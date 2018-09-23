@@ -1,0 +1,166 @@
+CHNOSZ_0.9-5 (2011-04-05) Minor updates in consideration of upcoming R-2.13.0:
+change Makefile in inst/doc to be compatible with a parallel make; move *.csv
+files not used in construction of 'thermo' object to 'inst/extdata' (and adjust
+paths in examples and in argument defaults of 'add.obigt' accordingly).
+
+CHNOSZ_0.9-4 (2011-02-22) Add 'cex.names' argument to strip(). Rewrite s2c() to
+use strsplit(). diagram() now accepts a 'group' argument without names. Update
+read.supcrt() to be able to import SLOP07.dat (fixes some problems with
+strangely formatted header and data fields). Add cyclohexane,aq data from
+Plyasunov and Shock, 2001. Add scripts in 'refseq' directory for processing
+NCBI RefSeq data, and add 'protein_refseq.csv' datafile with computed amino
+acid compositions for each taxon ID (taxid). Move code from danger() to
+add.obigt() (used to activate supplementary thermodynamic data). Add anim.TCA()
+for making animated stability diagrams for reactants in tricarboxylic acid
+cycle. New function slice.affinity() for extracting results from affinity()
+along a particular dimension. Move data files with non-standard file types to
+new 'extdata' directory.
+
+CHNOSZ_0.9-3 (2010-12-21) diagram() by default does not plot legends on 1D
+diagrams if there are more than 10 species, and now handles activity
+calculations in more than two dimensions (still only up to two are plotted).
+Change 'title' argument to 'main' and 'property' to 'what'; if latter is set to
+the name of a basis species the function calculates its equilibrium activity.
+get.protein() now searches the "AC" column in ECO.csv. Add HUM.csv for human
+proteins. Merge draw.diversity() into revisit(); add new targets (qqr, rmsd,
+cvrmsd, ratio) and plots (scatterplots with legend and LOESS fit). affinity()
+now returns x- and y-values used for calculations.  Change argument 'x' to
+'pattern' in grep.file() and implement search for multiple patterns.  Add
+vignettes on energy of rotein formation, getting started with CHNOSZ, and
+growth temperature and relative stabilities of proteins. 
+
+CHNOSZ_0.9-2 (2010-08-25) Add missing aliases in help files for data sets
+'SOJSH' and 'check'.
+
+CHNOSZ_0.9-1 (2010-07-20) Add expansivity (E) and compressibility (kT) to water
+(SUPCRT92) calculations.  Use double quotes to system calls to grep in
+grep.file() and read.fasta() so filenames with special characters can be
+processed.  The 'values' element of the list returned by affinity() now has
+dimensions equal to the number of variables. Use extendrange() to automatically
+get the y-limits of line (1-D) plots made by diagram(). Separate the utility
+functions in thermo.R into a number of util.* files, and also reorganize the
+corresponding documentation files. Add functions mtitle(), count.taxa(),
+is.fasta(), splitline(), trimfas(), protein.formula(), residue.formula(),
+species.label().  Add functions getnodes(), getrank(), parent(), allparents(),
+getnames() and sciname() for working with NCBI taxonomy files. Add function
+danger() for loading alternative entries to the thermodynamic database (this
+supersedes the functionality provided by the 'level' setting in thermo$opt,
+which is no longer supported). Move some of the longer examples from the
+documentation to longex(). Parts of the examples in the documentation that
+should not be run during e.g. the CRAN package checks are now protected by
+'\donttest'.
+
+CHNOSZ_0.9 (2009-11-30) Fix .First.lib so package date correctly displays when
+a CRAN-built package is loaded. Add URL to DESCRIPTION. In protein(), fix
+UniProt search and add colClasses to read.csv function call so names of
+proteins and organisms are always read as character. Add DNA polymerases and
+mammalian aquaporin-1, myoglobin and p53 to protein.csv to support examples.
+Fix issue in supcrt() where balancing reactions with charged species didn't
+work correctly.  affinity() now handles transects along multiple variables
+(useful for specifying nonuniform increments), invoked by specifying variables
+with length > 3. Modifications to diagram(): Add 'group' argument to treat
+groups of species as single composite species; implement 'alpha' option for 0-D
+diagrams; add 'bg' argument for specifying background color of legend; speed up
+plotting of predominance field labels and boundary lines. Change system
+function call in grep.file() from grep to egrep (for extended regular
+expressions). read.fasta() now has options to return the sequences and the
+lines from the file. Add functions residue.comp() for calculating the
+per-residue compositions of proteins, nucleicacids() for counting the bases and
+computing the formulas of DNA and RNA, unitize() for scaling activities of
+proteins so total activity of residues is unity (or other user-specified
+value), strip() to plot relative abundances as variable-width color bars,
+longex() to run additional examples. Add ability to select from duplicated
+species in database using new 'level' option in thermo$opt.  Update yeast
+examples in get.protein() to be consistent with Dick, 2009. Add URLs to
+reference lists in documentation.
+
+CHNOSZ_0.8 (2009-04-22) New functions extremes, where.extreme, diversity,
+richness, plot.diversity, abundance, abundance.old (extracted from diagram),
+protein.residue, grep.file, read.fasta, energy (extracted from affinity),
+mylapply transfer. Affinity calculations using new 'energy' function can be
+performed in more than two dimensions. Using Boltzmann distribution equation,
+new 'abundance' function performs faster calculations of relative abundance of
+species than 'abundance.old'. Files SGD.csv, ECO.csv and yeastgfp.csv are now
+included in the CHNOSZ package. Protein sequences in FASTA files can be
+searched and loaded using 'grep.file' and 'read.fasta'. Parallel processing
+implemented for some calculations -- new utility function mylapply calls
+lapply, or mclapply if multicore package is loaded; mylapply used in functions
+abundance, affinity (iprotein option), protein.length, aminoacids. New argument
+iprotein in 'affinity' to designate proteins for which to calculate affinities
+of formation reactions using speed-optimized approach (calculate those of the
+amino acid residues, then sum them together appropriately). Replaced 'proteome'
+with 'get.protein' and fixed bug in calculating compositions of proteologs from
+abundance data. Add residues, yeast cell-cycle proteins and carboxylases to
+protein datafile. Introduce transfer function for reaction path simulations for
+minerals and proteins. Documentation includes new examples of stress response
+and diversity calculations.
+
+CHNOSZ_0.7-2 (2008-11-12) New functions 'add.protein' and 'add.obigt' to read
+local data files. In 'diagram' fix calculation of predominant proteins in
+residue formation reactions.
+
+CHNOSZ_0.7-1 (2008-09-19) Minor update. Add SLAP_BACLI to protein composition
+data file. Fix some issues with the online search of Swiss-Prot.
+
+CHNOSZ_0.7 (2008-09-14) More work on calculations of the partial derivatives of
+omega; NaCl dissociation example is closer to but still not quite matching
+SOJ+92.  Increase speed of 'water' in SUPCRT92 mode (handle intermediate
+results in matrix instead of dataframe) and of 'diagram' when drawing
+boundaries on predominance diagrams (pass coordinates of line segments in a
+single call to 'line'). Add 'do.plot' argument to 'diagram' to enable figure
+calculations without actually making a plot. Fix labels for charged species
+generated by 'axis.label'.  Add 'return.approx' argument to 'info' for getting
+indicies of approximately matching species.
+
+CHNOSZ_0.6 (2008-03-08) Incorporate Debye-Huckel equation from Alberty, 2003 in
+function 'nonideal' and add corresponding argument (IS - ionic strength) to
+'subcrt', 'affinity'. Rename thermo$par (annoying conflict when trying to get
+help on the 'par' in graphics package) to thermo$opt. Add code for (but mask
+it) "f" term in the "g" function (Shock et al., 1992) for partial derivatives
+of omega parameter. Extensive testing and modification of speciation code in
+'diagram' for residue = TRUE.  New function 'change' wrapping 'mod.buffer' and
+'mod.obigt'. Add yline and xrange arguments to 'diagram'. Add minor tick marks
+to axes drawn using 'thermo.plot.new'. First release on chnosz.net.
+
+CHNOSZ_0.0.5 (2007-12-21) Change name of package, rename 'supcrt' to 'subcrt',
+link to H2O92D.F from SUPCRT92 (much faster than IAPWS calculations in R code),
+add 'examples' function and add more examples of buffers and protein
+calculations, update 'buffer' to be able to handle certain situations (e.g.,
+fayalite- magnetite-quartz, where no basis species in Fe-SiO2-O2 is in common
+to all species), add functions 'axis.label', 'describe', 'mod.obigt' and
+'mod.buffer', upload supporting proteomic (ECO.csv, SGD.csv, yeastgfp.csv) and
+thermodynamic data file (slop98.edit.dat) to webfiles.berkeley.edu. OBIGT.csv
+now has 3001 entries.
+
+speciate_0.04 (2007-08-08) Add support for phase transitions of minerals in
+'supcrt'. A new function 'proteome' retrieves amino acid compositions of
+proteins in yeast and E. coli and interacts with YeastGFP data to calculate the
+compositions of subproteomes (assemblages of proteins in compartments),
+requires external files. Change default style of axis labels (no longer e.g. O2
+(log f)). New function 'water.lines' adds oxidation- reduction stability limits
+of water to Eh-pH and related diagrams.
+
+speciate_0.03 (2006-12-06) Add license file, and make minor updates to code and
+data files. Extend the precision of values of G of the protein groups tabulated
+in OBIGT.csv to the units place (calculated from H and S), to prevent warnings
+caused by propagated rounding errors. Also recalculate the tabulated values of
+Cp and V of these groups to greater precision (hundredths place, thousandths
+for [UPBB]). Give the aqueous electron a value of standard molal entropy
+consistent with that of Z. Correct guanosine to guanine in nucleobase-amino
+acid example. Make single-species basis definition possible.
+
+speciate_0.02 (2006-11-10) Major update. Incorporates IAPWS-95 equations for
+water; additivity and ionization functions for proteins; and functions
+'affinity', 'buffer' and 'diagram'. Thermodynamic data are now retrieved from
+the OBIGT.csv data file (of 2006-11-07; 2928 entries); a function called 'info'
+is added as a user and programming interface to the data. 'protein' function
+can access the compositions of 115 proteins provided in the package, or
+retrieve compositions from SGD or Swiss-Prot. Includes R documentation and now
+passes R CMD check.
+
+speciate-0.01 (2006-08-17) Limited release. Primary functions include equations
+of state ('hkf', 'cgl'), 'makeup', 'supcrt'. ('basis', 'species' and 'info' are
+present but not working). Properties of liquid water are calculated from
+tabulated values on a P-T grid using 'interp' from the akima package. Separate
+data files for aqueous species (1548), and crystalline,gas,liquid species
+(242).

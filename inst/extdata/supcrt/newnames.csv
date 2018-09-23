@@ -1,0 +1,408 @@
+old,new
+amorphous-silica,"amorphous silica"
+"copper,native",copper
+"gold,native",gold
+potassium-oxide,"potassium oxide"
+"silver,native",silver
+sodium-oxide,"sodium oxide"
+herzenbergite,hedenbergite
+"phillipsite,ca",ca-phillipsite
+"phillipsite,k",k-phillipsite
+"phillipsite,na",na-phillipsite
+"tin,native",tin
+carbon-dioxide,"carbon dioxide"
+hydrogen-sulfide,"hydrogen sulfide"
+sulfur-dioxide,"sulfur dioxide"
+1-butanamine,butanamine
+1-butanol,butanol
+1-butene,butene
+1-heptanamine,heptanamine
+1-heptanol,heptanol
+1-heptene,heptene
+1-hexanamine,hexanamine
+1-hexanol,hexanol
+1-hexene,hexene
+1-octanamine,octanamine
+1-octanol,octanol
+1-octene,octene
+1-pentanamine,pentanamine
+1-pentanol,pentanol
+1-pentene,pentene
+1-propanamine,propanamine
+1-propanol,propanol
+1-propene,propene
+2-butanone,butanone
+a-aminobutyric,"a-aminobutyric acid"
+acetic-acid,"acetic acid"
+aspartic-acid,"aspartic acid"
+Al(OH)+2,AlOH+2
+butanoate,n-butanoate
+butanoic-acid,"n-butanoic acid"
+Ba(CO3),BaCO3
+Ca(CO3),CaCO3
+formic-acid,"formic acid"
+Fe(CH3COO)+,Fe(Ac)+
+Fe(CH3COO)2,Fe(Ac)2
+glutamic-acid,"glutamic acid"
+heptanoate,n-heptanoate
+heptanoic-acid,"n-heptanoic acid"
+hexanoate,n-hexanoate
+hexanoic-acid,"n-hexanoic acid"
+Mg(CO3),MgCO3
+n-butane,butane
+n-heptane,heptane
+n-hexane,hexane
+n-octane,octane
+n-pentane,pentane
+octanoate,n-octanoate
+octanoic-acid,"n-octanoic acid"
+pentanoate,n-pentanoate
+pentanoic-acid,"n-pentanoic acid"
+propanoic-acid,"propanoic acid"
+Pb(CH3COO)+,Pb(Ac)+
+Pb(CH3COO)2,Pb(Ac)2
+Sr(CO3),SrCO3
+Zn(CH3COO)+,Zn(Ac)+
+zn(ch3coo)2,Zn(Ac)2
+Zn(CH3COO)3-,Zn(Ac)3-
+PdS,vysotskite
+PtS,cooperite
+LITHARGE,litharge
+carbon-monoxide,"carbon monoxide"
+c2h4,ethylene
+2-hydroxybutanoic,"2-hydroxybutanoic acid"
+2-hydroxydecanoic,"2-hydroxydecanoic acid"
+2-hydroxyheptanoic,"2-hydroxyheptanoic acid"
+2-hydroxyhexanoic,"2-hydroxyhexanoic acid"
+2-hydroxynonanoic,"2-hydroxynonanoic acid"
+2-hydroxyoctanoic,"2-hydroxyoctanoic acid"
+2-hydroxypentanoic,"2-hydroxypentanoic acid"
+adipic-acid,"adipic acid"
+azelaic-acid,"azelaic acid"
+benzoic-acid,"n-benzoic acid"
+ba(hco3)+,Ba(HCO3)+
+o-CRESOL,o-cresol
+m-CRESOL,m-cresol
+p-CRESOL,p-cresol
+decanoate,n-decanoate
+decanoic-acid,"n-decanoic acid"
+2-3DMP,"2,3-dimethylphenol"
+"2,4-DMP","2,4-dimethylphenol"
+2-5DMP,"2,5-dimethylphenol"
+2-6DMP,"2,6-dimethylphenol"
+3-4DMP,"3,4-dimethylphenol"
+3-5DMP,"3,5-dimethylphenol"
+dodecanoate,n-dodecanoate
+dodecanoic-acid,"n-dodecanoic acid"
+glutaric-acid,"glutaric acid"
+GLYCOLATE,glycolate
+glycolic-acid,"glycolic acid"
+h2seo3,H2SeO3
+lactic-acid,"lactic acid"
+m-toluic-acid,"m-toluic acid"
+malonic-acid,"malonic acid"
+nonanoate,n-nonanoate
+nonanoic-acid,"n-nonanoic acid"
+o-toluic-acid,"o-toluic acid"
+oxalic-acid,"oxalic acid"
+p-toluic-acid,"p-toluic acid"
+pimelic-acid,"pimelic acid"
+sebacic-acid,"sebacic acid"
+suberic-acid,"suberic acid"
+succinic-acid,"succinic acid"
+undecanoate,n-undecanoate
+undecanoic-acid,"n-undecanoic acid"
+UREA,urea
+nd(ac)+2,Nd(Ac)+2
+tb(ac)+2,Tb(Ac)+2
+zn(ac)2,Zn(Ac)2
+arginine+,argininium
+arginine-,argininate
+dolomite-dis,"dolomite,disordered"
+dolomite-ord,"dolomite,ordered"
+nitric,"nitric oxide"
+nitrous,"nitrous oxide"
+am(ac)3,Am(Ac)3
+cystate,cysteinate
+2-3dmp,"2,3-dimethylphenol"
+"2,4-dmp","2,4-dimethylphenol"
+2-5dmp,"2,5-dimethylphenol"
+2-6dmp,"2,6-dimethylphenol"
+3-4dmp,"3,4-dimethylphenol"
+3-5dmp,"3,5-dimethylphenol"
+glycine+,glycinium
+histidine+,histidinium
+lysine+,lysinium
+lysine-,lysinate
+METHANE,methane
+Pd(OH)+,PdOH+
+Pt(OH)+,PtOH+
+Rh(OH)+,RhOH+
+Ru(OH)+,RuOH+
+tyrosine-,tyrosinate
+pce,perchloroethylene
+tce,trichloroethylene
+"1,1-dce","1,1-dichloroethylene"
+"cis-1,2-dce","cis-1,2-dichloroethylene"
+"trans-1,2-dce","trans-1,2-dichloroethylene"
+vc,"vinyl chloride"
+ADENINE,adenine
+GUANINE,guanine
+CYTOSINE,cytosine
+THYMINE,thymine
+URACIL,uracil
+DEOXYRIBOSE,deoxyribose
+ADENOSINE,adenosine
+CYTIDINE,cytidine
+GUANOSINE,guanosine
+THYMIDINE,thymidine
+URIDINE,uridine
+DEOXYADENOSINE,deoxyadenosine
+DEOXYCYTIDINE,deoxycytidine
+DEOXYGUANOSINE,deoxyguanosine
+DEOXYTHYMIDINE,deoxythymidine
+DEOXYURIDINE,deoxyuridine
+AMP2-,AMP-2
++H2AMP-,H2AMP
+CMP2-,CMP-2
++H2CMP-,H2CMP
+GMP2-,GMP-2
++H2GMP-,H2GMP
+TMP2-,TMP-2
++H2TMP-,H2TMP
+UMP2-,UMP-2
++H2UMP-,H2UMP
+dAMP2-,dAMP-2
+d+H2AMP-,dH2AMP
+dCMP2-,dCMP-2
+d+H2CMP-,dH2CMP
+dGMP2-,dGMP-2
+d+H2GMP-,dH2GMP
+dTMP2-,dTMP-2
+d+H2TMP-,dH2TMP
+dUMP2-,dUMP-2
+d+H2UMP-,dH2UMP
+ADP3-,ADP-3
+HADP2-,HADP-2
++H2ADP2-,H2ADP-
++H3ADP1-,H3ADP
+CDP3-,CDP-3
+HCDP2-,HCDP-2
++H2CDP2-,H2CDP-
++H3CDP1-,H3CDP
+GDP3-,GDP-3
+HGDP2-,HGDP-2
++H2GDP2-,H2GDP-
++H3GDP1-,H3GDP
+TDP3-,TDP-3
+HTDP2-,HTDP-2
++H2TDP2-,H2TDP-
++H3TDP1-,H3TDP
+UDP3-,UDP-3
+HUDP2-,HUDP-2
++H2UDP2-,H2UDP-
++H3UDP1-,H3UDP
+dADP3-,dADP-3
+dHADP2-,dHADP-2
+d+H2ADP2-,dH2ADP-
+d+H3ADP1-,dH3ADP
+dCDP3-,dCDP-3
+dHCDP2-,dHCDP-2
+d+H2CDP2-,dH2CDP-
+d+H3CDP1-,dH3CDP
+dGDP3-,dGDP-3
+dHGDP2-,dHGDP-2
+d+H2GDP2-,dH2GDP-
+d+H3GDP1,dH3GDP
+dTDP3-,dTDP-3
+dHTDP2-,dHTDP-2
+d+H2TDP2-,dH2TDP-
+d+H3TDP1-,dH3TDP
+dHUDP2-,dHUDP-2
+d+H2UDP2-,dH2UDP-
+d+H3UDP1-,dH3UDP
+ATP4-,ATP-4
+HATP3-,HATP-3
++H2ATP3-,H2ATP-2
++H3ATP2-,H3ATP-
++H4ATP-,H4ATP
+CTP4-,CTP-4
+HCTP3-,HCTP-3
++H2CTP3-,H2CTP-2
++H3CTP2-,H3CTP-
++H4CTP-,H4CTP
+GTP4-,GTP-4
+HGTP3-,HGTP-3
++H2GTP3-,H2GTP-2
++H3GTP2-,H3GTP-
++H4GTP-,H4GTP
+TTP4-,TTP-4
+HTTP3-,HTTP-3
++H2TTP3-,H2TTP-2
++H3TTP2-,H3TTP-
++H4TTP-,H4TTP
+UTP4-,UTP-4
+HUTP3-,HUTP-3
++H2UTP3-,H2UTP-2
++H3UTP2-,H3UTP-
++H4UTP-,H4UTP
+dATP4-,dATP-4
+dHATP3-,dHATP-3
+d+H2ATP3-,dH2ATP-2
+d+H3ATP2-,dH3ATP-
+d+H4ATP-,dH4ATP
+dCTP4-,dCTP-4
+dHCTP3-,dHCTP-3
+d+H2CTP3-,dH2CTP-2
+d+H3CTP2-,dH3CTP-
+d+H4CTP-,dH4CTP
+dGTP4-,dGTP-4
+dHGTP3-,dHGTP-3
+d+H2GTP3-,dH2GTP-2
+d+H3GTP2-,dH3GTP-
+d+H4GTP-,dH4GTP
+dTTP4-,dTTP-4
+dHTTP3-,dHTTP-3
+d+H2TTP3-,dH2TTP-2
+d+H3TTP2-,dH3TTP-
+d+H4TTP-,dH4TTP
+dUTP4-,dUTP-4
+dHUTP3-,dHUTP-3
+d+H2UTP3-,dH2UTP-2
+d+H3UTP2-,dH3UTP-
+d+H4UTP-,dH4UTP
+XYLOSE,xylose
+ARABINOSE,arabinose
+LYXOSE,lyxose
+XYLULOSE,xylulose
+RIBULOSE,ribulose
+GLUCOSE,glucose
+MANNOSE,mannose
+GALACTOSE,galactose
+FRUCTOSE,fructose
+SORBOSE,sorbose
+MgATP2-,MgATP-2
+H2NicMPred,H2NicMP(red)
+HNicMP-red,HNicMP(red)-
+NicMP2-red,NicMP(red)-2
+H2NicMP+ox,H2NicMP(ox)+
+HNicMPox,HNicMP(ox)
+NicMP-ox,NicMP(ox)-
+H2NADred,H2NAD(red)
+HNAD-red,HNAD(red)-
+NAD2-red,NAD(red)-2
+H2NAD+ox,H2NAD(ox)+
+HNADox,HNAD(ox)
+NAD-ox,NAD(ox)-
+R5P,ribose-5-phosphate
+R5P-,ribose-5-phosphate-1
+R5P2-,ribose-5-phosphate-2
+H4NADPred,H4NADP(red)
+H3NADP-red,H3NADP(red)-
+H2NADP2-red,H2NADP(red)-2
+HNADP3-red,HNADP(red)-3
+NADP4-red,NADP(red)-4
+H4NADP+ox,H4NADP(ox)+
+H3NADPox,H3NADP(ox)
+H2NADP-ox,H2NADP(ox)-
+HNADP2-ox,HNADP(ox)-2
+NADP3-ox,NADP(ox)-3
+Pb(Ox),Pb(Oxal)
+Mn(Ox),Mn(Oxal)
+Co(Ox),Co(Oxal)
+Ni(Ox),Ni(Oxal)
+Fe(Ox)+,Fe(Oxal)+
+Cu(Ox),Cu(Oxal)
+Na(Ox)-,Na(Oxal)-
+K(Ox)-,K(Oxal)-
+NH4(Ox)-,NH4(Oxal)-
+Mg(Ox),Mg(Oxal)
+Ca(Ox),Ca(Oxal)
+Zn(Ox),Zn(Oxal)
+Cd(Ox),Cd(Oxal)
+Al(Ox)+,Al(Oxal)+
+Yb(Ox)+,Yb(Oxal)+
+Ce(Ox)+,Ce(Oxal)+
+Nd(Ox)+,Nd(Oxal)+
+Eu(Ox)+,Eu(Oxal)+
+Gd(Ox)+,Gd(Oxal)+
+Ru(Ox)+,Ru(Oxal)+
+Pa(Ox)+2,Pa(Oxal)+2
+Th(Ox)+2,Th(Oxal)+2
+U(Ox)+2,U(Oxal)+2
+Np(Ox)+2,Np(Oxal)+2
+PuO2(Ox),PuO2(Oxal)
+UO2(Ox),UO2(Oxal)
+Am(Ox)+,Am(Oxal)+
+Cm(Ox)+,Cm(Oxal)+
+Y(Ox)+,Y(Oxal)+
+Be(Ox),Be(Oxal)
+Hg(Ox),Hg(Oxal)
+Cr(Ox),Cr(Oxal)
+Fe(Ox),Fe(Oxal)
+La(Ox)+,La(Oxal)+
+Tb(Ox)+,Tb(Oxal)+
+Er(Ox)+,Er(Oxal)+
+Lu(Ox)+,Lu(Oxal)+
+Cr(Ox)+,Cr(Oxal)+
+Ga(Ox)+,Ga(Oxal)+
+Sc(Ox)+,Sc(Oxal)+
+In(Ox)+,In(Oxal)+
+Pu(Ox)+2,Pu(Oxal)+2
+NpO2(Ox)+2,NpO2(Oxal)+2
+Sm(Ox)+,Sm(Oxal)+
+Li(Ox)-,Li(Oxal)-
+Sr(Ox),Sr(Oxal)
+Ba(Ox),Ba(Oxal)
+Ar,argon
+Xe,xenon
+"[Ala],cr",[Ala]
+"[Arg],cr",[Arg]
+"[Asn],cr",[Asn]
+"[Asp],cr",[Asp]
+"[Cys],cr",[Cys]
+"[Glu],cr",[Glu]
+"[Gln],cr",[Gln]
+"[Gly],cr",[Gly]
+"[His],cr",[His]
+"[Ile],cr",[Ile]
+"[Leu],cr",[Leu]
+"[Lys],cr",[Lys]
+"[Met],cr",[Met]
+"[Phe],cr",[Phe]
+"[Pro],cr",[Pro]
+"[Ser],cr",[Ser]
+"[Thr],cr",[Thr]
+"[Trp],cr",[Trp]
+"[Tyr],cr",[Tyr]
+"[Val],cr",[Val]
+"[hyd-pro],cr",[hyd-pro]
+"[hyd-lys],cr",[hyd-lys]
+"[AABB],cr",[AABB]
+"[PBB],cr",[PBB]
+"alanylglycine,cr",alanylglycine
+"cysteine,cr",cysteine
+"glycine,cr",glycine
+"glycylglycine,cr",glycylglycine
+"diglycylglycine,cr",diglycylglycine
+"4-hydroxyproline,cr",4-hydroxyproline
+"5-hydroxylysine,cr",5-hydroxylysine
+"leucine,cr",leucine
+"leucylglycine,cr",leucylglycine
+"methionine,cr",methionine
+"alanine,cr",alanine
+"valine,cr",valine
+"isoleucine,cr",isoleucine
+"aspartic-acid,cr","aspartic acid"
+"glutamic-acid,cr","glutamic acid"
+"asparagine,cr",asparagine
+"glutamine,cr",glutamine
+"proline,cr",proline
+"phenylalanine,cr",phenylalanine
+"tryptophan,cr",tryptophan
+"serine,cr",serine
+"threonine,cr",threonine
+"tyrosine,cr",tyrosine
+"lysine,cr",lysine
+"arginine,cr",arginine
+"histidine,cr",histidine

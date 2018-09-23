@@ -1,0 +1,44 @@
+****************************
+release checklist for CHNOSZ
+****************************
+
+- compile vignettes with release version number and date
+
+- run examples() and demos() to check their output
+
+- check output of demo("sources") to make sure all data sources are cited
+
+- recreate extdata/thermo/obigt_check.csv after all data updates:
+  co <- check.obigt()
+  write.csv(co, "obigt_check.csv", row.names=FALSE, na="")
+
+- check that uniprot.aa() works with current UniProt web pages
+
+- run R_PAPERSIZE=letter R CMD Rd2pdf chnosz/
+  and fix any lines truncated by page margins
+
+- run R CMD check using R compiled without long doubles (emulating Solaris checks on CRAN)
+  (CFLAGS=-ffloat-store ./configure --disable-long-double)
+
+- build the package on the source directory;
+  try both qpdf and ghostscript to compact vignettes:
+  R CMD build --compact-vignettes=both chnosz/
+
+- check reverse dependencies: ecipex and canprot packages
+
+OTHER THINGS TO CHECK:
+
+- remove all "<<-" from sources (leftover from debugging)
+
+- update list of documentation topics in examples() with any new ones
+
+- check for stale URLs in Rd files
+
+- clean up all TODO, XXX, etc. in Rd files (and hopefully R files too)
+
+- update .Rinstignore with any new/deleted files
+
+- ensure all Rd files have \concept{...} as listed in CHNOSZ-package.Rd
+
+- although Rd files could use the \doi macro, it generates a largish (ca. 265K)
+  build/partial.rdb file; just use \url for now.

@@ -1,0 +1,1283 @@
+CHANGES IN CHNOSZ 1.1.3-36 (2018-09-23)
+---------------------------------------
+
+THERMODYNAMIC DATA
+
+- The Berman data (Berman, 1988 and later additions) have replaced the
+  SUPCRT92 data (based on Helgeson et al., 1978) for most minerals in
+  the default database (i.e. the one loaded by data(thermo)). Only
+  native elements, sulfides, halides, sulfates, and selected carbonates
+  and oxides from SUPCRT92 that do not duplicate any in the Berman
+  dataset are loaded by default.
+
+- The superseded SUPCRT92 minerals (primarily the silicates and
+  Al-bearing minerals, as well as calcite, dolomite, hematite, and
+  magnetite) are in the file extdata/OBIGT/SUPCRT92.csv, which can be
+  loaded with add.obigt("SUPCRT92"). This is used in some examples for
+  comparing the datasets (see ?berman and demo("go-IU")), but should not
+  be needed by most users.
+
+- In thermo$obigt, the minerals using the Berman equations are
+  identified as those having NA values for all thermodynamic properties
+  (columns 8-20). These minerals have the state of "cr" (not "cr_Berman"
+  as before).
+
+- The heat capacity equation in berman() has been expanded to
+  Cp = k0 + k1T-1/2 + k2T-2 + k3T-3 + k4T-1 + k5T + k6T2 (as used in
+  winTWQ).
+
+- Multipliers on values in the Berman data files (extdata/Berman/*.csv)
+  have been removed, except for 10^5, 10^5, 10^5, and 10^8 on v1 to v4,
+  to be consistent with the winTWQ data format.
+
+- berman() now reads data from a user-supplied file specified in
+  thermo$opt$Berman.
+
+- Add mineral data from Berman and Aranovich, 1996 to
+  extdata/Berman/testing and an example of loading these data via
+  add.obigt() and thermo$opt$Berman (see ?berman).
+
+- Correct swapped v1 <-> v3 and v2 <-> v4 in extdata/Berman/DS10.csv.
+
+- To reduce confusion that "d5" might be a coefficient in the same
+  equation as d0 .. d4, rename "d5" (constant that scales disordering
+  enthalpy to volume) to "Vad" (notation used in Theriak-Domino manual).
+
+- Change abbreviation of grossular to Grs.
+
+DIAGRAMS
+
+- Lines in 1-D diagram()s can optionally be drawn as splines using the
+  method for splinefun() given in the 'spline.method' argument (the
+  default of NULL means no splines).
+
+- Add 'srt' argument to diagram() (rotation of line labels).
+
+- Export thermo.axis(), as it is useful for adding major and minor tick
+  marks after (above) other plot elements such as legends.
+
+- diagram(): rename 'what' argument to 'type'.
+
+- digram(): add new type of diagram, 'saturation', which is used to
+  plot saturation lines for minerals (where their affinity equals
+  zero).
+
+OTHER CHANGES
+
+- Add dumpdata() for returning/writing all packaged thermodynamic data
+  (including default database and optional data files).
+
+- TODO: fix overly long message for info("SiO2").
+
+- In equilibrate(), accept a length > 1 'normalize' argument to
+  normalize the chemical formulas of only the selected species.
+
+- Add C implementation of counting occurrences of all letters in a
+  string (src/count_letters.c) to speed up operation of count.aa().
+
+- read.fasta(): add support for file connections created using
+  archive::archive_read (https://github.com/jimhester/archive).
+
+- Add demo/bison.R (average oxidation state of carbon of metagenome-
+  derived proteins in different microbial phyla at Bison Pool)
+
+- Add thermo$opt$maxcores (default 2) to specify maximum number of
+  cores for parallel calculations with palply().
+
+- Keywords in basis(): Change 'CHNOPS+' to use O2 instead of e-, and add
+  'CHNOPSe' and 'MgCHNOPSe' for sets of basis species that have e-.
+
+- Change internal variable names in subcrt() for better readability
+  (sinfo -> ispecies, inpho -> iphases, sinph -> phasespecies).
+
+- To provide betters diagnostics for potential web apps, warning
+  messages produced by subcrt() are now available in the output of
+  affinity(), under 'sout$warnings'.
+
+BUG FIXES
+
+- Fix a bug where subcrt()$reaction$coeffs was incorrect for reactions
+  involving minerals with phase transitions. Also ensure that the output
+  reaction stoichiometry is correct for duplicated species in reactions.
+  Thanks to Grayson Boyer for the bug report.
+
+- Fix bug in nonideal() where "Zn" in formula was identified as charge.
+  Thanks to Feng Lai for reporting the incorrect behavior caused by
+  this bug.
+
+- For species in the revised HKF model, subcrt() now sets properties to
+  NA where the density of H2O is less than 0.35 g/cm3, avoiding the
+  output of bogus values in this region. Thanks to Evgeniy Bastrakov.
+
+CHANGES IN CHNOSZ 1.1.3 (2017-11-13)
+------------------------------------
+
+MAJOR CHANGES:
+
+- Add berman() function and extdata/Berman/*.csv files for calculating
+  thermodynamic properties of minerals using equations of Berman, 1988.
+
+- Calculations related to Berman's (1988) Figs. 1 and 2 for the lambda
+  transition of quartz are available in the new demo lambda.R.
+
+- Add functions implementing the Deep Earth Water (DEW) model
+  (Sverjensky et al., 2014): water.DEW() and its supporting functions
+  calculateDensity(), calculateGibbsofWater(), calculateEpsilon(),
+  calculateQ().
+
+- The computational setting for water (thermo$opt$water) can now be set
+  using water("DEW"), water("IAPWS"), etc.
+
+- Usage of the DEW model is shown in the new demo DEW.R. This demo also
+  depends on the Berman equations (above) and, for the last diagram in
+  the demo, the following *four* NEWS items:
+
+- In equilibrate(), it is now possible to combine affinity calculations
+  with variable activity of the balancing basis species (loga.balance).
+  For example, in the last plot of the DEW demo, the calculation
+  involves simultaneously varying temperature and logfO2 (given as
+  arguments to affinity()) as well as total concentration of carbon
+  (given by the loga.balance argument in equilibrate()).
+
+COMPUTATIONAL IMPROVEMENTS:
+
+- The 'alpha' argument of diagram() can be set to 'balance' to scale
+  the values by the balancing component. This is useful for making
+  "percent carbon" plots for systems where the species have different
+  carbon numbers.
+
+- nonideal() now has three methods for calculating activity
+  coefficients: 'Helgeson' and 'Helgeson0', which utilize the
+  Debye-Huckel equation with parameters as described by Helgeson, 1969,
+  and 'Alberty' (the only method previously available). The 'Helgeson'
+  method depends on the following *two* NEWS items (but the 'Helgeson0'
+  method omits the B-dot term):
+
+- All three water options (SUPCRT92, IAPWS95, DEW) can be used to
+  calculate 'A_DH' and 'B_DH', i.e. A and B coefficients in the extended
+  Debye-Huckel equation as described by Helgeson, 1969.
+
+- Add Bdot() to calculate the "B-dot" (or b_gamma) extended term
+  parameter for activity coefficients in NaCl solutions at high
+  temperature and pressure (Helgeson et al., 1981), including
+  very high pressures (> 10 kbar) based on extrapolations from Manning
+  et al., 2013.
+
+- For minerals with phase transitions (states 'cr2' 'cr3' etc.) in
+  thermo$obigt (i.e. the Helgeson minerals), it is now possible to use
+  the minerals in basis(), species(), affinity() with proper accounting
+  for transition effects. Just set the state to 'cr' or omit it,
+  e.g. species("quartz").
+
+- Implement SUPCRT92's handling of variable volume for quartz and
+  coesite. Calculations for other minerals still assume constant
+  volume of each phase.
+
+- Calculations of the g function are now enabled for DEW (with
+  pressure derivative) and IAPWS-95 (no derivatives included).
+
+- water.lines() now works for diagrams of Eh, pe, logfO2, logaO2,
+  logfH2, or logaH2 vs pH, T, or P. It is possible to have T or P on
+  either the x- or y-axis.
+
+- Variables that are in the aguments to affinity() now override any
+  buffers previously specified using basis().
+
+DATABASE UPDATES:
+
+- Add data(OBIGT) command to reset only the thermodynamic database
+  (OBIGT) to its default. data(thermo) is still used to reset
+  *everything* (the database and all computational and system settings).
+
+- In add.obigt(), using 'file' without a file suffix now can be used to
+  locate corresponding files (such as DEW_aq.csv or SUPCRTBL.csv) in the
+  extdata/OBIGT package directory.
+
+- add.obigt() gets new argument 'species' for selecting species to add.
+
+- Add Berman_cr.csv with names and formulas for minerals whose
+  thermodynamic properties are calculated using the Berman, 1988
+  equations. The state "cr_Berman" is used to distinguish these
+  minerals from the Helgeson data. The parameters themselves are
+  stored in extdata/Berman/*.csv.
+
+- Add DEW_aq.csv with aqueous species data from the DEW spreadsheet
+  (May 2017 version). Species with data that do not differ from the
+  default database in CHNOSZ are not included. Currently, detailed
+  reference keys and descriptions (in thermo$refs) are given for
+  selected species only. [Optional Data; not loaded by data(thermo)]
+
+- Add SUPCRTBL.csv with mineral and aqueous species data compiled by
+  Zimmer et al., 2016. Data were taken from original references or
+  from spronsbl.dat (http://www.indiana.edu/~hydrogeo/supcrtbl.html).
+  The new demo/go-IU.R uses these data. [Optional Data]
+
+- Update HKF parameters of adenine based on experimental heat capacity
+  and volume data (Lowe et al., 2017). Add demo/adenine.R comparing
+  the updates with the previous data (LaRowe and Helgeson, 2006).
+
+- Remove H2O(gas) from the database (taken from SUPCRT92), as it gives
+  inconsistent results for metastable steam (Zavarin et al., 2016,
+  LLNL-TR-701407, doi: 10.2172/1325873).
+
+- Change the formula of the electron from "Z0-1" (parsed as "zero Z
+  with minus one charge") to the equivalent but nicer-to-read "(Z-1)"
+  (parsed as "minus one Z"; the parentheses cause "-1" to be interpreted
+  as the coefficient on Z instead of the charge in the formula).
+
+- Add data for hedenbergite, andradite, ferro-actinolite, grunerite, and
+  ilvaite from Delgado Martin and Soler i Gil, 2010 (using the Berman
+  equations).
+
+OTHER CHANGES:
+
+- Add test-logmolality.R to demonstrate transformation of variables from
+  activity to molality in the main workflow; refer to this test and
+  describe these transformations in anintro.Rmd; remove "experimental"
+  labeling of activity coefficient calculations in CHNOSZ-package.Rd.
+
+- Add 'use.molality' argument to axis.label() and supporting functions.
+  So that the labels on diagrams are changed from activity (a) to
+  molality (m), this argument is set to TRUE by diagram() when IS is
+  supplied as an argument to affinity().
+
+- Add demo TCA.R for standard Gibbs energies of steps of the
+  citric acid cycle (Canovas and Shock, 2016).
+
+- Components of subcrt() output indicating the stable polymorph of
+  minerals with phase transitions are now named 'polymorph', not
+  'state'.
+
+- Add maxdiff() and expect_maxdiff() for calculating and testing the
+  maximum absolute pairwise difference between two objects.
+  expect_maxdiff() is used in tests/testthat/*.R as a more
+  straightforward alternative for checking differences than using
+  'tolerance' in expect_equal().
+
+- Add 'tol' argument to equil.reaction() (convergence tolerance for
+  uniroot()).
+
+- Add thermo$opt$Berman to signal info(), subcrt(), etc. to prefer
+  minerals in Berman dataset over Helgeson dataset (default: FALSE).
+
+REFACTORING AND CLEANUP:
+
+- In hkf() and cgl(), combine 'ghs' and 'eos' arguments into single
+  argument named 'parameters'.
+
+- Remove 'H2O.PrTr' and 'domega' arguments from hkf(). Properties of
+  water at Pr and Tr and the logic for when to find derivatives of omega
+  are now calculated within the function, thereby simplifying the
+  function call from subcrt().
+
+- Add 'H2O.props' argument to hkf(). This lists the properties of water
+  to calculate (at P, T); these are now included in the results, in
+  order to avoid duplicating the calculations in subcrt().
+
+- In water.* functions, rename the "diel" variable to "epsilon".
+
+- To save space, taxid_names.csv has been trimmed to hold only those
+  taxids listed in extdata/bison/gi.taxid.txt.
+
+- Remove Eco.csv.xz and rename more.aa() to yeast.aa().
+
+- Remove transfer() and associated functions draw.transfer(), apc(), and
+  feldspar().
+
+- Remove read.expr() and extdata/abundance/ISR+08.csv (protein abundance
+  in E. coli).
+
+- Reduce the size of obigt.html by ~450 KB. This was done by 1) using
+  rmarkdown with files in rmd/h/bootstrap-3.3.5/fonts/ replaced with
+  empty files (291 KB), and 2) changing the theme from "cosmo" to
+  "default" (151 KB).
+
+- Remove extdata/OBIGT/CHNOSZ_aq.csv and move the entry for
+  pseudo-H4SiO4 to inorganic_aq.csv.
+
+- Reorganize concept index entries in Rd files: Main workflow, Extended
+  workflow, Thermodynamic data, Thermodynamic calculations, Water
+  properties, Protein properties, Other tools, Utility functions.
+
+- Remove anim.TCA() and anim.carboxylase(); move the latter code to
+  demo/carboxylase.R.
+
+CHANGES IN CHNOSZ 1.1.0 (2017-05-04)
+------------------------------------
+
+DOCUMENTATION:
+
+- Replace anintro.Rnw (Sweave) with rewritten anintro.Rmd (using knitr
+  with Tufte style).
+
+- Add obigt.Rmd (Thermodynamic data in CHNOSZ).
+
+- Add eos-regress.Rmd (Regressing thermodynamic data), including
+  section on Making a pseudospecies: H4SiO4.
+
+- New demos: bugstab.R (potential diagrams for microbial proteins in
+  colorectal cancer), activity_ratios.R (mineral stability diagrams
+  with activity ratios on the axes), Shh.R (affinities of
+  transcription factors relative to Sonic hedgehog).
+
+- Converted demos: move examples from help pages to protein.equil.R,
+  add.obigt.R, and affinity.R.
+
+- Updated and removed demos: update buffer.R (logfH2 set by mineral
+  buffers and aqueous species) and rename old buffer.R to protbuff.R
+  (proteins as buffers); remove nucleobase.R.
+
+NAMESPACE:
+
+- The NAMESPACE now exports selected functions, instead of all of them.
+
+- The following functions are no longer exported, nor documented in the
+  Rd files: thermo.axis, optimal.index, extremes, caller.name, lsub,
+  lsum, pprod, energy, energy.args, A.ionization, can.be.numeric, s2c,
+  c2s, eos.args, TP.args, state.args, info.approx, info.character,
+  info.text, info.numeric, count.charge, count.formulas, buffer,
+  mod.basis, put.basis, preset.basis, preset.logact, species.basis,
+  envert, outvert, which.balance, gfun, IAPWS95.residual,
+  IAPWS95.idealgas, obigt2eos, group.formulas, get.formula, get.objfun,
+  balance.
+
+CHANGES TO diagram():
+
+- For the `groups` argument, activities are multiplied by the balance
+  coefficients before the summation.
+
+- Draw smoother boundary lines (with contour(); `lty` is usable), at the
+  expense of not being precisely aligned with the grid used for plotting
+  colors. For the old behavior, use `dotted=0`.
+
+- Default of `legend.x` changed to NA (instead of making a legend, put
+  labels near the lines).
+
+- Field labels: apply formatting (subscripts and superscripts) to names
+  that parse as chemical formulas; use `format.names=FALSE` to disable.
+
+- Chemical formulas that are part of the axis labels (log activity or
+  fugacity) now have formatting applied.
+
+- Add arguments `adj` and `dy` for x-alignment and y-offset of line
+  labels.
+
+- Add arguments `fill.NA` (color of empty areas) and `limit.water`
+  (assign NA to areas beyond water stability limits on Eh-pH and pe-pH
+  diagrams).
+
+NEW FEATURES:
+
+- Add ZC.col() for generating a red-grey-blue color scale from
+  numeric values.
+
+- Add "QEC" as a keyword for preset species in basis() (glutamine,
+  glutamic acid, cysteine, H2O, O2).
+
+- More flexible parsing of chemical formulas for ZC() and other
+  functions; e.g. `ZC(colMeans(protein.formula(1:4)))` now works.
+
+- read.fasta() extracts information from UniProt FASTA headers
+  (accession, name, organism) into columns of the output data frame
+  (protein, abbrv, organism).
+
+- Add `...` argument to thermo.plot.new() (additional arguments for
+  par()).
+
+- With new default arguments, thermo.axis() only plots the axis tick
+  marks and lines; this is used in diagram() to redraw the axes on
+  filled diagrams.
+
+- seq2aa() removes newlines and whitespace before counting the
+  letters in the sequence.
+
+- read.fasta(): change argument `i` to `iseq`; this is used to select
+  particular sequences to read from the file.
+
+- Add syslab() and ratlab() to make formatted expressions for
+  sets of thermodynamic components and activity ratios.
+
+- Add GHS_Tr() to calculate G, H, and S at Tr (298.15 K) of phases
+  stable at high temperature, using provided enthalpies of transition
+  and database values of transition temperatures and heat capacity
+  parameters, and GHS at Tr of the low-temperature phase.
+
+- Add extdata/supcrt/ directory with files read.supcrt.R, compare.R,
+  newnames.csv; used to compare data in SUPCRT and slop files
+  (http://geopig.asu.edu/?q=tools) to data in thermo$obigt.
+
+NEW AND OLD DATA:
+
+- Split OBIGT.csv and OBIGT-2.csv into multiple files according to type
+  of substance (inorganic, organic, or biotic). All files are now under
+  extdata/OBIGT/. Conflicting data from OBIGT-2.csv were removed (see
+  below).
+
+- Citations in OBIGT now have a suffix (e.g. [S92] or [S98]) if the data
+  were first present in sprons92.dat from SUPCRT, slop98.dat, or later
+  versions of the slop data files (http://geopig.asu.edu/?q=tools).
+
+- biotic_aq.csv: Add data for citric acid cycle metabolites from
+  Canovas and Shock, 2016.
+
+- CHNOSZ_aq.csv: Add H4SiO4 pseudospecies (pseudo-H4SiO4); see
+  calculations in eos-regress.Rmd.
+
+- organic_aq.csv: Add data for aqueous phenanthrene and methylphenanthrene
+  from Dick et al., 2013.
+
+- Remove superseded data previously in OBIGT-2.csv: citric acid cycle
+  metabolites from Dalla-Betta and Schulte, 2009.
+
+- Remove superseded data previously in OBIGT-2.csv: methionine and [Met]
+  from Dick et al., 2006. Examples that require the old group additivity
+  parameters can modify the database using:
+  `mod.obigt("[Met]", G=-35245, H=-59310)`.
+
+- Move two datasets that conflict with the primary database, but are
+  used in tests, examples, or vignettes, from OBIGT-2.csv to
+  extdata/thermo (Ste01.csv and BZA10.csv).
+
+- Remove other conflicting datasets (i.e. that provide different data
+  for a species already in the database) previously listed in
+  OBIGT-2.csv (21 sources).
+
+- Replace GHS for iron (c2, c3) calculated in CHNOSZ with values derived
+  from sprons92.dat.
+
+- Replace data for sulfur (cr) from Gurrieri, 1996, personal
+  communication with that "as used by" McCollom and Shock, 1997 (from
+  slop98.dat).
+
+- Update selected nonelectrolytes with data from Plyasunov and Shock,
+  2001, as listed in slop07.dat (http://geopig.asu.edu/?q=tools).
+
+- extdata: Add fasta/rubisco.fasta and cpetc/*.csv files SS98_Fig5a,
+  SS98_Fig5b, PM90 (all used in anintro.Rmd).
+
+BUG FIXES:
+
+- Correct charge (-2) of NAD(red)-2 in biotic_aq.csv. Thanks to Peter
+  Canovas.
+
+- Correct charge (-2) of MgATP-2.
+
+- subcrt() returns `loggam` using the common logarithm; add
+  test-nonideal.R to check for consistency between loggam and logK
+  values returned by subcrt(). This also fixes the issue previously
+  noted for the first example in ?nonideal. Thanks to David T. Wang for
+  the bug report and test.
+
+- NaN values from equilibrate() are now preserved by diagram(),
+  producing empty (NA) fields rather than being mistakenly labeled with
+  the first species. Thanks to Grayson Boyer for the bug report.
+
+OTHER CHANGES:
+
+- Remove msgout(), and replace previous calls to that function with
+  message() from base R. As a result, the messages don't appear in
+  Sweave vignettes, but can be turned on or off in knitr vignettes.
+
+- Remove HTCC1062.faa.xz.
+
+- Remove the bold formatting for "A" in expr.property(); "A" is
+  italicized like most other uppercase letters.
+
+- Rename browse.refs() to thermo.refs(); remove URL browsing (except for
+  summary table).
+
+- New function pinfo() merges functionality of old iprotein() and
+  ip2aa(). Add `regexp` argument to control whether matches are made
+  using a regular expression.
+
+- Rename aa2eos() to protein.obigt().
+
+- Remove anim.plasma() and AA03.csv.
+
+- Remove stress() and stress.csv; move data from Tai et al., 2005 (used
+  in an example in ?read.expr) to TBD+05.csv.
+
+- Remove read.aa() - replaced by read.csv() with as.is=TRUE.
+
+- Remove grep.file().
+
+- Remove sideeffects.Rd (functions with side effects are now identified
+  with red color in anintro.Rmd).
+
+CHANGES IN CHNOSZ 1.0.8 (2016-05-28)
+------------------------------------
+
+- Add gypsum to OBIGT.csv.
+
+- Add MgSO4 and hydrated Mg sulfate minerals to OBIGT-2.csv (kieserite,
+  starkeyite, hexahydrite and epsomite from Grevel and Majzlan, 2009).
+
+- Add demo dehydration.R. This demo requires the RSVGTipsDevice package,
+  which is currently unavailable on Windows.
+
+- Add ... argument to EOSvar() and EOSregress(). Allows specifying new
+  variables that are written as a function of arbitrary properties
+  (regression variables still must be a function of at least T and P).
+
+- EOSvar() now returns the negative of the 'QBorn' variable so that
+  values of omega obtained from regressions of volume data have the
+  correct sign in the HKF equations.
+
+- Use given/family naming scheme in inst/CITATION.
+
+- makeup() now works even if 'thermo' object is not available (useful
+  for other packages importing this function). Thanks to Nir Shahaf for
+  the suggestion.
+
+- So that byte-compiled package code works, subcrt() no longer uses
+  caller.name() for flow control. In its place, a new argument
+  'check.Ttr' has been added, used to bypass the checks of transition
+  temperature in calls from dPdTtr(). Thanks to Tomas Kalibera for the
+  suggestion.
+
+CHANGES IN CHNOSZ 1.0.7 (2015-11-19)
+------------------------------------
+
+- Add functions usrfig() (get figure limits in user coordinates) and
+  label.figure() (add label to figure outside of plot region).
+
+- Add demo copper.R (complexation of copper with glycine, uses
+  mosaic()).
+
+- Using new supporting function ibasis(), swap.basis() and mosaic()
+  now allow basis species to be specified by name, not only formula.
+
+- diagram() now has '...' argument to pass additional options to
+  plot() (useful with diagram(tplot=FALSE, ...)).
+
+- Update vignette 'equilibrium.Rnw' with better definitions of concepts,
+  organization of functions, and examples and applications. Now uses
+  knitr.
+
+- Remove demo diagram.R (concepts better shown in equilibrium.Rnw).
+
+- Rename basis.matrix() to basis.elements().
+
+- Argument of species.basis() defaults to current species indices.
+  ( species.basis() %*% basis.elements() returns elemental composition
+  of currently defined species.)
+
+- Move demos phosphate.R and nonideal.R to help page nonideal.Rd.
+
+- Add options to thermo$opt: 'ideal.H' and 'ideal.e'. Default TRUE tells
+  nonideal() to set activity coefficients of proton and electron to
+  zero.
+
+- Add 'method' argument to equilibrate() (can be 'reaction' or
+  'boltzmann').
+
+- For compatibility with a change in R-devel ("aperm(a, *) now preserves
+  names(dim(a))"), modify slice.affinity() to preserve names of
+  dimensions, and use check.attributes=FALSE or check.names=FALSE in
+  some tests.
+
+CHANGES IN CHNOSZ 1.0.6 (2015-10-19)
+------------------------------------
+
+- Rewrite rho.IAPWS95() to be able to invert density from IAPWS-95
+  equations for a more extensive range of T,P values.
+
+- Update R dependency to R-3.1.0, needed for 'extendInt' argument
+  of uniroot() (used by rho.IAPWS95()).
+
+- Add demo/density.R to show density of H2O calculated using
+  rho.IAPWS95() (optionally using water.SUPCRT92()).
+
+- Remove the relatively trivial demo/cordierite.R.
+
+- Update wrapper function for parallel calculations palply() (export of
+  variables, used in demo/density.R) and add tests in
+  test-util.program.R.
+
+- Tests that initiate calls to palply() (and therefore makeCluster())
+  failed with 'cannot open file 'startup.Rs': No such file or directory'
+  Fixed by adding Sys.setenv("R_TESTS" = "") to test-all.R.
+  Issue discussed here:
+  https://github.com/hadley/testthat/issues/129
+  https://github.com/hadley/testthat/issues/144
+
+- Fix bugs in which.pmax() that prevented proper assignment of
+  attributes in output, and functionality for lists of length 1.
+
+- mosaic() now multiplies affinities by _relative_ abundances of basis
+  species when blend=TRUE. Also, fix bug where using blend=TRUE gave
+  wrong results due to incorrect calculation of total activity of basis
+  species. Thanks to Grayson Boyer for the bug reports.
+
+- Add grDevices, graphics, stats, utils to Imports: in DESCRIPTION, and
+  add specific importsFrom lines in NAMESPACE.
+
+- Fix incorrect entry for entropy of aqueous methionine and [Met] in
+  OBIGT.csv. Thanks to Apar Prasad for reporting this.
+
+- Some fixes for compatibility with new version of testthat (increase
+  tolerance for one test in test-eos.R because of corrected alignment
+  actual/expected values in equals(); move inst/tests to
+  inst/test/testthat; use test_check instead of test_package in
+  test-all.R (for R CMD check)).
+
+CHANGES IN CHNOSZ 1.0.5 (2015-05-19)
+------------------------------------
+
+- Following "Writing R Extensions", remove uncommented \donttest{} code
+  from Rd files. Some examples have had \donttest{} markup removed
+  without other modification, some non-representative examples have
+  been deleted, and some longer examples have been moved to demo files.
+
+- Some previous \donttest{} examples have been moved to demos 'findit.R'
+  (replaces old demo), and to new demos 'revisit.R', 'ionize.R',
+  'buffer.R', 'wjd.R', 'yeastgfp.R', 'diagram.R'.
+
+- Rd files now use standard R \keyword{}s ('package' and 'utilities');
+  non-standard keywords have been changed to \concept{}s (see CHECKLIST
+  for description, and CHNOSZ-package.Rd for overview).
+
+CHANGES IN CHNOSZ 1.0.4 (2015-05-18)
+------------------------------------
+
+NEW FEATURES:
+
+- Add mosaic() function for affinity calculations with changing basis
+  species. See also new 'mosaic.R' demo.
+
+- Add thermo$opt$varP option for subcrt() to calculate Gibbs energies
+  of gases using a variable-pressure standard state. Thanks to Kirt
+  Robinson for the submitting the problem that led to this change.
+
+- Add 'solubility.R' demo, and add calcite solubility plot to
+  anintro.Rnw.
+
+DATA CONSISTENCY:
+
+- Move aqueous Ti(OH)4 and H4SiO4 to OBIGT-2.csv.
+
+- Add warning about data consistency and use of examples to
+  CHNOSZ-package.Rd and anintro.Rnw.
+
+OTHER CHANGES:
+
+- When making filled color diagrams, diagram() calls image() with
+  useRaster=TRUE. This speeds up plotting, eliminates artifacts (i.e.
+  blank lines) at some resolutions, and greatly reduces the size
+  of PDF files.
+
+- diagram() returns 'lx', 'ly' and 'is' for calculated positions of
+  labels and indices of those species in predominance diagrams,
+  including when the labels aren't plotted (by setting names=FALSE).
+
+- In energy(), add missing 'IS' argument in call to subcrt(). Thanks to
+  Grayson Boyer for the bug report.
+
+- In nonideal(), skip proton and electron. Add test for calculations
+  at constant and variable IS to test-util.affinity.R.
+
+- Modify hotspring.Rnw to use knitr, and add example calculations of
+  relative abundances of microbial phyla from Dick and Shock, 2013.
+
+- Add files with average amino acid compositions of proteins from Bison
+  Pool hot spring grouped according to annotation keyword (DS11.csv)
+  (moved here from protein.csv) or phylum assignment (DS13.csv).
+
+- water.lines() gets 'O2state' argument to specify state of O2.
+
+- Add 'as.residue' argument to diagram(), to divide reactions by
+  balance coefficients without rescaling to whole species formulas
+  (cf. 'normalize' argument which uses rescaling).
+
+- In equilibrate(), change name of 'stay.normal' argument to
+  'as.residue'.
+
+- In test-diagram.R, test that same diagrams are produced using
+  'normalize' in equilibrate() or diagram().
+
+- In test-diagram.R, test that same diagrams are produced using
+  'as.residue' in equilibrate() or diagram().
+
+- Add 'tplot' argument to diagram() (change to FALSE to use R's default
+  plot set-up).
+
+- R version dependency changed to (>= 3.0.0).
+
+CHANGES IN CHNOSZ 1.0.3 (2014-01-12)
+------------------------------------
+
+- Updated extdata/protein/Sce.csv.xz using Saccharomyces Genome
+  Database protein_properties.tab and SGD_features.tab dated
+  2013-08-24.
+
+- more.aa() includes SGDID and gene name in the abbrv and ref columns.
+
+- In extdata/refseq, scripts and data files were updated for NCBI
+  Reference Sequence (RefSeq) release 61 (2013-09-09). Code was
+  adapted to deal with WP multispecies accessions.
+
+- read.fasta() gets new argument 'id'; when supplied, it is used for
+  the protein names in the output, in place of those read from the
+  FASTA headers.
+
+- When reading protein names from the FASTA headers, read.fasta()
+  stops only at the first space, not space or underscore as before.
+
+- info() no longer specially sets state of "O2" to gas. The name
+  "oxygen", or the combination ("O2", "gas"), can be used to retrieve
+  data for the gas.
+
+- In thermo$obigt, names of gases (e.g. "oxygen") are used only for
+  the gaseous species; names were removed from dissolved species in
+  rows 63-79. Both gases and aqueous species can continue to be
+  referenced by their chemical formulas.
+
+- In read.expr(), allow multiple filter specifications.
+
+- revisit() has new argument loga0, a single vector of base-10
+  logarithms of activities of species used to calculate the base-2 log
+  ratio ( log2(a1/a0) ).
+
+- Updated tests to be compatible with testthat version 0.8 (in
+  development). Some tests now check for e.g. an error *and* warning
+  produced by a single function call.
+
+CHANGES IN CHNOSZ 1.0.1 (2013-07-04)
+------------------------------------
+
+- Allow IAPWS-95 calculations to be used in subcrt(): in 
+  water.IAPWS95(), rename internal function from 'epsilon' to 'diel';
+  in water(), return upper-case versions of names of properties.
+
+- rho.IAPWS95() has modified search interval to give results at
+  T < 250 K and P < 300 bar. Thanks to Marc Neveu.
+
+- In water.AW90(), analytical solution to polynomial equation is
+  now used to calculate dielectric constant. Thanks to Marc Neveu.
+
+- count.aa() and read.fasta() handle DNA sequences, with new argument
+  'type' (protein or DNA).
+
+- nucleicacids() split into nucleic.formula() and nucleic.complement().
+
+CHANGES IN CHNOSZ 1.0.0 (2013-03-28)
+------------------------------------
+
+MAJOR USER-VISIBLE CHANGE:
+
+- On attaching the package, the user is asked to load the 'thermo'
+  object, containing thermodynamic data and system settings, using
+  data(thermo). This is required because packages are not permitted to
+  alter the search path (but the user may).
+
+OTHER CHANGES:
+
+- Fix calculation of free energy derivative in wjd().
+
+- Add 'stay.normal' argument to equilibrate().
+
+- If obigt$G is available, hkf() returns this value, not NA, at Tr, Pr.
+
+- mod.obigt() defaults to taking chemical formula from the species name,
+  and checks for validity of formula.
+
+- Add example for LYSC_CHICK to protein.info.Rd.
+
+- Enable DGtr in findit(), 1-D DGtr plot in revisit().
+
+- Disable a check in valTP function of H2O92D.f to allow properties of
+  H2O to be calculated below 0.01 degrees C, to -20 degrees C.
+
+- Remove thermo$water and thermo$water2 storage of previous results;
+  they gave no significant speed gain in running examples.
+
+- Split IAPWS95.Rd out of water.Rd.
+
+- expr.* functions now do not wrap their values in as.expression()
+  (makes compounding expressions, e.g. with substitute(), easier).
+
+- Rename dl.aa() to uniprot.aa().
+
+- Add start and stop arguments to count.aa(), read.fasta(),
+  uniprot.aa().
+
+- add.protein() replaces amino acid compositions for existing
+  proteins with the same name.
+
+- Examples of calculation of affinity of formation of CSG_METVO
+  (following Dick and Shock, 2011) added to protein.info.Rd.
+
+- Use consistent names for water properties (Speed, diel, QBorn, ...).
+
+- Add water.props() to get names of properties of water.
+
+- Remove 'isat' argument from water.SUPCRT92(); function now accepts
+  'Psat' as value for 'P' argument.
+
+- Separate rho.IAPWS95() from water.IAPWS95().
+
+- In addition to the original regression variables, EOSvar() recognizes
+  names for available properties in water(), or can use the name to
+  get a user-defined function of temperature and pressure.
+
+- Simplify EOSplot() somewhat (don't group data by pressure ranges).
+
+- EOSlab() gets label from attribute (if present) of user-defined
+  function.
+
+- Modify test-util.data.R and wjd.Rd to pass R CMD check using R
+  configured with --disable-long-double .
+
+- The name of the environment affected by data(thermo), and used in many
+  functions, is changed from CHNOSZ:thermo to CHNOSZ.
+
+- Remove read.supcrt() and write.supcrt().
+
+- guess() now defaults to "stoich" method, not "central". (Needed since
+  limSolve package is not found during R-Forge checks on Windows.)
+
+
+CHANGES IN CHNOSZ 0.9-9 (2013-01-01)
+------------------------------------
+
+MAJOR CHANGES:
+
+- Split the functionality of diagram() into equilibrate() and diagram().
+  Old workflow: a <- affinity(); d <- diagram(a) .
+  New workflow: a <- affinity(); e <- equilibrate(a); d <- diagram(e) .
+  Old workflow is still usable for plotting the values of affinity, or
+  for making predominance diagrams using the maximum affinity method.
+
+- The 'thermo' object, which holds the thermodynamic database,
+  and system definitions (made by the user), is now placed in an
+  environment named 'CHNOSZ:thermo' on loading the package. Therefore, 
+  instances of '<<-' in the code now refer to this environment
+  instead of the global environment.
+
+- Create a set of tests in 'inst/tests', particularly for functions that
+  have been modified during this development cycle, and add a Suggests 
+  dependency on 'testthat'.
+
+- Move the code for the temperature and pressure derivatives of the "g"
+  function (related to the solvation parameter omega) to a new function 
+  gfun(); incorporate some fixes and a series of test_that() tests.
+  There is some impact on the calculated Gibbs energies of charged
+  species.
+
+NEW FUNCTIONS:
+
+- Add wjd() implementing the steepest descent algorithm for free energy
+  minimization described by White et al., 1958. Also add supporting 
+  functions element.potentials(), invertible.combs() for finding 
+  linearly independent combinations of rows of a matrix, 
+  is.near.equil(), and run.wjd().
+
+- Add guess() as another supporting function for wjd(), to produce 
+  initial guesses of moles of species satisfying a given elemental
+  bulk composition, and a Suggests dependency on 'limSolve'.
+
+- New function i2A() for generating a stoichiometric matrix from indices
+  of species in the thermodynamic database.
+
+- Add protein.equil() for step-by-step calculation of chemical
+  activities of proteins in metastable equilibrium.
+
+- Add an objective function DGtr() for calculating the Gibbs energy of
+  transformation of a system at constant temperature, pressure and
+  chemical activities of basis species.
+
+- Add msgout(), which is a modification of message() from base R. Now
+  used instead of cat(), to allow suppressing messages (e.g. during
+  testing with test_that).
+
+CHANGES TO ARGUMENTS:
+
+- In equilibrate(), the argument 'logact' (inherited from diagram()),
+  specifying the logarithm of activity of the balanced quantity, has
+  been renamed to 'loga.balance'. In the result, rename 'logact' to
+  'loga.equil', containing the equilibrium logarithms of activities
+  of the species of interest.
+
+- The 'residue' argument of diagram() has been changed to 'normalize'
+  in diagram() and equilibrate(). normalize=FALSE is always the default,
+  including for systems of proteins.
+
+- In balance(), the value of 'balance' used to indicate protein length
+  has been changed from 'PBB' to 'length'.
+
+- Everywhere it appeared, the logical argument 'do.plot' has been 
+  renamed to 'plot.it' (diagram(), revisit(), findit(), transfer()).
+  (This scheme is more consistent with e.g. qqplot().)
+
+- 'do.phases' argument in subcrt() and affinity() has been renamed to
+  'exceed.Ttr'. When that argument is FALSE (the default for subcrt()),
+  the Gibbs energies of mineral phases at temperatures beyond their 
+  transition temperature are set to NA, instead of 999999 used 
+  previously.
+
+- ZC() now accepts a numeric argument, referring to one or more species
+  indices in the thermodynamic database.
+
+CHANGES TO OUTPUT:
+
+- subcrt() now only outputs T (temperature), P (pressure) and rho
+  (density) columns if there is more than one T-P point ... makes
+  unlist()ing the results easier (used in element.mu() and 
+  basis.logact()).
+
+- subcrt() now outputs NA values for properties at temperatures above
+  the critical temperature of H2O, when Psat is being used.
+
+- read.blast() accepts NA for 'similarity', 'evalue' and 'max.hits' 
+  options. Descriptive column names are now assigned to the data frame
+  returned by the function.
+
+- energy.args() (called by affinity()) shows units in messages about
+  limits of variables.
+
+- EOSvar() has new variables invPPsi and invPPsiTTheta, used for
+  temperature- and pressure-dependent regressions in the revised HKF
+  equations of state.
+
+- thermo.plot.new() now saves the graphics device parameters 
+  (par(no.readonly=TRUE)) to thermo$opar the first time the function is 
+  called, allowing the parameters to be restored after running examples
+  that change them.
+
+- Rewrite mod.obigt() (it's now used by info() when adding proteins) and
+  add today() for returning today's date in the format used in SUPCRT 
+  files.
+
+REFACTORING OF FUNCTIONS:
+
+- Split the primary functionality of makeup(), parsing of chemical 
+  formulas, into a smaller makeup() function and supporting functions 
+  count.charge(), count.formulas(), and count.elements(). The new 
+  functions make extensive use of regular expressions, and no data 
+  frames. Running makeup() over the ca. 3000 formulas in thermo$obigt 
+  drops from ~35 to ~5 seconds on one machine.
+
+- New function as.chemical.formula() to replace the previous
+  functionality of makeup() for making string representations of
+  chemical formulas.
+
+- Replace element() with two separate functions, mass() and entropy().
+
+- Units setting interface is now split between three separate functions:
+  P.units(), T.units() and E.units().
+
+- Replace describe() with describe.basis(), describe.property(),
+  describe.reaction(). It is now fairly easy to make legends showing
+  temperature, pressure and chemical activities with italic symbols,
+  subscripts, and units.
+
+- Reorganize axis.label() and its supporting functions 
+  (now expr.species(), expr.property() and expr.units()). Add an example
+  showing a plot annotated with chemical formulas and reactions.
+
+- The functionality of info() is split into info(), info.character(),
+  info.approx(), info.numeric() and info.text(). For ease of use, single
+  approximate matches are accepted by info(), and searches for 'H2O' in
+  the 'aq' state now return H2O(liq).
+
+- The basis definition functionality of basis() is split into basis(), 
+  is.basis(), put.basis(), mod.basis(), preset.basis() and 
+  preset.logact().
+
+- The basis swapping functionality of basis() is split into 
+  basis.matrix(), element.mu(), basis.logact() and swap.basis(). Rename
+  basis.comp() to species.basis(), and remove expand.formulas().
+
+- Split aminoacids() into aminoacids() and count.aa().
+
+- The monolithic protein() function no longer exists; it has been
+  superseded by iprotein(), ip2aa(), get.aa(), dl.aa(), read.aa(),
+  sum.aa(), and aa2eos(). The user shouldn't notice significant changes
+  (other than in the composition of messages) when including proteins in
+  functions like subcrt() and affinity().
+
+- Functionality of get.protein() is split into more.aa() (amino acid
+  compositions from model organisms) and stress() (proteins identified
+  in stress response experiments).
+
+- get.expr(), for reading abundances or expression levels of proteins
+  from variously formatted data files, is renamed to read.expr(), with
+  retrieval of amino acid compositions of proteins moved to more.aa().
+
+- Replace ionize() with a completely rewritten and much easier to use
+  ionize.aa() for calculating the additive ionization properties of 
+  proteins; also add A.ionization(), usually invoked by affinity()
+
+- residue.info() mostly replaced by protein.basis().
+
+- Rename equil.react() to equil.reaction(), and give it parallel
+  potential (via palply) and a more efficient algorithm for determining
+  limits of the uniroot search. Also remove a redundant argument; 
+  arguments are now identical to those of equil.boltzmann() (and that
+  function was renamed from equil.boltz()).
+
+- Objective functions used in revisit() and findit() now each have
+  their own definitions, with an attribute indicating whether the
+  function is minimized or maximized.
+
+- Separate idealgas.IAPWS95() and residual.IAPWS95() from
+  water.IAPWS95() (in order to write some test_that tests.)
+
+DATA UPDATES:
+
+- Add 148 liquid and 148 crystalline acyclic isoprenoids, polycyclic 
+  alkanes, polynuclear aromatic hydrocarbons (PAH) and 62 crystalline
+  double ether-bonded or ester-bonded n-alkanes from Tables 16-23 of 
+  Richard and Helgeson, 1998. The properties of the following 
+  crystalline and liquid compounds, taken from those tables, replace the
+  previously entered values from the "reference model compound" tables
+  appearing earlier in that paper: biphenyl, naphthalene, 
+  1-methylnaphthalene, 1,8-dimethylnaphthalene, 2,3-dimethylnaphthalene
+  (cr only), anthracene, pyrene.
+
+- Add 13 crystalline, 29 liquid and 39 gaseous organic iodine compounds
+  from Richard and Gaona, 2011.
+
+- Add crystalline peptide sidechain and [AABB] and [PBB] groups and 
+  dipeptide model compounds and revised equations of state parameters 
+  for crystalline leucine and revised standard Gibbs energies of
+  crystalline and aqueous methionine and its aqueous sidechain group
+  [Met], from LaRowe and Dick, 2012. Also, use revised volumes of all
+  other crystalline amino acids given in that paper together with those
+  of Lys:HCl and His:HCl calculated using an effective volume of HCl(cr)
+  equal to 33.8 cm3/mol (difference between Arg and Arg:HCl).
+
+- Add 6 aqueous chloroethylenes from Haas and Shock, 1999.
+
+- Move superseded aqueous methionine sidechain group [Met] to 
+  OBIGT-2.csv so that its properties are available for reproduction
+  of published results (relevant to some examples in the package).
+
+- As revised makeup() function now strictly interprets a signed value at
+  the end of a chemical formula as charge, the formula of the electron
+  in thermo$obigt is changed from "Z-1" to "Z0-1".
+
+- In thermo$obigt, change the value for standard Gibbs energy of H2O 
+  from -56688 to -56687.711481 cal mol-1, to be consistent with the 
+  value generated by the fortran code from SUPCRT92 (H2O92D.f). Although
+  the latter is the source of the properties of H2O for many functions
+  in the package, there is an occasional function that accesses the
+  tabulated value at 25 degrees C (e.g., element.mu() and 
+  basis.logact()).
+
+- In protein.csv, change organism code BACST (Bacillus 
+  stearothermophilus) to GEOSE (Geobacillus stearothermophilus) for SLAP
+  and DPO1 proteins, and also apply changes in vignettes and examples.
+
+- In stress.csv, change ECO to Eco and SGD to Sce.
+
+EXTDATA UPDATES:
+
+- In extdata/refseq, scripts and data files were updated for NCBI
+  Reference Sequence (RefSeq) release 55 (2012-09-17).
+
+- In extdata/bison, sample BLAST output files for Bison Pool metagenome
+  use target database generated from RefSeq release 55.
+
+- Add P(ressure) column to extdata/cpetc/SOJSH.csv and a stopifnot() 
+  test for similarity to the experimental data to the example in 
+  water.Rd.
+
+- In extdata/protein rename ECO.csv.xz to Eco.csv.xz and SGD.csv.xz to
+  Sce.csv.xz.
+
+- In extdata/thermo add RH98_Table15.csv; this file together with new
+  function RH2obigt() is used to calculate thermodynamic properties of
+  organic compounds using group contributions from Richard and 
+  Helgeson, 1998.
+
+DOCUMENTATION AND VIGNETTES:
+
+- Add a Known Bugs section to the package help page.
+
+- Move 'extra' examples previously available in longex() to individual
+  demos, and add a function demos() to run them all.
+
+- All examples now run without any warnings (at least, as intended).
+
+- Add an example based on Shock and Canovas, 2010 for the 'transect' 
+  mode of affinity().
+
+- ionize.aa() has examples of contour plots as a function of temperature
+  and pH.
+
+- Group residue.formula(), protein.formula(), protein.name(), 
+  protein.length() into new documentation topic (util.protein.Rd).
+
+- Add 'sideeffects.Rd' to document some of the side effects of 
+  functions.
+
+- Add 'objective.Rd' for the objective functions.
+
+- To make output of examples reproducible, change mod.obigt() and 
+  protein() to not include current date/time for new data entries 
+  (remains an option for mod.obigt()).
+
+- Move vignette sources to 'vignettes' directory.
+
+- Remove vignettes formation.Rnw and xadditivity.Rnw 
+  (and, for the latter, the package Suggests dependency on xtable).
+
+- Rename protactive.Rnw to equilibrium.Rnw, with some changes.
+
+- Add vignette wjd.Rnw to accompany the new function wjd().
+
+- Add a release CHECKLIST to the installation directory of the package.
+
+- Replace "degrees" with UTF-8 degree symbol in second argument of
+  \eqn{}{}; add \encoding{UTF-8} to affected Rd files.
+
+OTHER CHANGES:
+
+- A matrix is now returned by makeup(), GHS() and some other functions
+  to avoid the performace penalty associated with data frames.
+
+- Add parallel as a Suggests dependency and replace mylapply() (based on
+  'multicore') with palply(), as a wrapper for parLapply and lapply.
+  palply() now invokes parLapply for length(X) > 10000 instead of 100.
+
+- Comment out lines containing WRITE and STOP statements in src/H2O92D.f
+  since they are discouraged by CRAN guidelines (and calls to them are
+  unlikely to be encountered while using the package).
+
+- Remove thermo$opt$verbose and thermo$opt$online.
+
+- In c2s(), use 'collapse' argument of paste() instead of a for loop.
+
+- Change R dependency to R >= 2.12.0, required for useDynLib in
+  NAMESPACE to find the shared library on Windows.
+
+CHANGES IN CHNOSZ 0.9-7 (2011-08-23)
+------------------------------------
+
+- Restore ZipData: no in DESCRIPTION, needed for building the package
+  on R < 2.13.0 on Windows.
+
+- Remove some incorrect titles for barplots in diagram().
+
+- Add more informative titles for plots in first example of diagram.Rd.
+
+- In EOSvar() and EOSlab(), name the first argument 'EXPR' in calls to 
+  switch() to avoid partial matching with 'E' (expansivity).
+
+- Shorten CHNOSZ-package.Rd and clean up formatting of some examples
+  in other documentation topics.
+
+CHANGES IN CHNOSZ 0.9-6 (2011-08-18)
+------------------------------------
+
+SIGNIFICANT CHANGES TO FUNCTIONS:
+
+- New function browse.refs() for listing references for thermodynamic
+  data and opening associated URLs. Supported by extdata/js/sorttable.js 
+  for sorting table of references in browser.
+
+- Add EOSregress(), EOSvar(), EOSlab(), EOSplot(), EOScoeffs() for 
+  regressing and comparing equations-of-state parameters from 
+  heat capacity and volume data for aqueous species.
+
+- Add anim.plasma() and anim.carboxylase() for making animated GIFs of
+  equilibrium activity diagrams. All anim.* functions now also work
+  on Windows (with ImageMagick installed).
+
+- New functions checkEOS(), checkGHS() for checking self-consistency of
+  individual database entries. check.obigt() replaces 'check' argument 
+  of info().
+
+- New argument 'chains' for protein() can be used to specify the number
+  of polypeptide chains in group additivity calculations.
+
+- protein() now looks for protein backbone group named '[PBB]' for group
+  additivity of crystalline proteins.
+
+- Remove count.taxa(), splitting its functionality into read.blast()
+  and id.blast(); new function write.blast().
+
+- eqdata() can now also extract results for solids, saturation states of
+  minerals, and major speciation of basis species from EQ6 output files.
+
+DATA UPDATES:
+
+- Rename 'source.csv' to 'refs.csv'. Add URLs for most references.
+
+- Column names 'source1' and 'source2' in OBIGT.csv, changed to
+  'ref1' and 'ref2'.
+
+- In protein.csv, add amino acid compositions of 105 
+  model proteins derived from metagenomic sequences at 
+  Bison Pool (Dick and Shock, 2011).
+  protein: overall, transferase, transport, dehydrogenase, ...;
+  organism: bisonN, bisonS, bisonR, bisonQ, bisonP
+
+- Add properties for aqueous bromine (Br2) and iodine (I2) from 
+  Wagman et al., 1982.
+
+- Add properties of crystalline and liquid groups from
+  Helgeson et al., 1998 and Richard and Helgeson, 1998.
+
+EXTDATA UPDATES:
+
+- Reorganize the 'extdata' directory, putting all files into one
+  of nine subdirectories (abundance, bison, cpetc, fasta, js, protein,
+  refseq, taxonomy, thermo).
+
+- To reduce installed package size, compress many data files in extdata 
+  using xz.
+
+- In extdata/bison, update partial protein BLAST output files for five 
+  Bison Pool sites to use target database made up of microbial protein 
+  sequences in NCBI Reference Sequence database version 47.
+
+- In extdata/cpetc, new files 'Cp.CH4.HW97.csv' and 'V.CH4.HWM96.csv'
+  contain experimental heat capacity and volume data for aqueous methane
+  from Hnedkovsky and Wood, 1997 and Hnedkovsky et al., 1996.
+
+- In extdata/refseq, rename 'taxid_phylum.csv' to 'taxid_names.csv'.
+
+- In extdata/thermo/OBIGT-2.csv, fix incorrectly entered values of c1 from 
+  Dalla-Betta and Schulte, 2010. Also apply corrected values of c1 and c2 
+  and minor corrections for delta-H and S from Marini and Accornero, 2010.
+
+DOCUMENTATION AND VIGNETTES:
+
+- Change vignette file names and titles to be in the same alphabetical
+  order to achieve the desired sorting in browseVignettes().
+
+- Add .Rinstignore to inst/doc to exclude figure, bibliography and
+  LyX files from the installation directory.
+
+- Adapted 'formation.Rnw' to work with pdflatex, and remove
+  Makefile in inst/doc.
+
+- Add 'hs-chemistry.Rnw' with calculations of relative stabilities 
+  of model proteins in a hot spring (Dick and Shock, 2011).
+
+- Add 'protactiv.Rnw' with detailed information on calculating equilibrium
+  activities of proteins, and comparisons with experimental abundances in 
+  human blood plasma and E. coli.
+
+- Add 'xadditivity.Rnw' with examples of group contribution calculations
+  (using qr.solve()) and comparison of two group contribution schemes.
+
+OTHER CHANGES:
+
+- In DESCRIPTION, change Depends to a more recent R (>= 2.10.0),
+  required for reading of compressed (including .xz) files.
+
+- Add Suggests: xtable in DESCRIPTION (used for 'xadditivity' vignette).
+
+- In DESCRIPTION, change "ZipData" to "BuildResaveData", keeping 
+  the setting at "no". Resaving data as compressed files reduces the
+  installed package size by about 200Kb, but complicates showing the file 
+  formats to new users.
+
+- Loading of shared object for calculating properties of H2O
+  now done by useDynLib in NAMESPACE.
+
+- Change .First.lib() to .onAttach(). In .onAttach, use 
+  packageStartupMessage() instead of cat().

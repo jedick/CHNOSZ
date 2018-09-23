@@ -1,0 +1,569 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english,noae,round]{article}
+\usepackage{mathpazo}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[letterpaper]{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{graphicx}
+\usepackage[authoryear]{natbib}
+\usepackage[unicode=true,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+\hypersetup{pdftitle={Winding journey down (in Gibbs energy)},
+ pdfauthor={Jeffrey M. Dick},
+ citecolor=blue}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+<<echo=F>>=
+  if(exists(".orig.enc")) options(encoding = .orig.enc)
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%\VignetteIndexEntry{Winding journey down (in Gibbs energy)}
+
+% so DOIs in bibliography show up as hyperlinks
+\newcommand*{\doi}[1]{\href{https://doi.org/#1}{doi: #1}}
+
+\makeatother
+
+\begin{document}
+
+\title{Winding journey down (in Gibbs energy)}
+
+\author{Jeffrey M. Dick}
+\maketitle
+
+\section{Introduction}
+
+\texttt{wjd()} appeared in CHNOSZ version 0.9-9. It implements the
+steepest descent algorithm for Gibbs energy minimization described
+by White, Johnson and Dantzig, \citeyear{WJD58}. This vignette shows
+some examples of its usage. The help page for \texttt{wjd()} in the
+CHNOSZ documentation has details of the implementation that are not
+covered in this vignette. The functions demonstrated here are not
+intended for aqueous solutions or heterogeneous phase equilibria,
+which are covered in some reviews \citep[e.g.][]{NPW_79}.
+
+The arguments of \texttt{wjd()} have default values to simulate the
+example problem given by \citealp{WJD58}. In their words, ``The
+example taken is the determination of the composition of the gases
+arising from the combustion of a stoichiometric mixture of hydrazine
+and oxygen at 3500 $^{\circ}$K and a pressure of 750 psi ($\ln P_{\mathrm{atm}}$
+=3.932).'' There are ten species included in this example. The value
+of temperature does not appear explicitly in the algorithm, or in
+the arguments to \texttt{wjd()}. Instead, the standard Gibbs energies
+of the species, at the given temperature, are provided in dimensionless
+form, i.e. $\Delta G^{\circ}/RT$. Note that White et al., 1958 use
+the terminology ``free energy'' and the notation $F^{\circ}$. The
+term ``Gibbs energy'' and corresponding notation are used here.
+
+<<libraryCHNOSZ, echo=FALSE>>=
+library(CHNOSZ)
+data(thermo)
+@
+
+\section{Is it winding?}
+
+The ``winding'' in the title refers to the observation that the
+abundances of species during a Gibbs energy minimization often do
+not all change in a monotonic fashion. This is because at each iteration
+a new direction of steepest descent is calculated; this direction
+is a vector of changes of mole numbers of all species in the system
+and is subject to mass balance constraints as well as the steepest-descent
+criterion.
+
+Let's run \texttt{wjd()} with its default settings and save the output.
+
+<<wjd>>=
+w <- wjd()
+@
+
+What are the most abundant species, and how many iterations were taken?
+
+<<abundant>>=
+# the order of species abundance
+oX <- order(w$X, decreasing=TRUE)
+# the stoichiometries of the two most abundant species
+w$A[head(oX,2),]
+# the number of iterations
+niter <- length(w$lambda)
+niter
+@
+
+<<abundantnames,echo=FALSE>>=
+# the formulas of the two most abundant species
+# use CHNOSZ's as.chemical.formula function, after 
+# dropping elements with zero stoichiometry
+f1 <- as.chemical.formula(w$A[oX[1],w$A[oX[1],]!=0])
+f2 <- as.chemical.formula(w$A[oX[2],w$A[oX[2],]!=0])
+f4 <- as.chemical.formula(w$A[oX[4],w$A[oX[4],]!=0])
+@
+
+We find that \Sexpr{f1} and \Sexpr{f2} are the most abundant species,
+after \Sexpr{niter} iterations. The fourth most-abundant species,
+\Sexpr{f4}, is discussed below.
+
+Let's track their mole fractions through the iterations. Write a function
+that returns the mole fractions of a species, after a specified number
+of iterations.
+
+<<iterfun>>=
+iterfun <- function(imax, i) {
+  w <- wjd(imax=imax)
+  x <- w$X[i]/sum(w$X)
+  return(x)
+}
+@
+
+Then apply the function over the different numbers of iterations,
+from 0 (initial conditions) to \Sexpr{niter}, and plot the values.
+
+\setkeys{Gin}{width=0.7\textwidth}
+
+<<>>=
+<<iterplot, fig=TRUE, width=6, height=2.5>>=
+par(mfrow = c(1, 2), mar = c(4.2, 4.2, .1, .1))
+sa <- sapply(0:niter, iterfun, i = oX[1])
+plot(0:niter, sa, xlab = "iteration", ylab = paste("x", f1), pch = 19)
+sa <- sapply(0:niter, iterfun, i = oX[4])
+plot(0:niter, sa, xlab = "iteration", ylab = paste("x", f4), pch = 19)
+@
+
+\setkeys{Gin}{width=1.0\textwidth}
+
+A bit of winding: the mole fraction of \Sexpr{f1} generally increases
+(there is a very slight decrease at the fifth iteration), but the
+mole fraction of \Sexpr{f4} increases in the first two iterations,
+then decreases in following ones. This behavior is consistent with
+a decrease in Gibbs energy at \emph{every} iteration; that can be
+verified by inspecting the values in the \Sexpr{niter}-iteration
+result:
+
+<<Gdown>>=
+all(diff(w$F.Y) < 0)
+@
+
+The decrease in Gibbs energy becomes smaller with every iteration,
+as an equilibrium distribution of species is approached:
+
+<<Gdownslower>>=
+identical(diff(w$F.Y), sort(diff(w$F.Y)))
+@
+
+\section{Is it near the bottom? Testing for equilibrium}
+
+
+\subsection{Change in Gibbs energy of the system becomes small}
+
+Equilibrium is synonymous with a global Gibbs energy minimum. Becoming
+convinced that the output from \texttt{wjd()} represents a near-equilibrium
+condition can be difficult. One type of observation that can be helpful
+is the amount of change during the iterations of the algorithm. As
+equilibrium is approached, it makes sense that the fractional decreases
+in Gibbs energy would become smaller and smaller. This is used as
+a stopping condition in the current implementation \textendash{} if
+the fractional change, relative to the total energy of the system,
+reaches the value of \texttt{Gfrac} given in the arguments the iterations
+stop. Here are the fractional changes with each iteration:
+
+<<Gfrac>>=
+diff(w$F.Y)/w$F.Y[1:7]
+@
+
+Only the last value is below the default value of \texttt{Gfrac} in
+\texttt{wjd()}.
+
+\subsection{Chemical potentials of the elements (from different species representing
+them) become more uniform}
+
+Equilibrium is also synonymous with uniformity of chemical potentials
+($\mu$) of the thermodynamic components throughout the system. For
+the default system in \texttt{wjd()}, and perhaps other systems of
+interest, the elements themselves are a conceivable set of the components.
+Often, the number and compositions of the species are such that multiple
+combinations of species satisfy the stoichiometric conditions necessary
+to be a basis set, and therefore can be used to compute the chemical
+potentials of the elements. At equilibrium, these different combinations
+of species would all yield the same chemical potentials of the elements. 
+
+There is a supporting function, \texttt{element.potentials()}, that
+computes the chemical potentials of the elements using different eligible
+combinations of species. It has an option to plot the results. Let's
+first look at a plot showing the results after 3 iterations.
+
+\setkeys{Gin}{width=0.6\textwidth}
+\begin{center}
+
+<<>>=
+<<marmgp, echo=FALSE>>=
+par(mar = c(4.2, 4.2, 1.1, 1.1))
+par(mgp = c(2, 1, 0))
+@
+
+<<>>=
+<<w3_ep_plot, fig=TRUE, width=7, height=5>>=
+<<marmgp>>
+w3 <- wjd(imax=3)
+ep3 <- element.potentials(w3, plot.it=TRUE)
+@
+\end{center}
+\setkeys{Gin}{width=1.0\textwidth}
+
+Here's the plot for the default settings of \texttt{wjd()} which takes
+6 iterations:
+
+\setkeys{Gin}{width=0.6\textwidth}
+\begin{center}
+
+<<>>=
+<<w_ep_plot, fig=TRUE, width=7, height=5>>=
+<<marmgp>>
+ep <- element.potentials(w, plot.it=TRUE)
+@
+
+\end{center}
+\setkeys{Gin}{width=1.0\textwidth}
+
+That one shows considerably less deviation than the first plot. The
+differences don't become zero, but perhaps they are small enough to
+accept as an operational solution. There is a function, \texttt{is.near.equil()},
+that provides a logical type result based on the range of chemical
+potentials of the elements calculated from the different eligible
+species combinations. It returns TRUE if the maximum difference for
+any element is below $\mu/RT=0.01$, but this limit can be changed
+through the \texttt{tol} argument to the function. With the default
+setting, \texttt{is.near.equil()} does pass the \Sexpr{niter}-iteration
+result, but by reducing the tolerance, the tests can be made to fail:
+
+<<w_ep_plot>>=
+is.near.equil(w3) # 3 iterations
+is.near.equil(w)  # 7 iterations
+is.near.equil(w, tol=0.00001)
+@
+
+\subsection{Different initial solutions yield similar results}
+
+\paragraph{Different guesses for an underdetermined system}
+
+Although it seems to be the case in the examples shown so far, increasing
+the number of iterations does not necessarily bring one closer to
+true equilibrium, since being trapped in a local energy minimum is
+a possibility. Sometimes local minima can be shown to exist by starting
+with different mole numbers of species, that still yield the same
+bulk composition (mole numbers of elements). \texttt{guess()} exists
+to facilitate this sort of investigation. Its input the stoichiometric
+matrix of species in the system (the default refers to the same system
+as in \texttt{wjd()}) and the bulk composition; it outputs one set
+or a series of sets of mole numbers of species that satisfy the bulk
+composition constraints. In general, this in an underdetermined problem,
+so there are usually an infinite number of possible solutions. 
+
+Using the default method (``stoich'') a single guess or multiple
+guesses are returned based on stoichiometric constraints (see the
+help page for details as well as the comments in the function code
+itself). If the ``central'' method is chosen instead, the single
+guess returned is the central solution from linear optimization using
+the package limSolve. Let's compare the guesses made by \texttt{guess()}
+with the default (from \citealp{WJD58}) initial composition in \texttt{wjd()}
+.
+
+<<guessw12>>=
+as.list(args(wjd))$Y
+Y1 <- guess(method="stoich")
+Y1
+#Y2 <- guess(method="central")
+#Y2
+@
+
+Now let's run the minimization using the different guesses, count
+the numbers of iterations, and test them for equilibrium.
+
+\setkeys{Gin}{width=0.6\textwidth}
+
+<<>>=
+<<stoich_guess>>=
+wY1 <- wjd(Y=Y1)
+niterY1 <- length(wY1$lambda)
+niterY1
+is.near.equil(wY1, tol=0.0001)
+@
+
+\setkeys{Gin}{width=0.6\textwidth}
+
+Using the first guess generated using the ``stoich'' method there
+were \Sexpr{niterY1-niter} more iterations than using the default
+initial solution in \texttt{wjd()}.
+
+Do the different initial guesses actually give similar results?
+
+\setkeys{Gin}{width=0.8\textwidth}
+
+<<>>=
+<<compare_guesses, fig=TRUE, width=7, height=4>>=
+par(mar=c(4.2, 4.2, 0.1, 0.1))
+plot(1:10, w$X, xlab="species", ylab="mole fraction")
+points(1:10, wY1$X, pch=0)
+#points(1:10, wY2$X, pch=2)
+@
+
+\setkeys{Gin}{width=0.8\textwidth}
+
+At that scale it's fairly difficult to tell them apart.
+
+\paragraph{Comparing many different guesses}
+
+Let's test for closeness to equilibrium of all of the guesses available
+from \texttt{guess()} for the default set of species and bulk composition.
+First generate all of the guesses. Note that \texttt{guess()} returns
+NA for compositionally eligible combinations of species that have
+some negative mole numbers, so we filter those out.
+
+<<allguesses>>=
+Ys <- guess(iguess=NULL, method="stoich")
+# total number of species combinations
+length(Ys)
+# species combinations that have all-positive mole numbers
+iYs <- which(!is.na(Ys))
+nguess <- length(iYs)
+nguess
+@
+
+Now let's run the minimization using each of those guesses, and test
+if each one \texttt{is.near.equil()}:
+
+<<allguess.equil>>=
+sapply(iYs,function(i) is.near.equil(wjd(Y=Ys[[i]])))
+@
+
+Looks like they are. What if we're really picky though and want to
+make sure the chemical potentials of the elements are very well-defined?
+We can decrease the tolerance of \texttt{is.near.equil()}:
+
+<<allguess.equil.2>>=
+sapply(iYs,function(i) is.near.equil(wjd(Y=Ys[[i]]),tol=0.0001))
+@
+
+Well some of the tests failed. But maybe this is because we have stopped
+iterating too soon. Let's iterate until a we have smaller change in
+Gibbs energy of the system:
+
+<<allguess.equil.3>>=
+sapply(iYs, function(i) {
+  is.near.equil(wjd(Y=Ys[[i]], Gfrac=1e-9), tol=0.0001)
+})
+@
+
+We're back to passing all but one of the equilibrium tests based on
+uniformity of chemical potentials of the elements. What are the standard
+deviations of the resulting species abundances?
+
+<<sd.species>>=
+Xs <- sapply(iYs, function(i) wjd(Y=Ys[[i]], Gfrac=1e-9)$X)
+apply(Xs, 1, sd)
+@
+
+Based on this exercise, starting from different initial species abundances
+for the same bulk composition, and arriving at a similar near-equilibrium
+solution, it seems likely that we are near the global minimum.
+
+(In fact, for ideal reactions in closed chemical systems there is
+only a unique solution \citep{Oth76}. Therefore, the algorithm should
+converge on the same result for any initial vector of species mole
+numbers with the same bulk composition.)
+
+\section{An example from the literature: prebiological atmospheres}
+
+We will try to reproduce a subset of the calculations of equilibrium
+between carbon-containing compounds in model prebiological atmospheres
+reported by \citet{DLE64}, using standard Gibbs energies from \citet{DLEN67}.
+The standard Gibbs energies shown in Figure 2 of \citet{DLEN67} for
+the selected compounds listed in Table 1 of \citet{DLE64} are provided
+with CHNOSZ. First let's have a look at what species there are:
+
+<<read_dlen>>=
+# read formulas and Gibbs energies
+file <- system.file("extdata/thermo/DLEN67.csv", package="CHNOSZ")
+dlen <- read.csv(file, as.is=TRUE, row.names=1)
+t(dlen[, 1, drop=FALSE])
+@
+
+Now let's write some code to define the system. The bulk composition
+in C:H:O space has 40 percent oxygen, a percentage of carbon given
+by \texttt{xC}, and hydrogen as the remainder; the C:N ratio is taken
+to be 1:1 \citep{DLE64}. The temperature is 500 K and the pressure
+is 1 atmosphere.
+
+<<setup_atmos>>=
+
+# turn formulas into a stoichiometric matrix
+A <- i2A(dlen$formula)
+# assemble Gibbs energies/RT at 500 K
+T <- 500  # K
+R <- 1.9872  # gas constant, cal K^-1 mol^-1
+G0.RT <- 1000 * dlen$G500 / R / T
+# a function to minimize Gibbs energy for system with 
+# given mole fraction of carbon (xC)
+min.atmos <- function(xC) {
+  # the bulk composition C:H:N:O
+  B <- c(xC, 100-40-xC, xC, 40)
+  # guess the initial composition
+  Y <- guess(A, B)
+  w <- wjd(A=A, G0.RT=G0.RT, Y=Y, P=1, imax=90, Gfrac=1e-14)
+  if(!is.near.equil(w)) cat(paste("not near equilibrium for xC=", xC, "\n"))
+  return(w)
+}
+@
+
+Notice the increase in \texttt{imax} and the decrease in \texttt{Gfrac}
+from the defaults! These changes are needed to get closer to equilibrium
+(and we'll know we're not there if a message is shown). What does
+the prebiological atmosphere look like with 15\% (not counting nitrogen)
+carbon?
+
+<<atmos_C15>>=
+sort(min.atmos(15)$X, decreasing=TRUE)
+@
+
+Well that's exciting! The order of abundances of $\mathrm{H_{2}O}$,
+$\mathrm{CO_{2}}$, $\mathrm{CH_{4}}$, $\mathrm{NH_{3}}$, $\mathrm{CO}$,
+ethane ($\mathrm{C_{2}H_{6}}$), formic acid ($\mathrm{CH_{2}O_{2}}$)
+and so on matches the order on the left side of Figure 2 in \citet{DLE64}.
+How about changing the carbon content? (\emph{Because it takes a while
+to run, the code is commented below; it is present in }\texttt{\emph{demo(wjd)}}\emph{,
+which was used to make the plot.})
+
+<<atmos_figure>>=
+# xCs <- seq(8, 47, 1)
+# Xs <- sapply(xCs, function(xC) min.atmos(xC)$X)
+# # normalize the mole numbers to mole fractions
+# Xs <- t(t(Xs)/colSums(Xs))
+# plot(-10, 0, xlim=c(0, 55), ylim=c(-25, 1), xlab="mole percent C", ylab="log10 mole fraction")
+# for(i in 1:nrow(Xs)) lines(xCs, log10(Xs[i, ]))
+# text(48, log10(Xs[, length(xCs)]), dlen$formula, adj=0)
+# text(35, log10(Xs[, 27]) + 0.5, dlen$formula, adj=0)
+# text(7, log10(Xs[, 1]), dlen$formula, adj=1)
+@
+\begin{center}
+\includegraphics[width=0.7\columnwidth]{dayhoff}
+\par\end{center}
+
+We triggered some ``not near equilibrium'' messages (\emph{not shown;
+run the demo to see them}), but overall it seems well behaved (note
+that using the ``central'' method in \texttt{guess()} is one way
+that leads to fewer of these messages). And, as expected, it is similar
+to Fig. 2 of \citet{DLE64}, with a major crossing of curves at about
+28\% carbon, together with an increase in aromatic compounds (e.g.
+naphthalene, anthracene) going toward higher carbon content. Unlike
+the figure in \citet{DLE64}, there appears to be a second major crossing
+of curves at about 43\% carbon, corresponding to a rise in CO.
+
+\section{Running Down: Using a Thermodynamic Database}
+
+So far the examples shown here have been based on the chemical system
+defined by the default settings for the arguments to the functions.
+What if we're interested in a different system? It can be rather tedious
+to manually construct the stoichiometric matrices and vectors of standard
+Gibbs energies of the species. The function \texttt{run.wjd()} pulls
+the compositional and thermodynamic data for requested species from
+the thermodynamic database and then calls \texttt{wjd()}.
+
+\subsection{At a single temperature}
+
+Let's start by finding the indices in the thermodynamic database of
+some liquid alkanes and aromatic compounds:
+
+<<alkanes_aromatics>>=
+alkanes <- c("n-hexane", "n-heptane", "n-octane", "n-nonane")
+ialk <- info(alkanes, "liq")
+aromatics <- c("naphthalene", "anthracene", "phenanthrene", "pyrene")
+iaro <- info(aromatics, "liq")
+@
+
+Let's find the equilibrium distribution of species for a bulk composition
+corresponding to a single mole of each species.
+
+<<run_aa>>=
+waa <- run.wjd(c(ialk, iaro), Y=rep(1, 8))
+waa$elements
+is.near.equil(waa)
+@
+
+The \texttt{waa\$elements} shows that the bulk chemical composition
+in the Gibbs energy minimization was $\mathrm{C_{84}H_{106}}$ (H/C
+= 1.261905). That FALSE means the chemical potentials of the elements
+calculated from different combinations of species differ by more than
+0.01, the default setting of \texttt{tol} in \texttt{is.near.equil()}.
+We can make it TRUE by running more iterations and increasing the
+number of intervals tested for fractional distance change at each
+step (\texttt{nlambda}):
+
+<<run_aa_equil>>=
+waa <- run.wjd(c(ialk, iaro), Y=rep(1, 8), imax=20, Gfrac=1e-14, nlambda=501)
+is.near.equil(waa)
+@
+
+Let's plot the abundances of the species:
+
+<<barplot_aa, fig=TRUE, width=5, height=3>>=
+par(mar=c(1.1, 4.1, 1.1, 1.1))
+bp <- barplot(waa$X, ylab="moles")
+text(bp, rep(0.2,8), c(alkanes, aromatics), srt=90, adj=0)
+@
+
+Now let's calculate the chemical potentials of the elements (dimensionless
+values, $\mu/RT$) ...
+
+<<element_potentials_C84H106>>=
+ep <- equil.potentials(waa)
+print(ep)
+@
+
+... and the corresponding logarithms of chemical activities of a set
+of basis species:
+
+<<basis_potentials_C84H106>>=
+basis(c("graphite", "H2"), c("cr", "gas"))
+basis.logact(ep)
+@
+
+\subsection{Bulk composition instead of moles of species}
+
+\texttt{run.wjd()} can be given B (bulk chemical composition), instead
+of Y (initial numbers of moles of species). When this happens, the
+function tests the different initial compositions generated by \texttt{guess()}
+until one is found that is within the specified tolerance of chemical
+potentials of elements. Here's an example:
+
+<<run_aa_C100H70, fig=TRUE, width=5, height=3>>=
+waa <- run.wjd(c(ialk, iaro), B="C100H70")
+par(mar=c(1.1, 4.1, 1.1, 1.1))
+bp <- barplot(waa$X, ylab="moles")
+text(bp, rep(0.2,8), c(alkanes, aromatics), srt=90, adj=0)
+@
+
+Compared with the previous example, here the lower H/C = 0.7 defines
+a more oxidized system, so the increase in aromatic content is expected.
+As before, we can calculate the chemical potentials of the elements
+and of a corresponding set of basis species:
+
+<<basis_potentials_C84H106>>=
+print(ep <- equil.potentials(waa))
+basis.logact(ep)
+@
+
+\section{Document History}
+\begin{itemize}
+\item 2012-01-01 Initial version
+\item 2012-06-16 Running Down using alkanes and aromatics
+\item 2012-09-20 Add example from Dayhoff et al.
+\end{itemize}
+\bibliographystyle{plainnat}
+\bibliography{vig}
+
+\end{document}

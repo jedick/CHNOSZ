@@ -1,0 +1,26 @@
+html { 
+  font-size: 14px;
+}
+
+body {
+  font-family: ‘Times New Roman’, Times, serif;
+}
+
+li {
+  padding: 0.25rem 0;
+}
+
+/* zero margin around pre blocks (looks more like R console output) */
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* for CHNOSZ links */
+h1 a:link {
+  color: red;
+}
+
+h3 a:link {
+    color: red;
+}

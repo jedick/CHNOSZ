@@ -1,0 +1,40 @@
+name,species,state,logact
+AC,"acetic acid",aq,-3
+FORM,"formic acid",aq,-3
+AL,alanine,aq,-3
+GLN,glutamine,aq,-3
+UREA,urea,aq,-3
+ATP,H4ATP,aq,-3
+GSH,glutathione,aq,-3
+LYS,lysine,aq,-3
+RIBOSE,ribose,aq,-3
+GLUCOSE,glucose,aq,-3
+CYSTINE,cystine,aq,-3
+ETHANOL,ethanol,aq,-3
+MAMINE,methanamine,aq,-3
+HM,hematite,cr,0
+HM,magnetite,cr,0
+FeFeO,iron,cr,0
+FeFeO,FeO,cr,0
+CO2-AC,CO2,aq,-3
+CO2-AC,"acetic acid",aq,-3
+C2H4-AC,C2H4,aq,-3
+C2H4-AC,"acetic acid",aq,-3
+CH4-AC,CH4,aq,-3
+CH4-AC,"acetic acid",aq,-10
+ET-H,C2H4,aq,-3
+ET-H,C2H6,aq,-15
+cysteine-cystine,cysteine,aq,-3
+cysteine-cystine,cystine,aq,-3
+GSH-GSSG,GSH,aq,-3
+GSH-GSSG,GSSG,aq,-9
+NADred-NADox,HNAD(red)-,aq,-3
+NADred-NADox,NAD(ox)-,aq,-3
+QFM,quartz,cr,0
+QFM,fayalite,cr,0
+QFM,magnetite,cr,0
+PPM,pyrite,cr,0
+PPM,pyrrhotite,cr,0
+PPM,magnetite,cr,0
+water,water,liq,0
+quartz,quartz,cr,0

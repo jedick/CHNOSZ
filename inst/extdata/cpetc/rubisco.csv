@@ -1,0 +1,28 @@
+ID,T1,T2,domain,species,URL
+G9FID8,0,6,E,"Phaeocystis antarctica",https://doi.org/10.3354/ab00256
+M9R7V1,4,10,B,"Octadecabacter antarcticus 307",https://doi.org/10.1016/S0723-2020(97)80003-3
+K4MAK9,18,18,A,"Methanolobus psychrophilus",https://doi.org/10.1128/AEM.01146-08
+Q12TQ0,23,23,A,"Methanococcoides burtonii",https://doi.org/10.1016/S0723-2020(11)80117-7
+Q9ZI34,25,30,B,"Bradyrhizobium japonicum",https://doi.org/10.1099/00207713-32-1-136
+P0C916,28,30,B,"Thiobacillus ferrooxidans",https://doi.org/10.1080/01490459209377920
+P00874,30,30,E,"Zea mays",https://doi.org/10.1016/S0065-2113(08)60322-3
+Q0EX22,30,30,B,"Mariprofundus ferrooxydans",https://doi.org/10.1371/journal.pone.0000667
+L0RHZ1,35,35,B,"Desulfovibrio hydrothermalis",https://doi.org/10.1099/ijs.0.02323-0
+Q8THG2,35,40,A,"Methanosarcina acetivorans",http://aem.asm.org/content/47/5/971
+F9ZLP0,45,45,B,"Acidithiobacillus caldus",https://doi.org/10.1099/13500872-140-12-3451
+P37393,45,45,E,"Cyanidium caldarium",http://link.springer.com/article/10.1007/BF00409031
+P72383,45,50,B,"Sulfobacillus acidophilus",https://doi.org/10.1099/00221287-142-4-775
+Q51856,52,52,B,"Pseudomonas hydrogenothermophila",https://doi.org/10.1271/bbb1961.41.685
+Q2JIP3,50,55,B,"Synechococcus sp. (strain JA-2-3B'a(2-13))",https://doi.org/10.1128/AEM.72.1.544-550.2006
+A0B9K9,55,60,A,"Methanosaeta thermophila",https://doi.org/10.1099/00207713-42-3-463
+Q8DIS5,57,57,B,"Thermosynechococcus elongatus",https://doi.org/10.1093/oxfordjournals.pcp.a075684
+G8LZL2,60,60,B,"Clostridium clariflavum",https://doi.org/10.1099/ijs.0.003483-0
+F8IID7,65,65,B,"Bacillus acidocaldarius",https://doi.org/10.1099/00221287-67-1-9
+A8F7V4,65,65,B,"Thermotoga lettingae",https://doi.org/10.1099/00207713-52-4-1361
+B9KXE5,70,70,B,"Thermomicrobium roseum",https://doi.org/10.1371/journal.pone.0004207
+O28635,76,76,A,"Archaeoglobus fulgidus",http://aem.asm.org/content/60/4/1227
+Q58632,85,85,A,"Methanocaldococcus jannaschii",https://doi.org/10.1007/BF00425213
+A1RZJ5,85,90,A,"Thermofilum pendens",https://doi.org/10.1016/S0723-2020(83)80035-6
+A3DND9,85,92,A,"Staphylothermus marinus",https://doi.org/10.1016/S0723-2020(86)80157-6
+O58677,98,98,A,"Pyrococcus horikoshii",https://doi.org/10.1007/s007920050051
+Q8U1P9,100,100,A,"Pyrococcus furiosus",https://doi.org/10.1007/BF00413027

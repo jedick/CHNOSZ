@@ -1,0 +1,1082 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english,round]{article}
+\usepackage{mathpazo}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{amsbsy}
+\usepackage{amssymb}
+\usepackage[authoryear]{natbib}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=true]
+ {hyperref}
+\hypersetup{
+ citecolor=magenta, urlcolor=blue}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%\VignetteIndexEntry{Equilibrium in CHNOSZ}
+%\VignetteEngine{knitr::knitr}
+
+% so DOIs in bibliography show up as hyperlinks
+\newcommand*{\doi}[1]{\href{https://doi.org/#1}{doi: #1}}
+
+\makeatother
+
+\begin{document}
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.align='center')
+opts_chunk$set(tidy=TRUE)
+## set code/output width
+options(width=85)
+## set number of digits
+options(digits=3)
+@
+
+\title{Equilibrium in CHNOSZ}
+
+\author{Jeffrey M. Dick}
+
+\maketitle
+This document defines the concepts, explains the organization of functions,
+and provides examples of calculating equilibrium in CHNOSZ. It also
+highlights some applications of the methods (i.e. to reproduce published
+diagrams) and includes an Appendix on details of the equilibration
+calculations.
+
+\section{Concepts}
+\begin{description}
+\item [{Species~of~interest}] Chemical species for which you want to
+calculate relative stabilities.
+\item [{Basis~species}] Species in terms of which you want to write all
+formation reactions of species of interest.
+\item [{Formation~reactions}] Stoichiometric chemical reactions showing
+the mass balance requirements for formation of 1 mole of each species
+of interest from the basis species.
+\item [{Chemical~affinity}] Negative of the differential of Gibbs energy
+of a system with respect to reaction progress. For a given reaction,
+chemical affinity is the negative of Gibbs energy of reaction; $\boldsymbol{A}=2.303RT\log(K/Q)$,
+where $K$ is the equilibrium constant and $Q$ is the activity quotient
+of species in the reaction ($\log$ in this text denotes base-10 logarithms,
+i.e. \texttt{log10} in R).
+\item [{(1)~Reference~activity}] User-defined (usually equal) activities
+of species of interest.
+\item [{(1)~Reference~affinity}] ($\boldsymbol{A}_{{\it ref}}$) Chemical
+affinity of formation reaction with a reference activity of the species
+of interest.
+\item [{(1)~Maximum~affinity~method}] Comparison of reference affinities
+for given balance coefficients in order to calculate stability regions
+on a predominance diagram.
+\item [{Balance~coefficients}] ($n_{balance}$) The number of moles of
+a basis species present in the formation reaction of each of the species
+of interest. Reactions between any two species of interest then are
+``balanced'' on this basis species. Can be a quantity other than
+basis species (e.g., balance = 1, or length of amino acid sequence
+of protein).
+\item [{Predominance~diagram}] Diagram showing fields of maximal stability
+(i.e. greatest activity at equilibrium) for species of interest as
+a function of two variables (aka equal activity diagram).
+\item [{(2)~Starred~affinity}] ($\boldsymbol{A}^{*}$) Chemical affinity
+of formation reaction with unit activity of the species of interest
+(aka ``starved'' affinity because the activity of the species of
+interest drops out of $Q$).
+\item [{(2)~Total~balance~activity}] The sum of activities of this basis
+species contributed by each of the species of interest. (In Appendix:
+activity of the immobile or conserved component; $a_{\mathrm{ic}}$.)
+\item [{(2)~Equilibration~method}] Comparison of starred affinities in
+order to calculate activities of species of interest for given balance
+coefficients and total balance activity.
+\item [{Speciation~diagram}] Diagram showing the activities of species
+of interest, usually as a function of 1 variable (aka activity diagram).
+\item [{Boltzmann~distribution}] Algorithm used for the equilibration
+method when the balance coefficients are 1.
+\item [{Reaction~matrix}] Algorithm used for the equilibration method
+when the balance coefficients are not all 1.
+\item [{Normalization}] Algorithm used for large molecules such as proteins;
+chemical formulas and affinities are scaled to a similar molecular
+size (e.g. a single residue; ``residue equivalent'' in Appendix),
+activities are calculated using balance = 1, and formulas and activities
+are rescaled to the original size of the molecule.
+\item [{Mosaic}] Calculations of chemical affinities for making diagrams
+where the speciation of basis species depends on the variables.
+\end{description}
+The numbered groups above are connected with two distinct approaches
+to generating diagrams:
+\begin{enumerate}
+\item With the \textbf{maximum affinity method} for creating predominance
+diagrams, the user sets the reference activities of the species of
+interest; the program compares the reference affinities at these conditions
+to determine the most stable species (highest activity, i.e. predominant
+at equilibrium).
+\item With the \textbf{equilibration method} for creating predominance or
+activity diagrams, the user explicitly sets the total balance activity
+or the program takes it from the reference activities of the species.
+The starred affinities are used to calculate equilibrium activities
+using one of two techniques (Boltzmann distribution for balance =
+1, reaction matrix for balance $\ne$ 1).
+\end{enumerate}
+The affinities used in these calculations can be calculated using
+\texttt{affinity()}, which works with a single basis set, or with
+\texttt{mosaic()}, which uses multiple basis sets to account for basis
+species that themselves may change as a function of the variables
+of interest (e.g. ionization of carbonic acid as a function of pH).
+This document focuses primarily on the \texttt{affinity()} function;
+for more information on mosaic diagrams see the help page (type \texttt{?mosaic}
+at the R command line).
+
+Step-by-step examples of some of the calculations, particularly the
+reaction matrix algorithm, are provided in the Appendix. For further
+description of the equilibration method applied to proteins see \citet{DS13}
+(also with a derivation of energetic distance from equilibrium using
+the \textbf{starred affinity}).
+
+\section{Organization}
+
+The function sequences below assume you have already defined the basis
+species and species of interest using \texttt{basis(...)} and \texttt{species(...)}
+(ellipses here and below indicate system-specific input).
+
+Note that if \texttt{equilibrate()} or \texttt{diagram()} is called
+without an explicit \texttt{balance} argument, the balance coefficients
+will be taken from the first basis species (in the current basis definition)
+that is present in all of the species. Depending on the system, this
+may coincide either with balance = 1 or with balance $\ne$ 1. In
+the case of \texttt{normalize = TRUE} or \texttt{as.residue = TRUE},
+the balance coefficients (for the purposes of the equilibration step)
+are temporarily set to 1.
+\begin{enumerate}
+\item Maximum affinity method, balance = 1
+
+\begin{enumerate}
+\item Typical use: simple mineral/aqueous species stability comparisons
+\item Function sequence:\\
+\texttt{a <- affinity(...)}\\
+\texttt{diagram(a, balance = 1)}
+\item Algorithm: $\max\left\{ \boldsymbol{A}_{{\it ref}}\right\} $
+\end{enumerate}
+\item Equilibration method, balance = 1
+
+\begin{enumerate}
+\item Typical use: simple aqueous species activity comparisons
+\item Function sequence:\\
+\texttt{a <- affinity(...)}\\
+\texttt{e <- equilibrate(a, balance = 1)}\\
+\texttt{diagram(e)}
+\item Algorithm: Boltzmann distribution
+\end{enumerate}
+\item Maximum affinity method, balance $\ne$ 1
+
+\begin{enumerate}
+\item Typical use: mineral/aqueous species stability comparisons
+\item Function sequence:\\
+\texttt{a <- affinity(...)}~\\
+\texttt{diagram(a, balance = ...)}
+\item Algorithm: $\max\left\{ \boldsymbol{A}_{{\it ref}}/n_{balance}\right\} $
+\end{enumerate}
+\item Equilibration method, balance $\ne$ 1
+
+\begin{enumerate}
+\item Typical use: aqueous species activity comparisons
+\item Function sequence:\\
+\texttt{a <- affinity(...)}~\\
+\texttt{e <- equilibrate(a, balance = ...)}~\\
+\texttt{diagram(e)}
+\item Algorithm: Reaction matrix
+\end{enumerate}
+\item Maximum affinity method, normalize = TRUE
+
+\begin{enumerate}
+\item Typical use: protein/polymer stability comparisons
+\item Function sequence:\\
+\texttt{a <- affinity(...)}~\\
+\texttt{diagram(a, normalize = TRUE)}
+\item Algorithm: $\max\left\{ \boldsymbol{A}^{*}/n_{balance}-\log n_{balance}\right\} $
+\end{enumerate}
+\item Equilibration method, normalize = TRUE
+
+\begin{enumerate}
+\item Typical use: protein/polymer activity comparisons
+\item Function sequence:\\
+\texttt{a <- affinity(...)}~\\
+\texttt{e <- equilibrate(a, normalize = TRUE)}~\\
+\texttt{diagram(e)}
+\item Algorithm: Scale formulas and affinities to residues; Boltzmann distribution
+(balance = 1); Scale activities to proteins
+\end{enumerate}
+\end{enumerate}
+
+\section{Examples}
+
+\subsection{Amino acids}
+
+Basis species: $\mathrm{CO_{2}}$, $\mathrm{H_{2}O}$, $\mathrm{NH_{3}}$,
+$\mathrm{H_{2}S}$, $\mathrm{O_{2}}$. Species of interest: 20 amino
+acids. (Only the first few lines of the data frame of amino acid species
+are shown.)
+
+<<AAsetup>>=
+library(CHNOSZ)
+data(thermo)
+basis("CHNOS")
+species(aminoacids(""))[1:5, ]
+@
+
+Code for making the diagrams. Function names refer to the subfigure
+labels.
+
+<<AAfigures>>=
+res <- 200
+aa <- aminoacids()
+
+aaA <- function() {
+  a <- affinity(O2=c(-90, -70, res), H2O=c(-20, 10, res))
+  diagram(a, balance=1, names=aa)
+}
+
+aaB <- function() {
+  a <- affinity(O2=c(-90, -70, 80), H2O=c(-20, 10, 80))
+  e <- equilibrate(a, balance=1)
+  diagram(e, names=aa)
+}
+
+aaC <- function() {
+  a <- affinity(O2=c(-71, -66, res), H2O=c(-8, 4, res))
+  diagram(a, balance="CO2", names=aa)
+}
+
+aaD <- function() {
+  a <- affinity(O2=c(-71, -66, 80), H2O=c(-8, 4, 80))
+  e <- equilibrate(a, balance="CO2")
+  diagram(e, names=aa)
+}
+
+aaE <- function() {
+  basis("O2", -66)
+  a <- affinity(H2O=c(-8, 4))
+  e <- equilibrate(a, balance="CO2")
+  diagram(e, ylim=c(-5, -1), names=aa)
+}
+
+aaF <- function() {
+  species(1:20, -4)
+  a <- affinity(H2O=c(-8, 4))
+  e <- equilibrate(a, balance="CO2")
+  diagram(e, ylim=c(-5, -1), names=aa)
+}
+@
+
+Note that for the plot we use the 1-letter abbreviations of the amino
+acids, unlike the full species names (\texttt{aminoacids()} is a function
+in CHNOSZ that returns their names or abbreviations).
+
+<<AAnames>>=
+AA <- aminoacids("")
+names(AA) <- aa
+AA
+@
+
+The annotated figure is shown next. The actual code used to set up
+the plots, add labels, etc. is in the source of this vignette (not
+shown in the PDF).
+
+<<showtime, include=FALSE>>=
+showtime <- function(st) {
+  # plot time in lower-right of figure region
+  f <- usrfig()
+  par(xpd=TRUE)
+  if(st[3] > 2) col <- "red" else col <- "black"
+  text(f$x[2], f$y[1], paste(round(st[3], 1), "s\n"), adj=1, col=col)
+  par(xpd=FALSE)
+}
+@
+
+<<AAplot, echo=FALSE, message=FALSE, results="hide", fig.width=13/2, fig.height=9/2, cache=TRUE>>=
+layout(t(matrix(c(1:7, 11, 8:10, 12), nrow=4)), widths=c(1, 4, 4, 4), heights=c(1, 4, 4))
+
+## row 0 (column titles)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+plot.new()
+text(0.5, 0.5, "maximum affinity", cex=1.4)
+plot.new()
+text(0.5, 0.5, "equilibration", cex=1.4)
+plot.new()
+text(0.5, 0.5, "equilibration", cex=1.4)
+par(opar)
+
+## row 1 (balance = 1)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+text(0.5, 0.5, "balance = 1", srt=90, cex=1.4)
+par(opar)
+# figure A
+st <- system.time(dA <- aaA())
+showtime(st)
+title(main="loga(species) = -3", cex.main=1)
+label.figure("A", col="blue", yfrac=0.9, xfrac=0.1)
+# figure B
+st <- system.time(dB <- aaB())
+showtime(st)
+title(main=paste("loga(total species) =", round(dB$loga.balance[1], 2)), cex.main=1)
+label.figure("B", col="blue", yfrac=0.9, xfrac=0.1)
+
+## row 2 (balance = nCO2)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+text(0.5, 0.5, 'balance = "CO2"', srt=90, cex=1.4)
+par(opar)
+# figure C
+st <- system.time(dC <- aaC())
+showtime(st)
+title(main="loga(species) = -3", cex.main=1)
+label.figure("C", col="blue", yfrac=0.9, xfrac=0.1)
+# figure D
+st <- system.time(dD <- aaD())
+showtime(st)
+title(main=paste("loga(total CO2) =", round(dD$loga.balance[1], 2)), cex.main=1)
+label.figure("D", col="blue", yfrac=0.9, xfrac=0.1)
+
+## right (speciation at different total activity of CO2)
+par(xpd=NA)
+lines(c(-66, -64.5), c(4, 9), lty=2)
+lines(c(-66, -64.5), c(-8, -8.5), lty=2)
+par(xpd=FALSE)
+# figure E
+st <- system.time(dE <- aaE())
+showtime(st)
+title(main=paste("loga(total CO2) =", round(dE$loga.balance[1], 2)), cex.main=1)
+label.figure("E", col="blue", yfrac=0.9, xfrac=0.1)
+# figure F
+st <- system.time(dF <- aaF())
+showtime(st)
+title(main=paste("loga(total CO2) =", round(dF$loga.balance[1], 2)), cex.main=1)
+label.figure("F", col="blue", yfrac=0.9, xfrac=0.1)
+
+@
+
+Comments on the plots:
+\begin{itemize}
+\item The equal-activity lines in Figures \textcolor{blue}{A} and \textcolor{blue}{B}
+are \emph{identical}. For balance = 1, the maximum affinity method
+and the equilibration method should produce the same predominance
+diagrams. (More precisely, because balance = 1, the conditions of
+equal activity of any species of interest \textbf{are independent
+of} the actual value of that activity.)
+\item Figures \textcolor{blue}{C} and \textcolor{blue}{D} are \emph{different}.
+For balance $\ne$ 1, the maximum affinity method and the equilibration
+method will generally produce difference predominance diagrams. (Because
+balance $\ne$ 1, the conditions of equal activity of any species
+of interest \textbf{depend on} the actual value of that activity.)
+\item Both Figures \textcolor{blue}{E} and \textcolor{blue}{F} are constructed
+using the equilibration method, to calculate activities of species
+as a function of $\log a_{\mathrm{H_{2}O}}$ at $\log f_{\mathrm{O_{2}}}=-66$.
+Figure \textcolor{blue}{E} shows the results for the default settings
+($a_{\mathrm{CO_{2}}}$ is the sum of activities present in all species,
+taken from initial species activity of $10^{-3}$) and the crossing
+lines indicating equal activities \emph{are identical to the positions
+in Figure }\textcolor{blue}{\emph{D}} at $\log f_{\mathrm{O_{2}}}=-66$.
+\item Figure \textcolor{blue}{F} shows the results for a lower total activity
+of $\mathrm{CO_{2}}$. Consequently, the activities of the predominant
+species decrease from ca. $10^{-2}$ in Figure \textcolor{blue}{E}
+to ca. $10^{-3}$ in Figure \textcolor{blue}{F}. Also, the stability
+region of the smaller glycine has grown at the expense of the neighboring
+bigger amino acids, so that the crossing lines indicating equal activities
+in Figure \textcolor{blue}{F} \emph{are closer to those shown in Figure
+}\textcolor{blue}{\emph{C}} at $\log f_{\mathrm{O_{2}}}=-66$.
+\item In other words, a lower equal-activity value causes the stability
+region of the species with the smaller balance coefficient to invade
+that of the species with the larger balance coefficient.
+\item Figures \textcolor{blue}{A}, \textcolor{blue}{B}, \textcolor{blue}{C},
+and \textcolor{blue}{D} are all equal activity diagrams, but have
+different constraints on the activities:
+
+\begin{itemize}
+\item Maximum affinity method (Figures \textcolor{blue}{A}, \textcolor{blue}{C}):
+Equal activities of species set to a constant value.
+\item Equilibration method (Figures \textcolor{blue}{B}, \textcolor{blue}{D}):
+Equal activities of species determined by overall speciation of the
+system.
+\end{itemize}
+\end{itemize}
+
+\subsection{Proteins}
+
+Basis species: $\mathrm{CO_{2}}$, $\mathrm{H_{2}O}$, $\mathrm{NH_{3}}$,
+$\mathrm{H_{2}S}$, $\mathrm{O_{2}}$, $\mathrm{H^{+}}$. Species
+of interest: 6 proteins from the set of archaeal and bacterial surface
+layer proteins considered by \citet{Dic08}. 
+
+<<PRsetup, results="hide">>=
+basis("CHNOS+")
+organisms <- c("METJA", "HALJP", "METVO", "ACEKI", "GEOSE", "BACLI")
+proteins <- c(rep("CSG", 3), rep("SLAP", 3))
+species(proteins, organisms)
+@
+
+Code for the figures.
+
+<<PRfigures>>=
+prA <- function() {
+  a <- affinity(O2=c(-90, -70, 80), H2O=c(-20, 0, 80))
+  e <- equilibrate(a, balance="length", loga.balance=0)
+  diagram(e, names=organisms)
+}
+
+prB <- function() {
+  a <- affinity(O2=c(-90, -70))
+  e <- equilibrate(a, balance="length", loga.balance=0)
+  diagram(e, names=organisms, ylim=c(-5, -1))
+}
+
+prC <- function() {
+  a <- affinity(O2=c(-90, -70, res), H2O=c(-20, 0, res))
+  e <- equilibrate(a, normalize=TRUE, loga.balance=0)
+  diagram(e, names=organisms)
+}
+
+prD <- function() {
+  a <- affinity(O2=c(-90, -70))
+  e <- equilibrate(a, normalize=TRUE, loga.balance=0)
+  diagram(e, names=organisms, ylim=c(-5, -1))
+}
+
+prE <- function() {
+  a <- affinity(O2=c(-90, -70, res), H2O=c(-20, 0, res))
+  e <- equilibrate(a, as.residue=TRUE, loga.balance=0)
+  diagram(e, names=organisms)
+}
+
+prF <- function() {
+  a <- affinity(O2=c(-90, -70))
+  e <- equilibrate(a, as.residue=TRUE, loga.balance=0)
+  diagram(e, names=organisms, ylim=c(-3, 1))
+}
+@
+
+The plots follow. As before, the code used to layout the figure and
+label the plots is not shown in the PDF.
+
+<<PRplot, message=FALSE, echo=FALSE, results="hide", fig.width=13/2, fig.height=9/2, cache=TRUE>>=
+layout(t(matrix(1:12, nrow=4)), widths=c(1, 4, 4, 4), heights=c(1, 4, 4))
+
+## row 0 (column titles)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+plot.new()
+text(0.5, 0.5, 'balance = "length"', cex=1.4)
+plot.new()
+text(0.5, 0.5, "normalize = TRUE\n(balance = 1)", cex=1.4)
+plot.new()
+text(0.5, 0.5, "as.residue = TRUE\n(balance = 1)", cex=1.4)
+par(opar)
+
+## row 1 (equilibrate 2D)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+text(0.5, 0.5, "equilibration", srt=90, cex=1.4)
+par(opar)
+# figure A (balance = "length")
+st <- system.time(dA <- prA())
+showtime(st)
+label.figure("A", col="blue", yfrac=0.9, xfrac=0.1)
+# figure C (normalize = TRUE)
+st <- system.time(dC <- prC())
+showtime(st)
+label.figure("C", col="blue", yfrac=0.9, xfrac=0.1)
+# figure E (as.residue = TRUE)
+st <- system.time(dE <- prE())
+showtime(st)
+label.figure("E", col="blue", yfrac=0.9, xfrac=0.1)
+
+## row 2 (equilibrate 1D)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+text(0.5, 0.5, "equilibration", srt=90, cex=1.4)
+par(opar)
+# figure B (balance = "length")
+st <- system.time(prB())
+showtime(st)
+label.figure("B", col="blue", yfrac=0.9, xfrac=0.1)
+# figure D (normalize = TRUE)
+st <- system.time(prD())
+showtime(st)
+label.figure("D", col="blue", yfrac=0.9, xfrac=0.1)
+# figure F (as.residue = TRUE)
+st <- system.time(prF())
+showtime(st)
+label.figure("F", col="blue", yfrac=0.9, xfrac=0.1)
+@
+
+Comments on the plots:
+\begin{itemize}
+\item All of the plots shown are calculated using the equilibration method.
+The balanced species is amino acid residues (specified by balance
+= ``length'' in Figures \textcolor{blue}{A} and \textcolor{blue}{B}.
+In the other figures, \texttt{normalize = TRUE} and \texttt{as.residue
+= TRUE} internally reset the balance to 1 after scaling the protein
+formulas to single amino acid residue equivalents). Activity of the
+balanced species (amino acid residues) is set to 1 (log activity =
+0).
+\item Figure \textcolor{blue}{B} shows that balancing on length produces
+drastic transitions between activities of the proteins. This either/or
+type behavior is a consequence of the large sizes of the balancing
+coefficients, which become exponents on the activities in the expression
+for $Q$ (or coefficients on the logarithms of activities in $\log Q$).
+\item Figure \textcolor{blue}{D} shows that coexistence of proteins with
+comparable activities can be predicted using \texttt{normalize = TRUE}.
+Here, the protein formulas and affinities are scaled down to their
+``residue equivalents'', then the equilibrium among the residue
+equivalents is calculated (with balance = 1), and the activities are
+rescaled to the original proteins. For example, a residue activity
+of 0 corresponds to $10^{-2}$ for a 100-residue protein and to $10^{-3}$
+for a 1000-residue protein. 
+\item Figures \textcolor{blue}{E} and \textcolor{blue}{F} are like \texttt{normalize
+= TRUE}, except that the rescaling to original protein size is not
+performed. Note the higher activities of the residue equivalents (Figure
+\textcolor{blue}{F}) compared to the proteins (Figure \textcolor{blue}{D}).
+\item Compare the equilibration plots above with the maximum affinity plots
+below. Here the equal activities of the proteins are intentionally
+set to a very low value: this causes a difference in the plot using
+balance = ``length'', but the second and third diagrams remain equivalent
+to those in Figures \textcolor{blue}{C} and \textcolor{blue}{E} above
+(verified by the \texttt{stopifnot} statements; \texttt{dA}, \texttt{dC}
+and \texttt{dE} refer to the diagrams above). This behavior is consistent
+with that seen in the amino acid example, where the maximum affinity
+and equilibration methods give equivalent results for balance = 1
+but different results for balance $\ne$ 1.
+\end{itemize}
+<<PRplot2, message=FALSE, results="hide", fig.width=6, fig.height=2, cache=TRUE>>=
+layout(t(matrix(1:3)))
+species(1:6, -111)
+a <- affinity(O2=c(-90, -70, res), H2O=c(-20, 0, res))
+d1 <- diagram(a, balance="length", names=organisms, main='balance = "length"')
+d2 <- diagram(a, normalize=TRUE, names=organisms, main="normalize = TRUE")
+d3 <- diagram(a, as.residue=TRUE, names=organisms, main="as.residue = TRUE")
+stopifnot(!identical(d1$predominant, dA$predominant))
+stopifnot(identical(d2$predominant, dC$predominant))
+stopifnot(identical(d3$predominant, dE$predominant))
+@
+
+With balance = ``length'', changing the equal activities to \emph{lower
+values} increases the relative stabilities of the \emph{smaller proteins},
+which is why the stability field of the larger protein from BACLI
+disappears while that of the smaller protein from METJA grows. Because
+of the drastic activity changes at the stability transitions (see
+Figure \textcolor{blue}{B} above), a large change in equal activities
+(to a minuscule activity = $10^{-111}$) is used here to demonstrate
+this effect, and even then the visual impact on the predominance diagram
+is subtle. Therefore, naturally occurring relative abundances of proteins
+are better modeled using the \texttt{normalize} or \texttt{as.residue}
+approaches.
+
+\clearpage
+
+\section{Applications}
+
+Many of the help-page examples and demos in CHNOSZ use these methods
+to reproduce (or closely emulate) published figures. Below is not
+a comprehensive list, but just some highlights.
+
+\subsection{Maximum affinity method}
+\begin{itemize}
+\item The ``Aqueous Aluminum'' example in \texttt{?diagram} shows predominance
+fields for aqueous species (balance = 1, after \citealp{TS01})
+\item The ``Fe-S-O'' example in \texttt{?diagram} shows stability fields
+for minerals (balance $\ne$ 1, after \citealp{Hel70c}).
+\item Next is an example of using \emph{unequal activities} of species (mineral
+activity = 1; variable aqueous species activity indicated by the contours
+(logarithm of activity)) to plot aqueous species \textendash{} mineral
+stability boundaries (balance = 1, after Figure 14 of \citealp{Pou49}).
+\end{itemize}
+<<Pourbaix, message=FALSE, results="hide", fig.width=4, fig.height=3, cache=TRUE>>=
+basis(c("Cu+2", "H2O", "H+", "e-"))
+species(c("Cu+2", "copper", "cuprite", "tenorite"))
+for(loga in c(-1, 0, -2, -3)) {
+  species("Cu+2", loga) 
+  a <- affinity(pH=c(1.6, 7.6, 400), Eh=c(-0.2, 1, 400))
+  if(loga==-1) d <- diagram(a)
+  else d <- diagram(a, add=TRUE, names=NULL)
+  iCu <- which(d$predominant == 1, arr.ind=TRUE)
+  text(a$vals[[1]][max(iCu[, 1])] - 0.03, a$vals[[2]][min(iCu[, 2])] + 0.2, adj=1, loga)
+}
+water.lines(d)
+
+@
+
+\subsection{Equilibration method}
+\begin{itemize}
+\item Speciation of reduced and oxidized glutathione, after \citet{SB01}.
+Two moles of reduced glutathione (GSH) are oxidized to produce one
+mole of oxidized glutathione containing a disulfide bond (GSSG), according
+to
+\[
+2\mathrm{GSH}\rightleftharpoons\mathrm{GSSG}+\mathrm{H_{2}}
+\]
+First, we define a basis set that includes GSH; this becomes the balanced
+basis species, so we can set its total activity in the call to \texttt{equilibrate()}.
+This total activity is the initial concentration of GSH that will
+be speciated among GSH and GSSG. If the aqueous species have equal
+concentrations (or activities), the fraction of GSH that has been
+oxidized is actually 2/3, because the formation of one mole of GSSG
+consumes two moles of GSH. That is why the blue lines (fraction of
+starting GSH that is oxidized) are higher than the black lines (aqueous
+species distribution). Although the caption to Fig. 3 of \citet{SB01}
+reads ``percent GSH that has been oxidized to GSSG'', the lines
+in their figure are closer to the black lines in the figure below.
+\end{itemize}
+<<glutathione, results="hide", message=FALSE, fig.width=5, fig.height=4>>=
+basis(c("GSH", "NH3", "H2S", "H2O", "H+", "e-"))
+basis("pH", 7)
+species(c("GSH", "GSSG"))
+a <- affinity(Eh=c(-0.3, -0.1))
+# initial millimoles of GSH
+mM <- c(10, 3, 1)
+M <- mM * 1e-3
+for(i in 1:3) {
+  e <- equilibrate(a, loga.balance=log10(M[i]))
+  diagram(e, alpha=TRUE, lty=c(0, i), add = i!=1, legend.x=NULL, ylim=c(0, 1), yline=1.6, lwd=2, ylab="aqueous species distribution")
+  fGSH <- 1 - (10^e$loga.equil[[1]] / M[i])
+  lines(e$vals[[1]], fGSH, col="blue", lty=i)
+}
+mtext(side=2, "fraction of GSH oxidized to GSSG", las=0, line=2.6, col="blue", cex=0.8)
+mtext(side=2, "- - - - - - - - - - - - - - - - - - -", las=0, line=2.1, cex=0.8)
+legend("topleft", lty=1:3, legend=paste(mM, "mM GSH"))
+@
+
+\subsection{Mosaic diagrams}
+
+The examples using \texttt{mosaic()} shown below are based on the
+maximum affinity method, but equilibration calculations are also possible
+(if a suitable example from the literature is found it will be added
+here; see also the \texttt{blend} argument of \texttt{mosaic()} to
+equilibrate the basis species rather than compose the diagram using
+the predominant basis species).
+\begin{itemize}
+\item See the examples in \texttt{?mosaic} and \texttt{demo(\textquotedbl{}mosaic\textquotedbl{})}
+for calculations of mineral stabilities in the Fe-S-O-$\mathrm{H_{2}O}$
+system (after \citealp{GC65}).
+\item A calculation of copper solubility limits and speciation with aqueous
+glycine based on Fig. 2b of \citet{AD01}. We use \texttt{mosaic()}
+to speciate the basis species glycine (activity $10^{-1}$) as a function
+of pH. The stability fields are shown for \emph{unequal activities}
+of the minerals (unit activity) and aqueous species ($10^{-4}$).
+This is essentially a composite of three diagrams, with glycinium,
+glycine and glycinate in the basis at low, mid and high pH. This demo
+also modifies the thermodynamic database (with \texttt{mod.obigt()})
+to use Gibbs energies taken from \citet{AD01}, and bypasses the default
+plotting of labels by \texttt{diagram()} in order to customize their
+format and placement.
+\end{itemize}
+<<Aksu_Doyle, message=FALSE, results="hide", fig.width=6, fig.height=4.8, cache=TRUE>>=
+demo("copper", ask=FALSE)
+@
+
+\appendix
+
+\section*{Appendix}
+
+Two different methods of calculating the equilibrium activities of
+species in a system are described below. These are referred to as
+the \emph{reaction-matrix approach} and the \emph{Boltzmann distribution}.
+Each method is demonstrated using a specific example that has been
+described previously \citep{Dic08,DS11} (the ``CSG'' example).
+The results shows that two approaches are equivalent when the molar
+formulas are normalized.
+
+\section{Standard states, the ideal approximation and sources of data}
+
+By chemical activity we mean the quantity $a_{i}$ that appears in
+the expression 
+\begin{equation}
+\mu_{i}=\mu_{i}^{\circ}+RT\ln a_{i}\,,\label{eq:mu}
+\end{equation}
+where $\mu_{i}$ and $\mu_{i}^{\circ}$ stand for the chemical potential
+and the standard chemical potential of the $i$th species, and $R$
+and $T$ represent the gas constant and the temperature in Kelvin
+($\ln$here stands for the natural logarithm). Chemical activity is
+related to molality ($m_{i}$) by
+\begin{equation}
+a_{i}=\gamma_{i}m_{i}\,,\label{eq:activity}
+\end{equation}
+where $\gamma_{i}$ stands for the activity coefficient of the $i$th
+species. For this discussion, we take $\gamma_{i}=1$ for all species,
+so chemical activity is assumed to be numerically equivalent to molality.
+Since molality is a measure of concentration, calculating the equilibrium
+chemical activities can be a theoretical tool to help understand the
+relative abundances of species, including proteins.
+
+For the CSG examples below, we would like to reproduce exactly the
+values appearing in publications. Because recent versions of CHNOSZ
+incorporate data updates for the methionine sidechain group, we should
+therefore revert to the previous values \citep{DLH06} before proceeding.
+
+<<AddObigt>>=
+data(thermo)
+mod.obigt("[Met]", G=-35245, H=-59310)
+@
+
+\section{Reaction-matrix approach}
+
+\subsection{CSG Example: Whole formulas}
+
+Let us calculate the equilibrium activities of two proteins in metastable
+equilibrium. To do this we start by writing the formation reactions
+of each protein as
+\begin{equation}
+{\it stuff}_{3}\rightleftharpoons\mathrm{CSG\_METVO}\,\label{react:CSG_METVO}
+\end{equation}
+and
+\begin{equation}
+{\it stuff}_{4}\rightleftharpoons\mathrm{CSG\_METJA}\,.\label{react:CSG_METJA}
+\end{equation}
+The basis species in the reactions are collectively symbolized by
+${\it stuff}$; the subscripts simply refer to the reaction number
+in this document. In these examples, ${\it stuff}$ consists of $\mathrm{CO_{2}}$,
+$\mathrm{H_{2}O}$, $\mathrm{NH_{3}}$, $\mathrm{O_{2}}$, $\mathrm{H_{2}S}$
+and $\mathrm{H^{+}}$ in different molar proportions. To see what
+${\it stuff}$ is, try out these commands in CHNOSZ:
+
+<<ProteinFormation>>=
+basis("CHNOS+")
+species("CSG",c("METVO", "METJA"))
+@
+
+Although the basis species are defined, the temperature is not yet
+specified, so it is not immediately possible to calculate the ionization
+states of the proteins. That is why the coefficient on $\mathrm{H^{+}}$
+is zero in the output above. Let us now calculate the chemical affinities
+of formation of the ionized proteins at 25 $^{\circ}$C, 1 bar, and
+pH = 7 (specified by the logarithm of activity of $\mathrm{H^{+}}$
+in the basis species):
+
+<<ProteinAffinity>>=
+a <- affinity()
+a$values
+@
+
+Since \texttt{affinity()} returns a list with a lot of information
+(such as the basis species and species definitions) the last command
+was written to only print the \texttt{values} part of that list. The
+values are actually dimensionless, i.e. $\boldsymbol{A}/2.303RT$.
+
+The affinities of the formation reactions above were calculated for
+a \emph{reference value of activity of the proteins, which is not
+the equilibrium value}. Those non-equilibrium activities were $10^{-3}$.
+How do we calculate the equilibrium values? Let us write specific
+statements of the expression for chemical affinity (2.303 is used
+here to stand for the natural logarithm of 10), 
+\begin{equation}
+\boldsymbol{A}=2.303RT\log(K/Q)\,,\label{eq:affinity}
+\end{equation}
+for Reactions \ref{react:CSG_METVO} and \ref{react:CSG_METJA} as
+\begin{equation}
+\begin{array}{rl}
+\boldsymbol{A}_{3}/2.303RT & =\log K_{3}-\log Q_{3}\\
+ & =\log K_{3}+\log a_{{\it stuff},3}-\log a_{\mathrm{CSG\_METVO}}\\
+ & =\boldsymbol{A}_{3}^{*}/2.303RT-\log a_{\mathrm{CSG\_METVO}}
+\end{array}\label{eq:A3_METVO}
+\end{equation}
+and
+
+\begin{equation}
+\begin{array}{rl}
+\boldsymbol{A}_{4}/2.303RT & =\log K_{4}-\log Q_{4}\\
+ & =\log K_{4}+\log a_{{\it stuff},4}-\log a_{\mathrm{CSG\_METJA}}\\
+ & =\boldsymbol{A}_{4}^{*}/2.303RT-\log a_{\mathrm{CSG\_METJA}}\,.
+\end{array}\label{eq:A4_METJA}
+\end{equation}
+The $\boldsymbol{A}^{*}$ denote the affinities of the formation reactions
+when the activities of the proteins are unity. I like to call these
+the ``starved'' affinities. From the output above it follows that
+$\boldsymbol{A}_{3}^{*}/2.303RT=104.6774$ and $\boldsymbol{A}_{4}^{*}/2.303RT=314.1877$.
+
+Next we must specify how reactions are balanced in this system: what
+is conserved during transformations between species (let us call it
+the immobile component)? For proteins, one possibility is to use the
+repeating protein backbone group. Let us use $n_{i}$ to designate
+the number of residues in the $i$th protein, which is equal to the
+number of backbone groups, which is equal to the length of the sequence.
+If $\gamma_{i}=1$ in Eq. (\ref{eq:activity}), the relationship between
+the activity of the $i$th protein ($a_{i}$) and the activity of
+the residue equivalent of the $i$th protein ($a_{residue,i}$) is
+\begin{equation}
+a_{residue,i}=n_{i}\times a_{i}\,.\label{eq:a_residue_i}
+\end{equation}
+ We can use this to write a statement of mass balance: 
+\begin{equation}
+553\times a_{\mathrm{CSG\_METVO}}+530\times a_{\mathrm{CSG\_METJA}}=1.083\,.\label{eq:a_residue}
+\end{equation}
+
+At equilibrium, the affinities of the formation reactions, per conserved
+quantity (in this case protein backbone groups) are equal. Therefore
+$\boldsymbol{A}=\boldsymbol{A}_{3}/553=\boldsymbol{A}_{4}/530$ is
+a condition for equilibrium. Combining this with Eqs. (\ref{eq:A3_METVO})
+and (\ref{eq:A4_METJA}) gives
+\begin{equation}
+\boldsymbol{A}/2.303RT=\left(104.6774-\log a_{\mathrm{CSG\_METVO}}\right)/553\label{eq:A_METVO}
+\end{equation}
+and
+\begin{equation}
+\boldsymbol{A}/2.303RT=\left(314.1877-\log a_{\mathrm{CSG\_METJA}}\right)/530\,.\label{eq:A_METJA}
+\end{equation}
+Now we have three equations (\ref{eq:a_residue}\textendash \ref{eq:A_METJA})
+with three unknowns. The solution can be displayed in CHNOSZ as follows.
+Because the balancing coefficients differ from unity, the function
+called by \texttt{equilibrate()} in this case is \texttt{equil.reaction()},
+which implements the equation-solving strategy described in the next
+section.
+
+<<ProteinActivities>>=
+e <- equilibrate(a)
+e$loga.equil
+@
+
+Those are the logarithms of the equilibrium activities of the proteins.
+Combining these values with either Eq. (\ref{eq:A_METVO}) or (\ref{eq:A_METJA})
+gives us the same value for affinity of the formation reactions per
+residue (or per protein backbone group), $\boldsymbol{A}/2.303RT=0.5978817$.
+Equilibrium activities that differ by such great magnitudes make it
+appear that the proteins are very unlikely to coexist in metastable
+equilibrium. Later we explain the concept of using residue equivalents
+of the proteins to achieve a different result.
+
+\subsection{Implementing the reaction-matrix approach}
+
+CHNOSZ implements a method for solving the system of equations that
+relies on a difference function for the activity of the immobile component.
+The steps to obtain this difference function are:
+\begin{enumerate}
+\item Set the total activity of the immobile (conserved) component (aka
+total balance activity) as $a_{\mathrm{ic}}$ (e.g., the 1.083 in
+Eqn. \ref{eq:a_residue}).
+\item Write a function for the logarithm of activity of each of the species
+of interest: $\boldsymbol{A}=\left(\boldsymbol{A}_{i}^{*}-2.303RT\log a_{i}\right)/n_{\mathrm{ic},i}$,
+where $n_{\mathrm{ic},i}$ stands for the number of moles of the immobile
+component that react in the formation of one mole of the $i$th species.
+(e.g., for systems of proteins where the backbone group is conserved,
+$n_{\mathrm{ic},i}$ is the same as $n_{i}$ in Eq. \ref{eq:a_residue_i}).
+Calculate values for each of the $\boldsymbol{A}_{i}^{*}$. Metastable
+equilibrium is implied by the equality of $\boldsymbol{A}$ in all
+of the equations.
+\item Write a function for the total activity of the immobile component:
+$a_{\mathrm{ic}}^{'}=\sum n_{\mathrm{ic},i}a_{i}$.
+\item The difference function is now $\delta a_{\mathrm{ic}}=a_{\mathrm{ic}}^{'}-a_{\mathrm{ic}}$.
+\end{enumerate}
+Now all we have to do is find the value of $\boldsymbol{A}$ where
+$\delta a_{\mathrm{ic}}=0$. This is achieved in the code by first
+looking for a range of values of $\boldsymbol{A}$ where at one end
+$\delta a_{\mathrm{ic}}<0$ and at the other end $\delta a_{\mathrm{ic}}>0$,
+then using the \texttt{uniroot()} function that is part of R to find
+the solution. 
+
+Even if values of $\delta a_{\mathrm{ic}}$ on either side of zero
+can be located, the algorithm does not guarantee an accurate solution
+and may give a warning about poor convergence if a certain tolerance
+is not reached.
+
+\subsection{CSG Example: normalized formulas (residue equivalents)}
+
+Let us consider the formation reactions of the normalized formulas
+(residue equivalents) of proteins, for example
+\begin{equation}
+{\it stuff}_{12}\rightleftharpoons\mathrm{CSG\_METVO(residue)}\,\label{react:CSG_METVO_residue}
+\end{equation}
+and
+\begin{equation}
+{\it stuff}_{13}\rightleftharpoons\mathrm{CSG\_METJA(residue)}\,.\label{react:CSG_METJA_residue}
+\end{equation}
+The formulas of the residue equivalents are those of the proteins
+divided by the number of residues in each protein. The \texttt{protein.basis()}
+function shows the coefficients on the basis species in these reactions:
+
+<<ProteinBasis>>=
+protein.basis(species()$name, normalize=TRUE)
+@
+
+Let us denote by $\boldsymbol{A}_{12}$ and $\boldsymbol{A}_{13}$
+the chemical affinities of Reactions \ref{react:CSG_METVO_residue}
+and \ref{react:CSG_METJA_residue}. We can write 
+\begin{equation}
+\boldsymbol{A}_{12}/2.303RT=\log K_{12}+\log a_{{\it stuff},12}-\log a_{\mathrm{CSG\_METVO(residue)}}\label{eq:A3_METVO_residue}
+\end{equation}
+and
+
+\begin{equation}
+\boldsymbol{A}_{13}/2.303RT=\log K_{13}+\log a_{{\it stuff},13}-\log a_{\mathrm{CSG\_METJA(residue)}}\,.\label{eq:A4_METJA_residue}
+\end{equation}
+For metastable equilibrium we have $\boldsymbol{A}_{12}/1=\boldsymbol{A}_{13}/1$.
+The $1$'s in the denominators are there as a reminder that we are
+still conserving residues, and that each reaction now is written for
+the formation of a single residue equivalent. So, let us write $\boldsymbol{A}$
+for $\boldsymbol{A}_{12}=\boldsymbol{A}_{13}$ and also define $\boldsymbol{A}_{12}^{*}=\boldsymbol{A}_{12}+2.303RT\log a_{\mathrm{CSG\_METVO(residue)}}$
+and $\boldsymbol{A}_{13}^{*}=\boldsymbol{A}_{13}+2.303RT\log a_{\mathrm{CSG\_METJA(residue)}}$.
+At the same temperature, pressure and activities of basis species
+and proteins as shown in the previous section, we can write $\boldsymbol{A}_{12}^{*}=\boldsymbol{A}_{3}^{*}/553=2.303RT\times0.1892901$
+and $\boldsymbol{A}_{13}^{*}=\boldsymbol{A}_{4}^{*}/530=2.303RT\times0.5928069$
+to give 
+\begin{equation}
+\boldsymbol{A}/2.303RT=0.1892901-\log a_{\mathrm{CSG\_METVO(residue)}}\label{eq:A_METVO_residue}
+\end{equation}
+and
+\begin{equation}
+\boldsymbol{A}/2.303RT=0.5928069-\log a_{\mathrm{CSG\_METJA(residue)}}\,,\label{eq:A_METJA_residue}
+\end{equation}
+which are equivalent to Equations 12 and 13 in the paper \citep{Dic08}
+but with more decimal places shown. A third equation arises from the
+conservation of amino acid residues:
+\begin{equation}
+a_{\mathrm{CSG\_METVO(residue)}}+a_{\mathrm{CSG\_METJA(residue)}}=1.083\,.\label{eq:a_residue_2}
+\end{equation}
+The solution to these equations is $a_{\mathrm{CSG\_METVO(residue)}}=0.3065982$,
+$a_{\mathrm{CSG\_METJA(residue)}}=0.7764018$ and $\boldsymbol{A}/2.303RT=0.7027204$.
+
+The corresponding logarithms of activities of the proteins are $\log\left(0.307/553\right)=-3.256$
+and $\log\left(0.776/530\right)=-2.834$. These activities of the
+proteins are much closer to each other than those calculated using
+formation reactions for whole protein formulas, so this result seems
+more compatible with the actual coexistence of proteins in nature.
+
+The approach just described is not actually used by \texttt{equilibrate(...,
+normalize = TRUE)}. Instead, because balance = 1, the Boltzmann distribution,
+which is faster, can be used.
+
+\section{Boltzmann distribution}
+
+\subsection{CSG Example: Normalized formulas}
+
+An expression for Boltzmann distribution, relating equilibrium activities
+of species to the affinities of their formation reactions, can be
+written as (using the same definitions of the symbols above)
+\begin{equation}
+\frac{a_{i}}{\sum a_{i}}=\frac{e^{\boldsymbol{A}_{i}^{*}/RT}}{\sum e^{\boldsymbol{A}_{i}^{*}/RT}}\,.\label{eq:Boltzmann}
+\end{equation}
+Using this equation, we can very quickly (without setting up a system
+of equations) calculate the equilibrium activities of proteins using
+their residue equivalents. Above, we saw $\boldsymbol{A}_{12}^{*}/2.303RT=0.1892901$
+and $\boldsymbol{A}_{13}^{*}/2.303RT=0.5928069$. Multiplying by $\ln10=2.302585$
+gives $\boldsymbol{A}_{12}^{*}/RT=0.4358565$ and $\boldsymbol{A}_{13}^{*}/RT=1.364988$.
+We then have $e^{\boldsymbol{A}_{12}^{*}/RT}=1.546287$ and $e^{\boldsymbol{A}_{13}/RT}=3.915678$.
+This gives us $\sum e^{A_{i}^{*}/RT}=5.461965$, $a_{12}/\sum a_{i}=0.2831009$
+and $a_{13}/\sum a_{i}=0.7168991$. Since $\sum a_{i}=1.083$, we
+arrive at $a_{12}=0.3065982$ and $a_{13}=0.7764018$, the same result
+as above.
+
+\section{Notes on implementation}
+
+\subsection{CSG example: another look}
+
+All the tedium of writing reactions, calculating affinities, etc.,
+above does help to understand the application of the reaction-matrix
+and Boltzmann distribution methods to protein equilibrium calculations.
+But can we automate the step-by-step calculation for any system, including
+more than two proteins? And can we be sure that higher-level functions
+in CHNOSZ, particularly \texttt{equilibrate()}, match the output of
+the step-by-step calculations? Now we can, with the \texttt{protein.equil()}
+function introduced in version 0.9-9. Below is its output when configured
+for CSG example we have been discussing.
+
+\begin{small}
+
+<<ProteinEquil, results="hide">>=
+protein <- pinfo(c("CSG_METVO", "CSG_METJA"))
+basis("CHNOS+")
+swap.basis("O2", "H2")
+protein.equil(protein, loga.protein=-3)
+@
+
+\end{small}
+
+The function checks (``check it!'') against the step-by-step calculations
+the values of $\boldsymbol{A}^{*}$ calculated using \texttt{affinity()},
+and the equilibrium activities of the proteins calculated using \texttt{equilibrate()}.
+(Note that Astar/RT in the second line after the first ``check it!''
+can be multiplied by $\ln10$ to get the values shown above in Eqs.
+\ref{eq:A_METVO_residue} and \ref{eq:A_METJA_residue}.)
+
+\subsection{Visualizing the effects of normalization}
+
+A comparison of equilibrium calculations that do and do not use normalized
+formulas for proteins was presented by \citet{Dic08}. A diagram like
+Figure 5 in that paper is shown below.
+
+<<ProteinSpeciation, results="hide", message=FALSE, fig.height=5.5, cache=TRUE>>=
+organisms <- c("METSC", "METJA", "METFE", "HALJP",  "METVO", "METBU", "ACEKI", "GEOSE", "BACLI", "AERSA")
+proteins <- c(rep("CSG", 6), rep("SLAP", 4))
+basis("CHNOS+")
+species(proteins, organisms)
+a <- affinity(O2=c(-100, -65))
+layout(matrix(1:2), heights=c(1, 2))
+e <- equilibrate(a)
+diagram(e, ylim=c(-2.8, -1.6), names=organisms)
+water.lines(e)
+title(main="Equilibrium activities of proteins, normalize = FALSE")
+e <- equilibrate(a, normalize=TRUE)
+diagram(e, ylim=c(-4, -2), names=organisms)
+water.lines(e)
+title(main="Equilibrium activities of proteins, normalize = TRUE")
+@
+
+Although it is well below the stability limit of $\mathrm{H_{2}O}$
+(vertical dashed line), there is an interesting convergence of the
+activities of some proteins at low $\log f_{\mathrm{O_{2}}}$, due
+most likely to compositional similarity of the amino acid sequences.
+
+The reaction-matrix approach can also be applied to systems having
+conservation coefficients that differ from unity, such as many mineral
+and inorganic systems, where the immobile component has different
+molar coefficients in the formulas. For example, consider a system
+like one described by \citet{See96}:
+
+<<SulfurSpeciation, results="hide", message=FALSE, fig.width=6, fig.height=5.5>>=
+basis("CHNOS+")
+basis("pH", 5)
+species(c("H2S", "S2-2", "S3-2", "S2O3-2", "S2O4-2",  "S3O6-2", "S5O6-2", "S2O6-2", "HSO3-", "SO2", "HSO4-"))
+a <- affinity(O2=c(-50, -15), T=325, P=350)
+layout(matrix(c(1, 2, 3, 3), nrow=2), widths=c(4, 1))
+col <- rep(c("blue", "black", "red"), each=4)
+lty <- 1:4
+for(normalize in c(FALSE, TRUE)) {
+  e <- equilibrate(a, loga.balance=-2, normalize=normalize)
+  diagram(e, ylim=c(-30, 0), legend.x=NULL, col=col, lty=lty)
+  water.lines(e)
+  title(main=paste("Aqueous sulfur speciation, normalize =", normalize))
+}
+par(mar=c(0, 0, 0, 0))
+plot.new()
+leg <- lapply(species()$name, expr.species)
+legend("center", lty=lty, col=col, lwd=1.5, bty="n", legend=as.expression(leg), y.intersp=1.3)
+@
+
+The first diagram is quantitatively similar to the one shown by \citet{See96},
+with the addition of color and the water stability line. If we use
+the normalized formulas (divide whole formulas by moles of $\mathrm{H_{2}S}$
+in their formation reactions), the range of activities of species
+is smaller at any given $\log f_{\mathrm{O_{2}}_{\left(g\right)}}$,
+as shown in the second diagram. Although \texttt{normalize = TRUE}
+was implemented to study the relative stabilities of proteins, it
+might also be relevant to other systems where the molecules are in
+various stages of polymerization.
+
+\section*{Document history}
+\begin{itemize}
+\item 2009-11-29 Initial version containing CSG example (title: Calculating
+relative abundances of proteins)
+\item 2012-09-30 Renamed to ``Equilibrium in CHNOSZ''. Remove activity
+comparisons, add maximum affinity method.
+\item 2015-11-08 Add sections on concepts, organization, examples and applications;
+move most material from the previous version of the document to the
+Appendix; now uses the \textbf{knitr} vignette engine.
+\end{itemize}
+\bibliographystyle{plainnat}
+\bibliography{vig}
+
+\end{document}

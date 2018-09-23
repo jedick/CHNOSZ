@@ -1,0 +1,77 @@
+# exports starting with functions used in vignettes, examples, demos, tests 20170224
+export(
+# anintro vignette
+  "info", "makeup", "as.chemical.formula", "ZC",
+  "subcrt", "T.units", "P.units", "E.units", "convert",
+  "axis.label", "expr.species", "basis", "describe.reaction",
+  "species", "affinity", "swap.basis", "diagram", "mosaic",
+  "water.lines", "mod.buffer", "thermo.plot.new",
+  "describe.property", "describe.basis", "equilibrate",
+  "aminoacids", "ZC.col",
+  "pinfo", "protein.length", "protein.formula",
+  "read.fasta", "protein.basis", "yeastgfp", "yeast.aa", "add.protein",
+  "unitize", "revisit", "seq2aa", "findit",
+  "thermo.refs", "mod.obigt", "today",
+# examples
+  "examples", "demos", "mtitle",
+  "list2array", "slice", "dimSums", "slice.affinity",
+  "def2gi", "read.blast", "id.blast",
+  "add.obigt", "RH2obigt",
+  "expr.property", "expr.units",
+  "mass", "entropy", "GHS", "water",
+  "i2A", "invertible.combs",
+  "dPdTtr", "Ttr",
+  "count.aa", "nucleic.complement", "nucleic.formula",
+  "rho.IAPWS95", "IAPWS95", "water.AW90", "WP02.auxiliary", "water.IAPWS95",
+  "getrank", "parent", "sciname", "allparents", "getnodes", "getnames",
+  "protein.obigt", "hkf", "cgl", "which.pmax",
+  "equil.boltzmann", "equil.reaction", "find.tp",
+  "ionize.aa", "MP90.cp", "aasum",
+  "qqr", "RMSD", "CVRMSD", "spearman", "DGmix", "DDGmix", "DGtr",
+  "ratlab",
+  "EOSregress", "EOScoeffs", "EOSplot", "EOSvar",
+  "wjd", "element.potentials", "is.near.equil", "guess", "run.wjd",
+# demos
+  "protein.equil", "palply",
+  "label.plot",
+  "equil.potentials", "basis.logact",
+  "label.figure", "syslab",
+# equilibrium vignette
+  "usrfig",
+# hotspring vignette
+  "strip",
+# ecipex package
+  "count.elements",
+# (no other functions are used in the tests)
+# other exported functions that are not used above
+  "write.blast", "checkEOS", "checkGHS", "check.obigt",
+  "V_s_var", "Cp_s_var",
+  "DGinf", "SD", "pearson", "shannon", "CV", "logact",
+  "EOSlab", "EOScalc",
+  "basis.elements", "element.mu", "ibasis",
+  "water.SUPCRT92", "eqdata", "plot_findit",
+  "nonideal", "uniprot.aa", "run.guess",
+# added 20170301 or later
+  "GHS_Tr", "calculateDensity", "calculateGibbsOfWater",
+  "calculateEpsilon", "calculateQ", "water.DEW", "berman",
+  "maxdiff", "expect_maxdiff", "Bdot",
+# added 20171121 or later
+  "dumpdata", "thermo.axis"
+)
+
+# Load shared objects
+# Refer to all C/Fortran routines by their name prefixed by C_
+useDynLib(CHNOSZ, .registration = TRUE, .fixes = "C_")
+
+# Imports from default packages
+importFrom("grDevices", "dev.cur", "dev.off", "extendrange",
+  "heat.colors", "png", "rainbow", "topo.colors")
+importFrom("graphics", "abline", "axTicks", "axis", "barplot", "box",
+  "contour", "image", "legend", "lines", "mtext", "par", "plot",
+  "plot.new", "plot.window", "points", "rect", "text", "title")
+importFrom("stats", "D", "as.formula", "cor", "lm", "loess.smooth",
+  "na.omit", "predict.lm", "qqline", "qqnorm", "sd", "splinefun",
+  "uniroot", "median")
+importFrom("utils", "browseURL", "capture.output", "combn", "demo",
+  "example", "head", "installed.packages", "read.csv", "tail",
+  "write.csv", "write.table", "read.table")

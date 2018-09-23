@@ -1,0 +1,10 @@
+bibentry(bibtype = "Article",
+         title = "Calculation of the relative metastabilities of proteins using the CHNOSZ software package",
+         author = person(given = c("Jeffrey", "M."), family = "Dick", email="jmdick@asu.edu"),
+         journal = "Geochemical Transactions",
+	 year = "2008",
+         volume = "9",
+         number = "10",
+         pages = "",
+         doi = "10.1186/1467-4866-9-10",
+	 )
