@@ -110,6 +110,8 @@ berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.t
     Tprime <- T + Td
     # with the condition that Tref < Tprime < Tlambda(1bar)
     iTprime <- Tref < Tprime & Tprime < Tlambda
+    # handle NA values (arising from NA in input P values e.g. Psat above Tcritical) 20180925
+    iTprime[is.na(iTprime)] <- FALSE
     Tprime <- Tprime[iTprime]
     Cptr[iTprime] <- Tprime * (l1 + l2 * Tprime)^2
     # we got Cp, now calculate the integrations for H and S
@@ -118,6 +120,8 @@ berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.t
     Ttr <- T[iTtr]
     Tlambda_P <- Tlambda_P[iTtr]
     Td <- Td[iTtr]
+    # handle NA values 20180925
+    Tlambda_P[is.na(Tlambda_P)] <- Inf
     # the upper integration limit is Tlambda_P
     Ttr[Ttr >= Tlambda_P] <- Tlambda_P[Ttr >= Tlambda_P]
     # derived variables

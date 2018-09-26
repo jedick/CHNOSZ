@@ -88,3 +88,14 @@ test_that("nonexistent or incomplete user data file is handled properly", {
   thermo$opt$Berman <<- NA
   expect_error(berman("xxx"), "Data for xxx not available. Please add it to your_data_file.csv")
 })
+
+test_that("NA values of P are handled", {
+  sresult <- subcrt("H2O", T = seq(0, 500, 100))
+  T <- sresult$out$water$T
+  P <- sresult$out$water$P
+  # this stopped with a error prior to version 1.1.3-37
+  bresult <- berman("quartz", T = convert(T, "K"), P = P)
+  expect_equal(sum(is.na(bresult$G)), 2)
+  # this also now works (producing the same NA values)
+  #subcrt("quartz", T = seq(0, 500, 100))
+})

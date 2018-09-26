@@ -560,8 +560,10 @@ diagram <- function(
         zs <- t(predominant[, ncol(predominant):1])
         if(!is.null(fill)) fill.color(xs, ys, zs, fill, ngroups)
         pn <- plot.names(zs, xs, ys, names)
-        # only draw the lines if there is more than one field (avoid warnings from contour)
-        if(length(unique(as.vector(zs))) > 1) {
+        # only draw the lines if there is more than one field  20180923
+        # (to avoid warnings from contour, which seem to be associated with weird
+        # font metric state and subsequent errors adding e.g. subscripted text to plot)
+        if(length(na.omit(unique(as.vector(zs)))) > 1) {
           if(!is.null(dotted)) plot.line(zs, xlim, ylim, dotted, col, lwd, xrange=xrange)
           else contour.lines(predominant, xlim, ylim, lty=lty, col=col, lwd=lwd)
         }

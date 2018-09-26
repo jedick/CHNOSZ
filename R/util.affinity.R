@@ -17,7 +17,7 @@ slice.affinity <- function(affinity,d=1,i=1) {
 
 ### unexported functions ###
 
-energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.Ttr=FALSE,transect=FALSE) {
+energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.Ttr=FALSE,exceed.rhomin=FALSE,transect=FALSE) {
   # 20090329 extracted from affinity() and made to
   # deal with >2 dimensions (variables)
 
@@ -136,7 +136,7 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
       if("T" %in% vars) T <- vals[[which(vars=="T")]]
       if("P" %in% vars) P <- vals[[which(vars=="P")]]
       if("IS" %in% vars) IS <- vals[[which(vars=="IS")]]
-      s.args <- list(species=species,property=property,T=T,P=P,IS=IS,grid=grid,convert=FALSE,exceed.Ttr=exceed.Ttr)
+      s.args <- list(species=species,property=property,T=T,P=P,IS=IS,grid=grid,convert=FALSE,exceed.Ttr=exceed.Ttr,exceed.rhomin=exceed.rhomin)
       return(do.call("subcrt",s.args))
     }
   }

@@ -12,8 +12,8 @@
 #source("util.data.R")
 #source("species.R")
 
-affinity <- function(...,property=NULL,sout=NULL,exceed.Ttr=FALSE,
-  return.buffer=FALSE,balance="PBB",iprotein=NULL,loga.protein=-3) {
+affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rhomin=FALSE,
+  return.buffer=FALSE, balance="PBB", iprotein=NULL, loga.protein=-3) {
   # ...: variables over which to calculate
   # property: what type of energy
   #   (G.basis,G.species,logact.basis,logK,logQ,A)
@@ -30,7 +30,7 @@ affinity <- function(...,property=NULL,sout=NULL,exceed.Ttr=FALSE,
 
   # the argument list
   args <- energy.args(list(...))
-  args <- c(args,list(sout=sout,exceed.Ttr=exceed.Ttr))
+  args <- c(args, list(sout=sout, exceed.Ttr=exceed.Ttr, exceed.rhomin=exceed.rhomin))
 
   # the species we're given
   thermo <- get("thermo")

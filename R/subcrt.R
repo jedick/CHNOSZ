@@ -12,7 +12,7 @@
 
 subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "H", "S", "V", "Cp"),
   T = seq(273.15, 623.15, 25), P = "Psat", grid = NULL, convert = TRUE, exceed.Ttr = FALSE,
-  logact = NULL, action.unbalanced = "warn", IS = 0) {
+  exceed.rhomin = FALSE, logact = NULL, action.unbalanced = "warn", IS = 0) {
 
   # revise the call if the states have 
   # come as the second argument 
@@ -287,12 +287,14 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     p.aq <- hkfstuff$aq
     H2O.PT <- hkfstuff$H2O
     # set properties to NA for density below 0.35 g/cm3 (a little above the critical isochore, threshold used in SUPCRT92) 20180922
-    ilowrho <- H2O.PT$rho < 350
-    ilowrho[is.na(ilowrho)] <- FALSE
-    if(any(ilowrho)) {
-      for(i in 1:length(p.aq)) p.aq[[i]][ilowrho, ] <- NA
-      if(sum(ilowrho)==1) ptext <- "pair" else ptext <- "pairs"
-      warnings <- c(warnings, paste0("below minimum density for applicability of revised HKF equations (", sum(ilowrho), " T,P ", ptext, ")"))
+    if(!exceed.rhomin) {
+      ilowrho <- H2O.PT$rho < 350
+      ilowrho[is.na(ilowrho)] <- FALSE
+      if(any(ilowrho)) {
+        for(i in 1:length(p.aq)) p.aq[[i]][ilowrho, ] <- NA
+        if(sum(ilowrho)==1) ptext <- "pair" else ptext <- "pairs"
+        warnings <- c(warnings, paste0("below minimum density for applicability of revised HKF equations (", sum(ilowrho), " T,P ", ptext, ")"))
+      }
     }
     # calculate activity coefficients if ionic strength is not zero
     if(any(IS != 0)) {

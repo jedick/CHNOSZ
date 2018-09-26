@@ -186,9 +186,12 @@ test_that("reaction coefficients for repeated species are handled correctly", {
 
 test_that("properties of HKF species below 0.35 g/cm3 are NA and give a warning", {
   wtext <- "below minimum density for applicability of revised HKF equations \\(2 T,P pairs\\)"
-  expect_warning(s1 <- subcrt(c("Na+", "quartz"), T=450, P=c(400, 450, 500)), wtext)            
+  expect_warning(s1 <- subcrt(c("Na+", "quartz"), T=450, P=c(400, 450, 500)), wtext) 
   expect_equal(sum(is.na(s1$out$`Na+`$logK)), 2)
   expect_equal(sum(is.na(s1$out$quartz$logK)), 0)
+  # use exceed.rhomin to go below the minimum density
+  s2 <- subcrt(c("Na+", "quartz"), T=450, P=c(400, 450, 500), exceed.rhomin=TRUE)
+  expect_equal(sum(is.na(s2$out$`Na+`$logK)), 0)
 })
 
 # references

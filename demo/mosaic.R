@@ -22,13 +22,13 @@ bases2 <- c("CO3-2", "HCO3-", "CO2")
 # calculate affinities using the predominant basis species
 # using blend=TRUE we get curvy lines, particularly at the boundaries with siderite
 # compare with the plot in Garrels and Christ, 1965
-m1 <- mosaic(bases, bases2, TRUE, pH=pH, Eh=Eh, T=T)
+m1 <- mosaic(bases, bases2, blend=TRUE, pH=pH, Eh=Eh, T=T)
 # make a diagram and add water stability lines
 diagram(m1$A.species, lwd=2)
 water.lines(m1$A.species, col="seagreen", lwd=1.5)
 # show lines for Fe(aq) = 10^-4 M
 species(c("Fe+2", "Fe+3"), -4)
-m2 <- mosaic(bases, bases2, TRUE, pH=pH, Eh=Eh, T=T)
+m2 <- mosaic(bases, bases2, blend=TRUE, pH=pH, Eh=Eh, T=T)
 diagram(m2$A.species, add=TRUE, names=NULL)
 title(main=paste("Iron oxides, sulfides and carbonate in water, log(total S) = -6,",
   "log(total C)=0, after Garrels and Christ, 1965", sep="\n"))
