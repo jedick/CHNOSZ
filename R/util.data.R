@@ -1,7 +1,7 @@
 # CHNOSZ/util.data.R
 # check entries in the thermodynamic database
 
-thermo.refs <- function(key=NULL) {
+thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
   ## return references for thermodynamic data.
   ## 20110615 browse.refs() first version
   ## 20170212 thermo.refs() remove browsing (except for table of all sources)
@@ -135,8 +135,14 @@ thermo.refs <- function(key=NULL) {
   } else if(is.numeric(key)) {
     # get the source keys for the indicated species
     sinfo <- suppressMessages(info(key))
-    mysources <- unique(c(sinfo$ref1, sinfo$ref2))
-    mysources <- mysources[!is.na(mysources)]
+    if(keep.duplicates) {
+      # output a single reference for each species 20180927
+      # (including duplicated references, and not including ref2)
+      mysources <- sinfo$ref1
+    } else {
+      mysources <- unique(c(sinfo$ref1, sinfo$ref2))
+      mysources <- mysources[!is.na(mysources)]
+    }
     return(thermo.refs(mysources))
   } else if(is.list(key)) {
     if("species" %in% names(key)) ispecies <- key$species$ispecies
