@@ -13,7 +13,14 @@ thermo.plot.new <- function(xlim,ylim,xlab,ylab,cex=par('cex'),mar=NULL,lwd=par(
   }
   # 20090324 mar handling: NULL - a default setting; NA - par's setting
   # 20090413 changed mar of top side from 2 to 2.5
-  if(is.null(mar)) mar <- c(3,3.5,2.5,1) else if(is.na(mar[1])) mar <- par('mar')
+  marval <- c(3, 3.5, 2.5, 1)
+  if(identical(mar[1], NA)) marval <- par("mar")
+  # 20181007 get mar from the current device (if it exists) and par("mar") is not the default
+  if(!is.null(dev.list())) {
+    if(!identical(par("mar"), c(5.1, 4.1, 4.1, 2.1))) marval <- par("mar")
+  }
+  # assign marval to mar if the latter is NULL or NA
+  if(!is.numeric(mar)) mar <- marval
   par(mar=mar,mgp=mgp,tcl=0.3,las=las,xaxs=axs,yaxs=axs,cex=cex,lwd=lwd,col=col,fg=col, ...)
   plot.new()
   plot.window(xlim=xlim,ylim=ylim)

@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-38 (2018-09-27)
+CHANGES IN CHNOSZ 1.1.3-39 (2018-10-07)
 ---------------------------------------
 
 THERMODYNAMIC DATA
@@ -58,9 +58,14 @@ DIAGRAMS
 
 - diagram(): rename 'what' argument to 'type'.
 
-- digram(): add new type of diagram, 'saturation', which is used to
+- diagram(): add new type of diagram, 'saturation', which is used to
   plot saturation lines for minerals (where their affinity equals
   zero).
+
+- thermo.plot.new() and, by extension, diagram(), now "listen" to the
+  setting of par("mar"). However, if a new plot is being made, or the
+  device has the default setting of mar from par(), mar is (re)set to
+  the default value in thermo.plot.new().
 
 BUG FIXES
 

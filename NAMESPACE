@@ -65,7 +65,7 @@ useDynLib(CHNOSZ, .registration = TRUE, .fixes = "C_")
 
 # Imports from default packages
 importFrom("grDevices", "dev.cur", "dev.off", "extendrange",
-  "heat.colors", "png", "rainbow", "topo.colors")
+  "heat.colors", "png", "rainbow", "topo.colors", "dev.list")
 importFrom("graphics", "abline", "axTicks", "axis", "barplot", "box",
   "contour", "image", "legend", "lines", "mtext", "par", "plot",
   "plot.new", "plot.window", "points", "rect", "text", "title")

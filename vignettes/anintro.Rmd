@@ -209,7 +209,7 @@ thermo.refs(iadenine)
 
 * Use <span style="color:green">`subcrt()`</span> to calculate standard molal thermodynamic properties.
 
-```{r bsad_adenine, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, results="hide", fig.cap="Nucleobase equal-activity diagram at <i>T</i> = 100 °C.", cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r bsad_adenine, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, results="hide", fig.cap="Nucleobase equal-activity diagram at <i>T</i> = 100 °C.", cache=TRUE, pngquant=pngquant, timeit=timeit}
 basis("CHNOSe")
 species(c("adenine", "cytosine", "guanine", "thymine", "uracil"))
 a <- affinity(H2O = c(-12, -0), Eh = c(-0.4, -0.2), T = 100)
@@ -220,7 +220,7 @@ diagram(a)
 subcrt("adenine", T = 100)
 ```
 
-```{r equil_adenine, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, results="hide", fig.cap="Activities of nucleobases in metastable equilibrium at <i>T</i> = 100 °C.", cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r equil_adenine, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, results="hide", fig.cap="Activities of nucleobases in metastable equilibrium at <i>T</i> = 100 °C.", cache=TRUE, pngquant=pngquant, timeit=timeit}
 basis("e-", 3.6)
 a <- affinity(H2O = c(-12, 0), T = 100)
 e <- equilibrate(a)
@@ -614,7 +614,7 @@ swap.basis("O2", "e-")
 That is, running <span style="color:green">`affinity()`</span>`$values` again would give the same result.
 ```
 
-```{r EhpH_plot, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="Aqueous sulfur species at 25 °C.", pngquant=pngquant, timeit=timeit}
+```{r EhpH_plot, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="Aqueous sulfur species at 25 °C.", pngquant=pngquant, timeit=timeit}
 a <- affinity(pH = c(0, 12), Eh = c(-0.5, 1))
 diagram(a, fill = "heat")
 water.lines(a)
@@ -693,7 +693,7 @@ The other arguments, like those of <span style="color:green">`affinity()`</span>
 The first call to <span style="color:green">`diagram()`</span> plots the species of interest; the second adds the predominance fields of the basis species.
 We turn off the gray coloring beyond the water stability limits (`limit.water`) but plot the red dotted lines using <span style="color:green">`water.lines()`</span>:
 
-```{r copper_mosaic, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", message=FALSE, cache=TRUE, fig.cap="Copper minerals and aqueous complexes with chloride, 200 °C.", pngquant=pngquant, timeit=timeit}
+```{r copper_mosaic, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", message=FALSE, cache=TRUE, fig.cap="Copper minerals and aqueous complexes with chloride, 200 °C.", pngquant=pngquant, timeit=timeit}
 T <- 200
 res <- 200
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
@@ -714,7 +714,7 @@ However, the choice of other basis species can also affect the diagram.
 For instance, we can use H<sub>2</sub> or `r o2` in place of *e*<sup>-</sup>.
 To do that, let's write a function to swap those basis species and make a diagram.
 We use R's `do.call()` to construct the argument list for <span style="color:green">`mosaic()`</span>; this way, the name of the `newvar` argument to our function indicates the chosen variable.
-```{r mosaicfun, fig.fullwidth=TRUE, fig.width=9, fig.height=3, small.mar=TRUE, dpi=dpi, out.width="85%", message=FALSE, results="hide", cache=TRUE, fig.cap="The same chemical system projected into different sets of basis species.", pngquant=pngquant, timeit=timeit}
+```{r mosaicfun, fig.fullwidth=TRUE, fig.width=9, fig.height=3, dpi=dpi, out.width="85%", message=FALSE, results="hide", cache=TRUE, fig.cap="The same chemical system projected into different sets of basis species.", pngquant=pngquant, timeit=timeit}
 mosaicfun <- function(newvar, T = 200) {
   swap.basis("e-", names(newvar))
   if (names(newvar) == "O2") basis("O2", "gas")
@@ -779,7 +779,7 @@ a$values <- lapply(a$values, convert, "G", T)
 a$values <- lapply(a$values, `*`, -0.001)
 ```
 
-```{r rainbow_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="Affinities of organic synthesis in a hydrothermal system, after Shock and Canovas (2010).", pngquant=pngquant, timeit=timeit}
+```{r rainbow_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="Affinities of organic synthesis in a hydrothermal system, after Shock and Canovas (2010).", pngquant=pngquant, timeit=timeit}
 diagram(a, balance = 1, ylim = c(-100, 100), ylab = axis.label("A", prefix="k"),
         col = rainbow(8), lwd = 2, bg = "slategray3")
 abline(h = 0, lty = 2, lwd = 2)
@@ -842,7 +842,7 @@ unlist(affinity(T = 300, P = 100, return.buffer = TRUE)[1:3])
 ```
 
 <!-- put demo(buffer) here for appealing placement on page -->
-```{r demo_buffer_noecho, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", message=FALSE, echo=FALSE, cache=TRUE, fig.cap="Values of log<i>f</i><sub>H<sub>2</sub></sub> corresponding to mineral buffers or to given activities of aqueous species.", pngquant=pngquant, timeit=timeit}
+```{r demo_buffer_noecho, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", message=FALSE, echo=FALSE, cache=TRUE, fig.cap="Values of log<i>f</i><sub>H<sub>2</sub></sub> corresponding to mineral buffers or to given activities of aqueous species.", pngquant=pngquant, timeit=timeit}
 demo(buffer, echo = FALSE)
 ```
 Et voilà! We have found log*a*<sub>H<sub>2</sub>S</sub> and `r logfO2` that are compatible with the coexistence of the three minerals.
@@ -888,7 +888,7 @@ For more information, see the vignette [<span style="color:blue">*Equilibrium in
 The method based on the Boltzmann equation is fast, but is applicable only to systems where the coefficient on the balanced basis species in each of the formation reactions is one.
 The reaction-matrix method is slower, but can be applied to systems were the balanced basis species has reaction coefficients other than one.
 
-```{r bjerrum_diagram, fig.margin=TRUE, fig.width=3, fig.height=6, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, results="hide", message=FALSE, cache=TRUE, fig.cap="Three views of carbonate speciation: affinity, activity, degree of formation.", pngquant=pngquant, timeit=timeit}
+```{r bjerrum_diagram, fig.margin=TRUE, fig.width=3, fig.height=6, dpi=dpi, out.width="100%", echo=FALSE, results="hide", message=FALSE, cache=TRUE, fig.cap="Three views of carbonate speciation: affinity, activity, degree of formation.", pngquant=pngquant, timeit=timeit}
 par(mfrow = c(3, 1))
 basis("CHNOS+")
 species(c("CO2", "HCO3-", "CO3-2"))
@@ -1007,7 +1007,7 @@ It is also possible to plot the distribution of species within individual groups
 We do this by setting the names and line types for the *other* species to values that prevent them from being plotted:
 ```{r groups_diagram, echo=-(1:4), eval=FALSE}
 ```
-```{r groups_diagram, fig.fullwidth=TRUE, fig.width=9, fig.height=3, small.mar=TRUE, dpi=dpi, out.width="85%", echo=FALSE, message=FALSE, results="hide", cache=TRUE, fig.cap="Distribution of inorganic and groups of organic species (left plot) and of alcohols and ketones (middle and right plots) as a function of <i>T</i>, pH, and log<i>f</i><sub>O<sub>2</sub></sub>.", pngquant=pngquant, timeit=timeit}
+```{r groups_diagram, fig.fullwidth=TRUE, fig.width=9, fig.height=3, dpi=dpi, out.width="85%", echo=FALSE, message=FALSE, results="hide", cache=TRUE, fig.cap="Distribution of inorganic and groups of organic species (left plot) and of alcohols and ketones (middle and right plots) as a function of <i>T</i>, pH, and log<i>f</i><sub>O<sub>2</sub></sub>.", pngquant=pngquant, timeit=timeit}
 ```
 
 ## Balancing differently
@@ -1033,7 +1033,7 @@ The first plot is the most similar to Figure 4 of Shock (1990), except for the a
 There, we set `balance = 1`, which indicates that moles of species are conserved; this is equivalent to balancing on the amino acid backbone.
 In the remaining plots, the balance is set to each of the basis species in turn (except for O<sub>2</sub>), then on volume.
 <span style="color:green">`expr.species()`</span> together with R's `substitute()` is used to make titles that include formatted chemical formulas:
-```{r aafun, fig.fullwidth=TRUE, fig.width=12.5, fig.height=2.5, small.mar=TRUE, dpi=dpi, out.width="100%", message=FALSE, results="hide", fig.cap="Plots of maximum affinity at 250 °C and 265 bar using different reaction balances for 20 amino acids.", cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r aafun, fig.fullwidth=TRUE, fig.width=12.5, fig.height=2.5, dpi=dpi, out.width="100%", message=FALSE, results="hide", fig.cap="Plots of maximum affinity at 250 °C and 265 bar using different reaction balances for 20 amino acids.", cache=TRUE, pngquant=pngquant, timeit=timeit}
 aafun <- function(balance) {
   diagram(a, balance = balance, fill = col)
   blab <- expr.species(balance)
@@ -1519,7 +1519,7 @@ The <span style="color:green">`revisit()`</span> function ([see below](#optimiza
 Here, we plot the information-theoretic free energy Δ*G<sub>inf</sub>* (calculated from the relative entropy or Kullback--Leibler divergence):
 ```{r yeastplot, eval=FALSE, echo=10}
 ```
-```{r yeastplot, fig.fullwidth=TRUE, fig.width=7.5, fig.height=2.5, small.mar=TRUE, dpi=ifelse(dpi==50, 50, 100), out.width="85%", echo=FALSE, message=FALSE, results="hide", cache=TRUE, fig.cap="ER-to-Golgi proteins: calculations without and with length normalization, and free energy difference between experimental and calculated abundances in metastable equilibrium with normalization.", pngquant=pngquant, timeit=timeit}
+```{r yeastplot, fig.fullwidth=TRUE, fig.width=7.5, fig.height=2.5, dpi=ifelse(dpi==50, 50, 100), out.width="85%", echo=FALSE, message=FALSE, results="hide", cache=TRUE, fig.cap="ER-to-Golgi proteins: calculations without and with length normalization, and free energy difference between experimental and calculated abundances in metastable equilibrium with normalization.", pngquant=pngquant, timeit=timeit}
 ```
 
 The minimum free energy difference occurs near `r logfO2` = -78.
@@ -1573,7 +1573,7 @@ Those proteins are Olig2, Irx3, Nkx6.2, Dbx1, and Shh (numbers 2, 5, 7, 8, 1 in 
 Here, `adj = 0` makes the labels left-aligned, `dy = 0.1` adds a *y* offset to the labels, and `format.names = FALSE` prevents formatting of the names as if they were chemical formulas (that causes subscripted numbers to appear).
 The last few lines are used to make a second *x* axis, using a label generated with <span style="color:green">`axis.label()`</span>:
 
-```{r Shh_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap="Per-residue affinities for formation of transcription factors relative to Shh.", cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r Shh_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap="Per-residue affinities for formation of transcription factors relative to Shh.", cache=TRUE, pngquant=pngquant, timeit=timeit}
 # line type, width, and color
 twc <- lapply(c(3, 1, 1), rep, length(pname))
 ihigh <- c(2, 5, 7, 8, 1)
@@ -1727,7 +1727,7 @@ Let's see this in action using amino acid compositions deduced from metagenomic 
 We read a data file of amino acid compositions produced in that study, taking those labeled "transferase".
 Then we add the proteins and get their indices using <span style="color:red">`add.protein()`</span>, set the basis, calculate the affinities, and make a potential diagram with temperature and activity of dissolved hydrogen as variables:
 
-```{r bison_transferase, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap='Potential diagram for metagenomically identified sequences of transferases in Bison Pool hot spring. See also the vignette [<span style="color:blue">*Hot-spring proteins in CHNOSZ*</span>](hotspring.pdf).', cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r bison_transferase, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap='Potential diagram for metagenomically identified sequences of transferases in Bison Pool hot spring. See also the vignette [<span style="color:blue">*Hot-spring proteins in CHNOSZ*</span>](hotspring.pdf).', cache=TRUE, pngquant=pngquant, timeit=timeit}
 file <- system.file("extdata/protein/DS11.csv", package = "CHNOSZ")
 aa <- read.csv(file, as.is = TRUE)
 aa <- aa[grep("transferase", aa$protein), ]
@@ -1868,7 +1868,7 @@ This side effect (changing the activities of basis species) is why the text for 
 ```{r smoker_plot, eval=FALSE, echo=23:25}
 ```
 
-```{r smoker_plot, fig.fullwidth=TRUE, fig.width=9, fig.height=5, small.mar=TRUE, dpi=dpi, out.width="85%", echo=FALSE, message=FALSE, results="hide", cache=TRUE, fig.cap="Optimization of a thermodynamic model for relative abundances of amino acids in a 270 °C black smoker fluid using 1, 2, or 3 variables (left to right).", pngquant=pngquant, timeit=timeit}
+```{r smoker_plot, fig.fullwidth=TRUE, fig.width=9, fig.height=5, dpi=dpi, out.width="85%", echo=FALSE, message=FALSE, results="hide", cache=TRUE, fig.cap="Optimization of a thermodynamic model for relative abundances of amino acids in a 270 °C black smoker fluid using 1, 2, or 3 variables (left to right).", pngquant=pngquant, timeit=timeit}
 ```
 
 The calculation using <span style="color:red">`findit()`</span>, in which the added variable log*a*<sub>`r h2o`</sub> optimizes to ca. -2.4, shows that measured concentrations of 6 amino acids fall within 1--2 log units of the relative abundances in metastable equilibrium.
