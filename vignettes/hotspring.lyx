@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -31,6 +31,8 @@ knitr
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -70,6 +72,7 @@ knitr
 \suppress_date false
 \justification true
 \use_refstyle 0
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -82,7 +85,10 @@ knitr
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -191,6 +197,7 @@ This document is intended to demonstrate the calculations described in two
 \begin_inset CommandInset citation
 LatexCommand citep
 key "DS11,DS13"
+literal "true"
 
 \end_inset
 
@@ -244,6 +251,7 @@ Load CHNOSZ and the thermodynamic database.
 \begin_inset CommandInset citation
 LatexCommand citep
 key "DLH06"
+literal "true"
 
 \end_inset
 
@@ -251,6 +259,7 @@ key "DLH06"
 \begin_inset CommandInset citation
 LatexCommand citep
 key "LD12"
+literal "true"
 
 \end_inset
 
@@ -430,6 +439,7 @@ lines(xpoints, pHfun(xpoints))
 LatexCommand href
 name "DOI link"
 target "https://doi.org/10.1371/journal.pone.0022782.g005"
+literal "false"
 
 \end_inset
 
@@ -575,6 +585,7 @@ Here are names of phyla and colors and line types used for plotting (colors
 \begin_inset CommandInset citation
 LatexCommand citep
 key "WE08"
+literal "true"
 
 \end_inset
 
@@ -918,6 +929,7 @@ DOI links for these plots as they appeared in the publications:
 LatexCommand href
 name "plot 1"
 target "https://doi.org/10.1371/journal.pone.0022782.g004"
+literal "false"
 
 \end_inset
 
@@ -926,6 +938,7 @@ target "https://doi.org/10.1371/journal.pone.0022782.g004"
 LatexCommand href
 name "plot 2"
 target "https://doi.org/10.1371/journal.pone.0072395.g001"
+literal "false"
 
 \end_inset
 
@@ -1161,6 +1174,7 @@ Function to calculate
 \begin_inset CommandInset citation
 LatexCommand cite
 key "DS11"
+literal "true"
 
 \end_inset
 
@@ -1168,6 +1182,7 @@ key "DS11"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "DS13"
+literal "true"
 
 \end_inset
 
@@ -1264,6 +1279,7 @@ a.res
 LatexCommand href
 name "DOI link"
 target "https://doi.org/10.1371/journal.pone.0022782.t005"
+literal "false"
 
 \end_inset
 
@@ -1328,6 +1344,7 @@ To go from residue-normalized affinities to the actual progression of relative
 \begin_inset CommandInset citation
 LatexCommand citep
 key "DS11"
+literal "true"
 
 \end_inset
 
@@ -1483,7 +1500,7 @@ a <- affinity(T=Tlim, H2=c(-7, -4))
 
 \begin_layout Plain Layout
 
-diagram(a, fill=NULL, names=1:5, normalize=TRUE)
+diagram(a, fill=NULL, names=as.character(1:5), normalize=TRUE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1561,6 +1578,7 @@ legend("bottom", lty=1:5, legend=1:5, bty="n", cex=0.6)
 LatexCommand href
 name "DOI link"
 target "https://doi.org/10.1371/journal.pone.0022782.g005"
+literal "false"
 
 \end_inset
 
@@ -1703,6 +1721,7 @@ for(i in 1:2) {
 LatexCommand href
 name "DOI link"
 target "https://doi.org/10.1371/journal.pone.0022782.g007"
+literal "false"
 
 \end_inset
 
@@ -1818,7 +1837,7 @@ for(j in 1:2) {
 
 \begin_layout Plain Layout
 
-    diagram(a, fill=NULL, names=1:5, normalize=TRUE)
+    diagram(a, fill=NULL, names=as.character(1:5), normalize=TRUE)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1866,6 +1885,7 @@ for(j in 1:2) {
 LatexCommand href
 name "DOI link"
 target "https://doi.org/10.1371/journal.pone.0072395.g002"
+literal "false"
 
 \end_inset
 
@@ -2277,6 +2297,7 @@ for(i in 1:5) {
 LatexCommand href
 name "DOI link"
 target "https://doi.org/10.1371/journal.pone.0072395.g003"
+literal "false"
 
 \end_inset
 
@@ -2326,6 +2347,7 @@ Oxidation-reduction potential (ORP), measured in the field using a portable
 \begin_inset CommandInset citation
 LatexCommand citep
 key "BPJ85"
+literal "true"
 
 \end_inset
 
@@ -2377,6 +2399,7 @@ Data from Bison Pool and another hot spring shown in Fig.
 \begin_inset CommandInset citation
 LatexCommand citep
 key "DS11"
+literal "true"
 
 \end_inset
 
@@ -2787,6 +2810,7 @@ DOI links to published versions:
 LatexCommand href
 name "plot 1"
 target "https://doi.org/10.1371/journal.pone.0022782.g009"
+literal "false"
 
 \end_inset
 
@@ -2795,6 +2819,7 @@ target "https://doi.org/10.1371/journal.pone.0022782.g009"
 LatexCommand href
 name "plot 2"
 target "https://doi.org/10.1371/journal.pone.0072395.g004"
+literal "false"
 
 \end_inset
 
@@ -2973,6 +2998,7 @@ for(iloc in 1:5) {
 LatexCommand href
 name "DOI link"
 target "https://doi.org/10.1371/journal.pone.0072395.g005"
+literal "false"
 
 \end_inset
 
@@ -3118,6 +3144,7 @@ legend("bottomleft", legend=rev(phyla.abbrv), fill=rev(phyla.cols), bty="n",
 LatexCommand href
 name "DOI link"
 target "https://doi.org/10.1371/journal.pone.0072395.g006"
+literal "false"
 
 \end_inset
 

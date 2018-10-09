@@ -1,4 +1,4 @@
-%% LyX 2.2.2 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.0 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[english]{article}
 \usepackage{mathpazo}
@@ -350,7 +350,7 @@ temperature (the first variable in the argument list to \texttt{affinity()}).
 par(mfrow=c(1, 2))
 # first plot
 a <- affinity(T=Tlim, H2=c(-7, -4))
-diagram(a, fill=NULL, names=1:5, normalize=TRUE)
+diagram(a, fill=NULL, names=as.character(1:5), normalize=TRUE)
 lines(Tlim, get.logaH2(Tlim), lty=3)
 # second plot
 species(1:5, -3)
@@ -423,7 +423,7 @@ for(j in 1:2) {
   for(annot in c("overall", "transferase", "synthase")) {
     ip <- ip.annot[aa.annot$protein==annot]
     a <- affinity(T=c(50, 100), H2=c(-7, -4), iprotein=ip)
-    diagram(a, fill=NULL, names=1:5, normalize=TRUE)
+    diagram(a, fill=NULL, names=as.character(1:5), normalize=TRUE)
     # add logaH2-T line
     lines(par("usr")[1:2], get.logaH2(par("usr")[1:2]), lty=3)
     # add a title

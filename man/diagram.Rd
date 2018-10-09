@@ -95,13 +95,18 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
 2-D diagrams, for two variables, are plotted as predominance fields.
 The allowed variables are any that \code{\link{affinity}} accepts: temperature, pressure, or the chemical activities of the basis species
 
-If \code{groups} is supplied, the activities of the species identified in each numeric element of this list are multiplied by the balance coefficients of the species, then summed together.
-The names of the list are used to label the lines or fields for the summed activities of the resulting groups.
-
-For all diagrams, the \code{names} of the species and their colors in \code{col.names} can be changed, as can \code{cex}, \code{cex.names}, and \code{cex.axis} to adjust the overall character expansion factors (see \code{\link{par}}) and those of the species names and axis labels.
-The x- and y-axis labels are automatically generated unless they are supplied in \code{xlab} and \code{ylab}. 
 A new plot is started unless \code{add} is TRUE.
 If \code{plot.it} is FALSE, no plot will be generated but all the intermediate computations will be performed and the results returned.
+
+Line or field labels use the names of the species as provided in \code{eout}; formatting is applied to chemical formuls unless \code{format.names} is FALSE.
+Use the \code{names} argument to override the default species names.
+Alternatively, supply a numeric value to \code{names} to indicate the subset of default names that should or shouldn't be plotted (positive and negative indices, respectively).
+Use \code{col.names} and \code{cex.names} to change the colors and size of the labels.
+Use \code{cex} and \code{cex.axis} to adjust the overall character expansion factors (see \code{\link{par}}) and those of the axis labels.
+The x- and y-axis labels are automatically generated unless they are supplied in \code{xlab} and \code{ylab}. 
+
+If \code{groups} is supplied, the activities of the species identified in each numeric element of this list are multiplied by the balance coefficients of the species, then summed together.
+The names of the list are used to label the lines or fields for the summed activities of the resulting groups.
 
 \code{find.tp} finds the locations in a matrix of integers that are surrounded by the greatest number of different values.
 The function counts the unique values in a 3x3 grid around each point and returns a matrix of indices (similar to \code{\link{which}(..., arr.ind = TRUE)}) for the maximum count (ties result in more than one pair of indices).
