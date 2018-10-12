@@ -29,7 +29,8 @@ diagram <- function(
   col=par("col"), col.names=par("col"), fill=NULL,
   fill.NA="slategray1", limit.water=TRUE,
   # field and line labels
-  names=NULL, format.names=TRUE, adj=0.5, dy=0, srt=0,
+  names=NULL, format.names=TRUE, bold=FALSE, italic=FALSE,
+  font=par("font"), family=par("family"), adj=0.5, dy=0, srt=0,
   # title and legend
   main=NULL, legend.x=NA,
   # plotting controls
@@ -253,7 +254,11 @@ diagram <- function(
     if(all(grepl("_", names))) is.pname <- TRUE
     if(format.names & !is.pname) {
       exprnames <- as.expression(names)
-      for(i in seq_along(exprnames)) exprnames[[i]] <- expr.species(exprnames[[i]])
+      for(i in seq_along(exprnames)) {
+        exprnames[[i]] <- expr.species(exprnames[[i]])
+        if(bold) exprnames[[i]] <- substitute(bold(a), list(a=exprnames[[i]]))
+        if(italic) exprnames[[i]] <- substitute(italic(a), list(a=exprnames[[i]]))
+      }
       names <- exprnames
     }
 
@@ -334,7 +339,7 @@ diagram <- function(
             }
             # also include y-offset (dy) and y-adjustment (labels bottom-aligned with the line)
             # .. and srt (string rotation) 20171127
-            text(xvalues[imax], plotvals[[i]][imax] + dy[i], labels=names[i], adj=c(thisadj, 0), cex=cex.names, srt=srt[i])
+            text(xvalues[imax], plotvals[[i]][imax] + dy[i], labels=names[i], adj=c(thisadj, 0), cex=cex.names, srt=srt[i], font=font, family=family)
           }
         } else legend(x=legend.x, lty=lty, legend=names, col=col, cex=cex.names, lwd=lwd, ...)
       }
@@ -501,7 +506,7 @@ diagram <- function(
         # plot field labels
         # the cex argument in this function specifies the character 
         # expansion of the labels relative to the current
-        if(!is.null(names) & any(inames)) text(namesx, namesy, labels=names[inames], cex=cex.names, col=col.names[inames])
+        if(!is.null(names) & any(inames)) text(namesx, namesy, labels=names[inames], cex=cex.names, col=col.names[inames], font=font, family=family)
         return(list(namesx=namesx, namesy=namesy, inames=which(inames)))
       }
 

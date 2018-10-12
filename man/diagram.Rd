@@ -27,7 +27,8 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
     col=par("col"), col.names=par("col"), fill=NULL,
     fill.NA="slategray1", limit.water=TRUE,
     # field and line labels
-    names=NULL, format.names=TRUE, adj=0.5, dy=0, srt=0,
+    names=NULL, format.names=TRUE, bold = FALSE, italic = FALSE, 
+    font = par("font"), family = par("family"), adj=0.5, dy=0, srt=0,
     # title and legend
     main=NULL, legend.x=NA,
     # plotting controls
@@ -69,6 +70,10 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{limit.water}{logical, set NA values beyond water stability limits?}
   \item{names}{character, names of species for activity lines or predominance fields}
   \item{format.names}{logical, apply formatting to chemical formulas?}
+  \item{bold}{logical, use bold formatting for names?}
+  \item{italic}{logical, use italic formatting for names?}
+  \item{font}{character, font type for names (has no effect if \code{format.names} is TRUE)}
+  \item{family}{character, font family for names}
   \item{adj}{numeric, adjustment for line labels}
   \item{dy}{numeric, y offset for line labels}
   \item{srt}{numeric, rotation for line labels}
