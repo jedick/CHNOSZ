@@ -162,6 +162,7 @@ diagram <- function(
 
   ## identify predominant species
   predominant <- NA
+  linesout <- NA
   if(plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)") & type!="saturation") {
     pv <- plotvals
     # some additional steps for affinity values, but not for equilibrated activities
@@ -469,7 +470,10 @@ diagram <- function(
         }
 	# the categories (species/groups/etc) on the plot
 	zvals <- na.omit(unique(as.vector(predominant)))
-	# take each possible pair
+        # initialize list to output line coordinates
+        linesout <- list()
+        iout <- 1
+	# take each possible pair of species
 	for(i in 1:(length(zvals)-1)) {
 	  for(j in (i+1):length(zvals)) {
 	    z <- predominant
@@ -478,9 +482,25 @@ diagram <- function(
 	    # give them neighboring values (so we get one contour line)
 	    z[z==zvals[i]] <- 0
 	    z[z==zvals[j]] <- 1
-	    contour(xs, ys, z, levels=0.5, drawlabels=FALSE, add=TRUE, lty=lty, col=col, lwd=lwd)
+            # use contourLines() instead of contour() in order to get line coordinates 20181029
+	    cLines <- contourLines(xs, ys, z, levels=0.5)
+            if(length(cLines) > 0) {
+              # loop in case contourLines returns multiple lines
+              for(k in 1:length(cLines)) {
+                # draw the lines
+                lines(cLines[[k]][2:3], lty=lty, col=col, lwd=lwd)
+                # keep the x and y values (list components 2 and 3)
+                linesout[[iout]] <- cLines[[k]][[2]]
+                names(linesout)[iout] <- paste0("x", k, "_", i, ".", j)
+                linesout[[iout+1]] <- cLines[[k]][[3]]
+                names(linesout)[iout+1] <- paste0("y", k, "_", i, ".", j)
+                iout <- iout + 2
+              }
+            }
 	  }
 	}
+        # https://stackoverflow.com/questions/34570860/adding-na-to-make-all-list-elements-equal-length 20181029
+        lapply(linesout, `length<-`, max(lengths(linesout)))
       }
       ## label plot function
       # calculate coordinates for field labels
@@ -577,7 +597,7 @@ diagram <- function(
         # font metric state and subsequent errors adding e.g. subscripted text to plot)
         if(length(na.omit(unique(as.vector(zs)))) > 1) {
           if(!is.null(dotted)) plot.line(zs, xlim, ylim, dotted, col, lwd, xrange=xrange)
-          else contour.lines(predominant, xlim, ylim, lty=lty, col=col, lwd=lwd)
+          else linesout <- contour.lines(predominant, xlim, ylim, lty=lty, col=col, lwd=lwd)
         }
         # re-draw the tick marks and axis lines in case the fill obscured them
         if(tplot & !identical(fill, "transparent")) thermo.axis()
@@ -585,8 +605,9 @@ diagram <- function(
       out2D <- list(namesx=pn$namesx, namesy=pn$namesy, inames=pn$inames)
     } # end if(nd==2)
   } # end if(plot.it)
-
-  out <- c(eout, list(plotvar=plotvar, plotvals=plotvals, names=names, predominant=predominant), out2D)
+  out <- c(eout, list(plotvar=plotvar, plotvals=plotvals, names=names, predominant=predominant))
+  if(!identical(predominant, NA) & is.null(dotted)) out <- c(out, list(lines=linesout))
+  out <- c(out, out2D)
   return(invisible(out))
 }
 

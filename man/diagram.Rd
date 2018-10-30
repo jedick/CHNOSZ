@@ -139,7 +139,7 @@ By default, \code{\link{heat.colors}} are used to fill the predominance fields i
 \code{fill.NA} is also used to specify the color outside the water stability limits on Eh-pH or pe-pH diagrams, when \code{limit.water} is TRUE.
 Note that the default for \code{fill.NA} is automatically changed to \samp{transparent} when \code{add} is TRUE.
 
-The default line-drawing algorithm uses \code{\link{contour}} to draw smooth-looking diagonal and curved lines, at the expense of not coinciding exactly with the rectangular grid (which is still used for drawing colors).
+The default line-drawing algorithm uses \code{\link{contourLines}} to obtain smooth-looking diagonal and curved lines, at the expense of not coinciding exactly with the rectangular grid that is used for drawing colors.
 \code{lty}, \code{col}, and \code{lwd} can be specified, but limiting the lines via \code{xrange} is not currently supported.
 To go back to the old behavior for drawing lines, set \code{dotted} to \samp{0}.
 The old behavior does not follow \code{lty}; instead, the style of the boundary lines on 2-D diagrams can be altered by supplying one or more non-zero integers in \code{dotted}, which indicates the fraction of line segments to omit; a value of \samp{1} or NULL for \code{dotted} has the effect of not drawing the boundary lines.
@@ -159,7 +159,7 @@ This algorithm is based on a comparison of the affinities of the formation react
 If \code{type} is \samp{saturation}, the function plots the line for each species where the affinity of formation equals zero.
 If for a given species no saturation line is possible or the range of the diagram is beyond the saturation line, the function prints a message instead.
 If \code{type} is the name of a basis species, the equilibrium activity of the selected basis species in each of the formation reactions is plotted.
-In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines (see the \CO2-acetic acid example in \code{\link{buffer}}.
+In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines (see the \CO2-acetic acid example in \code{\link{buffer}}).
 The \samp{saturation} diagram can handle multiple species, but if \code{type} is the name a basis species, then only the first species of interest is used in the calculation, and a warning is produced if there is more than one.
 }
 
@@ -183,9 +183,13 @@ An inset dot-and-line plot is created below each strip if \code{ns} is given.
 This argument has the same format as \code{ispecies}, and can be used e.g. to display the relative numbers of species for comparison with the stability calculations.
 }
 
-\value{
-For speciation diagrams (1-D), an \code{\link{invisible}} list of the chemical activities of the species, or their degrees of formation (if \code{alpha} is \code{TRUE}), at each point.
-For predominance diagrams (2-D), an invisible list with elements \code{species}, the dataframe describing the species, \code{out}, which species predominates at each grid point, and \code{A}, a list of the calculated values of the chemical affinity (per balanced quantity) (log10 dimensionless) at each point.
+\section{Value}{
+  The function returns an \code{\link{invisible}} list containing, first, the contents of \code{eout}, i.e. the provided output of \code{\link{affinity}} or \code{\link{equilibrate}}.
+  To this are added the name of the plotted variable in \code{plotvar}, the plotted values in \code{plotvals}, and the names used for labeling the plot in \code{names}.
+  For 1-D diagrams, \code{plotvals} usually corresponds to the chemical activities of the species (i.e. \code{eout$loga.equil}), or, if \code{alpha} is \code{TRUE}, their mole fractions (degrees of formation).
+  For 2-D diagrams, the output also contains \code{predominant}, giving the numbers (from the \code{\link{species}} definition) of the predominant (aka maximum-affinity) species at each grid point.
+  The rows and columns of \code{predominant} correspond to the x- and y-variables, respectively.
+  Finally, the output for 2-D diagrams contains a \code{lines} component, giving the x- and y-coordinates of the field boundaries computed using \code{\link{contourLines}}; the values are padded to equal length with NAs to faciliate exporting the results using \code{\link{write.csv}}.
 }
 
 \seealso{ 
@@ -293,7 +297,7 @@ stopifnot(species()$name[d$predominant[99, 101]]=="sillimanite")
 
   LaRowe, D. E. and Helgeson, H. C. (2007) Quantifying the energetics of metabolic reactions in diverse biogeochemical systems: electron flow and ATP synthesis. \emph{Geobiology} \bold{5}, 153--168. \url{https://doi.org/10.1111/j.1472-4669.2007.00099.x}
 
-  Majzlan, J., Navrotsky, A., McClesky, R. B. and Alpers, C. N. (2006) Thermodynamic properties and crystal structure refinement of ferricopiapite, coquimbite, rhomboclase, and Fe2(SO4)3(H2O)5. \emph{Eur. J. Mineral.} \bold{18}, 175--186. \url{https://doi.org/10.1127/0935-1221/2006/0018-0175}
+  Majzlan, J., Navrotsky, A., McClesky, R. B. and Alpers, C. N. (2006) Thermodynamic properties and crystal structure refinement of ferricopiapite, coquimbite, rhomboclase, and Fe\s{2}(SO\s{4})\s{3}(H\s{2}O)\s{5}. \emph{Eur. J. Mineral.} \bold{18}, 175--186. \url{https://doi.org/10.1127/0935-1221/2006/0018-0175}
 }
 
 \concept{Main workflow}

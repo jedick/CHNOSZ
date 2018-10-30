@@ -77,7 +77,7 @@ print(out <- data.frame(G.18=G.18.kJ, G.100=G.100.kJ, Z.C=Z.C))
 # make a plot; set units to get correct label
 E.units("J")
 plot(out$Z.C, out$G.18, pch=20, xlim=c(-1.1, 1.1), ylim=c(-200, 500), 
-  xlab=axis.label("ZC"), ylab=axis.label("DGr"))
+  xlab=axis.label("ZC"), ylab=axis.label("DGr", prefix="k"))
 points(out$Z.C, out$G.100, col="red", pch=20)
 legend("topleft", pch=c(20, 20), col=c("black", "red"),
   legend=describe.property(c("T", "T"), c(18, 100)))
