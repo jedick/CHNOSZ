@@ -12,7 +12,8 @@ protbuff        Chemical activities buffered by thiol peroxidases or sigma facto
 yeastgfp        Subcellular locations: log fO2 - log aH2O and log a - log fO2 diagrams
 mosaic          Eh-pH diagram for iron oxides, sulfides and carbonate with two sets of changing basis species
 copper          Another example of mosaic(): complexation of copper with glycine species
-solubility      Solubility of calcite or CO2(gas) as a function of pH
+oldsolub        Old solubility calculations using uniroot()
+solubility      Solubility of calcite and CO2(gas) as a function of pH
 wjd             Gibbs energy minimization: prebiological atmospheres and cell periphery of yeast
 dehydration     log K of dehydration reactions; SVG file contains tooltips and links
 bugstab         Formation potential of microbial proteins in colorectal cancer

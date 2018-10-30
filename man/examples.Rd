@@ -15,9 +15,9 @@
   examples(save.png = FALSE)
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
-    "protbuff", "yeastgfp", "mosaic", "copper", "solubility",
-    "wjd", "bugstab", "Shh", "activity_ratios", "adenine",
-    "DEW", "lambda", "TCA", "go-IU", "bison"),
+    "protbuff", "yeastgfp", "mosaic", "copper", "oldsolub",
+    "solubility", "wjd", "bugstab", "Shh", "activity_ratios",
+    "adenine", "DEW", "lambda", "TCA", "go-IU", "bison"),
     save.png=FALSE)
 }
 
@@ -45,7 +45,8 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{yeastgfp} \tab * Subcellular locations: \logfO2 - \logaH2O and \loga - \logfO2 diagrams (Dick, 2009) \cr
     \code{mosaic} \tab * Eh-pH diagram with two sets of changing basis species (Garrels and Christ, 1965) \cr
     \code{copper} \tab * Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001) \cr
-    \code{solubility} \tab * Solubility of calcite (cf. Manning et al., 2013) or \CO2 (cf. Stumm and Morgan, 1996) \cr
+    \code{oldsolub} \tab Old solubility calculations using \code{\link{uniroot}} \cr
+    \code{solubility} \tab * Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
     \code{wjd} \tab * \eqn{G}{G} minimization: prebiological atmospheres (Dayhoff et al., 1964) and cell periphery of yeast \cr
     \code{dehydration} \tab * \logK of dehydration reactions; SVG file contains tooltips and links \cr
     \code{bugstab} \tab * Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
