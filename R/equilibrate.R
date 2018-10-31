@@ -15,7 +15,9 @@ equilibrate <- function(aout, balance=NULL, loga.balance=NULL,
   ## number of possible species
   nspecies <- length(aout$values)
   ## get the balancing coefficients
-  n.balance <- balance(aout, balance)
+  bout <- balance(aout, balance)
+  n.balance <- bout$n.balance
+  balance <- bout$balance
   ## take selected species in 'ispecies'
   if(length(ispecies)==0) stop("the length of ispecies is zero")
   # take out species that have NA affinities
@@ -249,7 +251,7 @@ equil.reaction <- function(Astar, n.balance, loga.balance, tol=.Machine$double.e
 
 ### unexported functions ###
 
-# return a list containing the balancing coefficients (n) and a textual description (description)
+# return a list containing the balancing coefficients (n.balance) and a textual description (balance)
 balance <- function(aout, balance=NULL) {
   ## generate n.balance from user-given or automatically identified basis species
   ## extracted from equilibrate() 20120929
@@ -302,5 +304,5 @@ balance <- function(aout, balance=NULL) {
       if(any(n.balance==0)) stop("some species have no ", balance, " in the formation reaction")
     }
   }
-  return(n.balance)
+  return(list(n.balance=n.balance, balance=balance))
 }

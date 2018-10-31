@@ -49,7 +49,7 @@ test_that("'groups' and 'alpha' work as expected", {
   # group the species together
   d <- diagram(e, groups=list(1:2, 3:4), plot.it=FALSE)
   # we should find that their activities have been multiplied by the balance coefficients and summed
-  n.balance <- balance(a)
+  n.balance <- balance(a)$n.balance
   expect_equal(d$plotvals[[1]], log10(n.balance[1]*10^e$loga.equil[[1]] + n.balance[2]*10^e$loga.equil[[2]]))
   expect_equal(d$plotvals[[2]], log10(n.balance[3]*10^e$loga.equil[[3]] + n.balance[4]*10^e$loga.equil[[4]]))
   # ask for degrees of formation instead of logarithms of activities

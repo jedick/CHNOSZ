@@ -109,8 +109,14 @@ put.basis <- function(ispecies, logact = rep(NA, length(ispecies))) {
   if("(Z-1)" %in% rownames(comp)) rownames(comp)[rownames(comp)=="(Z-1)"] <- "e-"
   # now check it for validity of basis species
   # the first test: matrix is square
-  if( nrow(comp) > ncol(comp) ) stop("overdetermined system; square stoichiometric matrix needed")
-  if( nrow(comp) < ncol(comp) ) stop("underdetermined system; square stoichiometric matrix needed")
+  if( nrow(comp) > ncol(comp) ) {
+    if("Z" %in% colnames(comp)) stop("the number of basis species is greater than the number of elements and charge")
+    else stop("the number of basis species is greater than the number of elements")
+  }
+  if( nrow(comp) < ncol(comp) ) {
+    if("Z" %in% colnames(comp)) stop("the number of basis species is less than the number of elements and charge")
+    else stop("the number of basis species is less than the number of elements")
+  }
   # the second test: matrix is invertible
   if(class(try(solve(comp), silent=TRUE))=='try-error') 
     stop("singular stoichiometric matrix")

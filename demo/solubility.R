@@ -50,7 +50,7 @@ for(what in c("CO2", "calcite")) {
   A.whatif <- loga.species.track + A.track - loga.equil.track
 
   # predictive: assuming the species distribution doesn't change,
-  # what is the total loga that would give zero affinity?
+  # what is the log(total activity) that gives zero affinity?
   # TODO: modify this according to stoichiometry (species with > 1 of the balanced basis species)
   loga.total <- loga.balance + A.whatif
 

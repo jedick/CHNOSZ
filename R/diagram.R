@@ -53,7 +53,7 @@ diagram <- function(
     if(!"loga.equil" %in% names(eout)) {
       eout.is.aout <- TRUE
       # get the balancing coefficients
-      if(type=="auto") n.balance <- balance(eout, balance)
+      if(type=="auto") n.balance <- balance(eout, balance)$n.balance
       else n.balance <- rep(1, length(eout$values))
     }
   } else if(type %in% rownames(eout$basis)) {

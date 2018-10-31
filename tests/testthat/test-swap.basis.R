@@ -10,7 +10,7 @@ test_that("swap.basis raises errors when needed", {
   expect_error(swap.basis(c("CO2", "H2O"), c("HCO3-", "H2O")), "can only swap one species for one species")
   expect_error(swap.basis("CH4", "C2H5OH"), "basis species .* is not defined")
   expect_error(swap.basis("CO2", "C60"), "is not available")
-  expect_error(swap.basis("CO2", "H2"), "overdetermined")
+  expect_error(swap.basis("CO2", "H2"), "the number of basis species is greater than the number of elements and charge")
 })
 
 test_that("basis.logact only accepts defined elements", {

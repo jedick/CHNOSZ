@@ -924,7 +924,7 @@ To display the species distribution, or degree of formation, add `alpha = TRUE` 
 The possible reactions between species are all balanced on 1 C.
 Therefore, although pH alters the total activity of C, in a system with ideal mixing the total activity of C doesn't affect the relative activities of these species.
 ```{marginfigure}
-See [<span style="color:blue">`demo(solubility)`</span>](../demo) for calculations of the total activity of C in this ideal system; uncomment a line in the demo to run calculations for CO<sub>2</sub> instead of calcite.
+See [<span style="color:blue">`demo(solubility)`</span>](../demo) for calculations of the total activity of C in equilibrium with either CO<sub>2(<i>gas</i>)</sub> or calcite.
 ```
 
 ## Groups of species
