@@ -47,6 +47,7 @@ diagram <- function(
   #    'loga.equil'          - equilibrium activities of species of interest (eout)
   #    name of basis species - equilibrium activity of a basis species (aout)
   #    'saturation'          - affinity=0 line for each species (2D)
+  #    'loga.balance'        - activity of balanced basis species (eout from solubility())
   eout.is.aout <- FALSE
   plot.loga.basis <- FALSE
   if(type %in% c("auto", "saturation")) {
@@ -62,7 +63,7 @@ diagram <- function(
     if(isTRUE(alpha) | is.character(alpha)) stop("equilibrium activities of basis species not available with alpha=TRUE")
     plot.loga.basis <- TRUE
   } else if(type=="loga.equil" & !"loga.equil" %in% names(eout)) stop("'eout' is not the output from equil()") 
-  else if(type!="loga.equil") stop(type, " is not a valid diagram type")
+  else if(!type %in% c("loga.equil", "loga.balance")) stop(type, " is not a valid diagram type")
 
   ## consider a different number of species if we're grouping them together
   ngroups <- length(groups)
@@ -71,6 +72,12 @@ diagram <- function(
   # unless something happens below, we'll plot the loga.equil from equilibrate()
   plotvals <- eout$loga.equil
   plotvar <- "loga.equil"
+
+  ## handle loga.balance here (i.e. solubility calculations)
+  if(type=="loga.balance") {
+    plotvals <- list(eout$loga.balance)
+    plotvar <- "loga.balance"
+  }
 
   ## number of dimensions (T, P or chemical potentials that are varied)
   # length(eout$vars) - the number of variables = the maximum number of dimensions
@@ -209,7 +216,10 @@ diagram <- function(
     ### general plot parameters ###
 
     ## handle line type/width/color arguments
-    if(is.null(lty)) lty <- 1:ngroups
+    if(is.null(lty)) {
+      if(type=="loga.balance") lty <- 1
+      else lty <- 1:ngroups
+    }
     lty <- rep(lty, length.out=ngroups)
     lwd <- rep(lwd, length.out=ngroups)
     col <- rep(col, length.out=ngroups)
@@ -302,7 +312,7 @@ diagram <- function(
           lines(spline.x, spline.y, col=col[i], lty=lty[i], lwd=lwd[i])
         }
       }
-      if(!add & !is.null(legend.x)) {
+      if(type %in% c("auto", "loga.equil") & !is.null(legend.x)) {
         # 20120521: use legend.x=NA to label lines rather than make legend
         if(is.na(legend.x)) {
           maxvals <- do.call(pmax, pv)
@@ -581,7 +591,7 @@ diagram <- function(
             else contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, levels=0, labels=names[i], method=contour.method)
           }
         } else {
-          # otherwise, make contours of properties using first species only
+          # contour solubilities (loga.balance), or properties using first species only
           if(length(plotvals) > 1) warning("showing only first species in 2-D property diagram")
           zs <- plotvals[[1]]
           contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, method=contour.method)

@@ -895,13 +895,13 @@ species(c("CO2", "HCO3-", "CO3-2"))
 a25 <- affinity(pH = c(4, 13))
 a150 <- affinity(pH = c(4, 13), T = 150)
 diagram(a25, dy = 0.4)
-diagram(a150, add = TRUE, col = "red")
+diagram(a150, add = TRUE, names = NULL, col = "red")
 e25 <- equilibrate(a25, loga.balance = -3)
 e150 <- equilibrate(a150, loga.balance = -3)
 diagram(e25, ylim = c(-6, 0), dy = 0.15)
-diagram(e150, add = TRUE, col = "red")
+diagram(e150, add = TRUE, names = NULL, col = "red")
 diagram(e25, alpha = TRUE, dy = -0.25)
-diagram(e150, alpha = TRUE, add = TRUE, col = "red")
+diagram(e150, alpha = TRUE, add = TRUE, names = NULL, col = "red")
 ```
 
 The distribution of aqueous carbonate species as a function of pH (a type of Bjerrum plot) is a classic example of an equilibrium calculation.
