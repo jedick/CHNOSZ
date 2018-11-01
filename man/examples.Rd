@@ -16,7 +16,7 @@
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
     "protbuff", "yeastgfp", "mosaic", "copper", "oldsolub",
-    "solubility", "wjd", "bugstab", "Shh", "activity_ratios",
+    "solubility", "gold", "wjd", "bugstab", "Shh", "activity_ratios",
     "adenine", "DEW", "lambda", "TCA", "go-IU", "bison"),
     save.png=FALSE)
 }
@@ -47,6 +47,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{copper} \tab * Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001) \cr
     \code{oldsolub} \tab Old solubility calculations using \code{\link{uniroot}} \cr
     \code{solubility} \tab * Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
+    \code{gold} \tab * Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009) \cr
     \code{wjd} \tab * \eqn{G}{G} minimization: prebiological atmospheres (Dayhoff et al., 1964) and cell periphery of yeast \cr
     \code{dehydration} \tab * \logK of dehydration reactions; SVG file contains tooltips and links \cr
     \code{bugstab} \tab * Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
@@ -80,6 +81,8 @@ This is probably due to a transition between different regimes for the propertie
 }
 
 \references{
+Akinfiev, N. N. and Zotov, A. V. (2001) Thermodynamic description of chloride, hydrosulfide, and hydroxo complexes of Ag(I), Cu(I), and Au(I) at temperatures of 25-500\degC and pressures of 1-2000 bar. \emph{Geochem. Int.} \bold{39}, 990--1006. \url{http://pleiades.online/cgi-perl/search.pl/?type=abstract&name=geochem&number=10&year=1&page=990}
+
 Aksu, S. and Doyle, F. M. (2001) Electrochemistry of copper in aqueous glycine solutions. \emph{J. Electrochem. Soc.} \bold{148}, B51--B57. \url{https://doi.org/10.1149/1.1344532}
 
 Amend, J. P. and Shock, E. L. (1998) Energetics of amino acid synthesis in hydrothermal ecosystems. \emph{Science} \bold{281}, 1659--1662. \url{https://doi.org/10.1126/science.281.5383.1659}
@@ -114,11 +117,15 @@ Schulte, M. D. and Shock, E. L. (1995) Thermodynamics of Strecker synthesis in h
 
 Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \url{https://doi.org/10.1039/FT9928800803}
 
+Stef{\aacute}nsson, A. and Seward, T. M. (2004) Gold(I) complexing in aqueous sulphide solutions to 500\degC at 500 bar. \emph{Geochim. Cosmochim. Acta} \bold{68}, 4121--4143. \url{https://doi.org/10.1016/j.gca.2004.04.006}
+
 Stumm, W. and Morgan, J. J. (1996) \emph{Aquatic Chemistry: Chemical Equilibria and Rates in Natural Waters}, John Wiley & Sons, New York, 1040 p. \url{http://www.worldcat.org/oclc/31754493}
 
 Sverjensky, D. A., Harrison, B. and Azzolini, D. (2014a) Water in the deep Earth: The dielectric constant and the solubilities of quartz and corundum to 60 kb and 1,200 \degC. \emph{Geochim. Cosmochim. Acta} \bold{129}, 125--145. \url{https://doi.org/10.1016/j.gca.2013.12.019}
 
 Sverjensky, D. A., Stagno, V. and Huang, F. (2014b) Important role for organic carbon in subduction-zone fluids in the deep carbon cycle. \emph{Nat. Geosci.} \bold{7}, 909--913. \url{https://doi.org/10.1038/ngeo2291}
+
+Williams-Jones, A. E., Bowell, R. J. and Migdisov, A. A. (2009) Gold in solution. \emph{Elements} \bold{5}, 281--287. \url{https://doi.org/10.2113/gselements.5.5.281}
 
 Zimmer, K., Zhang, Y., Lu, P., Chen, Y., Zhang, G., Dalkilic, M. and Zhu, C. (2016) SUPCRTBL: A revised and extended thermodynamic dataset and software package of SUPCRT92. \emph{Comp. Geosci.} \bold{90}, 97--111. \url{https://doi.org/10.1016/j.cageo.2016.02.013}
 }

@@ -21,7 +21,7 @@
   axis.label(label, units = NULL, basis = get("thermo")$basis, prefix = "",
     use.molality = FALSE)
   describe.basis(basis = get("thermo")$basis, ibasis = 1:nrow(basis),
-    digits = 1, oneline = FALSE)
+    digits = 1, oneline = FALSE, use.molality = FALSE, use.pH = TRUE)
   describe.property(property, value, digits = 0, oneline = FALSE,
     ret.val = FALSE)
   describe.reaction(reaction, iname = numeric(), states = NULL)
@@ -36,6 +36,7 @@
   \item{value}{numeric, logarithm of activity or fugacity of species, or value of other property}
   \item{use.makeup}{logical, use \code{\link{makeup}} to count the elements?}
   \item{use.molality}{logical, use molality (m) instead of activity (a) for aqueous species?}
+  \item{use.pH}{logical, use pH instead of log activity of H+?}
   \item{property}{character, description of chemical property}
   \item{prefix}{character, prefix for units}
   \item{per}{character, denominator in units}

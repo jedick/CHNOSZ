@@ -2,6 +2,9 @@
 # write descriptions of chemical species, properties, reactions, conditions
 # modified from describe(), axis.label()  20120121 jmd
 
+## if this file is interactively sourced, the following are also needed to provide unexported functions:
+#source("util.character.R")
+
 expr.species <- function(species, state="", log="", value=NULL, use.makeup=FALSE, use.molality=FALSE) {
   # make plotting expressions for chemical formulas
   # that include subscripts, superscripts (if charged)
@@ -38,16 +41,16 @@ expr.species <- function(species, state="", log="", value=NULL, use.makeup=FALSE
         if(coeff==-1) coeff <- "-"
         else if(coeff==1) coeff <- "+"
         else if(coeff > 0) coeff <- paste("+", as.character(coeff), sep="")
-        # append the coefficient (as a superscript if we're not in a log expression)
-        if(log != "") expr <- substitute(a*b, list(a=expr, b=coeff))
-        else expr <- substitute(a^b, list(a=expr, b=coeff))
+        # append the coefficient as a superscript
+        expr <- substitute(a^b, list(a=expr, b=coeff))
       }
     }
   }
   # write a designation of physical state
-  # use the state given in log if it's a gas or neutral aqueous species
-  if(log %in% c("g", "gas")) state <- "g"
-  else if(!"Z" %in% names(elements) & !missing(log)) state <- log
+  ## deprecated 20181101
+  ## use the state given in log if it's a gas or neutral aqueous species
+  #if(log %in% c("g", "gas")) state <- "g"
+  #else if(!"Z" %in% names(elements) & !missing(log)) state <- log
   if(state != "") {
     # subscript it if we're not in a log expression
     if(log != "") expr <- substitute(a*group('(',italic(b),')'),list(a=expr, b=state))
@@ -89,7 +92,7 @@ expr.property <- function(property, use.molality=FALSE) {
   if(property=="Eh") return("Eh")
   if(property=="pH") return("pH")
   if(property=="pe") return("pe")
-  if(property=="IS") return("IS")
+  if(property=="IS") return(quote(italic(I)))
   if(property=="ZC") return(quote(italic(Z)[C]))
   # process each character in the property abbreviation
   prevchar <- character()
@@ -182,15 +185,24 @@ axis.label <- function(label, units=NULL, basis=get("thermo")$basis, prefix="", 
   return(desc)
 }
 
-describe.basis <- function(basis=get("thermo")$basis, ibasis=1:nrow(basis), digits=1, oneline=FALSE) {
+describe.basis <- function(basis = get("thermo")$basis, ibasis = 1:nrow(basis),
+  digits = 1, oneline = FALSE, use.molality = FALSE, use.pH = TRUE) {
   # make expressions for the chemical activities/fugacities of the basis species
   propexpr <- valexpr <- character()
   for(i in ibasis) {
     # propexpr is logarithm of activity or fugacity
-    propexpr <- c(propexpr, expr.species(rownames(basis)[i], log=basis$state[i]))
-    # we have an as.numeric here in case the basis$logact is character
-    # (by inclusion of a buffer for one of the other basis species)
-    valexpr <- c(valexpr, format(round(as.numeric(basis$logact[i]), digits), nsmall=digits))
+    if(rownames(basis)[i]=="H+" & use.pH) thispropexpr <- "pH"
+    else thispropexpr <- expr.species(rownames(basis)[i], log=basis$state[i], use.molality = use.molality)
+    propexpr <- c(propexpr, thispropexpr)
+    if(can.be.numeric(basis$logact[i])) {
+      # we have an as.numeric here in case the basis$logact is character
+      # (by inclusion of a buffer for one of the other basis species)
+      if(thispropexpr=="pH") valexpr <- c(valexpr, format(round(-as.numeric(basis$logact[i]), digits), nsmall=digits))
+      else valexpr <- c(valexpr, format(round(as.numeric(basis$logact[i]), digits), nsmall=digits))
+    } else {
+      # a non-numeric value is the name of a buffer
+      valexpr <- c(valexpr, basis$logact[i])
+    }
   }
   # write an equals sign between the property and value
   desc <- character()

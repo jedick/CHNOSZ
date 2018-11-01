@@ -1,10 +1,14 @@
-CHANGES IN CHNOSZ 1.1.3-45 (2018-10-31)
+CHANGES IN CHNOSZ 1.1.3-46 (2018-11-01)
 ---------------------------------------
 
 NEW FEATURES
 
 - Add solubility(). Run this after equilibrate() to calculate the
   solubility (loga.balance) of the balanced basis species.
+
+- Add demo/gold.R for calculations of Au solubility (based on diagrams
+  from Akinfiev and Zotov, 2001, Stefánsson and Seward, 2004, and
+  Williams-Jones et al., 2009).
 
 - Revise demo/solubility.R to show solubility calculations for CO2(gas)
   and calcite as a function of T and pH.

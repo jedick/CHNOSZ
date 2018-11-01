@@ -31,6 +31,17 @@ For example, set \code{exp} to 2 for calculating the solubility of calcite (CaCO
 The output of \code{solubility} has the same format as that of \code{equilibrate}, and can be used by \code{\link{diagram}} with \code{type = "loga.balance"}. 
 }
 
+\section{Warning}{
+This function has not been tested for systems that may form dimers or higher-order complexes (such as Au\s{2}S\s{2}\S{2-}).
+The lower figures in \code{demo("gold")} are incomplete, as they do not account for other possible reactions not involving Au, particularly the decrease of Cl\S{-} concentration owing to the rising stability of the NaCl\s{(aq)} complex at high temperature.
+Except for relatively simple systems, even after careful refinement, the results from CHNOSZ, which considers chemical activities as the independent variables, will not match the results from speciation-solubility (or Gibbs energy minimization) codes, where the system is defined by its bulk composition.
+}
+
+\seealso{
+\code{demo("solubility")} adds pH-\T diagrams to the CO\s{2} and calcite example here.
+\code{demo("gold")} shows solubility calculations for Au in aqueous solutions with hydroxide, chloride, and hydrosulfide complexes.
+}
+
 \examples{\dontshow{data(thermo)}
 # solubility of CO2 and calcite as a function of pH
 par(mfrow = c(1, 2))

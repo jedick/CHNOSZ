@@ -45,3 +45,4 @@
 \newcommand{\ge}{\ifelse{latex}{\eqn{\ge}}{\ifelse{html}{\out{&ge;}}{≥}}}
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\Delta}{\ifelse{latex}{\eqn{\Delta}}{\ifelse{html}{\out{&Delta;}}{Δ}}}
+\newcommand{\aacute}{\ifelse{latex}{\out{\'{a}}}{\ifelse{html}{\out{&aacute;}}{á}}}

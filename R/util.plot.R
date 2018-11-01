@@ -104,7 +104,7 @@ water.lines <- function(eout, which=c('oxidation','reduction'),
   if(eout$vars[1]=="P") P <- envert(xpoints, "bar")
   # logaH2O is 0 unless given in eout$basis
   iH2O <- match("H2O", rownames(eout$basis))
-  if(is.na(iH2O)) logaH2O <- 0 else logaH2O <- eout$basis$logact[iH2O]
+  if(is.na(iH2O)) logaH2O <- 0 else logaH2O <- as.numeric(eout$basis$logact[iH2O])
   # pH is 7 unless given in eout$basis or plotted on one of the axes
   iHplus <- match("H+", rownames(eout$basis))
   if(eout$vars[1]=="pH") pH <- xpoints
