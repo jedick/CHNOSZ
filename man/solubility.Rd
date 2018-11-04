@@ -38,7 +38,7 @@ Except for relatively simple systems, even after careful refinement, the results
 }
 
 \seealso{
-\code{demo("solubility")} adds pH-\T diagrams to the CO\s{2} and calcite example here.
+\code{demo("solubility")} adds \T-pH diagrams to the CO\s{2} and calcite example here.
 \code{demo("gold")} shows solubility calculations for Au in aqueous solutions with hydroxide, chloride, and hydrosulfide complexes.
 }
 

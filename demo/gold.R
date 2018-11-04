@@ -31,6 +31,8 @@ mod.obigt("Au(HS)2-", G = 3487, H = 4703, S = 77.46, Cp = 3.3, V = 75.1,
 # set up system
 # use H2S here: it's the predominant species at the pH of the QMK buffer -- see sulfur()
 basis(c("Al2O3", "SiO2", "Fe", "Au", "K+", "Cl-", "H2S", "H2O", "oxygen", "H+"))
+# set activity of K+ for 0.5 molal KCl assuming complete dissociation
+basis("K+", log10(0.5))
 
 # create a pH buffer
 mod.buffer("QMK", c("quartz", "muscovite", "K-feldspar"), "cr", 0)
@@ -130,23 +132,22 @@ Au_T1 <- function() {
   basis("H2S", "PPM")
   # apply QMK buffer for pH
   basis("H+", "QMK")
-  # at 400 degC, 1000 bar, and IS=2, the logarithm of the activity coefficient of Cl- is -0.66:
-  loggam <- subcrt("Cl-", T=400, P=1000, IS=2)$out[[1]]$loggam
-  # for a total molality of 2 m (1.5 m NaCl and 0.5 m KCl), the activity of Cl- is about 10:
-  actCl <- 2/10^loggam
-  basis("Cl-", log10(actCl))
+  # calculate solution composition for 2 mol/kg NaCl
+  NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
   # calculate affinity, equilibrate, solubility
-  a <- affinity(T = c(150, 550), P = 1000, IS = 2)
+  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(NaCl$a_Cl), P = 1000, IS = NaCl$IS)
   e <- equilibrate(a)
   s <- solubility(e)
   # make diagram and show total log molality
   diagram(s, ylim = c(-10, -4), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
   # make legend and title
-  dprop <- describe.property(c("P", "IS"), c(1000, 2))
-  legend("topleft", dprop, bty = "n")
-  dbasis <- describe.basis(ibasis = c(6, 9, 7, 10))
-  legend("bottomright", dbasis, bty = "n")
+  dP <- describe.property("P", 1000)
+  dNaCl <- expression(NaCl == 2~mol~kg^-1)
+  dK <- describe.basis(ibasis=5)
+  legend("topleft", c(dP, dNaCl, dK), bty = "n")
+  dbasis <- describe.basis(ibasis = c(9, 7, 10))
+  legend("topright", dbasis, bty = "n")
   title(main=("After Williams-Jones et al., 2009, Fig. 2B"), font.main = 1)
 }
 
@@ -155,36 +156,29 @@ Au_T1 <- function() {
 # (doi:10.1144/SP402.4)
 Au_T2 <- function() {
   species(c("Au(HS)2-", "Au(HS)", "AuOH", "AuCl2-"))
-  # set total activity of H2S
-  # TODO: the paper says total S = 0.01 m,
-  # but a higher activity makes the diagram here closer to
-  # that of Williams-Jones et al., 2009
-  basis("H2S", -1)
+  # approximate activity of H2S for total S = 0.01 m
+  basis("H2S", -2)
   # apply HM buffer for fO2
   basis("O2", "HM")
   # apply QMK buffer for pH
   basis("H+", "QMK")
-  # calculate activity coefficient of Cl- at IS=2
-  loggam <- subcrt("Cl-", T = seq(150, 550, 10), P = 1000, IS = 2)$out[[1]]$loggam
-  # calculate activity of Cl- given a total molality of 2 m (1.5 m NaCl and 0.5 m KCl)
-  actCl <- 2/10^loggam
-  # TODO: adjust Cl- activity for increasing logK(T) of Na+ + Cl- = NaCl
+  # calculate solution composition for 2 mol/kg NaCl
+  NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
   # calculate affinity, equilibrate, solubility
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(actCl), P = 1000, IS = 2)
+  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(NaCl$a_Cl), P = 1000, IS = NaCl$IS)
   e <- equilibrate(a)
   s <- solubility(e)
   # make diagram and show total log molality
   diagram(s, ylim = c(-10, -2), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
   # make legend and title
-  dprop <- describe.property(c("P", "IS"), c(1000, 2))
-  legend("topleft", dprop, bty = "n")
-  # show the log molality of Cl-
-  basis("Cl-", log10(2))
-  dbasis1 <- describe.basis(ibasis = 6, use.molality = TRUE)
-  dbasis2 <- describe.basis(ibasis = c(9, 7, 10))
-  legend("bottomright", c(dbasis1, dbasis2), bty = "n")
-  title(main=("After Williams-Jones et al., 2009, Fig. 2B"), font.main = 1)
+  dP <- describe.property("P", 1000)
+  dNaCl <- expression(NaCl == 2~mol~kg^-1)
+  dK <- describe.basis(ibasis=5)
+  legend("topleft", c(dP, dNaCl, dK), bty = "n")
+  dbasis <- describe.basis(ibasis = c(9, 7, 10))
+  legend("topright", dbasis, bty = "n")
+  title(main=("After Williams-Jones et al., 2009, Fig. 2A"), font.main = 1)
 }
 
 # make plots
