@@ -3,17 +3,18 @@
 # given a total molality of NaCl
 # taking account of ion association: Na+ + Cl- = NaCl(aq)
 # 20181102 jmd first version
+# 20181105 add activity coefficients of Na+
 
 NaCl <- function(T=seq(100, 500, 100), P=1000, m_tot=2) {
   # define a function for the reaction quotient
-  logQ <- function(m_Cl, gamma) {
+  logQ <- function(m_Cl, gam_NaCl, gam_Na, gam_Cl) {
     # starting with Q = a_NaCl / (a_Na+ * a_Cl-),
-    # substitute gam_NaCl = 0, m_NaCl + m_Cl = m_tot, m_Cl = m_Na, gam_Cl = gam_Na = gamma
+    # substitute m_tot = m_NaCl + m_Cl and m_Cl = m_Na
     # to write:
-    log10( (m_tot - m_Cl) / (m_Cl * gamma) ^ 2 )
+    log10( (m_tot - m_Cl) * gam_NaCl / (m_Cl ^ 2 * gam_Na * gam_Cl) )
   }
   # define a function for affinity = log(K / Q)
-  A <- function(m_Cl, gamma, logK) logK - logQ(m_Cl, gamma)
+  A <- function(m_Cl, gam_NaCl, gam_Na, gam_Cl, logK) logK - logQ(m_Cl, gam_NaCl, gam_Na, gam_Cl)
   # calculate equilibrium constant at all temperatures (standard conditions: IS = 0)
   logK <- subcrt(c("Na+", "Cl-", "NaCl"), c(-1, -1, 1), T = T, P = P)$out$logK
   # calculate Debye-Huckel parameters at all temperatures
@@ -23,15 +24,18 @@ NaCl <- function(T=seq(100, 500, 100), P=1000, m_tot=2) {
   ISout <- a_Cl <- numeric(N)
   # initial guess for m_Cl and ionic strength assuming complete dissociation of NaCl
   IS <- m_Cl <- rep(m_tot, N)
-  # the species index for Cl-
-  iCl <- info("Cl-")
+  # the species indices for Cl- and Na+
+  ispecies <- info(c("Na+", "Cl-"))
   # we start by doing calculations for all temperatures
   doit <- !logical(N)
   while(any(doit)) {
     # calculate activity coefficient at given ionic strength
-    gamma <- suppressMessages(10^nonideal(iCl, list(data.frame(G=numeric(N))), IS=IS, T=convert(T, "K"), P=P, A_DH=wout$A_DH, B_DH=wout$B_DH)[[1]]$loggam)
+    speciesprops <- rep(list(data.frame(G=numeric(N))), length(ispecies))
+    gammas <- suppressMessages(nonideal(ispecies, speciesprops, IS=IS, T=convert(T, "K"), P=P, A_DH=wout$A_DH, B_DH=wout$B_DH))
+    gam_Na <- 10^gammas[[1]]$loggam
+    gam_Cl <- 10^gammas[[2]]$loggam
     # solve for m_Cl
-    for(i in which(doit)) m_Cl[i] <- uniroot(A, c(0, m_tot), gamma=gamma[i], logK=logK[i])$root
+    for(i in which(doit)) m_Cl[i] <- uniroot(A, c(0, m_tot), gam_NaCl=1, gam_Na=gam_Na[i], gam_Cl=gam_Cl[i], logK=logK[i])$root
     # calculate new ionic strength and deviation
     ISnew <- m_Cl
     dIS <- ISnew - IS
@@ -40,9 +44,10 @@ NaCl <- function(T=seq(100, 500, 100), P=1000, m_tot=2) {
     # keep going until the deviation in ionic strength at any temperature is less than 0.01
     doit <- abs(dIS) > 0.01
   }
-  # assemble final gamma and activity of Cl-
-  gamma <- suppressMessages(10^nonideal(iCl, list(data.frame(G=numeric(N))), IS=IS, T=convert(T, "K"), P=P, A_DH=wout$A_DH, B_DH=wout$B_DH)[[1]]$loggam)
-  a_Cl <- m_Cl * gamma
+  # assemble final molality of Cl- and gammas
+  gammas <- suppressMessages(nonideal(ispecies, speciesprops, IS=IS, T=convert(T, "K"), P=P, A_DH=wout$A_DH, B_DH=wout$B_DH))
+  gam_Na <- 10^gammas[[1]]$loggam
+  gam_Cl <- 10^gammas[[2]]$loggam
   # return the calculated values
-  list(IS=IS, gamma=gamma, a_Cl=a_Cl)
+  list(IS=IS, m_Cl=m_Cl, gam_Na=gam_Na, gam_Cl=gam_Cl)
 }

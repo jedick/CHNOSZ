@@ -23,7 +23,7 @@ The only reaction considered is Na\S{+} + Cl\S{-} = NaCl(aq).
 The algorithm starts by calculating the equilibrium constant (\emph{K}) of the reaction and assuming complete dissociation of NaCl(aq).
 This also permits calculating the ionic strength from the molalities of Na\S{+} and Cl\S{-}.
 Then, \code{\link{uniroot}} is used to find the equilibrium molality of Cl\S{-}; that is, where the affinity of the reaction (log(\emph{K}/\emph{Q})) becomes zero.
-The activity quotient (\emph{Q}) is evaluated taking account of activity coefficients calculated for the nominal ionic strength (see \code{\link{nonideal}}).
+The activity quotient (\emph{Q}) is evaluated taking account of activity coefficients of Na\S{+} and Cl\S{-} calculated for the nominal ionic strength (see \code{\link{nonideal}}).
 The calculated molality of Cl\S{-} yields a new estimate of the ionic strength of the system.
 The calculations are iterated until the deviation in ionic strength at all temperatures is less than 0.01.
 }
@@ -34,7 +34,7 @@ The formation of other species such as HCl or NaOH is not accounted for.
 }
 
 \value{
-A list with components \samp{IS} (\dQuote{true} ionic strength from concentrations of unpaired ions), \samp{gamma} (activity coefficient of Cl\S{-}), \samp{a_Cl} (activity of Cl\S{-}).
+A list with components \samp{IS} (\dQuote{true} ionic strength from concentrations of unpaired ions), \samp{m_Cl} (molality of Cl\S{-}), \samp{gam_Na}, and \samp{gam_Cl} (activity coefficients of Na\S{+} and Cl\S{-}).
 }
 
 \seealso{
@@ -49,20 +49,20 @@ m.HCh <- 1:6
 IS.HCh <- list(`100`=c(0.992, 1.969, 2.926, 3.858, 4.758, 5.619),
                `300`=c(0.807, 1.499, 2.136, 2.739, 3.317, 3.875),
                `500`=c(0.311, 0.590, 0.861, 1.125, 1.385, 1.642))
-gam.HCh <- list(`100`=c(0.565, 0.545, 0.551, 0.567, 0.589, 0.615),
-                `300`=c(0.366, 0.307, 0.275, 0.254, 0.238, 0.224),
-                `500`=c(0.19, 0.137, 0.111, 0.096, 0.085, 0.077))
+gam_Cl.HCh <- list(`100`=c(0.565, 0.545, 0.551, 0.567, 0.589, 0.615),
+                  `300`=c(0.366, 0.307, 0.275, 0.254, 0.238, 0.224),
+                  `500`=c(0.19, 0.137, 0.111, 0.096, 0.085, 0.077))
 # total molality in the calculation with NaCl()
 m_tot <- seq(1, 6, 0.5)
 N <- length(m_tot)
 # where we'll put the calculated values
 IS.calc <- data.frame(`100`=numeric(N), `300`=numeric(N), `500`=numeric(N))
-gam.calc <- data.frame(`100`=numeric(N), `300`=numeric(N), `500`=numeric(N))
+gam_Cl.calc <- data.frame(`100`=numeric(N), `300`=numeric(N), `500`=numeric(N))
 # NaCl() is *not* vectorized over m_tot, so we use a loop here
 for(i in 1:length(m_tot)) {
   NaCl.out <- NaCl(c(100, 300, 500), P=1000, m_tot=m_tot[i])
   IS.calc[i, ] <- NaCl.out$IS
-  gam.calc[i, ] <- NaCl.out$gamma
+  gam_Cl.calc[i, ] <- NaCl.out$gam_Cl
 }
 # plot ionic strength from HCh and NaCl() as points and lines
 par(mfrow=c(2, 1))
@@ -78,11 +78,13 @@ dprop <- describe.property(rep("T", 3), c(100, 300, 500))
 legend("topleft", dprop, lty=1, pch=1, col=col)
 title(main="H2O + NaCl; HCh (points) and 'NaCl()' (lines)")
 # plot activity coefficient (gamma)
-plot(c(1,6), c(0,1), xlab="NaCl (mol/kg)", ylab="gamma", type="n")
+plot(c(1,6), c(0,1), xlab="NaCl (mol/kg)", ylab=expression(gamma[Cl^"-"]), type="n")
 for(i in 1:3) {
-  points(m.HCh, gam.HCh[[i]], col=col[i])
-  lines(m_tot, gam.calc[, i], col=col[i])
+  points(m.HCh, gam_Cl.HCh[[i]], col=col[i])
+  lines(m_tot, gam_Cl.calc[, i], col=col[i])
 }
+# we should be fairly close
+stopifnot(maxdiff(unlist(gam_Cl.calc[seq(1,11,2), ]), unlist(gam_Cl.HCh)) < 0.034)
 }
 
 \references{

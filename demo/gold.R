@@ -134,8 +134,9 @@ Au_T1 <- function() {
   basis("H+", "QMK")
   # calculate solution composition for 2 mol/kg NaCl
   NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
+  a_Cl <- NaCl$m_Cl * NaCl$gam_Cl
   # calculate affinity, equilibrate, solubility
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(NaCl$a_Cl), P = 1000, IS = NaCl$IS)
+  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(a_Cl), P = 1000, IS = NaCl$IS)
   e <- equilibrate(a)
   s <- solubility(e)
   # make diagram and show total log molality
@@ -164,8 +165,9 @@ Au_T2 <- function() {
   basis("H+", "QMK")
   # calculate solution composition for 2 mol/kg NaCl
   NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
+  a_Cl <- NaCl$m_Cl * NaCl$gam_Cl
   # calculate affinity, equilibrate, solubility
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(NaCl$a_Cl), P = 1000, IS = NaCl$IS)
+  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(a_Cl), P = 1000, IS = NaCl$IS)
   e <- equilibrate(a)
   s <- solubility(e)
   # make diagram and show total log molality

@@ -203,7 +203,9 @@ stopifnot(maxdiff(logK.calc, c(inorganic.logK, organic.logK)) < 0.021)
 loggamma <- c(-0.15, -0.18, -0.22, -0.26, -0.31)
 # activity coefficients calculated in CHNOSZ
 sres <- subcrt("propanoate", T = seq(600, 1000, 100), P = 50000, IS = c(0.39, 0.57, 0.88, 1.45, 2.49))
-stopifnot(maxdiff(sres$out[[1]]$loggam, loggamma) < 0.004)
+stopifnot(maxdiff(sres$out[[1]]$loggam, loggamma) < 0.023)
+# if m_star in nonideal() was zero, we could decrease the tolerance here
+#stopifnot(maxdiff(sres$out[[1]]$loggam, loggamma) < 0.004)
 
 ###########
 ### all done!

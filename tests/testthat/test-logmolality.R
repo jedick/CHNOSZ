@@ -9,11 +9,10 @@ test_that("non-zero ionic strength transforms variables from activity to molalit
   # the long way...
   wprop <- water(c("A_DH", "B_DH"), P=1)
   nonid <- nonideal(c("H+", "HCO3-"), subcrt(c("H+", "HCO3-"), T=25)$out, IS=1, T=298.15, P=1, A_DH=wprop$A_DH, B_DH=wprop$B_DH)
-  # here we have a small difference due to rounding of the expected value:
-  expect_maxdiff(nonid[[2]]$loggam, -0.1790625, 1e-7)
+  # compare with a precalculated value:
+  expect_maxdiff(nonid[[2]]$loggam, -0.1868168, 1e-7)
   # the short way...
   loggam <- subcrt(c("H+", "HCO3-"), T=25, IS=1)$out[[2]]$loggam
-  # we get that loggam(H+)=0 and loggam(HCO3-)=-0.179
   expect_equal(nonid[[2]]$loggam, loggam)
 
   ## take-home message -1: with default settings, the activity coefficient of H+ is always 1

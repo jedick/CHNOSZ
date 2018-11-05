@@ -3,11 +3,12 @@
 # moved to nonideal.R from util.misc.R 20151107
 # added Helgeson method 20171012
 
-nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, method=get("thermo")$opt$nonideal) {
+nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, method=get("thermo")$opt$nonideal) {
   # generate nonideal contributions to thermodynamic properties
   # number of species, same length as speciesprops list
   # T in Kelvin, same length as nrows of speciespropss
   # arguments A_DH and B_DH are needed for all methods other than "Alberty", and P is needed for "bgamma"
+  # m_start is the total molality of all dissolved species; if not given, it is taken to be equal to ionic strength
 
   mettext <- function(method) {
     mettext <- paste(method, "equation")
@@ -28,8 +29,10 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, method=get("th
   }
 
   # check if we have a valid method setting
-  thermo <- get("thermo")
-  if(!thermo$opt$nonideal %in% c("Alberty", "Bdot", "Bdot0", "bgamma", "bgamma0")) stop("invalid setting (", thermo$opt$nonideal, ") in thermo$opt$nonideal")
+  if(!method %in% c("Alberty", "Bdot", "Bdot0", "bgamma", "bgamma0")) {
+    if(missing(method)) stop("invalid setting (", thermo$opt$nonideal, ") in thermo$opt$nonideal")
+    else stop("invalid method (", thermo$opt$nonideal, ")")
+  }
 
   # function to calculate extended Debye-Huckel equation and derivatives using Alberty's parameters
   Alberty <- function(prop = "loggamma", Z, I, T) {
@@ -60,8 +63,8 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, method=get("th
   }
   
   # function for Debye-Huckel equation with B-dot extended term parameter (Helgeson, 1969)
-  Helgeson <- function(prop = "loggamma", Z, I, T, A_DH, B_DH, acirc, bgamma) {
-    loggamma <- - A_DH * Z^2 * I^0.5 / (1 + acirc * B_DH * I^0.5) + bgamma * I
+  Helgeson <- function(prop = "loggamma", Z, I, T, A_DH, B_DH, acirc, m_star, bgamma) {
+    loggamma <- - A_DH * Z^2 * I^0.5 / (1 + acirc * B_DH * I^0.5) - log10(1 + 0.0180153 * m_star) + bgamma * I
     R <- 1.9872  # gas constant, cal K^-1 mol^-1
     if(prop=="loggamma") return(loggamma)
     else if(prop=="G") return(R * T * log(10) * loggamma)
@@ -113,6 +116,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, method=get("th
   else if(method=="Bdot") bgamma <- Bdot(convert(T, "C"))
   else if(method %in% c("Bdot0", "bgamma0")) bgamma <- 0
   # loop over species #2: activity coefficient calculations
+  if(is.null(m_star)) m_star <- IS
   iH <- info("H+")
   ie <- info("e-")
   speciesprops <- as.list(speciesprops)
@@ -132,14 +136,14 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, method=get("th
         myprops[, j] <- myprops[, j] + Alberty(pname, Z[i], IS, T)
         didit <- TRUE
       } else {
-        myprops[, j] <- myprops[, j] + Helgeson(pname, Z[i], IS, T, A_DH, B_DH, acirc[i], bgamma)
+        myprops[, j] <- myprops[, j] + Helgeson(pname, Z[i], IS, T, A_DH, B_DH, acirc[i], m_star, bgamma)
         didit <- TRUE
       }
     }
     # append a loggam column if we did any nonideal calculations of thermodynamic properties
     if(didit) {
       if(method=="Alberty") myprops <- cbind(myprops, loggam = Alberty("loggamma", Z[i], IS, T))
-      else myprops <- cbind(myprops, loggam = Helgeson("loggamma", Z[i], IS, T, A_DH, B_DH, acirc[i], bgamma))
+      else myprops <- cbind(myprops, loggam = Helgeson("loggamma", Z[i], IS, T, A_DH, B_DH, acirc[i], m_star, bgamma))
     }
     speciesprops[[i]] <- myprops
     if(didit) ndid <- ndid + 1

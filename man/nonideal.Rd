@@ -9,7 +9,7 @@ Calculate activity coefficients and adjusted (non-ideal) molal properties of aqu
 
 \usage{
   nonideal(species, speciesprops, IS, T, P, A_DH, B_DH,
-           method=get("thermo")$opt$nonideal)
+           m_star=NULL, method=get("thermo")$opt$nonideal)
   bgamma(TC, P, showsplines = "")
 }
 
@@ -21,6 +21,7 @@ Calculate activity coefficients and adjusted (non-ideal) molal properties of aqu
   \item{P}{numeric, pressure (bar); required for B-dot or b_gamma equation}
   \item{A_DH}{numeric, A Debye-Huckel coefficient; required for B-dot or b_gamma equation}
   \item{B_DH}{numeric, B Debye-Huckel coefficient; required for B-dot or b_gamma equation}
+  \item{m_star}{numeric, total molality of all dissolved species}
   \item{method}{character, \samp{Alberty}, \samp{Bdot}, \samp{Bdot0}, or \samp{bgamma}}
   \item{TC}{numeric, temperature (\degC)}
   \item{showsplines}{character, show isobaric (\samp{T}) or isothermal (\samp{P}) splines}
@@ -37,7 +38,9 @@ The lengths of \code{IS} and \code{T} supplied in the arguments should be equal 
 If \code{method} is \samp{Alberty}, the values of \code{IS} are combined with Alberty's (2003) equation 3.6-1 (extended Debye-Hückel equation; Hückel, 1925) and its derivatives, to calculate adjusted molal properties at the specified ionic strength(s) and temperature(s).
 The adjusted molal properties that can be calculated include \samp{G}, \samp{H}, \samp{S} and \samp{Cp}; any columns in the dataframes of \code{speciesprops} with other names are left untouched.
 
-In addition to \code{IS} and \code{T}, the following two methods depend on values of \code{P}, \code{A_DH}, and \code{B_DH} given in the arguments.
+In addition to \code{IS} and \code{T}, the following two methods depend on values of \code{P}, \code{A_DH}, \code{B_DH}, and \code{m_star} given in the arguments.
+\code{m_star}, the total molality of all dissolved species, is used to compute the mole fraction to molality conversion factor.
+If \code{m_star} is NULL, it is taken to be equal to \code{IS}, which is an underestimate.
 For these methods, \samp{G} is currently the only adjusted molal property that is calculated (but this can be used by \code{\link{subcrt}} to calculate adjusted equilibrium constants).
 
 If \code{method} is \samp{Bdot} (the default setting in CHNOSZ), the \dQuote{B-dot} form of the extended Debye-Hückel equation equation is used.
