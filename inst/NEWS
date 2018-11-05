@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-47 (2018-11-01)
+CHANGES IN CHNOSZ 1.1.3-48 (2018-11-05)
 ---------------------------------------
 
 NEW FEATURES
@@ -9,6 +9,10 @@ NEW FEATURES
 - Add NaCl(), implementing a first-order calculation of the speciation
   of NaCl in water, taking account of activity coefficients and the
   reaction Na+ + Cl- = NaCl(aq).
+
+- nonideal() now uses specific ion-size parameters for different ions,
+  in accord with the HCh package (Shvarov and Bastrakov, 1999).
+  Parameters are from Table 2.7 of Garrels and Christ, 1965.
 
 - Add demo/gold.R for calculations of Au solubility in hydrothermal
   chloride and sulfide solutions (based on diagrams from Akinfiev and

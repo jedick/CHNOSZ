@@ -39,7 +39,7 @@ The adjusted molal properties that can be calculated include \samp{G}, \samp{H},
 
 If \code{method} is \samp{Helgeson}, the \dQuote{B-dot} equation is used.
 This equation seems to have been originally proposed by Huckel, 1925; parameters were derived for use at high temperature and pressure by Helgeson, 1969; Helgeson et al., 1981; Manning, 2013.
-The distance of closest approach (the \dQuote{ion size parameter}) is set to 3.72 Angstrom, which is appropriate for NaCl-dominated solutions (Helgeson et al., 1981 Table 2).
+The distance of closest approach (the \dQuote{ion size parameter}) is taken from the UT_SIZES.REF file of the HCh package (Shvarov and Bastrakov, 1992), which is based on Table 2.7 of Garrels and Christ, 1965.
 In addition to \code{IS} and \code{T}, this method depends on values of \code{P}, \code{A_DH}, and \code{B_DH} given in the arguments.
 The calculation of \dQuote{B-dot}, also used in the equations, is made within \code{nonideal} by calling the \code{Bdot} function.
 For some uses, it is desirable to set the \dQuote{B-dot} parameter to zero; this can be done by setting the method to \code{Helgeson0}.
@@ -138,7 +138,7 @@ par(opar)
 nonideal(oldnon) # same as nonideal("Helgeson")
 
 ## activity coefficients for monovalent ions at 700 degC, 10 kbar
-# after Manning, 2010, Fig. 7
+# after Manning, 2013, Fig. 7
 IS <- c(0.001, 0.01, 0.1, 1, 2, 2.79)
 # we're above 5000 bar, so need to use IAPWS-95 or DEW
 oldwat <- water("DEW")
@@ -153,10 +153,9 @@ speciesprops <- list(data.frame(G=rep(0, length(IS))))
 # the activity coefficient; check values of the latter
 Manning_gamma <- c(0.93, 0.82, 0.65, 0.76, 1.28, 2)
 gamma <- 10^nonidealprops[[1]]$loggam
-# we're getting progressively further from his values with
-# higher IS; not sure why
+# the error is larger at higher IS
 stopifnot(maxdiff(gamma[1], Manning_gamma[1]) < 0.01)
-stopifnot(maxdiff(gamma, Manning_gamma) < 0.23)
+stopifnot(maxdiff(gamma, Manning_gamma) < 0.36)
 
 ## data and splines used for calculating B-dot
 ## (extended term parameter)
@@ -167,6 +166,8 @@ Bdot(showsplines = "P")
 \references{
 Alberty, R. A. (2003) \emph{Thermodynamics of Biochemical Reactions}, John Wiley & Sons, Hoboken, New Jersey, 397 p. \url{http://www.worldcat.org/oclc/51242181}
 
+Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibria}, Harper & Row, New York, 450 p. \url{http://www.worldcat.org/oclc/517586}
+
 Helgeson, H. C. (1969) Thermodynamics of hydrothermal systems at elevated temperatures and pressures. \emph{Am. J. Sci.} \bold{267}, 729--804. \url{https://doi.org/10.2475/ajs.267.7.729}
 
 Helgeson, H. C., Kirkham, D. H. and Flowers, G. C. (1981) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures. IV. Calculation of activity coefficients, osmotic coefficients, and apparent molal and standard and relative partial molal properties to 600\degC and 5 Kb. \emph{Am. J. Sci.} \bold{281}, 1249--1516. \url{https://doi.org/10.2475/ajs.281.10.1249}
@@ -176,6 +177,8 @@ Hückel, E. (1925). The theory of concentrated, aqueous solutions of strong elec
 Manning, C. E. (2013) Thermodynamic modeling of fluid-rock interaction at mid-crustal to upper-mantle conditions. \emph{Rev. Mineral. Geochem.} \bold{76}, 135--164. \url{https://doi.org/10.2138/rmg.2013.76.5}
 
 Manning, C. E., Shock, E. L. and Sverjensky, D. A. (2013) The chemistry of carbon in aqueous fluids at crustal and upper-mantle conditions: Experimental and theoretical constraints. \emph{Rev. Mineral. Geochem.} \bold{75}, 109--148. \url{https://doi.org/10.2138/rmg.2013.75.5}
+
+Shvarov, Y. and Bastrakov, E. (1999) HCh: A software package for geochemical equilibrium modelling. User's Guide. \emph{Australian Geological Survey Organisation} \bold{1999/25}.
 }
 
 \concept{Thermodynamic calculations}

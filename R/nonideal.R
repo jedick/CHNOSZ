@@ -54,9 +54,9 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, method=get("th
   }
   
   # function for Debye-Huckel equation with B-dot extended term parameter (Helgeson, 1969)
-  Helgeson <- function(Z, I, T, P, A_DH, B_DH, prop = "loggamma") {
-    # "distance of closest approach" of ions in NaCl solutions (HKF81 Table 2)
-    acirc <- 3.72e-8  # cm
+  Helgeson <- function(Z, I, T, P, A_DH, B_DH, prop = "loggamma", acirc) {
+    ## "distance of closest approach" of ions in NaCl solutions (HKF81 Table 2)
+    #acirc <- 3.72e-8  # cm
     if(method=="Helgeson") loggamma <- - A_DH * Z^2 * I^0.5 / (1 + acirc * B_DH * I^0.5) + Bdot * I
     else if(method=="Helgeson0") loggamma <- - A_DH * Z^2 * I^0.5 / (1 + acirc * B_DH * I^0.5)
     R <- 1.9872  # gas constant, cal K^-1 mol^-1
@@ -70,39 +70,69 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, method=get("th
 
   # get species indices
   if(!is.numeric(species[[1]])) species <- info(species, "aq")
+  # loop over species #1: get the charge
+  Z <- numeric(length(species))
+  for(i in 1:length(species)) {
+    # force a charge count even if it's zero
+    mkp <- makeup(c("Z0", species[i]), sum=TRUE)
+    thisZ <- mkp[match("Z", names(mkp))]
+    # don't do anything for neutral species (Z absent from formula or equal to zero)
+    if(is.na(thisZ)) next
+    if(thisZ==0) next
+    Z[i] <- thisZ
+  }
+  # get species formulas to assign acirc 20181105
+  if(grepl("Helgeson", method)) {
+    formula <- get("thermo")$obigt$formula[species]
+    # "ion size paramter" taken from UT_SIZES.REF of HCh package (Shvarov and Bastrakov, 1999),
+    # based on Table 2.7 of Garrels and Christ, 1965
+    acircdat <- c("Rb+"=2.5, "Cs+"=2.5, "NH4+"=2.5, "Tl+"=2.5, "Ag+"=2.5,
+      "K+"=3, "Cl-"=3, "Br-"=3, "I-"=3, "NO3-"=3,
+      "OH-"=3.5, "F-"=3.5, "HS-"=3.5, "BrO3-"=3.5, "IO3-"=3.5, "MnO4-"=3.5,
+      "Na+"=4, "HCO3-"=4, "H2PO4-"=4, "HSO3-"=4, "Hg2+2"=4, "SO4-2"=4, "SeO4-2"=4, "CrO4-2"=4, "HPO4-2"=4, "PO4-3"=4,
+      "Pb+2"=4.5, "CO3-2"=4.5, "SO4-2"=4.5, "MoO4-2"=4.5,
+      "Sr+2"=5, "Ba+2"=5, "Ra+2"=5, "Cd+2"=5, "Hg+2"=5, "S-2"=5, "WO4-2"=5,
+      "Li+"=6, "Ca+2"=6, "Cu+2"=6, "Zn+2"=6, "Sn+2"=6, "Mn+2"=6, "Fe+2"=6, "Ni+2"=6, "Co+2"=6,
+      "Mg+2"=8, "Be+2"=8,
+      "H+"=9, "Al+3"=9, "Cr+3"=9, "La+3"=9, "Ce+3"=9, "Y+3"=9, "Eu+3"=9,
+      "Th+4"=11, "Zr+4"=11, "Ce+4"=11, "Sn+4"=11)
+    acirc <- as.numeric(acircdat[formula])
+    acirc[is.na(acirc)] <- 4.5
+    # make a message
+    nZ <- sum(Z!=0)
+    if(nZ > 1) message("nonideal: using ", paste(acirc[Z!=0], collapse=" "), " for ion size parameters of ", paste(formula[Z!=0], collapse=" "))
+    else if(nZ==1) message("nonideal: using ", acirc[Z!=0], " for ion size parameter of ", formula[Z!=0])
+    # use correct units for ion size paramter
+    acirc <- acirc * 10^-8
+  }
+  # loop over species #2: activity coefficient calculations
   iH <- info("H+")
   ie <- info("e-")
   speciesprops <- as.list(speciesprops)
   ndid <- 0
-  # loop over species
   for(i in 1:length(species)) {
     myprops <- speciesprops[[i]]
-    # get the charge from the chemical formula
-    # force a charge count even if it's zero
-    mkp <- makeup(c("Z0", species[i]), sum=TRUE)
-    Z <- mkp[match("Z", names(mkp))]
-    # don't do anything for neutral species (Z absent from formula or equal to zero)
-    if(is.na(Z)) next
-    if(Z==0) next
     # to keep unit activity coefficients of the proton and electron
     if(species[i] == iH & get("thermo")$opt$ideal.H) next
     if(species[i] == ie & get("thermo")$opt$ideal.e) next
+    # skip neutral species
+    if(Z[i]==0) next
     didit <- FALSE
     for(j in 1:ncol(myprops)) {
       pname <- colnames(myprops)[j]
       if(method=="Alberty" & pname %in% c("G", "H", "S", "Cp")) {
-        myprops[, j] <- myprops[, j] + Alberty(Z, IS, T, pname)
+        myprops[, j] <- myprops[, j] + Alberty(Z[i], IS, T, pname)
         didit <- TRUE
       } else if(grepl("Helgeson", method) & pname %in% c("G", "H", "S", "Cp")) {
-        myprops[, j] <- myprops[, j] + Helgeson(Z, IS, T, P, A_DH, B_DH, pname)
+        myprops[, j] <- myprops[, j] + Helgeson(Z[i], IS, T, P, A_DH, B_DH, pname, acirc[i])
         didit <- TRUE
       }
     }
     # append a loggam column if we did any nonideal calculations of thermodynamic properties
     if(didit) {
-      if(method=="Alberty") myprops <- cbind(myprops, loggam = Alberty(Z, IS, T))
+      if(method=="Alberty") myprops <- cbind(myprops, loggam = Alberty(Z[i], IS, T))
       else if(grepl("Helgeson", method)) {
-        myprops <- cbind(myprops, loggam = Helgeson(Z, IS, T, P, A_DH, B_DH))
+        myprops <- cbind(myprops, loggam = Helgeson(Z[i], IS, T, P, A_DH, B_DH, "loggamma", acirc[i]))
       }
     }
     speciesprops[[i]] <- myprops

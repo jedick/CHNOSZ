@@ -42,7 +42,7 @@ A list with components \samp{IS} (\dQuote{true} ionic strength from concentratio
 }
 
 \examples{\dontshow{data(thermo)}
-# ionic strength and activity coefficient of Cl-
+# ionic strength of solution and activity coefficient of Cl-
 # from HCh (Shvarov and Bastrakov, 1999) at 1000 bar,
 # 100, 200, and 300 degress C, and 1 to 6 molal NaCl
 m.HCh <- 1:6
@@ -60,7 +60,7 @@ IS.calc <- data.frame(`100`=numeric(N), `300`=numeric(N), `500`=numeric(N))
 gam.calc <- data.frame(`100`=numeric(N), `300`=numeric(N), `500`=numeric(N))
 # NaCl() is *not* vectorized over m_tot, so we use a loop here
 for(i in 1:length(m_tot)) {
-  NaCl.out <- NaCl(c(100, 300, 500), m_tot=m_tot[i])
+  NaCl.out <- NaCl(c(100, 300, 500), P=1000, m_tot=m_tot[i])
   IS.calc[i, ] <- NaCl.out$IS
   gam.calc[i, ] <- NaCl.out$gamma
 }

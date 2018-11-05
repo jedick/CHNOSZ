@@ -75,3 +75,35 @@ test_that("nonideality calculations work for Zn", {
   expect_type(subcrt(c("Zn+2", "Cl-", "ZnCl+"), c(-1, -1, 1), T=200, P=16, IS=0.05), "list")   
 })
 
+
+# 20181105
+test_that("activity coefficients are similar to those from HCh", {
+  # ionic strength of solution and activity coefficients of Na+ and Cl-
+  # from HCh (Shvarov and Bastrakov, 1999) at 1000 bar,
+  # 100, 200, and 300 degress C, and 1 to 6 molal NaCl
+  # using the default "B-dot" activity coefficient model (Helgeson, 1969)
+  IS.HCh <- list(`100`=c(0.992, 1.969, 2.926, 3.858, 4.758, 5.619),
+                 `300`=c(0.807, 1.499, 2.136, 2.739, 3.317, 3.875),
+                 `500`=c(0.311, 0.590, 0.861, 1.125, 1.385, 1.642))
+  gamCl.HCh <- list(`100`=c(0.565, 0.545, 0.551, 0.567, 0.589, 0.615),
+                    `300`=c(0.366, 0.307, 0.275, 0.254, 0.238, 0.224),
+                    `500`=c(0.19, 0.137, 0.111, 0.096, 0.085, 0.077))
+  gamNa.HCh <- list(`100`=c(0.620, 0.616, 0.635, 0.662, 0.695, 0.730),
+                    `300`=c(0.421, 0.368, 0.339, 0.318, 0.302, 0.288),
+                    `500`=c(0.233, 0.180, 0.155, 0.138, 0.126, 0.117))
+  # calculate activity coefficent of Cl- at each temperature
+  gamCl.100 <- 10^subcrt("Cl-", T=100, P=1000, IS=IS.HCh$`100`)$out$`Cl-`$loggam
+  gamCl.300 <- 10^subcrt("Cl-", T=300, P=1000, IS=IS.HCh$`300`)$out$`Cl-`$loggam
+  gamCl.500 <- 10^subcrt("Cl-", T=500, P=1000, IS=IS.HCh$`500`)$out$`Cl-`$loggam
+  # TODO: get lower differences by adjusting the activity coefficient model in CHNOSZ
+  expect_maxdiff(gamCl.100, gamCl.HCh$`100`, 0.73)
+  expect_maxdiff(gamCl.300, gamCl.HCh$`300`, 0.22)
+  expect_maxdiff(gamCl.500, gamCl.HCh$`500`, 0.04)
+  # calculate activity coefficent of Cl- at each temperature
+  gamNa.100 <- 10^subcrt("Na+", T=100, P=1000, IS=IS.HCh$`100`)$out$`Na+`$loggam
+  gamNa.300 <- 10^subcrt("Na+", T=300, P=1000, IS=IS.HCh$`300`)$out$`Na+`$loggam
+  gamNa.500 <- 10^subcrt("Na+", T=500, P=1000, IS=IS.HCh$`500`)$out$`Na+`$loggam
+  expect_maxdiff(gamNa.100, gamNa.HCh$`100`, 0.67)
+  expect_maxdiff(gamNa.300, gamNa.HCh$`300`, 0.18)
+  expect_maxdiff(gamNa.500, gamNa.HCh$`500`, 0.06)
+})
