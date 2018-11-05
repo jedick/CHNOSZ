@@ -155,8 +155,8 @@ species(c(inorganics, organics))
 IS <- c(0.39, 0.57, 0.88, 1.45, 2.49)
 pH <- c(3.80, 3.99, 4.14, 4.25, 4.33)
 molC <- c(0.03, 0.2, 1, 4, 20)
-## use Debye-Huckel equation with B-dot set to zero
-nonideal("Helgeson0")
+## use extended Debye-Huckel equation with b_gamma set to zero
+nonideal("bgamma0")
 ## calculate affinities on the T-logfO2-pH-IS transect
 a <- affinity(T = T, O2 = buf$O2 - 2, IS = IS, pH = pH, P = 50000)
 ## calculate metastable equilibrium activities using the total

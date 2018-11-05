@@ -96,14 +96,14 @@ test_that("activity coefficients are similar to those from HCh", {
   gamCl.300 <- 10^subcrt("Cl-", T=300, P=1000, IS=IS.HCh$`300`)$out$`Cl-`$loggam
   gamCl.500 <- 10^subcrt("Cl-", T=500, P=1000, IS=IS.HCh$`500`)$out$`Cl-`$loggam
   # TODO: get lower differences by adjusting the activity coefficient model in CHNOSZ
-  expect_maxdiff(gamCl.100, gamCl.HCh$`100`, 0.73)
-  expect_maxdiff(gamCl.300, gamCl.HCh$`300`, 0.22)
-  expect_maxdiff(gamCl.500, gamCl.HCh$`500`, 0.04)
+  expect_maxdiff(gamCl.100, gamCl.HCh$`100`, 0.13)
+  expect_maxdiff(gamCl.300, gamCl.HCh$`300`, 0.05)
+  expect_maxdiff(gamCl.500, gamCl.HCh$`500`, 0.02)
   # calculate activity coefficent of Cl- at each temperature
   gamNa.100 <- 10^subcrt("Na+", T=100, P=1000, IS=IS.HCh$`100`)$out$`Na+`$loggam
   gamNa.300 <- 10^subcrt("Na+", T=300, P=1000, IS=IS.HCh$`300`)$out$`Na+`$loggam
   gamNa.500 <- 10^subcrt("Na+", T=500, P=1000, IS=IS.HCh$`500`)$out$`Na+`$loggam
-  expect_maxdiff(gamNa.100, gamNa.HCh$`100`, 0.67)
-  expect_maxdiff(gamNa.300, gamNa.HCh$`300`, 0.18)
-  expect_maxdiff(gamNa.500, gamNa.HCh$`500`, 0.06)
+  expect_maxdiff(gamNa.100, gamNa.HCh$`100`, 0.16)
+  expect_maxdiff(gamNa.300, gamNa.HCh$`300`, 0.06)
+  expect_maxdiff(gamNa.500, gamNa.HCh$`500`, 0.02)
 })

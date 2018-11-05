@@ -1,6 +1,6 @@
-# CHNOSZ/demo/solubility.R: vectorized solubility without uniroot
-# 20181030 adapted from CHNOSZ/demo/oldsolub.R
-# 20181031 use new solubility(); add T-pH plots
+# CHNOSZ/demo/solubility.R: solubility of CO2 and calcite
+# 20150306 jmd first version; used uniroot() to find zero affinity
+# 20181031 use new vectorized, non-uniroot solubility(); add T-pH plots
 
 # for comparison with published CO2 solubility plot, see Fig. 4.5 in
 # Stumm and Morgan, 1996, Aquatic Chemistry: Chemical Equilibria and Rates in Natural Waters

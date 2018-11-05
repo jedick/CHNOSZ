@@ -280,7 +280,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     # always get density
     H2O.props <- "rho"
     # calculate A_DH and B_DH if we're using the B-dot (Helgeson) equation
-    if(any(IS != 0) & grepl("Helgeson", thermo$opt$nonideal)) H2O.props <- c(H2O.props, "A_DH", "B_DH")
+    if(any(IS != 0) & thermo$opt$nonideal %in% c("Bdot", "Bdot0", "bgamma", "bgamma0")) H2O.props <- c(H2O.props, "A_DH", "B_DH")
     # get other properties for H2O only if it's in the reaction
     if(any(isH2O)) H2O.props <- c(H2O.props, eosprop)
     hkfstuff <- hkf(eosprop, parameters = param, T = T, P = P, H2O.props=H2O.props)
@@ -298,7 +298,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     }
     # calculate activity coefficients if ionic strength is not zero
     if(any(IS != 0)) {
-      if(grepl("Helgeson", thermo$opt$nonideal)) p.aq <- nonideal(iphases[isaq], p.aq, newIS, T, P, H2O.PT$A_DH, H2O.PT$B_DH)
+      if(thermo$opt$nonideal %in% c("Bdot", "Bdot0", "bgamma", "bgamma0")) p.aq <- nonideal(iphases[isaq], p.aq, newIS, T, P, H2O.PT$A_DH, H2O.PT$B_DH)
       else if(thermo$opt$nonideal=="Alberty") p.aq <- nonideal(iphases[isaq], p.aq, newIS, T)
     }
     outprops <- c(outprops, p.aq)
