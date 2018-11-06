@@ -79,9 +79,11 @@ test_that("nonideality calculations work for Zn", {
 # 20181105
 test_that("activity coefficients are similar to those from HCh", {
   # ionic strength of solution and activity coefficients of Na+ and Cl-
-  # from HCh (Shvarov and Bastrakov, 1999) at 1000 bar,
-  # 100, 200, and 300 degress C, and 1 to 6 molal NaCl
+  # calculated with HCh version 3.7 (Shvarov and Bastrakov, 1999) at 1000 bar,
+  # 100, 200, and 300 degress C, and 1 to 6 molal NaCl,
   # using the default "B-dot" activity coefficient model (Helgeson, 1969)
+  # and the default setting for the Setchenow equation,
+  # for which the only non-zero term is the mole fraction to molality conversion factor
   IS.HCh <- list(`100`=c(0.992, 1.969, 2.926, 3.858, 4.758, 5.619),
                  `300`=c(0.807, 1.499, 2.136, 2.739, 3.317, 3.875),
                  `500`=c(0.311, 0.590, 0.861, 1.125, 1.385, 1.642))
@@ -91,19 +93,28 @@ test_that("activity coefficients are similar to those from HCh", {
   gamNa.HCh <- list(`100`=c(0.620, 0.616, 0.635, 0.662, 0.695, 0.730),
                     `300`=c(0.421, 0.368, 0.339, 0.318, 0.302, 0.288),
                     `500`=c(0.233, 0.180, 0.155, 0.138, 0.126, 0.117))
+  gamNaCl.HCh <- list(`100`=c(0.965, 0.933, 0.904, 0.876, 0.850, 0.827),
+                      `300`=c(0.968, 0.941, 0.915, 0.892, 0.870, 0.849),
+                      `500`=c(0.977, 0.955, 0.935, 0.915, 0.897, 0.879))
   # calculate activity coefficent of Cl- at each temperature
   gamCl.100 <- 10^subcrt("Cl-", T=100, P=1000, IS=IS.HCh$`100`)$out$`Cl-`$loggam
   gamCl.300 <- 10^subcrt("Cl-", T=300, P=1000, IS=IS.HCh$`300`)$out$`Cl-`$loggam
   gamCl.500 <- 10^subcrt("Cl-", T=500, P=1000, IS=IS.HCh$`500`)$out$`Cl-`$loggam
-  # TODO: get lower differences by adjusting the activity coefficient model in CHNOSZ
   expect_maxdiff(gamCl.100, gamCl.HCh$`100`, 0.07)
   expect_maxdiff(gamCl.300, gamCl.HCh$`300`, 0.03)
   expect_maxdiff(gamCl.500, gamCl.HCh$`500`, 0.009)
-  # calculate activity coefficent of Cl- at each temperature
+  # calculate activity coefficent of Na+ at each temperature
   gamNa.100 <- 10^subcrt("Na+", T=100, P=1000, IS=IS.HCh$`100`)$out$`Na+`$loggam
   gamNa.300 <- 10^subcrt("Na+", T=300, P=1000, IS=IS.HCh$`300`)$out$`Na+`$loggam
   gamNa.500 <- 10^subcrt("Na+", T=500, P=1000, IS=IS.HCh$`500`)$out$`Na+`$loggam
   expect_maxdiff(gamNa.100, gamNa.HCh$`100`, 0.08)
   expect_maxdiff(gamNa.300, gamNa.HCh$`300`, 0.03)
   expect_maxdiff(gamNa.500, gamNa.HCh$`500`, 0.013)
+  # calculate activity coefficent of NaCl at each temperature
+  gamNaCl.100 <- 10^subcrt("NaCl", T=100, P=1000, IS=IS.HCh$`100`)$out$`NaCl`$loggam
+  gamNaCl.300 <- 10^subcrt("NaCl", T=300, P=1000, IS=IS.HCh$`300`)$out$`NaCl`$loggam
+  gamNaCl.500 <- 10^subcrt("NaCl", T=500, P=1000, IS=IS.HCh$`500`)$out$`NaCl`$loggam
+  expect_maxdiff(gamNaCl.100, gamNaCl.HCh$`100`, 0.09)
+  expect_maxdiff(gamNaCl.300, gamNaCl.HCh$`300`, 0.09)
+  expect_maxdiff(gamNaCl.500, gamNaCl.HCh$`500`, 0.10)
 })

@@ -30,8 +30,10 @@ mod.obigt("Au(HS)2-", G = 3487, H = 4703, S = 77.46, Cp = 3.3, V = 75.1,
 
 # set up system
 # use H2S here: it's the predominant species at the pH of the QMK buffer -- see sulfur()
-basis(c("Al2O3", "SiO2", "Fe", "Au", "K+", "Cl-", "H2S", "H2O", "oxygen", "H+"))
-# set activity of K+ for 0.5 molal KCl assuming complete dissociation
+basis(c("Al2O3", "quartz", "Fe", "Au", "K+", "Cl-", "H2S", "H2O", "oxygen", "H+"))
+# set molality of K+ in completely dissociated 0.5 molal KCl
+# NOTE: This value is used only for making the legend;
+# activities corrected for ionic strength are computed below
 basis("K+", log10(0.5))
 
 # create a pH buffer
@@ -135,8 +137,12 @@ Au_T1 <- function() {
   # calculate solution composition for 2 mol/kg NaCl
   NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
   a_Cl <- NaCl$m_Cl * NaCl$gam_Cl
+  # using this ionic strength, calculate the activity of K+
+  # assuming complete dissociation of 0.5 mol/kg KCl
+  gam_K <- 10^subcrt("K+", T = seq(150, 550, 10), P = 1000, IS=NaCl$IS)$out$`K+`$loggam
+  a_K <- 0.5 * gam_K
   # calculate affinity, equilibrate, solubility
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(a_Cl), P = 1000, IS = NaCl$IS)
+  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(a_Cl), `K+` = log10(a_K), P = 1000, IS = NaCl$IS)
   e <- equilibrate(a)
   s <- solubility(e)
   # make diagram and show total log molality
@@ -145,7 +151,7 @@ Au_T1 <- function() {
   # make legend and title
   dP <- describe.property("P", 1000)
   dNaCl <- expression(NaCl == 2~mol~kg^-1)
-  dK <- describe.basis(ibasis=5)
+  dK <- describe.basis(ibasis=5, use.molality=TRUE)
   legend("topleft", c(dP, dNaCl, dK), bty = "n")
   dbasis <- describe.basis(ibasis = c(9, 7, 10))
   legend("topright", dbasis, bty = "n")
@@ -166,8 +172,12 @@ Au_T2 <- function() {
   # calculate solution composition for 2 mol/kg NaCl
   NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
   a_Cl <- NaCl$m_Cl * NaCl$gam_Cl
+  # using this ionic strength, calculate the activity of K+
+  # assuming complete dissociation of 0.5 mol/kg KCl
+  gam_K <- 10^subcrt("K+", T = seq(150, 550, 10), P = 1000, IS=NaCl$IS)$out$`K+`$loggam
+  a_K <- 0.5 * gam_K
   # calculate affinity, equilibrate, solubility
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(a_Cl), P = 1000, IS = NaCl$IS)
+  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(a_Cl), `K+` = log10(a_K), P = 1000, IS = NaCl$IS)
   e <- equilibrate(a)
   s <- solubility(e)
   # make diagram and show total log molality
@@ -176,7 +186,7 @@ Au_T2 <- function() {
   # make legend and title
   dP <- describe.property("P", 1000)
   dNaCl <- expression(NaCl == 2~mol~kg^-1)
-  dK <- describe.basis(ibasis=5)
+  dK <- describe.basis(ibasis=5, use.molality=TRUE)
   legend("topleft", c(dP, dNaCl, dK), bty = "n")
   dbasis <- describe.basis(ibasis = c(9, 7, 10))
   legend("topright", dbasis, bty = "n")

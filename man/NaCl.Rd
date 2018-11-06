@@ -23,7 +23,7 @@ The only reaction considered is Na\S{+} + Cl\S{-} = NaCl(aq).
 The algorithm starts by calculating the equilibrium constant (\emph{K}) of the reaction and assuming complete dissociation of NaCl(aq).
 This also permits calculating the ionic strength from the molalities of Na\S{+} and Cl\S{-}.
 Then, \code{\link{uniroot}} is used to find the equilibrium molality of Cl\S{-}; that is, where the affinity of the reaction (log(\emph{K}/\emph{Q})) becomes zero.
-The activity quotient (\emph{Q}) is evaluated taking account of activity coefficients of Na\S{+} and Cl\S{-} calculated for the nominal ionic strength (see \code{\link{nonideal}}).
+The activity quotient (\emph{Q}) is evaluated taking account of activity coefficients of Na\S{+}, Cl\S{-}, and NaCl(aq) calculated for the nominal ionic strength (see \code{\link{nonideal}}).
 The calculated molality of Cl\S{-} yields a new estimate of the ionic strength of the system.
 The calculations are iterated until the deviation in ionic strength at all temperatures is less than 0.01.
 }
@@ -43,7 +43,7 @@ A list with components \samp{IS} (\dQuote{true} ionic strength from concentratio
 
 \examples{\dontshow{data(thermo)}
 # ionic strength of solution and activity coefficient of Cl-
-# from HCh (Shvarov and Bastrakov, 1999) at 1000 bar,
+# from HCh version 3.7 (Shvarov and Bastrakov, 1999) at 1000 bar,
 # 100, 200, and 300 degress C, and 1 to 6 molal NaCl
 m.HCh <- 1:6
 IS.HCh <- list(`100`=c(0.992, 1.969, 2.926, 3.858, 4.758, 5.619),
@@ -67,8 +67,11 @@ for(i in 1:length(m_tot)) {
 # plot ionic strength from HCh and NaCl() as points and lines
 par(mfrow=c(2, 1))
 col <- c("black", "red", "orange")
-plot(c(1,6), c(0,6), xlab="NaCl (mol/kg)", ylab="I (mol/kg)", type="n")
+plot(c(1,6), c(0,6), xlab="NaCl (mol/kg)", ylab=axis.label("IS"), type="n")
 for(i in 1:3) {
+  # NOTE: the differences are probably mostly due to different models
+  # for the properties of NaCl(aq) (HCh: B.Ryhzenko model;
+  # CHONSZ: revised HKF with parameters from Shock et al., 1997)
   points(m.HCh, IS.HCh[[i]], col=col[i])
   lines(m_tot, IS.calc[, i], col=col[i])
 }
@@ -77,14 +80,14 @@ abline(0, 1, lty=3)
 dprop <- describe.property(rep("T", 3), c(100, 300, 500))
 legend("topleft", dprop, lty=1, pch=1, col=col)
 title(main="H2O + NaCl; HCh (points) and 'NaCl()' (lines)")
+plot(c(1,6), c(0,0.8), xlab="NaCl (mol/kg)", ylab=expression(gamma[Cl^"-"]), type="n")
 # plot activity coefficient (gamma)
-plot(c(1,6), c(0,1), xlab="NaCl (mol/kg)", ylab=expression(gamma[Cl^"-"]), type="n")
 for(i in 1:3) {
   points(m.HCh, gam_Cl.HCh[[i]], col=col[i])
   lines(m_tot, gam_Cl.calc[, i], col=col[i])
 }
 # we should be fairly close
-stopifnot(maxdiff(unlist(gam_Cl.calc[seq(1,11,2), ]), unlist(gam_Cl.HCh)) < 0.034)
+stopifnot(maxdiff(unlist(gam_Cl.calc[seq(1,11,2), ]), unlist(gam_Cl.HCh)) < 0.033)
 }
 
 \references{

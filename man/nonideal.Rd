@@ -4,7 +4,7 @@
 \alias{bgamma}
 \title{Activity coefficients of aqueous species}
 \description{
-Calculate activity coefficients and adjusted (non-ideal) molal properties of aqueous species.
+Calculate activity coefficients and adjusted (transformed) molal properties of aqueous species.
 }
 
 \usage{
@@ -28,12 +28,16 @@ Calculate activity coefficients and adjusted (non-ideal) molal properties of aqu
 }
 
 \details{
-\code{nonideal} takes a list of dataframes (in \code{speciesprops}) containing the standard molal properties of the identified \code{species}.
+This function calculates activity coefficients and adjusted thermodynamic proeprties (i.e. transformed standard Gibbs energy) for charged and neutral aqueous species.
+The species are identified by name or species index in \code{species}.
+\code{speciesprops} is a list of dataframes containing the input standard molal properties; normally, at least one column is \samp{G} for Gibbs energy.
 The function calculates the *adjusted* properties for given ionic strength (\code{IS}); they are equal to the *standard* values only at IS=0.
-The function bypasses (leaves unchanged) properties of all species whose charge (determined by the number of Z in their \code{\link{makeup}}) is equal to zero.
-The proton (\Hplus) and electron (\eminus) are also bypassed by default; this makes sense if you are setting the pH, i.e. activity of \Hplus, to some value.
-To apply the calculations to H+ and/or e-, change \code{\link{thermo}$opt$ideal.H} or \code{ideal.e} to FALSE.
 The lengths of \code{IS} and \code{T} supplied in the arguments should be equal to the number of rows of each dataframe in \code{speciesprops}, or length one to use single values throughout.
+}
+
+\section{Charged Species}{
+Calculations for the proton (\Hplus) and electron (\eminus) are skipped by default; this makes sense if you are setting the pH, i.e. activity of \Hplus, to some value.
+To apply the calculations to H+ and/or e-, change \code{\link{thermo}$opt$ideal.H} or \code{ideal.e} to FALSE.
 
 If \code{method} is \samp{Alberty}, the values of \code{IS} are combined with Alberty's (2003) equation 3.6-1 (extended Debye-Hückel equation; Hückel, 1925) and its derivatives, to calculate adjusted molal properties at the specified ionic strength(s) and temperature(s).
 The adjusted molal properties that can be calculated include \samp{G}, \samp{H}, \samp{S} and \samp{Cp}; any columns in the dataframes of \code{speciesprops} with other names are left untouched.
@@ -52,7 +56,16 @@ If \code{method} is \samp{bgamma}, the \dQuote{b_gamma} equation is used.
 The distance of closest approach is set to a constant (3.72e-8 cm) (e.g., Manning et al., 2013).
 The extended term parameter is calculated by calling the \code{bgamma} function.
 Alternatively, set the extended term parameter to zero with \samp{bgamma0}.
+}
 
+\section{Neutral Species}{
+For neutral species, the Setch{\eacute}now equation is used, as described in Shvarov and Bastrakov, 1999.
+If \code{\link{thermo}$opt$Setchenow} is \samp{bgamma0} (the default), the extended term parameter is set to zero and the only non-zero term is the mole fraction to molality conversion factor (using the value of \code{m_star}).
+If \code{thermo$opt$Setchenow} is \samp{bgamma}, the extended term paramter is taken from the setting for the charged species (which can be either \samp{Bdot} or \samp{bgamma}).
+Set \code{thermo$opt$Setchenow} to any other value to disable the calculations for neutral species.
+}
+
+\section{b_gamma}{
 \code{bgamma} calculates the extended term parameter (written as b_gamma; Helgeson et al., 1981) for activity coefficients in NaCl-dominated solutions at high temperature and pressure.
 Data at \Psat and 0.5 to 5 kb are taken from Helgeson (1969, Table 2 and Figure 3) and Helgeson et al. (1981, Table 27) and extrapolated values at 10 to 30 kb from Manning et al. (2013, Figure 11).
 Furthermore, the 10 to 30 kb data were used to generate super-extrapolated values at 40, 50, and 60 kb, which may be encountered using the \code{\link{water.DEW}} calculations.

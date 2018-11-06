@@ -62,13 +62,21 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     else if(prop=="Cp") return(R * T^2 *loggamma(eval(DD(A, "T", 2)), Z, I, B))
   }
   
-  # function for Debye-Huckel equation with B-dot extended term parameter (Helgeson, 1969)
+  # function for Debye-Huckel equation with b_gamma or B-dot extended term parameter (Helgeson, 1969)
   Helgeson <- function(prop = "loggamma", Z, I, T, A_DH, B_DH, acirc, m_star, bgamma) {
     loggamma <- - A_DH * Z^2 * I^0.5 / (1 + acirc * B_DH * I^0.5) - log10(1 + 0.0180153 * m_star) + bgamma * I
     R <- 1.9872  # gas constant, cal K^-1 mol^-1
     if(prop=="loggamma") return(loggamma)
     else if(prop=="G") return(R * T * log(10) * loggamma)
     # note the log(10) (=2.303) ... use natural logarithm to calculate G
+  }
+
+  # function for Setchenow equation with b_gamma or B-dot extended term parameter (Shvarov and Bastrakov, 1999)  20181106
+  Setchenow <- function(prop = "loggamma", I, T, m_star, bgamma) {
+    loggamma <- - log10(1 + 0.0180153 * m_star) + bgamma * I
+    R <- 1.9872  # gas constant, cal K^-1 mol^-1
+    if(prop=="loggamma") return(loggamma)
+    else if(prop=="G") return(R * T * log(10) * loggamma)
   }
 
   # get species indices
@@ -79,7 +87,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     # force a charge count even if it's zero
     mkp <- makeup(c("Z0", species[i]), sum=TRUE)
     thisZ <- mkp[match("Z", names(mkp))]
-    # don't do anything for neutral species (Z absent from formula or equal to zero)
+    # no charge if Z is absent from the formula or equal to zero
     if(is.na(thisZ)) next
     if(thisZ==0) next
     Z[i] <- thisZ
@@ -111,7 +119,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     # "distance of closest approach" of ions in NaCl solutions (HKF81 Table 2)
     acirc <- rep(3.72e-8, length(species))
   }
-  # get b_gamma (or Bdot)
+  # get b_gamma or B-dot
   if(method=="bgamma") bgamma <- bgamma(convert(T, "C"), P)
   else if(method=="Bdot") bgamma <- Bdot(convert(T, "C"))
   else if(method %in% c("Bdot0", "bgamma0")) bgamma <- 0
@@ -120,35 +128,55 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
   iH <- info("H+")
   ie <- info("e-")
   speciesprops <- as.list(speciesprops)
-  ndid <- 0
+  ncharged <- nneutral <- 0
   for(i in 1:length(species)) {
     myprops <- speciesprops[[i]]
     # to keep unit activity coefficients of the proton and electron
     if(species[i] == iH & get("thermo")$opt$ideal.H) next
     if(species[i] == ie & get("thermo")$opt$ideal.e) next
-    # skip neutral species
-    if(Z[i]==0) next
-    didit <- FALSE
-    for(j in 1:ncol(myprops)) {
-      pname <- colnames(myprops)[j]
-      if(!pname %in% c("G", "H", "S", "Cp")) next
-      if(method=="Alberty") {
-        myprops[, j] <- myprops[, j] + Alberty(pname, Z[i], IS, T)
-        didit <- TRUE
-      } else {
-        myprops[, j] <- myprops[, j] + Helgeson(pname, Z[i], IS, T, A_DH, B_DH, acirc[i], m_star, bgamma)
-        didit <- TRUE
+    didcharged <- didneutral <- FALSE
+    # logic for neutral and charged species 20181106
+    if(Z[i]==0) {
+      for(j in 1:ncol(myprops)) {
+        pname <- colnames(myprops)[j]
+        if(!pname %in% c("G", "H", "S", "Cp")) next
+        if(get("thermo")$opt$Setchenow == "bgamma") {
+          myprops[, j] <- myprops[, j] + Setchenow(pname, IS, T, m_star, bgamma)
+          didneutral <- TRUE
+        } else if(get("thermo")$opt$Setchenow == "bgamma0") {
+          myprops[, j] <- myprops[, j] + Setchenow(pname, IS, T, m_star, bgamma = 0)
+          didneutral <- TRUE
+        }
+      }
+    } else {
+      for(j in 1:ncol(myprops)) {
+        pname <- colnames(myprops)[j]
+        if(!pname %in% c("G", "H", "S", "Cp")) next
+        if(method=="Alberty") {
+          myprops[, j] <- myprops[, j] + Alberty(pname, Z[i], IS, T)
+          didcharged <- TRUE
+        } else {
+          myprops[, j] <- myprops[, j] + Helgeson(pname, Z[i], IS, T, A_DH, B_DH, acirc[i], m_star, bgamma)
+          didcharged <- TRUE
+        }
       }
     }
-    # append a loggam column if we did any nonideal calculations of thermodynamic properties
-    if(didit) {
+    # append a loggam column if we did any calculations of adjusted thermodynamic properties
+    if(didcharged) {
       if(method=="Alberty") myprops <- cbind(myprops, loggam = Alberty("loggamma", Z[i], IS, T))
       else myprops <- cbind(myprops, loggam = Helgeson("loggamma", Z[i], IS, T, A_DH, B_DH, acirc[i], m_star, bgamma))
     }
+    if(didneutral) {
+      if(get("thermo")$opt$Setchenow == "bgamma") myprops <- cbind(myprops, loggam = Setchenow("loggamma", IS, T, m_star, bgamma))
+      else if(get("thermo")$opt$Setchenow == "bgamma0") myprops <- cbind(myprops, loggam = Setchenow("loggamma", IS, T, m_star, bgamma = 0))
+    }
+    # save the calculated properties and increment progress counters
     speciesprops[[i]] <- myprops
-    if(didit) ndid <- ndid + 1
+    ncharged <- ncharged + sum(didcharged)
+    nneutral <- nneutral + sum(didneutral)
   }
-  if(ndid > 0) message("nonideal: calculated activity coefficients for ", ndid, " species (", mettext(method), ")")
+  if(ncharged > 0) message("nonideal: calculations for ", ncharged, " charged species (", mettext(method), ")")
+  if(nneutral > 0) message("nonideal: calculations for ", nneutral, " neutral species (Setchenow equation)")
   return(speciesprops)
 }
 

@@ -1,7 +1,19 @@
-CHANGES IN CHNOSZ 1.1.3-49 (2018-11-05)
+CHANGES IN CHNOSZ 1.1.3-51 (2018-11-06)
 ---------------------------------------
 
 NEW FEATURES
+
+- Add solubility(). Run this after equilibrate() to calculate the
+  solubility (loga.balance) of the balanced basis species.
+
+- Revise demo/solubility.R to show solubility calculations for CO2(gas)
+  and calcite as a function of T and pH.
+
+- Add demo/gold.R for calculations of Au solubility in hydrothermal
+  chloride and sulfide solutions (based on diagrams from Akinfiev and
+  Zotov, 2001, Stefánsson and Seward, 2004, and Williams-Jones et al.,
+  2009). This depends on the revised nonideal() and new NaCl() functions
+  described next.
 
 - Reorganize and expand options for activity coefficient calculations
   (set in thermo$opt$nonideal: Bdot, Bdot0, bgamma, bgamma0, or Alberty).
@@ -15,20 +27,15 @@ NEW FEATURES
   (Shvarov and Bastrakov, 1999). Parameters are from Table 2.7 of
   Garrels and Christ, 1965.
 
+- nonideal() now calulates activity coefficients of neutral species,
+  using the Setchénow equation. Whether the extended-term parameter in
+  this equation is taken to be zero or is taken from the value for
+  charged species (see above) is controlled by setting
+  'thermo$opt$Setchenow' to bgamma0 (default) or bgamma.
+
 - Add NaCl(), implementing a first-order calculation of the speciation
   of NaCl in water, taking account of activity coefficients and the
   reaction Na+ + Cl- = NaCl(aq).
-
-- Add solubility(). Run this after equilibrate() to calculate the
-  solubility (loga.balance) of the balanced basis species.
-
-- Revise demo/solubility.R to show solubility calculations for CO2(gas)
-  and calcite as a function of T and pH.
-
-- Add demo/gold.R for calculations of Au solubility in hydrothermal
-  chloride and sulfide solutions (based on diagrams from Akinfiev and
-  Zotov, 2001, Stefánsson and Seward, 2004, and Williams-Jones et al.,
-  2009).
 
 THERMODYNAMIC DATA
 

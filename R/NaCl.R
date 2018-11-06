@@ -3,7 +3,8 @@
 # given a total molality of NaCl
 # taking account of ion association: Na+ + Cl- = NaCl(aq)
 # 20181102 jmd first version
-# 20181105 add activity coefficients of Na+
+# 20181105 use activity coefficient of Na+
+# 20181106 use activity coefficient of NaCl
 
 NaCl <- function(T=seq(100, 500, 100), P=1000, m_tot=2) {
   # define a function for the reaction quotient
@@ -24,22 +25,27 @@ NaCl <- function(T=seq(100, 500, 100), P=1000, m_tot=2) {
   ISout <- a_Cl <- numeric(N)
   # initial guess for m_Cl and ionic strength assuming complete dissociation of NaCl
   IS <- m_Cl <- rep(m_tot, N)
-  # the species indices for Cl- and Na+
-  ispecies <- info(c("Na+", "Cl-"))
+  # the corresponding total molality of dissolved species (NaCl + Cl- + Na+)
+  m_star <- (m_tot - m_Cl) + 2*m_Cl
+  # the species indices for Na+, Cl-, and NaCl(aq)
+  ispecies <- info(c("Na+", "Cl-", "NaCl"))
   # we start by doing calculations for all temperatures
   doit <- !logical(N)
   while(any(doit)) {
     # calculate activity coefficient at given ionic strength
     speciesprops <- rep(list(data.frame(G=numeric(N))), length(ispecies))
-    gammas <- suppressMessages(nonideal(ispecies, speciesprops, IS=IS, T=convert(T, "K"), P=P, A_DH=wout$A_DH, B_DH=wout$B_DH))
+    gammas <- suppressMessages(nonideal(ispecies, speciesprops, IS=IS, T=convert(T, "K"), P=P, A_DH=wout$A_DH, B_DH=wout$B_DH, m_star=m_star))
     gam_Na <- 10^gammas[[1]]$loggam
     gam_Cl <- 10^gammas[[2]]$loggam
+    gam_NaCl <- 10^gammas[[3]]$loggam
     # solve for m_Cl
-    for(i in which(doit)) m_Cl[i] <- uniroot(A, c(0, m_tot), gam_NaCl=1, gam_Na=gam_Na[i], gam_Cl=gam_Cl[i], logK=logK[i])$root
+    for(i in which(doit)) m_Cl[i] <- uniroot(A, c(0, m_tot), gam_NaCl=gam_NaCl[i], gam_Na=gam_Na[i], gam_Cl=gam_Cl[i], logK=logK[i])$root
+    # calculate new total molality
+    m_star <- (m_tot - m_Cl) + 2*m_Cl
     # calculate new ionic strength and deviation
     ISnew <- m_Cl
     dIS <- ISnew - IS
-    # set net ionic strength
+    # set new ionic strength
     IS <- ISnew
     # keep going until the deviation in ionic strength at any temperature is less than 0.01
     doit <- abs(dIS) > 0.01
@@ -49,5 +55,5 @@ NaCl <- function(T=seq(100, 500, 100), P=1000, m_tot=2) {
   gam_Na <- 10^gammas[[1]]$loggam
   gam_Cl <- 10^gammas[[2]]$loggam
   # return the calculated values
-  list(IS=IS, m_Cl=m_Cl, gam_Na=gam_Na, gam_Cl=gam_Cl)
+  list(IS=IS, m_Cl=m_Cl, gam_Na=gam_Na, gam_Cl=gam_Cl, gam_NaCl=gam_NaCl)
 }
