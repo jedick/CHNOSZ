@@ -62,8 +62,7 @@ test_that("calculations using IAPWS-95 are possible", {
 
 test_that("phase transitions of minerals give expected messages and results", {
   iacanthite <- info("acanthite", "cr2")
-  #expect_message(subcrt(iacanthite), "subcrt: some points below transition temperature for acanthite cr2 \\(using NA for G\\)")
-  expect_message(subcrt(iacanthite), "subcrt: some points above temperature limit for acanthite cr2 \\(using NA for G\\)")
+  expect_message(subcrt(iacanthite), "subcrt: temperature\\(s\\) of 623.15 K and above exceed limit for acanthite cr2 \\(using NA for G\\)")
   expect_equal(subcrt("acanthite")$out$acanthite$polymorph, c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3))
   # the reaction coefficients in the output should be unchanged 20171214
   expect_equal(subcrt(c("bunsenite", "nickel", "oxygen"), c(-1, 1, 0.5))$reaction$coeff, c(-1, 1, 0.5)) 
@@ -89,8 +88,6 @@ test_that("calculations for K-feldspar are consistent with SUPCRT92", {
 })
 
 test_that("calculations for quartz are nearly consistent with SUPCRT92", {
-  # remove existing quartz so that SUPCRT92 quartz gets added with cr and cr2 next to each other
-  thermo$obigt <<- thermo$obigt[thermo$obigt$name!="quartz", ]
   add.obigt("SUPCRT92")
   # using SUPCRT's equations, the alpha-beta transition occurs at
   # 705 degC at 5000 bar and 1874 degC at 50000 bar,
@@ -119,8 +116,6 @@ test_that("calculations for quartz are nearly consistent with SUPCRT92", {
 })
 
 test_that("more calculations for quartz are nearly consistent with SUPCRT92", {
-  # remove existing quartz so that SUPCRT92 quartz gets added with cr and cr2 next to each other
-  thermo$obigt <<- thermo$obigt[thermo$obigt$name!="quartz", ]
   add.obigt("SUPCRT92")
   # output from SUPCRT92 for reaction specified as "1 QUARTZ" run at 1 bar
   # (SUPCRT shows phase transition at 574.850 deg C, and does not give Cp values around the transition)
@@ -192,6 +187,20 @@ test_that("properties of HKF species below 0.35 g/cm3 are NA and give a warning"
   # use exceed.rhomin to go below the minimum density
   s2 <- subcrt(c("Na+", "quartz"), T=450, P=c(400, 450, 500), exceed.rhomin=TRUE)
   expect_equal(sum(is.na(s2$out$`Na+`$logK)), 0)
+})
+
+test_that("combining minerals with phase transitions and aqueous species with IS > 0 does not mangle output", {
+  # s2 was giving quartz an extraneous loggam column and incorrect G and logK 20181107
+  add.obigt("SUPCRT92")
+  s1 <- subcrt(c("quartz", "K+"), T=25, IS=1)
+  s2 <- subcrt(c("K+", "quartz"), T=25, IS=1)
+  expect_true(identical(colnames(s1$out[[1]]), c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "polymorph")))
+  expect_true(identical(colnames(s2$out[[2]]), c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "polymorph")))
+  expect_true(identical(colnames(s1$out[[2]]), c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "loggam", "IS")))
+  expect_true(identical(colnames(s2$out[[1]]), c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "loggam", "IS")))
+  # another one ... pyrrhotite was getting a loggam
+  expect_true(identical(colnames(subcrt(c("iron", "Na+", "Cl-", "OH-", "pyrrhotite"), T=25, IS=1)$out$pyrrhotite),
+    c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "polymorph")))
 })
 
 # references

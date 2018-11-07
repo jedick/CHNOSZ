@@ -7,13 +7,14 @@ Calculate speciation and ionic strength of aqueous solutions with a given molali
 }
 
 \usage{
-  NaCl(T = seq(100, 500, 100), P = 1000, m_tot = 2)
+  NaCl(T = seq(100, 500, 100), P = 1000, m_tot = 2, ...)
 }
 
 \arguments{
   \item{T}{numeric, temperature in \degC}
   \item{P}{numeric, pressure in bar (single value)}
   \item{m_tot}{numeric, total molality of NaCl (single value)}
+  \item{...}{additional arguments for \code{\link{subcrt}}}
 }
 
 \details{

@@ -14,16 +14,16 @@ solubility <- function(aout, balance=NULL, split=FALSE) {
   ## unit activities of species, so we have to take away the activites
   Astar <- function(i) aout$values[[i]] + aout$species$logact[i]
   loga.equil <- lapply(1:length(aout$values), Astar)
+
   ## for a dissociation (split) on a *per reaction* (not system) basis,
   ## apply the divisor here and skip the if(split){} part below
   ## (can be used to reproduce Fig. 4 of Manning et al., 2013)
   if(is.numeric(split)) loga.equil <- lapply(loga.equil, "/", split)
 
-  # get the balancing coefficients
+  ## to output loga.balance we need the balancing coefficients
   bout <- balance(aout, balance)
   n.balance <- bout$n.balance
   balance <- bout$balance
-
   # get logarithm of total activity of the balancing basis species
   logabfun <- function(loga.equil, n.balance) {
     # exponentiate, multiply by n.balance, sum, logarithm

@@ -328,20 +328,22 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         # name and state
         myname <- reaction$name[i]
         mystate <- reaction$state[i]
-#        # don't proceed if the state is cr_Berman
-#        if(mystate=="cr_Berman") next
-        # if this phase is cr2 or higher, check if we're below the transition temperature
-        if(!(reaction$state[i] %in% c('liq','cr','gas'))) {
-          Ttr <- Ttr(iphases[i]-1,P=P,dPdT=dPdTtr(iphases[i]-1))
-          if(all(is.na(Ttr))) next
-          if(any(T < Ttr)) {
-            status.Ttr <- "(extrapolating G)"
-            if(!exceed.Ttr) {
-              # put NA into the value of G
-              p.cgl[[ncgl[i]]]$G[T<Ttr] <- NA
-              status.Ttr <- "(using NA for G)"
-            } 
-            #message(paste('subcrt: some points below transition temperature for',myname, mystate, status.Ttr))
+        # if we are considering multiple phases, and if this phase is cr2 or higher, check if we're below the transition temperature
+        if(length(iphases) > length(ispecies) & i > 1) {
+          if(!(reaction$state[i] %in% c('liq','cr','gas')) & reaction$name[i-1] == reaction$name[i]) {
+            # after add.obigt("SUPCRT92"), quartz cr and cr2 are not next to each other in thermo$obigt,
+            # so use iphases[i-1] here, not iphases[i]-1  20181107
+            Ttr <- Ttr(iphases[i-1], iphases[i], P=P, dPdT = dPdTtr(iphases[i-1], iphases[i]))
+            if(all(is.na(Ttr))) next
+            if(any(T < Ttr)) {
+              status.Ttr <- "(extrapolating G)"
+              if(!exceed.Ttr) {
+                # put NA into the value of G
+                p.cgl[[ncgl[i]]]$G[T<Ttr] <- NA
+                status.Ttr <- "(using NA for G)"
+              } 
+              #message(paste('subcrt: some points below transition temperature for',myname, mystate, status.Ttr))
+            }
           }
         }
         # check if we're above the temperature limit or transition temperature
@@ -351,19 +353,21 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         # calculate Ttr at higher P if a phase transition is present
         if(i < nrow(reaction)) {
           # if the next one is cr2, cr3, etc we have a transition
-          if(reaction$state[i+1] %in% c("cr1", "cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9"))
-            Ttr <- Ttr(iphases[i],P=P,dPdT=dPdTtr(iphases[i]))
-          # we don't warn here about the transition
-          warn.above <- FALSE
+          if(reaction$state[i+1] %in% c("cr1", "cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9") & reaction$name[i+1] == reaction$name[i]) {
+            Ttr <- Ttr(iphases[i], iphases[i+1], P = P, dPdT = dPdTtr(iphases[i], iphases[i+1]))
+            # we don't warn here about the transition
+            warn.above <- FALSE
+          }
         }
         if(any(is.na(Ttr))) next
-        if(!all(Ttr==0) & any(T >= Ttr)) {
+        if(!all(Ttr == 0) & any(T >= Ttr)) {
           status.Ttr <- "(extrapolating G)"
           if(!exceed.Ttr) {
-            p.cgl[[ncgl[i]]]$G[T>=Ttr] <- NA
+            p.cgl[[ncgl[i]]]$G[T >= Ttr] <- NA
             status.Ttr <- "(using NA for G)"
           }
-          if(warn.above) message(paste('subcrt: some points above temperature limit for',myname, mystate, status.Ttr))
+          Tmax <- min(T[T >= Ttr])
+          if(warn.above) message(paste("subcrt: temperature(s) of", Tmax, "K and above exceed limit for", myname, mystate, status.Ttr))
         }
       }
     }
@@ -430,7 +434,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       }
       # find the minimum-energy phase at each T-P point
       phasestate <- numeric()
-      out.new.entry <- outprops[[1]]
+      out.new.entry <- outprops[[arephases[1]]]
       for(j in 1:nrow(G)) {
         ps <- which.min(as.numeric(G[j,]))
         if(length(ps)==0) {
@@ -458,7 +462,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       up <- unique(phasestate)
       if(length(up)>1) { word <- 'are'; p.word <- 'phases' }
       else { word <- 'is'; p.word <- 'phase' }
-      message(paste(p.word,c2s(unique(phasestate)),word,'stable'))
+      message(paste(p.word,paste(unique(phasestate), collapse=","),word,'stable'))
     } else {
       # multiple phases aren't involved ... things stay the same
       out.new[[i]] <- outprops[[arephases]]
@@ -469,6 +473,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       isH2O.new <- c(isH2O.new,isH2O[arephases])
     }
   }
+
   outprops <- out.new
   # remove the rows that were added to keep track of phase transitions
   reaction <- reaction.new[1:length(ispecies),]

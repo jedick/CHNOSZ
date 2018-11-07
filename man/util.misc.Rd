@@ -11,14 +11,15 @@ Calculate \eqn{dP/dT}{dP/dT} and temperature of phase transitions; scale logarit
 }
 
 \usage{
-  dPdTtr(ispecies)
-  Ttr(ispecies, P = 1, dPdT = NULL)
+  dPdTtr(ispecies, ispecies2 = NULL)
+  Ttr(ispecies, ispecies2 = NULL, P = 1, dPdT = NULL)
   GHS_Tr(ispecies, Htr)
   unitize(logact = NULL, length = NULL, logact.tot = 0)
 }
 
 \arguments{
   \item{ispecies}{numeric, species index of a mineral phase}
+  \item{ispecies2}{numeric, species index of next mineral phase (the default is ispecies + 1)}
   \item{P}{numeric, pressure (bar)}
   \item{dPdT}{numeric, values of (\eqn{dP/dT}{dP/dT}) of phase transitions (\code{Ttr})}
   \item{Htr}{numeric, enthalpy(ies) of transition (cal/mol)}
@@ -28,7 +29,7 @@ Calculate \eqn{dP/dT}{dP/dT} and temperature of phase transitions; scale logarit
 }
 
 \details{
-\code{dPdTtr} returns values of \eqn{(dP/dT)_{Ttr}}{(dP/dT)Ttr}, where \eqn{Ttr}{Ttr} represents the transition temperature, of the phase transition at the high-\eqn{T}{T} stability limit of the \code{ispecies} in \code{thermo$obigt} (no checking is done to verify that the species represents in fact one phase of a mineral with phase transitions).
+\code{dPdTtr} returns values of \eqn{(dP/dT)_{Ttr}}{(dP/dT)Ttr}, where \eqn{Ttr}{Ttr} represents the transition temperature, of the phase transition at the high-\eqn{T}{T} stability limit of the \code{ispecies} in \code{thermo$obigt} (other than checking that the names match, the function does not check that the species in fact represent different phases of the same mineral).
 \code{dPdTtr} takes account of the Clapeyron equation, \eqn{(dP/dT)_{Ttr}}{(dP/dT)Ttr}=\eqn{{\Delta}S/{\Delta}V}{DS/DV}, where \eqn{{\Delta}S}{DS} and \eqn{{\Delta}V}{DV} represent the changes in entropy and volume of phase transition, and are calculated using \code{subcrt} at Ttr from the standard molal entropies and volumes of the two phases involved.
 Using values of \code{dPdT} calculated using \code{dPdTtr} or supplied in the arguments, \code{Ttr} returns as a function of \code{P} values of the upper transition temperature of the mineral phase represented by \code{ispecies}.
 
@@ -42,17 +43,21 @@ If any of those species are proteins, the function gets their lengths using \cod
 }
 
 \examples{\dontshow{data(thermo)}
-### the first example is commented because after removing most of the
-### Helgeson et al. minerals, we don't have a suitable mineral in the
-### database to demonstrate this calculation (but ice might work)
-## properties of phase transitions
-#si <- info("enstatite")
-## (dP/dT) of transitions
-#dPdTtr(si)  # first transition
-#dPdTtr(si+1) # second transition
-## temperature of transitions (Ttr) as a function of P
-#Ttr(si,P=c(1,10,100,1000))
-#Ttr(si,P=c(1,10,100,1000))
+# we need the Helgeson et al., 1978 minerals for this example
+add.obigt("SUPCRT92")
+# that replaces the existing enstatite with the first phase;
+# the other phases are appended to the end of thermo$obigt
+i1 <- info("enstatite")
+i2 <- info("enstatite", "cr2")
+i3 <- info("enstatite", "cr3")
+# (dP/dT) of transitions
+dPdTtr(i1, i2)  # first transition
+dPdTtr(i2, i3)  # second transition
+# temperature of transitions (Ttr) as a function of P
+Ttr(i1, i2, P=c(1,10,100,1000))
+Ttr(i2, i3, P=c(1,10,100,1000))
+# restore default database
+data(OBIGT)
 
 # calculate the GHS at Tr for the high-temperature phases of iron
 # using transition enthalpies from the SUPCRT92 database (sprons92.dat)

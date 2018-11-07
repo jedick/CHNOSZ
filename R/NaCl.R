@@ -6,7 +6,7 @@
 # 20181105 use activity coefficient of Na+
 # 20181106 use activity coefficient of NaCl
 
-NaCl <- function(T=seq(100, 500, 100), P=1000, m_tot=2) {
+NaCl <- function(T=seq(100, 500, 100), P=1000, m_tot=2, ...) {
   # define a function for the reaction quotient
   logQ <- function(m_Cl, gam_NaCl, gam_Na, gam_Cl) {
     # starting with Q = a_NaCl / (a_Na+ * a_Cl-),
@@ -17,7 +17,7 @@ NaCl <- function(T=seq(100, 500, 100), P=1000, m_tot=2) {
   # define a function for affinity = log(K / Q)
   A <- function(m_Cl, gam_NaCl, gam_Na, gam_Cl, logK) logK - logQ(m_Cl, gam_NaCl, gam_Na, gam_Cl)
   # calculate equilibrium constant at all temperatures (standard conditions: IS = 0)
-  logK <- subcrt(c("Na+", "Cl-", "NaCl"), c(-1, -1, 1), T = T, P = P)$out$logK
+  logK <- subcrt(c("Na+", "Cl-", "NaCl"), c(-1, -1, 1), T = T, P = P, ...)$out$logK
   # calculate Debye-Huckel parameters at all temperatures
   wout <- water(c("A_DH", "B_DH"), T = convert(T, "K"), P = P)
   # initialize output variables
