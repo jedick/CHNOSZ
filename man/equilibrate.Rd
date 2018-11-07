@@ -83,6 +83,13 @@ If \code{equil.boltzmann} is called with \code{balance} other than \samp{1}, it 
 
 }
 
+\section{Warning}{
+Despite its name, this function does not generally produce a complete equilibrium.
+It returns activities of species such that the affinities of formation reactions are equal to each other (and transformations between species have zero affinity); this is a type of metastable equilibrium.
+Although they are equal to each other, the affinities are not necessarily equal to zero.
+Use \code{solubility} to find complete equilibrium, where the affinities of the formation reactions become zero.
+}
+
 \seealso{
 \code{\link{diagram}} has examples of using \code{equilibrate} to make equilibrium activity diagrams. \code{\link{revisit}} can be used to perform further analysis of the equilibrium activities.
 \code{\link{palply}} is used by both \code{equil.reaction} and \code{equil.boltzmann} to parallelize intensive parts of the calculations.

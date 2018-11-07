@@ -25,8 +25,7 @@ basis(c("carbon dioxide", "H2O", "O2", "H+"))
 basis("CO2", -3.5)
 species(c("CO2", "HCO3-", "CO3-2"))
 a <- affinity(pH = c(pH, res), T = T1, IS = IS)
-e <- equilibrate(a)
-s <- solubility(e)
+s <- solubility(a)
 # first plot total activity line
 diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
 # add activities of species
@@ -39,11 +38,12 @@ legend("topleft", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
 title(main = substitute("Solubility of"~what~"at"~T~degree*"C",
   list(what = expr.species("CO2"), T = T1)), line = 1.6)
 mtext("cf. Fig. 4.5 of Stumm and Morgan, 1996")
+# check the endpoints
+stopifnot(round(s$loga.balance[c(1, res)])==c(-5, 6))
 
 # CO2 T-pH plot
 a <- affinity(pH = c(pH, res), T = c(T, res), IS = IS)
-e <- equilibrate(a)
-s <- solubility(e)
+s <- solubility(a)
 diagram(s, type = "loga.balance")
 title(main = substitute("Solubility of"~what, list(what = expr.species("CO2"))))
 
@@ -51,8 +51,7 @@ title(main = substitute("Solubility of"~what, list(what = expr.species("CO2"))))
 basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
 species(c("CO2", "HCO3-", "CO3-2"))
 a <- affinity(pH = c(pH, res), T = T1, IS = IS)
-e <- equilibrate(a)
-s <- solubility(e, exp = 2)
+s <- solubility(a, split = TRUE)
 diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
 diagram(s, add = TRUE, dy = 1)
 legend("topright", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
@@ -60,10 +59,11 @@ legend("topright", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
 title(main = substitute("Solubility of"~what~"at"~T~degree*"C",
   list(what = "calcite", T = T1)), line = 1.6)
 mtext("cf. Fig. 4A of Manning et al., 2013")
+# check the endpoints
+stopifnot(round(s$loga.balance[c(1, res)])==c(4, -4))
 
 # calcite T-pH plot
 a <- affinity(pH = c(pH, res), T = c(T, res), IS = IS)
-e <- equilibrate(a)
-s <- solubility(e, exp = 2)
+s <- solubility(a, split = TRUE)
 diagram(s, type = "loga.balance")
 title(main = "Solubility of calcite", font.main = 1)

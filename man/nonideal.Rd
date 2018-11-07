@@ -2,7 +2,7 @@
 \name{nonideal}
 \alias{nonideal}
 \alias{bgamma}
-\title{Activity coefficients of aqueous species}
+\title{Activity Coefficients of Aqueous Species}
 \description{
 Calculate activity coefficients and adjusted (transformed) molal properties of aqueous species.
 }
@@ -39,7 +39,7 @@ The lengths of \code{IS} and \code{T} supplied in the arguments should be equal 
 Calculations for the proton (\Hplus) and electron (\eminus) are skipped by default; this makes sense if you are setting the pH, i.e. activity of \Hplus, to some value.
 To apply the calculations to H+ and/or e-, change \code{\link{thermo}$opt$ideal.H} or \code{ideal.e} to FALSE.
 
-If \code{method} is \samp{Alberty}, the values of \code{IS} are combined with Alberty's (2003) equation 3.6-1 (extended Debye-Hückel equation; Hückel, 1925) and its derivatives, to calculate adjusted molal properties at the specified ionic strength(s) and temperature(s).
+If \code{method} is \samp{Alberty}, the values of \code{IS} are combined with Alberty's (2003) equation 3.6-1 (extended Debye-Hückel equation) and its derivatives, to calculate adjusted molal properties at the specified ionic strength(s) and temperature(s).
 The adjusted molal properties that can be calculated include \samp{G}, \samp{H}, \samp{S} and \samp{Cp}; any columns in the dataframes of \code{speciesprops} with other names are left untouched.
 
 In addition to \code{IS} and \code{T}, the following two methods depend on values of \code{P}, \code{A_DH}, \code{B_DH}, and \code{m_star} given in the arguments.
@@ -194,13 +194,11 @@ Helgeson, H. C. (1969) Thermodynamics of hydrothermal systems at elevated temper
 
 Helgeson, H. C., Kirkham, D. H. and Flowers, G. C. (1981) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures. IV. Calculation of activity coefficients, osmotic coefficients, and apparent molal and standard and relative partial molal properties to 600\degC and 5 Kb. \emph{Am. J. Sci.} \bold{281}, 1249--1516. \url{https://doi.org/10.2475/ajs.281.10.1249}
 
-Hückel, E. (1925). The theory of concentrated, aqueous solutions of strong electrolytes. \emph{Physikalische Zeitschrift} \bold{26}, 93--147.
-
 Manning, C. E. (2013) Thermodynamic modeling of fluid-rock interaction at mid-crustal to upper-mantle conditions. \emph{Rev. Mineral. Geochem.} \bold{76}, 135--164. \url{https://doi.org/10.2138/rmg.2013.76.5}
 
 Manning, C. E., Shock, E. L. and Sverjensky, D. A. (2013) The chemistry of carbon in aqueous fluids at crustal and upper-mantle conditions: Experimental and theoretical constraints. \emph{Rev. Mineral. Geochem.} \bold{75}, 109--148. \url{https://doi.org/10.2138/rmg.2013.75.5}
 
-Shvarov, Y. and Bastrakov, E. (1999) HCh: A software package for geochemical equilibrium modelling. User's Guide. \emph{Australian Geological Survey Organisation} \bold{1999/25}.
+Shvarov, Y. and Bastrakov, E. (1999) HCh: A software package for geochemical equilibrium modelling. User's Guide. \emph{Australian Geological Survey Organisation} \bold{1999/25}. \url{http://pid.geoscience.gov.au/dataset/ga/25473}
 }
 
 \concept{Thermodynamic calculations}

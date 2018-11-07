@@ -65,7 +65,7 @@ for(i in 1:length(m_tot)) {
   gam_Cl.calc[i, ] <- NaCl.out$gam_Cl
 }
 # plot ionic strength from HCh and NaCl() as points and lines
-par(mfrow=c(2, 1))
+opar <- par(mfrow=c(2, 1))
 col <- c("black", "red", "orange")
 plot(c(1,6), c(0,6), xlab="NaCl (mol/kg)", ylab=axis.label("IS"), type="n")
 for(i in 1:3) {
@@ -88,10 +88,11 @@ for(i in 1:3) {
 }
 # we should be fairly close
 stopifnot(maxdiff(unlist(gam_Cl.calc[seq(1,11,2), ]), unlist(gam_Cl.HCh)) < 0.033)
+par(opar)
 }
 
 \references{
-Shvarov, Y. and Bastrakov, E. (1999) HCh: A software package for geochemical equilibrium modelling. User's Guide. \emph{Australian Geological Survey Organisation} \bold{1999/25}.
+Shvarov, Y. and Bastrakov, E. (1999) HCh: A software package for geochemical equilibrium modelling. User's Guide. \emph{Australian Geological Survey Organisation} \bold{1999/25}. \url{http://pid.geoscience.gov.au/dataset/ga/25473}
 }
 
 \concept{Extended workflow}

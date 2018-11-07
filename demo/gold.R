@@ -80,11 +80,10 @@ Au_pH1 <- function() {
   # apply PPM buffer for fO2 and aH2S
   basis("O2", "PPM")
   basis("H2S", "PPM")
-  # calculate affinity, equilibrate, solubility
+  # calculate affinity and solubility
   # (set IS = 0 for diagram to show "log m" instead of "log a")
   a <- affinity(pH = c(3, 8), T = 300, P = 1000, IS = 0)
-  e <- equilibrate(a)
-  s <- solubility(e)
+  s <- solubility(a)
   # make diagram and show total log molality
   diagram(s, ylim = c(-10, -5), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
@@ -106,11 +105,10 @@ Au_pH2 <- function() {
   # apply PPM buffer for fO2 and aH2S
   basis("O2", "PPM")
   basis("H2S", "PPM")
-  # calculate affinity, equilibrate, solubility
+  # calculate affinity and solubility
   # (set IS = 0 for diagram to show "log m" instead of "log a")
   a <- affinity(pH = c(3, 8), T = 450, P = 1000, IS = 0)
-  e <- equilibrate(a)
-  s <- solubility(e)
+  s <- solubility(a)
   # make diagram and show total log molality
   diagram(s, ylim = c(-8, -3), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
@@ -141,10 +139,9 @@ Au_T1 <- function() {
   # assuming complete dissociation of 0.5 mol/kg KCl
   gam_K <- 10^subcrt("K+", T = seq(150, 550, 10), P = 1000, IS=NaCl$IS)$out$`K+`$loggam
   a_K <- 0.5 * gam_K
-  # calculate affinity, equilibrate, solubility
+  # calculate affinity and solubility
   a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(a_Cl), `K+` = log10(a_K), P = 1000, IS = NaCl$IS)
-  e <- equilibrate(a)
-  s <- solubility(e)
+  s <- solubility(a)
   # make diagram and show total log molality
   diagram(s, ylim = c(-10, -4), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
@@ -176,10 +173,9 @@ Au_T2 <- function() {
   # assuming complete dissociation of 0.5 mol/kg KCl
   gam_K <- 10^subcrt("K+", T = seq(150, 550, 10), P = 1000, IS=NaCl$IS)$out$`K+`$loggam
   a_K <- 0.5 * gam_K
-  # calculate affinity, equilibrate, solubility
+  # calculate affinity and solubility
   a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(a_Cl), `K+` = log10(a_K), P = 1000, IS = NaCl$IS)
-  e <- equilibrate(a)
-  s <- solubility(e)
+  s <- solubility(a)
   # make diagram and show total log molality
   diagram(s, ylim = c(-10, -2), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)

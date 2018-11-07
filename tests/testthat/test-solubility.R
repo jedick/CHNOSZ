@@ -7,29 +7,38 @@ test_that("solubility() produces stable conditions (affinity = 0)", {
   T <- 25
   IS <- 0
 
-  # start with CO2
+  ## start with CO2
   basis(c("carbon dioxide", "H2O", "O2", "H+"))
   # ca. atmospheric PCO2
   basis("CO2", -3.5)
   species(c("CO2", "HCO3-", "CO3-2"))
   a <- affinity(pH = c(pH, res), T = T, IS = IS)
-  e <- equilibrate(a)
-  s <- solubility(e)
-
-  # check for stable conditions (affinity = 0)
-  species(1:3, 0)
-  atest <- affinity(pH = s$vals[[1]], T = T, IS = IS)
-  expect_true(all(sapply(unlist(atest$values) - unlist(s$loga.equil), all.equal, 0)))
+  s <- solubility(a)
+  # a function to check for stable conditions (affinity = 0)
+  # do this by setting activities in species() then calculating the affintiy
+  checkfun <- function(i) {
+    logact <- sapply(s$loga.equil, "[", i)
+    species(1:3, logact)
+    basis("pH", s$vals[[1]][i])
+    affinity(T = T, IS = IS)
+  }
+  # check any 'i' here - let's just take two
+  expect_equal(max(abs(unlist(checkfun(33)$values))), 0)
+  expect_equal(max(abs(unlist(checkfun(99)$values))), 0)
 
   # now do calcite
   basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
   species(c("CO2", "HCO3-", "CO3-2"))
   a <- affinity(pH = c(pH, res), T = T, IS = IS)
-  e <- equilibrate(a)
-  s <- solubility(e, exp = 2)
-
-  # check for stable conditions (affinity = 0)
-  species(1:3, 0)
-  atest <- affinity(pH = s$vals[[1]], `Ca+2` = s$loga.balance, T = T, IS = IS)
-  expect_true(all(sapply(unlist(atest$values) - unlist(s$loga.equil), all.equal, 0)))
+  s <- solubility(a, split = TRUE)
+  # here we need to also set the activity of Ca+2
+  checkfun <- function(i) {
+    logact <- sapply(s$loga.equil, "[", i)
+    species(1:3, logact)
+    basis("pH", s$vals[[1]][i])
+    basis("Ca+2", s$loga.balance[i])
+    affinity(T = T, IS = IS)
+  }
+  expect_equal(max(abs(unlist(checkfun(33)$values))), 0)
+  expect_equal(max(abs(unlist(checkfun(99)$values))), 0)
 })
