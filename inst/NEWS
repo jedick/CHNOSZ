@@ -1,5 +1,19 @@
-CHANGES IN CHNOSZ 1.1.3-52 (2018-11-07)
+CHANGES IN CHNOSZ 1.1.3-54 (2018-11-07)
 ---------------------------------------
+
+MAJOR BUG FIXED
+
+- Previously, the virtual conversion of activities to molalities was
+  done incorrectly; the Gibbs energies of basis species and formed
+  species were transformed in the same direction. They should have
+  opposite transformations. This has been fixed by adding the 'is.basis'
+  argument to nonideal(), which is used by affinity() to transform the
+  Gibbs energies in the right direction.
+
+- For more information, see the new section of ?nonideal: 'is.basis and
+  the CHNOSZ workflow'.
+
+- Two new demos depend on the corrected behavior: gold.R and QtzMsKfs.R.
 
 NEW FEATURES
 

@@ -47,3 +47,4 @@
 \newcommand{\Delta}{\ifelse{latex}{\eqn{\Delta}}{\ifelse{html}{\out{&Delta;}}{Δ}}}
 \newcommand{\aacute}{\ifelse{latex}{\out{\'{a}}}{\ifelse{html}{\out{&aacute;}}{á}}}
 \newcommand{\eacute}{\ifelse{latex}{\out{\'{e}}}{\ifelse{html}{\out{&eacute;}}{é}}}
+\newcommand{\gamma}{\ifelse{latex}{\eqn{\gamma}}{\ifelse{html}{\out{&gamma;}}{γ}}}

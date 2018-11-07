@@ -12,7 +12,7 @@
 
 subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "H", "S", "V", "Cp"),
   T = seq(273.15, 623.15, 25), P = "Psat", grid = NULL, convert = TRUE, exceed.Ttr = FALSE,
-  exceed.rhomin = FALSE, logact = NULL, action.unbalanced = "warn", IS = 0) {
+  exceed.rhomin = FALSE, logact = NULL, action.unbalanced = "warn", IS = 0, is.basis = FALSE) {
 
   # revise the call if the states have 
   # come as the second argument 
@@ -45,6 +45,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     if(length(species) > length(state)) state <- rep(state,length.out=length(species))
     state <- state.args(state)
   }
+  # make is.basis the same length as species
+  is.basis <- rep(is.basis, length.out=length(species))
 
   # allowed properties
   properties <- c("rho", "logK", "G", "H", "S", "Cp", "V", "kT", "E")
@@ -298,8 +300,11 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     }
     # calculate activity coefficients if ionic strength is not zero
     if(any(IS != 0)) {
-      if(thermo$opt$nonideal %in% c("Bdot", "Bdot0", "bgamma", "bgamma0")) p.aq <- nonideal(iphases[isaq], p.aq, newIS, T, P, H2O.PT$A_DH, H2O.PT$B_DH)
-      else if(thermo$opt$nonideal=="Alberty") p.aq <- nonideal(iphases[isaq], p.aq, newIS, T)
+      # work out whether the species are basis species (from the is.basis argument) 20181107
+      isb <- is.basis[match(iphases[isaq], ispecies)]
+      if(thermo$opt$nonideal %in% c("Bdot", "Bdot0", "bgamma", "bgamma0"))
+        p.aq <- nonideal(iphases[isaq], p.aq, newIS, T, P, H2O.PT$A_DH, H2O.PT$B_DH, is.basis=isb)
+      else if(thermo$opt$nonideal=="Alberty") p.aq <- nonideal(iphases[isaq], p.aq, newIS, T, is.basis=isb)
     }
     outprops <- c(outprops, p.aq)
   } else if(any(isH2O)) {

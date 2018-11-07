@@ -3,7 +3,7 @@
 # moved to nonideal.R from util.misc.R 20151107
 # added Helgeson method 20171012
 
-nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, method=get("thermo")$opt$nonideal) {
+nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, method=get("thermo")$opt$nonideal, is.basis=FALSE) {
   # generate nonideal contributions to thermodynamic properties
   # number of species, same length as speciesprops list
   # T in Kelvin, same length as nrows of speciespropss
@@ -123,6 +123,9 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
   if(method=="bgamma") bgamma <- bgamma(convert(T, "C"), P)
   else if(method=="Bdot") bgamma <- Bdot(convert(T, "C"))
   else if(method %in% c("Bdot0", "bgamma0")) bgamma <- 0
+  # different signs for basis species and species of interest 20181107
+  species.sign <- ifelse(is.basis, -1, 1)
+  species.sign <- rep(species.sign, length.out=length(species))
   # loop over species #2: activity coefficient calculations
   if(is.null(m_star)) m_star <- IS
   iH <- info("H+")
@@ -141,10 +144,10 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
         pname <- colnames(myprops)[j]
         if(!pname %in% c("G", "H", "S", "Cp")) next
         if(get("thermo")$opt$Setchenow == "bgamma") {
-          myprops[, j] <- myprops[, j] + Setchenow(pname, IS, T, m_star, bgamma)
+          myprops[, j] <- myprops[, j] + species.sign[i] * Setchenow(pname, IS, T, m_star, bgamma)
           didneutral <- TRUE
         } else if(get("thermo")$opt$Setchenow == "bgamma0") {
-          myprops[, j] <- myprops[, j] + Setchenow(pname, IS, T, m_star, bgamma = 0)
+          myprops[, j] <- myprops[, j] + species.sign[i] * Setchenow(pname, IS, T, m_star, bgamma = 0)
           didneutral <- TRUE
         }
       }
@@ -153,10 +156,10 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
         pname <- colnames(myprops)[j]
         if(!pname %in% c("G", "H", "S", "Cp")) next
         if(method=="Alberty") {
-          myprops[, j] <- myprops[, j] + Alberty(pname, Z[i], IS, T)
+          myprops[, j] <- myprops[, j] + species.sign[i] * Alberty(pname, Z[i], IS, T)
           didcharged <- TRUE
         } else {
-          myprops[, j] <- myprops[, j] + Helgeson(pname, Z[i], IS, T, A_DH, B_DH, acirc[i], m_star, bgamma)
+          myprops[, j] <- myprops[, j] + species.sign[i] * Helgeson(pname, Z[i], IS, T, A_DH, B_DH, acirc[i], m_star, bgamma)
           didcharged <- TRUE
         }
       }

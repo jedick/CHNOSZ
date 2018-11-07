@@ -133,10 +133,12 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
     if(!is.null(sout)) return(sout) else {
       ## subcrt arguments
       species <- c(mybasis$ispecies,myspecies$ispecies)
+      is.basis <- c(rep(TRUE, length(mybasis$ispecies)), rep(FALSE, length(myspecies$ispecies)))
       if("T" %in% vars) T <- vals[[which(vars=="T")]]
       if("P" %in% vars) P <- vals[[which(vars=="P")]]
       if("IS" %in% vars) IS <- vals[[which(vars=="IS")]]
-      s.args <- list(species=species,property=property,T=T,P=P,IS=IS,grid=grid,convert=FALSE,exceed.Ttr=exceed.Ttr,exceed.rhomin=exceed.rhomin)
+      s.args <- list(species = species, property = property, T = T, P = P, IS = IS, grid = grid,
+        convert = FALSE, exceed.Ttr = exceed.Ttr, exceed.rhomin = exceed.rhomin, is.basis = is.basis)
       return(do.call("subcrt",s.args))
     }
   }
