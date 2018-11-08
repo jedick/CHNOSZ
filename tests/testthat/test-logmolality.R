@@ -5,7 +5,6 @@ test_that("non-zero ionic strength transforms variables from activity to molalit
   # and in the rest of the main workflow of CHNOSZ?
   # 20171025 first version
   # 20181106 include non-zero activity coefficient of CO2(aq)
-  # 20181107 include 'is.basis' and opposite transformations for basis species and formed species
 
   ### first get the activity coefficients of H+ and HCO3-
   ## the long way...
@@ -71,9 +70,7 @@ test_that("non-zero ionic strength transforms variables from activity to molalit
   ## case 2: IS = 1
   a1 <- affinity(IS=1)
   A1affinity <- -convert(a1$values[[2]], "G")
-  # we had better use is.basis here, which indicates the direction of transformation of Gibbs energy  20181107
-  A1subcrt.trans <- subcrt(c("CO2", "H2O", "H+", "HCO3-"), c(-1, -1, 1, 1), T=25, logact=c(-3, 0, -7, -3), IS=1, is.basis=c(TRUE, TRUE, TRUE, FALSE))$out$A
-  expect_equal(A1affinity[[1]], A1subcrt.trans)
+  expect_equal(A1affinity[[1]], A1subcrt)
   ## take-home message 2: using affinity() with IS not equal to zero, the "logact"
   ## set by species() is logmolal in affinity calculations for charged aqueous species
 
@@ -94,10 +91,7 @@ test_that("non-zero ionic strength transforms variables from activity to molalit
   # so, logK = 6.345
   logKrev <- -logK
   logQrev0 <- -logQ0
-  # note the minus sign here, because HCO3 is now a basis species
-  # and has the opposite Gibbs energy transformation  20181107
-  logaHCO3 <- -3 - loggam_HCO3
-  logQrev1 <- (0 + logaCO2) - (-7 + logaHCO3)
+  logQrev1 <- -logQ1
   ACO2_0manual <- -convert(logKrev - logQrev0, "G")
   ACO2_1manual <- -convert(logKrev - logQrev1, "G")
   expect_equal(ACO2_0manual, ACO2_0affinity[[1]])
@@ -118,9 +112,8 @@ test_that("non-zero ionic strength transforms variables from activity to molalit
   # case 2: IS = 1
   logact_HCO3 <- e1$loga.equil[[2]]
   logact_CO2 <- e1$loga.equil[[1]]
-  # CO2 (formed species): convert log activity to log molality (multiply by loggam)
-  # HCO3- (basis species): convert log molality to log activity (divide by loggam)
-  logQeq1 <- (-7 + logact_HCO3 - loggam_HCO3) - (logact_CO2 + loggam_CO2 + 0)
+  # here, loga.equil is the *molality*, so we must multiply by loggam
+  logQeq1 <- (-7 + logact_HCO3 + loggam_HCO3) - (logact_CO2 + loggam_CO2 + 0)
   Aeq1 <- -convert(logK - logQeq1, "G") # zero!
   expect_equal(Aeq1[[1]], 0)
   ## take-home message 4: using affinity() with IS not equal to zero, the "loga.equil"

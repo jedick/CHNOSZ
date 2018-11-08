@@ -1,22 +1,5 @@
-CHANGES IN CHNOSZ 1.1.3-55 (2018-11-08)
+CHANGES IN CHNOSZ 1.1.3-56 (2018-11-08)
 ---------------------------------------
-
-MAJOR BUG FIXED
-
-- Previously, with calculations using nonideal(), the Gibbs energies of
-  basis species and formed species were transformed in the same
-  direction, causing an incorrct conversion of activities to molalities.
-  This has been fixed by adding the 'is.basis' argument to nonideal(),
-  which is used by affinity() to transform the Gibbs energies in opposite
-  directions for basis species and formed species.
-
-- For more information, see the new section of ?nonideal: 'is.basis and
-  the CHNOSZ workflow'.
-
-- Two new demos depend on the corrected behavior: gold.R and QtzMsKfs.R.
-  The latter demo also provides a comparison of the superseded Helgeson
-  (SUPCRT92) and newer Berman datasets for minerals. See below for more
-  information on demo/gold.R.
 
 NEW FEATURES
 

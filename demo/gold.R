@@ -147,7 +147,7 @@ Au_T1 <- function() {
   dK <- describe.basis(ibasis=5, use.molality=TRUE)
   legend("topleft", c(dP, dNaCl, dK), bty = "n")
   dbasis <- describe.basis(ibasis = c(9, 7, 10))
-  legend("topright", dbasis, bty = "n")
+  legend(320, -4, dbasis, bty = "n")
   title(main=("After Williams-Jones et al., 2009, Fig. 2B"), font.main = 1)
 }
 
@@ -156,7 +156,7 @@ Au_T1 <- function() {
 # (doi:10.1144/SP402.4)
 Au_T2 <- function() {
   species(c("Au(HS)2-", "Au(HS)", "AuOH", "AuCl2-"))
-  # approximate activity of H2S for total S = 0.01 m
+  # total S = 0.01 m
   basis("H2S", -2)
   # apply HM buffer for fO2
   basis("O2", "HM")
@@ -164,12 +164,12 @@ Au_T2 <- function() {
   basis("H+", "QMK")
   basis("K+", log10(0.5))
   # calculate solution composition for 2 mol/kg NaCl
-  NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=1)
+  NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
   # calculate affinity and solubility
   a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(NaCl$m_Cl), P = 1000, IS = NaCl$IS)
   s <- solubility(a)
   # make diagram and show total log molality
-  diagram(s, ylim = c(-10, -2), col = col, lwd = 2, lty = 1)
+  diagram(s, ylim = c(-10, -3), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
   # make legend and title
   dP <- describe.property("P", 1000)
@@ -177,7 +177,7 @@ Au_T2 <- function() {
   dK <- describe.basis(ibasis=5, use.molality=TRUE)
   legend("topleft", c(dP, dNaCl, dK), bty = "n")
   dbasis <- describe.basis(ibasis = c(9, 7, 10))
-  legend("topright", dbasis, bty = "n")
+  legend(320, -3, dbasis, bty = "n")
   title(main=("After Williams-Jones et al., 2009, Fig. 2A"), font.main = 1)
 }
 

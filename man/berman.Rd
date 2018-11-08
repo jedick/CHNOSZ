@@ -94,6 +94,53 @@ G_Cs <- berman("coesite", T=T, P=P)$G
 DGrxn <- G_Cs - G_aQz
 stopifnot(all(abs(DGrxn) < 100))
 
+### compare mineral stabilities in the Berman and Helgeson datasets
+### on a T - log(K+/H+) diagram, after Sverjensky et al., 1991
+### (doi:10.1016/0016-7037(91)90157-Z)
+## set up the system: basis species
+basis(c("K+", "Al+3", "quartz", "H2O", "O2", "H+"))
+# use pH = 0 so that aK+ = aK+/aH+
+basis("pH", 0)
+# load the species
+species(c("K-feldspar", "muscovite", "kaolinite",
+          "pyrophyllite", "andalusite"), "cr")
+## start with the data from Helgeson et al., 1978
+add.obigt("SUPCRT92")
+# calculate affinities in aK+ - temperature space
+# exceed.Tr: enable calculations above stated temperature limit of pyrophyllite
+res <- 400
+a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, exceed.Ttr = TRUE)
+# make base plot with colors and no lines
+diagram(a, xlab = ratlab("K+", use.molality = TRUE), lty = 0, fill = "terrain")
+# add the lines, extending into the low-density region (exceed.rhomin = TRUE)
+a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, 
+              exceed.Ttr = TRUE, exceed.rhomin = TRUE)
+diagram(a, add = TRUE, names = NULL, col = "red", lwd = 1.5)
+# the list of references:
+ref1 <- thermo.refs(species()$ispecies)$key
+## now use the (default) data from Berman, 1988
+# this resets the thermodynamic database
+# without affecting the basis and species settings
+data(OBIGT)
+# we can check that we have Berman's quartz
+# and not coesite or some other phase of SiO2
+iSiO2 <- rownames(basis()) == "SiO2"
+stopifnot(info(basis()$ispecies[iSiO2])$name == "quartz")
+# Berman's dataset doesn't have the upper temperature limits, so we don't need exceed.Ttr here
+a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, exceed.rhomin = TRUE)
+diagram(a, add = TRUE, names = NULL, col = "blue", lwd = 1.5)
+# the list of references:
+ref2 <- thermo.refs(species()$ispecies)$key
+ref2 <- paste(ref2, collapse = ", ")
+# add legend and title
+legend("top", "low-density region", text.font = 3, bty = "n")
+legend("topleft", describe.property(c("P", "IS"), c(1000, 1)), bty = "n")
+legend("left", c(ref1, ref2),
+       lty = c(1, 1), lwd = 1.5, col = c(2, 4), bty = "n")
+title(main = syslab(c("K2O", "Al2O3", "SiO2", "H2O", "HCl")), line = 1.8)
+title(main = "Helgeson and Berman minerals, after Sverjensky et al., 1991",
+      line = 0.3, font.main = 1)
+
 # make a P-T diagram for SiO2 minerals (Ber88 Fig. 4)
 basis(c("SiO2", "O2"), c("cr", "gas"))
 species(c("quartz", "quartz,beta", "coesite"), "cr")

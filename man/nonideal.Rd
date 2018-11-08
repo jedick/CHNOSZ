@@ -9,7 +9,7 @@ Calculate activity coefficients and adjusted (transformed) molal properties of a
 
 \usage{
   nonideal(species, speciesprops, IS, T, P, A_DH, B_DH,
-           m_star=NULL, method=get("thermo")$opt$nonideal, is.basis=FALSE)
+           m_star=NULL, method=get("thermo")$opt$nonideal)
   bgamma(TC, P, showsplines = "")
 }
 
@@ -23,7 +23,6 @@ Calculate activity coefficients and adjusted (transformed) molal properties of a
   \item{B_DH}{numeric, B Debye-Huckel coefficient; required for B-dot or b_gamma equation}
   \item{m_star}{numeric, total molality of all dissolved species}
   \item{method}{character, \samp{Alberty}, \samp{Bdot}, \samp{Bdot0}, or \samp{bgamma}}
-  \item{is.basis}{logical, is (are) the specie basis species?}
   \item{TC}{numeric, temperature (\degC)}
   \item{showsplines}{character, show isobaric (\samp{T}) or isothermal (\samp{P}) splines}
 }
@@ -74,23 +73,6 @@ If all \code{P} correspond to one of the isobaric conditions, the values of \cod
 Otherwise, particular (dependent on the \code{T}) isobaric spline fits are themselves used to construct isothermal splines for the given values of \code{T}; the isothermal splines are then used to generate the values of \code{Bdot} for the given \code{P}.
 To see the splines, set \code{showsplines} to \samp{T} to make the first set (isobaric splines) along with the data points, or \samp{P} for examples of isothermal splines at even temperature intervals (here, the symbols are not data, but values generated from the isobaric splines).
 This is a crude method of kriging the data, but produces fairly smooth interpolations without adding any external dependencies.
-}
-
-\section{is.basis and the CHNOSZ workflow}{
-The main workflow in CHNOSZ (\code{\link{basis}} - \code{\link{species}} - \code{\link{affinity}} - ( \code{\link{solubility}} or \code{\link{equilibrate}} ) - \code{\link{diagram}}) is written in terms of chemical activities, not concentrations (i.e. molalities for aqueous species).
-To output molalities for the \emph{species of interest}, which are formed from the basis species, we would multiply CHNOSZ's activities by activity coefficients.
-But to obtain activities for the \emph{basis species}, we should divide the molalities that are desired in the input by activity coefficients.
-That is, to convert the entire workflow from activity to molality space requires opposite treatments for the basis species and the species being formed.
-To simplify the problem, CHNOSZ does not compute molalities by actually multiplying activities by activity coefficients (or vice versa) -- this would require complex calculations of activity coefficients at the input and output stages, considering the many possible dimensions of system variables -- a true mess!
-Instead, the same effect is obtained at the core of the workflow by using standard Gibbs energies adjusted for given ionic strength (i.e. transformed Gibbs energies).
-The transformation is very simple: by adding \emph{RT}\gamma (\gamma is the activity coefficient calculated at the appropriate \emph{T}, \emph{P}, and ionic strength) to the standard Gibbs energy, all expressions for activity of that species are converted to molality.
-That transformation is consistent with the requirements for the species of interest.
-The reverse transformation, subtracting \emph{RT}\gamma from the standard Gibbs energy, is needed for the basis species.
-
-The \code{is.basis} argument controls the direction of the transformation.
-In general, it should not be needed by the user, but is used by \code{affinity} to obtain the correctly transformed Gibbs energies.
-Thus, by activating nonideality calculations in \code{affinity} (with a non-zero \code{IS} argument), the activity variables, such as \code{logact} in the \code{basis} and \code{species} definitions, and \code{loga.equil} and \code{loga.balance} in the downstream calculations, are converted to molalities.
-Actually renaming the variables in the code is not possible, but \code{\link{diagram}} changes the plot labels to molalities if it is provided results from a calculation with non-zero \code{IS} set in \code{affinity}.
 }
 
 \value{

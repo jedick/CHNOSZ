@@ -11,7 +11,7 @@
     property = c("logK","G","H","S","V","Cp"),
     T = seq(273.15,623.15,25), P = "Psat", grid = NULL, 
     convert = TRUE, exceed.Ttr = FALSE, exceed.rhomin = FALSE,
-    logact = NULL, action.unbalanced = "warn", IS = 0, is.basis = FALSE)
+    logact = NULL, action.unbalanced = "warn", IS = 0)
 }
 
 \arguments{
@@ -28,7 +28,6 @@
   \item{convert}{logical, are input and output units of T and P those of the user (\code{TRUE}) (see \code{\link{T.units}}), or are they Kelvin and bar (\code{FALSE})?}
   \item{action.unbalanced}{character \samp{warn} or NULL, what action to take if unbalanced reaction is provided}
   \item{IS}{numeric, ionic strength(s) at which to calculate adjusted molal properties, mol kg\eqn{^{-1}}{^-1}}
-  \item{is.basis}{logical, is (are) the species basis species? See \code{\link{nonideal}}}
 }
 
 \details{
