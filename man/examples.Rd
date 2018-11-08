@@ -16,8 +16,8 @@
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
     "protbuff", "yeastgfp", "mosaic", "copper", "solubility",
-    "gold", "wjd", "bugstab", "Shh", "activity_ratios", "adenine",
-    "DEW", "lambda", "TCA", "go-IU", "bison"),
+    "gold", "QtzMsKfs", "wjd", "bugstab", "Shh", "activity_ratios",
+    "adenine", "DEW", "lambda", "TCA", "go-IU", "bison"),
     save.png=FALSE)
 }
 
@@ -47,6 +47,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{copper} \tab * Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001) \cr
     \code{solubility} \tab * Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
     \code{gold} \tab * Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009) \cr
+    \code{QtzMsKfs} \tab * Helgeson and Berman minerals and calculations with molality (Sverjensky et al., 1991) \cr
     \code{wjd} \tab * \eqn{G}{G} minimization: prebiological atmospheres (Dayhoff et al., 1964) and cell periphery of yeast \cr
     \code{dehydration} \tab * \logK of dehydration reactions; SVG file contains tooltips and links \cr
     \code{bugstab} \tab * Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
@@ -121,6 +122,8 @@ Stef{\aacute}nsson, A. and Seward, T. M. (2004) Gold(I) complexing in aqueous su
 Stumm, W. and Morgan, J. J. (1996) \emph{Aquatic Chemistry: Chemical Equilibria and Rates in Natural Waters}, John Wiley & Sons, New York, 1040 p. \url{http://www.worldcat.org/oclc/31754493}
 
 Sverjensky, D. A., Harrison, B. and Azzolini, D. (2014a) Water in the deep Earth: The dielectric constant and the solubilities of quartz and corundum to 60 kb and 1,200 \degC. \emph{Geochim. Cosmochim. Acta} \bold{129}, 125--145. \url{https://doi.org/10.1016/j.gca.2013.12.019}
+
+Sverjensky, D. A., Hemley, J. J. and D'Angelo, W. M. (1991) Thermodynamic assessment of hydrothermal alkali feldspar-mica-aluminosilicate equilibria. \emph{Geochim. Cosmochim. Acta} \bold{55}, 989-1004. \url{https://doi.org/10.1016/0016-7037(91)90157-Z}
 
 Sverjensky, D. A., Stagno, V. and Huang, F. (2014b) Important role for organic carbon in subduction-zone fluids in the deep carbon cycle. \emph{Nat. Geosci.} \bold{7}, 909--913. \url{https://doi.org/10.1038/ngeo2291}
 

@@ -82,6 +82,7 @@ expr.property <- function(property, use.molality=FALSE) {
   propchar <- s2c(property)
   expr <- ""
   # some special cases
+  if(is.na(property)) return("")
   if(property=="logK") return(quote(log~italic(K)))
   # grepl here b/c diagram() uses "loga.equil" and "loga.basis"
   if(grepl("loga", property)) {
@@ -223,7 +224,8 @@ describe.property <- function(property=NULL, value=NULL, digits=0, oneline=FALSE
   propexpr <- valexpr <- character()
   for(i in 1:length(property)) {
     propexpr <- c(propexpr, expr.property(property[i]))
-    if(value[i]=="Psat") thisvalexpr <- quote(italic(P)[sat])
+    if(is.na(value[i])) thisvalexpr <- ""
+    else if(value[i]=="Psat") thisvalexpr <- quote(italic(P)[sat])
     else {
       thisvalue <- format(round(as.numeric(value[i]), digits), nsmall=digits)
       thisunits <- expr.units(property[i])
@@ -236,7 +238,8 @@ describe.property <- function(property=NULL, value=NULL, digits=0, oneline=FALSE
   # write an equals sign between the property and value
   desc <- character()
   for(i in seq_along(propexpr)) {
-    thisdesc <- substitute(a==b, list(a=propexpr[[i]], b=valexpr[[i]]))
+    if(is.na(value[i])) thisdesc <- propexpr[[i]]
+    else thisdesc <- substitute(a==b, list(a=propexpr[[i]], b=valexpr[[i]]))
     if(oneline) {
       # put all the property/value equations on one line, separated by commas
       if(i==1) desc <- substitute(a, list(a=thisdesc))
@@ -284,7 +287,7 @@ describe.reaction <- function(reaction, iname=numeric(), states=NULL) {
 }
 
 # make formatted text for activity ratio 20170217
-ratlab <- function(ion="K+") {
+ratlab <- function(ion="K+", use.molality=FALSE) {
   # the charge
   Z <- makeup(ion)["Z"]
   # the text for the exponent on aH+
@@ -292,9 +295,11 @@ ratlab <- function(ion="K+") {
   # the expression for the ion and H+
   expr.ion <- expr.species(ion)
   expr.H <- expr.species("H+")
+  # with use.molality, change a to m
+  a <- ifelse(use.molality, "m", "a")
   # the final expression
-  if(exp.H=="1") substitute(log~(italic(a)[expr.ion] / italic(a)[expr.H]), list(expr.ion=expr.ion, expr.H=expr.H))
-  else substitute(log~(italic(a)[expr.ion] / italic(a)[expr.H]^exp.H), list(expr.ion=expr.ion, expr.H=expr.H, exp.H=exp.H))
+  if(exp.H=="1") substitute(log~(italic(a)[expr.ion] / italic(a)[expr.H]), list(a=a, expr.ion=expr.ion, expr.H=expr.H))
+  else substitute(log~(italic(a)[expr.ion] / italic(a)[expr.H]^exp.H), list(a=a, expr.ion=expr.ion, expr.H=expr.H, exp.H=exp.H))
 }
 
 # make formatted text for thermodynamic system 20170217

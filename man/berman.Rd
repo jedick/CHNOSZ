@@ -100,36 +100,6 @@ species(c("quartz", "quartz,beta", "coesite"), "cr")
 a <- affinity(T=c(200, 1700, 200), P=c(0, 50000, 200))
 diagram(a)
 
-## a longer example, comparing diagrams made using the
-## Berman and Helgeson datasets, after Sverjensky et al., 1991
-res <- 200
-# using the Helgeson data
-add.obigt("SUPCRT92")
-# set up basis species
-basis(c("K+", "Al+3", "quartz", "H2O", "O2", "H+"))
-# use pH = 0 so that aK+ = aK+/aH+
-basis("pH", 0)
-# load the species
-species(c("K-feldspar", "muscovite", "kaolinite",
-          "pyrophyllite", "andalusite"), "cr")
-# calculate affinities in aK+ - temperature space
-a <- affinity(`K+`=c(0, 5, res), T=c(200, 650, res), P=1000)
-# note that we go just past the quartz transition,
-# but it has no effect on the diagram
-diagram(a, xlab=ratlab("K+"))
-# now using the Berman data: this resets the thermodynamic database
-# without affecting the basis and species settings
-data(OBIGT)
-# it might be good to check that we have Berman's quartz
-# and not coesite or some other SiO2 phase
-info(basis()$ispecies[3])
-a <- affinity(`K+`=c(0, 5, res), T=c(200, 650, res), P=1000)
-diagram(a, add=TRUE, names="", col="blue", lwd=2)
-legend("topleft", lty=c(1, 1, NA), lwd=c(1, 2, 0), col=c("black", "blue", ""),
-       legend=c("Helgeson et al., 1978 (unadjusted)",
-       "Berman, 1988", "    (adjusted by Sverjensky et al., 1991)"), bty="n")
-title(main="Comparison of Helgeson and Berman datasets at 1000 bar")
-
 ## Getting data from a user-supplied file
 ## Ol-Opx exchange equilibrium, after Berman and Aranovich, 1996
 E.units("J")
@@ -161,8 +131,6 @@ Berman, R. G. and Aranovich, L. Ya. (1996) Optimized standard state and solution
 Berman, R. G. (2007) winTWQ (version 2.3): A software package for performing internally-consistent thermobarometric calculations. \emph{Open File} \bold{5462}, Geological Survey of Canada, 41 p. \url{https://doi.org/10.4095/223425}
 
 Helgeson, H. C., Delany, J. M., Nesbitt, H. W. and Bird, D. K. (1978) Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am. J. Sci.} \bold{278-A}, 1--229. \url{http://www.worldcat.org/oclc/13594862}
-
-Sverjensky, D. A., Hemley, J. J. and D'Angelo, W. M. (1991) Thermodynamic assessment of hydrothermal alkali feldspar-mica-aluminosilicate equilibria. \emph{Geochim. Cosmochim. Acta} \bold{55}, 989-1004. \url{https://doi.org/10.1016/0016-7037(91)90157-Z}
 }
 
 \concept{Thermodynamic calculations}

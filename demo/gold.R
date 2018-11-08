@@ -132,15 +132,11 @@ Au_T1 <- function() {
   basis("H2S", "PPM")
   # apply QMK buffer for pH
   basis("H+", "QMK")
+  basis("K+", log10(0.5))
   # calculate solution composition for 2 mol/kg NaCl
   NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
-  a_Cl <- NaCl$m_Cl * NaCl$gam_Cl
-  # using this ionic strength, calculate the activity of K+
-  # assuming complete dissociation of 0.5 mol/kg KCl
-  gam_K <- 10^subcrt("K+", T = seq(150, 550, 10), P = 1000, IS=NaCl$IS)$out$`K+`$loggam
-  a_K <- 0.5 * gam_K
   # calculate affinity and solubility
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(a_Cl), `K+` = log10(a_K), P = 1000, IS = NaCl$IS)
+  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(NaCl$m_Cl), P = 1000, IS = NaCl$IS)
   s <- solubility(a)
   # make diagram and show total log molality
   diagram(s, ylim = c(-10, -4), col = col, lwd = 2, lty = 1)
@@ -166,15 +162,11 @@ Au_T2 <- function() {
   basis("O2", "HM")
   # apply QMK buffer for pH
   basis("H+", "QMK")
+  basis("K+", log10(0.5))
   # calculate solution composition for 2 mol/kg NaCl
-  NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
-  a_Cl <- NaCl$m_Cl * NaCl$gam_Cl
-  # using this ionic strength, calculate the activity of K+
-  # assuming complete dissociation of 0.5 mol/kg KCl
-  gam_K <- 10^subcrt("K+", T = seq(150, 550, 10), P = 1000, IS=NaCl$IS)$out$`K+`$loggam
-  a_K <- 0.5 * gam_K
+  NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=1)
   # calculate affinity and solubility
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(a_Cl), `K+` = log10(a_K), P = 1000, IS = NaCl$IS)
+  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(NaCl$m_Cl), P = 1000, IS = NaCl$IS)
   s <- solubility(a)
   # make diagram and show total log molality
   diagram(s, ylim = c(-10, -2), col = col, lwd = 2, lty = 1)

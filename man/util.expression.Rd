@@ -26,7 +26,7 @@
     ret.val = FALSE)
   describe.reaction(reaction, iname = numeric(), states = NULL)
   syslab(system = c("K2O", "Al2O3", "SiO2", "H2O"), dash="\u2013")
-  ratlab(ion = "K+")
+  ratlab(ion = "K+", use.molality = FALSE)
 }
 
 \arguments{
