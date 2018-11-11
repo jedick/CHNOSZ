@@ -1,5 +1,6 @@
 # CHNOSZ/demo/gold.R: Au solubility calculations
 # 20181101 jmd first version
+# 20181109 add calculation of K+ molality
 
 ## additions to OBIGT:
 # Au(HS) from Akinfiev and Zotov, 2010
@@ -19,12 +20,13 @@ mod.obigt("AuOH", formula = "AuOH", state = "aq", ref1 = "PAB+14", date = today(
 ## modifications to OBIGT:
 # AuCl2- from Akinfiev and Zotov, 2001 (reported in AZ10)
 # (http://pleiades.online/cgi-perl/search.pl/?type=abstract&name=geochem&number=10&year=1&page=990)
-mod.obigt("AuCl2-", formula = "AuCl2-", state = "aq", ref1 = "AZ01", date = today(),
+mod.obigt("AuCl2-", ref1 = "AZ01", date = today(),
   G = -36795, H = -46664, S = 47.16, Cp = -26.4, V = 68.6,
   a1 = 11.4774, a2 = 20.2425, a3 = -2.2063, a4 = -3.6158,
   c1 = 27.0677, c2 = -22.240, omega = 0.8623, z = -1)
 # Au(HS)2- from Pokrovski et al., 2014
-mod.obigt("Au(HS)2-", G = 3487, H = 4703, S = 77.46, Cp = 3.3, V = 75.1,
+mod.obigt("Au(HS)2-", ref1 = "PAB+14", date = today(),
+  G = 3487, H = 4703, S = 77.46, Cp = 3.3, V = 75.1,
   a1 = 12.3373, a2 = 22.3421, a3 = 3.0317, a4 = -3.7026,
   c1 = -53.6010, c2 = 31.4030, omega = 0.7673, z = -1)
 
@@ -123,6 +125,18 @@ Au_pH2 <- function() {
   title(main=("After Stef\u00e1nsson and Seward, 2004, Fig. 12b"), font.main = 1, cex.main = 1.1)
 }
 
+# estimate the Cl- molality and ionic strength for a hypothetical 
+# NaCl solution with total chloride equal to specified NaCl + KCl solution,
+# then estimate the molality of K+ in that solution 20181109
+chloride <- function(T, P, m_NaCl, m_KCl) {
+  NaCl <- NaCl(T = T, P = P, m_tot = m_NaCl + m_KCl)
+  # calculate logK of K+ + Cl- = KCl, adjusted for ionic strength
+  logKadj <- subcrt(c("K+", "Cl-", "KCl"), c(-1, -1, 1), T = T, P = P, IS = NaCl$IS)$out$logK
+  # what is the molality of K+ from 0.5 mol/kg KCl, assuming total chloride from above
+  m_K <- m_KCl / (10^logKadj * NaCl$m_Cl + 1)
+  list(IS = NaCl$IS, m_Cl = NaCl$m_Cl, m_K = m_K)
+}
+
 # log(m_Au)-T diagram like Fig. 2B of Williams-Jones et al., 2009
 # (doi:10.2113/gselements.5.5.281)
 Au_T1 <- function() {
@@ -132,14 +146,13 @@ Au_T1 <- function() {
   basis("H2S", "PPM")
   # apply QMK buffer for pH
   basis("H+", "QMK")
-  basis("K+", log10(0.5))
-  # calculate solution composition for 2 mol/kg NaCl
-  NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
+  # estimate solution composition for 1.5 m NaCl and 0.5 m KCl
+  chl <- chloride(T = seq(150, 550, 10), P = 1000, m_NaCl = 1.5, m_KCl = 0.5)
   # calculate affinity and solubility
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(NaCl$m_Cl), P = 1000, IS = NaCl$IS)
+  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
   s <- solubility(a)
   # make diagram and show total log molality
-  diagram(s, ylim = c(-10, -4), col = col, lwd = 2, lty = 1)
+  diagram(s, ylim = c(-10, -3), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
   # make legend and title
   dP <- describe.property("P", 1000)
@@ -147,7 +160,7 @@ Au_T1 <- function() {
   dK <- describe.basis(ibasis=5, use.molality=TRUE)
   legend("topleft", c(dP, dNaCl, dK), bty = "n")
   dbasis <- describe.basis(ibasis = c(9, 7, 10))
-  legend(320, -4, dbasis, bty = "n")
+  legend(320, -3, dbasis, bty = "n")
   title(main=("After Williams-Jones et al., 2009, Fig. 2B"), font.main = 1)
 }
 
@@ -162,11 +175,13 @@ Au_T2 <- function() {
   basis("O2", "HM")
   # apply QMK buffer for pH
   basis("H+", "QMK")
-  basis("K+", log10(0.5))
-  # calculate solution composition for 2 mol/kg NaCl
-  NaCl <- NaCl(T = seq(150, 550, 10), P = 1000, m_tot=2)
-  # calculate affinity and solubility
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(NaCl$m_Cl), P = 1000, IS = NaCl$IS)
+  # estimate solution composition for 1.5 m NaCl and 0.5 m KCl
+  chl <- chloride(T = seq(150, 550, 10), P = 1000, m_NaCl = 1.5, m_KCl = 0.5)
+#  # calculate affinity and solubility, considering speciation of sulfur
+#  bases <- c("H2S", "HS-", "SO4-2", "HSO4-")
+#  m <- mosaic(bases, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
+#  s <- solubility(m$A.species)
+  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
   s <- solubility(a)
   # make diagram and show total log molality
   diagram(s, ylim = c(-10, -3), col = col, lwd = 2, lty = 1)

@@ -140,6 +140,8 @@ legend("left", c(ref1, ref2),
 title(main = syslab(c("K2O", "Al2O3", "SiO2", "H2O", "HCl")), line = 1.8)
 title(main = "Helgeson and Berman minerals, after Sverjensky et al., 1991",
       line = 0.3, font.main = 1)
+# cleanup for next example
+data(thermo)
 
 # make a P-T diagram for SiO2 minerals (Ber88 Fig. 4)
 basis(c("SiO2", "O2"), c("cr", "gas"))

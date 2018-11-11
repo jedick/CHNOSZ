@@ -44,3 +44,13 @@ test_that("equil.potentials - basis.logact - element.mu makes a roundtrip at 25 
   basis(names(bl99), bl99)
   expect_equal(element.mu(T=99), ep99)
 })
+
+# 20181111
+test_that("swapping works with a buffer (no recalculation of activities)", {
+  basis("FeCHNOS+")
+  oldb <- basis("O2", "PPM")
+  # before version 1.1.3-57, this gave Error in value * (-log(10) * R * T) : non-numeric argument to binary operator
+  newb <- swap.basis("O2", "hydrogen")
+  # note: logact includes "PPM" for O2 (old) and H2 (new)
+  expect_identical(oldb$logact, newb$logact)
+})

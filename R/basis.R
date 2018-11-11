@@ -185,7 +185,11 @@ mod.basis <- function(species, state=NULL, logact=NULL) {
       }
     } 
     # then modify the logact
-    if(!is.null(logact)) thermo$basis$logact[ib] <- as.numeric(logact[i])
+    if(!is.null(logact)) {
+      # allow this to be non-numeric in case we're called by swap.basis() while a buffer is active  20181109
+      if(can.be.numeric(logact[i])) thermo$basis$logact[ib] <- as.numeric(logact[i])
+      else thermo$basis$logact[ib] <- logact[i]
+    }
     # assign the result to the CHNOSZ environment
     assign("thermo", thermo, "CHNOSZ")
   }

@@ -94,13 +94,19 @@ swap.basis <- function(species, species2, T = 25) {
   ispecies <- oldbasis$ispecies
   ispecies[ib] <- ispecies2
   newbasis <- put.basis(ispecies)
-  # if put.basis didn't stop with an error, we're good to go!
-  # what were the original chemical potentials of the elements?
-  emu <- element.mu(oldbasis, T=T)
-  # the corresponding logarithms of activities of the new basis species
-  bl <- basis.logact(emu, newbasis, T=T)
+  # now deal with the activities
+  if(!all(can.be.numeric(oldbasis$logact))) {
+    # if there are any buffers, just set the old activities
+    bl <- oldbasis$logact
+  } else {
+    # no buffers, so we can recalculate activities to maintain the chemical potentials of the elements
+    # what were the original chemical potentials of the elements?
+    emu <- element.mu(oldbasis, T=T)
+    # the corresponding logarithms of activities of the new basis species
+    bl <- basis.logact(emu, newbasis, T=T)
+  }
   # update the basis with these logacts
-  mb <- mod.basis(ispecies, logact=bl)
+  mb <- mod.basis(ispecies, state = newbasis$state, logact = bl)
   # delete, then restore species if they were defined
   species(delete=TRUE)
   if(!is.null(ts)) {

@@ -33,6 +33,7 @@ mosaic <- function(bases, bases2=NULL, blend=FALSE, ...) {
       A.bases2 <- mcall$A.bases
     }
     # change the basis species; restore the original at the end of the loop
+    if(can.be.numeric(logact.swap)) logact.swap <- as.numeric(logact.swap)
     if(i < length(bases)) {
       swap.basis(bases[i], bases[i+1]) 
       # TODO: basis() requires the formula to identify the basis species,
