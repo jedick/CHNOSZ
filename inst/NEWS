@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-56 (2018-11-08)
+CHANGES IN CHNOSZ 1.1.3-58 (2018-11-11)
 ---------------------------------------
 
 NEW FEATURES
@@ -36,6 +36,12 @@ NEW FEATURES
 - Add NaCl(), implementing a first-order calculation of the speciation
   of NaCl in water, taking account of activity coefficients and the
   reaction Na+ + Cl- = NaCl(aq).
+
+- Add dumpdata() for returning/writing all packaged thermodynamic data
+  (including default database and optional data files).
+
+- Add demo/bison.R (average oxidation state of carbon of metagenome-
+  derived proteins in different microbial phyla at Bison Pool)
 
 THERMODYNAMIC DATA
 
@@ -130,35 +136,14 @@ BUG FIXES
   NA where the density of H2O is less than 0.35 g/cm3, avoiding the
   output of bogus values in this region. Thanks to Evgeniy Bastrakov.
 
-OTHER CHANGES
+COMPUTATIONAL OPTIONS
 
 - Add 'exceed.rhomin' argument to subcrt() and affinity() to enable
   output of properties for species in the revised HKF model below 0.35
   g/cm3.
 
-- To provide betters diagnostics for potential web apps, warning
-  messages produced by subcrt() are now available in the output of
-  affinity(), under 'sout$warnings'.
-
-- Change internal variable names in subcrt() for better readability
-  (sinfo -> ispecies, inpho -> iphases, sinph -> phasespecies).
-
-- Add dumpdata() for returning/writing all packaged thermodynamic data
-  (including default database and optional data files).
-
-- TODO: fix overly long message for info("SiO2").
-
 - In equilibrate(), accept a length > 1 'normalize' argument to
   normalize the chemical formulas of only the selected species.
-
-- Add C implementation of counting occurrences of all letters in a
-  string (src/count_letters.c) to speed up operation of count.aa().
-
-- read.fasta(): add support for file connections created using
-  archive::archive_read (https://github.com/jimhester/archive).
-
-- Add demo/bison.R (average oxidation state of carbon of metagenome-
-  derived proteins in different microbial phyla at Bison Pool)
 
 - Add thermo$opt$maxcores (default 2) to specify maximum number of
   cores for parallel calculations with palply().
@@ -170,6 +155,26 @@ OTHER CHANGES
   output a single primary reference for each species, keeping any
   duplicated references (but not including any secondary references in
   thermo$obigt$ref2). Thanks to Evgeniy Bastrakov for the suggestion.
+
+USABILITY ENHANCEMENTS
+
+- To provide better diagnostics for potential web apps, warning
+  messages produced by subcrt() are now available in the output of
+  affinity(), under 'sout$warnings'.
+
+- Change internal variable names in subcrt() for better readability
+  (sinfo -> ispecies, inpho -> iphases, sinph -> phasespecies).
+
+- TODO: fix overly long message for info("SiO2").
+
+- Add C implementation of counting occurrences of all letters in a
+  string (src/count_letters.c) to speed up operation of count.aa().
+
+- read.fasta(): add support for file connections created using
+  archive::archive_read (https://github.com/jimhester/archive).
+
+- The arguments in expr.species() have been reorganized for more
+  flexible and concise usage.
 
 CHANGES IN CHNOSZ 1.1.3 (2017-11-13)
 ------------------------------------

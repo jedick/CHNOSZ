@@ -36,10 +36,8 @@ test_that("GHS() and obigt2eos() produce expected values", {
   expect_equal(as.numeric(testGHS[1, 3]), testent[2])
 })
   
-
 test_that("expr.species() produces expected errors", {
   expect_error(expr.species(c("H2O", "CO2")), "more than one species")
-  expect_error(expr.species("CO2", log = "aqq"), "'aqq' is not a recognized state")
 })
 
 test_that("[P|T|E].units() do not accept invalid units", {

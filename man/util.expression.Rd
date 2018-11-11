@@ -14,28 +14,29 @@
 \description{Generate expressions suitable for axis labels and plot legends describing chemical species, properties and reactions.}
 
 \usage{
-  expr.species(species, state = "", log = "", value=NULL, use.makeup=FALSE,
-    use.molality = FALSE)
-  expr.property(property, use.molality = FALSE)
+  expr.species(species, state = "aq", value=NULL, log=FALSE, molality=FALSE,
+    use.state=FALSE, use.makeup=FALSE)
+  expr.property(property, molality = FALSE)
   expr.units(property, prefix = "", per = "mol")
   axis.label(label, units = NULL, basis = get("thermo")$basis, prefix = "",
-    use.molality = FALSE)
+    molality = FALSE)
   describe.basis(basis = get("thermo")$basis, ibasis = 1:nrow(basis),
-    digits = 1, oneline = FALSE, use.molality = FALSE, use.pH = TRUE)
+    digits = 1, oneline = FALSE, molality = FALSE, use.pH = TRUE)
   describe.property(property, value, digits = 0, oneline = FALSE,
     ret.val = FALSE)
   describe.reaction(reaction, iname = numeric(), states = NULL)
   syslab(system = c("K2O", "Al2O3", "SiO2", "H2O"), dash="\u2013")
-  ratlab(ion = "K+", use.molality = FALSE)
+  ratlab(ion = "K+", molality = FALSE)
 }
 
 \arguments{
   \item{species}{character, formula of a chemical species}
   \item{state}{character, designation of physical state}
-  \item{log}{character, designation of physical state (for logarithm of activity or fugacity)}
   \item{value}{numeric, logarithm of activity or fugacity of species, or value of other property}
+  \item{log}{logical, write logarithm of activity/fugacity/molality?}
+  \item{molality}{logical, use molality (m) instead of activity (a) for aqueous species?}
+  \item{use.state}{logical, include state in expression?}
   \item{use.makeup}{logical, use \code{\link{makeup}} to count the elements?}
-  \item{use.molality}{logical, use molality (m) instead of activity (a) for aqueous species?}
   \item{use.pH}{logical, use pH instead of log activity of H+?}
   \item{property}{character, description of chemical property}
   \item{prefix}{character, prefix for units}
@@ -59,10 +60,15 @@
 
 The \code{expr.*} functions create \code{\link{expression}}s using the \code{\link{plotmath}} syntax to describe the names and states and logarithms of activity or fugacity of chemical species, conditions including temperature and pressure and chemical properties such as Gibbs energy and volume.
 
-\code{expr.species} takes as input the formula of a single chemical \code{species} and constructs an expression including subscripted coefficients, and a suffixed designation of physical \code{state} (italicized, in parentheses) if provided.
-If \code{log} designates a physical state (as in \code{\link{thermo}$obigt$state}), the expression includes a \samp{log} prefix, followed by \samp{f} for fugacity of gaseous species, or \samp{a} for activity of species in all other states.
+\code{expr.species} constructs a formatted expression using the formula or name of a single chemical \code{species}.
+With no other arguments, the formula is just formatted with the appropriate subscripts and superscripts.
+Providing the physical \code{state} adds a variable to the expression (\emph{a} for aqueous species and pure phases, except \emph{f} for gases).
+Set \code{molality} to TRUE to write \emph{m} instead of \emph{a} for aqueous species.
+The state itself is written in the expression if \code{use.state} is TRUE.
+If \code{log} is TRUE, the expression includes a \samp{log} prefix.
+Finally, provide a value in \code{value} to write an equation (something like logfO2 = -70), or set it to NA to only write the variable itself (e.g. logfO2).
 Set \code{use.makeup} to TRUE to use \code{\link{makeup}} to parse the chemical formula.
-This can have the undesirable effect of reordering and grouping all the elements, and has been replaced with a different splitting algorithm so that coefficients and charges are sub/superscripted without affecting the intervening text.
+This was an older default action that had the undesirable effect of reordering and grouping all the elements, and has been replaced with a different splitting algorithm so that coefficients and charges are sub/superscripted without affecting the intervening text.
 
 \code{expr.property} accepts a description in \code{property} that indicates the chemical property of interest.
 Uppercase letters are italicized, and lowercase letters are italicized and subscripted.
@@ -100,7 +106,7 @@ If none of those characters appears in the property, the expression is an empty 
 If this matches the chemical formula of one of the basis species in the \code{basis} argument, the expression for the label is generated using \code{expr.species} with \code{log} set to the physical state of the basis species.
 Otherwise, the expression is built by combining the output of \code{expr.property} with \code{expr.units} (or the value in \code{units}, if it is supplied), placing a comma between the two. 
 This function is used extensively in \code{\link{diagram}} and also appears in many of the examples.
-Note that \code{\link{diagram}} sets \code{use.molality} to TRUE if \code{IS} was supplied as an argument to \code{\link{affinity}}.
+Note that \code{\link{diagram}} sets \code{molality} to TRUE if \code{IS} was supplied as an argument to \code{\link{affinity}}.
 
   \code{describe.basis} makes an expression summarizing the basis species definition (logarithms of activity or fugacity of the basis species) provided in \code{basis}; only the basis species identified by \code{ibasis} are included. 
 
@@ -124,10 +130,10 @@ plot(0, 0, xlim=c(1,5), ylim=c(1,5), xlab="function", ylab="example")
 text0 <- function(...) text(..., adj=0)
 # species
 text0(1, 1, expr.species("CO2"))
-text0(1, 2, expr.species("CO2", state="aq"))
-text0(1, 3, expr.species("CO2", state="aq", log="aq"))
-text0(1, 4, expr.species("CO2", log="aq"))
-text0(1, 5, expr.species("CO2", log="aq", value=-3))
+text0(1, 2, expr.species("CO2", use.state=TRUE))
+text0(1, 3, expr.species("CO2", log=TRUE, use.state=TRUE))
+text0(1, 4, expr.species("CO2", log=TRUE))
+text0(1, 5, expr.species("CO2", log=TRUE, value=-3))
 # properties
 text0(2, 1, expr.property("A"))
 text0(2, 2, expr.property("DV"))

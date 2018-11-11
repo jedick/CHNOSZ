@@ -111,7 +111,7 @@ add.obigt("SUPCRT92")
 res <- 400
 a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, exceed.Ttr = TRUE)
 # make base plot with colors and no lines
-diagram(a, xlab = ratlab("K+", use.molality = TRUE), lty = 0, fill = "terrain")
+diagram(a, xlab = ratlab("K+", molality = TRUE), lty = 0, fill = "terrain")
 # add the lines, extending into the low-density region (exceed.rhomin = TRUE)
 a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, 
               exceed.Ttr = TRUE, exceed.rhomin = TRUE)

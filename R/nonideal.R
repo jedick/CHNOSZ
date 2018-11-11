@@ -93,8 +93,8 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     Z[i] <- thisZ
   }
   # get species formulas to assign acirc 20181105
+  formula <- get("thermo")$obigt$formula[species]
   if(grepl("Bdot", method)) {
-    formula <- get("thermo")$obigt$formula[species]
     # "ion size paramter" taken from UT_SIZES.REF of HCh package (Shvarov and Bastrakov, 1999),
     # based on Table 2.7 of Garrels and Christ, 1965
     acircdat <- c("Rb+"=2.5, "Cs+"=2.5, "NH4+"=2.5, "Tl+"=2.5, "Ag+"=2.5,
@@ -109,10 +109,10 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
       "Th+4"=11, "Zr+4"=11, "Ce+4"=11, "Sn+4"=11)
     acirc <- as.numeric(acircdat[formula])
     acirc[is.na(acirc)] <- 4.5
-    # make a message
-    nZ <- sum(Z!=0)
-    if(nZ > 1) message("nonideal: using ", paste(acirc[Z!=0], collapse=" "), " for ion size parameters of ", paste(formula[Z!=0], collapse=" "))
-    else if(nZ==1) message("nonideal: using ", acirc[Z!=0], " for ion size parameter of ", formula[Z!=0])
+    ## make a message
+    #nZ <- sum(Z!=0)
+    #if(nZ > 1) message("nonideal: using ", paste(acirc[Z!=0], collapse=" "), " for ion size parameters of ", paste(formula[Z!=0], collapse=" "))
+    #else if(nZ==1) message("nonideal: using ", acirc[Z!=0], " for ion size parameter of ", formula[Z!=0])
     # use correct units (cm) for ion size parameter
     acirc <- acirc * 10^-8
   } else if(grepl("bgamma", method)) {
@@ -128,7 +128,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
   iH <- info("H+")
   ie <- info("e-")
   speciesprops <- as.list(speciesprops)
-  ncharged <- nneutral <- 0
+  icharged <- ineutral <- logical(length(species))
   for(i in 1:length(species)) {
     myprops <- speciesprops[[i]]
     # to keep unit activity coefficients of the proton and electron
@@ -172,11 +172,11 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     }
     # save the calculated properties and increment progress counters
     speciesprops[[i]] <- myprops
-    ncharged <- ncharged + sum(didcharged)
-    nneutral <- nneutral + sum(didneutral)
+    if(didcharged) icharged[i] <- TRUE
+    if(didneutral) ineutral[i] <- TRUE
   }
-  if(ncharged > 0) message("nonideal: calculations for ", ncharged, " charged species (", mettext(method), ")")
-  if(nneutral > 0) message("nonideal: calculations for ", nneutral, " neutral species (Setchenow equation)")
+  if(sum(icharged) > 0) message("nonideal: calculations for ", paste(formula[icharged], collapse=", "), " (", mettext(method), ")")
+  if(sum(ineutral) > 0) message("nonideal: calculations for ", paste(formula[ineutral], collapse=", "), " (Setchenow equation)")
   return(speciesprops)
 }
 

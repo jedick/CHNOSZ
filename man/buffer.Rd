@@ -147,7 +147,7 @@ species(1, -10)
 a <- affinity(O2=c(-85, -70, 4), T=c(25, 100, 4))
 d <- diagram(a, type="CO2", add=TRUE, lty=2)
 # add a legend
-lAC <- expr.species("CH3COOH", log="aq")
+lAC <- expr.species("CH3COOH", log=TRUE)
 ltext <- c(as.expression(lAC), -3, -10)
 lty <- c(NA, 1, 2)
 legend("topright", legend=ltext, lty=lty, bg="white")

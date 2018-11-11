@@ -166,7 +166,7 @@ The \samp{saturation} diagram can handle multiple species, but if \code{type} is
 \section{Activity Coefficients}{
 The wording in this page and names of variables in functions refer exclusively to \samp{activities} of aqueous species.
 However, if activity coefficients are calculated (using the \code{IS} argument in \code{\link{affinity}}), then these variables are effectively transformed to molalities (see \code{tests/testthat/} \code{test-logmolality.R}).
-So that the labels on diagrams are adjusted accordingly, \code{\link{diagram}} sets the \code{use.molality} argument of \code{\link{axis.label}} to TRUE if \code{IS} was supplied as an argument to \code{\link{affinity}}.
+So that the labels on diagrams are adjusted accordingly, \code{\link{diagram}} sets the \code{molality} argument of \code{\link{axis.label}} to TRUE if \code{IS} was supplied as an argument to \code{\link{affinity}}.
 The labeling as molality takes effect even if \code{IS} is set to 0; this way, by including (or not) the \code{IS = 0} argument to \code{affinity}, the user decides whether to label aqueous species variables as molality (or activity) for calculations at zero ionic strength (where molality = activity).
 }
 
@@ -273,9 +273,8 @@ species(c("kyanite", "sillimanite", "andalusite"))
 # at 1 bar only, so we permit calculation at higher temperatures
 a <- affinity(T=c(200, 900, 99), P=c(0, 9000, 101), exceed.Ttr=TRUE)
 d <- diagram(a, fill=NULL)
-bexpr <- sapply(c("Al2O3", "SiO2", "H2O"), expr.species, simplify=FALSE)
-btext <- substitute(Al2O3 - SiO2 - H2O, unlist(bexpr))
-mtitle(c(as.expression(btext), "after Helgeson et al., 1978"))
+slab <- syslab(c("Al2O3", "SiO2", "H2O"))
+mtitle(c(as.expression(slab), "after Helgeson et al., 1978"))
 # find the approximate position of the triple point
 tp <- find.tp(d$predominant)
 Ttp <- a$vals[[1]][tp[1, 2]]

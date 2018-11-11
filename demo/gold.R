@@ -156,11 +156,13 @@ Au_T1 <- function() {
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
   # make legend and title
   dP <- describe.property("P", 1000)
-  dNaCl <- expression(NaCl == 2~mol~kg^-1)
-  dK <- describe.basis(ibasis=5, use.molality=TRUE)
-  legend("topleft", c(dP, dNaCl, dK), bty = "n")
-  dbasis <- describe.basis(ibasis = c(9, 7, 10))
-  legend(320, -3, dbasis, bty = "n")
+  dNaCl <- expression(italic(m)[NaCl] == 1.5)
+  dKCl <- expression(italic(m)[KCl] == 0.5)
+  legend("topleft", c(dP, dNaCl, dKCl), bty = "n")
+  dH2S <- describe.basis(ibasis = 7, molality=TRUE)
+  dO2 <- describe.basis(ibasis = 9)
+  dpH <- describe.basis(ibasis = 10)
+  legend(300, -3, c(dH2S, dO2, dpH), bty = "n")
   title(main=("After Williams-Jones et al., 2009, Fig. 2B"), font.main = 1)
 }
 
@@ -188,11 +190,13 @@ Au_T2 <- function() {
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
   # make legend and title
   dP <- describe.property("P", 1000)
-  dNaCl <- expression(NaCl == 2~mol~kg^-1)
-  dK <- describe.basis(ibasis=5, use.molality=TRUE)
-  legend("topleft", c(dP, dNaCl, dK), bty = "n")
-  dbasis <- describe.basis(ibasis = c(9, 7, 10))
-  legend(320, -3, dbasis, bty = "n")
+  dNaCl <- expression(italic(m)[NaCl] == 1.5)
+  dKCl <- expression(italic(m)[KCl] == 0.5)
+  legend("topleft", c(dP, dNaCl, dKCl), bty = "n")
+  dH2S <- expr.species("H2S", value = 0.01, molality = TRUE)
+  dO2 <- describe.basis(ibasis = 9)
+  dpH <- describe.basis(ibasis = 10)
+  legend(300, -3, c(dH2S, dO2, dpH), bty = "n")
   title(main=("After Williams-Jones et al., 2009, Fig. 2A"), font.main = 1)
 }
 
