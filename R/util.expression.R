@@ -299,7 +299,7 @@ ratlab <- function(ion="K+", molality=FALSE) {
 }
 
 # make formatted text for thermodynamic system 20170217
-syslab <- function(system = c("K2O", "Al2O3", "SiO2", "H2O"), dash="\u2013") {
+syslab <- function(system = c("K2O", "Al2O3", "SiO2", "H2O"), dash="-") {
   for(i in seq_along(system)) {
     expr <- expr.species(system[i])
     # use en dash here

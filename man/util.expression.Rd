@@ -25,7 +25,7 @@
   describe.property(property, value, digits = 0, oneline = FALSE,
     ret.val = FALSE)
   describe.reaction(reaction, iname = numeric(), states = NULL)
-  syslab(system = c("K2O", "Al2O3", "SiO2", "H2O"), dash="\u2013")
+  syslab(system = c("K2O", "Al2O3", "SiO2", "H2O"), dash="-")
   ratlab(ion = "K+", molality = FALSE)
 }
 
