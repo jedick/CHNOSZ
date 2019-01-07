@@ -61,15 +61,13 @@ knit_hooks$set(smallish.mar = function(before, options, envir) {
 
 ## use pngquant to optimize PNG images
 knit_hooks$set(pngquant = hook_pngquant)
+pngquant <- "--speed=1 --quality=0-25"
 # pngquant isn't available on R-Forge ...
-if (!nzchar(Sys.which("pngquant"))) {
-  pngquant <- NULL 
-  # save space by using a lower resolution
-  dpi <- 50
-} else {
-  pngquant <- "--speed=1 --quality=0-25"
-  dpi <- 50
-}
+if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL 
+
+## use a low resolution to save space in the package
+# change this to 72 to make higher-resolution images for the CHNOSZ web page
+dpi <- 50
 
 ## http://stackoverflow.com/questions/23852753/knitr-with-gridsvg
 ## Set up a chunk hook for manually saved plots.
@@ -661,7 +659,7 @@ Mosaic diagrams, which are often shown for oxide, sulfide, and carbonate mineral
 These diagrams are made by constructing individual diagrams for the possible basis species.
 The individual diagrams are then combined, each one contributing to the final diagram only in the range of stability of the corresponding basis species.
 
-Let's use <span style="color:green">`mosaic()`</span> to make a diagram for aqueous species and minerals in the Cu-S-Cl-`r h2o` system, similar to Figure 5a of @CPCC17.
+Let's use <span style="color:green">`mosaic()`</span> to make a diagram for aqueous species and minerals in the Cu-S-Cl-`r h2o` system.
 To know what aqueous copper chloride complexes are available in the database, we can use a fuzzy search:
 ```{r info_CuCl, results="hide"}
 info(" CuCl")
@@ -677,12 +675,12 @@ Those are temperatures in Kelvin (regardless of the <span style="color:red">`T.u
 
 Next we define the basis, and set the activities of the H<sub>2</sub>S and Cl<sup>-</sup> basis species.
 These represent the total activity of S and Cl in the system, which are distributed among the minerals and aqueous species.
-Three minerals and the aqueous copper chloride species are included:
+Four minerals and the aqueous copper chloride species are included:
 ```{r copper_setup, echo=TRUE, results="hide"}
 basis(c("Cu", "H2S", "Cl-", "H2O", "H+", "e-"))
 basis("H2S", -6)
 basis("Cl-", -0.7)
-species(c("copper", "tenorite"))
+species(c("copper", "cuprite", "tenorite"))
 species("chalcocite", "cr2")
 species(c("CuCl", "CuCl2-", "CuCl3-2", "CuCl+", "CuCl2", "CuCl3-", "CuCl4-2"))
 ```
@@ -707,6 +705,13 @@ water.lines(m1$A.species, col = "red", lwd = 2, lty = 3)
 The argument `blend = TRUE` is used to combine the diagrams according to the equilibrium activities of the basis species by themselves ([see below](#equilibration)).
 The smooth transitions between basis species cause the appearance of curved lines on the plot.
 Without that argument, the diagrams would be combined using the dominant basis species, and all of the line segments would be straight.
+
+Note that this diagram is balanced on Cu, so that no Cu appears in reactions between any two other species (minerals or aqueous species).
+If <span style="color:green">`diagram()`</span> is run with `balance = 1`, then the reactions are written for one mole of the mineral formulas on each side of the reaction, with the possibility of Cu appearing as an additional species to conserve the elements.
+This may be problematic, as Cu would be be present in some reactions in Eh-pH space where it is not a stable phase.
+However, it is common in low-temperature aqueous geochemical calculations to "turn off" particular redox reactions that are not thought to attain equilibrium, so decoupling a species from equilibrium may be justified in some circumstances.
+Therefore, while changing the balance constraints has important implications that should be carefully considered, it can present a possibly useful view of the system if certain assumptions are met.
+Changing the balance to 1 results in the loss of the tenorite stability field and extension of chalcocite stability to pH < 0, as shown in Figure 5a of @CPCC17.
 
 <a name="mosaicfun"></a>
 We have seen the effects of speciation of S in the basis species.
