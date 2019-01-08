@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-60 (2019-01-07)
+CHANGES IN CHNOSZ 1.1.3-61 (2019-01-08)
 ---------------------------------------
 
 NEW FEATURES
@@ -185,6 +185,8 @@ USABILITY ENHANCEMENTS
 
 - The arguments in expr.species() have been reorganized for more
   flexible and concise usage.
+
+- Reduce message clutter for diagrams showing water stability limits.
 
 CHANGES IN CHNOSZ 1.1.3 (2017-11-13)
 ------------------------------------

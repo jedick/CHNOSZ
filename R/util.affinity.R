@@ -264,12 +264,12 @@ energy.args <- function(args) {
   }
   # report non-variables to user
   if(!T.is.var)
-    message('energy.args: temperature is ',outvert(T,'K'),' ',T.units())
+    message('affinity: temperature is ',outvert(T,'K'),' ',T.units())
   if(!P.is.var) {
-    if(identical(P,"Psat")) message("energy.args: pressure is Psat")
-    else message('energy.args: pressure is ',outvert(P,'bar'),' ',P.units())
+    if(identical(P,"Psat")) message("affinity: pressure is Psat")
+    else message('affinity: pressure is ',outvert(P,'bar'),' ',P.units())
   }
-  if(!IS.is.var & !identical(IS,0)) message('energy.args: ionic strength is ',IS)
+  if(!IS.is.var & !identical(IS,0)) message('affinity: ionic strength is ',IS)
   # default values for resolution
   res <- 128
   # where we store the output
@@ -299,12 +299,12 @@ energy.args <- function(args) {
         if(transect) args[[i]] <- -args[[i]]
         else args[[i]][1:2] <- -args[[i]][1:2]
         if(!'H+' %in% rownames(thermo$basis)) 
-          message('energy.args: pH requested, but no H+ in the basis')
+          message('affinity: pH requested, but no H+ in the basis')
       } 
       if(names(args)[i]=="pe") {
         names(args)[i] <- "e-"
         if(!'e-' %in% rownames(thermo$basis)) 
-          message('energy.args: pe requested, but no e- in the basis')
+          message('affinity: pe requested, but no e- in the basis')
         if(transect) args[[i]] <- -args[[i]]
         else args[[i]][1:2] <- -args[[i]][1:2]
       }
@@ -332,7 +332,7 @@ energy.args <- function(args) {
       if(nametxt=="T") unittxt <- " K"
       if(nametxt=="P") unittxt <- " bar"
       if(nametxt=="Eh") unittxt <- " V"
-      message("energy.args: variable ", length(vars), " is ", nametxt, 
+      message("affinity: variable ", length(vars), " is ", nametxt, 
         " at ", n, " values from ", lims.orig[1], " to ", lims.orig[2], unittxt)
     }
   }

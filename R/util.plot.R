@@ -127,12 +127,12 @@ water.lines <- function(eout, which=c('oxidation','reduction'),
     if('reduction' %in% which) {
       logfH2 <- logaH2O # usually 0
       if(yaxis=="H2") {
-        logK <- subcrt(c("H2", "H2"), c(-1, 1), c("gas", H2state), T=T, P=P, convert=FALSE)$out$logK 
+        logK <- suppressMessages(subcrt(c("H2", "H2"), c(-1, 1), c("gas", H2state), T=T, P=P, convert=FALSE))$out$logK
         # this is logfH2 if H2state=="gas", or logaH2 if H2state=="aq"
         logfH2 <- logfH2 + logK
         y.reduction <- rep(logfH2, length.out=length(xpoints))
       } else {
-        logK <- subcrt(c("H2O", "O2", "H2"), c(-1, 0.5, 1), c("liq", O2state, "gas"), T=T, P=P, convert=FALSE)$out$logK 
+        logK <- suppressMessages(subcrt(c("H2O", "O2", "H2"), c(-1, 0.5, 1), c("liq", O2state, "gas"), T=T, P=P, convert=FALSE))$out$logK 
         # this is logfO2 if O2state=="gas", or logaO2 if O2state=="aq"
         logfO2 <- 2 * (logK - logfH2 + logaH2O)
         if(yaxis=="O2") y.reduction <- rep(logfO2, length.out=length(xpoints))
@@ -143,12 +143,12 @@ water.lines <- function(eout, which=c('oxidation','reduction'),
     if('oxidation' %in% which) {
       logfO2 <- logaH2O # usually 0
       if(yaxis=="H2") {
-        logK <- subcrt(c("H2O", "O2", "H2"), c(-1, 0.5, 1), c("liq", "gas", H2state), T=T, P=P, convert=FALSE)$out$logK 
+        logK <- suppressMessages(subcrt(c("H2O", "O2", "H2"), c(-1, 0.5, 1), c("liq", "gas", H2state), T=T, P=P, convert=FALSE))$out$logK 
         # this is logfH2 if H2state=="gas", or logaH2 if H2state=="aq"
         logfH2 <- logK - 0.5*logfO2 + logaH2O
         y.oxidation <- rep(logfH2, length.out=length(xpoints))
       } else {
-        logK <- subcrt(c("O2", "O2"), c(-1, 1), c("gas", O2state), T=T, P=P, convert=FALSE)$out$logK 
+        logK <- suppressMessages(subcrt(c("O2", "O2"), c(-1, 1), c("gas", O2state), T=T, P=P, convert=FALSE))$out$logK 
         # this is logfO2 if O2state=="gas", or logaO2 if O2state=="aq"
         logfO2 <- logfO2 + logK
         if(yaxis=="O2") y.oxidation <- rep(logfO2, length.out=length(xpoints))
