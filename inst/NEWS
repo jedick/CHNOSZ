@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-61 (2019-01-08)
+CHANGES IN CHNOSZ 1.1.3-62 (2019-01-15)
 ---------------------------------------
 
 NEW FEATURES
@@ -91,6 +91,9 @@ THERMODYNAMIC DATA
   organic_aq.csv) consistent with those used in later papers, e.g.
   H-succinate and succinate-2 for the -1 and -2 charged ions. Remove
   duplicated entries for H-succinate and succinate-2 from biotic_aq.csv.
+
+- Update G, H, and S of celestite using properties of the dissolution
+  reaction given by Reardon and Armstrong, 1987.
 
 DIAGRAMS
 
