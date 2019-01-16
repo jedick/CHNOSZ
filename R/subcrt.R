@@ -51,8 +51,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   # property checking
   calcprop <- property
   notprop <- property[!calcprop %in% properties]
-  if(length(notprop) > 0) stop(paste(notprop,
-    "are not valid properties\ntry rho, logK, G, H, S, V, Cp, kT, or E"))
+  if(length(notprop) == 1) stop(paste("invalid property name:", paste(notprop, collapse=" ")))
+  if(length(notprop) > 1) stop(paste("invalid property names:", paste(notprop, collapse=" ")))
   # length checking
   if(do.reaction & length(species)!=length(coeff)) 
     stop('coeff must be same length as the number of species.')

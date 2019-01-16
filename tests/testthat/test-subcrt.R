@@ -203,6 +203,12 @@ test_that("combining minerals with phase transitions and aqueous species with IS
     c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "polymorph")))
 })
 
+test_that("argument checking handles some types of invalid input", {
+  expect_error(subcrt("H2O", -1, "liq", "xxx"), "invalid property name: xxx")
+  # before version 1.1.3-63, having more than one invalid property gave a mangled error message
+  expect_error(subcrt("H2O", -1, "liq", c(1, 2)), "invalid property names: 1 2")
+})
+
 # references
 
 # Amend, J. P. and Shock, E. L. (2001) 
