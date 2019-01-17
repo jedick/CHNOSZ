@@ -28,8 +28,27 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
   # this is where energy.args() used to sit
   # this is where energy() used to sit
 
+  # argument recall 20190117
+  # if the first argument is the result from a previous affinity() calculation,
+  # just update the remaining arguments
+  args.orig <- list(...)
+  # we can only do anything with at least one argument
+  if(length(args.orig) > 0) {
+    if(identical(args.orig[[1]][1], list(fun="affinity"))) {
+      aargs <- args.orig[[1]]$args
+      # we can only update arguments given after the first argument
+      if(length(args.orig) > 1) {
+        for(i in 2:length(args.orig)) {
+          if(names(args.orig)[i] %in% names(aargs)) aargs[[names(args.orig)[i]]] <- args.orig[[i]]
+          else aargs <- c(aargs, args.orig[i])
+        }
+      }
+      return(do.call(affinity, aargs))
+    }
+  }
+
   # the argument list
-  args <- energy.args(list(...))
+  args <- energy.args(args.orig)
   args <- c(args, list(sout=sout, exceed.Ttr=exceed.Ttr, exceed.rhomin=exceed.rhomin))
 
   # the species we're given
@@ -219,7 +238,6 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
     vals[[iP]] <- outvert(vals[[iP]], "bar")
   }
   # get Eh
-  args.orig <- list(...)
   iEh <- match("Eh", names(args.orig))
   if(!is.na(iEh)) {
     vars[[iEh]] <- "Eh"
@@ -247,11 +265,16 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
 
   # content of return value depends on buffer request
   if(return.buffer) return(c(tb, list(vars=vars, vals=vals)))
+  # for argument recall, include all arguments (except sout) in output 20190117
+  allargs <- c(args.orig, list(property=property, exceed.Ttr=exceed.Ttr, exceed.rhomin=exceed.rhomin,
+    return.buffer=return.buffer, balance=balance, iprotein=iprotein, loga.protein=loga.protein))
   # add IS value only if it given as an argument 20171101
   # (even if its value is 0, the presence of IS will trigger diagram() to use "m" instead of "a" in axis labels)
   iIS <- match("IS", names(args.orig))
-  if(!is.na(iIS)) a <- list(sout=sout, property=property, basis=mybasis, species=myspecies, T=T, P=P, IS=args$IS, vars=vars, vals=vals, values=a)
-  else a <- list(sout=sout, property=property, basis=mybasis, species=myspecies, T=T, P=P, vars=vars, vals=vals, values=a)
+  if(!is.na(iIS)) a <- list(fun="affinity", args=allargs, sout=sout, property=property,
+                            basis=mybasis, species=myspecies, T=T, P=P, IS=args$IS, vars=vars, vals=vals, values=a)
+  else a <- list(fun="affinity", args=allargs, sout=sout, property=property,
+                 basis=mybasis, species=myspecies, T=T, P=P, vars=vars, vals=vals, values=a)
   if(buffer) a <- c(a, list(buffer=tb))
   return(a)
 }

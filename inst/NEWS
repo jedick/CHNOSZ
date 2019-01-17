@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-63 (2019-01-17)
+CHANGES IN CHNOSZ 1.1.3-64 (2019-01-17)
 ---------------------------------------
 
 NEW FEATURES
@@ -42,6 +42,9 @@ NEW FEATURES
 
 - Add demo/bison.R (average oxidation state of carbon of metagenome-
   derived proteins in different microbial phyla at Bison Pool)
+
+- affinity(): implement argument recall, to re-run a calculation with
+  the same settings except for particular additions or modifications.
 
 THERMODYNAMIC DATA
 

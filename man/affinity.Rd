@@ -12,7 +12,7 @@ Calculate the chemical affinities of formation reactions of species.
 }
 
 \arguments{
-  \item{...}{numeric, zero or more named arguments, used to identify the variables of interest in the calculations}
+  \item{...}{numeric, zero or more named arguments, used to identify the variables of interest in the calculations. For argument recall, pass the output from a previous calculation of \code{affinity} as an unnamed first argument.}
   \item{property}{character, the property to be calculated. Default is \samp{A}, for chemical affinity of formation reactions of species of interest}
   \item{sout}{list, output from \code{\link{subcrt}}}
   \item{exceed.Ttr}{logical, allow \code{\link{subcrt}} to compute properties for phases beyond their transition temperature?}
@@ -54,10 +54,13 @@ Valid properties are \samp{A} or NULL for chemical affinity, \samp{logK} or \sam
 The properties returned are those of the formation reactions of the species of interest from the basis species.
 It is also possible to calculate the properties of the species of interest themselves (not their formation reactions) by setting the \code{property} to \samp{G.species}, \samp{Cp.species}, etc.
 Except for \samp{A}, the properties of proteins or their reactions calculated in this manner are restricted to nonionized proteins.
+
+Argument recall is invoked by passing a previous result of \code{affinity} as the first argument.
+The function then calls itself using the settings from the previous calculation, with additions or modifications indicated by the remaining arguments in the current function call.
 }
 
 \value{
-A list, elements of which are \code{sout} output from \code{\link{subcrt}}, \code{property} name of the calculated property (\samp{A} for chemical affinity), \code{basis} and \code{species} definition of basis species and species of interest in effect at runtime, \code{T} and \code{P} temperature and pressure, in the system units of Kelvin and bar, set to \code{numeric()} (length=0) if either one is a variable, \code{vars} the names of the variables, \code{vals} the values of the variables (a list, one element for each variable), \code{values} the result of the calculation (a list, one element for each species, with names taken from the species index in \code{\link{thermo}$obigt}).
+A list, elements of which are \code{fun} the name of the function (\samp{affinity}), \code{args} all of the arguments except for \samp{sout} (these are used for argument recall), \code{sout} output from \code{\link{subcrt}}, \code{property} name of the calculated property (\samp{A} for chemical affinity), \code{basis} and \code{species} definition of basis species and species of interest in effect at runtime, \code{T} and \code{P} temperature and pressure, in the system units of Kelvin and bar, set to \code{numeric()} (length=0) if either one is a variable, \code{vars} the names of the variables, \code{vals} the values of the variables (a list, one element for each variable), \code{values} the result of the calculation (a list, one element for each species, with names taken from the species index in \code{\link{thermo}$obigt}).
 The elements of the lists in \code{vals} and \code{values} are arrays of \eqn{n}{n} dimensions, where \eqn{n}{n} is the number of variables.
 The values of chemical affinity of formation reactions of the species are returned in dimensionless units (for use with decimal logarithms, i.e., \emph{A}/\eqn{2.303RT}).
 

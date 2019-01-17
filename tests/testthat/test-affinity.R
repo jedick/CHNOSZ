@@ -165,3 +165,15 @@ test_that("IS can be constant or variable", {
   expect_equal(unlist(lapply(a2$values, tail, 1)), unlist(a1$values))
   nonideal(oldnon)
 })
+
+test_that("argument recall is usable", {
+  basis("CHNOS")
+  species(c("CO2", "CH4"))
+  a0 <- affinity(O2=c(-80, -60))
+  a1 <- affinity(O2=c(-80, -60), T=100)
+  a2 <- affinity(a0, T=100)
+  a3 <- affinity(a1, T=25)
+  expect_identical(a1, a2)
+  # we don't test entire output here becuase a0 doesn't have a "T" argument
+  expect_identical(a0$values, a3$values)
+})
