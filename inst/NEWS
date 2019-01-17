@@ -1,10 +1,14 @@
-CHANGES IN CHNOSZ 1.1.3-64 (2019-01-17)
+CHANGES IN CHNOSZ 1.1.3-65 (2019-01-17)
 ---------------------------------------
 
 NEW FEATURES
 
 - Add solubility(). Run this after affinity() to calculate the
-  solubility of the conserved basis species.
+  solubility of a solid or gas defined as the conserved basis species,
+  which is involved in the formation of one or more dissolved species.
+  Features in development include automatic detection of dissociation
+  reactions and finding the final ionic strength for dissolution of a
+  mineral into pure water.
 
 - Revise demo/solubility.R to show solubility calculations for CO2(gas)
   and calcite as a function of T and pH.

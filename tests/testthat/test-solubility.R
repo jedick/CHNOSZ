@@ -30,7 +30,7 @@ test_that("solubility() produces stable conditions (affinity = 0)", {
   basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
   species(c("CO2", "HCO3-", "CO3-2"))
   a <- affinity(pH = c(pH, res), T = T, IS = IS)
-  s <- solubility(a, split = TRUE)
+  s <- solubility(a)
   # here we need to also set the activity of Ca+2
   checkfun <- function(i) {
     logact <- sapply(s$loga.equil, "[", i)
@@ -41,4 +41,12 @@ test_that("solubility() produces stable conditions (affinity = 0)", {
   }
   expect_equal(max(abs(unlist(checkfun(33)$values))), 0)
   expect_equal(max(abs(unlist(checkfun(99)$values))), 0)
+})
+
+test_that("solubility() catches some error conditions", {
+  # demo(solubility) has basis(c("calcite", "Ca+2", "H2O", "O2", "H+")), but what if the user puts H2O second?
+  basis(c("calcite", "H2O", "Ca+2", "O2", "H+"))
+  species(c("CO2", "HCO3-", "CO3-2"))
+  a <- affinity()
+  expect_error(solubility(a), "unsure whether this is a dissociation reaction")
 })

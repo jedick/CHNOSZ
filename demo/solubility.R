@@ -51,7 +51,7 @@ title(main = substitute("Solubility of"~what, list(what = expr.species("CO2"))))
 basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
 species(c("CO2", "HCO3-", "CO3-2"))
 a <- affinity(pH = c(pH, res), T = T1, IS = IS)
-s <- solubility(a, split = TRUE)
+s <- solubility(a)
 diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
 diagram(s, add = TRUE, dy = 1)
 legend("topright", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
@@ -64,6 +64,6 @@ stopifnot(round(s$loga.balance[c(1, res)])==c(4, -4))
 
 # calcite T-pH plot
 a <- affinity(pH = c(pH, res), T = c(T, res), IS = IS)
-s <- solubility(a, split = TRUE)
+s <- solubility(a)
 diagram(s, type = "loga.balance")
 title(main = "Solubility of calcite", font.main = 1)

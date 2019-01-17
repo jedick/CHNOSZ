@@ -7,28 +7,47 @@ Calculate chemical activities of species in equilibrium with a soluble basis spe
 }
 
 \usage{
-  solubility(aout, balance = NULL, split = FALSE)
+  solubility(aout, dissociation = NULL, find.IS = FALSE)
 }
 
 \arguments{
   \item{aout}{list, output from \code{\link{affinity}}}
-  \item{balance}{character, basis species to conserve in reactions}
-  \item{split}{logical, does the mineral undergo a dissociation reaction?}
+  \item{dissociation}{logical, does the mineral undergo a dissociation reaction?}
+  \item{find.IS}{logical, find the equilibrium ionic strength by iteration?}
 }
 
 \details{
 This function performs a simple task: from the values of \code{\link{affinity}} of formation reactions of species at given activity, it works backward to find the activities of species that make the affinities zero.
 This corresponds to complete equilibrium with all of the basis species.
-For solubility calculations, the basis species should be set up so that formation reactions of species are balanced on the thing being dissolved (a mineral such as CaCO\s3 or gas such as CO\s2).
-This is usually identified as the first basis species, but if there is any ambiguity, use \code{balance} to indicate the conserved basis species.
+Usually, the basis species should be set up so that the first basis species represents the substance being dissolved (a mineral such as CaCO\s3 or gas such as CO\s2).
+Internally, this is treated as the conserved basis species, so it must be present in all of the formation reactions of the species.
+It is also possible to set the conserved basis species as other than the first one (see \code{demo(gold)}), but this implies that dissociation reactions are not occurring (see below).
 
-\code{split} should be set when calculating the solubility of something that dissociates (not just dissolves).
-For example, to calculate the solubility of calcite (CaCO\s3), each form of carbonate is represented by a different reaction, but all of these reactions also release calcium ions.
-The equilibrium calculation must take account of the \emph{total} activity of the shared ion (Ca\S{+2}); naturally, that value was unknown for the calculation of \code{\link{affinity}}.
-The solution is accomplished by setting \code{split} to TRUE to recalculate the affinities (working backward, as if the split didn't occur).
-Then, the resulting activities correspond to equilibrium considering the system-wide activity of Ca\S{+2}.
-A \emph{not recommended} alternative is to set \code{split} to a numeric value (probably 2) to calculate activities on a per-reaction basis, where each reaction has its own activity of Ca\S{+2}.
-That does not give a complete equilibrium, but may be required to reproduce some published diagrams.
+The \code{\link{species}} should be defined to represent one set of ions (anions or cations or their complexes) formed in solution, all involving the conserved basis species.
+For a dissociation reaction, the second basis species should be used to represent the counterion (cation or anion).
+
+The function perfoms some additional steps to calculate the solubility of something that dissociates (not just dissolves).
+For example, the dissolution of calcite (CaCO\s3), involves the release of both calcium ions and different forms of carbonate in solution, depending on the pH.
+The equilibrium calculation must take account of the \emph{total} activity of the shared ion (Ca\S{+2}), which is unknown at the start of the calculation.
+The solution is accomplished by recalculating the affinities, essentially working backward from the assumption that the dissociation didn't occur.
+The resulting activities correspond to equilibrium considering the system-wide activity of Ca\S{+2}.
+
+The function attempts to automatically detect whether dissociation reactions are involved by looking at the first species.
+If the formation reaction of that species includes \emph{both} the first and second basis species, the \code{dissociation} flag is set to TRUE.
+An example reaction of this type can be found in demo(solubility): CaCO3 (first basis species) = Ca+2 (second basis species) + CO3-2 (first species).
+Note that if the conserved basis species is not the first basis species, then the automatic detection of \code{dissociation} will always return FALSE.
+Therefore, a reaction corresponding to Au (fourth basis species) + ... = ... gives \code{dissociation} = FALSE (see \code{demo(gold)}).
+This algorithm for determining whether dissociation occurs is prone to error, so \code{dissociation} can be explicitly set in the arguments.
+A \emph{not recommended} alternative is to set \code{dissociation} to a numeric value corresponding to the stoichiometry of released species (i.e. 2 for a 1:1 electrolyte).
+This setting indicates to calculate activities on a per-reaction basis, where each reaction has its own (independent) activity of Ca\S{+2}.
+That does not give a complete equilibrium in the system, but may be required to reproduce some published diagrams.
+
+Note that other variables (pH, ionic strength, activities of other basis species) should be defined in the preceding call to \code{\link{affinity}}.
+However, for dissolving a substance in pure water, \code{find.IS} can be set to TRUE to determine the final ionic strength.
+This works by calculating the ionic strength from the equilibrium solubility calculation, then re-running \code{affinity} with those values.
+Note that for dissociation reactions, the ionic strength is calculated from both the ions present in the species definition and the counter ion, which should be the second basis species.
+TODO: Speciation of counterions (e.g. ionized forms of carbonate or sulfate) can be accomplished by using the \code{\link{mosaic}} function instead of \code{affinity}.
+The calculation is iterated until the ionic strength deviation at every point is lower than a preset tolerance (1e-4).
 
 The output of \code{solubility} has the same format as that of \code{equilibrate}, and can be used by \code{\link{diagram}} with \code{type = "loga.balance"} to plot the solubilities, or with \code{type = NULL} to plot the activities of species. 
 }
@@ -54,7 +73,7 @@ res <- 100
 T <- 25
 IS <- 0
 
-# start with CO2
+# start with CO2 (not a dissociation reaction)
 basis(c("carbon dioxide", "H2O", "O2", "H+"))
 # ca. atmospheric PCO2
 basis("CO2", -3.5)
@@ -74,11 +93,11 @@ title(main = substitute("Solubility of"~what~"at"~T~degree*"C",
   list(what = expr.species("CO2"), T = T)), line = 1.5)
 mtext("cf. Fig. 4.5 of Stumm and Morgan, 1996")
 
-# now do calcite
+# now do calcite (a dissociation reaction)
 basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
 species(c("CO2", "HCO3-", "CO3-2"))
 a <- affinity(pH = c(pH, res), T = T, IS = IS)
-s <- solubility(a, split = TRUE)
+s <- solubility(a)
 diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
 diagram(s, add = TRUE, dy = 1)
 legend("topright", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
