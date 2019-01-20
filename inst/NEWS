@@ -1,23 +1,24 @@
-CHANGES IN CHNOSZ 1.1.3-65 (2019-01-17)
+CHANGES IN CHNOSZ 1.1.3-66 (2019-01-20)
 ---------------------------------------
 
-NEW FEATURES
+NEW FEATURE: SOLUBILITY CALCULATIONS
 
 - Add solubility(). Run this after affinity() to calculate the
   solubility of a solid or gas defined as the conserved basis species,
   which is involved in the formation of one or more dissolved species.
-  Features in development include automatic detection of dissociation
-  reactions and finding the final ionic strength for dissolution of a
-  mineral into pure water.
+
+- Features include automatic detection of dissociation reactions and
+  finding the final ionic strength for dissolution of a mineral into
+  pure water (find.IS argument).
+
+- find.IS depends on the new argument recall feature of affinity().
+  This allows a calculation to be re-run with the same settings except
+  for particular additions or modifications.
 
 - Revise demo/solubility.R to show solubility calculations for CO2(gas)
   and calcite as a function of T and pH.
 
-- Add demo/gold.R for calculations of Au solubility in hydrothermal
-  chloride and sulfide solutions (based on diagrams from Akinfiev and
-  Zotov, 2001, Stefánsson and Seward, 2004, and Williams-Jones et al.,
-  2009). This depends on the revised nonideal() and new NaCl() functions
-  described next.
+NEW FEATURE: EXPANDED ACTIVITY COEFFICIENT CALCULATIONS
 
 - Reorganize and expand options for activity coefficient calculations
   (set in thermo$opt$nonideal: Bdot, Bdot0, bgamma, bgamma0, or Alberty).
@@ -41,16 +42,25 @@ NEW FEATURES
   of NaCl in water, taking account of activity coefficients and the
   reaction Na+ + Cl- = NaCl(aq).
 
-- Add dumpdata() for returning/writing all packaged thermodynamic data
-  (including default database and optional data files).
+DOCUMENTATION
+
+- Add demo/gold.R for calculations of Au solubility in hydrothermal
+  chloride and sulfide solutions (based on diagrams from Akinfiev and
+  Zotov, 2001, Stefánsson and Seward, 2004, and Williams-Jones et al.,
+  2009). This depends on the revised nonideal() and new NaCl() functions
+  described above.
+
+- anintro.Rmd: add cuprite to mosaic diagram example, and note about
+  implications of changing balance to 1.
 
 - Add demo/bison.R (average oxidation state of carbon of metagenome-
   derived proteins in different microbial phyla at Bison Pool)
 
-- affinity(): implement argument recall, to re-run a calculation with
-  the same settings except for particular additions or modifications.
-
 THERMODYNAMIC DATA
+
+- Add dumpdata() for returning/writing all packaged thermodynamic data
+  (including default database and optional data files). The file is
+  also available on the website (chnosz.net/download/alldata.csv).
 
 - The Berman data (Berman, 1988 and later additions) have replaced the
   SUPCRT92 data (based on Helgeson et al., 1978) for most minerals in
@@ -136,11 +146,6 @@ DIAGRAMS
   coordinates of lines (field boundaries) on 2-D diagrams (these are
   taken from the output of contourLines()).
 
-DOCUMENTATION
-
-- anintro.Rmd: add cuprite to mosaic diagram example, and note about
-  implications of changing balance to 1.
-
 BUG FIXES
 
 - Fix a bug where subcrt()$reaction$coeffs was incorrect for reactions
@@ -178,7 +183,7 @@ COMPUTATIONAL OPTIONS
 
 USABILITY ENHANCEMENTS
 
-- To provide better diagnostics for potential web apps, warning
+- To provide better diagnostics for other apps using CHNOSZ, warning
   messages produced by subcrt() are now available in the output of
   affinity(), under 'sout$warnings'.
 

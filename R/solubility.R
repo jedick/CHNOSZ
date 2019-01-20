@@ -38,7 +38,7 @@ solubility <- function(aout, dissociation=NULL, find.IS=FALSE) {
   bout <- balance(aout)
   n.balance <- bout$n.balance
   balance <- bout$balance
-  # get logarithm of total activity of the balancing basis species
+  # get logarithm of total activity of the conserved basis species
   logabfun <- function(loga.equil, n.balance) {
     # exponentiate, multiply by n.balance, sum, logarithm
     a.equil <- mapply("^", 10, loga.equil, SIMPLIFY = FALSE)
@@ -79,16 +79,36 @@ solubility <- function(aout, dissociation=NULL, find.IS=FALSE) {
 
     # get the old IS
     IS.old <- rep(IS, length.out = length(aout$values[[1]]))
-    # calculate the ionic strength (assuming no ion pairing)
-    # i.e. for Sr+2 and SO4-2
-    # TODO: determine the correct values for the actual species in the system
-    mol.cation <- mol.anion <- 10^loga.balance
-    Z <- 2
-    IS <- (mol.cation * Z^2 + mol.anion * Z^2) / 2
+    # calculate the ionic strength for unpaired ions: IS = sum(molality * Z^2) / 2
+    sum.mZ2 <- 0
+    ion.names <- character()
+    # is there an ion in the basis species?
+    if(dissociation) {
+      basis.ion <- rownames(aout$basis)[2]
+      Z.basis.ion <- makeup(basis.ion)["Z"]
+      if(!is.na(Z.basis.ion)) {
+        sum.mZ2 <- sum.mZ2 + 10^loga.balance * Z.basis.ion^2
+        ion.names <- c(ion.names, basis.ion)
+      }
+    }
+    # add ions present in the species of interest
+    for(i in 1:length(loga.equil)) {
+      species.ion <- aout$species$name[i]
+      Z.species.ion <- makeup(species.ion)["Z"]
+      if(!is.na(Z.species.ion)) {
+        sum.mZ2 <- sum.mZ2 + 10^loga.equil[[i]] * Z.species.ion^2
+        ion.names <- c(ion.names, species.ion)
+      }
+    }
+    IS <- sum.mZ2 / 2
+    # report ions used in the ionic strength calculation
+    if(find.IS & niter==1) message("solubility: ionic strength calculated for ", paste(ion.names, collapse=" "))
     # report the current ionic strength
     if(find.IS) message("solubility: (iteration ", niter, ") ionic strength range is ", paste(round(range(IS), 4), collapse=" "))
     # stop iterating if we reached the tolerance (or find.IS=FALSE)
     if(!find.IS | all(IS - IS.old < 1e-4)) break
+    # expand argument values for affinity()
+    for(i in 1:length(aout$vals)) aout$args[[i]] <- aout$vals[[i]]
     # recalculate the affinity using the new IS
     aout <- suppressMessages(do.call(aout$fun, list(aout, IS = IS)))
     niter <- niter + 1
