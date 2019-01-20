@@ -11,6 +11,11 @@ solubility <- function(aout, dissociation=NULL, find.IS=FALSE) {
   ## concept: the logarithms of activities of species at equilibrium are equal to
   ## Astar, the affinities calculated for unit activities of species
 
+  ## is aout the output from mosaic() instead of affinity()?
+  aout.save <- aout
+  thisfun <- aout$fun
+  if(thisfun=="mosaic") aout <- aout$A.species
+
   ## does the system involve a dissociation reaction?
   if(is.null(dissociation)) {
     # assume FALSE unless determined otherwise
@@ -107,10 +112,21 @@ solubility <- function(aout, dissociation=NULL, find.IS=FALSE) {
     if(find.IS) message("solubility: (iteration ", niter, ") ionic strength range is ", paste(round(range(IS), 4), collapse=" "))
     # stop iterating if we reached the tolerance (or find.IS=FALSE)
     if(!find.IS | all(IS - IS.old < 1e-4)) break
-    # expand argument values for affinity()
-    for(i in 1:length(aout$vals)) aout$args[[i]] <- aout$vals[[i]]
+    # on the first iteration, expand argument values for affinity() or mosaic()
+    if(niter==1) {
+      if(thisfun=="affinity") for(i in 1:length(aout$vals)) {
+        aout.save$args[[i]] <- aout$vals[[i]]
+      }
+      else if(thisfun=="mosaic") {
+        for(i in 1:length(aout$vals)) {
+          argname <- names(aout$args)[i]
+          aout.save$args[[argname]] <- aout$vals[[i]]
+        }
+      }
+    }
     # recalculate the affinity using the new IS
-    aout <- suppressMessages(do.call(aout$fun, list(aout, IS = IS)))
+    aout <- suppressMessages(do.call(thisfun, list(aout.save, IS = IS)))
+    if(thisfun=="mosaic") aout <- aout$A.species
     niter <- niter + 1
   }
 

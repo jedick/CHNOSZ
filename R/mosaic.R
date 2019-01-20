@@ -4,6 +4,25 @@
 
 # function to calculate affinities with mosaic of basis species
 mosaic <- function(bases, bases2=NULL, blend=FALSE, ...) {
+
+  # argument recall 20190120
+  # if the first argument is the result from a previous mosaic() calculation,
+  # just update the remaining arguments
+  if(is.list(bases)) {
+    if(identical(bases[1], list(fun="mosaic"))) {
+      aargs <- bases$args
+      # we can only update arguments given in ...
+      ddd <- list(...)
+      if(length(ddd) > 0) {
+        for(i in 1:length(ddd)) {
+          if(names(ddd)[i] %in% names(aargs)) aargs[[names(ddd)[i]]] <- ddd[[i]]
+          else aargs <- c(aargs, ddd[i])
+        }
+      }
+      return(do.call(mosaic, aargs))
+    }
+  }
+
   if(is.null(bases2)) {
     # the arguments for affinity()
     myargs <- list(...)
@@ -13,11 +32,13 @@ mosaic <- function(bases, bases2=NULL, blend=FALSE, ...) {
     # the arguments for mosaic() (second set of basis species; inner loop)
     myargs <- list(bases=bases2, blend=blend, ...)
   }
+
   # are the swapped basis species on the plot?
   # (the first one should be present in the starting basis set)
   iswap <- match(bases[1], names(myargs))
   # the log activity of the starting basis species
   logact.swap <- basis()$logact[ibasis(bases[1])]
+
   # a list where we'll keep the affinity calculations
   affs <- list()
   for(i in seq_along(bases)) {
@@ -46,6 +67,7 @@ mosaic <- function(bases, bases2=NULL, blend=FALSE, ...) {
       basis(bformula, logact.swap)
     }
   }
+
   # calculate affinities of formation of basis species
   message(paste("mosaic: combining diagrams for", paste(bases, collapse=" "), sep=" "))
   ispecies <- species()$ispecies
@@ -57,6 +79,7 @@ mosaic <- function(bases, bases2=NULL, blend=FALSE, ...) {
   # restore original species with original activities
   species(delete=TRUE)
   species(ispecies, species.logact)
+
   # affinities calculated using the first basis species
   A.species <- affs[[1]]
   if(blend) {
@@ -88,7 +111,10 @@ mosaic <- function(bases, bases2=NULL, blend=FALSE, ...) {
       }
     }
   }
+
+  # for argument recall, include all arguments in output 20190120
+  allargs <- c(list(bases=bases, bases2=bases2, blend=blend), list(...))
   # return the affinities for the species and basis species
-  if(is.null(bases2)) return(list(A.species=A.species, A.bases=A.bases))
-  else return(list(A.species=A.species, A.bases=A.bases, A.bases2=A.bases2))
+  if(is.null(bases2)) return(list(fun="mosaic", args=allargs, A.species=A.species, A.bases=A.bases))
+  else return(list(fun="mosaic", args=allargs, A.species=A.species, A.bases=A.bases, A.bases2=A.bases2))
 }
