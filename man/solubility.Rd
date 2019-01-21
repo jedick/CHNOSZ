@@ -64,16 +64,14 @@ Except for relatively simple systems, even after careful refinement, the results
 }
 
 \examples{\dontshow{data(thermo)}
-# solubility of CO2 and calcite as a function of pH
+## solubility of CO2 and calcite as a function of pH
 opar <- par(mfrow = c(1, 2))
-
-# set pH range and resolution, constant temperature and ionic strength
+## set pH range and resolution, constant temperature and ionic strength
 pH <- c(0, 14)
 res <- 100
 T <- 25
 IS <- 0
-
-# start with CO2 (not a dissociation reaction)
+## start with CO2 (not a dissociation reaction)
 basis(c("carbon dioxide", "H2O", "O2", "H+"))
 # ca. atmospheric PCO2
 basis("CO2", -3.5)
@@ -92,8 +90,7 @@ legend("topleft", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
 title(main = substitute("Solubility of"~what~"at"~T~degree*"C",
   list(what = expr.species("CO2"), T = T)), line = 1.5)
 mtext("cf. Fig. 4.5 of Stumm and Morgan, 1996")
-
-# now do calcite (a dissociation reaction)
+## now do calcite (a dissociation reaction)
 basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
 species(c("CO2", "HCO3-", "CO3-2"))
 a <- affinity(pH = c(pH, res), T = T, IS = IS)
@@ -105,8 +102,38 @@ legend("topright", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
 title(main = substitute("Solubility of"~what~"at"~T~degree*"C",
   list(what = "calcite", T = T)))
 mtext("cf. Fig. 4A of Manning et al., 2013")
-
 par(opar)
+
+## two ways to calculate pH-dependent solubility of calcite
+## with ionic strength determination
+## method 1: CO2 and carbonate species as formed species
+basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
+species(c("CO2", "HCO3-", "CO3-2"))
+# ionic strength calculations don't converge below around pH=3
+a <- affinity(pH = c(3, 14))
+sa0 <- solubility(a)
+saI <- solubility(a, find.IS = TRUE)
+## method 2: CO2 and carbonate species as basis species
+basis(c("calcite", "CO2", "H2O", "O2", "H+"))
+species(c("Ca+2"))
+m <- mosaic(c("CO2", "HCO3-", "CO3-2"), pH = c(3, 14), blend = TRUE)
+sm0 <- solubility(m)
+smI <- solubility(m, find.IS = TRUE)
+## plot the results
+plot(0, 0, xlab="pH", ylab="solubility, log mol", xlim = c(3, 14), ylim = c(-5, 2))
+# method 1 with/without ionic strength
+lines(a$vals[[1]], saI$loga.balance, lwd=5, col="lightblue")
+lines(a$vals[[1]], sa0$loga.balance, lwd=5, col="pink")
+# method 2 with/without ionic strength
+lines(a$vals[[1]], smI$loga.balance, lty=2)
+lines(a$vals[[1]], sm0$loga.balance, lty=2)
+legend("topright", c("I = 0", "I = calculated", "mosaic method"),
+       col = c("pink", "lightblue", "black"), lwd = c(5, 5, 1), lty = c(1, 1, 2))
+# the two methods give nearly equivalent results
+stopifnot(all.equal(sa0$loga.balance, sm0$loga.balance))
+stopifnot(all.equal(saI$loga.balance, smI$loga.balance, tolerance = 0.003))
+## NOTE: the second method (using mosaic) takes longer, but is
+## more flexible; complexes with Ca+2 could be included
 }
 
 \references{

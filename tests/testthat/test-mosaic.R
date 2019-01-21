@@ -36,10 +36,13 @@ test_that("blend=TRUE produces reasonable values", {
   pH <- c(0, 14, 29)
   m1 <- mosaic(bases, pH=pH)
   m2 <- mosaic(bases, pH=pH, blend=TRUE)
-  # these species have no S so the results should be the same
-  expect_equal(m1$A.species$values, m2$A.species$values)
-  species(c("pyrrhotite", "pyrite"))
+  # these species have no S so the results should be similar,
+  # 20190121 except for a negative free energy of mixing (positive affinity)
+  expect_true(all(m2$A.species$values[[1]] - m1$A.species$values[[1]] > 0))
+  # the differences increase, then decrease
+  expect_equal(unique(sign(diff(as.numeric(m2$A.species$values[[1]] - m1$A.species$values[[1]])))), c(1, -1))
   # now with S-bearing species ...
+  species(c("pyrrhotite", "pyrite"))
   m3 <- mosaic(bases, pH=pH)
   m4 <- mosaic(bases, pH=pH, blend=TRUE)
   # the results are different ...
