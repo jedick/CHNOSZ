@@ -136,6 +136,8 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
     mystate <- thermo$obigt$state[ispecies.out]
     ispecies.other <- ispecies[!ispecies %in% ispecies.out]
     otherstates <- thermo$obigt$state[ispecies.other]
+    # substitute the mineral name for "cr" 20190121
+    otherstates[otherstates=="cr"] <- thermo$obigt$name[ispecies.other[otherstates=="cr"]]
     transtext <- othertext <- ""
     # we count, but don't show the states for phase transitions (cr2, cr3, etc)
     istrans <- otherstates %in% c("cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9")
@@ -144,9 +146,12 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
       ntrans <- sum(istrans)
       if(ntrans == 1) transtext <- paste(" with", ntrans, "phase transition")
       else if(ntrans > 1) transtext <- paste(" with", ntrans, "phase transitions")
+      # substitute the mineral name for "cr" 20190121
+      mystate <- thermo$obigt$name[ispecies.out]
     }
     otherstates <- otherstates[!istrans]
-    if(length(otherstates) > 0) othertext <- paste0(", also available in ", paste(otherstates, collapse=", "))
+    if(length(otherstates) == 1) othertext <- paste0("; other available phase is ", otherstates)
+    if(length(otherstates) > 1) othertext <- paste0("; other available phases are ", paste(otherstates, collapse=", "))
     if(transtext != "" | othertext != "") {
       starttext <- paste0("info.character: found ", species, "(", mystate, ")")
       message(starttext, transtext, othertext)

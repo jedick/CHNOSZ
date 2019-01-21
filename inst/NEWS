@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-68 (2019-01-21)
+CHANGES IN CHNOSZ 1.1.3-69 (2019-01-21)
 ---------------------------------------
 
 BUG FIXES
@@ -195,7 +195,8 @@ USABILITY ENHANCEMENTS
 - Change internal variable names in subcrt() for better readability
   (sinfo -> ispecies, inpho -> iphases, sinph -> phasespecies).
 
-- TODO: fix overly long message for info("SiO2").
+- info(): display mineral names instead of just "cr" in messages (e.g.
+  with info("SiO2")).
 
 - Add C implementation of counting occurrences of all letters in a
   string (src/count_letters.c) to speed up operation of count.aa().

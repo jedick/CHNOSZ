@@ -129,11 +129,12 @@ lines(a$vals[[1]], smI$loga.balance, lty=2)
 lines(a$vals[[1]], sm0$loga.balance, lty=2)
 legend("topright", c("I = 0", "I = calculated", "mosaic method"),
        col = c("pink", "lightblue", "black"), lwd = c(5, 5, 1), lty = c(1, 1, 2))
+title(main = "Solubility of calcite: Ionic strength and mosaic method")
 # the two methods give nearly equivalent results
 stopifnot(all.equal(sa0$loga.balance, sm0$loga.balance))
 stopifnot(all.equal(saI$loga.balance, smI$loga.balance, tolerance = 0.003))
 ## NOTE: the second method (using mosaic) takes longer, but is
-## more flexible; complexes with Ca+2 could be included
+## more flexible; e.g. complexes with Ca+2 could be included
 }
 
 \references{
