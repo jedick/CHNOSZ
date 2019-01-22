@@ -3,7 +3,7 @@
 # (BL = Bloomington campus of Indiana University)
 
 ## set up plotting area
-par(mfrow=c(2, 2))
+opar <- par(mfrow=c(2, 2))
 
 ## start with default database
 data(thermo)
@@ -153,3 +153,5 @@ mtitle(c("Aqueous aluminum species",
 ### clean up: restore thermodynamic database to default
 ###########
 data(thermo)
+
+par(opar)

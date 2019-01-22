@@ -45,6 +45,7 @@ for(i in 1:length(A$values)) A$values[[i]] <- A$values[[i]] - A.SSH
 ylab <- expression(bold(A)/2.303*italic(RT)*" vs Shh")
 xlab <- expression(log*italic(a)[H[2]][O])
 # set up normal plot, or plot with interpretive drawings
+opar <- par(no.readonly = TRUE)
 if(interp) {
   if(pdf) pdf("tfactor_interp.pdf", width=6, height=6)
   plot.new()
@@ -194,4 +195,5 @@ if(interp) {
   mtext(expression(log*italic(f)[O[2]]), line=2)
 }
 # all done!
+par(opar)
 if(pdf) dev.off()

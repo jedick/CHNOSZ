@@ -27,8 +27,9 @@ for(i in 1:length(names)) {
 species(names, "Sce")
 a <- affinity(H2O=c(-5, 0, 256), O2=c(-80, -66, 256))
 # setup the plot
+opar <- par(no.readonly = TRUE)
 layout(matrix(c(1, 1,2:7), byrow=TRUE, nrow=4), heights=c(0.7, 3, 3, 3))
-opar <- par(mar=c(0, 0, 0, 0))
+par(mar=c(0, 0, 0, 0))
 plot.new()
 text(0.5, 0.7, expression("Proteins in subcellular locations of"~italic("S. cerevisiae")~"(Dick, 2009)"), cex=1.5)
 text(0.5, 0.2, describe.basis(ibasis=c(1, 3, 4, 6), oneline=TRUE), cex=1.5)

@@ -39,6 +39,7 @@ T.units("K")
 TK <- seq(275, 425)
 P <- water("Psat", TK)$Psat
 # set up plots
+opar <- par(no.readonly = TRUE)
 layout(matrix(1:3), heights=c(1, 8, 8))
 # title at top
 par(mar=c(0, 0, 0, 0), cex=1)
@@ -116,3 +117,5 @@ legend("bottomright", lty = c(3, 2, 1), lwd = c(1, 1, 2), col = c("black", "blac
 )
 # reset database and computational settings
 data(thermo)
+
+par(opar)

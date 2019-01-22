@@ -1,11 +1,12 @@
 # plot effects of lambda transition in quartz
 # after Berman 1988 Figs. 1 and 2
+opar <- par(no.readonly = TRUE)
 layout(matrix(c(1, 4:2, 1, 7:5), nrow=4), heights=c(0.7, 3, 3, 3))
 # plot title first
 par(mar=c(0, 0, 0, 0))
 plot.new()
 text(0.5, 0.5, "Effects of lambda transition in quartz, after Berman (1988) Figs. 1 and 2", cex=1.8)
-opar <- par(mar=c(4, 4.5, 1, 0.5), cex=0.8)
+par(mar=c(4, 4.5, 1, 0.5), cex=0.8)
 
 TC <- 0:1200
 T <- convert(TC, "K")

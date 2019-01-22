@@ -2,7 +2,8 @@
 # average oxidation state of carbon (ZC) of metagenome-derived
 # proteins in different microbial phyla at Bison Pool  20171217
 
-par(mar=c(3.5, 4, 2.5, 2), las=1, mgp=c(2.2, 0.8, 0))
+# set default xaxs, yaxs, and tcl here becuase they are affected by previous demos
+par(mar=c(3.5, 4, 2.5, 2), las=1, mgp=c(2.2, 0.8, 0), xaxs="r", yaxs="r", tcl=-0.5)
 # read the amino acid compositions
 aa.annot <- read.csv(system.file("extdata/protein/DS11.csv", package="CHNOSZ"), as.is=TRUE)
 aa.phyla <- read.csv(system.file("extdata/protein/DS13.csv", package="CHNOSZ"), as.is=TRUE)

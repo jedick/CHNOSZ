@@ -10,6 +10,7 @@
 # Manning et al., 2013, Reviews in Mineralogy & Geochemistry, v. 75, pp. 109-148
 # (doi: 10.2138/rmg.2013.75.5)
 
+opar <- par(no.readonly = TRUE)
 layout(matrix(1:4, nrow = 2))
 
 # set pH and T range and resolution, constant temperature and ionic strength
@@ -67,3 +68,5 @@ a <- affinity(pH = c(pH, res), T = c(T, res), IS = IS)
 s <- solubility(a)
 diagram(s, type = "loga.balance")
 title(main = "Solubility of calcite", font.main = 1)
+
+par(opar)

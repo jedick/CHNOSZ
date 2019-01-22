@@ -201,8 +201,9 @@ Au_T2 <- function() {
 }
 
 # make plots
-par(mfrow=c(2, 2))
+opar <- par(mfrow=c(2, 2))
 Au_pH1()
 Au_pH2()
 Au_T1()
 Au_T2()
+par(opar)

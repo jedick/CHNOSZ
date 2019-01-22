@@ -2,7 +2,7 @@
 ## These are made with pH = 0 (activity of H+ = 1), so (activity of the ion) is equal to
 ## (activity of the ion) / [(activity of H+) ^ (charge of the ion)]
 
-par(mfrow = c(2, 2))
+opar <- par(mfrow = c(2, 2))
 res <- 200
 fill <- "terrain"
 
@@ -62,3 +62,5 @@ a <- affinity(SiO2 = c(-5, 0, res), `Ca+2` = c(6, 11, res), T = 300, P = 500)
 diagram(a, add = TRUE, col = "blue", col.names = "blue")
 title(main = syslab(c("CaO", "Al2O3", "MgO", "SiO2", "H2O")))
 legend("topright", describe.property(c("T", "P"), c(300, 500)), bty = "n")
+
+par(opar)
