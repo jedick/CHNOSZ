@@ -14,6 +14,8 @@ RHF78.1,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological S
 RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",iron,http://pubs.er.usgs.gov/publication/b1452
 RHF78.3,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","gibbsite GHS",http://pubs.er.usgs.gov/publication/b1452
 RHF78.4,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","rutile and titanite",http://pubs.er.usgs.gov/publication/b1452
+RHF78.5,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","scheelite GHS and V",http://pubs.er.usgs.gov/publication/b1452
+RHF78.6,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","ferberite V",http://pubs.er.usgs.gov/publication/b1452
 PB82,"L. N. Plummer and E. Busenberg",1982,"Geochim. Cosmochim. Acta 46, 1011-1040","aragonite and calcite",https://doi.org/10.1016/0016-7037(82)90056-4
 WEP+82,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","gases GHS",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
 WEP+82.1,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392",manganosite,https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
@@ -81,6 +83,7 @@ HS99,"J. R. Haas and E. L. Shock",1998,"Geochim. Cosmochim. Acta 63, 3429-3441",
 MS99,"W. M. Murphy and E. L. Shock",1999,"Rev. Mineral. Geochem. 38, 221-253",actinides,http://rimg.geoscienceworld.org/content/38/1/221
 PSK99,"P. Prapaipong, E. L. Shock and C. M. Koretsky",1999,"Geochim. Cosmochim. Acta 63, 2547-2577","metal-dicarboxylate complexes",https://doi.org/10.1016/S0016-7037(99)00146-5
 SAJ00,"R. E. Stoffregen, C. N. Alpers and J. L. Jambor",2000,"Rev. Mineral. Geochem. 40, 453-479","jarosite, natroalunite, and natrojarosite",https://doi.org/10.2138/rmg.2000.40.9
+WS00,"S. A. Wood and I. M. Samson",2000,"Econ. Geol. 95, 143-182","scheelite and ferberite; adopted values include Cp parameters for scheelite from @BK73 and GHS and Cp parameters for ferberite from @Pol90",https://doi.org/10.2113/gsecongeo.95.1.143
 AP01,"J. P. Amend and A. V. Plyasunov",2001,"Geochim. Cosmochim. Acta 65, 3901-3917",carbohydrates,https://doi.org/10.1016/S0016-7037(01)00707-4
 AS01,"J. P. Amend and E. L. Shock",2001,"FEMS Microbiol. Rev. 25, 175-243","NO and N<sub>2</sub>O",https://doi.org/10.1111/j.1574-6976.2001.tb00576.x
 AS01.1,"J. P. Amend and E. L. Shock",2001,"FEMS Microbiol. Rev. 25, 175-243","selenium and molybdenite",https://doi.org/10.1111/j.1574-6976.2001.tb00576.x
