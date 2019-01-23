@@ -7,7 +7,7 @@ plot.it <- FALSE
 limit.water <- TRUE
 
 # function to count the number of species on a diagram (not including NA fields)
-nspecies <- function(a) length(na.omit(unique(as.numeric(diagram(a, limit.water=limit.water, plot.it=plot.it)$predominant))))
+nspecies <- function(a) length(na.omit(unique(as.numeric(diagram(a, limit.water=limit.water, plot.it=plot.it, balance=1)$predominant))))
 
 res <- 25
 

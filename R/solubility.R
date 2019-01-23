@@ -20,15 +20,11 @@ solubility <- function(aout, dissociation=NULL, find.IS=FALSE) {
   if(is.null(dissociation)) {
     # assume FALSE unless determined otherwise
     dissociation <- FALSE
-    # react the first basis species to form the first species
-    sres <- suppressMessages(subcrt(c(rownames(aout$basis)[1], aout$species$name[1]), c(-1, 1)))
-    # note that the reaction is auto-balanced using all the basis species
-    # if the reaction involves the second basis species, we consider it to be a dissociation reaction
-    if(rownames(aout$basis)[2] %in% sres$reaction$formula) {
+    # if the reaction to form the first species involves the second basis species, we consider it to be a dissociation reaction
+    if(aout$species[1, 2] != 0) {
       # however, if the second basis species is H2O, H+, e-, O2 (or others?), we don't have enough information, so stop
-      if(rownames(aout$basis)[2] %in% c("H2O", "H+", "e-", "O2")) {
-        print(sres$reaction)
-        stop("unsure whether this is a dissociation reaction. if it is, redefine the basis to put a product ion second")
+      if(colnames(aout$species)[2] %in% c("H2O", "H+", "e-", "O2")) {
+        stop("Unsure whether the first formation reaction is a dissociation reaction.\nSet the 'dissociation' argument to TRUE or FALSE, or redefine the basis to put a product ion second.")
       }
       dissociation <- TRUE
     }

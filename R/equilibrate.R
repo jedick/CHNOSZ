@@ -271,8 +271,8 @@ balance <- function(aout, balance=NULL) {
   # try to automatically find a balance
   if(is.null(balance)) {
     ibalance <- which.balance(aout$species)
-    # no shared basis species - balance on one mole of species
-    if(length(ibalance) == 0) balance <- 1
+    # no shared basis species and balance not specified by user - an error
+    if(length(ibalance) == 0) stop("no basis species is present in all formation reactions")
   } 
   # change "1" to 1 (numeric) 20170206
   if(identical(balance, "1")) balance <- 1
