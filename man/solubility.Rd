@@ -7,13 +7,14 @@ Calculate chemical activities of species in equilibrium with a soluble basis spe
 }
 
 \usage{
-  solubility(aout, dissociation = NULL, find.IS = FALSE)
+  solubility(aout, dissociation = NULL, find.IS = FALSE, in.terms.of = NULL)
 }
 
 \arguments{
   \item{aout}{list, output from \code{\link{affinity}}}
   \item{dissociation}{logical, does the mineral undergo a dissociation reaction?}
   \item{find.IS}{logical, find the equilibrium ionic strength by iteration?}
+  \item{in.terms.of}{character, express the total solubility in terms of moles of this species}
 }
 
 \details{
@@ -46,10 +47,14 @@ Note that other variables (pH, ionic strength, activities of other basis species
 However, for dissolving a substance in pure water, \code{find.IS} can be set to TRUE to determine the final ionic strength.
 This works by calculating the ionic strength from the equilibrium solubility calculation, then re-running \code{affinity} with those values.
 Note that for dissociation reactions, the ionic strength is calculated from both the ions present in the species definition and the counter ion, which should be the second basis species.
-TODO: Speciation of counterions (e.g. ionized forms of carbonate or sulfate) can be accomplished by using the \code{\link{mosaic}} function instead of \code{affinity}.
 The calculation is iterated until the ionic strength deviation at every point is lower than a preset tolerance (1e-4).
+Alternatively, speciation of counterions (e.g. ionized forms of carbonate or sulfate) can also be accomplished by using the \code{\link{mosaic}} function instead of \code{affinity}.
+See the second example for this method.
 
 The output of \code{solubility} has the same format as that of \code{equilibrate}, and can be used by \code{\link{diagram}} with \code{type = "loga.balance"} to plot the solubilities, or with \code{type = NULL} to plot the activities of species. 
+The value of \code{loga.balance} reflects the activity (or molality) of the conserved basis species, i.e. the thing being dissolved.
+Use \code{in.terms.of} to express this value in terms of another species.
+For example, the solubility of corundum (Al\s{2}O\s{3}) can be expressed in terms of the moles of Al\S{+3} in solution (see the vignette \code{anintro.Rmd}).
 }
 
 \section{Warning}{

@@ -6,8 +6,9 @@
 ## if this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("equilibrate.R")
 #source("util.misc.R")
+#source("species.R")
 
-solubility <- function(aout, dissociation=NULL, find.IS=FALSE) {
+solubility <- function(aout, dissociation=NULL, find.IS=FALSE, in.terms.of=NULL) {
   ## concept: the logarithms of activities of species at equilibrium are equal to
   ## Astar, the affinities calculated for unit activities of species
 
@@ -22,11 +23,17 @@ solubility <- function(aout, dissociation=NULL, find.IS=FALSE) {
     dissociation <- FALSE
     # if the reaction to form the first species involves the second basis species, we consider it to be a dissociation reaction
     if(aout$species[1, 2] != 0) {
-      # however, if the second basis species is H2O, H+, e-, O2 (or others?), we don't have enough information, so stop
-      if(colnames(aout$species)[2] %in% c("H2O", "H+", "e-", "O2")) {
-        stop("Unsure whether the first formation reaction is a dissociation reaction.\nSet the 'dissociation' argument to TRUE or FALSE, or redefine the basis to put a product ion second.")
+      # 20190123 (corundum calculation): if there are only H2O, H+, and e-
+      # besides the first basis species, it's not a dissociation reaction
+      nbasis <- nrow(aout$basis)
+      nH2O <- sum(rownames(aout$basis) %in% c("H2O", "H+", "e-", "O2", "H2"))
+      if(nbasis > (nH2O + 1)) {
+        # if we got here, and the second basis species is H2O, H+, e-, O2 (or others?), we don't have enough information, so stop
+        if(colnames(aout$species)[2] %in% c("H2O", "H+", "e-", "O2", "H2")) {
+          stop("Unsure whether the first formation reaction is a dissociation reaction.\nSet the 'dissociation' argument to TRUE or FALSE, or redefine the basis to put a product ion second.")
+        }
+        dissociation <- TRUE
       }
-      dissociation <- TRUE
     }
     message("solubility: test for dissociation reaction returns ", dissociation)
   } else message("solubility: argument for dissociation reaction is ", dissociation)
@@ -124,6 +131,17 @@ solubility <- function(aout, dissociation=NULL, find.IS=FALSE) {
     aout <- suppressMessages(do.call(thisfun, list(aout.save, IS = IS)))
     if(thisfun=="mosaic") aout <- aout$A.species
     niter <- niter + 1
+  }
+
+  # do we want the solubility expressed in terms of
+  # something other than the first basis species? 20190123
+  if(!is.null(in.terms.of)) {
+    # write the reaction between the basis species and the new species
+    sbasis <- species.basis(in.terms.of)
+    # divide the activity of the conserved basis species by the coefficient in the formation reaction
+    ibalance <- which.balance(aout$species)
+    coeff <- sbasis[, ibalance][1]
+    loga.balance <- loga.balance - log10(coeff)
   }
 
   # make the output
