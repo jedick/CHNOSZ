@@ -28,8 +28,8 @@ The function calculates the affinities using each basis species listed in \code{
 The first species listed in \code{bases} should be in the current basis definition.
 The arguments in \code{...} are passed to \code{affinity} to specify the conditions.
 If \code{blend} is FALSE (the default), the function returns the affinities calculated using the single predominant basis species in \code{bases} at each condition.
-If \code{blend} is TRUE, the function combines the affinities of the formation reactions weighted by the relative abundances of the basis species at each condition.
-This tends to produce curved boundaries.
+If \code{blend} is TRUE, the function combines the affinities of the formation reactions in proportion to the relative abundances of the basis species at each condition, including a term to account for the Gibbs energy of mixing.
+See the second example in \code{\link{solubility}} for a numerical test of the calculations using \code{blend}.
 
 The basis species listed in \code{bases} should all be related to the first basis species there (i.e. all share the same element).
 A second, independent set of basis species can be provided in \code{bases2} (for example \samp{CO3-2}, \samp{HCO3-}, \samp{CO2}, if the first set of basis species are the sulfur-bearing ones listed above).

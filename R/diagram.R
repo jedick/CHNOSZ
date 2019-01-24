@@ -325,6 +325,11 @@ diagram <- function(
             myvals <- as.numeric(plotvals[[i]])
             # don't take values that lie close to or above the top of plot
             myvals[myvals > ylim[1] + 0.95*diff(ylim)] <- ylim[1]
+            # if we're adding to a plot, don't take values that are above the top of this plot
+            if(add) {
+              this.ylim <- par("usr")[3:4]
+              myvals[myvals > this.ylim[1] + 0.95*diff(this.ylim)] <- this.ylim[1]
+            }
             # the starting x-adjustment
             thisadj <- alladj[i]
             # if this line has any of the overall maximum values, use only those values

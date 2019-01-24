@@ -390,7 +390,7 @@ To calculate the thermodynamic properties of reactions, give the names of specie
 Here we calculate properties for the dissolution of CO<sub>2</sub>:
 ```{marginfigure}
 Because of aqueous speciation, this doesn't give the _solubility_ of CO<sub>2</sub>.
-For an example of a solubility calculation, see [<span style="color:blue">`demo(solubility)`</span>](../demo), which is based on a figure in Manning et al. (2013).
+Some examples of solubility calculations are in [<span style="color:blue">`demo(solubility)`</span>](../demo) ([see below](#complete-equilibrium-solubility)).
 ```
 ```{r subcrt_CO2}
 subcrt(c("CO2", "CO2"), c("gas", "aq"), c(-1, 1), T = seq(0, 250, 50))
@@ -926,11 +926,40 @@ To display the species distribution, or degree of formation, add `alpha = TRUE` 
 ```{r bjerrum_diagram, echo=12:13, eval=FALSE}
 ```
 
-The possible reactions between species are all balanced on 1 C.
-Therefore, although pH alters the total activity of C, in a system with ideal mixing the total activity of C doesn't affect the relative activities of these species.
-```{marginfigure}
-See [<span style="color:blue">`demo(solubility)`</span>](../demo) for calculations of the total activity of C in equilibrium with either CO<sub>2(<i>gas</i>)</sub> or calcite.
+## Complete equilibrium: Solubility
+
+It is important to remember that <span style="color:green">`equilibrate()`</span> calculates an equilibrium distribution of species for a given total activity of the conserved basis species.
+For instance, the previous diagram shows the relative abundances of CO<sub>2</sub>, HCO<sub>3</sub><sup>-</sup>, and CO<sub>3</sub><sup>-2</sup> as a function of pH assuming that the possible reactions between species are all balanced on 1 C and the total activity of C is constant.
+Although this assumption of metastable equilibrium is useful for making many types of diagrams for aqueous species, the aqueous solutions would not be in equilibrium with other phases, including gases or solids such as carbon dioxide or calcite.
+
+Moving away from metastable equilibrium to complete equilibrium actually involves a simplification of the computations.
+Instead of finding the activities of aqueous species where the affinities of formation reactions are equal to each other, equilibrium corresponds to the configuration where the affinities are equal to zero.
+However, this simplification comes with a different constraint: the reactions should be balanced on something that anchors them to a real quantity.
+It makes sense to think of this quantity as a conserved basis species (one that is present in the formation reactions of all species considered), which corresponds to a pure substance that is being dissolved.
+
+The <span style="color:green">`solubility()`</span> function provides a way to compute activities of aqueous species in equilibrium with a solid or gas, which is usually defined as the first basis species.
+The following example for corundum (Al<sub>2</sub>O<sub>3</sub>) is based on Figure 15 of @Man13.
+Corundum is set as the first basis species, and the formed species all contain Al.
+The affinities of the formation reactions, for any given activities of the species, but unit activity of the solid basis species (corundum), are input to <span style="color:green">`solubility()`</span>.
+An additional argument, `in.terms.of`, is used to compute the total molality of Al in solution, that is, twice the number of moles of Al<sub>2</sub>O<sub>3</sub> that are dissolved.
+<span style="color:green">`diagram()`</span> is used twice, first to plot the total molality of Al, then the concentrations of the individual species, using `adj` and `dy` to adjust the positions of labels in the *x*- and *y*-directions.
+Note that setting `IS` to 0 in <span style="color:green">`affinity()`</span> has no effect on the calculations, but signals <span style="color:green">`diagram()`</span> to label the *y* axis with logarithm of molality instead of logarithm of activity.
+
+```{r corundum, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", results="hide", message=FALSE, cache=TRUE, fig.cap="Solubility of corundum (green line) and equilibrium concentrations of aqueous species (black lines).", pngquant=pngquant, timeit=timeit}
+basis(c("corundum", "H2O", "H+", "O2"))
+species(c("Al+3", "AlO2-", "AlOH+2", "AlO+", "HAlO2"))
+a <- affinity(pH = c(0, 10), IS = 0)
+s <- solubility(a, in.terms.of = "Al+3")
+diagram(s, type = "loga.balance", ylim = c(-10, 0), lwd = 4, col = "green3")
+diagram(s, add = TRUE, adj = c(0, 1, 2.1, -0.2, -1.5), dy = c(0, 0, 4, -0.3, 0.1))
+legend("topright", c("25 °C", "1 bar"), text.font = 2, bty = "n")
 ```
+
+Other examples of using <span style="color:green">`solubility()`</span> are available in CHNOSZ.
+See [<span style="color:blue">`demo(solubility)`</span>](../demo) for calculations of the solubility of CO<sub>2(<i>gas</i>)</sub> and calcite as a function of pH and temperature.
+The calculation assumes the stoichiometric dissolution of calcite, in which CaCO<sub>3</sub> dissociates to form equal quantities of Ca<sup>+2</sup> and CO<sub>3</sub><sup>-2</sup> ions.
+Adding in activity coefficients, a different example in <span style="color:blue">`?solubility`</span> uses the `find.IS` option to find the final ionic strength for dissolving calcite into pure water.
+[<span style="color:blue">`demo(gold)`</span>](../demo) shows calculations of the solubility of gold as a function of pH and *T* as well as oxygen fugacity set by diferent mineral buffers, and considers ionic strength effects on activity coefficients, so that activities are transformed to molalities ([see below](#transformation-of-variables)).
 
 ## Groups of species
 
@@ -2165,9 +2194,10 @@ Thank you for reading, and have fun!
 ```{marginfigure}
 <span style="color:green">`browse.refs()`</span> was renamed to <span style="color:green">`thermo.refs()`</span> in 2017.
 ```
-* 2012-06-16 Add “More activity diagrams”.
+* 2012-06-16 Add "More activity diagrams".
 * 2015-05-14 Add warning about internal consistency of thermodynamic data.
 * 2017-02-15 Completely rewritten; switch from Sweave to knitr (Tufte style).
+* 2019-01-24 Add section on solubility calculations.
 
 View the R Markdown source of this document [on R-Forge](https://r-forge.r-project.org/scm/viewvc.php/pkg/CHNOSZ/vignettes/anintro.Rmd?view=markup&root=chnosz) or in R:
 

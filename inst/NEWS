@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-72 (2019-01-23)
+CHANGES IN CHNOSZ 1.1.3-75 (2019-01-24)
 ---------------------------------------
 
 BUG FIXES
@@ -77,8 +77,9 @@ DOCUMENTATION
   2009). This depends on the revised nonideal() and new NaCl() functions
   described above.
 
-- anintro.Rmd: add cuprite to mosaic diagram example, and note about
-  implications of changing balance to 1.
+- anintro.Rmd: add section on solubility calculations. Also, add
+  cuprite to mosaic diagram example, and note about implications of
+  changing balance to 1.
 
 - Add demo/bison.R (average oxidation state of carbon of metagenome-
   derived proteins in different microbial phyla at Bison Pool)
