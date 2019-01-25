@@ -26,6 +26,9 @@ release checklist for CHNOSZ
 
 - check reverse dependencies: ecipex and canprot packages
 
+- documentation links: after installation, run doc/mklinks.sh
+  and insert the modified anintro.html in the package
+
 OTHER THINGS TO CHECK:
 
 - remove all "<<-" from sources (leftover from debugging)

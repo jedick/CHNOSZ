@@ -1215,7 +1215,7 @@ To do so, we use R's `rbind()` and `do.call()` to turn `alpha` into a matrix, th
 ```
 
 Adding the `IS` argument to <span style="color:green">`affinity()`</span>, we can now plot *N*<sub>H<sup>+</sup></sub> at the given ionic strength.
-Here we set `plot.it = FALSE` in `diagram()` because we use the computed α to make our own plot.
+Here we set `plot.it = FALSE` in <span style="color:green">`diagram()`</span> because we use the computed α to make our own plot.
 This is similar to Figure 1.3 of Alberty (2003), but at higher temperature:
 ```{r ATP, eval=FALSE, echo=12:17}
 ```
@@ -1302,7 +1302,7 @@ subcrt("LYSC_CHICK")$out[[1]][1:6, ]
 Let's compare experimental values of heat capacity of four proteins, from @PM90, with those calculated using group additivity.
 After dividing Privalov and Makhatadze's experimental values by the lengths of the proteins to get per-residue values, we convert those to calories, then plot them.
 
-```{r protein_Cp, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, fig.cap='The heat capacity calculated by group additivity closely approximates experimental values for aqueous proteins. For a related figure showing the effects of ionization in the calculations, see <span style="color:blue">?ionize.aa</span>.', cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r protein_Cp, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, fig.cap='The heat capacity calculated by group additivity closely approximates experimental values for aqueous proteins. For a related figure showing the effects of ionization in the calculations, see <span style="color:blue">`?ionize.aa`</span>.', cache=TRUE, pngquant=pngquant, timeit=timeit}
 PM90 <- read.csv(system.file("extdata/cpetc/PM90.csv", package = "CHNOSZ"))
 plength <- protein.length(colnames(PM90)[2:5])
 Cp_expt <- t(t(PM90[, 2:5]) / plength)
@@ -2190,14 +2190,16 @@ Thank you for reading, and have fun!
 # Document history
 
 * 2010-09-30 Initial version.
+<!--
 * 2011-08-15 Add <span style="color:green">`browse.refs()`</span>; modifying database hint changed to <span style="color:blue">`help(thermo)`</span>.
 ```{marginfigure}
 <span style="color:green">`browse.refs()`</span> was renamed to <span style="color:green">`thermo.refs()`</span> in 2017.
 ```
-* 2012-06-16 Add "More activity diagrams".
-* 2015-05-14 Add warning about internal consistency of thermodynamic data.
-* 2017-02-15 Completely rewritten; switch from Sweave to knitr (Tufte style).
-* 2019-01-24 Add section on solubility calculations.
+-->
+* 2012-06-16 Add "More activity diagrams" (section no longer exists).
+* 2015-05-14 Add warning about [internal consistency of thermodynamic data](#thermodynamic-database).
+* 2017-02-15 Completely rewritten; switch from Sweave to [knitr](https://yihui.name/knitr/) ([Tufte style](https://rstudio.github.io/tufte/)).
+* 2019-01-24 Add [section on solubility calculations](#complete-equilibrium-solubility).
 
 View the R Markdown source of this document [on R-Forge](https://r-forge.r-project.org/scm/viewvc.php/pkg/CHNOSZ/vignettes/anintro.Rmd?view=markup&root=chnosz) or in R:
 
