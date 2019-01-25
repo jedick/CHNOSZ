@@ -29,6 +29,9 @@ release checklist for CHNOSZ
 - documentation links: after installation, run doc/mklinks.sh
   and insert the modified anintro.html in the package
 
+- reduce size of vignettes: after upgrading rmarkdown, replace files in
+  rmarkdown/rmd/h/bootstrap/fonts/ with empty files
+
 OTHER THINGS TO CHECK:
 
 - remove all "<<-" from sources (leftover from debugging)

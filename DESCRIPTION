@@ -1,6 +1,6 @@
 Date: 2019-01-25
 Package: CHNOSZ
-Version: 1.1.3-76
+Version: 1.1.3-77
 Title: Thermodynamic Calculations and Diagrams for Geo(bio)chemistry
 Authors@R: c(
     person("Jeffrey", "Dick", , "j3ffdick@gmail.com", role = c("aut", "cre"),
@@ -12,7 +12,7 @@ Author: Jeffrey Dick [aut, cre] (0000-0002-0687-5890),
   R Core Team [ctb] (code derived from R's pmax())
 Maintainer: Jeffrey Dick <j3ffdick@gmail.com>
 Depends: R (>= 3.1.0)
-Suggests: limSolve, testthat, knitr, rmarkdown, tufte, RSVGTipsDevice
+Suggests: limSolve, testthat, knitr, rmarkdown, tufte
 Imports: grDevices, graphics, stats, utils
 Description: An integrated set of tools for thermodynamic calculations in geochemistry and compositional
   biology. The thermodynamic properties of liquid water are calculated using Fortran code from

@@ -21,8 +21,6 @@ vignette: >
 bibliography: vig.bib
 link-citations: yes
 csl: elementa.csl
-# note: this may be needed for margin references in next version of tufte:
-#tufte_features: ["background", "margin_references"]
 ---
 
 ```{r options, include=FALSE}
