@@ -6,6 +6,7 @@
 # set background-image:none to remove underlines (from bootstrap theme)
 sed -i 's/<code>?`CHNOSZ-package`<\/code>/<code><a href="..\/html\/CHNOSZ-package.html" style="background-image:none;">?`CHNOSZ-package`<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?basis<\/code>/<code><a href="..\/html\/basis.html" style="background-image:none;">?basis<\/a><\/code>/g' anintro.html
+sed -i 's/<code>?mosaic<\/code>/<code><a href="..\/html\/eos.html" style="background-image:none;">?mosaic<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?buffer<\/code>/<code><a href="..\/html\/buffer.html" style="background-image:none;">?buffer<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?solubility<\/code>/<code><a href="..\/html\/solubility.html" style="background-image:none;">?solubility<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?ionize.aa<\/code>/<code><a href="..\/html\/ionize.aa.html" style="background-image:none;">?ionize.aa<\/a><\/code>/g' anintro.html

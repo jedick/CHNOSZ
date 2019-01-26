@@ -663,14 +663,6 @@ To know what aqueous copper chloride complexes are available in the database, we
 info(" CuCl")
 ```
 
-We wish to include chalcocite (Cu<sub>2</sub>S) in the system.
-This mineral undergoes phase transitions; to find out the temperatures of the phase transitions, we can also use <span style="color:green">`info()`</span>:
-```{r info_chalcocite, message=FALSE}
-info(info("chalcocite", c("cr", "cr2", "cr3")))$T
-```
-
-Those are temperatures in Kelvin (regardless of the <span style="color:red">`T.units()`</span>); at 200 °C we should use the second phase.
-
 Next we define the basis, and set the activities of the H<sub>2</sub>S and Cl<sup>-</sup> basis species.
 These represent the total activity of S and Cl in the system, which are distributed among the minerals and aqueous species.
 Four minerals and the aqueous copper chloride species are included:
@@ -678,9 +670,15 @@ Four minerals and the aqueous copper chloride species are included:
 basis(c("Cu", "H2S", "Cl-", "H2O", "H+", "e-"))
 basis("H2S", -6)
 basis("Cl-", -0.7)
-species(c("copper", "cuprite", "tenorite"))
-species("chalcocite", "cr2")
 species(c("CuCl", "CuCl2-", "CuCl3-2", "CuCl+", "CuCl2", "CuCl3-", "CuCl4-2"))
+species(c("chalcocite", "tenorite", "cuprite", "copper"))
+```
+
+Note that chalcocite (Cu<sub>2</sub>S) undergoes phase transitions.
+To get the temperatures of the phase transitions from `thermo$obigt` (in Kelvin, regardless of the <span style="color:red">`T.units()`</span>), we can use <span style="color:green">`info()`</span>.
+We see that at 200 °C (473.15 K) the second phase is stable; this one is automatially used by CHNOSZ for this diagram.
+```{r info_chalcocite, message=FALSE}
+info(info("chalcocite", c("cr", "cr2", "cr3")))$T
 ```
 
 We use <span style="color:green">`mosaic()`</span> to generate and combine diagrams for each candidate basis species (H<sub>2</sub>S, HS<sup>-</sup>, HSO<sub>4</sub><sup>-</sup>, or SO<sub>4</sub><sup>-2</sup>) as a function of Eh and pH.
@@ -691,25 +689,24 @@ We turn off the gray coloring beyond the water stability limits (`limit.water`) 
 
 ```{r copper_mosaic, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", message=FALSE, cache=TRUE, fig.cap="Copper minerals and aqueous complexes with chloride, 200 °C.", pngquant=pngquant, timeit=timeit}
 T <- 200
-res <- 200
+res <- 300
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 m1 <- mosaic(bases, blend = TRUE, pH = c(0, 12, res), Eh=c(-1.2, 0.75, res), T=T)
 diagram(m1$A.species, lwd = 2, fill = NA, limit.water = FALSE)
-diagram(m1$A.bases, add = TRUE, col = "blue", col.names = "blue", lty = 2,
-        limit.water = FALSE)
-water.lines(m1$A.species, col = "red", lwd = 2, lty = 3)
+diagram(m1$A.bases, add = TRUE, col = "red1", col.names = "red1", lty = 2,
+        limit.water = FALSE, italic = TRUE)
+water.lines(m1$A.species, col = "blue1", lty = 3)
 ```
 
-The argument `blend = TRUE` is used to combine the diagrams according to the equilibrium activities of the basis species by themselves ([see below](#equilibration)).
-The smooth transitions between basis species cause the appearance of curved lines on the plot.
+The argument `blend = TRUE` is used to combine the diagrams according to the relative abundances of the basis species along with a mixing term (see <span style="color:blue">`?mosaic`</span>).
+The smooth transitions between basis species can result in curved field boundaries, in this case around the chalcocite field.
 Without that argument, the diagrams would be combined using the dominant basis species, and all of the line segments would be straight.
 
-Note that this diagram is balanced on Cu, so that no Cu appears in reactions between any two other species (minerals or aqueous species).
+The reactions used to make this diagram are balanced on Cu, so that no Cu appears in reactions between any two other species (minerals or aqueous species).
 If <span style="color:green">`diagram()`</span> is run with `balance = 1`, then the reactions are written for one mole of the mineral formulas on each side of the reaction, with the possibility of Cu appearing as an additional species to conserve the elements.
 This may be problematic, as Cu would be be present in some reactions in Eh-pH space where it is not a stable phase.
 However, it is common in low-temperature aqueous geochemical calculations to "turn off" particular redox reactions that are not thought to attain equilibrium, so decoupling a species from equilibrium may be justified in some circumstances.
-Therefore, while changing the balance constraints has important implications that should be carefully considered, it can present a possibly useful view of the system if certain assumptions are met.
-Changing the balance to 1 results in the loss of the tenorite stability field and extension of chalcocite stability to pH < 0, as shown in Figure 5a of @CPCC17.
+Changing the balance to 1 results in the loss of the tenorite stability field and extension of chalcocite stability to lower pH, as shown in Figure 5a of @CPCC17.
 
 <a name="mosaicfun"></a>
 We have seen the effects of speciation of S in the basis species.
@@ -723,11 +720,11 @@ mosaicfun <- function(newvar, T = 200) {
   if (names(newvar) == "O2") basis("O2", "gas")
   mosaicargs <- c(list(bases), blend=TRUE, pH=list(c(-2, 12, res)), newvar, T=T)
   m1 <- do.call(mosaic, mosaicargs)
-  diagram(m1$A.species, lwd = 2, fill = rev(topo.colors(10)),
+  diagram(m1$A.species, lwd = 2, fill = "terrain",
           limit.water = FALSE)
-  diagram(m1$A.bases, add = TRUE, col = "blue", col.names = "blue", lty = 3,
-          limit.water = FALSE)
-  water.lines(m1$A.species, col = "red", lwd = 2, lty = 3)
+  diagram(m1$A.bases, add = TRUE, col = "red1", col.names = "red1", lty = 2,
+          limit.water = FALSE, italic = TRUE)
+  water.lines(m1$A.species, col = "blue1", lty = 3)
   swap.basis(names(newvar), "e-")
 }
 par(mfrow = c(1, 3))
