@@ -156,10 +156,10 @@ This is usually the affinity of the formation reaction, but can be set to some o
 If \code{type} is \samp{auto}, and the number of dimensions is 2, then equilibrium predominance (maximum affinity) fields are plotted.
 This algorithm is based on a comparison of the affinities of the formation reactions scaled by the balancing coefficients that are determined by the \code{balance} argument.
 
-If \code{type} is \samp{saturation}, the function plots the line for each species where the affinity of formation equals zero.
+If \code{type} is \samp{saturation}, the function plots the line for each species where the affinity of formation equals zero; see \code{demo("saturation")} for an example.
 If for a given species no saturation line is possible or the range of the diagram is beyond the saturation line, the function prints a message instead.
-If \code{type} is the name of a basis species, the equilibrium activity of the selected basis species in each of the formation reactions is plotted.
-In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines (see the \CO2-acetic acid example in \code{\link{buffer}}).
+If \code{type} is the name of a basis species, the equilibrium activity of the selected basis species in each of the formation reactions is plotted (see the \CO2-acetic acid example in \code{\link{buffer}}).
+In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines, using the method specified in \code{contour.method}.
 The \samp{saturation} diagram can handle multiple species, but if \code{type} is the name a basis species, then only the first species of interest is used in the calculation, and a warning is produced if there is more than one.
 }
 

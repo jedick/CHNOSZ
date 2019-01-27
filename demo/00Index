@@ -18,7 +18,7 @@ wjd             Gibbs energy minimization: prebiological atmospheres and cell pe
 dehydration     log K of dehydration reactions; SVG file contains tooltips and links
 bugstab         Formation potential of microbial proteins in colorectal cancer
 Shh             Affinities of transcription factors relative to Sonic hedgehog
-activity_ratios Mineral stability plots with activity ratios on the axes
+saturation      Equilibrium activity diagram showing activity ratios and mineral saturation limits
 adenine         HKF parameters regressed from heat capacity and volume of aqueous adenine
 DEW             Deep Earth Water (DEW) model for high pressures
 lambda          Thermodynamic properties of lambda transition in quartz

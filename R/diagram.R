@@ -578,6 +578,7 @@ diagram <- function(
       }
       # colors and curves (predominance), or contours (properties)
       if(identical(predominant, NA)) {
+        contour.method <- rep(contour.method, length.out=length(plotvals))
         if(type=="saturation") {
           # for saturation plot, contour affinity=0 for all species
           for(i in 1:length(plotvals)) {
@@ -591,15 +592,15 @@ diagram <- function(
               message("diagram: beyond range for saturation line of ", names[i])
               next
             }
-            if(identical(contour.method, NULL) | identical(contour.method, NA) | identical(contour.method, ""))
+            if(identical(contour.method, NULL) | identical(contour.method[1], NA) | identical(contour.method[1], ""))
               contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, levels=0, labels=names[i], drawlabels=FALSE)
-            else contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, levels=0, labels=names[i], method=contour.method)
+            else contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, levels=0, labels=names[i], method=contour.method[i])
           }
         } else {
           # contour solubilities (loga.balance), or properties using first species only
           if(length(plotvals) > 1) warning("showing only first species in 2-D property diagram")
           zs <- plotvals[[1]]
-          contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, method=contour.method)
+          contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, method=contour.method[1])
         }
         pn <- list(namesx=NULL, namesy=NULL, inames=NULL)
       } else {

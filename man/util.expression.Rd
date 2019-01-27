@@ -121,7 +121,7 @@ Note that \code{\link{diagram}} sets \code{molality} to TRUE if \code{IS} was su
 }
 
 \seealso{
-\code{demo("activity_ratios")} for examples of \code{syslab} and \code{ratlab}.
+\code{demo("saturation")} for examples of \code{syslab} and \code{ratlab}.
 }
 
 \examples{\dontshow{data(thermo)}

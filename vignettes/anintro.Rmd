@@ -633,7 +633,7 @@ Generally, then, <span style="color:green">`diagram()`</span> gives a *potential
 In systems where equilibrium is attainable, it makes sense to call this a *predominance diagram*, showing regions of maximum activity.
 
 ```{r EhpH_plot_color, fig.margin=TRUE, fig.width=4, fig.height=4, smallish.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="The same plot, with different colors and labels.", pngquant=pngquant, timeit=timeit}
-diagram(a, fill = "terrain", lwd = 3, lty = 3,
+diagram(a, fill = "terrain", lwd = 2, lty = 3,
         names = c("hydrogen sulfide", "bisulfide", "bisulfate", "sulfate"),
         tplot = FALSE, main = "sulfur species, 25 °C", bty = "n")
 ```
@@ -648,7 +648,9 @@ Additional arguments are passed to R's plotting functions; here, we use `bty` to
 Mineral stability diagrams often depict activity ratios, e.g. log (*a*<sub>Ca<sup>+2</sup></sub>/*a*<sub>H<sup>+</sup></sub><sup>2</sup>), on one or both axes.
 The variables used for potential calculations in CHNOSZ include only a single chemical activity, e.g. log *a*<sub>Ca<sup>+2</sup></sub>.
 However, you can set pH = 0 to generate diagrams that are geometrically equivalent to those calculated using activity ratios, and use <span style="color:green">`ratlab()`</span> to make the axes labels for the ratios.
-See [<span style="color:blue">`demo(activity_ratios)`</span>](../demo) for some examples.
+Moreover, <span style="color:green">`diagram()`</span> has a "saturation" option that can be used to draw saturation limits for minerals that do not contain the conserved basis species.
+See [<span style="color:blue">`demo(saturation)`</span>](../demo) for an example that uses activity ratios on the axes and plots saturation limits for calcite, magnesite, dolomite, and brucite on a diagram for the H<sub>2</sub>O&ndash;CO<sub>2</sub>&ndash;CaO&ndash;MgO&ndash;SiO<sub>2</sub> system.
+That demo can be used as a template to produce a wide range of diagrams similar to those in @BJH84.
 
 ## Mosaic diagrams
 
@@ -693,9 +695,9 @@ res <- 300
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 m1 <- mosaic(bases, blend = TRUE, pH = c(0, 12, res), Eh=c(-1.2, 0.75, res), T=T)
 diagram(m1$A.species, lwd = 2, fill = NA, limit.water = FALSE)
-diagram(m1$A.bases, add = TRUE, col = "red1", col.names = "red1", lty = 2,
+diagram(m1$A.bases, add = TRUE, col = "red1", col.names = "red1", lty = 3,
         limit.water = FALSE, italic = TRUE)
-water.lines(m1$A.species, col = "blue1", lty = 3)
+water.lines(m1$A.species, col = "blue1")
 ```
 
 The argument `blend = TRUE` is used to combine the diagrams according to the relative abundances of the basis species along with a mixing term (see <span style="color:blue">`?mosaic`</span>).
@@ -722,9 +724,9 @@ mosaicfun <- function(newvar, T = 200) {
   m1 <- do.call(mosaic, mosaicargs)
   diagram(m1$A.species, lwd = 2, fill = "terrain",
           limit.water = FALSE)
-  diagram(m1$A.bases, add = TRUE, col = "red1", col.names = "red1", lty = 2,
+  diagram(m1$A.bases, add = TRUE, col = "red1", col.names = "red1", lty = 3,
           limit.water = FALSE, italic = TRUE)
-  water.lines(m1$A.species, col = "blue1", lty = 3)
+  water.lines(m1$A.species, col = "blue1")
   swap.basis(names(newvar), "e-")
 }
 par(mfrow = c(1, 3))

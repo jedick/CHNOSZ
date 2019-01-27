@@ -16,7 +16,7 @@
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
     "protbuff", "yeastgfp", "mosaic", "copper", "solubility",
-    "gold", "wjd", "bugstab", "Shh", "activity_ratios",
+    "gold", "wjd", "bugstab", "Shh", "saturation",
     "adenine", "DEW", "lambda", "TCA", "go-IU", "bison"),
     save.png=FALSE)
 }
@@ -51,7 +51,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{dehydration} \tab * \logK of dehydration reactions; SVG file contains tooltips and links \cr
     \code{bugstab} \tab * Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
     \code{Shh} \tab * Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015) \cr
-    \code{activity_ratios} \tab * Mineral stability plots with activity ratios on the axes \cr
+    \code{saturation} \tab * Equilibrium activity diagram showing activity ratios and mineral saturation limits (Bowers et al., 1984) \cr
     \code{adenine} \tab * HKF regression of heat capacity and volume of aqueous adenine (Lowe et al., 2017) \cr
     \code{DEW} \tab * Deep Earth Water (DEW) model for high pressures (Sverjensky et al., 2014a and 2014b) \cr
     \code{lambda} \tab * Effects of lambda transition on thermodynamic properties of quartz (Berman, 1988) \cr
@@ -89,6 +89,8 @@ Amend, J. P. and Shock, E. L. (1998) Energetics of amino acid synthesis in hydro
 Amend, J. P. and Shock, E. L. (2001) Energetics of overall metabolic reactions of thermophilic and hyperthermophilic Archaea and Bacteria. \emph{FEMS Microbiol. Rev.} \bold{25}, 175--243. \url{https://doi.org/10.1016/S0168-6445(00)00062-0}
 
 Berman, R. G. (1988) Internally-consistent thermodynamic data for minerals in the system Na{\s2}O-K{\s2}O-CaO-MgO-FeO-Fe{\s2}O{\s3}-Al{\s2}O{\s3}-SiO{\s2}-TiO{\s2}-H{\s2}O-CO{\s2}. \emph{J. Petrol.} \bold{29}, 445-522. \url{https://doi.org/10.1093/petrology/29.2.445}
+
+Bowers, T. S., Jackson, K. J. and Helgeson, H. C. (1984) \emph{Equilibrium Activity Diagrams for Coexisting Minerals and Aqueous Solutions at Pressures and Temperatures to 5 kb and 600\degC}, Springer-Verlag, Berlin, 397 p. \url{http://www.worldcat.org/oclc/11133620}
 
 Canovas, P. A., III and Shock, E. L. (2016) Geobiochemistry of metabolism: Standard state thermodynamic properties of the citric acid cycle. \emph{Geochim. Cosmochim. Acta} \bold{195}, 293--322. \url{https://doi.org/10.1016/j.gca.2016.08.028}
 

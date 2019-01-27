@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-79 (2019-01-27)
+CHANGES IN CHNOSZ 1.1.3-80 (2019-01-27)
 ---------------------------------------
 
 BUG FIXES
@@ -84,6 +84,11 @@ DOCUMENTATION
 
 - Add demo/bison.R (average oxidation state of carbon of metagenome-
   derived proteins in different microbial phyla at Bison Pool)
+
+- demo/saturation.R replaces the previous activity_ratios.R, and
+  includes not only activity ratios on the axes but also saturation
+  limits for calcite, dolomite, magnesite, and brucite in the
+  H2O-CO2-CaO-MgO-SiO2 system.
 
 THERMODYNAMIC DATA
 
