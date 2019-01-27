@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-80 (2019-01-27)
+CHANGES IN CHNOSZ 1.1.3-81 (2019-01-27)
 ---------------------------------------
 
 BUG FIXES
@@ -214,6 +214,9 @@ USABILITY ENHANCEMENTS
 
 - info(): display mineral names instead of just "cr" in messages (e.g.
   for info("SiO2")).
+
+- info(): species with no matches in default database are also
+  searched in optional data files (SUPCRTBL, SUPCRT92).
 
 - Add C implementation of counting occurrences of all letters in a
   string (src/count_letters.c) to speed up operation of count.aa().
