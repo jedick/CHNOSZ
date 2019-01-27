@@ -9,7 +9,7 @@ FSR76,"M. J. Ferrante et al.",1976,"U. S. Bureau of Mines Report of Investigatio
 HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","data for minerals and phase transitions",http://www.worldcat.org/oclc/13594862
 HDNB78.1,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","litharge S, V, and Cp parameters",http://www.worldcat.org/oclc/13594862
 HDNB78.2,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","celestite V and Cp parameters",http://www.worldcat.org/oclc/13594862
-RHF78,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","chlorargyrite",http://pubs.er.usgs.gov/publication/b1452
+RHF78,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",chlorargyrite,http://pubs.er.usgs.gov/publication/b1452
 RHF78.1,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","dickite, fluorphlogopite, halloysite, and pyrope",http://pubs.er.usgs.gov/publication/b1452
 RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",iron,http://pubs.er.usgs.gov/publication/b1452
 RHF78.3,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","gibbsite GHS",http://pubs.er.usgs.gov/publication/b1452
@@ -33,7 +33,7 @@ Eva90,"B. W. Evans",1990,"Lithos 25, 3-23","glaucophane and pumpellyite",https:/
 SH90,"E. L. Shock and H. C. Helgeson",1990,"Geochim. Cosmochim. Acta 54, 915-945","organic species",https://doi.org/10.1016/0016-7037(90)90429-O
 SH90.1,"E. L. Shock and H. C. Helgeson",1990,"Geochim. Cosmochim. Acta 54, 915-945","formic acid, formate, and propanoate",https://doi.org/10.1016/0016-7037(90)90429-O
 BN91,"J. W. Ball and D. K. Nordstrom",1991,"User's manual for WATEQ4F, with revised thermodynamic data base and text cases for calculating speciation of major, trace, and redox elements in natural waters. USGS Open-File Report 91-183","arsenopyrite: G",https://pubs.er.usgs.gov/publication/ofr91183
-HRA91,"B. S. Hemingway et al.",1991,"Am. Mineral. 76, 445-457","bohemite",http://pubs.er.usgs.gov/publication/70016664
+HRA91,"B. S. Hemingway et al.",1991,"Am. Mineral. 76, 445-457",bohemite,http://pubs.er.usgs.gov/publication/70016664
 SHD91,"D. A. Sverjensky, J. J. Hemley and W. M. D'Angelo",1991,"Geochim. Cosmochim. Acta 55, 989-1004","G and H revisions for K- and Al-bearing silicates",https://doi.org/10.1016/0016-7037(89)90341-4
 SHD91.1,"D. A. Sverjensky, J. J. Hemley and W. M. D'Angelo",1991,"Geochim. Cosmochim. Acta 55, 989-1004","phlogopite: H and S modified by @Ber90, followed by G and H revision for K-bearing silicates [after @SHD91]",https://doi.org/10.1016/0016-7037(89)90341-4
 SHD91.2,"D. A. Sverjensky, J. J. Hemley and W. M. D'Angelo",1991,"Geochim. Cosmochim. Acta 55, 989-1004","annite: G and H revision for K-bearing silicates [after @SHD91]",https://doi.org/10.1016/0016-7037(89)90341-4
@@ -45,6 +45,7 @@ ZS92,"C. Zhu and D. A. Sverjensky",1982,"Geochim. Cosmochim. Acta 56, 3435-3467"
 Sho93,"E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3341-3349","ethylacetate and acetamide",https://doi.org/10.1016/0016-7037(93)90542-5
 Sho93.1,"E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3341-3349","carbon monoxide and ethylene",https://doi.org/10.1016/0016-7037(93)90542-5
 SK93,"E. L. Shock and C. M. Koretsky",1993,"Geochim. Cosmochim. Acta 57, 4899-4922","metal-acetate complexes",https://doi.org/10.1016/0016-7037(93)90128-J
+SK93.1,"E. L. Shock and C. M. Koretsky",1993,"Geochim. Cosmochim. Acta 57, 4899-4922","Au-acetate complexes",https://doi.org/10.1016/0016-7037(93)90128-J
 SM93,"E. L. Shock and W. B. McKinnon",1993,"Icarus 106, 464-477","CO, HCN, urea",https://doi.org/10.1006/icar.1993.1185
 SS93,"M. D. Schulte and E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3835-3846",aldehydes,https://doi.org/10.1016/0016-7037(93)90337-V
 HSS95,"J. R. Haas, E. L. Shock and D. C. Sassani",1995,"Geochim. Cosmochim. Acta 59, 4329-4350","complexes of rare earth elements",https://doi.org/10.1016/0016-7037(95)00314-P
@@ -65,8 +66,10 @@ MS97.1,"T. M. McCollom and E. L. Shock",1997,"Geochim. Cosmochim. Acta 61, 4375-
 SSB97,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266","uranium species",https://doi.org/10.1016/S0016-7037(97)00240-8
 SSB97.1,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266",uraninite,https://doi.org/10.1016/S0016-7037(97)00240-8
 SSH97,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","metal complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
+SSH97.1,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Au(HS)<sub>2</sub><sup>-</sup> and Au-chloride complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSWS97,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","inorganic ions and hydroxide complexes",https://doi.org/10.1016/S0016-7037(96)00339-0
 SSWS97.1,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","zincite and litharge",https://doi.org/10.1016/S0016-7037(96)00339-0
+SSWS97.2,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","Au<sup>+</sup> and Au<sup>+3</sup>",https://doi.org/10.1016/S0016-7037(96)00339-0
 TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976","humic acid, microflora, and plants",https://doi.org/10.1016/S1251-8050(97)83981-X
 HOKR98,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00219-6
 HOKR98.1,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","amino acids",https://doi.org/10.1016/S0016-7037(97)00219-6
@@ -78,7 +81,7 @@ SLOP98.10,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;Corre
 SLOP98.11,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;Data and parameters as used by @MS97. &quot;",http://geopig.asu.edu/?q=tools
 SS98a,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671","platinum-group ions and complexes",https://doi.org/10.1016/S0016-7037(98)00049-0
 SS98a.1,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671","platinum-group solids",https://doi.org/10.1016/S0016-7037(98)00049-0
-SS98a.2,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671",Rh+3,https://doi.org/10.1016/S0016-7037(98)00049-0
+SS98a.2,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671",Rh<sup>+3</sup>,https://doi.org/10.1016/S0016-7037(98)00049-0
 HS99,"J. R. Haas and E. L. Shock",1998,"Geochim. Cosmochim. Acta 63, 3429-3441","chloroethylene species",https://doi.org/10.1016/S0016-7037(99)00276-8
 MS99,"W. M. Murphy and E. L. Shock",1999,"Rev. Mineral. Geochem. 38, 221-253",actinides,http://rimg.geoscienceworld.org/content/38/1/221
 PSK99,"P. Prapaipong, E. L. Shock and C. M. Koretsky",1999,"Geochim. Cosmochim. Acta 63, 2547-2577","metal-dicarboxylate complexes",https://doi.org/10.1016/S0016-7037(99)00146-5
@@ -87,18 +90,19 @@ WS00,"S. A. Wood and I. M. Samson",2000,"Econ. Geol. 95, 143-182","scheelite and
 AP01,"J. P. Amend and A. V. Plyasunov",2001,"Geochim. Cosmochim. Acta 65, 3901-3917",carbohydrates,https://doi.org/10.1016/S0016-7037(01)00707-4
 AS01,"J. P. Amend and E. L. Shock",2001,"FEMS Microbiol. Rev. 25, 175-243","NO and N<sub>2</sub>O",https://doi.org/10.1111/j.1574-6976.2001.tb00576.x
 AS01.1,"J. P. Amend and E. L. Shock",2001,"FEMS Microbiol. Rev. 25, 175-243","selenium and molybdenite",https://doi.org/10.1111/j.1574-6976.2001.tb00576.x
+AZ01,"N. N. Akinfiev and A. V. Zotov",2001,"Geochem. Int. 39, 990-1006",AuCl<sub>2</sub><sup>-</sup>,http://pleiades.online/cgi-perl/search.pl?type=abstract&name=geochem&number=10&year=1&page=990
 MVT01,"L. Mercury, P. Vieillard. and Y. Tardy",2001,"Appl. Geochem. 16, 161-181","polymorphs of ice",https://doi.org/10.1016/S0883-2927(00)00025-1
 PS01,"A. V. Plyasunov and E. L. Shock",2001,"Geochim. Cosmochim. Acta 65, 3879-3900","aqueous nonelectrolytes",https://doi.org/10.1016/S0016-7037(01)00678-0
 PS01.1,"A. V. Plyasunov and E. L. Shock",2001,"Geochim. Cosmochim. Acta 65, 3879-3900","acetic acid, propanoic acid, and methane",https://doi.org/10.1016/S0016-7037(01)00678-0
 Ric01,"L. Richard",2001,"Geochim. Cosmochim. Acta 65, 3827-3877","organic sulfur compounds",https://doi.org/10.1016/S0016-7037(01)00761-X
-Ste01,"A. Stefansson",2001,"Chem. Geol. 172, 225-250",aqueous H<sub>4</sub>SiO<sub>4</sub>,http://dx.doi.org/10.1016/S0009-2541(00)00263-1
+Ste01,"A. Stefansson",2001,"Chem. Geol. 172, 225-250","aqueous H<sub>4</sub>SiO<sub>4</sub>",http://dx.doi.org/10.1016/S0009-2541(00)00263-1
 SSW01,"M. D. Schulte, E. L. Shock and R. H. Wood",2001,"Geochim. Cosmochim. Acta 65, 3919-3930","AsH<sub>3</sub>, CF<sub>4</sub>, CH<sub>3</sub>F, Cl<sub>2</sub>, ClO<sub>2</sub>, N<sub>2</sub>O, NF<sub>3</sub>, NO, PH<sub>3</sub>, and SF<sub>6</sub>",https://doi.org/10.1016/S0016-7037(01)00717-7
 TS01,"B. Tagirov and J. Schott",2001,"Geochim. Cosmochim. Acta 65, 3965-3992","aqueous Al species",http://dx.doi.org/10.1016/S0016-7037(01)00705-0
 MGN03,"J. Majzlan, K.-D. Grevel and A. Navrotsky",2003,"Am. Mineral. 88, 855-859","goethite, lepidocrocite, and maghemite GHS",https://doi.org/10.2138/am-2003-5-614
 NA03,"D. K. Nordstrom and D. G. Archer",2003,"Arsenic thermodynamic data and environmental geochemistry. In Arsenic in Groundwater, eds. Welch and Stollenwerk, Kluwer","As oxide and sulfide minerals",
 NA03.1,"D. K. Nordstrom and D. G. Archer",2003,"Arsenic thermodynamic data and environmental geochemistry. In Arsenic in Groundwater, eds. Welch and Stollenwerk, Kluwer","aqueous As oxides and sulfides",
 MLS+03,"J. Majzlan, B. E. Lang et al.",2003,"Am. Mineral. 88, 846-854","goethite, lepidocrocite, and maghemite Cp",https://doi.org/10.2138/am-2003-5-613
-AS04,"J. Apps and N. Spycher",2004,"Data qualification for thermodynamic data used to support THC calculations. Bechtel SAIC Company, LLC. ANL-NBS-HS-000043 REV 00 (DOC.20041118.0004)",aqueous SiO<sub>2</sub>,
+AS04,"J. Apps and N. Spycher",2004,"Data qualification for thermodynamic data used to support THC calculations. Bechtel SAIC Company, LLC. ANL-NBS-HS-000043 REV 00 (DOC.20041118.0004)","aqueous SiO<sub>2</sub>",
 MSB+04,"J. Majzlan, R. Stevens et al.",2004,"Phys. Chem. Mineral. 31, 518-531","hydronium jarosite",https://doi.org/10.1007/s00269-004-0405-z
 SR04,"M. D. Schulte and K. L. Rogers",2004,"Geochim. Cosmochim. Acta 68, 1087-1097","alkane thiols",https://doi.org/10.1016/j.gca.2003.06.001
 ZZX+05,"Y. Zhu et al.",2005,"J. Hazard. Mater. A120, 37-44","barium arsenate and barium hydrogen arsenate: G",https://doi.org/10.1016/j.jhazmat.2004.12.025
@@ -114,12 +118,13 @@ LMR06,"D. Langmuir et al.",2006,"Geochim. Cosmochim. Acta 70, 2942-2956","scorod
 MNM+06,"J. Majzlan, A. Navrotsky et al.",2006,"Eur. J. Mineral. 18, 175-186","coquimbite, ferricopiapite, and rhomboclase",https://doi.org/10.1127/0935-1221/2006/0018-0175
 Dic07,"J. M. Dick",2007,"Ph.D. Dissertation, Univ. of California","glutathione, cystine, and cystine sidechain",
 MA07,"L. Marini and M. Accornero",2007,"Environ. Geol. 52, 1343-1363","metal-arsenate and metal-arsenite complexes",https://doi.org/10.1007/s00254-006-0578-5
-SLOP07.1,"E. L. Shock et al.",2007,"slop07.dat computer data file","corrected charge of Pu(Oxal)+2",http://geopig.asu.edu/?q=tools
+SLOP07.1,"E. L. Shock et al.",2007,"slop07.dat computer data file","corrected charge of Pu(Oxal)<sup>+2</sup>",http://geopig.asu.edu/?q=tools
 SLOP07.2,"E. L. Shock et al.",2007,"slop07.dat computer data file","high-temperature HKF parameters from @AP01",http://geopig.asu.edu/?q=tools
 Ric08,"L. Richard",2008,"personal communication",alkenes,
 GM09,"K.-D. Grevel and J. Majzlan",2009,"Geochim. Cosmochim. Acta 73, 6805 - 6815","kieserite, starkeyite, hexahydrite, and epsomite",https://doi.org/10.1016/j.gca.2009.08.005
 HRMNS09,"H. C. Helgeson, L. Richard et al.",2009,"Geochim. Cosmochim. Acta 73, 594-695",kerogens,https://doi.org/10.1016/j.gca.2008.03.004
 AML10,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","metal-chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
+AZ10,"N. N. Akinfiev and A. V. Zotov",2010,"Geochem. Int. 48, 714-720","AuHS and Au(HS)<sub>2</sub><sup>-</sup>",https://doi.org/10.1134/S0016702910070074
 DS10,"J. Delgado Martin and A. Soler i Gil",2010,"Eur. J. Mineral. 22, 363-380","hedenbergite, andradite, ferro-actinolite, grunerite, and ilvaite",https://doi.org/10.1127/0935-1221/2010/0022-2021
 MA10,"L. Marini and M. Accornero",2010,"Environ. Earth Sci. 59, 1601-1606","corrected values",https://doi.org/10.1007/s12665-009-0369-x
 Sch10,"M. Schulte",2010,"Aquat. Geochem. 16, 621-637","organic sulfides",https://doi.org/10.1007/s10498-010-9102-3
@@ -131,6 +136,8 @@ LD12.3,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","
 DEH+13,"J. M. Dick, K. A. Evans et al.",2013,"Geochim. Cosmochim. Acta 122, 247-266","phenanthrene and methylphenanthrene isomers",https://doi.org/10.1016/j.gca.2013.08.020
 FDM+14,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","CO<sub>2</sub>, CO<sub>3</sub><sup>-2</sup>, and HCO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/j.gca.2014.01.030
 FDM+14.1,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","aragonite; source of data: `berman.dat`",https://doi.org/10.1016/j.gca.2014.01.030
+PAB+14,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","Au<sup>+</sup>, Au(OH)<sub>2</sub><sup>-</sup>, AuCl, and AuOH",https://doi.org/10.1144/SP402.4
+PAB+14.1,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","corrected H of AuHS",https://doi.org/10.1144/SP402.4
 SHA14,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","SiO<sub>2</sub> and Si<sub>2</sub>O<sub>4</sub>",https://doi.org/10.1016/j.gca.2013.12.019
 SHA14.1,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","revisions for AlO<sub>2</sub><sup>-</sup> and HAlO<sub>2</sub>",https://doi.org/10.1016/j.gca.2013.12.019
 SHA14.2,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","revisions for BO(OH) and BO<sub>2</sub><sup>-</sup>",https://doi.org/10.1016/j.gca.2013.12.019

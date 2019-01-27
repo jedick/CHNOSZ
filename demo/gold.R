@@ -1,34 +1,7 @@
 # CHNOSZ/demo/gold.R: Au solubility calculations
 # 20181101 jmd first version
 # 20181109 add calculation of K+ molality
-
-## additions to OBIGT:
-# Au(HS) from Akinfiev and Zotov, 2010
-# (doi:10.1134/S0016702910070074)
-# corrected H taken from Pokrovski et al., 2014
-# (doi:10.1144/SP402.4)
-mod.obigt("Au(HS)", formula = "Au(HS)", state = "aq", ref1 = "AZ10", date = today(),
-  G = 8344, H = 13193, S = 50.86, Cp = 1.8, V = 56.5,
-  a1 = 9.4965, a2 = 15.4057, a3 = -0.3052, a4 = -3.1459,
-  c1 = -38.1356, c2 = 19.6524, omega = 0, z = 0)
-# AuOH from Pokrovski et al., 2014
-mod.obigt("AuOH", formula = "AuOH", state = "aq", ref1 = "PAB+14", date = today(),
-  G = -32716, H = -41533, S = 21.89, Cp = -11.1, V = 32.4,
-  a1 = 6.1937, a2 = 7.3415, a3 = 2.8644, a4 = -3.0825,
-  c1 = -3.0370, c2 = -3.9635, omega = 0, z = 0)
-
-## modifications to OBIGT:
-# AuCl2- from Akinfiev and Zotov, 2001 (reported in AZ10)
-# (http://pleiades.online/cgi-perl/search.pl/?type=abstract&name=geochem&number=10&year=1&page=990)
-mod.obigt("AuCl2-", ref1 = "AZ01", date = today(),
-  G = -36795, H = -46664, S = 47.16, Cp = -26.4, V = 68.6,
-  a1 = 11.4774, a2 = 20.2425, a3 = -2.2063, a4 = -3.6158,
-  c1 = 27.0677, c2 = -22.240, omega = 0.8623, z = -1)
-# Au(HS)2- from Pokrovski et al., 2014
-mod.obigt("Au(HS)2-", ref1 = "PAB+14", date = today(),
-  G = 3487, H = 4703, S = 77.46, Cp = 3.3, V = 75.1,
-  a1 = 12.3373, a2 = 22.3421, a3 = 3.0317, a4 = -3.7026,
-  c1 = -53.6010, c2 = 31.4030, omega = 0.7673, z = -1)
+# 20190127 update Au species in OBIGT, not here
 
 # set up system
 # use H2S here: it's the predominant species at the pH of the QMK buffer -- see sulfur()
@@ -41,7 +14,7 @@ basis("K+", log10(0.5))
 # create a pH buffer
 mod.buffer("QMK", c("quartz", "muscovite", "K-feldspar"), "cr", 0)
 
-# define colors for Au(HS)2-, Au(HS), AuOH, AuCl2-
+# define colors for Au(HS)2-, AuHS, AuOH, AuCl2-
 # after Williams-Jones et al., 2009
 # (doi:10.2113/gselements.5.5.281)
 col <- c("#ED4037", "#F58645", "#0F9DE2", "#22CC88")
@@ -78,7 +51,7 @@ sulfur <- function() {
 # log(m_Au)-pH diagram like Fig. 7 of Akinfiev and Zotov, 2001
 # (http://pleiades.online/cgi-perl/search.pl/?type=abstract&name=geochem&number=10&year=1&page=990)
 Au_pH1 <- function() {
-  species(c("Au(HS)2-", "Au(HS)", "AuOH"))
+  species(c("Au(HS)2-", "AuHS", "AuOH"))
   # apply PPM buffer for fO2 and aH2S
   basis("O2", "PPM")
   basis("H2S", "PPM")
@@ -103,7 +76,7 @@ Au_pH1 <- function() {
 # log(m_Au)-pH diagram similar to Fig. 12b of Stefansson and Seward, 2004
 # (doi:10.1016/j.gca.2004.04.006)
 Au_pH2 <- function() {
-  species(c("Au(HS)2-", "Au(HS)", "AuOH", "AuCl2-"))
+  species(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
   # apply PPM buffer for fO2 and aH2S
   basis("O2", "PPM")
   basis("H2S", "PPM")
@@ -140,7 +113,7 @@ chloride <- function(T, P, m_NaCl, m_KCl) {
 # log(m_Au)-T diagram like Fig. 2B of Williams-Jones et al., 2009
 # (doi:10.2113/gselements.5.5.281)
 Au_T1 <- function() {
-  species(c("Au(HS)2-", "Au(HS)", "AuOH", "AuCl2-"))
+  species(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
   # apply PPM buffer for fO2 and aH2S
   basis("O2", "PPM")
   basis("H2S", "PPM")
@@ -170,7 +143,7 @@ Au_T1 <- function() {
 # (doi:10.2113/gselements.5.5.281)
 # (doi:10.1144/SP402.4)
 Au_T2 <- function() {
-  species(c("Au(HS)2-", "Au(HS)", "AuOH", "AuCl2-"))
+  species(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
   # total S = 0.01 m
   basis("H2S", -2)
   # apply HM buffer for fO2
@@ -201,7 +174,7 @@ Au_T2 <- function() {
 }
 
 # make plots
-opar <- par(mfrow=c(2, 2))
+opar <- par(mfrow = c(2, 2))
 Au_pH1()
 Au_pH2()
 Au_T1()
