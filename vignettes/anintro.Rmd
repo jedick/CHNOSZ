@@ -2057,7 +2057,6 @@ nrow(dat)
 
 Without additional information, there is often no clear strategy for "fixing" these entries, and they are provided as is.
 ```{marginfigure}
-See the [Numerical Tools from GEOPIG](http://geopig.asu.edu/?q=tools) for SUPCRT updates (slop files), including corrections that have not yet been ported to CHNOSZ.
 ```
 
 ## Water: SUPCRT92 or IAPWS-95 or DEW

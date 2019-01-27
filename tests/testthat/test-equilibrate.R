@@ -62,7 +62,7 @@ test_that("equilibrate() reproduces an example from the literature", {
   # we name them here because S5O6-2 isn't on the plot at logfO2=-30, 
   # and to get them in order
   species.ref <- c("S3O6-2", "S2O6-2", "S2O4-2", "S3-2", "S2-2", "S2O3-2", "HSO3-", "SO2", "HSO4-", "H2S")
-  # these values were read from the plot using g3data (http://www.frantz.fi/software/g3data.php)
+  # these values were read from the plot using g3data
   loga.ref <- c(-28.82, -24.70, -22.10, -14.19, -12.12, -11.86, -8.40, -7.40, -6.54, -1.95)
   # set up the system - see ?diagram for an example showing the entire plot
   basis("CHNOS+")
