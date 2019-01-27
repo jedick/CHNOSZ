@@ -1,6 +1,9 @@
 # CHNOSZ/util-affinity.R
 # helper functions for affinity()
 
+## if this file is interactively sourced, the following are also needed to provide unexported functions:
+#source("util.units.R")
+
 slice.affinity <- function(affinity,d=1,i=1) {
   # take a slice of affinity along one dimension
   a <- affinity
@@ -276,7 +279,7 @@ energy.args <- function(args) {
   what <- "A"
   vars <- character()
   vals <- list(NA)
-  # this needs to have 1 as the third component b/c
+  # this needs to have 1 as the third component because
   # energy() uses it to build an array with the given dimension
   lims <- list(c(NA, NA, 1))
   # clean out non-variables
@@ -298,13 +301,9 @@ energy.args <- function(args) {
         names(args)[i] <- "H+"
         if(transect) args[[i]] <- -args[[i]]
         else args[[i]][1:2] <- -args[[i]][1:2]
-        if(!'H+' %in% rownames(thermo$basis)) 
-          message('affinity: pH requested, but no H+ in the basis')
       } 
       if(names(args)[i]=="pe") {
         names(args)[i] <- "e-"
-        if(!'e-' %in% rownames(thermo$basis)) 
-          message('affinity: pe requested, but no e- in the basis')
         if(transect) args[[i]] <- -args[[i]]
         else args[[i]][1:2] <- -args[[i]][1:2]
       }
@@ -325,8 +324,15 @@ energy.args <- function(args) {
       # physical state
       ibasis <- match(nametxt, rownames(thermo$basis))
       if(isTRUE(as.logical(ibasis))) {
-        if(thermo$basis$state[ibasis]=="gas") nametxt <- paste("log_f(", nametxt, ")", sep="") 
-        else nametxt <- paste("log_a(", nametxt, ")", sep="") 
+        if(thermo$basis$state[ibasis]=="gas") nametxt <- paste("log10(f_", nametxt, ")", sep="") 
+        else nametxt <- paste("log10(a_", nametxt, ")", sep="") 
+      } else {
+        # stop if the argument doesn't correspond to a basis species, T, P, or IS
+        if(!nametxt %in% c("T", "P", "IS")) {
+          if(! (nametxt=="pH" & 'H+' %in% rownames(thermo$basis) | nametxt %in% c("pe", "Eh") & 'e-' %in% rownames(thermo$basis))) {
+            stop(nametxt, " is not one of T, P, or IS, and does not match any basis species")
+          }
+        }
       }
       # temperature and pressure and Eh
       if(nametxt=="T") unittxt <- " K"

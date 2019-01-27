@@ -56,11 +56,6 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
   mybasis <- thermo$basis
   myspecies <- thermo$species
 
-  # stop if Eh or pe is requested but e- isn't in the basis
-  if(any(c("Eh", "pe") %in% names(args$lims))) {
-    if(!"e-" %in% rownames(mybasis)) stop("variable Eh or pe requested but e- isn't in the basis")
-  }
-
   if(!is.null(property)) {
     # the user just wants an energy property
     buffer <- FALSE

@@ -3,12 +3,19 @@ context("affinity")
 # clear out any previous basis definition or database alterations
 suppressMessages(data(thermo))
 
-test_that("errors come as expected, and output gives T and P in user's units", {
+test_that("errors come as expected", {
   expect_error(affinity(iprotein=7), "basis species are not defined")
   expect_error(affinity(iprotein=NA), "has some NA values")
   expect_error(affinity(iprotein=0), "are not rownumbers")
   basis("CHNOS")
   expect_error(affinity(), "species have not been defined")
+  species("CO2")
+  expect_error(affinity(pe=c(-10, 10), pH=c(0, 14)), "pe.*does not match any basis species")
+  expect_error(affinity(O2=c(-80, -60), pH=c(0, 14)), "pH.*does not match any basis species")
+})
+
+test_that("output gives T and P in user's units", {
+  basis("CHNOS")
   species("5a(H),14b(H)-cholestane")
   a.C_bar <- affinity(T=c(0, 100, 10), P=c(10, 1000, 10))
   expect_equal(range(a.C_bar$vals[[1]]), c(0, 100))
