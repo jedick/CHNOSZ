@@ -26,7 +26,9 @@ JH85,"K. J. Jackson and H. C. Helgeson",1985,"Econ. Geol. 80, 1365-1378","Sn min
 RA87,"E. J. Reardon and D. K. Armstrong",1987,"Geochim. Cosmochim. Acta 51, 63-72","celestite GHS",https://doi.org/10.1016/0016-7037(87)90007-X
 Ber88,"R. G. Berman",1988,"J. Petrol. 29, 445-522",minerals,https://doi.org/10.1093/petrology/29.2.445
 SH88,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","ionic species",https://doi.org/10.1016/0016-7037(88)90181-0
+SH88.1,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/0016-7037(88)90181-0
 SHS89,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","inorganic neutral species",https://doi.org/10.1016/0016-7037(89)90341-4
+SHS89.1,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","aqueous SiO<sub>2</sub>",https://doi.org/10.1016/0016-7037(89)90341-4
 Ber90,"R. G. Berman",1990,"Am. Mineral. 75, 328-344",annite,http://ammin.geoscienceworld.org/content/75/3-4/328
 Ber90.1,"R. G. Berman",1990,"Am. Mineral. 75, 328-344","almandine and ilmenite: modified H and/or S",http://ammin.geoscienceworld.org/content/75/3-4/328
 Eva90,"B. W. Evans",1990,"Lithos 25, 3-23","glaucophane and pumpellyite",https://doi.org/10.1016/0024-4937(90)90003-J
@@ -46,6 +48,7 @@ Sho93,"E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3341-3349","ethylacetate 
 Sho93.1,"E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3341-3349","carbon monoxide and ethylene",https://doi.org/10.1016/0016-7037(93)90542-5
 SK93,"E. L. Shock and C. M. Koretsky",1993,"Geochim. Cosmochim. Acta 57, 4899-4922","metal-acetate complexes",https://doi.org/10.1016/0016-7037(93)90128-J
 SK93.1,"E. L. Shock and C. M. Koretsky",1993,"Geochim. Cosmochim. Acta 57, 4899-4922","Au-acetate complexes",https://doi.org/10.1016/0016-7037(93)90128-J
+SK93.2,"E. L. Shock and C. M. Koretsky",1993,"Geochim. Cosmochim. Acta 57, 4899-4922","Al-acetate complexes",https://doi.org/10.1016/0016-7037(93)90128-J
 SM93,"E. L. Shock and W. B. McKinnon",1993,"Icarus 106, 464-477","CO, HCN, urea",https://doi.org/10.1006/icar.1993.1185
 SS93,"M. D. Schulte and E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3835-3846",aldehydes,https://doi.org/10.1016/0016-7037(93)90337-V
 HSS95,"J. R. Haas, E. L. Shock and D. C. Sassani",1995,"Geochim. Cosmochim. Acta 59, 4329-4350","complexes of rare earth elements",https://doi.org/10.1016/0016-7037(95)00314-P
@@ -70,6 +73,8 @@ SSH97.1,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmoc
 SSWS97,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","inorganic ions and hydroxide complexes",https://doi.org/10.1016/S0016-7037(96)00339-0
 SSWS97.1,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","zincite and litharge",https://doi.org/10.1016/S0016-7037(96)00339-0
 SSWS97.2,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","Au<sup>+</sup> and Au<sup>+3</sup>",https://doi.org/10.1016/S0016-7037(96)00339-0
+SSWS97.3,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","arsenate and arsenite species",https://doi.org/10.1016/S0016-7037(96)00339-0
+SSWS97.4,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","aqueous Al species",https://doi.org/10.1016/S0016-7037(96)00339-0
 TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976","humic acid, microflora, and plants",https://doi.org/10.1016/S1251-8050(97)83981-X
 HOKR98,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00219-6
 HOKR98.1,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","amino acids",https://doi.org/10.1016/S0016-7037(97)00219-6
@@ -85,6 +90,7 @@ SS98a.2,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-
 HS99,"J. R. Haas and E. L. Shock",1998,"Geochim. Cosmochim. Acta 63, 3429-3441","chloroethylene species",https://doi.org/10.1016/S0016-7037(99)00276-8
 MS99,"W. M. Murphy and E. L. Shock",1999,"Rev. Mineral. Geochem. 38, 221-253",actinides,http://rimg.geoscienceworld.org/content/38/1/221
 PSK99,"P. Prapaipong, E. L. Shock and C. M. Koretsky",1999,"Geochim. Cosmochim. Acta 63, 2547-2577","metal-dicarboxylate complexes",https://doi.org/10.1016/S0016-7037(99)00146-5
+PSK99.1,"P. Prapaipong, E. L. Shock and C. M. Koretsky",1999,"Geochim. Cosmochim. Acta 63, 2547-2577","Al(Mal)<sup>+</sup> and Al(Oxal)<sup>+</sup>",https://doi.org/10.1016/S0016-7037(99)00146-5
 SAJ00,"R. E. Stoffregen, C. N. Alpers and J. L. Jambor",2000,"Rev. Mineral. Geochem. 40, 453-479","jarosite, natroalunite, and natrojarosite",https://doi.org/10.2138/rmg.2000.40.9
 WS00,"S. A. Wood and I. M. Samson",2000,"Econ. Geol. 95, 143-182","scheelite and ferberite; adopted values include Cp parameters for scheelite from @BK73 and GHS and Cp parameters for ferberite from @Pol90",https://doi.org/10.2113/gsecongeo.95.1.143
 AP01,"J. P. Amend and A. V. Plyasunov",2001,"Geochim. Cosmochim. Acta 65, 3901-3917",carbohydrates,https://doi.org/10.1016/S0016-7037(01)00707-4
@@ -158,7 +164,6 @@ ZZL+16.3,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","dawsonite GHS",http
 CHNOSZ.1,"J. M. Dick",2017,"CHNOSZ package documentation","GHS (T<sub>r</sub>) of the phase that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the phases that are stable at higher temperatures.",http://chnosz.net
 CHNOSZ.2,"J. M. Dick",2017,"CHNOSZ package documentation","alanate and glycinate: GHS as used by @DLH06",http://chnosz.net
 CHNOSZ.3,"J. M. Dick",2017,"CHNOSZ package documentation","metal-amino acid complexes: GHS were recalculated by adding the differences between values from @AH97b and @DLH06 for alanate or glycinate to the properties of the complexes reported by @SK95.",http://chnosz.net
-CHNOSZ.4,"J. M. Dick",2017,"CHNOSZ package documentation","pseudo-H<sub>4</sub>SiO<sub>4</sub>; GHS and HKF parameters calculated as shown in the vignette, [*Regressing thermodynamic data*](eos-regress.html)",http://chnosz.net
 CHNOSZ.5,"J. M. Dick",2017,"CHNOSZ package documentation","AuCl4- renamed to AuCl4-3",http://chnosz.net
 CHNOSZ.6,"J. M. Dick",2017,"CHNOSZ package documentation","dipeptides not included in slop files after slop98.dat",http://chnosz.net
 CHNOSZ.7,"J. M. Dick",2017,"CHNOSZ package documentation","charge of NpO2(Oxal), La(Succ)+, NH4(Succ)-, and NpO2(Succ) as listed by @PSK99",http://chnosz.net

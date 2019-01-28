@@ -13,8 +13,8 @@ test_that("info.numeric() produces expected errors and messages", {
   expect_error(info.numeric(9999), "species index 9999 not found in thermo\\$obigt")
   iargon <- info("argon", "gas")
   expect_message(info.numeric(iargon), "Cp of argon\\(gas\\) is NA; set by EOS parameters to 4.97")
-  iAlAc3 <- info("Al(Ac)3")
-  expect_message(info.numeric(iAlAc3), "V of Al\\(Ac\\)3\\(aq\\) is NA; set by EOS parameters to 104.51")
+  iAlAc3 <- info("Am(Ac)3")
+  expect_message(info.numeric(iAlAc3), "V of Am\\(Ac\\)3\\(aq\\) is NA; set by EOS parameters to 110.3")
 })
 
 test_that("info.approx() produces expected messages", {
@@ -23,7 +23,7 @@ test_that("info.approx() produces expected messages", {
   # note though that info("lactic acid") finds a match because info.character is used first...
   expect_equal(info("lactic acid"), grep("lactic acid", thermo$obigt$name))
   # looking in optional databases 20190127
-  expect_message(info("gibbsite"), "is in an optional database")
+  expect_message(info("dickite"), "is in an optional database")
 })
 
 test_that("info() can be used for cr and aq descriptions of the same species and proteins", {

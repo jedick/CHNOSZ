@@ -259,14 +259,14 @@ info("methane", "gas")
 ```{r info_methane_test, echo=FALSE, results="hide"}
 # this prevents the vignette from compiling in case
 # database updates cause the species index of methane to change
-stopifnot(info("methane")==859)
+stopifnot(info("methane")==926)
 # it is up to the editor of this vignette to ensure that number
 # is used in the hard-coded examples below!
 ```
 
-Knowing that aqueous methane is species number 859 in the database, you can again use <span style="color:green">`info()`</span> to retrieve the set of standard molal thermodynamic properties and equations of state parameters:
-```{r info_859, message=FALSE}
-info(859)
+Knowing that aqueous methane is species number 926 in the database, you can again use <span style="color:green">`info()`</span> to retrieve the set of standard molal thermodynamic properties and equations of state parameters:
+```{r info_926, message=FALSE}
+info(926)
 ```
 
 This number can be used as an argument (`ispecies`) for other functions in CHNOSZ to uniquely identify any species; some commonly used functions also accept the species names.
@@ -300,21 +300,21 @@ The messages may be useful for browsing the database, but owing to their ambiguo
 ## Counting elements, chemical formulas, <span style="color:green">`ZC()`</span>
 
 Continuing with the example of methane, let's look at its chemical formula:
-```{r info_859_formula, message=FALSE}
-info(859)$formula
+```{r info_926_formula, message=FALSE}
+info(926)$formula
 ```
 
 We can use <span style="color:green">`makeup()`</span> to count the elements in the formula, followed by <span style="color:green">`as.chemical.formula()`</span> to rewrite the formula on one line:
-```{r makeup_859}
-makeup(859)
-as.chemical.formula(makeup(859))
+```{r makeup_926}
+makeup(926)
+as.chemical.formula(makeup(926))
 ```
 
 For organic species, a calculation of the average oxidation state of carbon (`r zc`) is possible given the species index, chemical formula, or elemental count:
-```{r ZC_859, message=FALSE}
-ZC(859)
-ZC(info(859)$formula)
-ZC(makeup(859))
+```{r ZC_926, message=FALSE}
+ZC(926)
+ZC(info(926)$formula)
+ZC(makeup(926))
 ```
 
 # Calculating thermodynamic properties
@@ -936,13 +936,16 @@ It makes sense to think of this quantity as a conserved basis species (one that 
 
 The <span style="color:green">`solubility()`</span> function provides a way to compute activities of aqueous species in equilibrium with a solid or gas, which is usually defined as the first basis species.
 The following example for corundum (Al<sub>2</sub>O<sub>3</sub>) is based on Figure 15 of @Man13.
+To reproduce the diagram, we use superseded thermodynamic data that are kept in the `SLOP98` optional data file.
 Corundum is set as the first basis species, and the formed species all contain Al.
-The affinities of the formation reactions, for any given activities of the species, but unit activity of the solid basis species (corundum), are input to <span style="color:green">`solubility()`</span>.
+The affinities of the formation reactions, for unit activity of the solid basis species (corundum) and any given activities of the formed aqueous species, are input to <span style="color:green">`solubility()`</span>.
 An additional argument, `in.terms.of`, is used to compute the total molality of Al in solution, that is, twice the number of moles of Al<sub>2</sub>O<sub>3</sub> that are dissolved.
 <span style="color:green">`diagram()`</span> is used twice, first to plot the total molality of Al, then the concentrations of the individual species, using `adj` and `dy` to adjust the positions of labels in the *x*- and *y*-directions.
 Note that setting `IS` to 0 in <span style="color:green">`affinity()`</span> has no effect on the calculations, but signals <span style="color:green">`diagram()`</span> to label the *y* axis with logarithm of molality instead of logarithm of activity.
+At the end of the calculation, we use <span style="color:red">`data(thermo)`</span> to restore the default thermodynamic database.
 
 ```{r corundum, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", results="hide", message=FALSE, cache=TRUE, fig.cap="Solubility of corundum (green line) and equilibrium concentrations of aqueous species (black lines).", pngquant=pngquant, timeit=timeit}
+add.obigt("SLOP98")
 basis(c("corundum", "H2O", "H+", "O2"))
 species(c("Al+3", "AlO2-", "AlOH+2", "AlO+", "HAlO2"))
 a <- affinity(pH = c(0, 10), IS = 0)
@@ -950,6 +953,7 @@ s <- solubility(a, in.terms.of = "Al+3")
 diagram(s, type = "loga.balance", ylim = c(-10, 0), lwd = 4, col = "green3")
 diagram(s, add = TRUE, adj = c(0, 1, 2.1, -0.2, -1.5), dy = c(0, 0, 4, -0.3, 0.1))
 legend("topright", c("25 °C", "1 bar"), text.font = 2, bty = "n")
+data(thermo)
 ```
 
 Other examples of using <span style="color:green">`solubility()`</span> are available in CHNOSZ.
@@ -1961,15 +1965,15 @@ Minerals are identified by the state `cr`, and (for the Helgeson dataset) `cr2`,
 
 Two optional datasets can be activated by using <span style="color:red">`add.obigt()`</span>:
 
-<span style="color:red">`add.obigt("SUPCRTBL")`</span> -- This loads updated thermodynamic parameters for aqueous SiO<sub>2</sub>, aluminum and arsenic species, and minerals, as compiled in the [SUPCRTBL package](http://www.indiana.edu/~hydrogeo/supcrtbl.html) [@ZZL_16].
-SUPCRTBL also includes modifications to SUPCRT92 for calculating thermodynamic properties of minerals using the @HP11 dataset, but that is not available in CHNOSZ.
-Instead, the Berman mineral data can be used with similar results; see [<span style="color:blue">`demo(go-IU)`</span>](../demo).
-
 <span style="color:red">`add.obigt("DEW")`</span> -- These are aqueous species, with modified parameters, that are intended for use with the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model [@SHA14].
 You should also run <span style="color:red">`water("DEW")`</span> to activate the equations in the model; then, they will be used by <span style="color:green">`subcrt()`</span> and <span style="color:green">`affinity()`</span>.
 Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
-Detailed lists of sources for these Optional Data are in the vignette [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](obigt.html) (look under **Optional Data** / **SUPCRTBL** and **Optional Data** / **DEW**).
+<span style="color:red">`add.obigt("SLOP98")`</span> -- This file contains data that have been replaced by or are incompatible with more recent data updates.
+This includes updates for aqueous Au species as summarized by @PAB_14, and aqueous SiO<sub>2</sub>, aqueous aluminum species, and arsenic-bearing aqueous species and minerals, as compiled in the [SUPCRTBL package](http://www.indiana.edu/~hydrogeo/supcrtbl.html) [@ZZL_16].
+These updates have been applied to the default database in CHNOSZ; some calculations using the updated data are shown in [<span style="color:blue">`demo(go-IU)`</span>](../demo) and [<span style="color:blue">`demo(gold)`</span>](../demo).
+
+Detailed references for these optional datasets are in the vignette [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](obigt.html) (look under **Optional Data** / **DEW** and **Optional Data** / **SLOP98**).
 
 ## Adding data
 

@@ -261,7 +261,7 @@ check.obigt <- function() {
     # looking at thermo$obigt
     if(what=="OBIGT") tdata <- get("thermo")$obigt
     else if(what=="DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW_aq.csv", package="CHNOSZ"), as.is=TRUE)
-    else if(what=="SUPCRTBL") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRTBL.csv", package="CHNOSZ"), as.is=TRUE)
+    else if(what=="SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package="CHNOSZ"), as.is=TRUE)
     ntot <- nrow(tdata)
     # where to keep the results
@@ -294,7 +294,7 @@ check.obigt <- function() {
   out <- checkfun("OBIGT")
   # check optional data
   out <- rbind(out, checkfun("DEW"))
-  out <- rbind(out, checkfun("SUPCRTBL"))
+  out <- rbind(out, checkfun("SLOP98"))
   out <- rbind(out, checkfun("SUPCRT92"))
   # set differences within a tolerance to NA
   out$DCp[abs(out$DCp) < 1] <- NA
@@ -369,12 +369,12 @@ dumpdata <- function(file=NULL) {
   # optional data
   dat <- read.csv(system.file("extdata/OBIGT/DEW_aq.csv", package="CHNOSZ"), as.is=TRUE)
   DEW <- cbind(source="DEW", dat)
-  dat <- read.csv(system.file("extdata/OBIGT/SUPCRTBL.csv", package="CHNOSZ"), as.is=TRUE)
-  SUPCRTBL <- cbind(source="SUPCRTBL", dat)
+  dat <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)
+  SLOP98 <- cbind(source="SLOP98", dat)
   dat <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package="CHNOSZ"), as.is=TRUE)
   SUPCRT92 <- cbind(source="SUPCRT92", dat)
   # put it all together
-  out <- rbind(OBIGT, DEW, SUPCRTBL, SUPCRT92)
+  out <- rbind(OBIGT, DEW, SLOP98, SUPCRT92)
   # quote columns 2 (name) and 3 (abbrv) because they have commas for some entries
   if(!is.null(file)) write.csv(out, file, row.names=FALSE, quote=c(2, 3))
   else(return(out))
