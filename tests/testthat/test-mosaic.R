@@ -34,8 +34,9 @@ test_that("blend=TRUE produces reasonable values", {
   bases <- c("SO4-2", "HSO4-", "HS-", "H2S")         
   # calculate affinities using the predominant basis species
   pH <- c(0, 14, 29)
-  m1 <- mosaic(bases, pH=pH)
-  m2 <- mosaic(bases, pH=pH, blend=TRUE)
+  m1 <- mosaic(bases, pH = pH)
+  # calculate affinities with smooth transitions between basis species, including a mixing energy
+  m2 <- mosaic(bases, pH = pH, blend = TRUE, mixing = TRUE)
   # these species have no S so the results should be similar,
   # 20190121 except for a negative free energy of mixing (positive affinity)
   expect_true(all(m2$A.species$values[[1]] - m1$A.species$values[[1]] > 0))

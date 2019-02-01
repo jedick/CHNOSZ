@@ -7,13 +7,14 @@ Calculate chemical affinities of formation reactions of species using basis spec
 }
 
 \usage{
-  mosaic(bases, bases2=NULL, blend=FALSE, ...)
+  mosaic(bases, bases2 = NULL, blend = FALSE, mixing = FALSE, ...)
 }
 
 \arguments{
-  \item{bases}{character, basis species to be changed in the calculation}
+  \item{bases}{character, basis species to be changed in the calculation, or list, containing vectors for each group of changing basis species}
   \item{bases2}{character, second set of changing basis species}
   \item{blend}{logical, use relative abundances of basis species?}
+  \item{mixing}{logical, include a term for the Gibbs energy of mixing?}
   \item{...}{additional arguments to be passed to \code{\link{affinity}}}
 }
 
@@ -28,13 +29,20 @@ The function calculates the affinities using each basis species listed in \code{
 The first species listed in \code{bases} should be in the current basis definition.
 The arguments in \code{...} are passed to \code{affinity} to specify the conditions.
 If \code{blend} is FALSE (the default), the function returns the affinities calculated using the single predominant basis species in \code{bases} at each condition.
-If \code{blend} is TRUE, the function combines the affinities of the formation reactions in proportion to the relative abundances of the basis species at each condition, including a term to account for the Gibbs energy of mixing.
-See the second example in \code{\link{solubility}} for a numerical test of the calculations using \code{blend}.
+If \code{blend} is TRUE, the function combines the affinities of the formation reactions in proportion to the relative abundances of the basis species at each condition.
+Additionally, if \code{mixing} is TRUE, a term is included to account for the Gibbs energy of mixing.
+See the second example in \code{\link{solubility}} for a numerical test of the calculations using \code{blend} and \code{mixing}.
 
 The basis species listed in \code{bases} should all be related to the first basis species there (i.e. all share the same element).
 A second, independent set of basis species can be provided in \code{bases2} (for example \samp{CO3-2}, \samp{HCO3-}, \samp{CO2}, if the first set of basis species are the sulfur-bearing ones listed above).
 The function then works recursively, by calling itself instead of \code{affinity}, so that the inner loop changes the basis species in \code{bases2}.
 In this way, all possible combinations of the two sets of basis species are used in the calculation.
+
+A more flexible method of specifying multiple sets of basis species is now available.
+Instead of using \code{bases} and \code{bases2}, supply a list for just the \code{bases} argument.
+The list should contain any number of vectors specifying the groups of basis species.
+All combinations of basis species in these groups are used for the calculations.
+This overcomes the prior limitation of only having two changing groups of basis species.
 
 }
 

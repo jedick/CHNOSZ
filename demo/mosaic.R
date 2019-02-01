@@ -1,10 +1,13 @@
+# CHNOSZ/demo/mosaic.R
+# 20141221 first version
+
 # Fe-minerals and aqueous species in Fe-S-O-H-C system
 # after Garrels and Christ, 1965 Figure 7.21
 # to reproduce their diagram as closely as posssible, use their thermodynamic data (from Appendix 2)
-mod.obigt(c("Fe+2", "Fe+3"), G=c(-20300, -2520))
-mod.obigt(c("hematite", "magnetite", "pyrrhotite", "pyrite", "siderite"), G=c(-177100, -242400, -23320, -36000, -161060))
-mod.obigt(c("SO4-2", "HS-", "H2S", "HSO4-"), G=c(-177340, 3010, -6540, -179940))
-mod.obigt(c("CO2", "HCO3-", "CO3-2"), G=c(-92310, -140310, -126220))
+mod.obigt(c("Fe+2", "Fe+3"), G = c(-20300, -2520))
+mod.obigt(c("hematite", "magnetite", "pyrrhotite", "pyrite", "siderite"), G = c(-177100, -242400, -23320, -36000, -161060))
+mod.obigt(c("SO4-2", "HS-", "H2S", "HSO4-"), G = c(-177340, 3010, -6540, -179940))
+mod.obigt(c("CO2", "HCO3-", "CO3-2"), G = c(-92310, -140310, -126220))
 # conditions and system definition
 pH <- c(0, 14, 400)
 Eh <- c(-1, 1, 400)
@@ -22,18 +25,18 @@ bases2 <- c("CO3-2", "HCO3-", "CO2")
 # calculate affinities using the predominant basis species
 # using blend=TRUE we get curvy lines, particularly at the boundaries with siderite
 # compare with the plot in Garrels and Christ, 1965
-m1 <- mosaic(bases, bases2, blend=TRUE, pH=pH, Eh=Eh, T=T)
+m1 <- mosaic(bases, bases2, blend = TRUE, pH = pH, Eh = Eh, T = T)
 # make a diagram and add water stability lines
-diagram(m1$A.species, lwd=2)
-water.lines(m1$A.species, col="seagreen", lwd=1.5)
+diagram(m1$A.species, lwd = 2)
+water.lines(m1$A.species, col = "seagreen", lwd = 1.5)
 # show lines for Fe(aq) = 10^-4 M
 species(c("Fe+2", "Fe+3"), -4)
-m2 <- mosaic(bases, bases2, blend=TRUE, pH=pH, Eh=Eh, T=T)
-diagram(m2$A.species, add=TRUE, names=NULL)
+m2 <- mosaic(bases, bases2, blend = TRUE, pH = pH, Eh = Eh, T = T)
+diagram(m2$A.species, add = TRUE, names = NULL)
 title(main=paste("Iron oxides, sulfides and carbonate in water, log(total S) = -6,",
-  "log(total C)=0, after Garrels and Christ, 1965", sep="\n"))
+  "log(total C)=0, after Garrels and Christ, 1965", sep = "\n"))
 # overlay the carbonate basis species predominance fields
-d <- diagram(m1$A.bases2, add=TRUE, col="blue", names=NULL, lty=3, limit.water=FALSE)
-text(d$namesx, -0.8, as.expression(sapply(m1$A.bases2$species$name, expr.species)), col="blue")
+d <- diagram(m1$A.bases2, add = TRUE, col = "blue", names = NULL, lty = 3, limit.water = FALSE)
+text(d$namesx, -0.8, as.expression(sapply(m1$A.bases2$species$name, expr.species)), col = "blue")
 # reset the database, as it was changed in this example
 data(thermo)

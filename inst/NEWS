@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-85 (2019-02-01)
+CHANGES IN CHNOSZ 1.1.3-86 (2019-02-01)
 ---------------------------------------
 
 BUG FIXES
@@ -69,6 +69,15 @@ NEW FEATURE: EXPANDED ACTIVITY COEFFICIENT CALCULATIONS
   of NaCl in water, taking account of activity coefficients and the
   reaction Na+ + Cl- = NaCl(aq).
 
+OTHER NEW FEATURES
+
+- Add dumpdata() for returning/writing all packaged thermodynamic data
+  (including default database and optional data files). The file is
+  also available on the website (chnosz.net/download/alldata.csv).
+
+- mosaic() has been rewritten to handle more than two changing groups
+  of basis species.
+
 DOCUMENTATION
 
 - Add demo/gold.R for calculations of Au solubility in hydrothermal
@@ -91,10 +100,6 @@ DOCUMENTATION
   H2O-CO2-CaO-MgO-SiO2 system.
 
 THERMODYNAMIC DATA
-
-- Add dumpdata() for returning/writing all packaged thermodynamic data
-  (including default database and optional data files). The file is
-  also available on the website (chnosz.net/download/alldata.csv).
 
 - The Berman data (Berman, 1988 and later additions) have replaced the
   SUPCRT92 data (based on Helgeson et al., 1978) for most minerals in

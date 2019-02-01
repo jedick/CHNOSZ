@@ -1,15 +1,22 @@
 # CHNOSZ/mosaic.R
 # calculate affinities with changing basis species
-# 20141220 jmd
+# 20141220 jmd initial version
+# 20190129 complete rewrite to use any number of groups of changing basis species
+#   and improve speed by pre-calculating subcrt values (sout)
+
+## if this file is interactively sourced, the following are also needed to provide unexported functions:
+#source("basis.R")
+#source("util.character.R")
+#source("util.args.R")
 
 # function to calculate affinities with mosaic of basis species
-mosaic <- function(bases, bases2=NULL, blend=FALSE, ...) {
+mosaic <- function(bases, bases2 = NULL, blend = FALSE, mixing = FALSE, ...) {
 
   # argument recall 20190120
   # if the first argument is the result from a previous mosaic() calculation,
   # just update the remaining arguments
   if(is.list(bases)) {
-    if(identical(bases[1], list(fun="mosaic"))) {
+    if(identical(bases[1], list(fun = "mosaic"))) {
       aargs <- bases$args
       # we can only update arguments given in ...
       ddd <- list(...)
@@ -23,100 +30,131 @@ mosaic <- function(bases, bases2=NULL, blend=FALSE, ...) {
     }
   }
 
-  if(is.null(bases2)) {
-    # the arguments for affinity()
-    myargs <- list(...)
-  } else {
-    # the arguments for affinity (first set of basis species; outer loop)
-    myargs1 <- list(...)
-    # the arguments for mosaic() (second set of basis species; inner loop)
-    myargs <- list(bases=bases2, blend=blend, ...)
+  # backward compatibility 20190131:
+  # bases can be a vector instead of a list
+  # bases2 can be present
+  if(!is.list(bases)) {
+    bases <- list(bases)
+    hasbases2 <- FALSE
+    if(!is.null(bases2)) {
+      bases <- c(bases, list(bases2))
+      hasbases2 <- TRUE
+    }
+    otherargs <- list(...)
+    allargs <- c(list(bases = bases, blend = blend, mixing = mixing), otherargs)
+    out <- do.call(mosaic, allargs)
+    # replace A.bases (affinity calculations for all groups of basis species) with backwards-compatbile A.bases and A.bases2
+    if(hasbases2) A.bases2 <- out$A.bases[[2]]
+    A.bases <- out$A.bases[[1]]
+    out$A.bases <- A.bases
+    if(hasbases2) out <- c(out, list(A.bases2 = A.bases2))
+    return(out)
   }
 
-  # are the swapped basis species on the plot?
-  # (the first one should be present in the starting basis set)
-  iswap <- match(bases[1], names(myargs))
-  # the log activity of the starting basis species
-  logact.swap <- basis()$logact[ibasis(bases[1])]
+  # save starting basis and species definition
+  basis0 <- get("thermo")$basis
+  species0 <- get("thermo")$species
+  # get species indices of requested basis species
+  ispecies <- lapply(bases, info)
+  if(any(is.na(unlist(ispecies)))) stop("one or more of the requested basis species is unavailable")
+  # identify starting basis species
+  ispecies0 <- sapply(ispecies, "[", 1)
+  ibasis0 <- match(ispecies0, basis0$ispecies)
+  # quit if starting basis species are not present
+  ina <- is.na(ibasis0)
+  if(any(ina)) stop("the starting basis does not have ", paste(bases[ina], collapse = ", "))
 
-  # a list where we'll keep the affinity calculations
-  affs <- list()
-  for(i in seq_along(bases)) {
-    message(paste("mosaic: current basis species is", bases[i], sep=" "))
-    # set up argument list: name of swapped-in basis species
-    if(!is.na(iswap)) names(myargs)[iswap] <- bases[i]
-    # calculate affinities
-    if(is.null(bases2)) {
-      affs[[i]] <- do.call(affinity, myargs)
-    } else {
-      mcall <- do.call(mosaic, myargs)
-      affs[[i]] <- mcall$A.species
-      A.bases2 <- mcall$A.bases
-    }
-    # change the basis species; restore the original at the end of the loop
-    if(can.be.numeric(logact.swap)) logact.swap <- as.numeric(logact.swap)
-    if(i < length(bases)) {
-      swap.basis(bases[i], bases[i+1]) 
-      # TODO: basis() requires the formula to identify the basis species,
-      # would be nicer to just use the ibasis here
-      bformula <- rownames(basis())[ibasis(bases[i+1])]
-      basis(bformula, logact.swap)
-    } else {
-      swap.basis(bases[i], bases[1])
-      bformula <- rownames(basis())[ibasis(bases[1])]
-      basis(bformula, logact.swap)
-    }
+  # run subcrt() calculations for all basis species and formed species 20190131
+  # this avoids repeating the calculations in different calls to affinity()
+  # add all the basis species here - the formed species are already present
+  lapply(bases, species)
+  sout <- affinity(..., return.sout = TRUE)
+
+  # calculate affinities of the basis species themselves
+  A.bases <- list()
+  for(i in 1:length(bases)) {
+    message("mosaic: calculating affinities of basis species group ", i, ": ", paste(bases[[i]], collapse=" "))
+    species(delete = TRUE)
+    species(bases[[i]])
+    A.bases[[i]] <- suppressMessages(affinity(..., sout = sout))
   }
 
-  # calculate affinities of formation of basis species
-  message(paste("mosaic: combining diagrams for", paste(bases, collapse=" "), sep=" "))
-  ispecies <- species()$ispecies
-  species.logact <- species()$logact
-  species(delete=TRUE)
-  species(bases)
-  if(is.null(bases2)) A.bases <- do.call(affinity, myargs)
-  else A.bases <- do.call(affinity, myargs1)
-  # restore original species with original activities
-  species(delete=TRUE)
-  species(ispecies, species.logact)
+  # get all combinations of basis species
+  newbases <- as.matrix(expand.grid(ispecies))
+  allbases <- matrix(basis0$ispecies, nrow = 1)[rep(1, nrow(newbases)), , drop = FALSE]
+  allbases[, ibasis0] <- newbases
 
-  # affinities calculated using the first basis species
-  A.species <- affs[[1]]
+  # calculate affinities of species for all combinations of basis species
+  aff.species <- list()
+  message("mosaic: calculating affinities of species for all ", nrow(allbases), " combinations of the basis species")
+  # run backwards so that we put the starting basis species back at the end
+  for(i in nrow(allbases):1) {
+    put.basis(allbases[i, ], basis0$logact)
+    # we have to define the species using the current basis
+    species(species0$ispecies, species0$logact)
+    aff.species[[i]] <- suppressMessages(affinity(..., sout = sout))
+  }
+
+  # calculate equilibrium mole fractions for each group of basis species
+  group.fraction <- list()
   if(blend) {
-    # calculate affinities using relative abundances of basis species
-    # this isn't needed (and doesn't work) if all the affinities are NA 20180925
-    if(any(!sapply(A.species$values, is.na))) {
-      e <- equilibrate(A.bases)
-      # what is the total activity of the basis species?
-      a.tot <- Reduce("+", lapply(e$loga.equil, function(x) 10^x))
-      for(j in seq_along(affs)) {
-        for(i in seq_along(A.species$values)) {
-          # start with zero affinity
-          if(j==1) A.species$values[[i]][] <- 0
-          # add affinity scaled by relative abundance of this basis species
-          # and include mixing term (-x*log10(x)) 20190121
-          x <- 10^e$loga.equil[[j]]/a.tot
-          A.species$values[[i]] <- A.species$values[[i]] + affs[[j]]$values[[i]] * x - x * log10(x)
-        }
+    for(i in 1:length(A.bases)) {
+      # this isn't needed (and doesn't work) if all the affinities are NA 20180925
+      if(any(!sapply(A.bases[[1]]$values, is.na))) {
+        e <- equilibrate(A.bases[[i]])
+        # exponentiate to get activities then divide by total activity
+        a.equil <- lapply(e$loga.equil, function(x) 10^x)
+        a.tot <- Reduce("+", a.equil)
+        group.fraction[[i]] <- lapply(a.equil, function(x) x / a.tot)
+      } else {
+        group.fraction[[i]] <- A.bases[[i]]$values
       }
     }
   } else {
-    # use affinities from the single predominant basis species
-    d <- diagram(A.bases, plot.it=FALSE)
-    # merge affinities using the second, third, ... basis species
-    for(j in tail(seq_along(affs), -1)) {
-      is.predominant <- d$predominant==j
-      # diagram() produces NA beyond water limits on Eh-pH diagrams (but we can't use NA for indexing, below)
-      is.predominant[is.na(is.predominant)] <- FALSE
-      for(i in seq_along(A.species$values)) {
-        A.species$values[[i]][is.predominant] <- affs[[j]]$values[[i]][is.predominant]
+    # for blend = FALSE, we just look at whether
+    # a basis species predominates within its group
+    for(i in 1:length(A.bases)) {
+      d <- diagram(A.bases[[i]], plot.it = FALSE, limit.water = FALSE)
+      group.fraction[[i]] <- list()
+      for(j in 1:length(bases[[i]])) {
+        # if a basis species predominates, it has a mole fraction of 1, or 0 otherwise
+        yesno <- d$predominant
+        yesno[yesno != j] <- 0
+        yesno[yesno == j] <- 1
+        group.fraction[[i]][[j]] <- yesno
       }
     }
+  }
+
+  # make an indexing matrix for all combinations of basis species
+  ind.mat <- list()
+  for(i in 1:length(ispecies)) ind.mat[[i]] <- 1:length(ispecies[[i]])
+  ind.mat <- as.matrix(expand.grid(ind.mat))
+
+  # calculate mole fractions for each combination of basis species
+  for(i in 1:nrow(ind.mat)) {
+    # multiply fractions from each group
+    for(j in 1:ncol(ind.mat)) {
+      if(j==1) x <- group.fraction[[j]][[ind.mat[i, j]]]
+      else x <- x * group.fraction[[j]][[ind.mat[i, j]]]
+    }
+    # multiply affinities by the mole fractions of basis species
+    # include mixing term (-x*log10(x)) 20190121
+    if(blend & mixing) aff.species[[i]]$values <- lapply(aff.species[[i]]$values, function(values) values * x - x * log10(x))
+    else aff.species[[i]]$values <- lapply(aff.species[[i]]$values, function(values) values * x)
+  }
+  
+  # get total affinities for the species
+  A.species <- aff.species[[1]]
+  for(i in 1:length(A.species$values)) {
+    # extract the affinity contributions from each basis species
+    A.values <- lapply(lapply(aff.species, "[[", "values"), "[[", i)
+    # sum them to get total affinities for this species
+    A.species$values[[i]] <- Reduce("+", A.values)
   }
 
   # for argument recall, include all arguments in output 20190120
-  allargs <- c(list(bases=bases, bases2=bases2, blend=blend), list(...))
+  allargs <- c(list(bases = bases, blend = blend, mixing = mixing), list(...))
   # return the affinities for the species and basis species
-  if(is.null(bases2)) return(list(fun="mosaic", args=allargs, A.species=A.species, A.bases=A.bases))
-  else return(list(fun="mosaic", args=allargs, A.species=A.species, A.bases=A.bases, A.bases2=A.bases2))
+  return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases))
 }
