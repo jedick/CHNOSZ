@@ -119,7 +119,7 @@ Abbreviations used below are: Cp (heat capacity), GHS (standard Gibbs energy, en
 
 * Data from SUPCRT92 which have been superseded by the Berman data are listed under **Optional Data** / **SUPCRT92**.
 
-* Superseded data from SLOP98 (aqueous Au species) are listed under **Optional Data** / **SLOP98**.
+* Superseded data from SLOP98 (aqueous SiO<sub>2</sub> and Al, As, and Au species) are listed under **Optional Data** / **SLOP98**.
 
 # Sources of data {.tabset .tabset-fade}
 
@@ -227,7 +227,7 @@ optused <- c(optused, filerefs(csvfile))
 
 ### `r setfile("SLOP98.csv")`
 ```{r SLOP98, results="asis", echo=FALSE}
-cat('These species, taken from the slop98 data file, were present in earlier versions of CHNOSZ but have been replaced by or are inconsistent with later updates. The data are kept here for comparative purposes. Use e.g. <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.\n\n')
+cat('These species, taken from the slop98 data file, were present in earlier versions of CHNOSZ but have been replaced by or are inconsistent with later updates. The data are kept here for comparative purposes. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}
@@ -235,7 +235,7 @@ cat('These species, taken from the slop98 data file, were present in earlier ver
 
 ### `r setfile("SUPCRT92.csv")`
 ```{r SUPCRT92, results="asis", echo=FALSE}
-cat("These minerals, taken from the SUPCRT92 database, were used by default in earlier versions of CHNOSZ but have since been superseded by the Berman dataset. They are kept as optional data for testing and comparison purposes. The minerals here include all of the silicates and Al-bearing minerals from [Helgeson et al., 1978](http://www.worldcat.org/oclc/13594862), as well as calcite, dolomite, hematite, and magnetite. Note that other minerals from SUPCRT92 (including native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate those in the Berman dataset) are still present in the default database (**inorganic_cr.csv**).\n\n")
+cat('These minerals, taken from the SUPCRT92 database, were present in earlier versions of CHNOSZ but have since been superseded by the Berman dataset. They are kept as optional data for testing and comparison purposes. The minerals here include all of the silicates and Al-bearing minerals from [Helgeson et al., 1978](http://www.worldcat.org/oclc/13594862), as well as calcite, dolomite, hematite, and magnetite. Use <span style="color:red">`add.obigt("SUPCRT92")`</span> to load the data. Note that other minerals from SUPCRT92, including native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate those in the Berman dataset, are still present in the default database (**inorganic_cr.csv**).\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}

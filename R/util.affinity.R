@@ -133,9 +133,16 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
 
   ### function for calling subcrt
   sout.fun <- function(property="logK") {
-    if(!is.null(sout)) return(sout) else {
+    species <- c(mybasis$ispecies,myspecies$ispecies)
+    if(!is.null(sout)) {
+      # extract the needed species from a provided sout 20190131
+      isout <- match(species, sout$species$ispecies)
+      this.sout <- sout
+      this.sout$species <- this.sout$species[isout, ]
+      this.sout$out <- this.sout$out[isout]
+      return(this.sout) 
+    } else {
       ## subcrt arguments
-      species <- c(mybasis$ispecies,myspecies$ispecies)
       if("T" %in% vars) T <- vals[[which(vars=="T")]]
       if("P" %in% vars) P <- vals[[which(vars=="P")]]
       if("IS" %in% vars) IS <- vals[[which(vars=="IS")]]

@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-84 (2019-01-28)
+CHANGES IN CHNOSZ 1.1.3-85 (2019-02-01)
 ---------------------------------------
 
 BUG FIXES
@@ -239,6 +239,9 @@ USABILITY ENHANCEMENTS
 - In subcrt(), improve error message for invalid property names.
 
 - In affinity(), make invalid variable names an error.
+
+- Add 'return.sout' argument to affinity(), to return just the values
+  calculated with subcrt().
 
 CHANGES IN CHNOSZ 1.1.3 (2017-11-13)
 ------------------------------------

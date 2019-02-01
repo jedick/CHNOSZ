@@ -174,6 +174,7 @@ test_that("IS can be constant or variable", {
 })
 
 test_that("argument recall is usable", {
+  # 20190127
   basis("CHNOS")
   species(c("CO2", "CH4"))
   a0 <- affinity(O2=c(-80, -60))
@@ -183,4 +184,19 @@ test_that("argument recall is usable", {
   expect_identical(a1, a2)
   # we don't test entire output here becuase a0 doesn't have a "T" argument
   expect_identical(a0$values, a3$values)
+})
+
+test_that("sout is processed correctly", {
+  # 20190201
+  basis("CHNOS+")
+  # previously, this test would fail when sout has
+  # more species than are used in the calculation
+  species(c("H2S", "CO2", "CH4"))
+  a0 <- affinity(T = c(0, 100))
+  sout <- a0$sout
+  # test the calculation with just CH4
+  species(1:2, delete = TRUE)
+  a1 <- affinity(T = c(0, 100))
+  a2 <- affinity(T = c(0, 100), sout = a0$sout)
+  expect_equal(a1$values, a2$values)
 })

@@ -13,7 +13,7 @@
 #source("species.R")
 
 affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rhomin=FALSE,
-  return.buffer=FALSE, balance="PBB", iprotein=NULL, loga.protein=-3) {
+  return.buffer=FALSE, return.sout=FALSE, balance="PBB", iprotein=NULL, loga.protein=-3) {
   # ...: variables over which to calculate
   # property: what type of energy
   #   (G.basis,G.species,logact.basis,logK,logQ,A)
@@ -110,6 +110,8 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
     aa <- do.call("energy",args)
     a <- aa$a
     sout <- aa$sout
+
+    if(return.sout) return(sout)
 
     # more buffer stuff
     if(buffer) {

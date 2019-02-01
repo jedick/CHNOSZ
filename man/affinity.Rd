@@ -8,7 +8,7 @@ Calculate the chemical affinities of formation reactions of species.
 
 \usage{
   affinity(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rhomin = FALSE,
-    return.buffer=FALSE, balance="PBB", iprotein=NULL, loga.protein=-3)
+    return.buffer=FALSE, return.sout=FALSE, balance="PBB", iprotein=NULL, loga.protein=-3)
 }
 
 \arguments{
@@ -18,6 +18,7 @@ Calculate the chemical affinities of formation reactions of species.
   \item{exceed.Ttr}{logical, allow \code{\link{subcrt}} to compute properties for phases beyond their transition temperature?}
   \item{exceed.rhomin}{logical, allow \code{\link{subcrt}} to compute properties of species in the HKF model below 0.35 g cm\S{-3}?}
   \item{return.buffer}{logical. If \code{TRUE}, and a \code{\link{buffer}} has been associated with one or more basis species in the system, return the values of the activities of the basis species calculated using the buffer. Default is \code{FALSE}.}
+  \item{return.sout}{logical, return only the values calculated with \code{\link{subcrt}}?}
   \item{balance}{character. This argument is used to identify a conserved basis species (or \samp{PBB}) in a chemical activity buffer. Default is \samp{PBB}.}
   \item{iprotein}{numeric, indices of proteins in \code{\link{thermo}$protein} for which to calculate properties}
   \item{loga.protein}{numeric, logarithms of activities of proteins identified in \code{iprotein}}
