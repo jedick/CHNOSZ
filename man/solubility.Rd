@@ -121,7 +121,7 @@ saI <- solubility(a, find.IS = TRUE)
 ## method 2: CO2 and carbonate species as basis species
 basis(c("calcite", "CO2", "H2O", "O2", "H+"))
 species(c("Ca+2"))
-m <- mosaic(c("CO2", "HCO3-", "CO3-2"), pH = c(3, 14), blend = TRUE, mixing = TRUE)
+m <- mosaic(c("CO2", "HCO3-", "CO3-2"), pH = c(3, 14))
 sm0 <- solubility(m)
 smI <- solubility(m, find.IS = TRUE)
 ## plot the results

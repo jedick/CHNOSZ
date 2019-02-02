@@ -10,7 +10,7 @@
 #source("util.args.R")
 
 # function to calculate affinities with mosaic of basis species
-mosaic <- function(bases, bases2 = NULL, blend = FALSE, mixing = FALSE, ...) {
+mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
 
   # argument recall 20190120
   # if the first argument is the result from a previous mosaic() calculation,

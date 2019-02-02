@@ -98,9 +98,9 @@ species(c(As_aq, AsS_aq), -5)
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 # calculate affinties of formation reactions using the speciated S basis species
 res <- 300
-# we "blend" the transitions with pH, unlike LZ11's diagram where
+# the default has blend = TRUE, unlike LZ11's diagram where
 # it appears the S-basis species are switched in an on/off fashion
-m <- mosaic(bases, pH=c(0, 14, res), Eh=c(-0.8, 0.8, res), blend=TRUE)
+m <- mosaic(bases, pH=c(0, 14, res), Eh=c(-0.8, 0.8, res))
 # adjust colors and names
 fill <- rev(heat.colors(nrow(species())))
 fill[11:15] <- "darkgrey"
