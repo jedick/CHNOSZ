@@ -147,7 +147,13 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
       if("P" %in% vars) P <- vals[[which(vars=="P")]]
       if("IS" %in% vars) IS <- vals[[which(vars=="IS")]]
       s.args <- list(species=species,property=property,T=T,P=P,IS=IS,grid=grid,convert=FALSE,exceed.Ttr=exceed.Ttr,exceed.rhomin=exceed.rhomin)
-      return(do.call("subcrt",s.args))
+      sout <- do.call("subcrt",s.args)
+      # species indices are updated by subcrt() for minerals with phase transitions
+      # e.g. i <- info("chalcocite"); subcrt(i, T=200)$species$ispecies == i + 1
+      # so we should keep the original species index to be able to find the species in a provided 'sout'
+      # (noted for Mosaic diagram section of anintro.Rmd 20190203)
+      sout$species$ispecies <- species
+      return(sout)
     }
   }
 

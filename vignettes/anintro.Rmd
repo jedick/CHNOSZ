@@ -687,22 +687,22 @@ We use <span style="color:green">`mosaic()`</span> to generate and combine diagr
 The key argument is `bases`, which identifies the candidate basis species, starting with the one in the current basis.
 The other arguments, like those of <span style="color:green">`affinity()`</span>, specify the ranges of the variables; `res` indicates the grid resolution to use for each variable (the default is 128).
 The first call to <span style="color:green">`diagram()`</span> plots the species of interest; the second adds the predominance fields of the basis species.
-We turn off the gray coloring beyond the water stability limits (`limit.water`) but plot the red dotted lines using <span style="color:green">`water.lines()`</span>:
+We turn off the gray coloring beyond the water stability limits (`limit.water`) but plot dashed blue lines using <span style="color:green">`water.lines()`</span>:
 
 ```{r copper_mosaic, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", message=FALSE, cache=TRUE, fig.cap="Copper minerals and aqueous complexes with chloride, 200 °C.", pngquant=pngquant, timeit=timeit}
 T <- 200
 res <- 300
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
-m1 <- mosaic(bases, blend = TRUE, pH = c(0, 12, res), Eh=c(-1.2, 0.75, res), T=T)
+m1 <- mosaic(bases, pH = c(0, 12, res), Eh=c(-1.2, 0.75, res), T=T)
 diagram(m1$A.species, lwd = 2, fill = NA, limit.water = FALSE)
 diagram(m1$A.bases, add = TRUE, col = "red1", col.names = "red1", lty = 3,
         limit.water = FALSE, italic = TRUE)
 water.lines(m1$A.species, col = "blue1")
 ```
 
-The argument `blend = TRUE` is used to combine the diagrams according to the relative abundances of the basis species along with a mixing term (see <span style="color:blue">`?mosaic`</span>).
+The diagrams are combined according to the relative abundances of the different possible basis species listed in `bases` along with a term for the Gibbs energy of mixing (see <span style="color:blue">`?mosaic`</span>).
 The smooth transitions between basis species can result in curved field boundaries, in this case around the chalcocite field.
-Without that argument, the diagrams would be combined using the dominant basis species, and all of the line segments would be straight.
+If we added the argument `blend = FALSE`, the diagrams would instead be assembled using the single predominant basis species at any point on the Eh-pH grid, and all of the line segments would be straight.
 
 The reactions used to make this diagram are balanced on Cu, so that no Cu appears in reactions between any two other species (minerals or aqueous species).
 If <span style="color:green">`diagram()`</span> is run with `balance = 1`, then the reactions are written for one mole of the mineral formulas on each side of the reaction, with the possibility of Cu appearing as an additional species to conserve the elements.
@@ -720,7 +720,7 @@ We use R's `do.call()` to construct the argument list for <span style="color:gre
 mosaicfun <- function(newvar, T = 200) {
   swap.basis("e-", names(newvar))
   if (names(newvar) == "O2") basis("O2", "gas")
-  mosaicargs <- c(list(bases), blend=TRUE, pH=list(c(-2, 12, res)), newvar, T=T)
+  mosaicargs <- c(list(bases), pH = list(c(-2, 12, res)), newvar, T = T)
   m1 <- do.call(mosaic, mosaicargs)
   diagram(m1$A.species, lwd = 2, fill = "terrain",
           limit.water = FALSE)
