@@ -48,3 +48,4 @@
 \newcommand{\aacute}{\ifelse{latex}{\out{\'{a}}}{\ifelse{html}{\out{&aacute;}}{á}}}
 \newcommand{\eacute}{\ifelse{latex}{\out{\'{e}}}{\ifelse{html}{\out{&eacute;}}{é}}}
 \newcommand{\gamma}{\ifelse{latex}{\eqn{\gamma}}{\ifelse{html}{\out{&gamma;}}{γ}}}
+\newcommand{\alpha}{\ifelse{latex}{\eqn{\alpha}}{\ifelse{html}{\out{&alpha;}}{α}}}

@@ -56,10 +56,11 @@ PH95,"V. A. Pokrovskii and H. C. Helgeson",1995,"Am. J. Sci. 295, 1255-1342","al
 PK95,"V. B. Parker and I. L. Khodakovskii",1995,"J. Phys. Chem. Ref. Data 24, 1699-1745",melanterite,https://doi.org/10.1063/1.555964
 RH95,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","gypsum GHS",http://pubs.er.usgs.gov/publication/b2131
 SK95,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","metal-organic acid complexes",https://doi.org/10.1016/0016-7037(95)00058-8
-SK95.1,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","alanate, glycinate and their complexes not included in later slop files.",https://doi.org/10.1016/0016-7037(95)00058-8
+SK95.1,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","alanate, glycinate and their complexes with metals. Values are taken from slop98.dat, which notes corrected values for some species.",https://doi.org/10.1016/0016-7037(95)00058-8
 Sho95,"E. L. Shock",1995,"Am. J. Sci. 295, 496-580","carboxylic acids",https://doi.org/10.2475/ajs.295.5.496
 DPS+96,"I. Diakonov, G. Pokrovski et al.",1996,"Geochim. Cosmochim. Acta 60, 197-211",NaAl(OH)<sub>4</sub>,http://dx.doi.org/10.1016/0016-7037(95)00403-3
 AH97b,"J. P. Amend and H. C. Helgeson",1997,"J. Chem. Soc., Faraday Trans. 93, 1927-1941","amino acids GHS",https://doi.org/10.1039/A608126F
+AH97b.1,"J. P. Amend and H. C. Helgeson",1997,"J. Chem. Soc., Faraday Trans. 93, 1927-1941","alanate and glycinate GHS",https://doi.org/10.1039/A608126F
 DSM+97,"J. D. Dale, E. L. Shock et al.",1997,"Geochim. Cosmochim. Acta 61, 4017-4024",alkylphenols,https://doi.org/10.1016/S0016-7037(97)00212-3
 DSM+97.1,"J. D. Dale, E. L. Shock et al.",1997,"Geochim. Cosmochim. Acta 61, 4017-4024","phenol, and cresol isomers",https://doi.org/10.1016/S0016-7037(97)00212-3
 DSM+97.2,"J. D. Dale, E. L. Shock et al.",1997,"Geochim. Cosmochim. Acta 61, 4017-4024","dimethylphenol isomers",https://doi.org/10.1016/S0016-7037(97)00212-3
@@ -162,8 +163,7 @@ ZZL+16.1,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","As(&alpha;): V list
 ZZL+16.2,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","Cp parameters listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.3,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","dawsonite GHS",https://doi.org/10.1016/j.cageo.2016.02.013
 CHNOSZ.1,"J. M. Dick",2017,"CHNOSZ package documentation","GHS (T<sub>r</sub>) of the phase that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the phases that are stable at higher temperatures.",http://chnosz.net
-CHNOSZ.2,"J. M. Dick",2017,"CHNOSZ package documentation","alanate and glycinate: GHS as used by @DLH06",http://chnosz.net
-CHNOSZ.3,"J. M. Dick",2017,"CHNOSZ package documentation","metal-amino acid complexes: GHS were recalculated by adding the differences between values from @AH97b and @DLH06 for alanate or glycinate to the properties of the complexes reported by @SK95.",http://chnosz.net
+CHNOSZ.3,"J. M. Dick",2017,"CHNOSZ package documentation","metal-amino acid complexes: GHS were recalculated by adding the differences between values from @SK95 and @AH97b for alanate or glycinate to the properties of the complexes reported by @SK95.",http://chnosz.net
 CHNOSZ.5,"J. M. Dick",2017,"CHNOSZ package documentation","AuCl4- renamed to AuCl4-3",http://chnosz.net
 CHNOSZ.6,"J. M. Dick",2017,"CHNOSZ package documentation","dipeptides not included in slop files after slop98.dat",http://chnosz.net
 CHNOSZ.7,"J. M. Dick",2017,"CHNOSZ package documentation","charge of NpO2(Oxal), La(Succ)+, NH4(Succ)-, and NpO2(Succ) as listed by @PSK99",http://chnosz.net
