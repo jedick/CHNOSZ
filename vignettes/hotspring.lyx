@@ -265,6 +265,8 @@ literal "true"
 
  and are available starting in CHNOSZ_0.9-9 (the current values are used
  further below).
+ In addition, we load values for the glycine group that were superseded
+ in 2019.
 \end_layout
 
 \begin_layout Standard
@@ -289,6 +291,19 @@ data(thermo)
 \begin_layout Plain Layout
 
 mod.obigt("[Met]", G=-35245, H=-59310)
+\end_layout
+
+\begin_layout Plain Layout
+
+add.obigt(
+\begin_inset Quotes eld
+\end_inset
+
+OldAA
+\begin_inset Quotes erd
+\end_inset
+
+)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1793,6 +1808,19 @@ for(j in 1:2) {
 \begin_layout Plain Layout
 
     data(thermo)
+\end_layout
+
+\begin_layout Plain Layout
+
+    add.obigt(
+\begin_inset Quotes eld
+\end_inset
+
+OldAA
+\begin_inset Quotes erd
+\end_inset
+
+)
 \end_layout
 
 \begin_layout Plain Layout

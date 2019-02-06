@@ -6,6 +6,8 @@ protein <- pinfo(c("CSG_METVO", "CSG_METJA"))
 data(thermo)
 # use properties of the "old" [Met] sidechain group (Dick et al., 2006)
 mod.obigt("[Met]", G=-35245, H=-59310)
+# also use parameters for [Gly] from DLH06 20190206
+add.obigt("OldAA")
 # set up the basis species to those used in DS11
 basis("CHNOS+")
 # note this yields logaH2 = -4.657486

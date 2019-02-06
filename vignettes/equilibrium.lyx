@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -32,6 +32,8 @@ knitr
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -71,6 +73,7 @@ knitr
 \suppress_date false
 \justification true
 \use_refstyle 0
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -83,7 +86,10 @@ knitr
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -496,6 +502,7 @@ Step-by-step examples of some of the calculations, particularly the reaction
 \begin_inset CommandInset citation
 LatexCommand citet
 key "DS13"
+literal "true"
 
 \end_inset
 
@@ -1753,6 +1760,7 @@ Basis species:
 \begin_inset CommandInset citation
 LatexCommand citet
 key "Dic08"
+literal "true"
 
 \end_inset
 
@@ -2573,6 +2581,7 @@ Aqueous Aluminum
 \begin_inset CommandInset citation
 LatexCommand citealp
 key "TS01"
+literal "true"
 
 \end_inset
 
@@ -2600,6 +2609,7 @@ Fe-S-O
 \begin_inset CommandInset citation
 LatexCommand citealp
 key "Hel70c"
+literal "true"
 
 \end_inset
 
@@ -2617,6 +2627,7 @@ unequal activities
 \begin_inset CommandInset citation
 LatexCommand citealp
 key "Pou49"
+literal "true"
 
 \end_inset
 
@@ -2712,6 +2723,7 @@ Speciation of reduced and oxidized glutathione, after
 \begin_inset CommandInset citation
 LatexCommand citet
 key "SB01"
+literal "true"
 
 \end_inset
 
@@ -2743,6 +2755,7 @@ equilibrate()
 \begin_inset CommandInset citation
 LatexCommand citet
 key "SB01"
+literal "true"
 
 \end_inset
 
@@ -2899,6 +2912,7 @@ demo("mosaic")
 \begin_inset CommandInset citation
 LatexCommand citealp
 key "GC65"
+literal "true"
 
 \end_inset
 
@@ -2912,6 +2926,7 @@ A calculation of copper solubility limits and speciation with aqueous glycine
 \begin_inset CommandInset citation
 LatexCommand citet
 key "AD01"
+literal "true"
 
 \end_inset
 
@@ -2944,6 +2959,7 @@ mod.obigt()
 \begin_inset CommandInset citation
 LatexCommand citet
 key "AD01"
+literal "true"
 
 \end_inset
 
@@ -3001,6 +3017,7 @@ Boltzmann distribution
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Dic08,DS11"
+literal "true"
 
 \end_inset
 
@@ -3096,10 +3113,12 @@ th species.
 For the CSG examples below, we would like to reproduce exactly the values
  appearing in publications.
  Because recent versions of CHNOSZ incorporate data updates for the methionine
- sidechain group, we should therefore revert to the previous values 
+ and glycine sidechain groups, we should therefore revert to the previous
+ values 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "DLH06"
+literal "true"
 
 \end_inset
 
@@ -3123,6 +3142,19 @@ data(thermo)
 \begin_layout Plain Layout
 
 mod.obigt("[Met]", G=-35245, H=-59310)
+\end_layout
+
+\begin_layout Plain Layout
+
+add.obigt(
+\begin_inset Quotes eld
+\end_inset
+
+OldAA
+\begin_inset Quotes erd
+\end_inset
+
+)
 \end_layout
 
 \begin_layout Plain Layout
@@ -3872,6 +3904,7 @@ which are equivalent to Equations 12 and 13 in the paper
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Dic08"
+literal "true"
 
 \end_inset
 
@@ -4175,6 +4208,7 @@ A comparison of equilibrium calculations that do and do not use normalized
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Dic08"
+literal "true"
 
 \end_inset
 
@@ -4294,6 +4328,7 @@ The reaction-matrix approach can also be applied to systems having conservation
 \begin_inset CommandInset citation
 LatexCommand citet
 key "See96"
+literal "true"
 
 \end_inset
 
@@ -4411,6 +4446,7 @@ The first diagram is quantitatively similar to the one shown by
 \begin_inset CommandInset citation
 LatexCommand citet
 key "See96"
+literal "true"
 
 \end_inset
 

@@ -3,6 +3,8 @@
 # use old properties of [Met] (Dick et al., 2006) to reproduce this example
 data(thermo)
 mod.obigt("[Met]", G=-35245, H=-59310)
+# also use parameters for [Gly] from DLH06 20190206
+add.obigt("OldAA")
 # arranged by decreasing metastability:
 # order of this list of locations is based on the 
 # (dis)appearance of species on the current set of diagrams

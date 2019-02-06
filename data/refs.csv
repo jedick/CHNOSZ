@@ -61,6 +61,7 @@ Sho95,"E. L. Shock",1995,"Am. J. Sci. 295, 496-580","carboxylic acids",https://d
 DPS+96,"I. Diakonov, G. Pokrovski et al.",1996,"Geochim. Cosmochim. Acta 60, 197-211",NaAl(OH)<sub>4</sub>,http://dx.doi.org/10.1016/0016-7037(95)00403-3
 AH97b,"J. P. Amend and H. C. Helgeson",1997,"J. Chem. Soc., Faraday Trans. 93, 1927-1941","amino acids GHS",https://doi.org/10.1039/A608126F
 AH97b.1,"J. P. Amend and H. C. Helgeson",1997,"J. Chem. Soc., Faraday Trans. 93, 1927-1941","alanate and glycinate GHS",https://doi.org/10.1039/A608126F
+AH97b.2,"J. P. Amend and H. C. Helgeson",1997,"J. Chem. Soc., Faraday Trans. 93, 1927-1941","glycine and glycinium GHS",https://doi.org/10.1039/A608126F
 DSM+97,"J. D. Dale, E. L. Shock et al.",1997,"Geochim. Cosmochim. Acta 61, 4017-4024",alkylphenols,https://doi.org/10.1016/S0016-7037(97)00212-3
 DSM+97.1,"J. D. Dale, E. L. Shock et al.",1997,"Geochim. Cosmochim. Acta 61, 4017-4024","phenol, and cresol isomers",https://doi.org/10.1016/S0016-7037(97)00212-3
 DSM+97.2,"J. D. Dale, E. L. Shock et al.",1997,"Geochim. Cosmochim. Acta 61, 4017-4024","dimethylphenol isomers",https://doi.org/10.1016/S0016-7037(97)00212-3
@@ -105,6 +106,7 @@ Ric01,"L. Richard",2001,"Geochim. Cosmochim. Acta 65, 3827-3877","organic sulfur
 Ste01,"A. Stefansson",2001,"Chem. Geol. 172, 225-250","aqueous H<sub>4</sub>SiO<sub>4</sub>",http://dx.doi.org/10.1016/S0009-2541(00)00263-1
 SSW01,"M. D. Schulte, E. L. Shock and R. H. Wood",2001,"Geochim. Cosmochim. Acta 65, 3919-3930","AsH<sub>3</sub>, CF<sub>4</sub>, CH<sub>3</sub>F, Cl<sub>2</sub>, ClO<sub>2</sub>, N<sub>2</sub>O, NF<sub>3</sub>, NO, PH<sub>3</sub>, and SF<sub>6</sub>",https://doi.org/10.1016/S0016-7037(01)00717-7
 TS01,"B. Tagirov and J. Schott",2001,"Geochim. Cosmochim. Acta 65, 3965-3992","aqueous Al species",http://dx.doi.org/10.1016/S0016-7037(01)00705-0
+GKL02,"R. N. Goldberg et al.",2002,"J. Phys. Chem. Ref. Data 31, 231-370","glycine, diglycine, and triglycine (+1 and -1 ions) GHS",http://dx.doi.org/10.1063/1.1416902
 MGN03,"J. Majzlan, K.-D. Grevel and A. Navrotsky",2003,"Am. Mineral. 88, 855-859","goethite, lepidocrocite, and maghemite GHS",https://doi.org/10.2138/am-2003-5-614
 NA03,"D. K. Nordstrom and D. G. Archer",2003,"Arsenic thermodynamic data and environmental geochemistry. In Arsenic in Groundwater, eds. Welch and Stollenwerk, Kluwer","As oxide and sulfide minerals",
 NA03.1,"D. K. Nordstrom and D. G. Archer",2003,"Arsenic thermodynamic data and environmental geochemistry. In Arsenic in Groundwater, eds. Welch and Stollenwerk, Kluwer","aqueous As oxides and sulfides",
@@ -120,7 +122,10 @@ LH06b,"D. E. LaRowe and H. C. Helgeson",2006,"Thermochim. Acta 448, 82-106","Mg-
 LH06b.1,"D. E. LaRowe and H. C. Helgeson",2006,"Thermochim. Acta 448, 82-106","pyridine and piperidine",https://doi.org/10.1016/j.tca.2006.06.008
 DLH06,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","amino acid, protein, and organic groups",https://doi.org/10.5194/bg-3-311-2006
 DLH06.1,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","amino acids HKF parameters",https://doi.org/10.5194/bg-3-311-2006
-DLH06.2,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","Gly-X-Gly tripeptides",https://doi.org/10.5194/bg-3-311-2006
+DLH06.2,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","Gly-X-Gly tripeptides Cp, V, and HKF c1, c2, omega parameters",https://doi.org/10.5194/bg-3-311-2006
+DLH06.3,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","glycine, [Gly], and [UPBB] HKF parameters",https://doi.org/10.5194/bg-3-311-2006
+DLH06.4,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","methionine HKF parameters",https://doi.org/10.5194/bg-3-311-2006
+DLH06.5,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","triglycine Cp, V, and HKF c1, c2, omega parameters",https://doi.org/10.5194/bg-3-311-2006
 LMR06,"D. Langmuir et al.",2006,"Geochim. Cosmochim. Acta 70, 2942-2956","scorodite and amorphous ferric arsenate: G",https://doi.org/10.1016/j.gca.2006.03.006
 MNM+06,"J. Majzlan, A. Navrotsky et al.",2006,"Eur. J. Mineral. 18, 175-186","coquimbite, ferricopiapite, and rhomboclase",https://doi.org/10.1127/0935-1221/2006/0018-0175
 Dic07,"J. M. Dick",2007,"Ph.D. Dissertation, Univ. of California","glutathione, cystine, and cystine sidechain",
@@ -143,6 +148,7 @@ LD12.3,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","
 DEH+13,"J. M. Dick, K. A. Evans et al.",2013,"Geochim. Cosmochim. Acta 122, 247-266","phenanthrene and methylphenanthrene isomers",https://doi.org/10.1016/j.gca.2013.08.020
 FDM+14,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","CO<sub>2</sub>, CO<sub>3</sub><sup>-2</sup>, and HCO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/j.gca.2014.01.030
 FDM+14.1,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","aragonite; source of data: `berman.dat`",https://doi.org/10.1016/j.gca.2014.01.030
+Kit14,"N. Kitadai",2014,"J. Mol. Evol. 78, 171-187","glycine, diglycine, and triglycine (zwitterions and ions); diketopiperazine, [Gly] and [UPBB] groups",https://doi.org/10.1007/s00239-014-9616-1
 PAB+14,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","Au<sup>+</sup>, Au(OH)<sub>2</sub><sup>-</sup>, AuCl, and AuOH",https://doi.org/10.1144/SP402.4
 PAB+14.1,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","corrected H of AuHS",https://doi.org/10.1144/SP402.4
 SHA14,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","SiO<sub>2</sub> and Si<sub>2</sub>O<sub>4</sub>",https://doi.org/10.1016/j.gca.2013.12.019

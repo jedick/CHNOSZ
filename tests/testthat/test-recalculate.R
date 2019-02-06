@@ -1,15 +1,18 @@
 context("recalculate")
 
+# SK95: Shock and Korestky, 1995
 test_that("recalculated values from SK95 are correctly enetered in OBIGT", {
-  # SK95: Shock and Korestky, 1995  test added 20190206
+  # test added 20190206
   # thermodynamic data entries for amino acid glycinate and alanate complexes
+  # (no longer in default database)
+  data(thermo)
+  add.obigt("OldAA")
   iaa <- info(c("alanate", "glycinate"))
   iGly <- grep("\\(Gly\\)\\+$", thermo$obigt$name)
   iGly2 <- grep("\\(Gly\\)2$", thermo$obigt$name)
   iAlan <- grep("\\(Alan\\)\\+$", thermo$obigt$name)
   iAlan2 <- grep("\\(Alan\\)2$", thermo$obigt$name)
   # get values used in OBIGT
-  data(thermo)
   aa_GHS_OBIGT <- thermo$obigt[iaa, c("G", "H", "S")]
   Gly_GHS_OBIGT <- thermo$obigt[iGly, c("G", "H", "S")]
   Gly2_GHS_OBIGT <- thermo$obigt[iGly2, c("G", "H", "S")]

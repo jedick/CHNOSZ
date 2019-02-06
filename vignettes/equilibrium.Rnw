@@ -1,4 +1,4 @@
-%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[english,round]{article}
 \usepackage{mathpazo}
@@ -41,9 +41,7 @@ options(width=85)
 ## set number of digits
 options(digits=3)
 @
-
 \title{Equilibrium in CHNOSZ}
-
 \author{Jeffrey M. Dick}
 
 \maketitle
@@ -661,7 +659,7 @@ here; see also the \texttt{blend} argument of \texttt{mosaic()} to
 equilibrate the basis species rather than compose the diagram using
 the predominant basis species).
 \begin{itemize}
-\item See the examples in \texttt{?mosaic} and \texttt{demo(\textquotedbl{}mosaic\textquotedbl{})}
+\item See the examples in \texttt{?mosaic} and \texttt{demo(\textquotedbl mosaic\textquotedbl )}
 for calculations of mineral stabilities in the Fe-S-O-$\mathrm{H_{2}O}$
 system (after \citealp{GC65}).
 \item A calculation of copper solubility limits and speciation with aqueous
@@ -716,12 +714,14 @@ relative abundances of species, including proteins.
 
 For the CSG examples below, we would like to reproduce exactly the
 values appearing in publications. Because recent versions of CHNOSZ
-incorporate data updates for the methionine sidechain group, we should
-therefore revert to the previous values \citep{DLH06} before proceeding.
+incorporate data updates for the methionine and glycine sidechain
+groups, we should therefore revert to the previous values \citep{DLH06}
+before proceeding.
 
 <<AddObigt>>=
 data(thermo)
 mod.obigt("[Met]", G=-35245, H=-59310)
+add.obigt("OldAA")
 @
 
 \section{Reaction-matrix approach}

@@ -107,10 +107,29 @@ invisible(lapply(1:4, function(i) {
   text(800, y[i], describe.reaction(subcrt(c(Cdspecies[i], "Cl-",
     Cdspecies[i+1]), c(-1, -1, 1), T=25, P=1)$reaction))
 }))
+
+# another use of add.obigt()
+# compare Delta G of AABB = UPBB + H2O
+# (Figure 9 of Kitadai, 2014)
+E.units("J")
+# default database has values from Kitadai, 2014
+Kit14 <- subcrt(c("[AABB]", "[UPBB]", "H2O"), c(-1, 1, 1), T = seq(0, 300, 10))
+# optional file OldAA has superseded values of [UPBB] from Dick et al., 2006
+add.obigt("OldAA")
+DLH06 <- subcrt(c("[AABB]", "[UPBB]", "H2O"), c(-1, 1, 1), T = seq(0, 300, 10))
+xlab <- axis.label("T"); ylab <- axis.label("DG", prefix="k")
+plot(Kit14$out$T, Kit14$out$G/1000, type = "l", ylim = c(10, 35), xlab = xlab, ylab = ylab)
+lines(DLH06$out$T, DLH06$out$G/1000, lty = 2)
+legend("topleft", c("Dick et al., 2006", "Kitadai, 2014"), lty = c(2, 1))
+title(main = "AABB = UPBB + H2O; after Figure 9 of Kitadai, 2014")
+# reset to default database
+data(OBIGT)
 }
 
 \references{
 Bazarkina, E. F., Zotov, A. V., and Akinfiev, N. N. (2010)  Pressure-dependent stability of cadmium chloride complexes: Potentiometric measurements at 1-1000 bar and 25°C. \emph{Geology of Ore Deposits} \bold{52}, 167--178. \url{https://doi.org/10.1134/S1075701510020054}
+
+Kitadai, N. (2014)  Thermodynamic prediction of glycine polymerization as a function of temperature and pH consistent with experimentally obtained results. \emph{J. Mol. Evol.} \bold{78}, 171--187. \url{https://doi.org/10.1007/s00239-014-9616-1}
 
 Sverjensky, D. A., Shock, E. L., and Helgeson, H. C. (1997) Prediction of the thermodynamic properties of aqueous metal complexes to 1000 °C and 5 kbar. \emph{Geochim. Cosmochim. Acta} \bold{61}, 1359--1412. \url{https://doi.org/10.1016/S0016-7037(97)00009-4}
 }

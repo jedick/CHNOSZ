@@ -19,6 +19,8 @@ test_that("guess() operates on intermediate compositions but fails with endmembe
 })
 
 test_that("open-system equilibrium distributions reproduce the results of wjd()", {
+#  ### FIXME: equil.potentials(w) returns NULL unless we use parameters for [Gly] from DLH06 20190206
+#  add.obigt("OldAA")
   ### set up system
   # use proteins in the lipid particle (n=19)
   y <- yeastgfp("lipid.particle")
@@ -39,7 +41,7 @@ test_that("open-system equilibrium distributions reproduce the results of wjd()"
   Y <- rep(100, length(iobigt))
   # run the Gibbs energy minimization (this did not iterate before 20130109,
   # due to bug in calculation of free energy derivative)
-  w <- run.wjd(iobigt, Y=Y, Gfrac=1e-15, nlambda=1001)
+  w <- run.wjd(iobigt, Y=Y, Gfrac=1e-15, nlambda=501)
   # the molar abundances
   X.closed <- w$X
   # get the chemical potentials of the elements
@@ -56,8 +58,8 @@ test_that("open-system equilibrium distributions reproduce the results of wjd()"
   e <- equilibrate(a, loga.balance=log10(sum(Y)))
   X.open <- 10^unlist(e$loga.equil)
   # the test: abundances calculated both ways are equal
-  expect_equal(X.closed, X.open, tolerance=0.019)
-  # seems that we could do better than that 1.9% mean difference!
+  expect_equal(X.closed, X.open, tolerance=0.018)
+  # seems that we could do better than that 1.8% mean difference!
 })
 
 # see also test-swap.basis.R for an example using run.wjd() and 
