@@ -714,13 +714,12 @@ relative abundances of species, including proteins.
 
 For the CSG examples below, we would like to reproduce exactly the
 values appearing in publications. Because recent versions of CHNOSZ
-incorporate data updates for the methionine and glycine sidechain
-groups, we should therefore revert to the previous values \citep{DLH06}
-before proceeding.
+incorporate data updates for the protein backbone and methionine and
+glycine sidechain groups, we should therefore revert to the previous
+values \citep{DLH06} before proceeding.
 
 <<AddObigt>>=
 data(thermo)
-mod.obigt("[Met]", G=-35245, H=-59310)
 add.obigt("OldAA")
 @
 

@@ -3,7 +3,7 @@
 ## (Aksu, S. and Doyle, F. M., 2001. Electrochemistry of copper in aqueous glycine 
 ## solutions. J. Electrochem. Soc., 148, B51-B57. doi:10.1149/1.1344532)
 
-# we need some superseded Cu-Gly complexes 20190206
+# we need superseded data for Cu-Gly complexes 20190206
 add.obigt("OldAA")
 # add some new species to thermo$obigt
 m1 <- makeup(info(c("Cu+", "glycinate", "glycinate")), sum=TRUE)

@@ -2,8 +2,8 @@
 # based on "bugstab" function in Supporting Information of Dick, 2016
 # (https://doi.org/10.7717/peerj.2238)
 
-# to reproduce the calculations in the paper, use superseded data for [Gly] 20190206
-add.obigt("OldAA")
+# to reproduce the calculations in the paper, use superseded data for [Gly] and [UPBB] 20190206
+add.obigt("OldAA", c("[Gly]", "[UPBB]"))
 # set up graphics device
 layout(cbind(matrix(sapply(list(c(1, 2), c(3, 4)), function(x) rep(rep(x, each=3), 3)), nrow=6, byrow=TRUE),
              matrix(rep(c(0, 5, 5, 5, 5, 0), each=4), nrow=6, byrow=TRUE)))

@@ -3112,9 +3112,9 @@ th species.
 \begin_layout Standard
 For the CSG examples below, we would like to reproduce exactly the values
  appearing in publications.
- Because recent versions of CHNOSZ incorporate data updates for the methionine
- and glycine sidechain groups, we should therefore revert to the previous
- values 
+ Because recent versions of CHNOSZ incorporate data updates for the protein
+ backbone and methionine and glycine sidechain groups, we should therefore
+ revert to the previous values 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "DLH06"
@@ -3137,11 +3137,6 @@ status open
 \begin_layout Plain Layout
 
 data(thermo)
-\end_layout
-
-\begin_layout Plain Layout
-
-mod.obigt("[Met]", G=-35245, H=-59310)
 \end_layout
 
 \begin_layout Plain Layout

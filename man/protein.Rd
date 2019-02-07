@@ -29,9 +29,10 @@ title(main="Sequences for transferase at Bison Pool")
 
 ## surface-layer proteins from Methanococcus and others
 ## as a function of oxygen fugacity, after Dick, 2008, Fig. 5b
-# use old properties of [Met] (Dick et al., 2006) to reproduce this example
+# to reproduce the calculations in the paper,
+# use superseded data for [Met], [Gly] and [UPBB]
 data(thermo)
-mod.obigt("[Met]", G=-35245, H=-59310)
+add.obigt("OldAA")
 # make our protein list
 organisms <- c("METSC", "METJA", "METFE", "HALJP", "METVO",
   "METBU", "ACEKI", "GEOSE", "BACLI", "AERSA")

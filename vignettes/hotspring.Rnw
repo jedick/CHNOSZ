@@ -73,17 +73,16 @@ the $\Delta G_{tr}$) have been introduced here in order to streamline
 the code.
 
 Load CHNOSZ and the thermodynamic database. In order to reproduce
-the calculations from the 2011 paper, we modify the methionine sidechain
-group using old values of standard Gibbs energy and enthalpy from
-\citep{DLH06}; these are inaccurate values that were updated by \citep{LD12}
-and are available starting in CHNOSZ\_0.9-9 (the current values are
-used further below). In addition, we load values for the glycine group
-that were superseded in 2019.
+the calculations from the 2011 paper, we load old values of standard
+Gibbs energy and enthalpy of the methionine sidechain group from \citep{DLH06};
+these are inaccurate values that were updated by \citep{LD12} and
+are available starting in CHNOSZ\_0.9-9 (the current values are used
+further below). This step also loads values for the glycine group
+and the protein backone {[}UPBB{]} that were superseded in 2019.
 
 <<libraryCHNOSZ>>=
 library(CHNOSZ)
 data(thermo)
-mod.obigt("[Met]", G=-35245, H=-59310)
 add.obigt("OldAA")
 @
 
@@ -414,7 +413,7 @@ for(j in 1:2) {
   # use old [Met] for first row and new [Met] for second row
   if(j==2) {
     data(thermo)
-    add.obigt("OldAA")
+    add.obigt("OldAA", c("[Gly]", "[UPBB]"))
     ip.annot <- add.protein(aa.annot)
   }
   # setup basis species and proteins

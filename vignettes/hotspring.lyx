@@ -245,9 +245,9 @@ revisit()
 
 \begin_layout Standard
 Load CHNOSZ and the thermodynamic database.
- In order to reproduce the calculations from the 2011 paper, we modify the
- methionine sidechain group using old values of standard Gibbs energy and
- enthalpy from 
+ In order to reproduce the calculations from the 2011 paper, we load old
+ values of standard Gibbs energy and enthalpy of the methionine sidechain
+ group from 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "DLH06"
@@ -265,8 +265,8 @@ literal "true"
 
  and are available starting in CHNOSZ_0.9-9 (the current values are used
  further below).
- In addition, we load values for the glycine group that were superseded
- in 2019.
+ This step also loads values for the glycine group and the protein backone
+ [UPBB] that were superseded in 2019.
 \end_layout
 
 \begin_layout Standard
@@ -286,11 +286,6 @@ library(CHNOSZ)
 \begin_layout Plain Layout
 
 data(thermo)
-\end_layout
-
-\begin_layout Plain Layout
-
-mod.obigt("[Met]", G=-35245, H=-59310)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1820,7 +1815,23 @@ OldAA
 \begin_inset Quotes erd
 \end_inset
 
-)
+, c(
+\begin_inset Quotes eld
+\end_inset
+
+[Gly]
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+[UPBB]
+\begin_inset Quotes erd
+\end_inset
+
+))
 \end_layout
 
 \begin_layout Plain Layout

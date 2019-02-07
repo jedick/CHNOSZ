@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-90 (2019-02-06)
+CHANGES IN CHNOSZ 1.1.3-91 (2019-02-07)
 ---------------------------------------
 
 BUG FIXES
@@ -168,7 +168,11 @@ THERMODYNAMIC DATA
 
 - Add or update glycine, diglycine, and triglycine (zwitterions and
   ions), and diketopiperazine, [Gly] and [UPBB] groups from Kitadai,
-  2014. Superseded data have been moved to OBIGT/OldAA.csv.
+  2014.
+
+- For reproducing previous calculations, superseded data for [Gly] and
+  [UPBB], as well as [Met] (earlier superseded by LaRowe and Dick,
+  2012), have been moved to OBIGT/OldAA.csv.
 
 DIAGRAMS
 

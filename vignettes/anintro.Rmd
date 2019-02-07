@@ -1522,15 +1522,13 @@ logact <- unitize(numeric(5), pl)
 logabundance <- unitize(log10(y$abundance[!ina]), pl)
 ```
 
-Now we can load the proteins and calculate their activities in metastable equilibrium as a function of `r logfO2`:
-```{marginfigure}
-The commented line uses <span style="color:red">`mod.obigt()`</span> and <span style="color:red">`add.obigt()`</span> to revert the parameters of the methionine and glycine sidechain groups to those present in older versions of CHNOSZ (Dick et al., 2006).
-The current database, with parameters set by <span style="color:red">`data(thermo)`</span> and used here, contains updated group additivity parameters for methionine (LaRowe and Dick, 2012).
-```
+Now we can load the proteins and calculate their activities in metastable equilibrium as a function of `r logfO2`.
+The commented line uses <span style="color:red">`add.obigt()`</span> to revert the group additivity parameters to those present in older versions of CHNOSZ (Dick et al., 2006).
+The current database, with parameters set by <span style="color:red">`data(thermo)`</span> and used here, contains updated group additivity parameters for the sidechain groups of methionine (LaRowe and Dick, 2012) and glycine and the protein backbone [@Kit14].
+
 ```{r yeastplot, eval=FALSE, echo=1:6}
 par(mfrow = c(1, 3))
 basis("CHNOS+")
-#mod.obigt("[Met]", G = -35245, H = -59310)
 #add.obigt("OldAA")
 a <- affinity(O2 = c(-80, -73), iprotein = ip, loga.protein = logact)
 e <- equilibrate(a)
@@ -1559,7 +1557,7 @@ Here, we plot the information-theoretic free energy Δ*G<sub>inf</sub>* (calcula
 ```
 
 The minimum free energy difference occurs near `r logfO2` = -78.
-This agrees with the assessment shown in Figure 4 of @Dic09 (note that the old parameters for the methionine sidechain group were used in that study).
+This agrees with the assessment shown in Figure 4 of @Dic09 (but the updated group additivity parameters make the results slightly different).
 
 ## An affinity baseline
 
