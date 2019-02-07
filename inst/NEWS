@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-91 (2019-02-07)
+CHANGES IN CHNOSZ 1.1.3-92 (2019-02-07)
 ---------------------------------------
 
 BUG FIXES
@@ -101,6 +101,9 @@ DOCUMENTATION
   limits for calcite, dolomite, magnesite, and brucite in the
   H2O-CO2-CaO-MgO-SiO2 system.
 
+- Add demo/glycinate.R showing logK of complexation of glycinate with
+  divalent and monovalent metals.
+
 THERMODYNAMIC DATA
 
 - The Berman data (Berman, 1988 and later additions) have replaced the
@@ -170,9 +173,13 @@ THERMODYNAMIC DATA
   ions), and diketopiperazine, [Gly] and [UPBB] groups from Kitadai,
   2014.
 
+- Add data for metal-glycinate complexes from Azadi et al., 2019,
+  superseding Shock and Koretsky, 1995.
+
 - For reproducing previous calculations, superseded data for [Gly] and
   [UPBB], as well as [Met] (earlier superseded by LaRowe and Dick,
-  2012), have been moved to OBIGT/OldAA.csv.
+  2012), and metal-glycinate complexes have been moved to
+  OBIGT/OldAA.csv.
 
 DIAGRAMS
 

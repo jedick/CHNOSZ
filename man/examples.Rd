@@ -15,8 +15,8 @@
   examples(save.png = FALSE)
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
-    "protbuff", "yeastgfp", "mosaic", "copper", "solubility",
-    "gold", "wjd", "bugstab", "Shh", "saturation",
+    "protbuff", "yeastgfp", "glycinate", "mosaic", "copper",
+    "solubility", "gold", "wjd", "bugstab", "Shh", "saturation",
     "adenine", "DEW", "lambda", "TCA", "go-IU", "bison"),
     save.png=FALSE)
 }
@@ -43,6 +43,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{buffer} \tab  * Minerals and aqueous species as buffers of hydrogen fugacity (Schulte and Shock, 1995) \cr
     \code{protbuff} \tab Chemical activities buffered by thiol peroxidases or sigma factors \cr
     \code{yeastgfp} \tab * Subcellular locations: \logfO2 - \logaH2O and \loga - \logfO2 diagrams (Dick, 2009) \cr
+    \code{glycinate} \tab * Divalent and monovalent metal-glycinate complexes (Azadi et al., 2019) \cr
     \code{mosaic} \tab * Eh-pH diagram with two sets of changing basis species (Garrels and Christ, 1965) \cr
     \code{copper} \tab * Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001) \cr
     \code{solubility} \tab * Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
@@ -87,6 +88,8 @@ Aksu, S. and Doyle, F. M. (2001) Electrochemistry of copper in aqueous glycine s
 Amend, J. P. and Shock, E. L. (1998) Energetics of amino acid synthesis in hydrothermal ecosystems. \emph{Science} \bold{281}, 1659--1662. \url{https://doi.org/10.1126/science.281.5383.1659}
 
 Amend, J. P. and Shock, E. L. (2001) Energetics of overall metabolic reactions of thermophilic and hyperthermophilic Archaea and Bacteria. \emph{FEMS Microbiol. Rev.} \bold{25}, 175--243. \url{https://doi.org/10.1016/S0168-6445(00)00062-0}
+
+Azadi, M. R., Karrech, A., Attar, M. and Elchalakani, M. (2019) Data analysis and estimation of thermodynamic properties of aqueous monovalent metal-glycinate complexes. \emph{Fluid Phase Equilib.} \bold{480}, 25-40. \url{https://doi.org/10.1016/j.fluid.2018.10.002}
 
 Berman, R. G. (1988) Internally-consistent thermodynamic data for minerals in the system Na{\s2}O-K{\s2}O-CaO-MgO-FeO-Fe{\s2}O{\s3}-Al{\s2}O{\s3}-SiO{\s2}-TiO{\s2}-H{\s2}O-CO{\s2}. \emph{J. Petrol.} \bold{29}, 445-522. \url{https://doi.org/10.1093/petrology/29.2.445}
 

@@ -235,7 +235,7 @@ cat('These minerals, taken from the SUPCRT92 database, were present in earlier v
 
 ### `r setfile("SLOP98.csv")`
 ```{r SLOP98, results="asis", echo=FALSE}
-cat('These species, taken from the slop98 data file, were present in earlier versions of CHNOSZ but have been replaced by or are inconsistent with later updates. The data are kept here for comparative purposes. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.\n\n')
+cat('These species, taken from the slop98 data file, were present in earlier versions of CHNOSZ but have been replaced by or are incompatible with later updates. The data are kept here for comparative purposes. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}
@@ -243,7 +243,7 @@ cat('These species, taken from the slop98 data file, were present in earlier ver
 
 ### `r setfile("OldAA.csv")`
 ```{r OldAA, results="asis", echo=FALSE}
-cat('Data for these amino acids and related species were present in earlier versions of CHNOSZ but have been replaced by or are inconsistent with later updates [@Kit14]. The data are kept here to reproduce published calculations and for comparison with newer data. Use <span style="color:red">`add.obigt("OldAA")`</span> to load the data.\n\n')
+cat('Data for these amino acids and related species were present in earlier versions of CHNOSZ but have been replaced by or are incompatible with later updates [@LD12; @Kit14; @AKAE19]. The data are kept here to reproduce published calculations and for comparison with newer data. Use <span style="color:red">`add.obigt("OldAA")`</span> to load the data.\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}
