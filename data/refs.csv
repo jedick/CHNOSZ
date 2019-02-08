@@ -26,7 +26,8 @@ JH85,"K. J. Jackson and H. C. Helgeson",1985,"Econ. Geol. 80, 1365-1378","Sn min
 RA87,"E. J. Reardon and D. K. Armstrong",1987,"Geochim. Cosmochim. Acta 51, 63-72","celestite GHS",https://doi.org/10.1016/0016-7037(87)90007-X
 Ber88,"R. G. Berman",1988,"J. Petrol. 29, 445-522",minerals,https://doi.org/10.1093/petrology/29.2.445
 SH88,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","ionic species",https://doi.org/10.1016/0016-7037(88)90181-0
-SH88.1,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/0016-7037(88)90181-0
+SH88.1,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","values of GHS",https://doi.org/10.1016/0016-7037(88)90181-0
+SH88.2,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/0016-7037(88)90181-0
 SHS89,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","inorganic neutral species",https://doi.org/10.1016/0016-7037(89)90341-4
 SHS89.1,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","aqueous SiO<sub>2</sub>",https://doi.org/10.1016/0016-7037(89)90341-4
 Ber90,"R. G. Berman",1990,"Am. Mineral. 75, 328-344",annite,http://ammin.geoscienceworld.org/content/75/3-4/328
@@ -171,13 +172,13 @@ ZZL+16.1,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","As(&alpha;): V list
 ZZL+16.2,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","Cp parameters listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.3,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","dawsonite GHS",https://doi.org/10.1016/j.cageo.2016.02.013
 CHNOSZ.1,"J. M. Dick",2017,"CHNOSZ package documentation","GHS (T<sub>r</sub>) of the phase that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the phases that are stable at higher temperatures.",http://chnosz.net
-CHNOSZ.3,"J. M. Dick",2017,"CHNOSZ package documentation","metal-amino acid complexes: GHS were recalculated by adding the differences between values from @SK95 and @AH97b for alanate or glycinate to the properties of the complexes reported by @SK95.",http://chnosz.net
-CHNOSZ.5,"J. M. Dick",2017,"CHNOSZ package documentation","AuCl4- renamed to AuCl4-3",http://chnosz.net
-CHNOSZ.7,"J. M. Dick",2017,"CHNOSZ package documentation","charge of NpO2(Oxal), La(Succ)+, NH4(Succ)-, and NpO2(Succ) as listed by @PSK99",http://chnosz.net
-CHNOSZ.8,"J. M. Dick",2017,"CHNOSZ package documentation","Incorrect values of HKF a<sub>1</sub>--a<sub>4</sub> parameters for [-CH2NH2] were printed in Table 6 of @DLH06; corrected values are used here.",http://chnosz.net
-CHNOSZ.9,"J. M. Dick",2019,"CHNOSZ package documentation","recalculated values of Cp (those in @AKAE19 appear to be calculated using wrong sign on &omega;) and enthalpy (using &Delta;G=&Delta;H-T&Delta;S and the entropies of the elements)",http://chnosz.net
-CHNOSZ.10,"J. M. Dick",2019,"CHNOSZ package documentation","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: replace Ti with Tl",http://chnosz.net
-CHNOSZ.11,"J. M. Dick",2019,"CHNOSZ package documentation","HSiO<sub>3</sub><sup>-</sup>: GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",http://chnosz.net
+CHNOSZ.2,"J. M. Dick",2017,"CHNOSZ package documentation","metal-amino acid complexes: GHS were recalculated by adding the differences between values from @SK95 and @AH97b for alanate or glycinate to the properties of the complexes reported by @SK95.",http://chnosz.net
+CHNOSZ.3,"J. M. Dick",2017,"CHNOSZ package documentation","AuCl4- renamed to AuCl4-3",http://chnosz.net
+CHNOSZ.4,"J. M. Dick",2017,"CHNOSZ package documentation","charge of NpO2(Oxal), La(Succ)+, NH4(Succ)-, and NpO2(Succ) as listed by @PSK99",http://chnosz.net
+CHNOSZ.5,"J. M. Dick",2017,"CHNOSZ package documentation","Incorrect values of HKF a<sub>1</sub>--a<sub>4</sub> parameters for [-CH2NH2] were printed in Table 6 of @DLH06; corrected values are used here.",http://chnosz.net
+CHNOSZ.6,"J. M. Dick",2019,"CHNOSZ package documentation","recalculated values of Cp (those in @AKAE19 appear to be calculated using wrong sign on &omega;) and enthalpy (using &Delta;G=&Delta;H-T&Delta;S and the entropies of the elements)",http://chnosz.net
+CHNOSZ.7,"J. M. Dick",2019,"CHNOSZ package documentation","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: change Ti to Tl",http://chnosz.net
+CHNOSZ.8,"J. M. Dick",2019,"CHNOSZ package documentation","HSiO<sub>3</sub><sup>-</sup>: GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",http://chnosz.net
 LCT17,"A. R. Lowe, J. S. Cox and P. R. Tremaine",2017,"J. Chem. Thermodynamics 112, 129-145","adenine HKF parameters",https://doi.org/10.1016/j.jct.2017.04.005
 DEW17,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","other data from Aqueous Species Table in spreadsheet (see detailed references there)",http://www.dewcommunity.org
 DEW17.1,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","revised with new predicted a1 for ions",http://www.dewcommunity.org

@@ -35,19 +35,20 @@ data(thermo)
 
 # set up the plots
 layout(matrix(1:6, byrow = TRUE, nrow = 2), widths = c(2, 2, 1))
-par(mar = c(4, 3.2, 2.5, 0.5), mgp = c(2, 1, 0), las = 1, cex = 0.8)
+par(mar = c(4, 3.2, 2.5, 0.5), mgp = c(2.1, 1, 0), las = 1, cex = 0.8)
 xlab <- axis.label("T")
 ylab <- axis.label("logK")
 
 # first row: divalent metals
 matplot(T, sapply(logK_di1, c), type = "l", lwd = 2, lty = 1, xlab = xlab, ylab = ylab)
 matplot(T, sapply(logK_di1_SK95, c), type = "l", lwd = 2, lty = 2, add = TRUE)
-legend(-5, 7.7, c("Azadi et al., 2019", "Shock and Koretsky, 1995"), lty = c(1, 2), bty = "n", cex = 1)
-mtext(expression(M^"+2" + Gly^"-" == M*(Gly)^"+"), line = 0.5)
+legend(-9, 7.7, c("Azadi et al., 2019", "Shock and Koretsky, 1995"), lty = c(1, 2), bty = "n", cex = 1)
+# \u21cc is the double reaction arrow
+mtext(expression(M^"+2" + Gly^"-"~"\u21cc"~M*(Gly)^"+"), line = 0.5)
 matplot(T, sapply(logK_di2, c), type = "l", lwd = 2, lty = 1, xlab = xlab, ylab = ylab)
 matplot(T, sapply(logK_di2_SK95, c), type = "l", lwd = 2, lty = 2, add = TRUE)
-legend(-5, 14, c("Azadi et al., 2019", "Shock and Koretsky, 1995"), lty = c(1, 2), bty = "n", cex = 1)
-mtext(expression(M^"+2" + 2*Gly^"-" == M*(Gly)[2]), line = 0.5)
+legend(-9, 14, c("Azadi et al., 2019", "Shock and Koretsky, 1995"), lty = c(1, 2), bty = "n", cex = 1)
+mtext(expression(M^"+2" + 2*Gly^"-"~"\u21cc"~M*(Gly)[2]), line = 0.5)
 plot.new()
 par(xpd = NA)
 legend("right", as.expression(lapply(di, expr.species)), lty = 1, col = 1:6, bty = "n", cex = 1.2, lwd = 2)
@@ -58,9 +59,9 @@ par(xpd = FALSE)
 
 # second row: monovalent metals
 matplot(T, sapply(logK_mo1, c), type = "l", lwd = 2, lty = 1, xlab = xlab, ylab = ylab)
-mtext(expression(M^"+" + Gly^"-" == M*(Gly)), line = 0.5)
+mtext(expression(M^"+" + Gly^"-"~"\u21cc"~M*(Gly)), line = 0.5)
 matplot(T, sapply(logK_mo2, c), type = "l", lwd = 2, lty = 1, xlab = xlab, ylab = ylab)
-mtext(expression(M^"+" + 2*Gly^"-" == M*(Gly)[2]^"-"), line = 0.5)
+mtext(expression(M^"+" + 2*Gly^"-"~"\u21cc"~M*(Gly)[2]^"-"), line = 0.5)
 plot.new()
 par(xpd = NA)
 legend("right", as.expression(lapply(mo, expr.species)), lty = 1, col = 1:5, bty = "n", cex = 1.2, lwd = 2)
