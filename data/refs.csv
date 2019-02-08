@@ -43,6 +43,7 @@ JUN92,"C. de Capitani",1992,"JUN92.bs database supplied with Theriak/Domino soft
 SPRONS92.1,"H. C. Helgeson et al.",1992,"sprons92.dat computer data file","titanite: @BH83 + &quot;Gibbs free energies and enthalpies were corrected to be consistent with updated values of Gibbs free energies of Ca<sup>2+</sup> and CO<sub>3</sub><sup>2-</sup> [@SH88] together with the solubilities of calcite and aragonite reported by @PB82 &quot;",
 SPRONS92.2,"H. C. Helgeson et al.",1992,"sprons92.dat computer data file","Ca-bearing minerals; &quot;Gibbs free energies and enthalpies were corrected to be consistent with updated values of Gibbs free energies of Ca<sup>2+</sup> and CO<sub>3</sub><sup>2-</sup> [@SH88] together with the solubilities of calcite and aragonite reported by @PB82 &quot;",
 Sho92,"E. L. Shock",1992,"Geochim. Cosmochim. Acta 56, 3481-3491","diglycine, alanylglycine, leucylglycine, and diketopiperazine; not present in slop files after slop98.dat",https://doi.org/10.1016/0016-7037(92)90392-V
+Sho92.1,"E. L. Shock",1992,"Geochim. Cosmochim. Acta 56, 3481-3491","diketopiperazine GHS",https://doi.org/10.1016/0016-7037(92)90392-V
 ZS92,"C. Zhu and D. A. Sverjensky",1982,"Geochim. Cosmochim. Acta 56, 3435-3467","F,Cl,OH biotite and apatite endmembers. GHS and V were taken from Table 6 of @ZS92; heat capacity and volume parameters from `berman.dat`.",https://doi.org/10.1016/0016-7037(92)90390-5
 Sho93,"E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3341-3349","ethylacetate and acetamide",https://doi.org/10.1016/0016-7037(93)90542-5
 Sho93.1,"E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3341-3349","carbon monoxide and ethylene",https://doi.org/10.1016/0016-7037(93)90542-5
@@ -122,10 +123,10 @@ LH06b,"D. E. LaRowe and H. C. Helgeson",2006,"Thermochim. Acta 448, 82-106","Mg-
 LH06b.1,"D. E. LaRowe and H. C. Helgeson",2006,"Thermochim. Acta 448, 82-106","pyridine and piperidine",https://doi.org/10.1016/j.tca.2006.06.008
 DLH06,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","amino acid, protein, and organic groups",https://doi.org/10.5194/bg-3-311-2006
 DLH06.1,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","amino acids HKF parameters",https://doi.org/10.5194/bg-3-311-2006
-DLH06.2,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","Gly-X-Gly tripeptides Cp, V, and HKF c1, c2, omega parameters",https://doi.org/10.5194/bg-3-311-2006
+DLH06.2,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","Gly-X-Gly tripeptides Cp, V, and HKF c<sub>1</sub>, c<sub>2</sub>, &omega; parameters",https://doi.org/10.5194/bg-3-311-2006
 DLH06.3,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","glycine, [Gly], and [UPBB] HKF parameters",https://doi.org/10.5194/bg-3-311-2006
 DLH06.4,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","methionine HKF parameters",https://doi.org/10.5194/bg-3-311-2006
-DLH06.5,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","triglycine Cp, V, and HKF c1, c2, omega parameters",https://doi.org/10.5194/bg-3-311-2006
+DLH06.5,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","triglycine Cp, V, and HKF c<sub>1</sub>, c<sub>2</sub>, &omega; parameters",https://doi.org/10.5194/bg-3-311-2006
 DLH06.6,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","[Gly], [Met], and [UPBB]",https://doi.org/10.5194/bg-3-311-2006
 LMR06,"D. Langmuir et al.",2006,"Geochim. Cosmochim. Acta 70, 2942-2956","scorodite and amorphous ferric arsenate: G",https://doi.org/10.1016/j.gca.2006.03.006
 MNM+06,"J. Majzlan, A. Navrotsky et al.",2006,"Eur. J. Mineral. 18, 175-186","coquimbite, ferricopiapite, and rhomboclase",https://doi.org/10.1127/0935-1221/2006/0018-0175
@@ -162,7 +163,7 @@ SLOP15.3,"E. L. Shock et al.",2015,"slop15.dat computer data file","formaldehyde
 SLOP15.4,"E. L. Shock et al.",2015,"slop15.dat computer data file","adipic acid and n-dodecanoate: &quot;Gibbs free energy corrected to be compatible with the equation &Delta;G=&Delta;H-T&Delta;S for the formation reaction from elements. See footnote y in table 4 of @Sho95.&quot;",http://geopig.asu.edu/?q=tools
 SLOP15.5,"E. L. Shock et al.",2015,"slop15.dat computer data file","n-octanoate: &quot;Enthalpy corrected to be compatible with the equation &Delta;G=&Delta;H-T&Delta;S for the formation reaction from elements. See footnote ab in table 4 of @Sho95.&quot;",http://geopig.asu.edu/?q=tools
 SLOP15.6,"E. L. Shock et al.",2015,"slop15.dat computer data file","&quot;Enthalpy corrected to be compatible with the equation &Delta;G=&Delta;H-T&Delta;S for the formation reaction from elements.&quot;",http://geopig.asu.edu/?q=tools
-SLOP15.7,"E. L. Shock et al.",2015,"slop15.dat computer data file","hexanol, heptanol, and octanol: &quot;Minor differences in Gibbs energy, entropy, omega, a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>, a<sub>4</sub> and c<sub>1</sub> values compared to @SH90.&quot;",http://geopig.asu.edu/?q=tools
+SLOP15.7,"E. L. Shock et al.",2015,"slop15.dat computer data file","hexanol, heptanol, and octanol: &quot;Minor differences in Gibbs energy, entropy, &omega;, a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>, a<sub>4</sub> and c<sub>1</sub> values compared to @SH90.&quot;",http://geopig.asu.edu/?q=tools
 CS16,"P. A. Canovas III and E. L. Shock",2016,"Geochim. Cosmochim. Acta 195, 293-322","citric acid cycle metabolites",https://doi.org/10.1016/j.gca.2016.08.028
 CS16.1,"P. A. Canovas III and E. L. Shock",2016,"Geochim. Cosmochim. Acta 195, 293-322","citric acid species HKF a<sub>1</sub>--a<sub>4</sub> parameters",https://doi.org/10.1016/j.gca.2016.08.028
 ZZL+16,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","data listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
@@ -176,6 +177,7 @@ CHNOSZ.7,"J. M. Dick",2017,"CHNOSZ package documentation","charge of NpO2(Oxal),
 CHNOSZ.8,"J. M. Dick",2017,"CHNOSZ package documentation","Incorrect values of HKF a<sub>1</sub>--a<sub>4</sub> parameters for [-CH2NH2] were printed in Table 6 of @DLH06; corrected values are used here.",http://chnosz.net
 CHNOSZ.9,"J. M. Dick",2019,"CHNOSZ package documentation","recalculated values of Cp (those in @AKAE19 appear to be calculated using wrong sign on &omega;) and enthalpy (using &Delta;G=&Delta;H-T&Delta;S and the entropies of the elements)",http://chnosz.net
 CHNOSZ.10,"J. M. Dick",2019,"CHNOSZ package documentation","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: replace Ti with Tl",http://chnosz.net
+CHNOSZ.11,"J. M. Dick",2019,"CHNOSZ package documentation","HSiO<sub>3</sub><sup>-</sup>: GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",http://chnosz.net
 LCT17,"A. R. Lowe, J. S. Cox and P. R. Tremaine",2017,"J. Chem. Thermodynamics 112, 129-145","adenine HKF parameters",https://doi.org/10.1016/j.jct.2017.04.005
 DEW17,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","other data from Aqueous Species Table in spreadsheet (see detailed references there)",http://www.dewcommunity.org
 DEW17.1,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","revised with new predicted a1 for ions",http://www.dewcommunity.org

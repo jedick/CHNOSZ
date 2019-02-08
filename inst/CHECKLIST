@@ -26,6 +26,8 @@ release checklist for CHNOSZ
 
 - check reverse dependencies: ecipex and canprot packages
 
+- vignettes/obigt.bib: check correct year for CHNOSZ reference
+
 - documentation links: after installation, run doc/mklinks.sh
   and insert the modified anintro.html in the package
 

@@ -2,6 +2,8 @@ context("revisit")
 
 # initial setup
 suppressMessages({
+  # for numerical reproducibility, use the now-superseded properties of glycine 20190208
+  add.obigt("OldAA")
   basis("CHNOS")
   basis("O2", -65)
   species(c("leucine", "glycine", "glutamic acid"))
@@ -91,4 +93,7 @@ test_that("DGtr objective gives zero at equilibrium and >0 not at equilibrium", 
     expect_equal(min(r2$H), 0)
     expect_equal(r2$yopt, 25)
   }
+
+  # restore default database (altered in initial setp)
+  data(thermo)
 })

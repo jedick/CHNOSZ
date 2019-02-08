@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-92 (2019-02-07)
+CHANGES IN CHNOSZ 1.1.3-93 (2019-02-08)
 ---------------------------------------
 
 BUG FIXES
@@ -162,12 +162,20 @@ THERMODYNAMIC DATA
 - Update aqueous Au species with data from Akinfiev and Zotov, 2001
   and 2010, and Pokrovski et al., 2014.
 
-- Move superseded data for aqueous Au species to SLOP98.csv.
+- Move SUPCRTBL updates (As and Al minerals and aqueous species and
+  SiO2(aq)) into default database.
 
-- Move SUPCRTBL updates into default database.
+- Values for SiO2(aq) are taken from Apps and Spycher, 2004. Thanks
+  to John Apps for providing the document.
 
-- Add test-recalculate.R to check that some recalculated values are
-  correctly entered in OBIGT.
+- Recalculate GHS for HSiO3- by adding difference from SiO2(aq)
+  (Sverjensky et al., 1997) to updated values for SiO2(aq).
+
+- Add test-recalculate.R to check that recalculated values are correctly
+  entered in OBIGT.
+
+- Move superseded data for aqueous Au, As, and Al species, SiO2 and
+  HSiO3- to OBIGT/SLOP98.csv.
 
 - Add or update glycine, diglycine, and triglycine (zwitterions and
   ions), and diketopiperazine, [Gly] and [UPBB] groups from Kitadai,

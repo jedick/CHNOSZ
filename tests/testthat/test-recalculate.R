@@ -1,6 +1,7 @@
 context("recalculate")
 
 # SK95: Shock and Korestky, 1995
+# doi:10.1016/0016-7037(95)00058-8
 test_that("recalculated values from SK95 are correctly enetered in OBIGT", {
   # test added 20190206
   # thermodynamic data entries for amino acid glycinate and alanate complexes
@@ -35,4 +36,28 @@ test_that("recalculated values from SK95 are correctly enetered in OBIGT", {
   expect_equivalent(Gly_GHS_Delta, unique(round((Gly2_GHS_SK95 - Gly2_GHS_OBIGT)/2, 2)))
   expect_equivalent(Alan_GHS_Delta, unique(round(Alan_GHS_SK95 - Alan_GHS_OBIGT, 2)))
   expect_equivalent(Alan_GHS_Delta, unique(round((Alan2_GHS_SK95 - Alan2_GHS_OBIGT)/2, 2)))
+  # clean up
+  data(thermo)
+})
+
+# SSH97: Sverjensky et al., 1997
+# doi:10.1016/S0016-7037(97)00009-4
+test_that("recalculated values for HSiO3- match those in original reference", {
+  iSiO2 <- info("SiO2")
+  iHSiO3 <- info("HSiO3-")
+  # get values used in OBIGT
+  data(thermo)
+  SiO2_GHS_OBIGT <- thermo$obigt[iSiO2, c("G", "H", "S")]
+  HSiO3_GHS_OBIGT <- thermo$obigt[iHSiO3, c("G", "H", "S")]
+  # get values from SSH97
+  add.obigt("SLOP98")
+  SiO2_GHS_SSH97 <- thermo$obigt[iSiO2, c("G", "H", "S")]
+  HSiO3_GHS_SSH97 <- thermo$obigt[iHSiO3, c("G", "H", "S")]
+  # calculate differences
+  OBIGT_Delta <- HSiO3_GHS_OBIGT - SiO2_GHS_OBIGT
+  SSH97_Delta <- HSiO3_GHS_SSH97 - SiO2_GHS_SSH97
+  # perform test
+  expect_equal(OBIGT_Delta, SSH97_Delta)
+  # clean up
+  data(thermo)
 })
