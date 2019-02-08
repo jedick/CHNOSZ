@@ -1,6 +1,6 @@
 Date: 2019-02-08
 Package: CHNOSZ
-Version: 1.1.3-94
+Version: 1.1.3-95
 Title: Thermodynamic Calculations and Diagrams for Geochemistry
 Authors@R: c(
     person("Jeffrey", "Dick", , "j3ffdick@gmail.com", role = c("aut", "cre"),
@@ -14,23 +14,21 @@ Maintainer: Jeffrey Dick <j3ffdick@gmail.com>
 Depends: R (>= 3.1.0)
 Suggests: limSolve, testthat, knitr, rmarkdown, tufte
 Imports: grDevices, graphics, stats, utils
-Description: An integrated set of tools for thermodynamic calculations in geochemistry and compositional
-  biology. The thermodynamic properties of liquid water are calculated using Fortran code from
-  SUPCRT92 (Johnson et al., 1992 <doi:10.1016/0098-3004(92)90029-Q>) or an implementation
-  in R of the IAPWS-95 formulation (Wagner and Pruß, 2002 <doi:10.1063/1.1461829>).
-  Thermodynamic properties of other species are taken from a database for minerals and inorganic
-  and organic aqueous species including biomolecules, or from amino acid group additivity for
-  proteins (Dick et al., 2006 <doi:10.5194/bg-3-311-2006>). High-temperature properties are
-  calculated using the Berman-Brown (1985) <doi:10.1007/BF00379451> equations for minerals
-  and the revised Helgeson-Kirkham-Flowers (1981) <doi:10.2475/ajs.281.10.1249> equations for
-  aqueous species. The HKF equations are augmented with the Deep Earth Water (DEW) model
-  (Sverjensky et al., 2014 <doi:10.1016/j.gca.2013.12.019>) and estimates of parameters in the
-  extended Debye-Hückel equation (Manning et al., 2013 <doi:10.2138/rmg.2013.75.5>)
-  to calculate standard-state properties and activity coefficients for given ionic strength at high
-  pressure (to 6 GPa). Functions are provided to calculate standard-state properties of species and
-  reactions, define the basis species of a chemical system, automatically balance reactions, calculate
-  the chemical affinities of formation reactions for selected species, calculate the equilibrium
-  activities of those species, and plot the results on chemical activity diagrams.
+Description: An integrated set of tools for thermodynamic calculations in
+  aqueous geochemistry and geobiochemistry. Functions are provided for writing
+  balanced reactions to form species from user-selected basis species and for
+  calculating the standard molal properties of species and reactions, including
+  the standard Gibbs energy and equilibrium constant. Calculations of the
+  non-equilibrium chemical affinity and equilibrium chemical activity of species
+  can be portrayed on diagrams as a function of temperature, pressure, or
+  activity of basis species; in two dimensions, this gives a maximum affinity or
+  predominance diagram. The diagrams have formatted chemical formulas and axis
+  labels, and water stability limits can be added to Eh-pH, logfO2-T, and other
+  diagrams with a redox variable. The package has been developed to handle common
+  calculations in aqueous geochemistry, such as solubility due to complexation of
+  metal ions, mineral buffers of redox or pH, and changing the basis species
+  across a diagram ("mosaic diagrams"). CHNOSZ also has unique capabilities for
+  comparing the compositional and thermodynamic properties of different proteins.
 Encoding: UTF-8
 License: GPL (>= 2)
 BuildResaveData: no

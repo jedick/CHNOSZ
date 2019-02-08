@@ -251,6 +251,9 @@ info("methane")
 ```
 
 Multiple entries exist for methane; the index of the `aq` (aqueous) species is returned by default.
+```{marginfigure}
+This convention applies to organic species, but for inorganic species, the English name refers to the gas (<span style='color:green'>`info("oxygen")`</span>) while the chemical formula is used to identify the aqueous species (<span style='color:green'>`info("O2")`</span>).
+```
 A second argument can be used to specify a different physical state:
 ```{r info_methane_gas}
 info("methane", "gas")
@@ -1962,17 +1965,23 @@ browseURL(ref$URL)  ## opens a link to worldcat.org
 Thermodynamic properties of minerals in the default database are mostly taken from @Ber88 (including silicates, aluminosilicates, calcite, dolomite, hematite, and magnetite) and @HDNB78 (native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate any in the Berman dataset).
 Minerals are identified by the state `cr`, and (for the Helgeson dataset) `cr2`, `cr3`, etc. for higher-temperature polymorphs.
 
-Two optional datasets can be activated by using <span style="color:red">`add.obigt()`</span>:
+Some optional datasets can be activated by using <span style="color:red">`add.obigt()`</span>. The first three of these contain data that have been replaced by or are incompatible with later updates; the superseded data are kept here to reproduce published calculations and for comparison with the newer data:
+
+<span style="color:red">`add.obigt("SUPCRT92")`</span> -- This file contains data for minerals from SUPCRT92 (mostly Helgeson et al., 1978) that have been replaced by the Berman data set.
+
+<span style="color:red">`add.obigt("SLOP98")`</span> -- This file contains data from `slop98.dat` or later slop files, from Everett Shock's GEOPIG group at Arizona State University, that were previously used in CHNOSZ but have been replaced by newer data.
+This includes updates for aqueous Au species as summarized by @PAB_14, and aqueous SiO<sub>2</sub>, aqueous aluminum species, and arsenic-bearing aqueous species and minerals, as compiled in the [SUPCRTBL package](http://www.indiana.edu/~hydrogeo/supcrtbl.html) [@ZZL_16].
+Some calculations using the older data are shown in [this vignette](#complete-equilibrium-solubility) and [<span style="color:blue">`demo(go-IU)`</span>](../demo); see [<span style="color:blue">`demo(gold)`</span>](../demo) for calculations that depend exclusively on the newer data that are now loaded by default in CHNOSZ.
+
+<span style="color:red">`add.obigt("OldAA")`</span> -- This file contains superseded data for amino acids (methionine and glycine) and related species, particularly the [Met], [Gly], and protein backbone groups, as well as metal-glycinate complexes.
+The updates for these data have been taken from various publications ([LaRowe and Dick, 2012](https://doi.org/10.1016/j.gca.2011.11.041); [Kitadai, 2014](https://doi.org/10.1007/s00239-014-9616-1); [Azadi et al., 2019](https://doi.org/10.1016/j.fluid.2018.10.002))
+A comparison of log*K* of metal-glycinate complexes using the updated data is in [<span style="color:blue">`demo(glycinate)`</span>](../demo).
 
 <span style="color:red">`add.obigt("DEW")`</span> -- These are aqueous species, with modified parameters, that are intended for use with the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model [@SHA14].
 You should also run <span style="color:red">`water("DEW")`</span> to activate the equations in the model; then, they will be used by <span style="color:green">`subcrt()`</span> and <span style="color:green">`affinity()`</span>.
 Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
-<span style="color:red">`add.obigt("SLOP98")`</span> -- This file contains data that have been replaced by or are incompatible with more recent data updates.
-This includes updates for aqueous Au species as summarized by @PAB_14, and aqueous SiO<sub>2</sub>, aqueous aluminum species, and arsenic-bearing aqueous species and minerals, as compiled in the [SUPCRTBL package](http://www.indiana.edu/~hydrogeo/supcrtbl.html) [@ZZL_16].
-These updates have been applied to the default database in CHNOSZ; some calculations using the updated data are shown in [<span style="color:blue">`demo(go-IU)`</span>](../demo) and [<span style="color:blue">`demo(gold)`</span>](../demo).
-
-Detailed references for these optional datasets are in the vignette [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](obigt.html) (look under **Optional Data** / **DEW** and **Optional Data** / **SLOP98**).
+Detailed references for these optional datasets are in the vignette [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](obigt.html) (look under **Optional Data**).
 
 ## Adding data
 

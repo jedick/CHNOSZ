@@ -56,8 +56,8 @@ If \code{bases2} is provided, the list also contains \code{A.bases2} (affinities
 \dontshow{data(thermo)}# Fe-minerals and aqueous species in Fe-S-O-H system
 # speciate SO4-2, HSO4-, HS-, H2S as a function of Eh and pH
 # after Garrels and Christ, 1965 Figure 7.20
-pH <- c(0, 14, 500)
-Eh <- c(-1, 1, 500)
+pH <- c(0, 14, 250)
+Eh <- c(-1, 1, 250)
 T <- 25
 basis(c("FeO", "SO4-2", "H2O", "H+", "e-"))
 basis("SO4-2", -6)
@@ -78,6 +78,7 @@ m2 <- mosaic(bases, pH = pH, Eh = Eh, T = T)
 diagram(m2$A.species, add = TRUE, names = NULL)
 title(main=paste("Iron oxides and sulfides in water, log(total S) = -6",
   "After Garrels and Christ, 1965", sep="\n"))
+legend("bottomleft", c("log(act_Fe) = -4", "log(act_Fe) = -6"), lwd = c(2, 1), bty = "n")
 # we could overlay the basis species predominance fields
 #diagram(m1$A.bases, add=TRUE, col="blue", col.names="blue", lty=3)
 }
