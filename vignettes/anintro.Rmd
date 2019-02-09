@@ -2197,7 +2197,7 @@ Thank you for reading, and have fun!
 
 # Document history
 
-* 2010-09-30 Initial version.
+* 2010-09-30 Initial version (titled "Getting started with CHNOSZ").
 <!--
 * 2011-08-15 Add <span style="color:green">`browse.refs()`</span>; modifying database hint changed to <span style="color:blue">`help(thermo)`</span>.
 ```{marginfigure}

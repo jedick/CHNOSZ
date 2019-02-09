@@ -1,5 +1,5 @@
-CHANGES IN CHNOSZ 1.1.3-93 (2019-02-08)
----------------------------------------
+CHANGES IN CHNOSZ 1.1.3-100 (2019-02-09)
+----------------------------------------
 
 BUG FIXES
 
@@ -19,8 +19,8 @@ BUG FIXES
   reactions, and the user hasn't provided balance coefficients, stop
   with an error instead of setting the balance cofficients to 1.
   Thanks to Shuang Kong for an example calculation and Tucker Ely for
-  a previous request to produce an error here. The affected code is in
-  balance(), an unexported function used in equilibrate() and
+  a previous suggestion to produce an error here. The affected code is
+  in balance(), an unexported function used in equilibrate() and
   diagram() (and now also solubility()).
 
 NEW FEATURE: SOLUBILITY CALCULATIONS

@@ -33,11 +33,9 @@ For example, a value of 7 for pH is stored as a logarithm of activity of -7.
 
 Whenever \code{basis} is called with NULL values of both \code{state} and \code{logact}, the new set of species, if they are a valid basis set, completely replaces any existing basis definition.
 If this occurs, any existing species definition (created by the \code{species} function) is deleted.
-Call \code{basis} with \code{delete} set to TRUE or \code{species} set to \samp{""} to clear the basis definition.
-This also deletes the \code{\link{species}} list, if any.
+Call \code{basis} with \code{delete} set to TRUE or \code{species} set to \samp{""} to clear the basis definition and that of the \code{\link{species}}, if present.
 
 If the value of \code{basis} is one of the keywords in the following table, the corresponding set of basis species is loaded, and their activities are given preset values.
-This approach is used by many of the examples in the package.
 The basis species identified by these keywords are aqueous except for \H2O (liq), \O2 (gas) and \Fe2O3 (hematite).
 
   \tabular{ll}{

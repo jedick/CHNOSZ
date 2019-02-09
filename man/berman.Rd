@@ -126,7 +126,8 @@ data(OBIGT)
 # and not coesite or some other phase of SiO2
 iSiO2 <- rownames(basis()) == "SiO2"
 stopifnot(info(basis()$ispecies[iSiO2])$name == "quartz")
-# Berman's dataset doesn't have the upper temperature limits, so we don't need exceed.Ttr here
+# Berman's dataset doesn't have the upper temperature limits,
+# so we don't need exceed.Ttr here
 a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, exceed.rhomin = TRUE)
 diagram(a, add = TRUE, names = NULL, col = "blue", lwd = 1.5)
 # the list of references:

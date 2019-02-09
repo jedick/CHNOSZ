@@ -28,37 +28,36 @@
 
 \code{demos} runs all the \code{\link{demo}s} in the package.
 The demo(s) to run is/are specified by \code{which}; the default is to run them in the order of the list below.
-(Demos that are displayed on the CHNOSZ website (\url{http://chnosz.net/demos}) are indicated with an asterisk.)
 
   \tabular{ll}{
     \code{sources} \tab Cross-check the reference list with the thermodynamic database \cr
     \code{protein.equil} \tab Chemical activities of two proteins in metastable equilibrium (Dick and Shock, 2011) \cr
     \code{affinity} \tab Affinities of metabolic reactions and amino acid synthesis (Amend and Shock, 1998, 2001) \cr
-    \code{NaCl} \tab * Equilibrium constant for aqueous NaCl dissociation (Shock et al., 1992) \cr
-    \code{density} \tab * Density of \H2O, inverted from IAPWS-95 equations (\code{\link{rho.IAPWS95}}) \cr
-    \code{ORP} \tab * Temperature dependence of oxidation-reduction potential for redox standards \cr
+    \code{NaCl} \tab Equilibrium constant for aqueous NaCl dissociation (Shock et al., 1992) \cr
+    \code{density} \tab Density of \H2O, inverted from IAPWS-95 equations (\code{\link{rho.IAPWS95}}) \cr
+    \code{ORP} \tab Temperature dependence of oxidation-reduction potential for redox standards \cr
     \code{revisit} \tab Coefficient of variation of metastable equilibrium activities of proteins \cr
     \code{findit} \tab Minimize the standard deviation of logarithms of activities of sulfur species \cr
     \code{ionize} \tab ionize.aa(): contour plots of net charge and ionization properties of LYSC_CHICK \cr
-    \code{buffer} \tab  * Minerals and aqueous species as buffers of hydrogen fugacity (Schulte and Shock, 1995) \cr
+    \code{buffer} \tab Minerals and aqueous species as buffers of hydrogen fugacity (Schulte and Shock, 1995) \cr
     \code{protbuff} \tab Chemical activities buffered by thiol peroxidases or sigma factors \cr
-    \code{yeastgfp} \tab * Subcellular locations: \logfO2 - \logaH2O and \loga - \logfO2 diagrams (Dick, 2009) \cr
-    \code{glycinate} \tab * Divalent and monovalent metal-glycinate complexes (Azadi et al., 2019) \cr
-    \code{mosaic} \tab * Eh-pH diagram with two sets of changing basis species (Garrels and Christ, 1965) \cr
-    \code{copper} \tab * Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001) \cr
-    \code{solubility} \tab * Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
-    \code{gold} \tab * Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009) \cr
-    \code{wjd} \tab * \eqn{G}{G} minimization: prebiological atmospheres (Dayhoff et al., 1964) and cell periphery of yeast \cr
-    \code{dehydration} \tab * \logK of dehydration reactions; SVG file contains tooltips and links \cr
-    \code{bugstab} \tab * Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
-    \code{Shh} \tab * Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015) \cr
-    \code{saturation} \tab * Equilibrium activity diagram showing activity ratios and mineral saturation limits (Bowers et al., 1984) \cr
-    \code{adenine} \tab * HKF regression of heat capacity and volume of aqueous adenine (Lowe et al., 2017) \cr
-    \code{DEW} \tab * Deep Earth Water (DEW) model for high pressures (Sverjensky et al., 2014a and 2014b) \cr
-    \code{lambda} \tab * Effects of lambda transition on thermodynamic properties of quartz (Berman, 1988) \cr
-    \code{TCA} \tab * Standard Gibbs energies of the tricarboxylic (citric) acid cycle (Canovas and Shock, 2016) \cr
-    \code{go-IU} \tab * Diagrams using thermodynamic data in the SUPCRTBL compilation (Zimmer et al., 2016) \cr
-    \code{carboxylase} \tab * Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase \cr
+    \code{yeastgfp} \tab Subcellular locations: \logfO2 - \logaH2O and \loga - \logfO2 diagrams (Dick, 2009) \cr
+    \code{glycinate} \tab Metal-glycinate complexes (Shock and Koretsky, 1995; Azadi et al., 2019) \cr
+    \code{mosaic} \tab Eh-pH diagram with two sets of changing basis species (Garrels and Christ, 1965) \cr
+    \code{copper} \tab Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001) \cr
+    \code{solubility} \tab Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
+    \code{gold} \tab Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009) \cr
+    \code{wjd} \tab \eqn{G}{G} minimization: prebiological atmospheres (Dayhoff et al., 1964) and cell periphery of yeast \cr
+    \code{dehydration} \tab \logK of dehydration reactions; SVG file contains tooltips and links \cr
+    \code{bugstab} \tab Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
+    \code{Shh} \tab Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015) \cr
+    \code{saturation} \tab Equilibrium activity diagram showing activity ratios and mineral saturation limits (Bowers et al., 1984) \cr
+    \code{adenine} \tab HKF regression of heat capacity and volume of aqueous adenine (Lowe et al., 2017) \cr
+    \code{DEW} \tab Deep Earth Water (DEW) model for high pressures (Sverjensky et al., 2014a and 2014b) \cr
+    \code{lambda} \tab Effects of lambda transition on thermodynamic properties of quartz (Berman, 1988) \cr
+    \code{TCA} \tab Standard Gibbs energies of the tricarboxylic (citric) acid cycle (Canovas and Shock, 2016) \cr
+    \code{go-IU} \tab Diagrams using thermodynamic data in the SUPCRTBL compilation (Zimmer et al., 2016) \cr
+    \code{carboxylase} \tab Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase \cr
     \code{bison} \tab Average oxidation state of carbon in proteins for phyla at Bison Pool (Dick and Shock, 2013) \cr
   }
 
@@ -118,6 +117,8 @@ Lowe, A. R., Cox, J. S. and Tremaine, P. R. (2017) Thermodynamics of aqueous ade
 Manning, C. E., Shock, E. L. and Sverjensky, D. A. (2013) The chemistry of carbon in aqueous fluids at crustal and upper-mantle conditions: Experimental and theoretical constraints. \emph{Rev. Mineral. Geochem.} \bold{75}, 109--148. \url{https://doi.org/10.2138/rmg.2013.75.5}
 
 Schulte, M. D. and Shock, E. L. (1995) Thermodynamics of Strecker synthesis in hydrothermal systems. \emph{Orig. Life Evol. Biosph.} \bold{25}, 161--173. \url{https://doi.org/10.1007/BF01581580}
+
+Shock, E. L. and Koretsky, C. M. (1995) Metal-organic complexes in geochemical processes: Estimation of standard partial molal thermodynamic properties of aqueous complexes between metal cations and monovalent organic acid ligands at high pressures and temperatures. \emph{Geochim. Cosmochim. Acta} \bold{59}, 1497--1532. \url{https://doi.org/10.1016/0016-7037(95)00058-8}
 
 Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \url{https://doi.org/10.1039/FT9928800803}
 

@@ -14,25 +14,26 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
     eout,
     # type plot
     type = "auto", alpha = FALSE, normalize = FALSE,
-    as.residue = FALSE, balance=NULL, groups=as.list(1:length(eout$values)),
+    as.residue = FALSE, balance = NULL, groups = as.list(1:length(eout$values)),
     # figure size and sides for axis tick marks
-    xrange=NULL, mar=NULL, yline=par("mgp")[1]+0.3, side=1:4,
+    xrange = NULL, mar = NULL, yline = par("mgp")[1]+0.3, side = 1:4,
     # axis limits and labels
-    ylog=TRUE, xlim=NULL, ylim=NULL, xlab=NULL, ylab=NULL,
+    ylog = TRUE, xlim = NULL, ylim = NULL, xlab = NULL, ylab = NULL,
     # character sizes
-    cex=par("cex"), cex.names=1, cex.axis=par("cex"),
+    cex = par("cex"), cex.names = 1, cex.axis = par("cex"),
     # line styles
-    lty=NULL, lwd=par("lwd"), dotted=NULL, spline.method = NULL, contour.method = "edge",
+    lty = NULL, lwd = par("lwd"), dotted = NULL, spline.method = NULL,
+    contour.method = "edge",
     # colors
-    col=par("col"), col.names=par("col"), fill=NULL,
-    fill.NA="slategray1", limit.water=TRUE,
+    col = par("col"), col.names = par("col"), fill = NULL,
+    fill.NA = "slategray1", limit.water = TRUE,
     # field and line labels
-    names=NULL, format.names=TRUE, bold = FALSE, italic = FALSE, 
-    font = par("font"), family = par("family"), adj=0.5, dy=0, srt=0,
+    names = NULL, format.names = TRUE, bold = FALSE, italic = FALSE, 
+    font = par("font"), family = par("family"), adj = 0.5, dy = 0, srt = 0,
     # title and legend
-    main=NULL, legend.x=NA,
+    main = NULL, legend.x = NA,
     # plotting controls
-    add=FALSE, plot.it=TRUE, tplot=TRUE, ...)
+    add = FALSE, plot.it = TRUE, tplot = TRUE, ...)
   strip(affinity, ispecies = NULL, col = NULL, ns = NULL, 
     xticks = NULL, ymin = -0.2, xpad = 1, cex.names = 0.7)
   find.tp(x)
