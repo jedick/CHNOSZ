@@ -79,7 +79,7 @@ makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
   if("CHNOSZ" %in% search()) {
     are.elements <- names(out) %in% thermo$element$element
     if(!all(are.elements)) warning(paste("element(s) not in thermo$element:", 
-      paste(rownames(out)[!are.elements], collapse=" ") ))
+      paste(names(out)[!are.elements], collapse=" ") ))
   }
   # done!
   return(out)

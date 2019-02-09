@@ -263,20 +263,23 @@ check.obigt <- function() {
     else if(what=="DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW_aq.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package="CHNOSZ"), as.is=TRUE)
+    else if(what=="OldAA") tdata <- read.csv(system.file("extdata/OBIGT/OldAA.csv", package="CHNOSZ"), as.is=TRUE)
     ntot <- nrow(tdata)
     # where to keep the results
     DCp <- DV <- DG <- rep(NA,ntot)
     # first get the aqueous species
     isaq <- tdata$state=="aq"
-    eos.aq <- obigt2eos(tdata[isaq,],"aq")
-    DCp.aq <- checkEOS(eos.aq,"aq","Cp",ret.diff=TRUE)
-    DV.aq <- checkEOS(eos.aq,"aq","V",ret.diff=TRUE)
-    cat(paste("check.obigt: GHS for",sum(isaq),"aq species in",what,"\n"))
-    DG.aq <- checkGHS(eos.aq,ret.diff=TRUE)
-    # store the results
-    DCp[isaq] <- DCp.aq
-    DV[isaq] <- DV.aq
-    DG[isaq] <- DG.aq
+    if(any(isaq)) {
+      eos.aq <- obigt2eos(tdata[isaq,],"aq")
+      DCp.aq <- checkEOS(eos.aq,"aq","Cp",ret.diff=TRUE)
+      DV.aq <- checkEOS(eos.aq,"aq","V",ret.diff=TRUE)
+      cat(paste("check.obigt: GHS for",sum(isaq),"aq species in",what,"\n"))
+      DG.aq <- checkGHS(eos.aq,ret.diff=TRUE)
+      # store the results
+      DCp[isaq] <- DCp.aq
+      DV[isaq] <- DV.aq
+      DG[isaq] <- DG.aq
+    }
     # then other species, if they are present
     if(sum(!isaq) > 0) {
       eos.cgl <- obigt2eos(tdata[!isaq,],"cgl")
@@ -296,6 +299,7 @@ check.obigt <- function() {
   out <- rbind(out, checkfun("DEW"))
   out <- rbind(out, checkfun("SLOP98"))
   out <- rbind(out, checkfun("SUPCRT92"))
+  out <- rbind(out, checkfun("OldAA"))
   # set differences within a tolerance to NA
   out$DCp[abs(out$DCp) < 1] <- NA
   out$DV[abs(out$DV) < 1] <- NA
