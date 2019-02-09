@@ -2161,7 +2161,7 @@ Some functions in CHNOSZ lie outside the main workflow described above.
 ## Gibbs energy minimization
 
 <span style="color:green">`wjd()`</span> implements a Gibbs energy minimization using the method of steepest descent described by @WJD58.
-See <span style="color:blue">`?wjd`</span> as well as the vignette, [<span style="color:blue">*Winding journey down (in Gibbs energy)*</span>](wjd.pdf).
+See <span style="color:blue">`?wjd`</span> and [<span style="color:blue">`demo(wjd)`</span>](../demo).
 
 ## Group additivity and EQ3/6 output
 
@@ -2197,7 +2197,7 @@ Thank you for reading, and have fun!
 
 # Document history
 
-* 2010-09-30 Initial version (titled "Getting started with CHNOSZ").
+* 2010-09-30 Initial version, titled "Getting started with CHNOSZ".
 <!--
 * 2011-08-15 Add <span style="color:green">`browse.refs()`</span>; modifying database hint changed to <span style="color:blue">`help(thermo)`</span>.
 ```{marginfigure}

@@ -2881,9 +2881,9 @@ The examples using
 \family typewriter
 mosaic()
 \family default
- shown below are based on the maximum affinity method, but equilibration
- calculations are also possible (if a suitable example from the literature
- is found it will be added here; see also the 
+ mentioned below are based on the maximum affinity method, but equilibration
+ calculations are also possible.
+ See also the 
 \family typewriter
 blend
 \family default
@@ -2892,7 +2892,7 @@ blend
 mosaic()
 \family default
  to equilibrate the basis species rather than compose the diagram using
- the predominant basis species).
+ the predominant basis species.
 \end_layout
 
 \begin_layout Itemize
@@ -2920,8 +2920,12 @@ literal "true"
 \end_layout
 
 \begin_layout Itemize
-A calculation of copper solubility limits and speciation with aqueous glycine
- based on Fig.
+Run 
+\family typewriter
+demo("mosaic")
+\family default
+ for a calculation of copper solubility limits and speciation with aqueous
+ glycine based on Fig.
  2b of 
 \begin_inset CommandInset citation
 LatexCommand citet
@@ -2931,7 +2935,7 @@ literal "true"
 \end_inset
 
 .
- We use 
+ This demo uses 
 \family typewriter
 mosaic()
 \family default
@@ -2968,31 +2972,6 @@ literal "true"
 diagram()
 \family default
  in order to customize their format and placement.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<Aksu_Doyle, message=FALSE, results="hide", fig.width=6, fig.height=4.8, cache=TRU
-E>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-demo("copper", ask=FALSE)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section*

@@ -652,31 +652,28 @@ legend("topleft", lty=1:3, legend=paste(mM, "mM GSH"))
 
 \subsection{Mosaic diagrams}
 
-The examples using \texttt{mosaic()} shown below are based on the
-maximum affinity method, but equilibration calculations are also possible
-(if a suitable example from the literature is found it will be added
-here; see also the \texttt{blend} argument of \texttt{mosaic()} to
-equilibrate the basis species rather than compose the diagram using
-the predominant basis species).
+The examples using \texttt{mosaic()} mentioned below are based on
+the maximum affinity method, but equilibration calculations are also
+possible. See also the \texttt{blend} argument of \texttt{mosaic()}
+to equilibrate the basis species rather than compose the diagram using
+the predominant basis species.
 \begin{itemize}
 \item See the examples in \texttt{?mosaic} and \texttt{demo(\textquotedbl mosaic\textquotedbl )}
 for calculations of mineral stabilities in the Fe-S-O-$\mathrm{H_{2}O}$
 system (after \citealp{GC65}).
-\item A calculation of copper solubility limits and speciation with aqueous
-glycine based on Fig. 2b of \citet{AD01}. We use \texttt{mosaic()}
-to speciate the basis species glycine (activity $10^{-1}$) as a function
-of pH. The stability fields are shown for \emph{unequal activities}
-of the minerals (unit activity) and aqueous species ($10^{-4}$).
-This is essentially a composite of three diagrams, with glycinium,
-glycine and glycinate in the basis at low, mid and high pH. This demo
-also modifies the thermodynamic database (with \texttt{mod.obigt()})
-to use Gibbs energies taken from \citet{AD01}, and bypasses the default
+\item Run \texttt{demo(\textquotedbl mosaic\textquotedbl )} for a calculation
+of copper solubility limits and speciation with aqueous glycine based
+on Fig. 2b of \citet{AD01}. This demo uses \texttt{mosaic()} to speciate
+the basis species glycine (activity $10^{-1}$) as a function of pH.
+The stability fields are shown for \emph{unequal activities} of the
+minerals (unit activity) and aqueous species ($10^{-4}$). This is
+essentially a composite of three diagrams, with glycinium, glycine
+and glycinate in the basis at low, mid and high pH. This demo also
+modifies the thermodynamic database (with \texttt{mod.obigt()}) to
+use Gibbs energies taken from \citet{AD01}, and bypasses the default
 plotting of labels by \texttt{diagram()} in order to customize their
 format and placement.
 \end{itemize}
-<<Aksu_Doyle, message=FALSE, results="hide", fig.width=6, fig.height=4.8, cache=TRUE>>=
-demo("copper", ask=FALSE)
-@
 
 \appendix
 

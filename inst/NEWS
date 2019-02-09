@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.1.3-100 (2019-02-09)
+CHANGES IN CHNOSZ 1.1.3-101 (2019-02-09)
 ----------------------------------------
 
 BUG FIXES
@@ -103,6 +103,8 @@ DOCUMENTATION
 
 - Add demo/glycinate.R showing logK of complexation of glycinate with
   divalent and monovalent metals.
+
+- Remove vignette wjd.Rnw (Winding journey down in Gibbs energy).
 
 THERMODYNAMIC DATA
 
