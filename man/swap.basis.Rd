@@ -12,9 +12,9 @@
 
 \usage{
   swap.basis(species, species2, T = 25)
-  basis.elements(basis = get("thermo")$basis)
-  element.mu(basis = get("thermo")$basis, T = 25)
-  basis.logact(emu, basis = get("thermo")$basis, T = 25)
+  basis.elements(basis = thermo()$basis)
+  element.mu(basis = thermo()$basis, T = 25)
+  basis.logact(emu, basis = thermo()$basis, T = 25)
   ibasis(species)
 }
 
@@ -38,7 +38,7 @@ The other functions are supporting functions: \code{basis.elements} returns the 
 \seealso{ \code{\link{basis}}, and \code{\link{mosaic}} }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 ## swapping basis species
 # start with a preset basis definition
 b1 <- basis("CHNOS+")

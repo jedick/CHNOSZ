@@ -52,8 +52,8 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
   }
 
   # save starting basis and species definition
-  basis0 <- get("thermo")$basis
-  species0 <- get("thermo")$species
+  basis0 <- get("thermo", CHNOSZ)$basis
+  species0 <- get("thermo", CHNOSZ)$species
   # get species indices of requested basis species
   ispecies <- lapply(bases, info)
   if(any(is.na(unlist(ispecies)))) stop("one or more of the requested basis species is unavailable")

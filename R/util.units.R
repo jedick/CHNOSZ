@@ -4,40 +4,40 @@
 P.units <- function(units=NULL) {
   ## change units of pressure or list the current one
   # show the current units, if none is specified
-  if(is.null(units)) return(get("thermo")$opt$P.units)
+  if(is.null(units)) return(get("thermo", CHNOSZ)$opt$P.units)
   # argument handling
   units <- tolower(units)
   if(!units %in% c("bar","mpa")) stop("units of pressure must be either bar or MPa")
   # set the units and return them
-  if(units=="bar") with(as.environment("CHNOSZ"), thermo$opt$P.units <- "bar")
-  if(units=="mpa") with(as.environment("CHNOSZ"), thermo$opt$P.units <- "MPa")
-  message("changed pressure units to ", get("thermo")$opt$P.units)
+  if(units=="bar") with(CHNOSZ, thermo$opt$P.units <- "bar")
+  if(units=="mpa") with(CHNOSZ, thermo$opt$P.units <- "MPa")
+  message("changed pressure units to ", get("thermo", CHNOSZ)$opt$P.units)
 }
 
 T.units <- function(units=NULL) {
   ## change units of temperature or list the current one
   # show the current units, if none is specified
-  if(is.null(units)) return(get("thermo")$opt$T.units)
+  if(is.null(units)) return(get("thermo", CHNOSZ)$opt$T.units)
   # argument handling
   units <- tolower(units)
   if(!units %in% c("c","k")) stop("units of temperature must be either C or K")
   # set the units and return them
-  if(units=="c") with(as.environment("CHNOSZ"), thermo$opt$T.units <- "C")
-  if(units=="k") with(as.environment("CHNOSZ"), thermo$opt$T.units <- "K")
-  message("changed temperature units to ", get("thermo")$opt$T.units)
+  if(units=="c") with(CHNOSZ, thermo$opt$T.units <- "C")
+  if(units=="k") with(CHNOSZ, thermo$opt$T.units <- "K")
+  message("changed temperature units to ", get("thermo", CHNOSZ)$opt$T.units)
 }
 
 E.units <- function(units=NULL) {
   ## change units of energy or list the current one
   # show the current units, if none is specified
-  if(is.null(units)) return(get("thermo")$opt$E.units)
+  if(is.null(units)) return(get("thermo", CHNOSZ)$opt$E.units)
   # argument handling
   units <- tolower(units)
   if(!units %in% c("cal","j")) stop("units of energy must be either cal or J")
   # set the units and return them
-  if(units=="cal") with(as.environment("CHNOSZ"), thermo$opt$E.units <- "cal")
-  if(units=="j") with(as.environment("CHNOSZ"), thermo$opt$E.units <- "J")
-  message("changed energy units to ", get("thermo")$opt$E.units)
+  if(units=="cal") with(CHNOSZ, thermo$opt$E.units <- "cal")
+  if(units=="j") with(CHNOSZ, thermo$opt$E.units <- "J")
+  message("changed energy units to ", get("thermo", CHNOSZ)$opt$E.units)
 }
 
 convert <- function(value, units, T=298.15,
@@ -100,7 +100,7 @@ outvert <- function(value,units) {
   # converts the given value from the given units to
   # those specified in thermo$opt
   units <- tolower(units)
-  opt <- get("thermo")$opt
+  opt <- get("thermo", CHNOSZ)$opt
   if(units %in% c('c','k')) {
     if(units=='c' & opt$T.units=='K') return(convert(value,'k'))
     if(units=='k' & opt$T.units=='C') return(convert(value,'c'))
@@ -121,7 +121,7 @@ envert <- function(value,units) {
   # from those given in thermo$opt
   if(!is.numeric(value[1])) return(value)
   units <- tolower(units)
-  opt <- get("thermo")$opt
+  opt <- get("thermo", CHNOSZ)$opt
   if(units %in% c('c','k','t.units')) {
     if(units=='c' & opt$T.units=='K') return(convert(value,'c'))
     if(units=='k' & opt$T.units=='C') return(convert(value,'k'))

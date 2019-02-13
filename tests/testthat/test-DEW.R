@@ -2,7 +2,7 @@ context("DEW")
 
 # since this is alphabetically the first test,
 # we need to load the 'thermo' object (for running tests in R CMD check)
-suppressMessages(data(thermo))
+suppressMessages(reset())
 
 test_that("density of water is calculated correctly", {
   pressure <- c(5000, 5000, 10000, 10000, 20000, 20000, 50000, 50000)

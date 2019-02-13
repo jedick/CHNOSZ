@@ -95,5 +95,5 @@ test_that("DGtr objective gives zero at equilibrium and >0 not at equilibrium", 
   }
 
   # restore default database (altered in initial setp)
-  data(thermo)
+  reset()
 })

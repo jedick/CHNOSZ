@@ -18,9 +18,9 @@
     use.state=FALSE, use.makeup=FALSE)
   expr.property(property, molality = FALSE)
   expr.units(property, prefix = "", per = "mol")
-  axis.label(label, units = NULL, basis = get("thermo")$basis, prefix = "",
+  axis.label(label, units = NULL, basis = thermo()$basis, prefix = "",
     molality = FALSE)
-  describe.basis(basis = get("thermo")$basis, ibasis = 1:nrow(basis),
+  describe.basis(basis = thermo()$basis, ibasis = 1:nrow(basis),
     digits = 1, oneline = FALSE, molality = FALSE, use.pH = TRUE)
   describe.property(property, value, digits = 0, oneline = FALSE,
     ret.val = FALSE)
@@ -124,7 +124,7 @@ Note that \code{\link{diagram}} sets \code{molality} to TRUE if \code{IS} was su
 \code{demo("saturation")} for examples of \code{syslab} and \code{ratlab}.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## show descriptions of species and properties on a plot
 plot(0, 0, xlim=c(1,5), ylim=c(1,5), xlab="function", ylab="example")
 text0 <- function(...) text(..., adj=0)

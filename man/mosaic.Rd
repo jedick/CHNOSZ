@@ -53,7 +53,7 @@ If \code{bases2} is provided, the list also contains \code{A.bases2} (affinities
 }
 
 \examples{
-\dontshow{data(thermo)}# Fe-minerals and aqueous species in Fe-S-O-H system
+\dontshow{reset()}# Fe-minerals and aqueous species in Fe-S-O-H system
 # speciate SO4-2, HSO4-, HS-, H2S as a function of Eh and pH
 # after Garrels and Christ, 1965 Figure 7.20
 pH <- c(0, 14, 250)

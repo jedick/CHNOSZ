@@ -139,7 +139,7 @@ Zimmer, K., Zhang, Y., Lu, P., Chen, Y., Zhang, G., Dalkilic, M. and Zhu, C. (20
 
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 \dontshow{opar <- par(no.readonly=TRUE)}
 demos(c("ORP", "NaCl"))
 \dontshow{par(opar)}

@@ -1,7 +1,7 @@
 context("thermo")
 
 # clear out any previous basis definition or database alterations
-suppressMessages(data(thermo))
+suppressMessages(reset())
 
 test_that("NAs in thermo$obigt propagate to subcrt()", {
   # first of all, water is in thermo$obigt but its properties
@@ -19,7 +19,7 @@ test_that("NAs in thermo$obigt propagate to subcrt()", {
   mod.obigt(name="[Ala]", state="aq", G=NA, S=NA)
   expect_true(all(is.na(subcrt("[Ala]", "aq")$out[[1]]$G)))
   # be nice and restore the database
-  suppressMessages(data(thermo))
+  suppressMessages(reset())
 })
 
 test_that("minimal usage of mod.obigt() creates usable data entries", {

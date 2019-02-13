@@ -116,6 +116,6 @@ legend("bottomright", lty = c(3, 2, 1), lwd = c(1, 1, 2), col = c("black", "blac
   "density model (Lowe et al., 2017)", "HKF model (fit by Lowe et al., 2017 using CHNOSZ)")
 )
 # reset database and computational settings
-data(thermo)
+reset()
 
 par(opar)

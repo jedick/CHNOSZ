@@ -20,7 +20,7 @@
   Given a matrix \code{A}, with number of rows equal to or greater than the number of columns, return the combinations of row numbers that constitute invertible square matrices. Consider only the first \code{nmax} rows of the original matrix (to save time for large systems).
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## what combinations of the 20 common amino acids have
 ## a linearly independent stoichiometry with five elements?
 # the names of the amino acids

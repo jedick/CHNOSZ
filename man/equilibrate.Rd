@@ -101,7 +101,7 @@ Use \code{solubility} to find complete equilibrium, where the affinities of the 
 }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 ## equilibrium in a simple system:
 ## ionization of carbonic acid
 basis("CHNOS+")

@@ -2,7 +2,7 @@
 ## Dayhoff et al., 1964 (https://doi.org/10.1126/science.146.3650.1461)
 #pdf("dayhoff.pdf", width=6, height=6)
 # read formulas and Gibbs energies
-file <- system.file("extdata/thermo/DLEN67.csv", package="CHNOSZ")
+file <- system.file("extdata/adds/DLEN67.csv", package="CHNOSZ")
 dlen <- read.csv(file, as.is=TRUE, row.names=1)
 # turn formulas into a stoichiometric matrix
 A <- i2A(dlen$formula)

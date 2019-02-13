@@ -18,7 +18,7 @@ i2A <- function(formula) {
     A <- t(sapply(msz, c))
     # add names from character argument
     # or from thermo$obigt for numeric argument
-    if(is.numeric(formula[1])) rownames(A) <- get("thermo")$obigt$name[formula]
+    if(is.numeric(formula[1])) rownames(A) <- get("thermo", CHNOSZ)$obigt$name[formula]
     else rownames(A) <- formula
   }
   return(A)
@@ -60,7 +60,7 @@ as.chemical.formula <- function(makeup, drop.zero=TRUE) {
 
 mass <- function(formula) {
   # calculate the mass of elements in chemical formulas
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   formula <- i2A(get.formula(formula))
   ielem <- match(colnames(formula), thermo$element$element)
   if(any(is.na(ielem))) stop(paste("element(s)",
@@ -71,7 +71,7 @@ mass <- function(formula) {
 
 entropy <- function(formula) {
   # calculate the standard molal entropy at Tref of elements in chemical formulas
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   formula <- i2A(get.formula(formula))
   ielem <- match(colnames(formula), thermo$element$element)
   if(any(is.na(ielem))) warning(paste("element(s)",
@@ -158,7 +158,7 @@ get.formula <- function(formula) {
   # for numeric values, get the formulas from those rownumbers of thermo$obigt
   i <- as.integer.nowarn(formula)
   # we can't have more than the number of rows in thermo$obigt
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   iover <- i > nrow(thermo$obigt)
   iover[is.na(iover)] <- FALSE
   if(any(iover)) stop(paste("species number(s)",paste(i[iover],collapse=" "),

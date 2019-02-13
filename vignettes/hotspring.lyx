@@ -285,7 +285,7 @@ library(CHNOSZ)
 
 \begin_layout Plain Layout
 
-data(thermo)
+reset()
 \end_layout
 
 \begin_layout Plain Layout
@@ -1802,7 +1802,7 @@ for(j in 1:2) {
 
 \begin_layout Plain Layout
 
-    data(thermo)
+    reset()
 \end_layout
 
 \begin_layout Plain Layout

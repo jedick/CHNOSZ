@@ -48,8 +48,8 @@ makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
   # if the formula argument is numeric,
   # and if the thermo object is available,
   # get the formula of that numbered species from thermo$obigt
-  if("CHNOSZ" %in% search()) {
-    thermo <- get("thermo", "CHNOSZ")
+  if(exists("CHNOSZ")) {
+    thermo <- get("thermo", CHNOSZ)
     if(is.numeric(formula)) formula <- thermo$obigt$formula[formula]
   }
   # first deal with charge
@@ -76,7 +76,7 @@ makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
   # all done with the counting, now apply the multiplier
   out <- out * multiplier
   # complain if there are any elements that look strange
-  if("CHNOSZ" %in% search()) {
+  if(exists("CHNOSZ")) {
     are.elements <- names(out) %in% thermo$element$element
     if(!all(are.elements)) warning(paste("element(s) not in thermo$element:", 
       paste(names(out)[!are.elements], collapse=" ") ))

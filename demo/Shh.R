@@ -23,8 +23,8 @@ names <- c(SHH = "Shh", OLIG2 = "Olig2", NKX22 = "Nkx2.2", FOXA2 = "Foxa2",
   GLI3R = "Gli3R")
 
 # protein indices of Shh and the transcription factors
-ip <- match(pname, thermo$protein$protein)
-aa <- thermo$protein[ip, ]
+ip <- match(pname, thermo()$protein$protein)
+aa <- thermo()$protein[ip, ]
 
 # set up basis species
 basis("CHNOS")
@@ -200,4 +200,4 @@ if(interp) {
 # all done!
 par(opar)
 if(pdf) dev.off()
-data(thermo)
+reset()

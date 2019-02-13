@@ -1,7 +1,7 @@
 context("affinity")
 
 # clear out any previous basis definition or database alterations
-suppressMessages(data(thermo))
+suppressMessages(reset())
 
 test_that("errors come as expected", {
   expect_error(affinity(iprotein=7), "basis species are not defined")
@@ -104,7 +104,7 @@ test_that("'iprotein' gives consistent results on a transect", {
   # Eq. 24 of the paper
   H2 <- -11+T*3/40
   # remove "RESIDUE" entries in thermo$obigt (clutter from first test)
-  data(thermo)
+  reset()
   basis(c("HCO3-", "H2O", "NH3", "HS-", "H2", "H+"),
     "aq", c(-3, 0, -4, -7, 999, 999))
   sites <- c("N", "S", "R", "Q", "P")

@@ -57,7 +57,7 @@ aasum <- function(aa, abundance=1, average=FALSE, protein=NULL, organism=NULL) {
 add.protein <- function(aa) {
   # add a properly constructed data frame of 
   # amino acid counts to thermo$protein
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   if(!identical(colnames(aa), colnames(thermo$protein)))
     stop("'aa' does not have the same columns as thermo$protein")
   # find any protein IDs that are duplicated
@@ -75,7 +75,7 @@ add.protein <- function(aa) {
   }
   rownames(tp.new) <- NULL
   thermo$protein <- tp.new
-  assign("thermo", thermo, "CHNOSZ")
+  assign("thermo", thermo, CHNOSZ)
   # return the new rownumbers
   ip <- pinfo(po)
   # make some noise

@@ -34,7 +34,7 @@ findit <- function(lims=list(), objective="CV", niter=NULL, iprotein=NULL, plot.
   }
 
   # the initial values of the guesses (if midpoint==FALSE)
-  basis <- get("thermo")$basis
+  basis <- get("thermo", CHNOSZ)$basis
 
   # a hack so that we can use pH as a variable
   if("pH" %in% names(lims)) {
@@ -224,7 +224,7 @@ plot_findit <- function(x,which=NULL,mar=c(3.5,5,2,2),xlab="iteration",...) {
   for(i in which) {
     niter <- length(x$value[[i]])
     ylab <- names(x$value)[i]
-    if(ylab %in% c(rownames(get("thermo")$basis),"T","P","pH","Eh")) ylab <- axis.label(ylab)
+    if(ylab %in% c(rownames(get("thermo", CHNOSZ)$basis),"T","P","pH","Eh")) ylab <- axis.label(ylab)
     # the values
     plot(1:niter,x$value[[i]],xlab=xlab,ylab=ylab,...)
     lines(1:niter,x$value[[i]])

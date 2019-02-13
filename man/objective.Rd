@@ -77,7 +77,7 @@ Each objective function has an attribute (see \code{\link{attributes}} and \code
 \seealso{ \code{\link{revisit}}, \code{\link{findit}} }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 ## a made-up system: 4 species, 1 condition
 loga1 <- t(-4:-1)
 loga2 <- loga1 + 1

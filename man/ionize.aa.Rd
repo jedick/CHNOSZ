@@ -33,7 +33,7 @@
 
 \seealso{ \code{\link{pinfo}}, \code{\link{affinity}} }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## Charge of LYSC_CHICK as a function of pH and T
 # After Fig. 10 of Dick et al., 2006
 # the rownumber of the protein in thermo$protein

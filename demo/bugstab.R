@@ -73,4 +73,4 @@ label.figure("E", yfrac=0.96, paren=FALSE, font=2, cex=1)
 par(opar)
 layout(1)
 # reset thermodynamic database
-data(thermo)
+reset()

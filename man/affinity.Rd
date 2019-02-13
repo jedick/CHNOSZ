@@ -76,7 +76,7 @@ However, if one or more of \code{pe}, \code{Eh} or \code{pH} is among the variab
 }
 
 \examples{
-\dontshow{data(thermo)}## set up a system and calculate
+\dontshow{reset()}## set up a system and calculate
 ## chemical affinities of formation reactions
 basis(c("SiO2", "MgO", "H2O", "O2"), c(-5, -5, 0, 999))
 species(c("quartz","enstatite","forsterite"))

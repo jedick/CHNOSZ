@@ -1,3 +1,20 @@
+CHANGES IN CHNOSZ 1.2.0-1 (2019-02-13)
+--------------------------------------
+
+CRAN COMPLIANCE
+
+- Because data(thermo) and data(OBIGT) did not actually create said
+  objects in the user's workspace (the expected behavior for data()),
+  the package's data are now loaded by two new functions, reset() and
+  obigt(). reset() is automatically run upon loading the package, so
+  that existing scripts beginning with data(thermo) still work (this
+  command now has no effect other than producing a warning).
+
+OTHER CHANGES
+
+- Add thermo() as a convenience function to access or modify the
+  package's data, especially various computational options.
+
 CHANGES IN CHNOSZ 1.2.0 (2019-02-09)
 ------------------------------------
 

@@ -117,7 +117,7 @@ First, load CHNOSZ and its database:
 
 ```{r library_CHNOSZ}
 library(CHNOSZ)
-data(thermo)
+reset()
 ```
 
 Now, read a data file with experimental measurements from @HW97.

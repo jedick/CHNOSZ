@@ -65,4 +65,4 @@ mtitle(expression("Copper-water-glycine at 25"~degree*"C and 1 bar",
   "After Aksu and Doyle, 2001 (Fig. 2b)"), line=0.5)
 
 # done!
-data(thermo)
+reset()

@@ -22,7 +22,7 @@ library(CHNOSZ)
 ```
 
 ```{r data_thermo, include=FALSE}
-data(thermo)
+reset()
 ```
 
 ```{r nspecies, include=FALSE}
@@ -62,20 +62,20 @@ filerefs <- function(csvfile, dat=NULL, message=FALSE) {
   if(length(tab)==0) return(paste(dat$name, dat$state))
   # the keys only (no [S92] etc.)
   keys <- sapply(strsplit(names(tab), " "), "[", 1)
-  # warn if any keys aren't in thermo$ref$key
-  ikey <- match(keys, thermo$ref$key)
+  # warn if any keys aren't in thermo()$ref$key
+  ikey <- match(keys, thermo()$ref$key)
   ina <- is.na(ikey)
-  if(any(ina)) cat(paste("**WARNING: key(s)", paste(names(tab)[ina], collapse=" "), "not found in `thermo$ref$key`**\n\n"))
-  # put the table in chronological order, according to thermo$ref
-  #ikey <- na.omit(match(thermo$ref$key, keys))
-  ikey <- order(match(keys, thermo$ref$key)) # works for duplicated keys (e.g. "Sho92" and "Sho92 [S98]")
+  if(any(ina)) cat(paste("**WARNING: key(s)", paste(names(tab)[ina], collapse=" "), "not found in `thermo()$ref$key`**\n\n"))
+  # put the table in chronological order, according to thermo()$ref
+  #ikey <- na.omit(match(thermo()$ref$key, keys))
+  ikey <- order(match(keys, thermo()$ref$key)) # works for duplicated keys (e.g. "Sho92" and "Sho92 [S98]")
   tab <- tab[ikey]
   keys <- keys[ikey]
   xxx <- lapply(seq_along(tab), function(i){
     thiskey <- keys[i]
-    # read thermo$ref$note
-    iref <- match(thiskey, thermo$ref$key)
-    note <- thermo$ref$note[iref]
+    # read thermo()$ref$note
+    iref <- match(thiskey, thermo()$ref$key)
+    note <- thermo()$ref$note[iref]
     if(!identical(note, "")) note <- paste0(" *", note, "* ")
     # append symbol for [S92], [S98], or [S15]
     if(grepl("[S92]", names(tab)[i], fixed=TRUE) | grepl("SPRONS92", names(tab)[i], fixed=TRUE)) note <- paste0(note, "(ø)")
@@ -104,12 +104,12 @@ filerefs <- function(csvfile, dat=NULL, message=FALSE) {
 ```
 
 This [vignette](index.html), produced on `r Sys.Date()`, documents the sources of thermodynamic data in CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
-Running <span style='color:red'>`data(thermo)`</span> creates the default database (`thermo$obigt`) in the R session.
+Running <span style='color:red'>`reset()`</span> creates the default database (`thermo()$obigt`) in the R session.
 
-The sections below correspond to CSV data files that are stored in the `extdata/OBIGT` package directory and read by <span style='color:red'>`data(thermo)`</span> (except for Optional Data).
-In each section, the primary references (`ref1` in `thermo$obigt`) are listed in chronological order.
+The sections below correspond to CSV data files that are stored in the `extdata/OBIGT` package directory and read by <span style='color:red'>`reset()`</span> (except for Optional Data).
+In each section, the primary references (`ref1` in `thermo()$obigt`) are listed in chronological order.
 Any secondary references (`ref2`) are listed with bullet points.
-Each reference is followed by the number of species, and a note (from `thermo$refs`).
+Each reference is followed by the number of species, and a note (from `thermo()$refs`).
 Symbols show whether the data were present in the earliest of the sprons92.dat (ø), slop98.dat (\*), slop07.dat (†), or slop15.dat (‡) datafiles for the SUPCRT92 package.
 
 Any additional comments are placed at the beginning of the sections.
@@ -137,7 +137,7 @@ cat('The formation reaction of the proton can be expressed as &frac12;H<sub>2,(*
 cat('Because the conventional standard Gibbs energy of this reaction is 0 at all *T*, the standard entropy of the reaction is also constrained to be zero (cf. [Puigdomenech et al., 1997](http://www.oecd-nea.org/dbtdb/pubs/book-pdf/427-494.pdf)).\n')
 cat('Therefore, the "element" of positive charge (Z) has zero thermodynamic properties except for an entropy, *S*°<sub>*T*<sub>r</sub></sub>, that is negative one-half that of H<sub>2,(*g*)</sub>.\n')
 cat('The standard entropy of the aqueous electron, which is a solely a pseudospecies defined by *e*<sup>-</sup> = -Z, is opposite that of Z.<span style="color:red">**</span>\n\n')
-cat('Despite these considerations, the final column of the thermodynamic database (`thermo$obigt`) lists a charge of "0" for both the aqueous proton and electron.\n')
+cat('Despite these considerations, the final column of the thermodynamic database (`thermo()$obigt`) lists a charge of "0" for both the aqueous proton and electron.\n')
 cat('Data in this this column are used in CHNOSZ only to specify the charge that is input to the "*g*-function" ([Tanger and Helgeson, 1988](https://doi.org/10.2475/ajs.288.1.19); [Shock and Helgeson, 1988](https://doi.org/10.1016/0016-7037(88)90181-0)).\n')
 cat('Setting it to zero prevents activation of the *g*-function, which would result in non-zero contributions to thermodynamic properties, conflicting with the conventions mentioned above.\n')
 cat('All other calculations in CHNOSZ obtain the elemental makeup, including the correct charge for the species, by parsing the chemical formulas stored in the database.<span style="color:red">^^</span>\n\n')
@@ -186,7 +186,7 @@ cat("The source of parameters used here for goethite is different from that in t
 ### `r setfile("Berman_cr.csv")`
 ```{r Berman_cr, results="asis", echo=FALSE}
 cat("This file gives the identifiying information for minerals whose properties are calculated using the formulation of [Berman (1988)](https://doi.org/10.1093/petrology/29.2.445).\n")
-cat("Note that thermodynamic properties for these minerals are listed as NA in `thermo$obigt`; the actual data are stored separately, as CSV files in `extdata/Berman/*.csv`.\n")
+cat("Note that thermodynamic properties for these minerals are listed as NA in `thermo()$obigt`; the actual data are stored separately, as CSV files in `extdata/Berman/*.csv`.\n")
 ```
 
 ```{r reflist, results="asis", echo=FALSE}
@@ -349,7 +349,7 @@ used2 <- c(used2, filerefs(csvfile))
 
 # Total count of species
 
-`r length(used)` of `r nrow(thermo$obigt)` entries in `thermo$obigt` and `r length(optused)` optional data entries are documented here.
+`r length(used)` of `r nrow(thermo()$obigt)` entries in `thermo()$obigt` and `r length(optused)` optional data entries are documented here.
 
 ```{r check_used_used2, results="asis", echo=FALSE}
 if(length(used) + length(optused) != length(used2)) cat(paste0("**WARNING: Tabbed list has ", length(used) + length(optused), " species but 'All at once list' has ", length(used2),".**\n\n"))

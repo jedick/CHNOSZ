@@ -77,7 +77,7 @@ dim(dimSums(d,2))  # 4 2
 dim(dimSums(d,3))  # 4 3
 
 # working with an 'affinity' object
-\dontshow{data(thermo)}
+\dontshow{reset()}
 basis("CHNOS+")
 species("alanine")
 a1 <- affinity(O2=c(-80,-60))   # at pH=7

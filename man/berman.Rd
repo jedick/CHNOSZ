@@ -78,7 +78,7 @@ A data frame with \code{T} (K), \code{P} (bar), \code{G}, \code{H}, \code{S}, an
 }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 # other than the formula, the parameters aren't stored in
 # thermo$obigt, so this shows NAs
 info(info("quartz", "cr"))
@@ -121,7 +121,7 @@ ref1 <- thermo.refs(species()$ispecies)$key
 ## now use the (default) data from Berman, 1988
 # this resets the thermodynamic database
 # without affecting the basis and species settings
-data(OBIGT)
+obigt()
 # we can check that we have Berman's quartz
 # and not coesite or some other phase of SiO2
 iSiO2 <- rownames(basis()) == "SiO2"
@@ -142,7 +142,7 @@ title(main = syslab(c("K2O", "Al2O3", "SiO2", "H2O", "HCl")), line = 1.8)
 title(main = "Helgeson and Berman minerals, after Sverjensky et al., 1991",
       line = 0.3, font.main = 1)
 # cleanup for next example
-data(thermo)
+reset()
 
 # make a P-T diagram for SiO2 minerals (Ber88 Fig. 4)
 basis(c("SiO2", "O2"), c("cr", "gas"))
@@ -160,7 +160,7 @@ Gex_Ber88 <- subcrt(species, coeffs, T=T, P=1)$out$G
 # add data from BA96
 datadir <- system.file("extdata/Berman/testing", package="CHNOSZ")
 add.obigt(file.path(datadir, "BA96_obigt.csv"))
-thermo$opt$Berman <<- file.path(datadir, "BA96_berman.csv")
+thermo("opt$Berman" = file.path(datadir, "BA96_berman.csv"))
 Gex_BA96 <- subcrt(species, coeffs, T=seq(600, 1500, 50), P=1)$out$G
 # Ber88 is lower than BA96 at low T
 stopifnot((Gex_BA96 - Gex_Ber88)[1] > 0)
@@ -168,7 +168,7 @@ stopifnot((Gex_BA96 - Gex_Ber88)[1] > 0)
 # (actually, in our calculation they cross closer to 800 deg C)
 stopifnot(T[which.min(abs(Gex_BA96 - Gex_Ber88))] == 800)
 # reset the database (thermo$opt$E.units, thermo$obigt, and thermo$opt$Berman)
-data(thermo)
+reset()
 }
 
 \references{

@@ -27,7 +27,7 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
   # rho - for subcrt() output and g function
   # Born functions and epsilon - for HKF calculations
   H2O.props <- c(H2O.props, "QBorn", "XBorn", "YBorn", "epsilon")
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   if(grepl("SUPCRT", thermo$opt$water)) {
     # using H2O92D.f from SUPCRT92: alpha, daldT, beta - for partial derivatives of omega (g function)
     H2O.props <- c(H2O.props, "alpha", "daldT", "beta")

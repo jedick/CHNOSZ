@@ -42,7 +42,7 @@ If \code{logact} is NULL, the function takes the logarithms of activities from t
 If any of those species are proteins, the function gets their lengths using \code{protein.length}.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 # we need the Helgeson et al., 1978 minerals for this example
 add.obigt("SUPCRT92")
 # that replaces the existing enstatite with the first phase;
@@ -57,7 +57,7 @@ dPdTtr(i2, i3)  # second transition
 Ttr(i1, i2, P=c(1,10,100,1000))
 Ttr(i2, i3, P=c(1,10,100,1000))
 # restore default database
-data(OBIGT)
+obigt()
 
 # calculate the GHS at Tr for the high-temperature phases of iron
 # using transition enthalpies from the SUPCRT92 database (sprons92.dat)

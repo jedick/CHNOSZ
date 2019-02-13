@@ -22,7 +22,7 @@ berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.t
   DS10 <- read.csv(paste0(dir, "/DS10.csv"), as.is=TRUE)
   FDM14 <- read.csv(paste0(dir, "/FDM+14.csv"), as.is=TRUE)
   BDat17 <- read.csv(paste0(dir, "/BDat17.csv"), as.is=TRUE)
-  userfile <- get("thermo")$opt$Berman
+  userfile <- get("thermo", CHNOSZ)$opt$Berman
   userfileexists <- FALSE
   dat <- rbind(BDat17, FDM14, DS10, JUN92, ZS92, SHD91, Ber90, Ber88)
   if(!is.na(userfile)) {

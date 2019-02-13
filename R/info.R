@@ -9,7 +9,7 @@
 info <- function(species=NULL, state=NULL, check.it=TRUE) {
   ## return information for one or more species in thermo$obigt
   ## if no species are requested, summarize the available data  20101129
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   if(is.null(species)) {
     message("info: 'species' is NULL; summarizing information about thermodynamic data...")
     message(paste("thermo$obigt has", nrow(thermo$obigt[thermo$obigt$state=="aq", ]), "aqueous,",
@@ -63,7 +63,7 @@ info <- function(species=NULL, state=NULL, check.it=TRUE) {
 info.text <- function(ispecies) {
   # a textual description of species name, formula, source, e.g.
   # CO2 [CO2(aq)] (SSW01, SHS89, 11.Oct.07)
-  this <- get("thermo")$obigt[ispecies, ]
+  this <- get("thermo", CHNOSZ)$obigt[ispecies, ]
   sourcetext <- this$ref1
   ref2 <- this$ref2
   if(!is.na(ref2)) sourcetext <- paste(sourcetext, ref2, sep=", ")
@@ -78,7 +78,7 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
   # thermo$obigt$[species|abbrv|formula] or NA otherwise
   # a match to thermo$obigt$state is also required if 'state' is not NULL
   # (first occurence of a match to species is returned otherwise)
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   # find matches for species name, abbreviation or formula
   matches.species <- thermo$obigt$name==species | thermo$obigt$abbrv==species | thermo$obigt$formula==species
   # since thermo$obigt$abbrv contains NAs, convert NA results to FALSE
@@ -101,7 +101,7 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
         eos <- protein.obigt(ip, state=state)
         # the real assignment work 
         nrows <- suppressMessages(mod.obigt(eos))
-        thermo <- get("thermo", "CHNOSZ")
+        thermo <- get("thermo", CHNOSZ)
         matches.species <- rep(FALSE, nrows)
         matches.species[nrows] <- TRUE
       } else return(NA)
@@ -168,7 +168,7 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
 info.numeric <- function(ispecies, check.it=TRUE) {
   # from a numeric species index in 'ispecies' return the 
   # thermodynamic properties and equations-of-state parameters
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   # if we're called with NA, return an empty row
   if(is.na(ispecies)) {
     this <- thermo$obigt[1,]
@@ -222,7 +222,7 @@ info.approx <- function(species, state=NULL) {
   # returns species indices that have an approximate match of 'species'
   # to thermo$obigt$[name|abbrv|formula], 
   # possibly restricted to a given state
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   if(!is.null(state)) this <- thermo$obigt[thermo$obigt$state==state, ]
   else this <- thermo$obigt
   # only look for fairly close matches

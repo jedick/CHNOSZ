@@ -74,7 +74,7 @@ The result is \code{NaN} for any formula that does not contain carbon. Elements 
 \code{\link{protein.formula}} has an example of computing ZC for proteins compiled from the RefSeq database.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## mass and entropy from chemical formulas
 mass("H2O")
 entropy("H2O")
@@ -102,7 +102,7 @@ stopifnot(all.equal(ZC(si$formula), 0.0163132137031))
 
 ## calculate the chemical formulas, then
 ## ZC of all of the proteins in CHNOSZ' database
-pf <- protein.formula(thermo$protein)
+pf <- protein.formula(thermo()$protein)
 range(mass(pf))
 # use na.rm=TRUE because we have a "protein" with a formula of H2O
 range(ZC(pf), na.rm=TRUE)

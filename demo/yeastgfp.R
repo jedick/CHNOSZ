@@ -1,7 +1,6 @@
 ## Oxygen fugacity - activity of H2O predominance 
 ## diagrams for proteologs for 23 YeastGFP localizations
 # use superseded properties of [Met], [Gly], and [UPBB] (Dick et al., 2006)
-data(thermo)
 add.obigt("OldAA")
 # arranged by decreasing metastability:
 # order of this list of locations is based on the 
@@ -69,4 +68,4 @@ diagram(e, names=locations, ylim=c(-5, -3), col=mycolor, lwd=2)
 title(main=expression("Proteins in subcellular locations of"~italic("S. cerevisiae")))
 
 # reset thermodynamic database
-data(thermo)
+reset()

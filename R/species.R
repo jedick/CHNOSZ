@@ -6,7 +6,7 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
   # 20080925 default quiet=TRUE 20101003 default quiet=FALSE
   # 20120128 remove 'quiet' argument (messages can be hidden with suppressMessages())
   # 20120523 return thermo$species instead of rownumbers therein, and remove message showing thermo$species
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   ## argument processing
   # we can't deal with NA species
   if(identical(species, NA)) {
@@ -19,7 +19,7 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
     # delete the entire definition if requested
     if(is.null(species)) {
       thermo$species <- NULL
-      assign("thermo", thermo, "CHNOSZ")
+      assign("thermo", thermo, CHNOSZ)
       return(thermo$species)
     }
     # from here we're trying to delete already defined species
@@ -40,7 +40,7 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
       thermo$species <- thermo$species[-isp,]
       if(nrow(thermo$species)==0) thermo$species <- NULL
       else rownames(thermo$species) <- 1:nrow(thermo$species)
-      assign("thermo", thermo, "CHNOSZ")
+      assign("thermo", thermo, CHNOSZ)
     }
     return(thermo$species)
   }
@@ -75,7 +75,7 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
     # look for species in thermo$obigt
     iobigt <- suppressMessages(info(species, state))
     # since that could have updated thermo$obigt (with proteins), re-read thermo
-    thermo <- get("thermo", "CHNOSZ")
+    thermo <- get("thermo", CHNOSZ)
     # check if we got all the species
     ina <- is.na(iobigt)
     if(any(ina)) stop(paste("species not available:", paste(species[ina], collapse=" ")))
@@ -156,7 +156,7 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
       }
     }
   }
-  assign("thermo", thermo, "CHNOSZ")
+  assign("thermo", thermo, CHNOSZ)
   # return the new species definition or the index(es) of affected species
   if(index.return) return(ispecies)
   else return(thermo$species)
@@ -165,7 +165,7 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
 ### unexported functions ###
 
 # to retrieve the coefficients of reactions to form the species from the basis species
-species.basis <- function(species=get("thermo")$species$ispecies) {
+species.basis <- function(species=get("thermo", CHNOSZ)$species$ispecies) {
   # current basis elements
   bmat <- basis.elements()
   tbmat <- t(bmat)

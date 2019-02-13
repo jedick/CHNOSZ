@@ -40,7 +40,7 @@ At present, the formula is computed as the sum of the chemical formulas of the b
 
 \seealso{\code{\link{count.aa}} for counting amino acids or nucleic-acid bases in a sequence; \code{\link{protein.formula}} for calculating the chemical formulas of proteins.}
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## count nucleobases in a sequence
 bases <- count.aa("ACCGGGTTT", type="DNA")
 # the DNA complement of that sequence

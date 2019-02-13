@@ -8,7 +8,7 @@ Calculate values of activity or fugacity of basis species buffered by an assembl
 }
 
 \usage{
-  mod.buffer(name, species = NULL, state = get("thermo")$opt$state, 
+  mod.buffer(name, species = NULL, state = thermo()$opt$state, 
     logact = -3)
 }
 
@@ -47,9 +47,9 @@ This function is compatible with systems of proteins, but note that for buffers 
 }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 ## list the buffers
-thermo$buffers
+thermo()$buffers
 # another way to do it, for a specific buffer
 print(mod.buffer("PPM"))
 

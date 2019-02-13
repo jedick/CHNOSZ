@@ -117,7 +117,7 @@ If minerals with phase transitions are present, a third element (a dataframe) in
 }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 ## properties of species
 subcrt("water")
 # calculating at different temperatures
@@ -286,7 +286,7 @@ degC <- expr.units("T")
 title(main=substitute(H2O~and~Na~to~-20~degC, list(H2O=H2O, Na=Na, degC=degC)))
 
 ## Calculations using a variable-pressure standard state
-thermo$opt$varP <<- TRUE
+thermo("opt$varP" = TRUE)
 # Calculate the boiling point of n-octane at 2 and 20 bar
 # We need exceed.Ttr=TRUE because the liquid is metastable
 # at high temperatures (also, the gas is metastable at low
@@ -307,7 +307,7 @@ Tvap_20bar <- 276
 stopifnot(abs(Tvap2 - Tvap_2bar) < 6)
 stopifnot(abs(Tvap20 - Tvap_20bar) < 25)
 # those comparisons would fail if varP were FALSE (the default)
-thermo$opt$varP <<- FALSE
+thermo("opt$varP" = FALSE)
 }
 
 \references{

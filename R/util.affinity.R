@@ -40,7 +40,7 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
   mybasis <- basis()
   nbasis <- nrow(mybasis)
   ## species definition / number of species
-  myspecies <- get("thermo")$species
+  myspecies <- get("thermo", CHNOSZ)$species
   if(is.character(what)) {
     if(is.null(myspecies)) stop('species properties requested, but species have not been defined')
     nspecies <- nrow(myspecies)
@@ -244,7 +244,7 @@ energy.args <- function(args) {
   # over which to calculate logQ, logK and affinity
   # the names should be T, P, IS and names of basis species
   # (or pH, pe, Eh)
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   ## inputs are like c(T1,T2,res)
   # and outputs are like seq(T1,T2,length.out=res)
   # unless transect: do the variables specify a transect? 20090627

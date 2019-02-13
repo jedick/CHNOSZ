@@ -1,40 +1,36 @@
 \encoding{UTF-8}
 \name{thermo}
-\docType{data}
+\alias{reset}
+\alias{obigt}
 \alias{thermo}
-\alias{OBIGT}
-\alias{opt}
-\alias{element}
-\alias{refs}
-\alias{groups}
-\alias{buffers}
+\alias{CHNOSZ}
 \title{Thermodynamic Database and System Settings}
 \description{
-Run \code{data(thermo)} to initialize or reset all of the data used in CHNOSZ.
+Run \code{reset()} to reset all of the data used in CHNOSZ to default values.
 This includes the computational settings, thermodynamic database, and system settings (chemical species).
 
 The system settings are changed using \code{\link{basis}} and \code{\link{species}}.
-To restore the default system settings (no species loaded), run \code{basis("")}.
+To clear the system settings (the default, i.e. no species loaded), run \code{basis("")}; to clear only the formed species, run \code{species(delete = TRUE)}
 
 The thermodynamic database is changed using \code{\link{add.obigt}} and \code{\link{mod.obigt}}.
-To restore the default database, run \code{data(OBIGT)}.
+To restore the default database without altering the species settings, run \code{obigt()}.
 
 The computational settings are changed using \code{\link{water}}, \code{\link{P.units}}, \code{\link{T.units}}, \code{\link{E.units}}, and some other commands (e.g. \code{\link{mod.buffer}}).
 
-Some settings can only be changed by direct manipulation of \code{thermo$opt}.
-In an interactive session, this should be done using the super-assignment operator (e.g. \code{thermo$opt$ideal.H <<- FALSE}) so that the \code{thermo} object is not copied to the global environment.
-(Doing so would cause problems, as many functions are designed to access the \code{thermo} object in the \code{CHNOSZ} environment.)
+All the data are stored in the \code{thermo} data object in an environment named \code{CHNOSZ}.
+\code{thermo()} is a convenience function to access or modify parts of this object, in particular some computational settings, for example, \code{thermo("opt$ideal.H" = FALSE)} (see \code{\link{nonideal}}).
 
-To restore the default computational settings, thermodynamic database, and system settings, run \code{data(thermo)}.
-
-The data files provided with CHNOSZ are in the \code{data} and \code{extdata/OBIGT} directories of the package.
-The \code{*.csv} files in these directories are used to build the \code{thermo} data object in an environment named \code{CHNOSZ}.
-The structure of the \code{thermo} object is described below.
+The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{extdata/thermo} and \code{extdata/OBIGT} directories of the package, are used to build the \code{thermo} object, which is described below.
 }
 
 \usage{
-  data(thermo)
-  data(OBIGT)
+  reset()
+  obigt()
+  thermo(...)
+}
+
+\arguments{
+  \item{...}{list, one or more arguments whose names correspond to the component() to modify}
 }
 
 \format{
@@ -86,7 +82,7 @@ The structure of the \code{thermo} object is described below.
   This dataframe is a thermodynamic database of standard molal thermodynamic properties and equations of state parameters of species.
   Note the following database conventions:
   \itemize{
-     \item The combination of \code{name} and \code{state} defines a species in \code{thermo$obigt}. A species can not be duplicated (this is checked when running \code{data(thermo)}).
+     \item The combination of \code{name} and \code{state} defines a species in \code{thermo$obigt}. A species can not be duplicated (this is checked when running \code{reset()}).
      \item English names of gases are used only for the gas state. The dissolved species is named with the chemical formula. Therefore, \code{info("oxygen")} refers to the gas, and \code{info("O2")} refers to the aqueous species.
   } 
 
@@ -225,17 +221,19 @@ Other data files, including those supporting the examples and vignettes, are doc
 }
 
 \examples{
-\dontshow{data(thermo)}
 ## where are the data files in CHNOSZ?
-system.file("data", package="CHNOSZ")
 system.file("extdata", package="CHNOSZ")
+# what files make up OBIGT?
+# nb. the .csv.xz files are loaded by default,
+# and the .csv files have optional data that can be loaded with add.obigt()
+dir(system.file("extdata/OBIGT", package = "CHNOSZ"))
 
 ## exploring thermo$obigt
 # what physical states there are
-unique(thermo$obigt$state)
+unique(thermo()$obigt$state)
 # formulas of ten random species
-n <- nrow(thermo$obigt)
-thermo$obigt$formula[runif(10)*n]
+n <- nrow(thermo()$obigt)
+thermo()$obigt$formula[runif(10)*n]
 }
 
 \references{

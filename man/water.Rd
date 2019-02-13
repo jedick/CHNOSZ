@@ -119,7 +119,7 @@ A data frame, the number of rows of which corresponds to the number of input tem
 For calculating properties of reactions, \code{\link{subcrt}} coordinates the calculation of properties among \code{water} and \code{\link{hkf}} and \code{\link{cgl}} for other species.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## calculations along saturation curve
 T <- seq(273.15, 623.15, 25)
 # liquid density, from SUPCRT92

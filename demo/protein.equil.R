@@ -1,9 +1,6 @@
 ## steps in calculation of chemical activities of two proteins
 ## in metastable equilibrium, after Dick and Shock, 2011
 protein <- pinfo(c("CSG_METVO", "CSG_METJA"))
-# clear out amino acid residues loaded by the example above
-# ( in affinity(iprotein=ip) )
-data(thermo)
 # use superseded properties of [Met], [Gly], and [UPBB] (Dick et al., 2006)
 add.obigt("OldAA")
 # set up the basis species to those used in DS11
@@ -26,4 +23,4 @@ Aref.residue <- Astar.residue - loga.residue  # 0.446, after Eq. 16
 # A-star of the residue in natural log units (A/RT)
 log(10) * Astar.residue  # 0.4359, after Eq. 23
 # forget about the superseded group properties for whatever comes next
-data(thermo)
+reset()

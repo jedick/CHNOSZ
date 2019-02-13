@@ -43,7 +43,7 @@ If \code{check.it} is TRUE, several checks of self consistency among the thermod
 \seealso{ \code{\link{thermo}}, \code{\link{check.obigt}} }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 ## summary of available data
 info()
 

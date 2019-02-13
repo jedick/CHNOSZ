@@ -82,7 +82,7 @@ and the protein backone {[}UPBB{]} that were superseded in 2019.
 
 <<libraryCHNOSZ>>=
 library(CHNOSZ)
-data(thermo)
+reset()
 add.obigt("OldAA")
 @
 
@@ -412,7 +412,7 @@ par(mfrow=c(2, 3))
 for(j in 1:2) {
   # use old [Met] for first row and new [Met] for second row
   if(j==2) {
-    data(thermo)
+    reset()
     add.obigt("OldAA", c("[Gly]", "[UPBB]"))
     ip.annot <- add.protein(aa.annot)
   }

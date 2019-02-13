@@ -199,7 +199,7 @@ See the vignette \emph{Hot-spring proteins in CHNOSZ} for an example of the \cod
 }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 ## calculate the equilibrium logarithm of activity of a 
 ## basis species in different reactions
 basis("CHNOS")
@@ -259,7 +259,7 @@ d <- diagram(a, main="Fe-S-O-H, after Majzlan et al., 2006")
 # the first four species show up in order near pe=15
 stopifnot(all.equal(unique(d$predominant[, 183]), 1:4))
 water.lines(d, lwd=2)
-text(3, 22, describe.basis(thermo$basis[2:3,], digits=2, oneline=TRUE))
+text(3, 22, describe.basis(thermo()$basis[2:3,], digits=2, oneline=TRUE))
 text(3, 21, describe.property(c("T", "P"), c(25, 1), oneline=TRUE))
 
 ## Temperature-Pressure: kayanite-sillimanite-andalusite

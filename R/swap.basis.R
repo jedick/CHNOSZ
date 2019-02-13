@@ -6,13 +6,13 @@
 #source("basis.R")
 
 # return the current basis elements
-basis.elements <- function(basis = get("thermo")$basis) {
+basis.elements <- function(basis = thermo()$basis) {
   if(is.null(basis)) stop("basis species are not defined")
   return(as.matrix(basis[, 1:nrow(basis), drop=FALSE]))
 }
 
 # calculate chemical potentials of elements from logarithms of activity of basis species
-element.mu <- function(basis = get("thermo")$basis, T = 25) {
+element.mu <- function(basis = thermo()$basis, T = 25) {
   # matrix part of the basis definition
   basis.mat <- basis.elements(basis)
   # the standard Gibbs energies of the basis species
@@ -29,7 +29,7 @@ element.mu <- function(basis = get("thermo")$basis, T = 25) {
 }
 
 # calculate logarithms of activity of basis species from chemical potentials of elements
-basis.logact <- function(emu, basis = get("thermo")$basis, T = 25) {
+basis.logact <- function(emu, basis = thermo()$basis, T = 25) {
   # matrix part of the basis definition
   basis.mat <- basis.elements(basis)
   # elements in emu can't be less than the number in the basis
@@ -60,7 +60,7 @@ ibasis <- function(species) {
     # character: first look for formula of basis species
     ib <- match(species, rownames(basis))
     # if that doesn't work, look for name of basis species
-    if(is.na(ib)) ib <- match(species, get("thermo")$obigt$name[basis$ispecies])
+    if(is.na(ib)) ib <- match(species, get("thermo", CHNOSZ)$obigt$name[basis$ispecies])
   }
   return(ib)
 }
@@ -68,7 +68,7 @@ ibasis <- function(species) {
 # swap in one basis species for another
 swap.basis <- function(species, species2, T = 25) {
   # before we do anything, remember the old basis and species definitions
-  oldbasis <- get("thermo")$basis
+  oldbasis <- get("thermo", CHNOSZ)$basis
   ts <- species()
   if(is.null(oldbasis)) 
     stop("swapping basis species requires an existing basis definition")
@@ -111,7 +111,7 @@ swap.basis <- function(species, species2, T = 25) {
   species(delete=TRUE)
   if(!is.null(ts)) {
     suppressMessages(species(ts$ispecies))
-    suppressMessages(species(1:nrow(get("thermo")$species), ts$logact))
+    suppressMessages(species(1:nrow(get("thermo", CHNOSZ)$species), ts$logact))
   }
   # all done, return the new basis definition
   return(mb)

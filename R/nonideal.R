@@ -3,7 +3,7 @@
 # moved to nonideal.R from util.misc.R 20151107
 # added Helgeson method 20171012
 
-nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, method=get("thermo")$opt$nonideal) {
+nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, method=thermo()$opt$nonideal) {
   # generate nonideal contributions to thermodynamic properties
   # number of species, same length as speciesprops list
   # T in Kelvin, same length as nrows of speciespropss
@@ -19,10 +19,10 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
   # we can use this function to change the nonideal method option
   if(missing(speciesprops)) {
     if(species[1] %in% c("Bdot", "Bdot0", "bgamma", "bgamma0", "Alberty")) {
-      thermo <- get("thermo")
+      thermo <- get("thermo", CHNOSZ)
       oldnon <- thermo$opt$nonideal
       thermo$opt$nonideal <- species[1]
-      assign("thermo", thermo, "CHNOSZ")
+      assign("thermo", thermo, CHNOSZ)
       message("nonideal: setting nonideal option to use ", mettext(species))
       return(invisible(oldnon))
     } else stop(species[1], " is not a valid nonideality setting (Bdot, Bdot0, bgamma, bgamma0, or Alberty)")
@@ -93,7 +93,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     Z[i] <- thisZ
   }
   # get species formulas to assign acirc 20181105
-  formula <- get("thermo")$obigt$formula[species]
+  formula <- get("thermo", CHNOSZ)$obigt$formula[species]
   if(grepl("Bdot", method)) {
     # "ion size paramter" taken from UT_SIZES.REF of HCh package (Shvarov and Bastrakov, 1999),
     # based on Table 2.7 of Garrels and Christ, 1965
@@ -132,18 +132,18 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
   for(i in 1:length(species)) {
     myprops <- speciesprops[[i]]
     # to keep unit activity coefficients of the proton and electron
-    if(species[i] == iH & get("thermo")$opt$ideal.H) next
-    if(species[i] == ie & get("thermo")$opt$ideal.e) next
+    if(species[i] == iH & get("thermo", CHNOSZ)$opt$ideal.H) next
+    if(species[i] == ie & get("thermo", CHNOSZ)$opt$ideal.e) next
     didcharged <- didneutral <- FALSE
     # logic for neutral and charged species 20181106
     if(Z[i]==0) {
       for(j in 1:ncol(myprops)) {
         pname <- colnames(myprops)[j]
         if(!pname %in% c("G", "H", "S", "Cp")) next
-        if(get("thermo")$opt$Setchenow == "bgamma") {
+        if(get("thermo", CHNOSZ)$opt$Setchenow == "bgamma") {
           myprops[, j] <- myprops[, j] + Setchenow(pname, IS, T, m_star, bgamma)
           didneutral <- TRUE
-        } else if(get("thermo")$opt$Setchenow == "bgamma0") {
+        } else if(get("thermo", CHNOSZ)$opt$Setchenow == "bgamma0") {
           myprops[, j] <- myprops[, j] + Setchenow(pname, IS, T, m_star, bgamma = 0)
           didneutral <- TRUE
         }
@@ -167,8 +167,8 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
       else myprops <- cbind(myprops, loggam = Helgeson("loggamma", Z[i], IS, T, A_DH, B_DH, acirc[i], m_star, bgamma))
     }
     if(didneutral) {
-      if(get("thermo")$opt$Setchenow == "bgamma") myprops <- cbind(myprops, loggam = Setchenow("loggamma", IS, T, m_star, bgamma))
-      else if(get("thermo")$opt$Setchenow == "bgamma0") myprops <- cbind(myprops, loggam = Setchenow("loggamma", IS, T, m_star, bgamma = 0))
+      if(get("thermo", CHNOSZ)$opt$Setchenow == "bgamma") myprops <- cbind(myprops, loggam = Setchenow("loggamma", IS, T, m_star, bgamma))
+      else if(get("thermo", CHNOSZ)$opt$Setchenow == "bgamma0") myprops <- cbind(myprops, loggam = Setchenow("loggamma", IS, T, m_star, bgamma = 0))
     }
     # save the calculated properties and increment progress counters
     speciesprops[[i]] <- myprops

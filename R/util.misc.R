@@ -5,7 +5,7 @@
 dPdTtr <- function(ispecies, ispecies2 = NULL) {
   # calculate dP/dT for a phase transition
   # (argument is index of the lower-T phase)
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   if(is.null(ispecies2)) ispecies2 <- ispecies + 1
   pars <- info(c(ispecies, ispecies2), check.it=FALSE)
   # if these aren't the same mineral, we shouldn't be here
@@ -22,7 +22,7 @@ dPdTtr <- function(ispecies, ispecies2 = NULL) {
 
 Ttr <- function(ispecies, ispecies2 = NULL, P = 1, dPdT = NULL) {
   # calculate a phase transition temperature for given P
-  TtrPr <- get("thermo")$obigt$z.T[ispecies]
+  TtrPr <- get("thermo", CHNOSZ)$obigt$z.T[ispecies]
   # the constant slope, dP/dT
   if(is.null(dPdT)) dPdT <- dPdTtr(ispecies, ispecies2)
   Pr <- 1
@@ -85,7 +85,7 @@ unitize <- function(logact=NULL,length=NULL,logact.tot=0) {
   # if loga is NULL, take the logarithms of activities from
   # the current species definition. if any of those species
   # are proteins, get their lengths using protein.length.
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   if(is.null(logact)) {
     if(is.null(thermo$species)) stop("loga is NULL and no species are defined")
     ts <- thermo$species

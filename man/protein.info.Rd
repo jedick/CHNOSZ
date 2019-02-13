@@ -17,7 +17,7 @@
   pinfo(protein, organism=NULL, residue=FALSE, regexp=FALSE)
   protein.length(protein, organism = NULL)
   protein.formula(protein, organism = NULL, residue = FALSE)
-  protein.obigt(protein, organism = NULL, state=get("thermo")$opt$state)
+  protein.obigt(protein, organism = NULL, state=thermo()$opt$state)
   protein.basis(protein, T = 25, normalize = FALSE)
   protein.equil(protein, T=25, loga.protein = 0, digits = 4)
 }
@@ -68,7 +68,7 @@ If \code{normalize} is TRUE, the coefficients on the basis species are divided b
   \code{protein.equil} produces a series of messages showing step-by-step a calculation of the chemical activities of proteins in metastable equilibrium. For the first protein, it shows the standard Gibbs energies of the reaction to form the nonionized protein from the basis species and of the ionization reaction of the protein (if \samp{H+} is in the basis), then the standard Gibbs energy/RT of the reaction to form the (possibly ionized) protein per residue. The per-residue values of \samp{logQstar} and \samp{Astar/RT} are also shown for the first protein. Equilibrium calculations are then performed, only if more than one protein is specified. This calculation applies the Boltzmann distribution to the calculation of the equilibrium degrees of formation of the residue equivalents of the proteins, then converts them to activities of proteins taking account of \code{loga.protein} and protein length. If the \code{protein} argument is numeric (indicating rownumbers in \code{thermo$protein}), the values of \samp{Astar/RT} are compared with the output of \code{\link{affinity}}, and those of the equilibrium degrees of formation of the residues and the chemical activities of the proteins with the output of \code{\link{diagram}}. If the values in any of these tests are are not \code{\link{all.equal}} an error is produced indicating a bug. 
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 # search by name in thermo$protein
 ip1 <- pinfo("LYSC_CHICK")
 ip2 <- pinfo("LYSC", "CHICK")
@@ -122,15 +122,15 @@ file <- system.file("extdata/refseq/protein_refseq.csv.xz", package="CHNOSZ")
 ip <- add.protein(read.csv(file, as.is=TRUE))
 # only use those organisms with a certain
 # number of sequenced bases
-ip <- ip[as.numeric(thermo$protein$abbrv[ip]) > 50000]
-pf <- protein.formula(thermo$protein[ip, ])
+ip <- ip[as.numeric(thermo()$protein$abbrv[ip]) > 50000]
+pf <- protein.formula(thermo()$protein[ip, ])
 zc <- ZC(pf)
 # the organism names we search for
 # "" matches all organisms
 terms <- c("Natr", "Halo", "Rhodo", "Acido", "Methylo",
   "Chloro", "Nitro", "Desulfo", "Geo", "Methano",
   "Thermo", "Pyro", "Sulfo", "Buchner", "")
-tps <- thermo$protein$ref[ip]
+tps <- thermo()$protein$ref[ip]
 plot(0, 0, xlim=c(1, 15), ylim=c(-0.3, -0.05), pch="",
   ylab=expression(italic(Z)[C]),
   xlab="", xaxt="n", mar=c(6, 3, 1, 1))

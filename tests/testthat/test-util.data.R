@@ -9,18 +9,18 @@ test_that("checkGHS() and checkEOS() (via info()) produce messages", {
 
 test_that("checkGHS() and checkEOS() respond to thermo$opt$*.tol", {
   i1 <- info("SO4-2")
-  thermo$opt$Cp.tol <<- 0.5
+  thermo("opt$Cp.tol" = 0.5)
   expect_message(info(i1), "checkEOS")
   i2 <- info("a,w-dicarboxytetracosane")
-  thermo$opt$G.tol <<- 50
+  thermo("opt$G.tol" = 50)
   expect_message(info(i2), "checkGHS")
 })
 
 test_that("RH2obigt() gives group additivity results consistent with database values (from Richard and Helgeson, 1998)", {
-  file <- system.file("extdata/thermo/RH98_Table15.csv", package = "CHNOSZ")
+  file <- system.file("extdata/adds/RH98_Table15.csv", package = "CHNOSZ")
   dat <- read.csv(file, stringsAsFactors=FALSE)
   ispecies <- info(dat$compound, dat$state)
-  obigt.ref <- thermo$obigt[ispecies, ]
+  obigt.ref <- thermo()$obigt[ispecies, ]
   obigt.calc <- RH2obigt(file=file)
   # calculated values of H are spot on; to pass tests, tolerance on
   # G is set higher; is there an incorrect group value somewhere?
@@ -38,21 +38,21 @@ test_that("add.obigt() replaces existing entries without changing species index"
   # store the original species index of CdCl2
   iCdCl2 <- info("CdCl2", "aq")
   # add supplemental database - includes CdCl2
-  file <- system.file("extdata/thermo/BZA10.csv", package="CHNOSZ")
+  file <- system.file("extdata/adds/BZA10.csv", package="CHNOSZ")
   isp <- add.obigt(file)
   # species index of CdCl2 should not have changed
   expect_equal(info("CdCl2", "aq"), iCdCl2)
   # check that names of species modified are same as in file
   newdat <- read.csv(file, stringsAsFactors=FALSE)
   # the order isn't guaranteed ... just make sure they're all there
-  expect_true(all(newdat$name %in% thermo$obigt$name[isp]))
+  expect_true(all(newdat$name %in% thermo()$obigt$name[isp]))
 })
 
-test_that("data(thermo) and data(OBIGT) produce the same database", {
-  data(thermo)
-  d1 <- get("thermo")$obigt
-  data(OBIGT)
-  d2 <- get("thermo")$obigt
+test_that("reset() and obigt() produce the same database", {
+  reset()
+  d1 <- thermo()$obigt
+  obigt()
+  d2 <- thermo()$obigt
   expect_equal(d1, d2)
 })
 

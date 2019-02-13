@@ -46,7 +46,7 @@ nucleic.formula <- function(nucleic=NULL) {
   # the species indices of the bases, in the order appearing above
   i.base <- suppressMessages(info(names[!ina], check.it=FALSE))
   # the chemical formula of bases
-  f.base <- get("thermo")$obigt$formula[i.base]
+  f.base <- get("thermo", CHNOSZ)$obigt$formula[i.base]
   # loop over the base counts
   f.out <- character()
   for(i in 1:nrow(nucleic)) {

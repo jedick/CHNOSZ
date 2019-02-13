@@ -84,7 +84,7 @@ test_that("calculations for K-feldspar are consistent with SUPCRT92", {
   expect_equal(round(CHNOSZ$S, 1), SUPCRT_S)
   expect_equal(round(CHNOSZ$V, 1), SUPCRT_V)
   expect_equal(round(CHNOSZ$Cp, 1), SUPCRT_Cp)
-  data(OBIGT)
+  obigt()
 })
 
 test_that("calculations for quartz are nearly consistent with SUPCRT92", {
@@ -112,7 +112,7 @@ test_that("calculations for quartz are nearly consistent with SUPCRT92", {
   expect_equal(round(CHNOSZ$S, 1)[-4], SUPCRT_S[-4])
   expect_equal(round(CHNOSZ$Cp, 1)[-4], SUPCRT_Cp[-4])
   expect_equal(round(CHNOSZ$V, 1), SUPCRT_V)
-  data(OBIGT)
+  obigt()
 })
 
 test_that("more calculations for quartz are nearly consistent with SUPCRT92", {
@@ -146,7 +146,7 @@ test_that("more calculations for quartz are nearly consistent with SUPCRT92", {
   expect_maxdiff(CHNOSZ_5000bar$H, S92_5000bar$H, 300)
   expect_maxdiff(CHNOSZ_5000bar$S, S92_5000bar$S, 0.5)
   expect_maxdiff(CHNOSZ_5000bar$V, S92_5000bar$V, 0.05)
-  data(OBIGT)
+  obigt()
 })
 
 test_that("duplicated species yield correct phase transitions", {

@@ -9,7 +9,7 @@ Calculate activity coefficients and adjusted (transformed) molal properties of a
 
 \usage{
   nonideal(species, speciesprops, IS, T, P, A_DH, B_DH,
-           m_star=NULL, method=get("thermo")$opt$nonideal)
+           m_star=NULL, method=thermo()$opt$nonideal)
   bgamma(TC, P, showsplines = "")
 }
 
@@ -80,7 +80,7 @@ One (\samp{G}) or more (\samp{H}, \samp{S}, \samp{Cp}; currently only with the A
 For all affected species, a column named \code{loggam} (common (base-10) logarithm of gamma, the activity coefficient) is appended to the output dataframe of species properties.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ### Examples following Alberty, 2003
 ### (page numbers given below)
 
@@ -119,14 +119,14 @@ legend("top", lty=1, col=col, bty="n",
 # p. 16 Table 1.3: adjusted pKa of acetic acid
 # set ideal.H to FALSE to calculate activity coefficients for the proton
 # (makes for better replication of the values in Alberty's book)
-thermo$opt$ideal.H <<- FALSE
+thermo("opt$ideal.H" = FALSE)
 (sres <- subcrt(c("acetate", "H+", "acetic acid"), c(-1, -1, 1),
   IS=c(0, 0.1, 0.25), T=25, property="logK"))
 # we're within 0.01 log of Alberty's pK values
 Alberty_logK <- c(4.75, 4.54, 4.47)
 stopifnot(maxdiff(sres$out$logK, Alberty_logK) < 0.01)
 # reset option to default
-thermo$opt$ideal.H <<- TRUE
+thermo("opt$ideal.H" = TRUE)
 
 ### An example using IS with affinity():
 ## speciation of phosphate as a function of ionic strength

@@ -38,7 +38,7 @@ Diagnostic messages are printed if \code{trace} is positive (it is also included
 \code{water.AW90} provides values of the static dielectric constant (\code{epsilon}) calculated using equations given by Archer and Wang, 1990.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 # calculate density of stable phase at 500 K, 500 bar
 rho <- rho.IAPWS95(T=500, P=500)
 # calculate pressure (= 50 MPa) at this density
@@ -58,15 +58,15 @@ P.sigma <- WP02.auxiliary("P.sigma", T)
 # (low rho: steam; high rho: water)
 rho.IAPWS95(T, convert(P.sigma, "bar"))
 # thermo$opt$IAPWS.sat allows for choosing liquid or vapor or ""
-thermo$opt$IAPWS.sat <<- ""
+thermo("opt$IAPWS.sat" = "")
 # shows artifactual vapor-liquid transition
 water.IAPWS95("V", T, "Psat")
 # the calculated Psat, while not exact, should be close enough for most
 # geochemical calculations to select liquid or vapor
 oldwat <- water("IAPWS95")
-thermo$opt$IAPWS.sat <<- "vapor"
+thermo("opt$IAPWS.sat" = "vapor")
 V.vapor <- subcrt("water", T=convert(445:455, "C"))$out[[1]]$V
-thermo$opt$IAPWS.sat <<- "liquid" # the default
+thermo("opt$IAPWS.sat" = "liquid") # the default
 V.liquid <- subcrt("water", T=convert(445:455, "C"))$out[[1]]$V
 stopifnot(all(V.vapor > V.liquid))
 water(oldwat)

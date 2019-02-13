@@ -63,7 +63,7 @@ Furthermore, in \code{hkf}, the output is a list consisting of the above-describ
 }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 ## aqueous species
 CH4aq <- info(info("methane", "aq"))	
 hkf(property = "Cp", parameters = CH4aq)

@@ -31,7 +31,7 @@ add.obigt("OldAA")
 logK_di1_SK95 <- logK_di2_SK95 <- list()
 for(i in 1:length(di1)) logK_di1_SK95[[i]] <- subcrt(c(di[i], "glycinate", di1[i]), c(-1, -1, 1), T = T)$out$logK
 for(i in 1:length(di2)) logK_di2_SK95[[i]] <- subcrt(c(di[i], "glycinate", di2[i]), c(-1, -2, 1), T = T)$out$logK
-data(thermo)
+reset()
 
 # set up the plots
 layout(matrix(1:6, byrow = TRUE, nrow = 2), widths = c(2, 2, 1))

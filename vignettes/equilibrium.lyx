@@ -851,7 +851,7 @@ library(CHNOSZ)
 
 \begin_layout Plain Layout
 
-data(thermo)
+reset()
 \end_layout
 
 \begin_layout Plain Layout
@@ -3115,7 +3115,7 @@ status open
 
 \begin_layout Plain Layout
 
-data(thermo)
+reset()
 \end_layout
 
 \begin_layout Plain Layout

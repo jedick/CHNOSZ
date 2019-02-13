@@ -86,7 +86,7 @@ For calculations in more than two dimensions, the output contains \code{iopt}, a
 \code{\link{findit}} is a related function implementing a gridded search of chemical activities, temperature and/or pressure that optimize the objective function.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## example of defining a new objective function
 # count the species with logarithms of activity greater than loga2
 count <- function(loga1, loga2) rowSums(loga1 > loga2)

@@ -2,13 +2,13 @@
 # set up the basis species of a thermodynamic system
 
 basis <- function(species=NULL, state=NULL, logact=NULL, delete=FALSE) {
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   oldbasis <- thermo$basis
   ## delete the basis species if requested
   if(delete | identical(species, "")) {
     thermo$basis <- NULL
     thermo$species <- NULL
-    assign("thermo", thermo, "CHNOSZ")
+    assign("thermo", thermo, CHNOSZ)
     return(invisible(oldbasis))
   }
   ## return the basis definition if requested
@@ -91,7 +91,7 @@ basis <- function(species=NULL, state=NULL, logact=NULL, delete=FALSE) {
 
 # to add the basis to thermo$obigt
 put.basis <- function(ispecies, logact = rep(NA, length(ispecies))) {
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   state <- thermo$obigt$state[ispecies]
   # make the basis matrix, revised 20120114
   # get the elemental makeup of each species,
@@ -125,7 +125,7 @@ put.basis <- function(ispecies, logact = rep(NA, length(ispecies))) {
   comp <- cbind(as.data.frame(comp), ispecies, logact, state, stringsAsFactors=FALSE)
   # ready to assign to the global thermo object
   thermo$basis <- comp
-  assign("thermo", thermo, "CHNOSZ")
+  assign("thermo", thermo, CHNOSZ)
   # remove the species since there's no guarantee the
   # new basis includes all their elements
   species(delete=TRUE)
@@ -134,7 +134,7 @@ put.basis <- function(ispecies, logact = rep(NA, length(ispecies))) {
 
 # modify the states or logact values in the existing basis definition
 mod.basis <- function(species, state=NULL, logact=NULL) {
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   # the basis must be defined
   if(is.null(thermo$basis)) stop("basis is not defined")
   # loop over each species to modify
@@ -191,7 +191,7 @@ mod.basis <- function(species, state=NULL, logact=NULL) {
       else thermo$basis$logact[ib] <- logact[i]
     }
     # assign the result to the CHNOSZ environment
-    assign("thermo", thermo, "CHNOSZ")
+    assign("thermo", thermo, CHNOSZ)
   }
   return(thermo$basis)
 } 

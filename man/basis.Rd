@@ -74,7 +74,7 @@ Dick, J. M. (2017) Chemical composition and the potential for proteomic transfor
 }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 ## define basis species
 # one, two and three element examples
 basis("O2")

@@ -16,7 +16,7 @@ e <- equilibrate(a, normalize=TRUE)
 fill <- ZC.col(ZC(protein.formula(species()$name)))
 diagram(e, fill=fill)
 title(main="Thiol peroxidases from bacteria")
-legend("topleft", describe.basis(thermo$basis[-6,]), bg="slategray1", box.lwd=0)
+legend("topleft", describe.basis(thermo()$basis[-6,]), bg="slategray1", box.lwd=0)
 
 ## Buffer + ionization: relative stabilities
 ## of E. coli sigma factors on a T-pH diagram

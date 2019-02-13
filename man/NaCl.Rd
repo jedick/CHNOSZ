@@ -42,7 +42,7 @@ A list with components \samp{IS} (\dQuote{true} ionic strength from concentratio
 \code{demo("gold")} for an application of this function.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 # ionic strength of solution and activity coefficient of Cl-
 # from HCh version 3.7 (Shvarov and Bastrakov, 1999) at 1000 bar,
 # 100, 200, and 300 degress C, and 1 to 6 molal NaCl

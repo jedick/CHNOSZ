@@ -43,7 +43,7 @@ If \code{location} is NULL, \code{yeastgfp} returns the names of all known locat
 }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 # the first few names in UniProt for "aminotransferase yeast"
 genes <- c("AATC", "ARO8", "BCA1", "AMPL", "BCA2", "ARO9")
 # the corresponding ORF names

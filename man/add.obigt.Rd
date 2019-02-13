@@ -63,7 +63,7 @@ The values returned (\code{\link{invisible}}-y) are the indices of the added and
 
 \seealso{ \code{\link{thermo}}, \code{\link{util.data}}, \code{\link{mod.buffer}} }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## modify an existing species (example only)
 ialanine <- mod.obigt("alanine", state="cr", G=0, H=0, S=0)
 # we have made the values of G, H, and S inconsistent
@@ -78,7 +78,7 @@ mod.obigt("buckminsterfullerene", formula="C60", state="cr", date=today())
 # retrieve the species data (thermodynamic properties in this toy example are NA)
 info(info("C60"))
 # reset database
-data(OBIGT)
+obigt()
 
 # using add.obigt():
 # compare stepwise stability constants of cadmium chloride complexes
@@ -89,14 +89,14 @@ SSH97 <- lapply(1:4, function(i) {
   subcrt(c(Cdspecies[i], "Cl-", Cdspecies[i+1]),
     c(-1, -1, 1), T=25, P=P)$out$logK
 })
-file <- system.file("extdata/thermo/BZA10.csv", package="CHNOSZ")
+file <- system.file("extdata/adds/BZA10.csv", package="CHNOSZ")
 add.obigt(file)
 BZA10 <- lapply(1:4, function(i) {
   subcrt(c(Cdspecies[i], "Cl-", Cdspecies[i+1]),
     c(-1, -1, 1), T=25, P=P)$out$logK
 })
 # reset default database
-data(OBIGT)
+obigt()
 matplot(P, do.call(cbind, SSH97), type="l")
 matplot(P, do.call(cbind, BZA10), type="l", add=TRUE, lwd=2)
 legend("topleft", legend=c("", "", "Sverjensky et al., 1997",
@@ -124,7 +124,7 @@ lines(DLH06$out$T, DLH06$out$G/1000, lty = 2)
 legend("topleft", c("Dick et al., 2006", "Kitadai, 2014"), lty = c(2, 1))
 title(main = "AABB = UPBB + H2O; after Figure 9 of Kitadai, 2014")
 # reset to default database
-data(OBIGT)
+obigt()
 }
 
 \references{

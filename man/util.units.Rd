@@ -47,7 +47,7 @@ Note that \samp{Eh} and \samp{E0} both stand for the value of Eh (oxidation-redu
   }
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## examples using convert
 # temperature (Kelvin) to degrees C
 convert(273.15, "C")

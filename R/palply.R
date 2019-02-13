@@ -3,10 +3,10 @@
 palply <- function(varlist, X, FUN, ...) {
   # a wrapper function to run parLapply if length(X) >= thermo$opt$paramin
   # and package 'parallel' is available, otherwise run lapply
-  if(length(X) >= get("thermo")$opt$paramin) {
+  if(length(X) >= get("thermo", CHNOSZ)$opt$paramin) {
     # Use option mc.cores to choose an appropriate cluster size.
     # and set max at 2 for now (per CRAN policies)
-    nCores <- min(getOption("mc.cores"), get("thermo")$opt$maxcores)
+    nCores <- min(getOption("mc.cores"), get("thermo", CHNOSZ)$opt$maxcores)
     # don't load methods package, to save startup time - ?makeCluster
     cl <- parallel::makeCluster(nCores, methods=FALSE)
     # export the variables and notify the user

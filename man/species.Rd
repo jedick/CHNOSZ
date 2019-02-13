@@ -45,7 +45,7 @@ With \samp{delete=TRUE}, the value is the definition that existed prior the dele
   Use \code{\link{info}} to search the thermodynamic database without adding species to the system. \code{\link{basis}} is a prerequisite for \code{\link{species}}.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 # set up the basis species
 basis("CHNOS")
 # add, modify, delete species

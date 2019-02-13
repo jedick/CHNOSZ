@@ -46,7 +46,7 @@ If more than one formula is provided, a list of numeric vectors is returned, unl
 }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 # the composition of a simple compound
 makeup("CO2")     # 1 carbon, 2 oxygen
 # the formula of lawsonite, with a parenthetical part and a suffix

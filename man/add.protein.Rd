@@ -45,7 +45,7 @@ The value returned by this function is the rownumbers of \code{thermo$protein} t
 }
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 # manually adding a new protein
 # Human Gastric juice peptide 1
 aa <- seq2aa("GAJU_HUMAN", "LAAGKVEDSD")

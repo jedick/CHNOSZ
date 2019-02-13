@@ -23,13 +23,13 @@ test_that("info.approx() produces expected messages", {
   expect_message(info.approx("lactic"), "is similar to lactic acid")
   expect_message(info.approx("lactic acid"), "is ambiguous")
   # note though that info("lactic acid") finds a match because info.character is used first...
-  expect_equal(info("lactic acid"), grep("lactic acid", thermo$obigt$name))
+  expect_equal(info("lactic acid"), grep("lactic acid", thermo()$obigt$name))
   # looking in optional databases 20190127
   expect_message(info("dickite"), "is in an optional database")
 })
 
 test_that("info() can be used for cr and aq descriptions of the same species and proteins", {
   i2 <- info("LYSC_CHICK", c("cr", "aq")) 
-  expect_equal(thermo$obigt$state[i2], c("cr", "aq"))
+  expect_equal(thermo()$obigt$state[i2], c("cr", "aq"))
   expect_equal(info(i2)[1, ], info(i2[1]), check.attributes=FALSE)
 })

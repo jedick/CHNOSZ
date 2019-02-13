@@ -39,4 +39,4 @@ title(main=paste("Iron oxides, sulfides and carbonate in water, log(total S) = -
 d <- diagram(m1$A.bases2, add = TRUE, col = "blue", names = NULL, lty = 3, limit.water = FALSE)
 text(d$namesx, -0.8, as.expression(sapply(m1$A.bases2$species$name, expr.species)), col = "blue")
 # reset the database, as it was changed in this example
-data(thermo)
+reset()

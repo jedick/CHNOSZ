@@ -68,7 +68,7 @@ Except for relatively simple systems, even after careful refinement, the results
 \code{\link{equilibrate}} calculates equilibrium chemical activities of species given a constant value of \code{loga.balance} (the logarithm of total activity of the conserved basis species).
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## solubility of CO2 and calcite as a function of pH
 opar <- par(mfrow = c(1, 2))
 ## set pH range and resolution, constant temperature and ionic strength

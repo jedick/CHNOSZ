@@ -20,7 +20,7 @@ Check internal consistency of individual entries in database.
   check.obigt()
   dumpdata(file)
   RH2obigt(compound = NULL, state = "cr", 
-    file = system.file("extdata/thermo/RH98_Table15.csv", package = "CHNOSZ"))
+    file = system.file("extdata/adds/RH98_Table15.csv", package = "CHNOSZ"))
 }
 
 \arguments{
@@ -71,7 +71,7 @@ The values returned (\code{\link{invisible}}-y) by \code{mod.obigt} are the rown
 
 \seealso{ \code{\link{thermo}}, \code{\link{add.obigt}}, \code{\link{mod.buffer}} }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 # citation information for Helgeson et al., 1998
 thermo.refs("HOK+98")
 # two references for alanine

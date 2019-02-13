@@ -56,7 +56,9 @@ export(
   "calculateEpsilon", "calculateQ", "water.DEW", "berman",
   "maxdiff", "expect_maxdiff", "bgamma",
 # added 20171121 or later
-  "dumpdata", "thermo.axis", "solubility", "NaCl"
+  "dumpdata", "thermo.axis", "solubility", "NaCl",
+# added 20190213 or later
+  "CHNOSZ", "thermo", "reset", "obigt"
 )
 
 # Load shared objects

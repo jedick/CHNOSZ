@@ -1,7 +1,7 @@
 context("protein.info")
 
 # clear out any alterations to the database
-suppressMessages(data(thermo))
+suppressMessages(reset())
 
 test_that("pinfo() deals with underscore in first argument", {
   expect_equal(pinfo("LYSC_CHICK"), 6)

@@ -16,7 +16,7 @@ today <- function() {
 
 mod.obigt <- function(...) {
   # add or modify species in thermo$obigt
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   # the names and values are in the arguments
   # this works for providing arguments via do.call
   args <- list(...)
@@ -71,7 +71,7 @@ mod.obigt <- function(...) {
     # assign to thermo$obigt
     thermo$obigt <- rbind(thermo$obigt, newrows)
     rownames(thermo$obigt) <- NULL
-    assign("thermo", thermo, "CHNOSZ")
+    assign("thermo", thermo, CHNOSZ)
     # update ispecies
     ntotal <- nrow(thermo$obigt)
     ispecies[inew] <- (ntotal-length(inew)+1):ntotal
@@ -89,7 +89,7 @@ mod.obigt <- function(...) {
         message("mod.obigt: no change for ", args$name[iold[i]], "(", state, ")")
       else {
         thermo$obigt[ispecies[iold[i]], icol] <- args[iold[i], ]
-        assign("thermo", thermo, "CHNOSZ")
+        assign("thermo", thermo, CHNOSZ)
         message("mod.obigt: updated ", args$name[iold[i]], "(", state, ")")
       }
     }
@@ -100,7 +100,7 @@ mod.obigt <- function(...) {
 add.obigt <- function(file, species=NULL, force=TRUE, E.units="cal") {
   # add/replace entries in thermo$obigt from values saved in a file
   # only replace if force==TRUE
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   to1 <- thermo$obigt
   id1 <- paste(to1$name,to1$state)
   # we match system files with the file suffixes removed (e.g. "CHNOSZ_aq" or "DEW_aq")
@@ -168,9 +168,9 @@ add.obigt <- function(file, species=NULL, force=TRUE, E.units="cal") {
   # commit the change
   thermo$obigt <- to1
   rownames(thermo$obigt) <- 1:nrow(thermo$obigt)
-  assign("thermo", thermo, "CHNOSZ")
+  assign("thermo", thermo, CHNOSZ)
   message("add.obigt: read ", length(does.exist), " rows; made ", 
     nexist, " replacements, ", nrow(to2), " additions, units = ", E.units)
-  message("add.obigt: use data(thermo) to restore default database")
+  message("add.obigt: use obigt() or reset() to restore default database")
   return(invisible(inew))
 }

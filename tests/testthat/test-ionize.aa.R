@@ -18,14 +18,14 @@ test_that("handling of repeated T, P, pH values is correct", {
 
 test_that("charge summations for aa compositions are internally consistent", {
   # one pH value should give the same results as two of the same value
-  expect_equal(ionize.aa(thermo$protein[1:10,], pH=7), 
-    ionize.aa(thermo$protein[1:10,], pH=c(7,7))[1, , drop=FALSE], check.attributes=FALSE)
+  expect_equal(ionize.aa(thermo()$protein[1:10,], pH=7), 
+    ionize.aa(thermo()$protein[1:10,], pH=c(7,7))[1, , drop=FALSE], check.attributes=FALSE)
   # at pH extremes we should be fully ionized
-  iplus <- match(c("His", "Lys", "Arg", "chains"), colnames(thermo$protein))
-  iminus <- match(c("Cys", "Asp", "Glu", "Tyr", "chains"), colnames(thermo$protein))
-  ia520 <- ionize.aa(thermo$protein[1:10,], pH=c(-5, 20))
-  expect_equal(ia520[1, ], rowSums(thermo$protein[1:10, iplus]))
-  expect_equal(ia520[2, ], -rowSums(thermo$protein[1:10, iminus]))
+  iplus <- match(c("His", "Lys", "Arg", "chains"), colnames(thermo()$protein))
+  iminus <- match(c("Cys", "Asp", "Glu", "Tyr", "chains"), colnames(thermo()$protein))
+  ia520 <- ionize.aa(thermo()$protein[1:10,], pH=c(-5, 20))
+  expect_equal(ia520[1, ], rowSums(thermo()$protein[1:10, iplus]))
+  expect_equal(ia520[2, ], -rowSums(thermo()$protein[1:10, iminus]))
 })
 
 test_that("charge summations for aa compositions are consistent with literature", {
@@ -73,7 +73,7 @@ test_that("heat capacity and Gibbs energy of ionization are consistent with lite
   expect_equal(G.nonionized[1] + G.ionization.25, G.AMY_BACSU.25 * 1e6, tolerance=1e-3, check.attributes=FALSE)
   expect_equal(G.nonionized[2] + G.ionization.100, G.AMY_BACSU.100 * 1e6, tolerance=1e-3, check.attributes=FALSE)
   # restore thermo$obigt to original state
-  data(thermo)
+  reset()
 })
 
 test_that("affinity of ionization is consistent with manual calculations", {

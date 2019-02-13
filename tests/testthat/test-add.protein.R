@@ -1,7 +1,7 @@
 context("add.protein")
 
 # clear out any prior database alterations
-suppressMessages(data(thermo))
+suppressMessages(reset())
 
 test_that("add.protein works as expected", {
   # factors causing problems again ...

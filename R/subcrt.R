@@ -109,7 +109,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   }
 
   # get species information
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   # pre-20110808, we sent numeric species argument through info() to
   # get species name and state(s)
   # but why slow things down if we already have a species index?
@@ -133,7 +133,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         if(!si %in% 1:nrow(thermo$obigt)) stop(paste(species[i], "is not a row number of thermo$obigt"))
       }
       # that could have the side-effect of adding a protein; re-read thermo
-      thermo <- get("thermo", "CHNOSZ")
+      thermo <- get("thermo", CHNOSZ)
       if(is.na(si[1])) stop('no info found for ',species[i],' ',state[i])
       if(!is.null(state[i])) is.cr <- state[i]=='cr' else is.cr <- FALSE
       if(thermo$obigt$state[si[1]]=='cr' & (is.null(state[i]) | is.cr)) {

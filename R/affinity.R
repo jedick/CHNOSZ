@@ -52,7 +52,7 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
   args <- c(args, list(sout=sout, exceed.Ttr=exceed.Ttr, exceed.rhomin=exceed.rhomin))
 
   # the species we're given
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   mybasis <- thermo$basis
   myspecies <- thermo$species
 
@@ -82,7 +82,7 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
       # account for protein activities later
       resprot <- paste(resnames,"RESIDUE",sep="_")
       species(resprot, 0)
-      thermo <- get("thermo", "CHNOSZ")
+      thermo <- get("thermo", CHNOSZ)
       ires <- match(resprot, thermo$species$name)
     }
 
@@ -97,7 +97,7 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
       message('affinity: loading buffer species')
       if(!is.null(thermo$species)) is.species <- 1:nrow(thermo$species) else is.species <- numeric()
       is.buffer <- buffer(logK=NULL)
-      thermo <- get("thermo", "CHNOSZ")
+      thermo <- get("thermo", CHNOSZ)
       is.buff <- numeric()
       for(i in 1:length(is.buffer)) is.buff <- c(is.buff,as.numeric(is.buffer[[i]]))
       is.only.buffer <- is.buff[!is.buff %in% is.species]

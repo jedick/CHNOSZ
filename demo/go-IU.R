@@ -5,9 +5,6 @@
 ## set up plotting area
 opar <- par(mfrow=c(2, 2))
 
-## start with default database
-data(thermo)
-
 ###########
 ### plot 1: boehmite - kaolinite equilibrium
 ###########
@@ -30,7 +27,7 @@ r1 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T=
 # kaolinite from Berman, 1988
 # boehmite from Hemingway et al., 1991
 # SiO2 from Apps and Spycher, 2004
-data(thermo)
+reset()
 r2 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T=T, P=1000, exceed.Ttr = TRUE) 
 ## log activity of SiO2 is -ve logK
 lines(T, -r1$out$logK)
@@ -134,6 +131,6 @@ mtitle(c("Aqueous aluminum species",
 ###########
 ### clean up: restore thermodynamic database to default
 ###########
-data(thermo)
+reset()
 
 par(opar)

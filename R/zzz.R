@@ -1,6 +1,10 @@
 # CHNOSZ/zzz.R
 # this has the .onAttach function for package startup message and data initialization
 
+# the CHNOSZ environment is made here in open code 20190214
+# https://stackoverflow.com/questions/41954302/where-to-create-package-environment-variables
+CHNOSZ <- new.env()
+
 .onAttach <- function(libname,pkgname) {
   # version figuring adapted from package mgcv
   pkghelp <- library(help=CHNOSZ)$info[[1]]
@@ -14,7 +18,6 @@
   date <- um[nchar(um)>0][2]
   # identify the program and version
   packageStartupMessage(paste("CHNOSZ version ", version, " (", date, ")", sep=""))
-  # ask the user to load the 'thermo' data object
-  packageStartupMessage("Please run data(thermo) to create the \"thermo\" object")
+  # initialize the 'thermo' data object
+  reset()
 }
-

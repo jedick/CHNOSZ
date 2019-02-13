@@ -118,7 +118,7 @@ The vignette \emph{Regressing thermodynamic data} has more references and exampl
 
 
 \examples{
-\dontshow{data(thermo)}
+\dontshow{reset()}
 ## fit experimental heat capacities of CH4
 ## using revised Helgeson-Kirkham-Flowers equations
 # read the data from Hnědkovský and Wood, 1997

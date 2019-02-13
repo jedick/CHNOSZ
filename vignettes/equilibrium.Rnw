@@ -223,7 +223,7 @@ are shown.)
 
 <<AAsetup>>=
 library(CHNOSZ)
-data(thermo)
+reset()
 basis("CHNOS")
 species(aminoacids(""))[1:5, ]
 @
@@ -716,7 +716,7 @@ glycine sidechain groups, we should therefore revert to the previous
 values \citep{DLH06} before proceeding.
 
 <<AddObigt>>=
-data(thermo)
+reset()
 add.obigt("OldAA")
 @
 

@@ -22,7 +22,7 @@ test_that("GHS() and obigt2eos() produce expected values", {
   GHS <- GHS(icdata$formula, G=icdata$G, H=icdata$H, S=icdata$S)
   expect_equal(GHS[[3]], 61.8102928143)
   # done through obigt2eos
-  coe <- obigt2eos(thermo$obigt[ic,], "aq", fixGHS=TRUE)
+  coe <- obigt2eos(thermo()$obigt[ic,], "aq", fixGHS=TRUE)
   expect_equal(coe$S, GHS[[3]])
   ## mass and entropy of elements in chemical formulas
   # the "-1" is a single negative charge, the electron

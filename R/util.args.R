@@ -11,7 +11,7 @@ TP.args <- function(T=NULL, P=NULL) {
     P <- water("Psat", T, P="Psat")[, 1]
     # water.SUPCRT92 issues its own warnings about 
     # exceeding Psat's temperature limit
-    if(get("thermo")$opt$water == "IAPWS95")
+    if(get("thermo", CHNOSZ)$opt$water == "IAPWS95")
       if(length(which(is.na(P)))>0) 
         warning('TP.args: NAs in Psat (likely T > Tc where Tc = 647.096 K)',call.=FALSE)
   }

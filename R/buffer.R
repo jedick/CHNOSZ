@@ -2,9 +2,9 @@
 # Calculate chemical activities of buffered species
 # 20061102 jmd
 
-mod.buffer <- function(name,species=NULL,state=get("thermo")$opt$state,logact=-3) {
+mod.buffer <- function(name,species=NULL,state=thermo()$opt$state,logact=-3) {
   # 20071102 add or change a buffer system
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   if(is.null(species)) {
     iname <- which(name==thermo$buffers$name)
     if(length(iname)>0) species <- thermo$buffers$species[iname]
@@ -21,7 +21,7 @@ mod.buffer <- function(name,species=NULL,state=get("thermo")$opt$state,logact=-3
     if(length(imod)>0) {
       if(state[1]=='') {
         thermo$buffers <- thermo$buffers[-imod,]
-        assign("thermo", thermo, "CHNOSZ")
+        assign("thermo", thermo, CHNOSZ)
         message(paste('mod.buffer: removed ',c2s(species),' in ',
           c2s(unique(name)),' buffer',sep=''))
       } else {
@@ -33,7 +33,7 @@ mod.buffer <- function(name,species=NULL,state=get("thermo")$opt$state,logact=-3
         logact.old <- thermo$buffers$logact[imod]
         thermo$buffers$state[imod] <- state
         thermo$buffers$logact[imod] <- logact
-        assign("thermo", thermo, "CHNOSZ")
+        assign("thermo", thermo, CHNOSZ)
         if(identical(state.old,state) & identical(logact.old,logact)) {
           message(paste('mod.buffer: nothing changed for ',
             c2s(species),' in ',c2s(unique(name)),' buffer',sep=''))
@@ -50,7 +50,7 @@ mod.buffer <- function(name,species=NULL,state=get("thermo")$opt$state,logact=-3
     if(state[1]=='') state <- rep(thermo$opt$state,length.out=ls)
     t <- data.frame(name=name,species=species,state=state,logact=logact)
     thermo$buffers <- rbind(thermo$buffers,t)
-    assign("thermo", thermo, "CHNOSZ")
+    assign("thermo", thermo, CHNOSZ)
     message(paste('mod.buffer: added',c2s(unique(name))))
   }
   return(invisible(thermo$buffers[thermo$buffers$name %in% name,]))
@@ -59,7 +59,7 @@ mod.buffer <- function(name,species=NULL,state=get("thermo")$opt$state,logact=-3
 ### unexported functions ###
 
 buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balance='PBB') {
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   # if logK is NULL load the buffer species
   # otherwise perform buffer calculations.
   if(is.null(logK)) {

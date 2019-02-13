@@ -108,7 +108,7 @@ dfun <- function(T = 600, P = 50000, res=300) {
   legend("bottomleft", legend=dp, bty="n")
 }
 
-data(OBIGT)
+obigt()
 ## (not run) make diagram using CHNOSZ default database
 #dfun()
 #t1 <- quote("CHNOSZ default database"[])
@@ -136,7 +136,7 @@ mtitle(as.expression(c(DEWexpr, "and methane")))
 # true ionic strength: 0.39, 0.57, 0.88, 1.45, 2.49
 # pH: 3.80, 3.99, 4.14, 4.25, 4.33
 ## activate DEW model
-data(thermo)
+reset()
 water("DEW")
 # add species data for DEW
 inorganics <- c("methane", "CO2", "HCO3-", "CO3-2")
@@ -210,7 +210,7 @@ stopifnot(maxdiff(sres$out[[1]]$loggam, loggamma) < 0.023)
 ###########
 ### all done!
 # reset the database and previous water computational option
-data(OBIGT)
+obigt()
 water(oldwat)
 ###########
 

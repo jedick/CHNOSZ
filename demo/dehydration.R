@@ -48,12 +48,12 @@ for(i in 1:length(reactants)) {
 
   # names
   for(j in 1:2) {
-    formula <- thermo$obigt$formula[s$reaction$ispecies[j]]
-    key1 <- thermo$obigt$ref1[s$reaction$ispecies[j]]
+    formula <- thermo()$obigt$formula[s$reaction$ispecies[j]]
+    key1 <- thermo()$obigt$ref1[s$reaction$ispecies[j]]
     # remove suffix from the key (e.g. "DLH06 [S15]" --> "DLH06")
     key1 <- strsplit(key1, " ")[[1]][1]
-    ikey1 <- which(thermo$refs$key==key1)
-    URL1 <- thermo$refs$URL[ikey1]
+    ikey1 <- which(thermo()$refs$key==key1)
+    URL1 <- thermo()$refs$URL[ikey1]
     setSVGShapeURL(URL1, target="_blank")
     setSVGShapeContents(paste0("<title>", paste(formula, s$reaction$state[j]), "</title>"))
     if(j==1) dy <- 0.08 else dy <- -0.03
@@ -62,10 +62,10 @@ for(i in 1:length(reactants)) {
     name <- gsub("-.*", "", s$reaction$name[j])
     text(T[ilab[i]] + dx, s$out$logK[ilab[i]] + dy, name, adj=1, srt=srt[i])
     # add a second reference link if needed
-    key2 <- thermo$obigt$ref2[s$reaction$ispecies[j]]
+    key2 <- thermo()$obigt$ref2[s$reaction$ispecies[j]]
     if(!is.na(key2)) {
-      ikey2 <- which(thermo$refs$key==key2)
-      URL2 <- thermo$refs$URL[ikey2]
+      ikey2 <- which(thermo()$refs$key==key2)
+      URL2 <- thermo()$refs$URL[ikey2]
       setSVGShapeURL(URL2, target="_blank")
       setSVGShapeContents("<title>2nd reference</title>")
       text(T[ilab[i]] + dx, s$out$logK[ilab[i]] + dy, "(*)", adj=0)

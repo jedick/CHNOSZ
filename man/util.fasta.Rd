@@ -62,7 +62,7 @@ The \code{protein} argument corresponds to the \samp{Entry name} on the UniProt 
 \code{\link{nucleic.formula}} for an example of counting nucleobases in a DNA sequence.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## reading a protein FASTA file
 # the path to the file
 file <- system.file("extdata/fasta/EF-Tu.aln", package="CHNOSZ")

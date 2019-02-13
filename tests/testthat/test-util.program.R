@@ -18,7 +18,7 @@ test_that("other functions are calling palply() properly", {
     #ff <- system.file("extdata/fasta/HTCC1062.faa.xz", package="CHNOSZ")
     #expect_message(aa <- read.fasta(ff), "read.fasta running 1354 calculations")
     basis("CHNOS")
-    ip <- 1:nrow(thermo$protein)
+    ip <- 1:nrow(thermo()$protein)
     expect_message(a <- affinity(iprotein=rep(ip, 3)), "affinity running .* calculations")
     expect_message(e <- equilibrate(a, normalize=TRUE), "equil.boltzmann running .* calculations")
     # test reaction method

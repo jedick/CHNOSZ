@@ -6,7 +6,7 @@
 This page contains some examples of using the functions in CHNOSZ to calculate thermodynamic properties of and make diagrams for proteins.
 }
 
-\examples{\dontshow{data(thermo)}
+\examples{\dontshow{reset()}
 ## Standard molal entropy of a protein reaction
 basis("CHNOS")
 # here we provide the reaction coefficients of the 
@@ -31,7 +31,7 @@ title(main="Sequences for transferase at Bison Pool")
 ## as a function of oxygen fugacity, after Dick, 2008, Fig. 5b
 # to reproduce the calculations in the paper,
 # use superseded data for [Met], [Gly] and [UPBB]
-data(thermo)
+reset()
 add.obigt("OldAA")
 # make our protein list
 organisms <- c("METSC", "METJA", "METFE", "HALJP", "METVO",
@@ -58,7 +58,7 @@ stopifnot(organisms[unique(which.pmax(e$loga.equil))] ==
 stopifnot(order(as.data.frame(e$loga.equil)[62,],
   decreasing=TRUE)==c(2, 6, 7, 5, 3, 1, 9, 8, 10, 4))
 # reset thermodynamic database
-data(thermo)
+reset()
 
 ## relative stabilities of bovine proteins
 ## as a function of temperature along a glutathione redox buffer

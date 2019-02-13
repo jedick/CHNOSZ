@@ -1,7 +1,7 @@
 context("swap.basis")
 
 # clear out any previous basis definition or database alterations
-suppressMessages(data(thermo))
+suppressMessages(reset())
 
 test_that("swap.basis raises errors when needed", {
   expect_error(swap.basis(c("CO2", "H2O")), "requires an existing basis definition")

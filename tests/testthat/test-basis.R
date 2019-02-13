@@ -1,7 +1,7 @@
 context("basis")
 
 # clear out any previous basis definition or database alterations
-suppressMessages(data(thermo))
+suppressMessages(reset())
 
 test_that("invalid basis definitions cause an error", {
   expect_error(basis(character()), "argument is empty")
@@ -11,7 +11,7 @@ test_that("invalid basis definitions cause an error", {
   expect_error(basis(c("HCN", "H2O", "O2", "H2")), "singular")
   expect_error(basis(c("CN", "H2O", "O2", "H2")), "species not available")
   expect_error(basis(c("CN")), "species not available")
-  ina <- nrow(thermo$obigt) + 1
+  ina <- nrow(thermo()$obigt) + 1
   expect_error(basis(ina), "species not available")
   expect_error(preset.basis(c("CN")), "is not a keyword")
   # after all that, the basis should still be undefined

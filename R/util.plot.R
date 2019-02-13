@@ -5,11 +5,11 @@ thermo.plot.new <- function(xlim,ylim,xlab,ylab,cex=par('cex'),mar=NULL,lwd=par(
   mgp=c(1.7,0.3,0),cex.axis=par('cex'),col=par('col'),yline=NULL,axs='i',do.box=TRUE,
   las=1,xline=NULL, ...) {
   # start a new plot with some customized settings
-  thermo <- get("thermo")
+  thermo <- get("thermo", CHNOSZ)
   # 20120523 store the old par in thermo$opar
   if(is.null(thermo$opar)) {
     thermo$opar <- par(no.readonly=TRUE)
-    assign("thermo", thermo, "CHNOSZ")
+    assign("thermo", thermo, CHNOSZ)
   }
   # 20090324 mar handling: NULL - a default setting; NA - par's setting
   # 20090413 changed mar of top side from 2 to 2.5
