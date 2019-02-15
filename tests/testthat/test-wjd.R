@@ -19,8 +19,10 @@ test_that("guess() operates on intermediate compositions but fails with endmembe
 })
 
 test_that("open-system equilibrium distributions reproduce the results of wjd()", {
-#  ### FIXME: equil.potentials(w) returns NULL unless we use parameters for [Gly] from DLH06 20190206
-#  add.obigt("OldAA")
+  ### FIXME: equil.potentials(w) returns NULL unless we use group additivity parameters from DLH06 20190206
+  ### (issue appears with MKL and OpenBLAS CRAN checks)
+  reset()
+  add.obigt("OldAA")
   ### set up system
   # use proteins in the lipid particle (n=19)
   y <- yeastgfp("lipid.particle")
@@ -60,10 +62,8 @@ test_that("open-system equilibrium distributions reproduce the results of wjd()"
   # the test: abundances calculated both ways are equal
   expect_equal(X.closed, X.open, tolerance=0.018)
   # seems that we could do better than that 1.8% mean difference!
+  reset()
 })
-
-# see also test-swap.basis.R for an example using run.wjd() and 
-# equil.potentials() to generate chemical potentials of elements
 
 # references
 
