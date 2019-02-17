@@ -12,7 +12,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   diagram(
     # species affinities or activities
     eout,
-    # type plot
+    # type of plot
     type = "auto", alpha = FALSE, normalize = FALSE,
     as.residue = FALSE, balance = NULL, groups = as.list(1:length(eout$values)),
     # figure size and sides for axis tick marks

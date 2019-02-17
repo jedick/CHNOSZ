@@ -119,7 +119,7 @@ Abbreviations used below are: Cp (heat capacity), GHS (standard Gibbs energy, en
 
 * Data from SUPCRT92 which have been superseded by the Berman data are listed under **Optional Data** / **SUPCRT92**.
 
-* Superseded data from SLOP98 (aqueous SiO<sub>2</sub> and Al, As, and Au species) are listed under **Optional Data** / **SLOP98**.
+* Superseded data from SLOP98 (Al, As, and Au species) are listed under **Optional Data** / **SLOP98**.
 
 # Sources of data {.tabset .tabset-fade}
 
@@ -227,7 +227,7 @@ optused <- c(optused, filerefs(csvfile))
 
 ### `r setfile("SUPCRT92.csv")`
 ```{r SUPCRT92, results="asis", echo=FALSE}
-cat('These minerals, taken from the SUPCRT92 database, were present in earlier versions of CHNOSZ but have since been superseded by the Berman dataset. They are kept as optional data for testing and comparison purposes. The minerals here include all of the silicates and Al-bearing minerals from [Helgeson et al., 1978](http://www.worldcat.org/oclc/13594862), as well as calcite, dolomite, hematite, and magnetite. Use <span style="color:red">`add.obigt("SUPCRT92")`</span> to load the data. Note that other minerals from SUPCRT92, including native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate those in the Berman dataset, are still present in the default database (**inorganic_cr.csv**).\n\n')
+cat('These minerals and aqueous species, taken from the SUPCRT92 database, were present in earlier versions of CHNOSZ but have since been superseded by @Ber88 (minerals) and @NA03 (H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>). The thermodynamic properties and parameters are kept here as optional data for reproducing published calculations and making comparisons with newer data. The minerals here include all of the silicates and Al-bearing minerals from @HDNB78, as well as calcite, dolomite, hematite, and magnetite. Use <span style="color:red">`add.obigt("SUPCRT92")`</span> to load the data. Note that other minerals from SUPCRT92, including native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate those in the Berman dataset, are still present in the default database (**inorganic_cr.csv**).\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}
@@ -235,7 +235,7 @@ cat('These minerals, taken from the SUPCRT92 database, were present in earlier v
 
 ### `r setfile("SLOP98.csv")`
 ```{r SLOP98, results="asis", echo=FALSE}
-cat('These species, taken from the slop98 data file, were present in earlier versions of CHNOSZ but have been replaced by or are incompatible with later updates. The data are kept here for comparative purposes. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.\n\n')
+cat('These species, taken from slop98.dat or later files, were present in earlier versions of CHNOSZ but have been replaced by or are incompatible with other updates for aqueous Al species [@TS01], As species [@MA07; @MA10], and Au species [@AZ01; @AZ10; @PAB+14]. The data are kept here for comparative purposes. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}
@@ -244,6 +244,14 @@ cat('These species, taken from the slop98 data file, were present in earlier ver
 ### `r setfile("OldAA.csv")`
 ```{r OldAA, results="asis", echo=FALSE}
 cat('Data for these amino acids and related species were present in earlier versions of CHNOSZ but have been replaced by or are incompatible with later updates [@LD12; @Kit14; @AKAE19]. The data are kept here to reproduce published calculations and for comparison with newer data. Use <span style="color:red">`add.obigt("OldAA")`</span> to load the data.\n\n')
+```
+
+```{r optreflist, results="asis", echo=FALSE}
+```
+
+### `r setfile("AS04.csv")`
+```{r AS04, results="asis", echo=FALSE}
+cat('This file has data for aqueous SiO<sub>2</sub> from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>. Use <span style="color:red">`add.obigt("AS04")`</span> to load the data; see [<span style="color:blue">`demo(go-IU)`</span>](../demo) for an example.\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}
@@ -326,13 +334,6 @@ used2 <- c(used2, filerefs(csvfile))
 ```{r reflist2, results="asis", echo=FALSE}
 ```
 
-#### `r setfile("OldAA.csv")`
-```{r OldAA, results="asis", echo=FALSE}
-```
-
-```{r reflist2, results="asis", echo=FALSE}
-```
-
 #### `r setfile("SUPCRT92.csv")`
 ```{r SUPCRT92, results="asis", echo=FALSE}
 ```
@@ -342,6 +343,20 @@ used2 <- c(used2, filerefs(csvfile))
 
 #### `r setfile("SLOP98.csv")`
 ```{r SLOP98, results="asis", echo=FALSE}
+```
+
+```{r reflist2, results="asis", echo=FALSE}
+```
+
+#### `r setfile("OldAA.csv")`
+```{r OldAA, results="asis", echo=FALSE}
+```
+
+```{r reflist2, results="asis", echo=FALSE}
+```
+
+#### `r setfile("AS04.csv")`
+```{r AS04, results="asis", echo=FALSE}
 ```
 
 ```{r reflist2, results="asis", echo=FALSE}

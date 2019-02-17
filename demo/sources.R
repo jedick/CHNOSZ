@@ -19,8 +19,11 @@ os6 <- gsub("\ .*", "", tdata$ref2)
 tdata <- read.csv(system.file("extdata/OBIGT/OldAA.csv", package="CHNOSZ"), as.is=TRUE)
 os7 <- gsub("\ .*", "", tdata$ref1)
 os8 <- gsub("\ .*", "", tdata$ref2)
+tdata <- read.csv(system.file("extdata/OBIGT/AS04.csv", package="CHNOSZ"), as.is=TRUE)
+os9 <- gsub("\ .*", "", tdata$ref1)
+os10 <- gsub("\ .*", "", tdata$ref2)
 # all of the thermodynamic data sources - some of them might be NA
-obigt.source <- unique(c(ps1, ps2, os1, os2, os3, os4, os5, os6, os7, os8))
+obigt.source <- unique(c(ps1, ps2, os1, os2, os3, os4, os5, os6, os7, os8, os9, os10))
 obigt.source <- obigt.source[!is.na(obigt.source)]
 # these all produce character(0) if the sources are all accounted for
 print("missing these sources for thermodynamic properties:")

@@ -35,6 +35,7 @@ logfO2 <- "log<i>f</i><sub>O<sub>2</sub></sub>"
 zc <- "<i>Z</i><sub>C</sub>"
 o2 <- "O<sub>2</sub>"
 h2o <- "H<sub>2</sub>O"
+sio2 <- "SiO<sub>2</sub>"
 ```
 
 ```{r setup, include=FALSE}
@@ -1970,12 +1971,17 @@ Some optional datasets can be activated by using <span style="color:red">`add.ob
 <span style="color:red">`add.obigt("SUPCRT92")`</span> -- This file contains data for minerals from SUPCRT92 (mostly Helgeson et al., 1978) that have been replaced by the Berman data set.
 
 <span style="color:red">`add.obigt("SLOP98")`</span> -- This file contains data from `slop98.dat` or later slop files, from Everett Shock's GEOPIG group at Arizona State University, that were previously used in CHNOSZ but have been replaced by newer data.
-This includes updates for aqueous Au species as summarized by @PAB_14, and aqueous SiO<sub>2</sub>, aqueous aluminum species, and arsenic-bearing aqueous species and minerals, as compiled in the [SUPCRTBL package](http://www.indiana.edu/~hydrogeo/supcrtbl.html) [@ZZL_16].
-Some calculations using the older data are shown in [this vignette](#complete-equilibrium-solubility) and [<span style="color:blue">`demo(go-IU)`</span>](../demo); see [<span style="color:blue">`demo(gold)`</span>](../demo) for calculations that depend exclusively on the newer data that are now loaded by default in CHNOSZ.
+This includes updates for aqueous Al species [@TS01], Au species [@PAB_14], and arsenic-bearing aqueous species and minerals, as compiled in the [SUPCRTBL package](http://www.indiana.edu/~hydrogeo/supcrtbl.html) [@ZZL_16].
+Some calculations using the older data are shown in [this vignette](#complete-equilibrium-solubility).
+See [<span style="color:blue">`demo(gold)`</span>](../demo) for calculations that depend on the data for Au species that are now loaded by default in CHNOSZ.
 
 <span style="color:red">`add.obigt("OldAA")`</span> -- This file contains superseded data for amino acids (methionine and glycine) and related species, particularly the [Met], [Gly], and protein backbone groups, as well as metal-glycinate complexes.
 The updates for these data have been taken from various publications ([LaRowe and Dick, 2012](https://doi.org/10.1016/j.gca.2011.11.041); [Kitadai, 2014](https://doi.org/10.1007/s00239-014-9616-1); [Azadi et al., 2019](https://doi.org/10.1016/j.fluid.2018.10.002))
 A comparison of log*K* of metal-glycinate complexes using the updated data is in [<span style="color:blue">`demo(glycinate)`</span>](../demo).
+
+<span style="color:red">`add.obigt("AS04")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
+These data are included to help transition to the "higher solubility of quartz paradigm" [@WJ17], but are not included in the default database in order to maintain compatibility with existing data for minerals that are linked to the older aqueous `r sio2` data.
+See [<span style="color:blue">`demo(go-IU)`</span>](../demo) for an example.
 
 <span style="color:red">`add.obigt("DEW")`</span> -- These are aqueous species, with modified parameters, that are intended for use with the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model [@SHA14].
 You should also run <span style="color:red">`water("DEW")`</span> to activate the equations in the model; then, they will be used by <span style="color:green">`subcrt()`</span> and <span style="color:green">`affinity()`</span>.
