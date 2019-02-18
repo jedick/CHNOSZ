@@ -73,10 +73,12 @@ The proteins in the calculation are 24 carboxylases from a variety of organisms.
 There are 12 ribulose phosphate carboxylase and 12 acetyl-coenzyme A carboxylase; 6 of each type are from nominally mesophilic organisms and 6 from nominally thermophilic organisms, shown as blue and red symbols on the diagrams.
 The activities of hydrogen at each temperature are calculated using \eqn{\log a_{\mathrm{H_{2}}_{\left(aq\right)}}=-11+3/\left(40\times T\left(^{\circ}C\right)\right)}{logaH2 = -11 + 3/40 * T(degC)}; this equation comes from a model of relative stabilities of proteins in a hot-spring environment (Dick and Shock, 2011).
 
-In the \samp{NaCl} demo, the \logK lines calculated at \Psat and P=500 bar show discontinuities at 355 \degC.
-Although not realistic, this behavior is consistent with the output of \acronym{SUPCRT92} (Johnson et al., 1992) at 500 bar.
-This is probably due to a transition between different regimes for the properties of water as coded in SUPCRT's \code{H2O92D.F}, which is used by CHNOSZ.
-(Note that SUPCRT does not output thermodynamic properties above 350 \degC at \Psat; see Warning in \code{\link{subcrt}}.)
+}
+
+\section{Warning}{
+The discontinuities apparent in the plot made by the \code{NaCl} demo illustrate limitations of the "\emph{g} function" for charged species in the revised HKF model (the 355 \degC boundary of region II in Figure 6 of Shock et al., 1992).
+Note that \acronym{SUPCRT92} (Johnson et al., 1992) gives similar output at 500 bar.
+However, \acronym{SUPCRT} does not output thermodynamic properties above 350 \degC at \Psat; see Warning in \code{\link{subcrt}}.
 }
 
 \references{

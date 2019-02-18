@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.2.0-4 (2019-02-18)
+CHANGES IN CHNOSZ 1.2.0-5 (2019-02-18)
 --------------------------------------
 
 CRAN COMPLIANCE
@@ -20,7 +20,23 @@ NEW FEATURES
 
 THERMODYNAMIC DATA
 
-- Move SiO2(aq) and H2AsO3- from SLOP98.csv to SUPCRT92.csv.
+- Revert to using SiO2(aq) from SUPCRT92 (i.e. Shock et al., 1989) in
+  the default database.
+
+- Move SiO2(aq) from Apps and Spycher, 2004 and recalculated HSiO3- to
+  new optional data file, OBIGT/AS04.csv.
+
+- Move H2AsO3- from SLOP98.csv to SUPCRT92.csv.
+
+DOCUMENTATION
+
+- In demo/NaCl.R, indicate region not considered by Shock et al., 1992
+  in developing the revised HKF model and presence of the associated
+  discontinuities in SUPCRT92.
+
+OTHER CHANGES
+
+- In describe.reaction(), change equals sign to reaction double arrow.
 
 CHANGES IN CHNOSZ 1.2.0 (2019-02-09)
 ------------------------------------

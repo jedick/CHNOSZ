@@ -255,7 +255,7 @@ describe.reaction <- function(reaction, iname=numeric(), states=NULL) {
     if(i %in% iname) species <- reaction$name[i]
     else {
       # should the chemical formula have a state?
-      if(identical(states,"all")) species <- expr.species(reaction$formula[i], state=reaction$state[i], use.state=TRUE)
+      if(identical(states,"all") | i %in% states) species <- expr.species(reaction$formula[i], state=reaction$state[i], use.state=TRUE)
       else species <- expr.species(reaction$formula[i], state=reaction$state[i])
     }
     # get the absolute value of the reaction coefficient
@@ -278,7 +278,8 @@ describe.reaction <- function(reaction, iname=numeric(), states=NULL) {
     }
   }
   # put an equals sign between reactants and products
-  desc <- substitute(a==b, list(a=reactexpr, b=prodexpr))
+  # change this to unicode for the reaction double-arrow 20190218 \u21cc
+  desc <- substitute(a ~ "\u21cc" ~ b, list(a=reactexpr, b=prodexpr))
   return(desc)
 }
 
