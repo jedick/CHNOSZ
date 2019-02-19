@@ -78,6 +78,30 @@ test_that("gfun() gives expected results", {
   expect_equal(gfun.4000$dgdP * 1e6, dgdP.4000.ref, tolerance=1e-3)
 })
 
+test_that("AkDi produces expected results", {
+  # 20190220
+  # add an aqueous species conforming to the AkDi model: it has NA for Z
+  iCO2 <- mod.obigt("CO2", a=-8.8321, b=11.2684, c=-0.0850, z=NA)
+  # do the properties we calculate match previously calculated values?
+  P <- "Psat"
+  T <- seq(50, 350, 100)
+  # J mol-1
+  G_ref <- c(-389122.3, -405138.4, -425410.7, -450573.2)
+  G_calc <- subcrt(iCO2, T=T, P=P)$out[[1]]$G
+  # convert to J mol-1
+  G_calc <- convert(G_calc, "J", T=convert(T, "K"))
+  expect_equal(round(G_calc, 1), G_ref)
+
+  P <- 500
+  T <- seq(200, 1000, 200)
+  G_ref <- c(-412767.4, -459654.1, -515231.6, -565736.3, -617927.9)
+  G_calc <- subcrt(iCO2, T=T, P=P)$out[[1]]$G
+  G_calc <- convert(G_calc, "J", T=convert(T, "K"))
+  expect_equal(round(G_calc, 1), G_ref)
+
+  reset()
+})
+
 # reference
 
 # Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) 

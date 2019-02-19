@@ -33,3 +33,12 @@ test_that("info() can be used for cr and aq descriptions of the same species and
   expect_equal(thermo()$obigt$state[i2], c("cr", "aq"))
   expect_equal(info(i2)[1, ], info(i2[1]), check.attributes=FALSE)
 })
+
+test_that("info() gives correct column names for species using the AkDi model", {
+  # add an aqueous species conforming to the AkDi model: it has NA for Z
+  iCO2 <- mod.obigt("CO2", a = -8.8321, b = 11.2684, c = -0.0850, z = NA)
+  params <- info(iCO2)
+  expect_equal(params$a, -8.8321)
+  expect_equal(params$b, 11.2684)
+  expect_equal(params$xi, -0.0850)
+})

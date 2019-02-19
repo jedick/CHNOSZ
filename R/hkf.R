@@ -48,7 +48,7 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
   # a list to store the result
   aq.out <- list()
   nspecies <- nrow(parameters)
-  for(k in 1:nspecies) {
+  for(k in seq_len(nspecies)) {
     # loop over each species
     PAR <- parameters[k, ]
     # substitute Cp and V for missing EoS parameters
@@ -71,7 +71,7 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
     dwdP <- dwdT <- d2wdT2 <- numeric(length(T))
     Z <- PAR$Z
     omega.PT <- rep(PAR$omega, length(T))
-    if(!identical(Z, 0) & !identical(PAR$name, "H+")) {
+    if(!identical(Z, 0) & !is.na(Z) & !identical(PAR$name, "H+")) {
       # compute derivatives of omega: g and f functions (Shock et al., 1992; Johnson et al., 1992)
       rhohat <- H2O.PT$rho/1000  # just converting kg/m3 to g/cm3
       g <- gfun(rhohat, convert(T, "C"), P, H2O.PT$alpha, H2O.PT$daldT, H2O.PT$beta)

@@ -30,6 +30,8 @@ test_that("minimal usage of mod.obigt() creates usable data entries", {
                "please supply a valid chemical formula")
   # the default state is aq
   expect_message(itest <- mod.obigt("test", formula="Z0", date=today()), "added test\\(aq\\)")
+  # set the charge so following test use hkf() rather than AkDi()
+  mod.obigt("test", z = 0)
   # we should get NA values of G for a species with NA properties 
   expect_true(all(is.na(subcrt(itest)$out[[1]]$G)))
   # a single value of G comes through to subcrt
