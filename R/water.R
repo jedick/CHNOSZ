@@ -2,7 +2,7 @@
 # calculate thermodynamic and electrostatic properties of H2O
 # 20061016 jmd
 
-water <- function(property = NULL, T = 298.15, P = "Psat") {
+water <- function(property = NULL, T = 298.15, P = "Psat", P1 = TRUE) {
   # calculate the properties of liquid H2O as a function of T and P
   # T in Kelvin, P in bar
   if(is.null(property)) return(get("thermo", CHNOSZ)$opt$water)
@@ -25,7 +25,7 @@ water <- function(property = NULL, T = 298.15, P = "Psat") {
     # change 273.15 K to 273.16 K (needed for water.SUPCRT92 at Psat)
     if(identical(P, "Psat")) T[T == 273.15] <- 273.16
     # get properties using SUPCRT92
-    w.out <- water.SUPCRT92(property, T, P)
+    w.out <- water.SUPCRT92(property, T, P, P1)
   }
   if(grepl("IAPWS", wopt)) {
     # get properties using IAPWS-95 
@@ -38,7 +38,7 @@ water <- function(property = NULL, T = 298.15, P = "Psat") {
   w.out
 }
 
-water.SUPCRT92 <- function(property=NULL, T=298.15, P=1) {
+water.SUPCRT92 <- function(property=NULL, T=298.15, P=1, P1=TRUE) {
   ### interface to H2O92D.f : FORTRAN subroutine taken from 
   ### SUPCRT92 for calculating the thermodynamic and 
   ### electrostatic properties of H2O. 
@@ -105,7 +105,7 @@ water.SUPCRT92 <- function(property=NULL, T=298.15, P=1) {
         w.P <- H2O[[2]][2]
         w.P[w.P==0] <- NA
         # Psat specifies P=1 below 100 degC
-        w.P[w.P < 1] <- 1
+        if(P1) w.P[w.P < 1] <- 1
         P.out[i] <- w.P
       }
     }

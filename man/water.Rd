@@ -10,8 +10,8 @@ Calculate thermodynamic and electrostatic properties of water.
 }
 
 \usage{
-  water(property = NULL, T = 298.15, P = "Psat")
-  water.SUPCRT92(property=NULL, T = 298.15, P = 1)
+  water(property = NULL, T = 298.15, P = "Psat", P1 = TRUE)
+  water.SUPCRT92(property=NULL, T = 298.15, P = 1, P1 = TRUE)
   water.IAPWS95(property=NULL, T = 298.15, P = 1)
   water.DEW(property=NULL, T = 373.15, P = 1000)
 }
@@ -20,6 +20,7 @@ Calculate thermodynamic and electrostatic properties of water.
   \item{property}{character, computational setting or property(s) to calculate}
   \item{T}{numeric, temperature (K)}
   \item{P}{numeric, pressure (bar), or \samp{Psat} for vapor-liquid saturation}
+  \item{P1}{logical, output pressure of 1 bar below 100 \degC instead of calculated values of \samp{Psat}?}
 }
 
 \details{

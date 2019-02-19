@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.2.0-5 (2019-02-18)
+CHANGES IN CHNOSZ 1.2.0-6 (2019-02-19)
 --------------------------------------
 
 CRAN COMPLIANCE
@@ -17,6 +17,10 @@ NEW FEATURES
 
 - Add retrieve() to retrieve all the species with given elements. Thanks
   to Evgeniy Bastrakov for the suggestion.
+
+- water() and water.SUPCRT92(): add 'P1' argument to choose whether to
+  output 1 bar for Psat at temperatures less than 100 degrees C
+  (default is TRUE).
 
 THERMODYNAMIC DATA
 
