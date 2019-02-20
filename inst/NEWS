@@ -1,5 +1,5 @@
-CHANGES IN CHNOSZ 1.2.0-9 (2019-02-20)
---------------------------------------
+CHANGES IN CHNOSZ 1.2.0-10 (2019-02-20)
+---------------------------------------
 
 CRAN COMPLIANCE
 
@@ -20,7 +20,7 @@ NEW FEATURES
 
 - Add AkDi() to calculate thermodynamic properties of aqueous
   nonelectrolytes using the Akinfiev-Diamond model. Thanks to Evgeniy
-  Bastrakov for guidance and advice.
+  Bastrakov for guidance.
 
 THERMODYNAMIC DATA
 
@@ -41,6 +41,9 @@ DOCUMENTATION
   in developing the "g function" applicable to electrolytes in the
   revised HKF model, and note presence of resulting discontinuities (see
   man/examples.Rd).
+
+- Add demo/AkDi.R showing calculations of Henry's constant of dissolved
+  gases, after Figure 1 of Akinfiev and Diamond, 2003.
 
 OTHER CHANGES
 
