@@ -80,7 +80,7 @@ test_that("gfun() gives expected results", {
 
 test_that("AkDi produces expected results", {
   # 20190220
-  # add an aqueous species conforming to the AkDi model: it has NA for Z
+  # modify aqueous CO2 to use the AkDi model: it has NA for Z
   iCO2 <- mod.obigt("CO2", a=-8.8321, b=11.2684, c=-0.0850, z=NA)
   # do the properties we calculate match previously calculated values?
   P <- "Psat"
@@ -99,7 +99,19 @@ test_that("AkDi produces expected results", {
   G_calc <- convert(G_calc, "J", T=convert(T, "K"))
   expect_equal(round(G_calc, 1), G_ref)
 
+  # compare Gibbs energies at 25 degrees calculatwith with AkDi model to database values
+  iAkDi <- add.obigt("AkDi")
+  # this would produce an error if any of the corresponding gases were unavailable
+  sAkDi <- subcrt(iAkDi, T = 25)
+  GAkDi <- do.call(rbind, sAkDi$out)$G
+  # now get the parameters from default OBIGT
   reset()
+  GOBIGT <- info(iAkDi)$G
+  # calculate the differences and add names
+  Gdiff <- GAkDi - GOBIGT
+  names(Gdiff) <- info(iAkDi)$name
+  # the differences are not that big, except for HCl(aq)
+  expect_lt(max(abs(Gdiff)), 300)
 })
 
 # reference

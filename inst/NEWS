@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.2.0-8 (2019-02-20)
+CHANGES IN CHNOSZ 1.2.0-9 (2019-02-20)
 --------------------------------------
 
 CRAN COMPLIANCE
@@ -31,6 +31,9 @@ THERMODYNAMIC DATA
   new optional data file, OBIGT/AS04.csv.
 
 - Move H2AsO3- from OBIGT/SLOP98.csv to OBIGT/SUPCRT92.csv.
+
+- Add OBIGT/AkDi.csv as optional data file for species using
+  Akinfiev-Diamond model.
 
 DOCUMENTATION
 

@@ -265,6 +265,7 @@ check.obigt <- function() {
     else if(what=="SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="OldAA") tdata <- read.csv(system.file("extdata/OBIGT/OldAA.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="AS04") tdata <- read.csv(system.file("extdata/OBIGT/AS04.csv", package="CHNOSZ"), as.is=TRUE)
+    else if(what=="AkDi") tdata <- read.csv(system.file("extdata/OBIGT/AkDi.csv", package="CHNOSZ"), as.is=TRUE)
     ntot <- nrow(tdata)
     # where to keep the results
     DCp <- DV <- DG <- rep(NA,ntot)
@@ -401,7 +402,7 @@ obigt2eos <- function(obigt,state,fixGHS=FALSE) {
     isAkDi <- is.na(obigt$z.T)
     # remove scaling factors for the HKF species, but not for the AkDi species
     obigt[!isAkDi, 13:20] <- t(t(obigt[!isAkDi, 13:20]) * 10^c(-1,2,0,4,0,4,5,0))
-    # for AkDi specie, set NA values in remaining columns (for display only)
+    # for AkDi species, set NA values in remaining columns (for display only)
     obigt[isAkDi, 16:19] <- NA
     # if all of the species are AkDi, change the variable names
     if(all(isAkDi)) colnames(obigt)[13:20] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
