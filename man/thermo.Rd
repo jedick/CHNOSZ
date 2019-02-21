@@ -157,11 +157,11 @@ Columns 13-20 for crystalline, gas and liquid species (\eqn{Cp=a+bT+cT^{-2}+dT^{
       \tab \tab temperature limit of validity of extrapolation (K)
     }
 
-Columns 13-20 for aqueous species using the Akinfiev-Diamond model. Note that the \code{c} column is used to store the \eqn{\xi}{xi} parameter, and that \code{Z} must be NA to activate the code for this model.
+Columns 13-20 for aqueous species using the Akinfiev-Diamond model. Note that the \code{c} column is used to store the \eqn{\xi}{xi} parameter, and that \code{Z} must be NA to activate the code for this model. The remaining columns are not used.
 
     \tabular{lll}{
-      \code{a} \tab numeric \tab \eqn{a} \cr
-      \code{b} \tab numeric \tab \eqn{b} \cr
+      \code{a} \tab numeric \tab \eqn{a} (cm\S{3} g\S{-1}) \cr
+      \code{b} \tab numeric \tab \eqn{b} (cm\S{3} K\S{0.5} g\S{-1}) \cr
       \code{c} \tab numeric \tab \eqn{\xi}{xi} \cr
       \code{d} \tab numeric \tab \eqn{XX1} NA \cr
       \code{e} \tab numeric \tab \eqn{XX2} NA \cr

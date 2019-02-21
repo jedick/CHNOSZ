@@ -49,6 +49,7 @@ If all equations-of-state parameters are NA, but values of \samp{Cp} and/or \sam
 
 \code{AkDi} provides the Akinfiev-Diamond model for aqueous species (Akinfiev and Diamond, 2003).
 To run this code, the database must also include the corresponding gasesous species (with the same name or chemical formula).
+Currently, only the standard chemical potential (Gibbs energy) is calculated.
 
 }
 
@@ -83,8 +84,8 @@ hkf(property = "Cp", parameters = CH4aq, T = c(373.15,473.15), P = 1000)
 ## crystalline, gas, liquid species
 CH4gas <- info(info("methane", "gas"))	
 cgl(property = "Cp", parameters = CH4gas)
-# melting and vaporization of n-octane
-C8H18par <- info(info(rep("n-octane", 3), c("cr", "liq", "gas")))
+# melting and vaporization of octane
+C8H18par <- info(info(rep("octane", 3), c("cr", "liq", "gas")))
 myT <- seq(200, 420, 10)
 DG0f <- cgl(property = "G", parameters = C8H18par, T = myT, P = 1)
 cbind(T = myT, which.pmax(DG0f, pmin = TRUE))  # 1 = cr, 2 = liq, 3 = gas

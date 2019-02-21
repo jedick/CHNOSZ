@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.2.0-10 (2019-02-20)
+CHANGES IN CHNOSZ 1.2.0-11 (2019-02-21)
 ---------------------------------------
 
 CRAN COMPLIANCE
@@ -32,8 +32,11 @@ THERMODYNAMIC DATA
 
 - Move H2AsO3- from OBIGT/SLOP98.csv to OBIGT/SUPCRT92.csv.
 
-- Add OBIGT/AkDi.csv as optional data file for species using
-  Akinfiev-Diamond model.
+- Add OBIGT/AkDi.csv as optional data file for aqueous species from
+  Akinfiev and Diamond, 2003 and Akinfiev and Plyasunov, 2014.
+
+- Add gaseous HF and HCl to as requirements for the Akinfiev-Diamond
+  model for dissolved gases.
 
 DOCUMENTATION
 

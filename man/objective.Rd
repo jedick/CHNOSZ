@@ -93,7 +93,7 @@ stopifnot(all.equal(DDGmix(loga1, loga2), 0.0004))
 
 ## transforming an equilibrium assemblage of n-alkanes
 basis(c("CH4", "H2"), c("gas", "gas"))
-species(c("methane", "ethane", "propane", "n-butane"), "liq")
+species(c("methane", "ethane", "propane", "butane"), "liq")
 # calculate equilibrium assemblages over a range of logaH2
 a <- affinity(H2=c(-10, -5, 101), exceed.Ttr=TRUE)
 e <- equilibrate(a)

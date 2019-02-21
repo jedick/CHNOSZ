@@ -157,8 +157,8 @@ test_that("equilibrate() can be used with a vector of loga.balance values", {
 })
 
 test_that("normalizing formulas of only selected species works as expected", {
-  iC6 <- info("n-hexane", "liq")
-  iC12 <- info("n-dodecane", "liq")
+  iC6 <- info("hexane", "liq")
+  iC12 <- info("dodecane", "liq")
   `n-alkane` <- iC6:iC12
   i2C6 <- info("2-methylpentane", "liq")
   i2C9 <- info("2-methyloctane", "liq")
@@ -177,7 +177,7 @@ test_that("normalizing formulas of only selected species works as expected", {
   dloga_nalkane_norm <- diff(unlist(enorm$loga.equil[c(1, 7)]))
   dloga_isoalkane_norm <- diff(unlist(enorm$loga.equil[c(8, 11)]))
   # normalize only the n-alkane formulas
-  isalk <- grepl("n-", species()$name)
+  isalk <- species()$ispecies %in% `n-alkane`
   emix <- equilibrate(a, normalize=isalk)
   # the activity ratios for the normalized formulas should be the same in both calculations
   dloga_nalkane_mix <- diff(unlist(emix$loga.equil[c(1, 7)]))

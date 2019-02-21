@@ -257,6 +257,14 @@ cat('This file has data for aqueous SiO<sub>2</sub> from @AS04 and modified HSiO
 ```{r optreflist, results="asis", echo=FALSE}
 ```
 
+### `r setfile("AkDi.csv")`
+```{r AkDi, results="asis", echo=FALSE}
+cat('This file has parameters for aqueous nonelectrolytes in the Akinfiev-Diamond model [@AD03]. Use <span style="color:red">`add.obigt("AkDi")`</span> to load the data; see [<span style="color:blue">`demo(AkDi)`</span>](../demo) for an example.\n\n')
+```
+
+```{r optreflist, results="asis", echo=FALSE}
+```
+
 ## All at once
 
 ### Aqueous species
@@ -357,6 +365,13 @@ used2 <- c(used2, filerefs(csvfile))
 
 #### `r setfile("AS04.csv")`
 ```{r AS04, results="asis", echo=FALSE}
+```
+
+```{r reflist2, results="asis", echo=FALSE}
+```
+
+#### `r setfile("AkDi.csv")`
+```{r AkDi, results="asis", echo=FALSE}
 ```
 
 ```{r reflist2, results="asis", echo=FALSE}

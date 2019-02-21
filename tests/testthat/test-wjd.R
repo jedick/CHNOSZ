@@ -8,7 +8,7 @@ test_that("wjd() gives results similar to White et al., 1958", {
 })
 
 test_that("guess() operates on intermediate compositions but fails with endmembers", {
-  alkanes <- c("n-hexane", "n-heptane", "n-octane", "n-nonane")
+  alkanes <- c("hexane", "heptane", "octane", "nonane")
   ialk <- info(alkanes, "liq")
   expect_error(run.guess(ialk, "C6H14"), "there are only 0")
   # hmm, on windows this has a length of 5 (20120626)

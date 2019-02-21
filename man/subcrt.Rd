@@ -287,13 +287,13 @@ title(main=substitute(H2O~and~Na~to~-20~degC, list(H2O=H2O, Na=Na, degC=degC)))
 
 ## Calculations using a variable-pressure standard state
 thermo("opt$varP" = TRUE)
-# Calculate the boiling point of n-octane at 2 and 20 bar
+# Calculate the boiling point of octane at 2 and 20 bar
 # We need exceed.Ttr=TRUE because the liquid is metastable
 # at high temperatures (also, the gas is metastable at low
 # temperatures, but that doesn't produce NA in the output)
-sout2 <- subcrt(rep("n-octane", 2), c("liq", "gas"),
+sout2 <- subcrt(rep("octane", 2), c("liq", "gas"),
   c(-1, 1), T=seq(-50, 300, 0.1), P=2, exceed.Ttr=TRUE)$out
-sout20 <- subcrt(rep("n-octane", 2), c("liq", "gas"),
+sout20 <- subcrt(rep("octane", 2), c("liq", "gas"),
   c(-1, 1), T=seq(-50, 300, 0.1), P=20, exceed.Ttr=TRUE)$out
 # find T with the Gibbs energy of reaction that is closest to zero
 Tvap2 <- sout2$T[which.min(abs(sout2$G))]

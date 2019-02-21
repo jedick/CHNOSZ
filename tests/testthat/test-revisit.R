@@ -72,7 +72,7 @@ test_that("referenced objectives give expected results", {
 test_that("DGtr objective gives zero at equilibrium and >0 not at equilibrium", {
   # let's use n-alkanes
   basis(c("CH4", "H2"), c("gas", "gas"))
-  species(c("methane", "ethane", "propane", "n-butane"), "liq")
+  species(c("methane", "ethane", "propane", "butane"), "liq")
   # calculate equilibrium distribution over a range of logaH2
   a1 <- affinity(H2=c(-10, -5, 101), exceed.Ttr=TRUE)
   e1 <- equilibrate(a1)

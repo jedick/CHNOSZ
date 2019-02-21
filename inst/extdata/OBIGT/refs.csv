@@ -57,7 +57,7 @@ HSS95,"J. R. Haas, E. L. Shock and D. C. Sassani",1995,"Geochim. Cosmochim. Acta
 PH95,"V. A. Pokrovskii and H. C. Helgeson",1995,"Am. J. Sci. 295, 1255-1342","aluminum species",https://doi.org/10.2475/ajs.295.10.1255
 PK95,"V. B. Parker and I. L. Khodakovskii",1995,"J. Phys. Chem. Ref. Data 24, 1699-1745",melanterite,https://doi.org/10.1063/1.555964
 RH95,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","gypsum GHS",http://pubs.er.usgs.gov/publication/b2131
-RH95.1,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","hydrogen chloride (HCl gas)",http://pubs.er.usgs.gov/publication/b2131
+RH95.1,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","hydrogen fluoride and hydrogen chloride",http://pubs.er.usgs.gov/publication/b2131
 SK95,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","metal-organic acid complexes",https://doi.org/10.1016/0016-7037(95)00058-8
 SK95.1,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","alanate, glycinate and their complexes with metals. Values are taken from slop98.dat, which notes corrected values for some species.",https://doi.org/10.1016/0016-7037(95)00058-8
 Sho95,"E. L. Shock",1995,"Am. J. Sci. 295, 496-580","carboxylic acids",https://doi.org/10.2475/ajs.295.5.496
@@ -111,7 +111,8 @@ Ste01,"A. Stefansson",2001,"Chem. Geol. 172, 225-250","aqueous H<sub>4</sub>SiO<
 SSW01,"M. D. Schulte, E. L. Shock and R. H. Wood",2001,"Geochim. Cosmochim. Acta 65, 3919-3930","AsH<sub>3</sub>, CF<sub>4</sub>, CH<sub>3</sub>F, Cl<sub>2</sub>, ClO<sub>2</sub>, N<sub>2</sub>O, NF<sub>3</sub>, NO, PH<sub>3</sub>, and SF<sub>6</sub>",https://doi.org/10.1016/S0016-7037(01)00717-7
 TS01,"B. Tagirov and J. Schott",2001,"Geochim. Cosmochim. Acta 65, 3965-3992","aqueous Al species",https://doi.org/10.1016/S0016-7037(01)00705-0
 GKL02,"R. N. Goldberg et al.",2002,"J. Phys. Chem. Ref. Data 31, 231-370","glycine, diglycine, and triglycine (+1 and -1 ions) GHS",https://doi.org/10.1063/1.1416902
-AD03,"N. N. Akinfiev and L. W. Diamond",2003,"Geochim. Cosmochim. Acta 67, 613-629","aqueous nonelectrolytes",https://doi.org/10.1016/S0016-7037(02)01141-9
+AD03.1,"N. N. Akinfiev and L. W. Diamond",2003,"Geochim. Cosmochim. Acta 67, 613-629","dissolved gas species; parameters estimated from the experimental Henry's constant",https://doi.org/10.1016/S0016-7037(02)01141-9
+AD03.2,"N. N. Akinfiev and L. W. Diamond",2003,"Geochim. Cosmochim. Acta 67, 613-629","dissolved gas species; parameters estimated from standard-state properties at 25 &deg; C",https://doi.org/10.1016/S0016-7037(02)01141-9
 MGN03,"J. Majzlan, K.-D. Grevel and A. Navrotsky",2003,"Am. Mineral. 88, 855-859","goethite, lepidocrocite, and maghemite GHS",https://doi.org/10.2138/am-2003-5-614
 NA03,"D. K. Nordstrom and D. G. Archer",2003,"Arsenic thermodynamic data and environmental geochemistry. In Arsenic in Groundwater, eds. Welch and Stollenwerk, Kluwer","As oxide and sulfide minerals",
 NA03.1,"D. K. Nordstrom and D. G. Archer",2003,"Arsenic thermodynamic data and environmental geochemistry. In Arsenic in Groundwater, eds. Welch and Stollenwerk, Kluwer","aqueous As oxides and sulfides",
@@ -152,6 +153,7 @@ LD12.1,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","
 LD12.2,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","methionine GHS",https://doi.org/10.1016/j.gca.2011.11.041
 LD12.3,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","methionine sidechain GHS",https://doi.org/10.1016/j.gca.2011.11.041
 DEH+13,"J. M. Dick, K. A. Evans et al.",2013,"Geochim. Cosmochim. Acta 122, 247-266","phenanthrene and methylphenanthrene isomers",https://doi.org/10.1016/j.gca.2013.08.020
+AP14,"N. N. Akinfiev and A. V. Plyasunov",2014,"Geochim. Cosmochim. Acta 126, 338-351","B(OH)<sub>3</sub>, Si(OH)<sub>4</sub>, and As(OH)<sub>3</sub>",https://doi.org/10.1016/j.gca.2013.11.013
 FDM+14,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","CO<sub>2</sub>, CO<sub>3</sub><sup>-2</sup>, and HCO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/j.gca.2014.01.030
 FDM+14.1,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","aragonite; source of data: `berman.dat`",https://doi.org/10.1016/j.gca.2014.01.030
 Kit14,"N. Kitadai",2014,"J. Mol. Evol. 78, 171-187","glycine, diglycine, and triglycine (zwitterions and ions); diketopiperazine, [Gly] and [UPBB] groups",https://doi.org/10.1007/s00239-014-9616-1
