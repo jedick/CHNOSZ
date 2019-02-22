@@ -74,11 +74,11 @@ MS97.1,"T. M. McCollom and E. L. Shock",1997,"Geochim. Cosmochim. Acta 61, 4375-
 SSB97,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266","uranium species",https://doi.org/10.1016/S0016-7037(97)00240-8
 SSB97.1,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266",uraninite,https://doi.org/10.1016/S0016-7037(97)00240-8
 SSH97,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","metal complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
-SSH97.1,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Au(HS)<sub>2</sub><sup>-</sup> and Au-chloride complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
+SSH97.1,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Au(HS)<sub>2</sub><sup>-</sup>, AuCl, and AuCl<sub>2</sub><sup>-</sup>",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.2,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","HSiO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSWS97,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","inorganic ions and hydroxide complexes",https://doi.org/10.1016/S0016-7037(96)00339-0
 SSWS97.1,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","zincite and litharge",https://doi.org/10.1016/S0016-7037(96)00339-0
-SSWS97.2,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","Au<sup>+</sup> and Au<sup>+3</sup>",https://doi.org/10.1016/S0016-7037(96)00339-0
+SSWS97.2,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","Au<sup>+</sup>",https://doi.org/10.1016/S0016-7037(96)00339-0
 SSWS97.3,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","arsenate and arsenite species",https://doi.org/10.1016/S0016-7037(96)00339-0
 SSWS97.4,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","aqueous Al species",https://doi.org/10.1016/S0016-7037(96)00339-0
 TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976","humic acid, microflora, and plants",https://doi.org/10.1016/S1251-8050(97)83981-X
@@ -102,7 +102,7 @@ WS00,"S. A. Wood and I. M. Samson",2000,"Econ. Geol. 95, 143-182","scheelite and
 AP01,"J. P. Amend and A. V. Plyasunov",2001,"Geochim. Cosmochim. Acta 65, 3901-3917",carbohydrates,https://doi.org/10.1016/S0016-7037(01)00707-4
 AS01,"J. P. Amend and E. L. Shock",2001,"FEMS Microbiol. Rev. 25, 175-243","NO and N<sub>2</sub>O",https://doi.org/10.1111/j.1574-6976.2001.tb00576.x
 AS01.1,"J. P. Amend and E. L. Shock",2001,"FEMS Microbiol. Rev. 25, 175-243","selenium and molybdenite",https://doi.org/10.1111/j.1574-6976.2001.tb00576.x
-AZ01,"N. N. Akinfiev and A. V. Zotov",2001,"Geochem. Int. 39, 990-1006",AuCl<sub>2</sub><sup>-</sup>,http://pleiades.online/cgi-perl/search.pl?type=abstract&name=geochem&number=10&year=1&page=990
+AZ01,"N. N. Akinfiev and A. V. Zotov",2001,"Geochem. Int. 39, 990-1006","Au<sup>+</sup>, AuCl<sub>2</sub><sup>-</sup>, Au(OH)<sub>2</sub><sup>-</sup>, AuCl, and AuOH",http://pleiades.online/cgi-perl/search.pl?type=abstract&name=geochem&number=10&year=1&page=990
 MVT01,"L. Mercury, P. Vieillard. and Y. Tardy",2001,"Appl. Geochem. 16, 161-181","polymorphs of ice",https://doi.org/10.1016/S0883-2927(00)00025-1
 PS01,"A. V. Plyasunov and E. L. Shock",2001,"Geochim. Cosmochim. Acta 65, 3879-3900","aqueous nonelectrolytes",https://doi.org/10.1016/S0016-7037(01)00678-0
 PS01.1,"A. V. Plyasunov and E. L. Shock",2001,"Geochim. Cosmochim. Acta 65, 3879-3900","acetic acid, propanoic acid, and methane",https://doi.org/10.1016/S0016-7037(01)00678-0
@@ -157,8 +157,7 @@ AP14,"N. N. Akinfiev and A. V. Plyasunov",2014,"Geochim. Cosmochim. Acta 126, 33
 FDM+14,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","CO<sub>2</sub>, CO<sub>3</sub><sup>-2</sup>, and HCO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/j.gca.2014.01.030
 FDM+14.1,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","aragonite; source of data: `berman.dat`",https://doi.org/10.1016/j.gca.2014.01.030
 Kit14,"N. Kitadai",2014,"J. Mol. Evol. 78, 171-187","glycine, diglycine, and triglycine (zwitterions and ions); diketopiperazine, [Gly] and [UPBB] groups",https://doi.org/10.1007/s00239-014-9616-1
-PAB+14,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","Au<sup>+</sup>, Au(OH)<sub>2</sub><sup>-</sup>, AuCl, and AuOH",https://doi.org/10.1144/SP402.4
-PAB+14.1,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","corrected H of AuHS",https://doi.org/10.1144/SP402.4
+PAB+14,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","corrected H of AuHS",https://doi.org/10.1144/SP402.4
 SHA14,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","SiO<sub>2</sub> and Si<sub>2</sub>O<sub>4</sub>",https://doi.org/10.1016/j.gca.2013.12.019
 SHA14.1,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","revisions for AlO<sub>2</sub><sup>-</sup> and HAlO<sub>2</sub>",https://doi.org/10.1016/j.gca.2013.12.019
 SHA14.2,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","revisions for BO(OH) and BO<sub>2</sub><sup>-</sup>",https://doi.org/10.1016/j.gca.2013.12.019

@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.2.0-11 (2019-02-21)
+CHANGES IN CHNOSZ 1.2.0-12 (2019-02-22)
 ---------------------------------------
 
 CRAN COMPLIANCE
@@ -37,6 +37,8 @@ THERMODYNAMIC DATA
 
 - Add gaseous HF and HCl to as requirements for the Akinfiev-Diamond
   model for dissolved gases.
+
+- Move Au+3, AuCl3-2, and AuCl4-3 back into default database.
 
 DOCUMENTATION
 
