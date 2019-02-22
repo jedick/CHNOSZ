@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.2.0-12 (2019-02-22)
+CHANGES IN CHNOSZ 1.2.0-14 (2019-02-22)
 ---------------------------------------
 
 CRAN COMPLIANCE
@@ -42,6 +42,12 @@ THERMODYNAMIC DATA
 
 - Add/replace data for Ag+ and Cu+ and their complexes from Akinfiev
   and Zotov, 2001 and 2010.
+
+- Update HCl(aq) with data from Tagirov et al., 1997.
+
+- Update Pd+2 and complexes with data from Tagirov et al., 2013.
+
+- Update Pt+2 and complexes with data from Tagirov et al., 2015.
 
 DOCUMENTATION
 
