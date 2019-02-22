@@ -40,6 +40,9 @@ THERMODYNAMIC DATA
 
 - Move Au+3, AuCl3-2, and AuCl4-3 back into default database.
 
+- Add/replace data for Ag+ and Cu+ and their complexes from Akinfiev
+  and Zotov, 2001 and 2010.
+
 DOCUMENTATION
 
 - In demo/NaCl.R, indicate region not considered by Shock et al., 1992
