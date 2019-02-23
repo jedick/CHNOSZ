@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.2.0-14 (2019-02-22)
+CHANGES IN CHNOSZ 1.2.0-15 (2019-02-23)
 ---------------------------------------
 
 CRAN COMPLIANCE
@@ -66,6 +66,9 @@ OTHER CHANGES
 - water() and water.SUPCRT92(): add 'P1' argument to choose whether to
   output 1 bar for Psat at temperatures less than 100 degrees C
   (default is TRUE).
+
+- diagram(): 'xlim' and 'ylim' arguments now apply to 2-variable
+  diagrams. Thanks to Evgeniy Bastrakov for the suggestion.
 
 CHANGES IN CHNOSZ 1.2.0 (2019-02-09)
 ------------------------------------

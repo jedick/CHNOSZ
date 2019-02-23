@@ -97,3 +97,20 @@ test_that("NaN values from equilibrate() are preserved (as NA in predominance ca
   expect_equal(d$predominant[1, 128], as.numeric(NA))
   expect_equal(d$predominant[128, 1], as.numeric(NA))
 })
+
+## add the test but exclude it for now because plot.it=FALSE doesn't produce values for namesx 20190223
+#test_that("labels are dropped outside of xlim and ylim ranges", {
+#  basis(c("Fe", "O2", "S2"))
+#  species(c("iron", "ferrous-oxide", "magnetite",
+#    "hematite", "pyrite", "pyrrhotite"))
+#  a <- affinity(S2=c(-50, 0), O2=c(-90, -10), T=200)
+#  # total range: all species are present
+#  d <- diagram(a, fill="heat", xlim=NULL, ylim=NULL, plot.it=FALSE)
+#  expect_equal(sum(is.na(d$namesx)), 0)
+#  # reduce y-range to exclude hematite
+#  d <- diagram(a, fill="heat", xlim=NULL, ylim=c(-90, -50), plot.it=FALSE)
+#  expect_equal(sum(is.na(d$namesx)), 1)
+#  # reduce x-range to exclude pyrrhotite
+#  d <- diagram(a, fill="heat", xlim=c(-50, -20), ylim=c(-90, -50), plot.it=FALSE)
+#  expect_equal(sum(is.na(d$namesx)), 2)
+#})

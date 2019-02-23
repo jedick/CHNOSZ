@@ -206,7 +206,7 @@ diagram <- function(
     }
   }
 
-  ## where we'll put extra output for predominance diagrams (namesx, namesy, inames)
+  ## where we'll put extra output for predominance diagrams (namesx, namesy)
   out2D <- list()
 
   ### now on to the plotting ###
@@ -518,31 +518,30 @@ diagram <- function(
         lapply(linesout, `length<-`, max(lengths(linesout)))
       }
       ## label plot function
-      # calculate coordinates for field labels
-      plot.names <- function(out, xs, ys, names) {
-        ll <- ngroups
-        namesx <- numeric(ll); namesy <- numeric(ll); n <- numeric(ll)
-        for(j in nrow(out):1) {
-          # 20091116 for speed, loop over ngroups instead of k (columns)
-          for(i in 1:ll) {
-            k <- which(out[j,]==i)
-            if(length(k)==0) next
-            namesx[i] <- namesx[i] + sum(xs[k])
-            namesy[i] <- namesy[i] + length(k)*ys[nrow(out)+1-j]
-            n[i] <- n[i] + length(k)
-          }
+      plot.names <- function(out, xs, ys, xlim, ylim, names) {
+        # calculate coordinates for field labels
+        # revisions: 20091116 for speed, 20190223 work with user-specified xlim and ylim
+        namesx <- namesy <- rep(NA, length(names))
+        inames <- logical(length(names))
+        for(i in seq_along(names)) {
+          this <- which(out==i, arr.ind=TRUE)
+          if(length(this)==0) next
+          xsth <- xs[this[, 2]]
+          ysth <- rev(ys)[this[, 1]]
+          # use only values within the plot range
+          rx <- range(xlim)
+          ry <- range(ylim)
+          xsth <- xsth[xsth >= rx[1] & xsth <= rx[2]]
+          ysth <- ysth[ysth >= ry[1] & ysth <= ry[2]]
+          if(length(xsth)==0 | length(ysth)==0) next
+          namesx[i] <- mean(xsth)
+          namesy[i] <- mean(ysth)
+          inames[i] <- TRUE
         }
-        namesx <- namesx[n!=0]
-        namesy <- namesy[n!=0]
-        inames <- n!=0
-        n <- n[n!=0]
-        namesx <- namesx/n
-        namesy <- namesy/n
-        # plot field labels
-        # the cex argument in this function specifies the character 
-        # expansion of the labels relative to the current
+        # fields that really exist on the plot
+        inames <- !is.na(namesx)
         if(!is.null(names) & any(inames)) text(namesx, namesy, labels=names[inames], cex=cex.names, col=col.names[inames], font=font, family=family)
-        return(list(namesx=namesx, namesy=namesy, inames=which(inames)))
+        return(list(namesx=namesx, namesy=namesy))
       }
 
       ### done with predominance diagram functions
@@ -563,9 +562,18 @@ diagram <- function(
       # the x and y values 
       xs <- eout$vals[[1]]
       ys <- eout$vals[[2]]
-      # the limits; they aren't necessarily increasing, so don't use range()
-      xlim <- c(xs[1], tail(xs, 1))
-      ylim <- c(ys[1], tail(ys, 1))
+      # the limits of the calculation; they aren't necessarily increasing, so don't use range()
+      xlim.calc <- c(xs[1], tail(xs, 1))
+      ylim.calc <- c(ys[1], tail(ys, 1))
+      # add if(is.null) to allow user-specified limits 20190223
+      if(is.null(xlim)) {
+        if(add) xlim <- par("usr")[1:2]
+        else xlim <- xlim.calc
+      }
+      if(is.null(ylim)) {
+        if(add) ylim <- par("usr")[3:4]
+        else ylim <- ylim.calc
+      }
       # initialize the plot
       if(!add) {
         if(is.null(xlab)) xlab <- axis.label(eout$vars[1], basis=eout$basis, molality=molality)
@@ -602,23 +610,23 @@ diagram <- function(
           zs <- plotvals[[1]]
           contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, method=contour.method[1])
         }
-        pn <- list(namesx=NULL, namesy=NULL, inames=NULL)
+        pn <- list(namesx=NULL, namesy=NULL)
       } else {
         # put predominance matrix in the right order for image() etc
         zs <- t(predominant[, ncol(predominant):1])
         if(!is.null(fill)) fill.color(xs, ys, zs, fill, ngroups)
-        pn <- plot.names(zs, xs, ys, names)
+        pn <- plot.names(zs, xs, ys, xlim, ylim, names)
         # only draw the lines if there is more than one field  20180923
         # (to avoid warnings from contour, which seem to be associated with weird
         # font metric state and subsequent errors adding e.g. subscripted text to plot)
         if(length(na.omit(unique(as.vector(zs)))) > 1) {
-          if(!is.null(dotted)) plot.line(zs, xlim, ylim, dotted, col, lwd, xrange=xrange)
-          else linesout <- contour.lines(predominant, xlim, ylim, lty=lty, col=col, lwd=lwd)
+          if(!is.null(dotted)) plot.line(zs, xlim.calc, ylim.calc, dotted, col, lwd, xrange=xrange)
+          else linesout <- contour.lines(predominant, xlim.calc, ylim.calc, lty=lty, col=col, lwd=lwd)
         }
         # re-draw the tick marks and axis lines in case the fill obscured them
         if(tplot & !identical(fill, "transparent")) thermo.axis()
       } # done with the 2D plot!
-      out2D <- list(namesx=pn$namesx, namesy=pn$namesy, inames=pn$inames)
+      out2D <- list(namesx=pn$namesx, namesy=pn$namesy)
     } # end if(nd==2)
   } # end if(plot.it)
   out <- c(eout, list(plotvar=plotvar, plotvals=plotvals, names=names, predominant=predominant))
