@@ -29,8 +29,8 @@ retrieve <- function(..., include.electron = FALSE, include.groups = FALSE, stat
   for(elements in args) {
     not.present <- ! elements %in% colnames(stoich)
     if(any(not.present)) {
-      if(sum(not.present)==1) stop(elements[not.present], " is not an element that is present in any species")
-      else stop(paste(elements[not.present], collapse=", "), " are not elements that are present in any species")
+      if(sum(not.present)==1) stop('"', elements[not.present], '" is not an element that is present in any species')
+      else stop('"', paste(elements[not.present], collapse='", "'), '" are not elements that are present in any species')
     }
     # identify the species that have the elements
     has.elements <- rowSums(stoich[, elements, drop = FALSE] != 0) == length(elements)
