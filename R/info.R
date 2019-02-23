@@ -27,7 +27,7 @@ info <- function(species=NULL, state=NULL, check.it=TRUE) {
   ## run info.numeric or info.character depending on the input type
   if(is.numeric(species)) {
     out <- lapply(species, info.numeric, check.it)
-    # if we different states the column names could be different
+    # if we have different states the column names could be different
     if(length(unique(unlist(lapply(out, names)))) > ncol(thermo$obigt)) {
       # make them the same as thermo$obigt
       out <- lapply(out, function(row) {
@@ -36,6 +36,8 @@ info <- function(species=NULL, state=NULL, check.it=TRUE) {
     }
     # turn the list into a data frame
     out <- do.call(rbind, out)
+    # ensure that the rownames are numeric values (not names possibly inherited from retrieve()) 20190224
+    if(!is.null(attr(species, "names"))) row.names(out) <- species
   } else {
     # state and species should be same length
     if(!is.null(state)) {

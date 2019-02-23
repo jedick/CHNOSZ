@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.2.0-15 (2019-02-23)
+CHANGES IN CHNOSZ 1.2.0-16 (2019-02-24)
 ---------------------------------------
 
 CRAN COMPLIANCE
@@ -15,8 +15,9 @@ NEW FEATURES
 - Add thermo() as a convenience function to access or modify the
   package's data, especially various computational options.
 
-- Add retrieve() to retrieve all the species with given elements. Thanks
-  to Evgeniy Bastrakov for the suggestion.
+- Add retrieve() to retrieve all the species having given elements, or
+  all species in a given chemical system. Thanks to Evgeniy Bastrakov
+  for the suggestion.
 
 - Add AkDi() to calculate thermodynamic properties of aqueous
   nonelectrolytes using the Akinfiev-Diamond model. Thanks to Evgeniy
