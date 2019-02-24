@@ -522,8 +522,8 @@ diagram <- function(
         # calculate coordinates for field labels
         # revisions: 20091116 for speed, 20190223 work with user-specified xlim and ylim
         namesx <- namesy <- rep(NA, length(names))
-        inames <- logical(length(names))
-        for(i in seq_along(names)) {
+        # even if 'names' is NULL, we run the loop in order to generate namesx and namesy for the output 20190225
+        for(i in seq_along(groups)) {
           this <- which(out==i, arr.ind=TRUE)
           if(length(this)==0) next
           xsth <- xs[this[, 2]]
@@ -536,11 +536,9 @@ diagram <- function(
           if(length(xsth)==0 | length(ysth)==0) next
           namesx[i] <- mean(xsth)
           namesy[i] <- mean(ysth)
-          inames[i] <- TRUE
         }
         # fields that really exist on the plot
-        inames <- !is.na(namesx)
-        if(!is.null(names) & any(inames)) text(namesx, namesy, labels=names[inames], cex=cex.names, col=col.names[inames], font=font, family=family)
+        if(!is.null(names)) text(namesx, namesy, labels=names, cex=cex.names, col=col.names, font=font, family=family)
         return(list(namesx=namesx, namesy=namesy))
       }
 

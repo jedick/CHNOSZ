@@ -84,4 +84,5 @@ labplot("e")
 plot(Pkb, Qz_lambda$S, type="l", ylim=c(0, 3), ylab=axis.label("DlS"), xlab=Plab)
 labplot("f")
 
+reset()
 par(opar)

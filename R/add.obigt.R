@@ -1,6 +1,9 @@
 # CHNOSZ/add.obigt.R
 # add or change entries in the thermodynamic database
 
+## if this file is interactively sourced, the following are also needed to provide unexported functions:
+#source("info.R")
+
 today <- function() {
   # write today's date in the format used in SUPCRT data files
   # e.g. 13.May.12 for 2012-05-13
@@ -67,6 +70,15 @@ mod.obigt <- function(...) {
       warning("please supply a valid chemical formula as the species name or in the 'formula' argument")
       # transmit the error from makeup
       stop(e)
+    }
+    # for aqueous species, supply a value for Z if it is missing, otherwise NA triggers AkDi model 20190224
+    isaq <- newrows$state == "aq"
+    if(any(isaq)) {
+      mnrf <- makeup(newrows$formula)
+      if(nrow(newrows)==1) mnrf <- list(mnrf)
+      Z <- sapply(mnrf, "[", "Z")
+      Z[is.na(Z)] <- 0
+      newrows$z.T[isaq] <- Z[isaq]
     }
     # assign to thermo$obigt
     thermo$obigt <- rbind(thermo$obigt, newrows)

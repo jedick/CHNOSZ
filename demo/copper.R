@@ -52,7 +52,7 @@ for(i in 1:length(names)) {
   if(names[i]=="HCu(Gly)+2") srt <- 90
   if(names[i]=="HCu(Gly)+2") dx <- -0.2
   if(names[i]=="Cu(Gly)+") srt <- 90
-  text(d$namesx[i]+dx, d$namesy[i]+dy, lab, srt=srt)
+  text(na.omit(d$namesx)[i]+dx, na.omit(d$namesy)[i]+dy, lab, srt=srt)
 }
 
 # add glycine ionization lines

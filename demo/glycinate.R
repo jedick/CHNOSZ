@@ -34,6 +34,7 @@ for(i in 1:length(di2)) logK_di2_SK95[[i]] <- subcrt(c(di[i], "glycinate", di2[i
 reset()
 
 # set up the plots
+opar <- par(no.readonly = TRUE)
 layout(matrix(1:6, byrow = TRUE, nrow = 2), widths = c(2, 2, 1))
 par(mar = c(4, 3.2, 2.5, 0.5), mgp = c(2.1, 1, 0), las = 1, cex = 0.8)
 xlab <- axis.label("T")
@@ -66,3 +67,4 @@ plot.new()
 par(xpd = NA)
 legend("right", as.expression(lapply(mo, expr.species)), lty = 1, col = 1:5, bty = "n", cex = 1.2, lwd = 2)
 par(xpd = FALSE)
+par(opar)

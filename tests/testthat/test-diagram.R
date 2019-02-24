@@ -110,7 +110,7 @@ test_that("NaN values from equilibrate() are preserved (as NA in predominance ca
 #  # reduce y-range to exclude hematite
 #  d <- diagram(a, fill="heat", xlim=NULL, ylim=c(-90, -50), plot.it=FALSE)
 #  expect_equal(sum(is.na(d$namesx)), 1)
-#  # reduce x-range to exclude pyrrhotite
+#  # reduce x-range to exclude pyrite
 #  d <- diagram(a, fill="heat", xlim=c(-50, -20), ylim=c(-90, -50), plot.it=FALSE)
 #  expect_equal(sum(is.na(d$namesx)), 2)
 #})
