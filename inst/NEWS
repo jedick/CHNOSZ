@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.2.0-16 (2019-02-24)
+CHANGES IN CHNOSZ 1.2.0-19 (2019-02-25)
 ---------------------------------------
 
 CRAN COMPLIANCE
@@ -49,6 +49,8 @@ THERMODYNAMIC DATA
 - Update Pd+2 and complexes with data from Tagirov et al., 2013.
 
 - Update Pt+2 and complexes with data from Tagirov et al., 2015.
+
+- Update Zn+2 and complexes with data from Akinfiev and Tagirov, 2015.
 
 DOCUMENTATION
 

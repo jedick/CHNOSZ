@@ -263,14 +263,14 @@ info("methane", "gas")
 ```{r info_methane_test, echo=FALSE, results="hide"}
 # this prevents the vignette from compiling in case
 # database updates cause the species index of methane to change
-stopifnot(info("methane")==931)
+stopifnot(info("methane")==881)
 # it is up to the editor of this vignette to ensure that number
 # is used in the hard-coded examples below!
 ```
 
-Knowing that aqueous methane is species number 931 in the database, you can again use <span style="color:green">`info()`</span> to retrieve the set of standard molal thermodynamic properties and equations of state parameters:
-```{r info_931, message=FALSE}
-info(931)
+Knowing that aqueous methane is species number 881 in the database, you can again use <span style="color:green">`info()`</span> to retrieve the set of standard molal thermodynamic properties and equations of state parameters:
+```{r info_881, message=FALSE}
+info(881)
 ```
 
 This number can be used as an argument (`ispecies`) for other functions in CHNOSZ to uniquely identify any species; some commonly used functions also accept the species names.
@@ -304,21 +304,21 @@ The messages may be useful for browsing the database, but owing to their ambiguo
 ## Counting elements, chemical formulas, <span style="color:green">`ZC()`</span>
 
 Continuing with the example of methane, let's look at its chemical formula:
-```{r info_931_formula, message=FALSE}
-info(931)$formula
+```{r info_881_formula, message=FALSE}
+info(881)$formula
 ```
 
 We can use <span style="color:green">`makeup()`</span> to count the elements in the formula, followed by <span style="color:green">`as.chemical.formula()`</span> to rewrite the formula on one line:
-```{r makeup_931}
-makeup(931)
-as.chemical.formula(makeup(931))
+```{r makeup_881}
+makeup(881)
+as.chemical.formula(makeup(881))
 ```
 
 For organic species, a calculation of the average oxidation state of carbon (`r zc`) is possible given the species index, chemical formula, or elemental count:
-```{r ZC_931, message=FALSE}
-ZC(931)
-ZC(info(931)$formula)
-ZC(makeup(931))
+```{r ZC_881, message=FALSE}
+ZC(881)
+ZC(info(881)$formula)
+ZC(makeup(881))
 ```
 
 # Calculating thermodynamic properties

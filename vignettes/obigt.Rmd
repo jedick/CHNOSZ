@@ -154,7 +154,6 @@ used <- c(used, filerefs(csvfile))
 
 ### `r setfile("inorganic_aq.csv")`
 ```{r inorganic_aq, results="asis", echo=FALSE}
-cat("ZnCl<sub>4</sub><sup>-2</sup> was present in sprons92.dat but not in slop98.dat or later files, and is not included in CHNOSZ.<hr>")
 ```
 
 ```{r reflist, results="asis", echo=FALSE}
@@ -235,7 +234,7 @@ cat('These minerals and aqueous species, taken from the SUPCRT92 database, were 
 
 ### `r setfile("SLOP98.csv")`
 ```{r SLOP98, results="asis", echo=FALSE}
-cat('These species, taken mainly from slop98.dat, were present in earlier versions of CHNOSZ but have been replaced by or are incompatible with other updates for aqueous Al species [@TS01], As species [@MA07; @MA10], Au, Ag, and Cu species [@AZ01; @AZ10], Pd species [@TBZ+13], and Pt species [@TBB15]. The data are kept here to enable comparisons with newer data and reproduction of published calculations. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.\n\n')
+cat('These species, many of which were taken from slop98.dat and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with other updates for aqueous Al species [@TS01], As species [@NA03], Au, Ag, and Cu species [@AZ01; @AZ10], Pd species [@TBZ+13], Zn species [@AT14], and Pt species [@TBB15]. The data are kept here to enable comparisons with newer data and reproduction of published calculations. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}
