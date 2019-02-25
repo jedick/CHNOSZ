@@ -90,7 +90,8 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
   if(!is.null(iobigt)) {
     if(is.null(thermo$basis)) stop("basis species are not defined")
     # the coefficients in reactions to form the species from basis species
-    f <- (species.basis(iobigt))
+    # wrap values in unname in case they have names from retrieve(), otherwise makeup() doesn't work as intended 20190225
+    f <- (species.basis(unname(iobigt)))
     # the states and species names
     state <- as.character(thermo$obigt$state[iobigt])
     name <- as.character(thermo$obigt$name[iobigt])

@@ -3,7 +3,7 @@
 # 20190214 initial version
 # 20190224 use ... for multiple arguments (define a chemical system)
 
-retrieve <- function(..., state = NULL, add.charge = TRUE, hide.electron = TRUE, hide.proton = TRUE, hide.groups = TRUE) {
+retrieve <- function(..., state = NULL, add.charge = TRUE, hide.groups = TRUE, req1 = FALSE) {
   ## stoichiometric matrix
   # what are the formulas of species in the current database?
   formula <- thermo()$obigt$formula
@@ -30,6 +30,7 @@ retrieve <- function(..., state = NULL, add.charge = TRUE, hide.electron = TRUE,
   if(add.charge & length(args) > 1) {
     if(!"Z" %in% unlist(args)) args <- c(args, "Z")
   }
+  # for a numeric first argument, limit the result to only those species 20190225
   for(elements in args) {
     if(identical(elements, "all")) {
       ispecies <- 1:nrow(thermo()$obigt)
@@ -43,6 +44,8 @@ retrieve <- function(..., state = NULL, add.charge = TRUE, hide.electron = TRUE,
       # identify the species that have the elements
       has.elements <- rowSums(stoich[, elements, drop = FALSE] != 0) == length(elements)
       # which species are these (i.e. the species index)
+      # for req1, remember the species containing the first element 20190225
+      if(length(ispecies)==0) ispecies1 <- which(has.elements)
       ispecies <- c(ispecies, which(has.elements))
       ispecies <- ispecies[!duplicated(ispecies)]
     }
@@ -55,19 +58,24 @@ retrieve <- function(..., state = NULL, add.charge = TRUE, hide.electron = TRUE,
     iother <- rowSums(notsysstoich[ispecies, ] != 0) > 0
     ispecies <- ispecies[!iother]
   }
-  # exclude groups and electron and proton
+  # keep only species that contain the first element
+  if(req1) {
+    ispecies <- intersect(ispecies1, ispecies)
+    names(ispecies) <- thermo()$obigt$name[ispecies]
+  }
+  # exclude groups
   if(hide.groups) {
     igroup <- grepl("^\\[.*\\]$", thermo()$obigt$name[ispecies])
     ispecies <- ispecies[!igroup]
   }
-  if(hide.electron) {
-    ielectron <- names(ispecies) == "(Z-1)"
-    ispecies <- ispecies[!ielectron]
-  }
-  if(hide.proton) {
-    iproton <- names(ispecies) == "H+"
-    ispecies <- ispecies[!iproton]
-  }
+  #if(hide.electron) {
+  #  ielectron <- names(ispecies) == "(Z-1)"
+  #  ispecies <- ispecies[!ielectron]
+  #}
+  #if(hide.proton) {
+  #  iproton <- names(ispecies) == "H+"
+  #  ispecies <- ispecies[!iproton]
+  #}
   # filter states
   if(!is.null(state)) {
     istate <- thermo()$obigt$state[ispecies] %in% state

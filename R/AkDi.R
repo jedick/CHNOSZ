@@ -22,7 +22,7 @@ AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat =
     for(j in seq_along(property)) {
       if(property[[j]]=="G") {
         # send a message
-        message("AkDi(): Akinfiev-Diamond model for ", PAR$name, " gas to aq")
+        message("AkDi: Akinfiev-Diamond model for ", PAR$name, " gas to aq")
         # get gas properties (J mol-1)
         G_gas <- subcrt(PAR$name, "gas", T=T, P=P, convert=FALSE)$out[[1]]$G
         # TODO: does this work if E.units is cal or J?
