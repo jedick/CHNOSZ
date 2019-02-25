@@ -8,7 +8,7 @@ release checklist for CHNOSZ
 
 - check output of demo("sources") to make sure all data sources are cited
 
-- recreate extdata/thermo/obigt_check.csv after all data updates:
+- recreate extdata/adds/obigt_check.csv after all data updates:
   co <- check.obigt()
   write.csv(co, "obigt_check.csv", row.names=FALSE, na="")
 

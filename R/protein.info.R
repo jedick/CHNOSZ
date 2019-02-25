@@ -16,9 +16,9 @@ pinfo <- function(protein, organism=NULL, residue=FALSE, regexp=FALSE) {
   #   character `protein` and `organism`, e.g. 'LYSC', 'CHICK'
   # return the row(s) of thermo$protein (possibly per residue) for:
   #   numeric `protein` (the rownumber itself)
-  t_p <- get("thermo", CHNOSZ)$protein
   if(is.data.frame(protein)) out <- protein
   if(is.numeric(protein)) {
+    t_p <- get("thermo", CHNOSZ)$protein
     # drop NA matches to thermo$protein
     iproteins <- 1:nrow(t_p)
     protein[!protein %in% iproteins] <- NA
@@ -29,6 +29,7 @@ pinfo <- function(protein, organism=NULL, residue=FALSE, regexp=FALSE) {
     # compute per-residue counts if requested
     if(residue) out[, 5:25] <- out[, 5:25]/rowSums(out[, 6:25])
   } else {
+    t_p <- get("thermo", CHNOSZ)$protein
     # search for protein by regular expression
     if(regexp) {
       iprotein <- grepl(protein, t_p$protein)

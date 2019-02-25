@@ -7,7 +7,8 @@ Retrieve species in the database containing one or more chemical elements.
 }
 
 \usage{
-  retrieve(..., state = NULL, add.charge = TRUE, hide.groups = TRUE, req1 = FALSE)
+  retrieve(..., state = NULL, add.charge = TRUE, hide.groups = TRUE,
+    req1 = FALSE)
 }
 
 \arguments{
