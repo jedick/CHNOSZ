@@ -3,7 +3,7 @@
 # 20190214 initial version
 # 20190224 use ... for multiple arguments (define a chemical system)
 
-retrieve <- function(..., include.electron = FALSE, include.groups = FALSE, state = NULL) {
+retrieve <- function(..., state = NULL, add.charge = TRUE, hide.electron = TRUE, hide.proton = TRUE, hide.groups = TRUE) {
   ## stoichiometric matrix
   # what are the formulas of species in the current database?
   formula <- thermo()$obigt$formula
@@ -26,17 +26,26 @@ retrieve <- function(..., include.electron = FALSE, include.groups = FALSE, stat
   ## species identification
   args <- list(...)
   ispecies <- numeric()
+  # automatically add charge to a system 20190225
+  if(add.charge & length(args) > 1) {
+    if(!"Z" %in% unlist(args)) args <- c(args, "Z")
+  }
   for(elements in args) {
-    not.present <- ! elements %in% colnames(stoich)
-    if(any(not.present)) {
-      if(sum(not.present)==1) stop('"', elements[not.present], '" is not an element that is present in any species')
-      else stop('"', paste(elements[not.present], collapse='", "'), '" are not elements that are present in any species')
+    if(identical(elements, "all")) {
+      ispecies <- 1:nrow(thermo()$obigt)
+      names(ispecies) <- thermo()$obigt$formula
+    } else {
+      not.present <- ! elements %in% colnames(stoich)
+      if(any(not.present)) {
+        if(sum(not.present)==1) stop('"', elements[not.present], '" is not an element that is present in any species')
+        else stop('"', paste(elements[not.present], collapse='", "'), '" are not elements that are present in any species')
+      }
+      # identify the species that have the elements
+      has.elements <- rowSums(stoich[, elements, drop = FALSE] != 0) == length(elements)
+      # which species are these (i.e. the species index)
+      ispecies <- c(ispecies, which(has.elements))
+      ispecies <- ispecies[!duplicated(ispecies)]
     }
-    # identify the species that have the elements
-    has.elements <- rowSums(stoich[, elements, drop = FALSE] != 0) == length(elements)
-    # which species are these (i.e. the species index)
-    ispecies <- c(ispecies, which(has.elements))
-    ispecies <- ispecies[!duplicated(ispecies)]
   }
   # for a chemical system, defined by multiple arguments, the species can not contain any _other_ elements
   if(length(args) > 1) {
@@ -45,21 +54,26 @@ retrieve <- function(..., include.electron = FALSE, include.groups = FALSE, stat
     notsysstoich <- thermo()$stoich[, !isyselements]
     iother <- rowSums(notsysstoich[ispecies, ] != 0) > 0
     ispecies <- ispecies[!iother]
-    # include the species for "Z" (charge)
-    if(!include.electron) {
-      ielectron <- names(ispecies) == "(Z-1)"
-      ispecies <- ispecies[!ielectron]
-    }
   }
-  # exclude groups and filter states
-  if(!include.groups) {
+  # exclude groups and electron and proton
+  if(hide.groups) {
     igroup <- grepl("^\\[.*\\]$", thermo()$obigt$name[ispecies])
     ispecies <- ispecies[!igroup]
   }
+  if(hide.electron) {
+    ielectron <- names(ispecies) == "(Z-1)"
+    ispecies <- ispecies[!ielectron]
+  }
+  if(hide.proton) {
+    iproton <- names(ispecies) == "H+"
+    ispecies <- ispecies[!iproton]
+  }
+  # filter states
   if(!is.null(state)) {
     istate <- thermo()$obigt$state[ispecies] %in% state
     ispecies <- ispecies[istate]
   }
+  # for names, use e- instead of (Z-1)
+  names(ispecies)[names(ispecies)=="(Z-1)"] <- "e-"
   ispecies
 }
-
