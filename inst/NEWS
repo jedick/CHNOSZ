@@ -1,5 +1,5 @@
-CHANGES IN CHNOSZ 1.3.0-3 (2019-03-02)
---------------------------------------
+CHANGES IN CHNOSZ 1.3.1 (2019-03-02)
+------------------------------------
 
 - Fix unexported function obigt2eos(), which was affected by "Assignment
   to empty subset of data.frame fails check of length of value"
@@ -7,9 +7,9 @@ CHANGES IN CHNOSZ 1.3.0-3 (2019-03-02)
   caused errors in R-release (3.5.2) but not R-devel, when using info()
   for species with the AkDi model.
 
-- Various fixes to maintain compatibility with R version 3.1.0 (don't
-  use lengths(), and provide explicit colClasses to read.csv() to avoid
-  automatic detection of character for long numeric values).
+- Fixes to maintain compatibility with R version 3.1.0: don't use
+  lengths(), and provide explicit colClasses to read.csv() to avoid
+  automatic assignment of character for long numeric values.
 
 CHANGES IN CHNOSZ 1.3.0 (2019-02-26)
 ------------------------------------
