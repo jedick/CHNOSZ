@@ -44,7 +44,8 @@ obigt <- function() {
   # need explicit "/" for Windows
   sourcefiles <- paste0(OBIGTdir, "/", c(sources_aq, sources_cr, sources_liq, sources_gas), ".csv")
   sourcefiles[!sources=="Berman_cr"] <- paste0(sourcefiles[!sources=="Berman_cr"], ".xz")
-  datalist <- lapply(sourcefiles, read.csv, as.is=TRUE)
+  # we need explicit colClasses here to avoid automatic detection as character for long numeric values in R 3.1.0  20190302
+  datalist <- lapply(sourcefiles, read.csv, as.is=TRUE, colClasses=c(rep("character", 7), rep("numeric", 13)))
   obigt <- do.call(rbind, datalist)
   # also read references file
   refs <- read.csv(file.path(OBIGTdir, "refs.csv"), as.is=TRUE)

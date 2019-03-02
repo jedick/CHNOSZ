@@ -399,7 +399,7 @@ obigt2eos <- function(obigt,state,fixGHS=FALSE) {
   # and apply column names depending on the EOS
   if(identical(state, "aq")) {
     # species in the Akinfiev-Diamond model (AkDi) have NA for Z 20190219
-    isAkDi <- is.na(obigt$z.T)
+    isAkDi <- is.na(obigt[, 20])
     # remove scaling factors for the HKF species, but not for the AkDi species
     # protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
     # (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302

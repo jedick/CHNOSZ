@@ -515,7 +515,8 @@ diagram <- function(
 	  }
 	}
         # https://stackoverflow.com/questions/34570860/adding-na-to-make-all-list-elements-equal-length 20181029
-        lapply(linesout, `length<-`, max(lengths(linesout)))
+        # for compatibility with R 3.1.0, don't use lengths() here 20190302
+        lapply(linesout, `length<-`, max(sapply(linesout, length)))
       }
       ## label plot function
       plot.names <- function(out, xs, ys, xlim, ylim, names) {

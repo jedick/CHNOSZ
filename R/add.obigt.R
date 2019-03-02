@@ -128,7 +128,8 @@ add.obigt <- function(file, species=NULL, force=TRUE, E.units="cal") {
     if(length(isys)==1) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package="CHNOSZ")
   }
   # read data from the file
-  to2 <- read.csv(file, as.is=TRUE)
+  # we need explicit colClasses here to avoid automatic detection as character for long numeric values in R 3.1.0  20190302
+  to2 <- read.csv(file, as.is=TRUE, colClasses=c(rep("character", 7), rep("numeric", 13)))
   # load only selected species if requested
   if(!is.null(species)) {
     idat <- match(species, to2$name)
