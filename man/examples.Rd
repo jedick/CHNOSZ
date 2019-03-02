@@ -17,7 +17,7 @@
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
     "protbuff", "yeastgfp", "glycinate", "mosaic", "copper",
     "solubility", "gold", "wjd", "bugstab", "Shh", "saturation",
-    "adenine", "DEW", "lambda", "TCA", "go-IU", "bison"),
+    "adenine", "DEW", "lambda", "TCA", "go-IU", "bison", "AkDi"),
     save.png=FALSE)
 }
 
