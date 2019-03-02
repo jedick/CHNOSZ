@@ -401,9 +401,11 @@ obigt2eos <- function(obigt,state,fixGHS=FALSE) {
     # species in the Akinfiev-Diamond model (AkDi) have NA for Z 20190219
     isAkDi <- is.na(obigt$z.T)
     # remove scaling factors for the HKF species, but not for the AkDi species
-    obigt[!isAkDi, 13:20] <- t(t(obigt[!isAkDi, 13:20]) * 10^c(-1,2,0,4,0,4,5,0))
+    # protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
+    # (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302
+    if(any(!isAkDi)) obigt[!isAkDi, 13:20] <- t(t(obigt[!isAkDi, 13:20]) * 10^c(-1,2,0,4,0,4,5,0))
     # for AkDi species, set NA values in remaining columns (for display only)
-    obigt[isAkDi, 16:19] <- NA
+    if(any(isAkDi)) obigt[isAkDi, 16:19] <- NA
     # if all of the species are AkDi, change the variable names
     if(all(isAkDi)) colnames(obigt)[13:20] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
     else colnames(obigt)[13:20] <- c('a1','a2','a3','a4','c1','c2','omega','Z') 

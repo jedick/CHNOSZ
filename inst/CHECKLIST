@@ -2,8 +2,6 @@
 release checklist for CHNOSZ
 ****************************
 
-- compile vignettes with release version number and date
-
 - run examples() and demos() to check their output
 
 - check output of demo("sources") to make sure all data sources are cited
@@ -33,6 +31,9 @@ release checklist for CHNOSZ
 
 - reduce size of vignettes: after upgrading rmarkdown, replace files in
   rmarkdown/rmd/h/bootstrap/fonts/ with empty files
+
+- backwards compatibility: build and check the package with the
+  *minimum* R version (from the DESCRIPTION file)
 
 OTHER THINGS TO CHECK:
 
