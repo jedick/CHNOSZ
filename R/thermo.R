@@ -17,10 +17,15 @@ reset <- function() {
     buffers = read.csv(file.path(thermodir, "buffer.csv"), as.is=1:3),
     protein = read.csv(file.path(thermodir, "protein.csv"), as.is=1:4),
     groups = read.csv(file.path(thermodir, "groups.csv"), row.names=1, check.names=FALSE),
+    stoich = read.csv(file.path(thermodir, "stoich.csv.xz"), as.is=TRUE),
     basis = NULL,
     species = NULL,
     opar = NULL
   )
+  # store stoich as matrix (with non-unique row names), not data frame
+  formula <- thermo$stoich[, 1]
+  thermo$stoich <- as.matrix(thermo$stoich[, 2:ncol(thermo$stoich)])
+  rownames(thermo$stoich) <- formula
   # give a summary of what we are doing
   if(!"thermo" %in% ls(CHNOSZ)) message("reset: creating \"thermo\" object")
   else message("reset: resetting \"thermo\" object")

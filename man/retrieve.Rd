@@ -36,8 +36,8 @@ However, if the electron is in the result, its name (\samp{e-}) is used instead 
 If the argument list is empty, then the function returns an empty (length 0) numeric value.
 A special argument value \samp{all} can be used to retrieve all species in the thermodynamic database, including filtering on state and hiding of the groups.
 
-The first time the function is run, it uses \code{\link{i2A}} to build the stoichiometric matrix for the current database.
-Following runs use the previously calculated stoichiometric matrix, unless a change to the database is detected, which triggers a recalculation.
+To speed up operation, the function uses a precalculated stoichiometric matrix for the default database, which is loaded with the package (see \code{\link{thermo}}).
+If the function detects a change to any chemical formulas in database, it triggers a recalculation using \code{\link{i2A}}.
 }
 
 \seealso{

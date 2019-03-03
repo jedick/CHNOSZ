@@ -10,6 +10,9 @@ release checklist for CHNOSZ
   co <- check.obigt()
   write.csv(co, "obigt_check.csv", row.names=FALSE, na="")
 
+- recreate extdata/thermo/stoich.csv.xz after all data updates
+  (see testthat/test-retrieve.R for instructions)
+
 - check that uniprot.aa() works with current UniProt web pages
 
 - run R_PAPERSIZE=letter R CMD Rd2pdf chnosz/
@@ -18,30 +21,25 @@ release checklist for CHNOSZ
 - run R CMD check using R compiled without long doubles (emulating Solaris checks on CRAN)
   (CFLAGS=-ffloat-store ./configure --disable-long-double)
 
-- build the package on the source directory;
-  try both qpdf and ghostscript to compact vignettes:
-  R CMD build --compact-vignettes=both chnosz/
+- size reduction of vignettes: after installing/upgrading rmarkdown, replace files in
+  rmarkdown/rmd/h/bootstrap/fonts/ with empty files
 
-- check reverse dependencies on CRAN: LipidMS, canprot, ecipex, iemisc as of 2019-02-09
+- build the package using both qpdf and ghostscript to compact vignettes:
+  R CMD build --compact-vignettes=both chnosz/
 
 - vignettes/obigt.bib: check correct year for CHNOSZ reference
 
 - documentation links: after installation, run doc/mklinks.sh
   and insert the modified anintro.html in the package
 
-- reduce size of vignettes: after upgrading rmarkdown, replace files in
-  rmarkdown/rmd/h/bootstrap/fonts/ with empty files
-
 - backwards compatibility: build and check the package with the
   *minimum* R version (from the DESCRIPTION file)
 
-OTHER THINGS TO CHECK:
+- check reverse dependencies on CRAN: LipidMS, canprot, ecipex, iemisc as of 2019-02-09
 
-- remove all "<<-" from sources (leftover from debugging)
+OTHER THINGS TO WORK ON:
 
 - update list of documentation topics in examples() with any new ones
-
-- check for stale URLs in Rd files
 
 - clean up all TODO, XXX, etc. in Rd files (and hopefully R files too)
 
