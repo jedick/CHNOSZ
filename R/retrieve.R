@@ -2,23 +2,38 @@
 # retrieve species with given elements
 # 20190214 initial version
 # 20190224 use ... for multiple arguments (define a chemical system)
+# 20190304 update the stoichiometric matrix instead of doing a full recalculation when the database changes
 
 retrieve <- function(..., state = NULL, add.charge = TRUE, hide.groups = TRUE, req1 = FALSE) {
   ## stoichiometric matrix
   # what are the formulas of species in the current database?
   formula <- thermo()$obigt$formula
-  # get a previously calculated stoichiometric matrix, if it matches the current database
+  # get a previously calculated stoichiometric matrix
   stoich <- thermo()$stoich
-  if(!is.null(stoich)) {
-    # if it doesn't match the current database, don't use it
-    if(!identical(rownames(stoich), formula)) stoich <- NULL
-  }
-  if(is.null(stoich)) {
-    # Create the stoichiometric matrix for the current database
-    # and suppress warning messages about missing elements
-    message("retrieve: creating stoichiometric matrix")
-    # NOTE: row names are the formulas, so we can detect if the database changes
-    stoich <- suppressWarnings(i2A(formula))
+  # if it doesn't match the current database, update it
+  if(!identical(rownames(stoich), formula)) {
+    message("retrieve: updating stoichiometric matrix")
+    # first put rows in the right order for the current database
+    istoich <- match(formula, rownames(stoich))
+    stoich <- stoich[na.omit(istoich), ]
+    # deal with any missing formulas
+    if(any(is.na(istoich))) {
+      # convert the stoichiometric matrix to data frame with a 'formula' column
+      oldstoich <- cbind(formula = rownames(stoich), as.data.frame(stoich))
+      # get the stoichiometry of the additional formulas
+      # and suppress warning messages about missing elements
+      addstoich <- suppressWarnings(i2A(formula[is.na(istoich)]))
+      addstoich <- cbind(formula = rownames(addstoich), as.data.frame(addstoich))
+      # merge the old and added stoichiometries, and assign 0 for missing elements in either one
+      newstoich <- merge(oldstoich, addstoich, all = TRUE)
+      newstoich[is.na(newstoich)] <- 0
+      # convert the data frame to matrix with rownames corresponding to formulas
+      stoich <- as.matrix(newstoich[, 2:ncol(newstoich)])
+      rownames(stoich) <- newstoich$formula
+      # put rows in the right order for the current database
+      istoich <- match(formula, rownames(stoich))
+      stoich <- stoich[istoich, ]
+    }
     # store the stoichiometric matrix for later calculations
     thermo("stoich" = stoich)
   }

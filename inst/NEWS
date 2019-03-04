@@ -1,9 +1,12 @@
-CHANGES IN CHNOSZ 1.3.1-1 (2019-03-03)
+CHANGES IN CHNOSZ 1.3.1-2 (2019-03-04)
 --------------------------------------
 
-- Add thermo/stoich.csv.xz (stored as thermo()$stoich), containing a
+- Add thermo/stoich.csv.xz (loaded as thermo()$stoich), containing a
   precalculated stochiometric matrix for the default database, to speed
   up retrieve().
+
+- retrieve() now updates the stoichiometric matrix when the database
+  changes, instead of performing a full recalculation.
 
 CHANGES IN CHNOSZ 1.3.1 (2019-03-02)
 ------------------------------------

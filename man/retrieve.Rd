@@ -37,7 +37,7 @@ If the argument list is empty, then the function returns an empty (length 0) num
 A special argument value \samp{all} can be used to retrieve all species in the thermodynamic database, including filtering on state and hiding of the groups.
 
 To speed up operation, the function uses a precalculated stoichiometric matrix for the default database, which is loaded with the package (see \code{\link{thermo}}).
-If the function detects a change to any chemical formulas in database, it triggers a recalculation using \code{\link{i2A}}.
+If the function detects a change to any chemical formulas in database, it updates the stoichiometric matrix using \code{\link{i2A}}.
 }
 
 \seealso{

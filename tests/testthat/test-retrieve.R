@@ -18,6 +18,6 @@ test_that("errors and recalculations produce expected messages", {
   expect_error(retrieve(c("A", "B", "C", "D")), '"A", "D" are not elements')
   # this should recalculate the stoichiometric matrix
   add.obigt("SUPCRT92")
-  expect_message(retrieve("Ti"), "creating stoichiometric matrix")
+  expect_message(retrieve("Ti"), "updating stoichiometric matrix")
   reset()
 })

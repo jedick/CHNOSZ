@@ -2,7 +2,7 @@
 release checklist for CHNOSZ
 ****************************
 
-- run examples() and demos() to check their output
+- run examples() and demos() and inspect their output (especially plots)
 
 - check output of demo("sources") to make sure all data sources are cited
 
@@ -37,7 +37,7 @@ release checklist for CHNOSZ
 
 - check reverse dependencies on CRAN: LipidMS, canprot, ecipex, iemisc as of 2019-02-09
 
-OTHER THINGS TO WORK ON:
+OTHER THINGS TO DO (depending on changes made in development):
 
 - update list of documentation topics in examples() with any new ones
 
