@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.1-2 (2019-03-04)
+CHANGES IN CHNOSZ 1.3.1-3 (2019-03-05)
 --------------------------------------
 
 - Add thermo/stoich.csv.xz (loaded as thermo()$stoich), containing a
@@ -7,6 +7,9 @@ CHANGES IN CHNOSZ 1.3.1-2 (2019-03-04)
 
 - retrieve() now updates the stoichiometric matrix when the database
   changes, instead of performing a full recalculation.
+
+- Add 'ligands' argument to retrieve(), for getting metal-bearing
+  species with a range of possible elements in the ligands.
 
 CHANGES IN CHNOSZ 1.3.1 (2019-03-02)
 ------------------------------------
