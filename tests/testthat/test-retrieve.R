@@ -8,7 +8,7 @@ test_that("packaged stoichiometric matrix matches the default database", {
   # formula <- thermo()$obigt$formula
   # stoich <- i2A(formula)
   # write.csv(stoich, "stoich.csv")
-  # system("xz stoich.csv")
+  # system("xz -f stoich.csv")
 })
 
 test_that("errors and recalculations produce expected messages", {

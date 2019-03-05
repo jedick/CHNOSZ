@@ -37,7 +37,7 @@ sed -i '120,$s/<code>equilibrate()<\/code>/<code><a href="..\/html\/equilibrate.
 sed -i '120,$s/<code>diagram()<\/code>/<code><a href="..\/html\/diagram.html" style="background-image:none;">diagram()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>basis()<\/code>/<code><a href="..\/html\/basis.html" style="background-image:none;">basis()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>species()<\/code>/<code><a href="..\/html\/species.html" style="background-image:none;">species()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>reset()<\/code>/<code><a href="..\/html\/reset.html" style="background-image:none;">reset()<\/a><\/code>/g' anintro.html
+sed -i '120,$s/<code>reset()<\/code>/<code><a href="..\/html\/thermo.html" style="background-image:none;">reset()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>describe.reaction()<\/code>/<code><a href="..\/html\/util.expression.html" style="background-image:none;">describe.reaction()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>swap.basis()<\/code>/<code><a href="..\/html\/swap.basis.html" style="background-image:none;">swap.basis()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>water.lines()<\/code>/<code><a href="..\/html\/util.plot.html" style="background-image:none;">water.lines()<\/a><\/code>/g' anintro.html
