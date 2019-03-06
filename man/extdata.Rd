@@ -5,18 +5,20 @@
 \title{Extra Data}
 
 \description{
-  The files in the subdirectories of \code{extdata} support the examples in the package documentation and vignettes. 
+  The files in the subdirectories of \code{extdata} provide additional thermodynamic data and other data to support the examples in the package documentation and vignettes. 
+  See \code{\link{thermo}} for a description of the files in \code{extdata/OBIGT}, which are used to generate the thermodynamic database.
 }
 
 \details{
 
-  Files in \code{Berman} contain mineral data using the Berman formulation:
+  Files in \code{Berman} contain thermodynamic data for minerals using the Berman formulation:
   \itemize{
-    \item \code{Ber88.csv} contains thermodynamic data for minerals taken from Berman (1988).
-    \code{\link{berman}} uses these data for calculation of thermodynamic properties at \P and \T, and converts to the units used by \code{\link{subcrt}}.
+    \item \code{Berman_1988.csv} contains thermodynamic data for minerals taken from Berman (1988).
+    \item \code{*_xxxx.csv} contain thermodynamic data from other sources.
+    \code{\link{berman}} uses these data for the calculation of thermodynamic properties at specified \P and \T, which are then available for use in \code{\link{subcrt}}.
+    If there are any duplicated mineral names in the files, only the most recent data are used, as determined by the year in the file name.
     Following conventions used in other data files, the names of sanidine and microcline were changed to K-feldspar,high and K-feldspar,low.
-    \item \code{*.csv} contain thermodynamic data from other sources.
-    \item \code{sympy.R} is an R script used to symbolically integrate heat capacity and volume (to calculate enthalpy, entropy and Gibbs energy), using \CRANpkg{rSymPy}.
+    \item \code{sympy.R} is an R script that uses \CRANpkg{rSymPy} to symbolically integrate Bermans's equations for heat capacity and volume to write experessions for enthalpy, entropy and Gibbs energy.
     \item The \code{testing} directory contains data files based on Berman and Aranovich (1996). These are used to demonstrate the addition of data from a user-supplied file (see \code{\link{berman}}).
   }
 
@@ -36,7 +38,7 @@
 
   Files in \code{cpetc} contain experimental and calculated thermodynamic and environmental data:
   \itemize{
-    \item \code{PM90.csv} Heat capacities of four unfolded aqueous proteins taken from Privalov and Makhatadze, 1990. Temperature in \degC is in the first column, and heat capacities of the proteins in J mol\eqn{^{-1}}{^-1} K\eqn{^{-1}}{^-1} in the remaining columns. See \code{\link{ionize.aa}} and the vignette \code{anintro.Rmd} for examples that uses this file.
+    \item \code{PM90.csv} Heat capacities of four unfolded aqueous proteins taken from Privalov and Makhatadze, 1990. Temperature in \degC is in the first column, and heat capacities of the proteins in J mol\eqn{^{-1}}{^-1} K\eqn{^{-1}}{^-1} in the remaining columns. See \code{\link{ionize.aa}} and the vignette \code{anintro.Rmd} for examples that use this file.
     \item \code{RH95.csv} Heat capacity data for iron taken from Robie and Hemingway, 1995. Temperature in Kelvin is in the first column, heat capacity in J K\eqn{^{-1}}{^-1} mol\eqn{^{-1}}{^-1} in the second. See \code{\link{subcrt}} for an example that uses this file.
     \item \code{RT71.csv} pH titration measurements for unfolded lysozyme (\samp{LYSC_CHICK}) taken from Roxby and Tanford, 1971. pH is in the first column, net charge in the second. See \code{\link{ionize.aa}} for an example that uses this file.
     \item \code{SOJSH.csv} Experimental equilibrium constants for the reaction NaCl(aq) = Na+ + Cl- as a function of temperature and pressure taken from Fig. 1 of Shock et al., 1992. See \code{demo("NaCl")} for an example that uses this file.
@@ -103,7 +105,7 @@
   Files in \code{adds} contain additional thermodynamic data and group additivity definitions:
   \itemize{
     \item \code{BZA10.csv} contains supplementary thermodynamic data taken from Bazarkina et al. (2010). The data can be added to the database in the current session using \code{\link{add.obigt}}. See \code{\link{add.obigt}} for an example that uses this file.
-    \item \code{obigt_check.csv} contains the results of running \code{\link{check.obigt}} to check the internal consistency of entries in the primary and supplementary databases.
+    \item \code{obigt_check.csv} contains the results of running \code{\link{check.obigt}} to check the internal consistency of entries in the default and optional datafiles.
     \item \code{RH98_Table15.csv} Group stoichiometries for high molecular weight crystalline and liquid organic compounds taken from Table 15 of Richard and Helgeson, 1998. The first three columns have the \code{compound} name, \code{formula} and physical \code{state} (\samp{cr} or \samp{liq}). The remaining columns have the numbers of each group in the compound; the names of the groups (columns) correspond to species in \code{\link{thermo}$obigt}. The compound named \samp{5a(H),14a(H)-cholestane} in the paper has been changed to \samp{5a(H),14b(H)-cholestane} here to match the group stoichiometry given in the table. See \code{\link{RH2obigt}} for a function that uses this file.
     \item \code{DLEN67.csv} Standard Gibbs energies of formation, in kcal/mol, from Dayhoff et al., 1967, for nitrogen (N2) plus 17 compounds shown in Fig. 2 of Dayhoff et al., 1964, at 300, 500, 700 and 1000 K. See \code{demo("wjd")} and the vignette \code{wjd.Rmd} for examples that use this file.
     \item \code{SK95.csv} contains thermodynamic data for alanate, glycinate, and their complexes with metals, taken from Shock and Koretsky (1995) as corrected in slop98.dat. The data are used in the package tests (\code{test-recalculate.R}) to check the recalculated values of G, H, and S in \code{thermo$obigt} using properties for alanate and glycinate from Amend and Helgeson (1997).

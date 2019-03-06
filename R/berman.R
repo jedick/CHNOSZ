@@ -12,26 +12,25 @@ berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.t
   ncond <- max(length(T), length(P))
   T <- rep(T, length.out=ncond)
   P <- rep(P, length.out=ncond)
-  # get thermodynamic parameters
-  dir <- system.file("extdata/Berman/", package="CHNOSZ")
-  Ber88 <- read.csv(paste0(dir, "/Ber88.csv"), as.is=TRUE)
-  Ber90 <- read.csv(paste0(dir, "/Ber90.csv"), as.is=TRUE)
-  SHD91 <- read.csv(paste0(dir, "/SHD91.csv"), as.is=TRUE)
-  ZS92 <- read.csv(paste0(dir, "/ZS92.csv"), as.is=TRUE)
-  JUN92 <- read.csv(paste0(dir, "/JUN92.csv"), as.is=TRUE)
-  DS10 <- read.csv(paste0(dir, "/DS10.csv"), as.is=TRUE)
-  FDM14 <- read.csv(paste0(dir, "/FDM+14.csv"), as.is=TRUE)
-  BDat17 <- read.csv(paste0(dir, "/BDat17.csv"), as.is=TRUE)
+  # get thermodynamic parameters from data files
+  path <- system.file("extdata/Berman/", package="CHNOSZ")
+  files <- dir(path, "\\.csv$")
+  # put files in reverse chronological order (youngest first)
+  files <- rev(files[order(sapply(strsplit(files, "_"), "[", 2))])
+  # read the parameters from each file
+  dat <- list()
+  for(i in 1:length(files)) dat[[i]] <- read.csv(file.path(path, files[i]), as.is = TRUE)
+  # assemble the parameters in a single data frame
+  dat <- do.call(rbind, dat)
+  # is there a user-supplied data file?
   userfile <- get("thermo", CHNOSZ)$opt$Berman
   userfileexists <- FALSE
-  dat <- rbind(BDat17, FDM14, DS10, JUN92, ZS92, SHD91, Ber90, Ber88)
   if(!is.na(userfile)) {
     if(userfile!="") {
       if(file.exists(userfile)) {
         userfileexists <- TRUE
         BDat_user <- read.csv(userfile, as.is=TRUE)
-        # assemble the files in reverse chronological order
-        dat <- rbind(BDat_user, BDat17, FDM14, DS10, JUN92, ZS92, SHD91, Ber90, Ber88)
+        dat <- rbind(BDat_user, dat)
       } else stop("the file named in thermo$opt$Berman (", userfile, ") does not exist")
     } 
   }

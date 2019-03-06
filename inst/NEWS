@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.1-3 (2019-03-05)
+CHANGES IN CHNOSZ 1.3.1-6 (2019-03-06)
 --------------------------------------
 
 - Add thermo/stoich.csv.xz (loaded as thermo()$stoich), containing a
@@ -10,6 +10,11 @@ CHANGES IN CHNOSZ 1.3.1-3 (2019-03-05)
 
 - Add 'ligands' argument to retrieve(), for getting metal-bearing
   species with a range of possible elements in the ligands.
+
+- In extdata/Berman, rename .csv files to include whole year. berman()
+  now uses the years in the filenames to assemble the data in reverse
+  chronological order, and keeps only the most recent data for any
+  duplicated minerals.
 
 CHANGES IN CHNOSZ 1.3.1 (2019-03-02)
 ------------------------------------
