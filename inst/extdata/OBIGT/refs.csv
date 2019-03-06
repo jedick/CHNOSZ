@@ -27,8 +27,8 @@ RA87,"E. J. Reardon and D. K. Armstrong",1987,"Geochim. Cosmochim. Acta 51, 63-7
 Ber88,"R. G. Berman",1988,"J. Petrol. 29, 445-522",minerals,https://doi.org/10.1093/petrology/29.2.445
 SH88,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","ionic species",https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.1,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","values of GHS",https://doi.org/10.1016/0016-7037(88)90181-0
-SH88.2,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/0016-7037(88)90181-0
-SH88.3,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","Ag<sup>+</sup>",https://doi.org/10.1016/0016-7037(88)90181-0
+SH88.2,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
+SH88.3,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",Ag<sup>+</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
 SHS89,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","inorganic neutral species",https://doi.org/10.1016/0016-7037(89)90341-4
 SHS89.1,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","aqueous SiO<sub>2</sub>",https://doi.org/10.1016/0016-7037(89)90341-4
 Ber90,"R. G. Berman",1990,"Am. Mineral. 75, 328-344",annite,http://ammin.geoscienceworld.org/content/75/3-4/328
@@ -46,6 +46,7 @@ SPRONS92.1,"H. C. Helgeson et al.",1992,"sprons92.dat computer data file","titan
 SPRONS92.2,"H. C. Helgeson et al.",1992,"sprons92.dat computer data file","Ca-bearing minerals; &quot;Gibbs free energies and enthalpies were corrected to be consistent with updated values of Gibbs free energies of Ca<sup>2+</sup> and CO<sub>3</sub><sup>2-</sup> [@SH88] together with the solubilities of calcite and aragonite reported by @PB82 &quot;",
 Sho92,"E. L. Shock",1992,"Geochim. Cosmochim. Acta 56, 3481-3491","diglycine, alanylglycine, leucylglycine, and diketopiperazine; not present in slop files after slop98.dat",https://doi.org/10.1016/0016-7037(92)90392-V
 Sho92.1,"E. L. Shock",1992,"Geochim. Cosmochim. Acta 56, 3481-3491","diketopiperazine GHS",https://doi.org/10.1016/0016-7037(92)90392-V
+VGT92,"O. Vidal, B. Goffé and T. Theye",1992,"J. Metamorphic Geol. 10, 603-614",sudoite,https://doi.org/10.1111/j.1525-1314.1992.tb00109.x
 ZS92,"C. Zhu and D. A. Sverjensky",1982,"Geochim. Cosmochim. Acta 56, 3435-3467","F,Cl,OH biotite and apatite endmembers. GHS and V were taken from Table 6 of @ZS92; heat capacity and volume parameters from `berman.dat`.",https://doi.org/10.1016/0016-7037(92)90390-5
 Sho93,"E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3341-3349","ethylacetate and acetamide",https://doi.org/10.1016/0016-7037(93)90542-5
 Sho93.1,"E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3341-3349","carbon monoxide and ethylene",https://doi.org/10.1016/0016-7037(93)90542-5
@@ -80,7 +81,7 @@ SSWS97.4,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 
 SSWS97.5,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","Zn<sup>+2</sup> and Zn-hydroxide complexes",https://doi.org/10.1016/S0016-7037(96)00339-0
 SSH97,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","metal complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.1,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Au(HS)<sub>2</sub><sup>-</sup> and Ag(HS)<sub>2</sub><sup>-</sup>",https://doi.org/10.1016/S0016-7037(97)00009-4
-SSH97.2,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","HSiO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/S0016-7037(97)00009-4
+SSH97.2,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412",HSiO<sub>3</sub><sup>-</sup>,https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.3,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Au-, Ag-, Cu- and Zn-chloride complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.4,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Zn-acetate complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSB97,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266","uranium species",https://doi.org/10.1016/S0016-7037(97)00240-8
@@ -98,7 +99,7 @@ SLOP98.11,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;Data 
 SS98a,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671","platinum-group ions and complexes",https://doi.org/10.1016/S0016-7037(98)00049-0
 SS98a.1,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671","platinum-group solids",https://doi.org/10.1016/S0016-7037(98)00049-0
 SS98a.2,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671",Rh<sup>+3</sup>,https://doi.org/10.1016/S0016-7037(98)00049-0
-SS98a.3,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671",Pd<sup>+2</sup> and Pt<sup>+2</sup> and their complexes,https://doi.org/10.1016/S0016-7037(98)00049-0
+SS98a.3,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671","Pd<sup>+2</sup> and Pt<sup>+2</sup> and their complexes",https://doi.org/10.1016/S0016-7037(98)00049-0
 HS99,"J. R. Haas and E. L. Shock",1998,"Geochim. Cosmochim. Acta 63, 3429-3441","chloroethylene species",https://doi.org/10.1016/S0016-7037(99)00276-8
 MS99,"W. M. Murphy and E. L. Shock",1999,"Rev. Mineral. Geochem. 38, 221-253",actinides,http://rimg.geoscienceworld.org/content/38/1/221
 PSK99,"P. Prapaipong, E. L. Shock and C. M. Koretsky",1999,"Geochim. Cosmochim. Acta 63, 2547-2577","metal-dicarboxylate complexes",https://doi.org/10.1016/S0016-7037(99)00146-5
@@ -116,6 +117,7 @@ Ric01,"L. Richard",2001,"Geochim. Cosmochim. Acta 65, 3827-3877","organic sulfur
 Ste01,"A. Stefansson",2001,"Chem. Geol. 172, 225-250","aqueous H<sub>4</sub>SiO<sub>4</sub>",https://doi.org/10.1016/S0009-2541(00)00263-1
 SSW01,"M. D. Schulte, E. L. Shock and R. H. Wood",2001,"Geochim. Cosmochim. Acta 65, 3919-3930","AsH<sub>3</sub>, CF<sub>4</sub>, CH<sub>3</sub>F, Cl<sub>2</sub>, ClO<sub>2</sub>, N<sub>2</sub>O, NF<sub>3</sub>, NO, PH<sub>3</sub>, and SF<sub>6</sub>",https://doi.org/10.1016/S0016-7037(01)00717-7
 TS01,"B. Tagirov and J. Schott",2001,"Geochim. Cosmochim. Acta 65, 3965-3992","aqueous Al<sup>+3</sup> and complexes",https://doi.org/10.1016/S0016-7037(01)00705-0
+VPT01,"O. Vidal, T. Parra and F. Trotet",2001,"Am. J. Sci. 301, 557-592","daphnite and Mg-amesite",https://doi.org/10.2475/ajs.301.6.557
 GKL02,"R. N. Goldberg et al.",2002,"J. Phys. Chem. Ref. Data 31, 231-370","glycine, diglycine, and triglycine (+1 and -1 ions) GHS",https://doi.org/10.1063/1.1416902
 AD03.1,"N. N. Akinfiev and L. W. Diamond",2003,"Geochim. Cosmochim. Acta 67, 613-629","dissolved gas species; parameters estimated from the experimental Henry's constant",https://doi.org/10.1016/S0016-7037(02)01141-9
 AD03.2,"N. N. Akinfiev and L. W. Diamond",2003,"Geochim. Cosmochim. Acta 67, 613-629","dissolved gas species; parameters estimated from standard-state properties at 25 &deg; C",https://doi.org/10.1016/S0016-7037(02)01141-9
@@ -126,8 +128,9 @@ MLS+03,"J. Majzlan, B. E. Lang et al.",2003,"Am. Mineral. 88, 846-854","goethite
 AS04,"J. Apps and N. Spycher",2004,"Data qualification for thermodynamic data used to support THC calculations. Bechtel SAIC Company, LLC. ANL-NBS-HS-000043 REV 00 (DOC.20041118.0004)","aqueous SiO<sub>2</sub>",
 MSB+04,"J. Majzlan, R. Stevens et al.",2004,"Phys. Chem. Mineral. 31, 518-531","hydronium jarosite",https://doi.org/10.1007/s00269-004-0405-z
 SR04,"M. D. Schulte and K. L. Rogers",2004,"Geochim. Cosmochim. Acta 68, 1087-1097","alkane thiols",https://doi.org/10.1016/j.gca.2003.06.001
+VPV05,"O. Vidal, T. Parra and P. Viellard",2005,"Am. Mineral. 90, 347-358",Fe-amesite,https://doi.org/10.2138/am.2005.1554
 ZZX+05,"Y. Zhu et al.",2005,"J. Hazard. Mater. A120, 37-44","barium arsenate and barium hydrogen arsenate: G",https://doi.org/10.1016/j.jhazmat.2004.12.025
-AVZP06,"N. N. Akinfiev et al.",2006,"Geochem. Int. 44, 867-878","AgCl<sub>3</sub><sup>-2</sup>",https://doi.org/10.1134/S0016702906090035
+AVZP06,"N. N. Akinfiev et al.",2006,"Geochem. Int. 44, 867-878",AgCl<sub>3</sub><sup>-2</sup>,https://doi.org/10.1134/S0016702906090035
 HPT06,"B. Hawrylak, R. Palepu and P. R. Tremaine",2006,"J. Chem. Thermodynamics 38, 988-1007","methyldiethanolamine and methyldiethanolammonium chloride HKF parameters",https://doi.org/10.1016/j.jct.2005.10.013
 LH06a,"D. E. LaRowe and H. C. Helgeson",2006,"Geochim. Cosmochim. Acta 70, 4680-4724","nucleic-acid bases, nucleosides, and nucleotides",https://doi.org/10.1016/j.gca.2006.04.010
 LH06a.1,"D. E. LaRowe and H. C. Helgeson",2006,"Geochim. Cosmochim. Acta 70, 4680-4724","citric acid and citrate",https://doi.org/10.1016/j.gca.2006.04.010
