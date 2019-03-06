@@ -43,6 +43,14 @@ retrieve <- function(elements = NULL, ligands = NULL, state = NULL, add.charge =
     thermo("stoich" = stoich)
   }
 
+  ## generate error for missing element(s)
+  allelements <- c(unlist(elements), unlist(ligands))
+  not.present <- ! allelements %in% c(colnames(stoich), "all")
+  if(any(not.present)) {
+    if(sum(not.present)==1) stop('"', allelements[not.present], '" is not an element that is present in any species in the database')
+    else stop('"', paste(allelements[not.present], collapse='", "'), '" are not elements that are present in any species in the database')
+  }
+
   ## handle 'ligands' argument
   if(!is.null(ligands)) {
 
@@ -71,7 +79,6 @@ retrieve <- function(elements = NULL, ligands = NULL, state = NULL, add.charge =
       if(identical(element, "all")) {
         ispecies[[i]] <- 1:nrow(thermo()$obigt)
       } else {
-        if(! element %in% colnames(stoich)) stop('"', element, '" is not an element that is present in any species')
         # identify the species that have the element
         has.element <- rowSums(stoich[, element, drop = FALSE] != 0) == 1
         ispecies[[i]] <- which(has.element)
