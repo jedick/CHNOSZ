@@ -13,8 +13,8 @@
 
   Files in \code{Berman} contain thermodynamic data for minerals using the Berman formulation:
   \itemize{
-    \item \code{Berman_1988.csv} contains thermodynamic data for minerals taken from Berman (1988).
-    \item \code{*_xxxx.csv} contain thermodynamic data from other sources.
+    \item \code{Ber88_1988.csv} contains thermodynamic data for minerals taken from Berman (1988).
+    \item Other files with names like \code{xxx_yyyy.csv} contain thermodynamic data from other sources; xxx in the filename corresponds to the reference in \code{\link{thermo}$obigt} and yyyy gives the year of publication.
     \code{\link{berman}} uses these data for the calculation of thermodynamic properties at specified \P and \T, which are then available for use in \code{\link{subcrt}}.
     If there are any duplicated mineral names in the files, only the most recent data are used, as determined by the year in the file name.
     Following conventions used in other data files, the names of sanidine and microcline were changed to K-feldspar,high and K-feldspar,low.
