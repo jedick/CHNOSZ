@@ -100,8 +100,10 @@ solubility <- function(aout, dissociation=NULL, find.IS=FALSE, in.terms.of=NULL)
       }
     }
     # add ions present in the species of interest
+    # instead of using aout$species$name, use info() to get formulas 20190309
+    species.formulas <- info(aout$species$ispecies)$formula
     for(i in 1:length(loga.equil)) {
-      species.ion <- aout$species$name[i]
+      species.ion <- species.formulas[i]
       Z.species.ion <- makeup(species.ion)["Z"]
       if(!is.na(Z.species.ion)) {
         sum.mZ2 <- sum.mZ2 + 10^loga.equil[[i]] * Z.species.ion^2
