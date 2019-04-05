@@ -3,7 +3,7 @@
 
 # notable functions in this demo:
 # EOSregress() - to regress HKF coefficients from Cp data
-# add.obigt() - to add thermodynamic data that are not in the default database
+# mod.obigt() - to modify the thermodynamic database for comparisons with an older set of parameters for adenine
 
 # LCT17 = Lowe et al., 2017 (J. Chem. Thermodyn., doi:10.1016/j.jct.2017.04.005)
 # LH06 = LaRowe and Helgeson, 2006 (Geochim. Cosmochim. Acta, doi:10.1016/j.gca.2006.04.010)

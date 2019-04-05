@@ -21,7 +21,7 @@ release checklist for CHNOSZ
 - run R CMD check using R compiled without long doubles (emulating Solaris checks on CRAN)
   (CFLAGS=-ffloat-store ./configure --disable-long-double)
 
-- size reduction of vignettes: after installing/upgrading rmarkdown, replace files in
+- reduce the size of vignettes: after installing/upgrading rmarkdown, replace files in
   rmarkdown/rmd/h/bootstrap/fonts/ with empty files
 
 - build the package using both qpdf and ghostscript to compact vignettes:
