@@ -1,5 +1,5 @@
-CHANGES IN CHNOSZ 1.3.1-8 (2019-03-06)
---------------------------------------
+CHANGES IN CHNOSZ 1.3.1-11 (2019-04-08)
+---------------------------------------
 
 - Add thermo/stoich.csv.xz (loaded as thermo()$stoich), containing a
   precalculated stochiometric matrix for the default database, to speed
@@ -18,6 +18,9 @@ CHANGES IN CHNOSZ 1.3.1-8 (2019-03-06)
 
 - Add data for sudoite, daphnite, Mg-amesite, and Fe-amesite to
   extdata/Berman (Vidal et al., 1992, 2001, 2005).
+
+- obigt.Rmd: Use Zenodo DOI for citations to slop98.dat, slop07.dat, and
+  slop16.dat.
 
 CHANGES IN CHNOSZ 1.3.1 (2019-03-02)
 ------------------------------------

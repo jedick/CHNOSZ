@@ -13,7 +13,7 @@ vignette: >
 bibliography: obigt.bib
 # so that these appear in the bibliography
 nocite: | 
-  @SPRONS92, @SLOP98, @SLOP07, @SLOP15, @CHNOSZ, @JOH92, @WP02, @CWM89, @PRPG97, @TH88, @Kul06, @Sho09, @HP11
+  @SPRONS92, @SLOP98, @SLOP07, @SLOP16, @CHNOSZ, @JOH92, @WP02, @CWM89, @PRPG97, @TH88, @Kul06, @Sho09, @HP11
 csl: elementa.csl
 ---
 
@@ -81,7 +81,7 @@ filerefs <- function(csvfile, dat=NULL, message=FALSE) {
     if(grepl("[S92]", names(tab)[i], fixed=TRUE) | grepl("SPRONS92", names(tab)[i], fixed=TRUE)) note <- paste0(note, "(ø)")
     if(grepl("[S98]", names(tab)[i], fixed=TRUE) | grepl("SLOP98", names(tab)[i], fixed=TRUE)) note <- paste0(note, "(\\*)")
     if(grepl("[S07]", names(tab)[i], fixed=TRUE) | grepl("SLOP07", names(tab)[i], fixed=TRUE)) note <- paste0(note, "(†)")
-    if(grepl("[S15]", names(tab)[i], fixed=TRUE) | grepl("SLOP15", names(tab)[i], fixed=TRUE)) note <- paste0(note, "(‡)")
+    if(grepl("[S15]", names(tab)[i], fixed=TRUE) | grepl("SLOP16", names(tab)[i], fixed=TRUE)) note <- paste0(note, "(‡)")
     # use bullets for ref2
     if(whichref=="ref2") bullet <- "- " else bullet <- ""
     # convert key (e.g. LD12.2) to ref in OBIGT.bib (e.g. LD12)
@@ -89,7 +89,7 @@ filerefs <- function(csvfile, dat=NULL, message=FALSE) {
     # replace SLOP98 with slop98.dat, etc.
     # (we don't actually cite them here to keep the year from showing -- it's annoying to see e.g. "slop98.dat (1998)")
     citemark <- "@"
-    if(thisref=="SLOP15") { thisref <- "slop15.dat"; citemark <- "" }
+    if(thisref=="SLOP16") { thisref <- "slop16.dat"; citemark <- "" }
     if(thisref=="SLOP07") { thisref <- "slop07.dat"; citemark <- "" }
     if(thisref=="SLOP98") { thisref <- "slop98.dat"; citemark <- "" }
     if(thisref=="SPRONS92") { thisref <- "sprons92.dat"; citemark <- "" }
@@ -104,13 +104,13 @@ filerefs <- function(csvfile, dat=NULL, message=FALSE) {
 ```
 
 This [vignette](index.html), produced on `r Sys.Date()`, documents the sources of thermodynamic data in CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
-Running <span style='color:red'>`reset()`</span> creates the default database (`thermo()$obigt`) in the R session.
+All of these data, except for Optional Data, are used in the default database, which is loaded when the package is attached, or by running <span style='color:red'>`reset()`</span>.
 
-The sections below correspond to CSV data files that are stored in the `extdata/OBIGT` package directory and read by <span style='color:red'>`reset()`</span> (except for Optional Data).
+The sections below correspond to CSV data files that are stored in the `extdata/OBIGT` package directory and read by <span style='color:red'>`reset()`</span> to create the database in the R session (`thermo()$obigt`).
 In each section, the primary references (`ref1` in `thermo()$obigt`) are listed in chronological order.
 Any secondary references (`ref2`) are listed with bullet points.
 Each reference is followed by the number of species, and a note (from `thermo()$refs`).
-Symbols show whether the data were present in the earliest of the sprons92.dat (ø), slop98.dat (\*), slop07.dat (†), or slop15.dat (‡) datafiles for the SUPCRT92 package.
+Symbols show whether the data were present in the earliest of the sprons92.dat (ø), slop98.dat (\*), slop07.dat (†), or slop16.dat (‡) datafiles for the SUPCRT92 package.
 
 Any additional comments are placed at the beginning of the sections.
 Abbreviations used below are: Cp (heat capacity), GHS (standard Gibbs energy, enthalpy, entropy), HKF (Helgeson-Kirkham-Flowers equations), V (volume), T (temperature), P (pressure).
@@ -119,7 +119,7 @@ Abbreviations used below are: Cp (heat capacity), GHS (standard Gibbs energy, en
 
 * Data from SUPCRT92 which have been superseded by the Berman data are listed under **Optional Data** / **SUPCRT92**.
 
-* Superseded data from SLOP98 (Al, As, and Au species) are listed under **Optional Data** / **SLOP98**.
+* Superseded data from SLOP98 (inlucding Al, As, and Au species) are listed under **Optional Data** / **SLOP98**.
 
 # Sources of data {.tabset .tabset-fade}
 
@@ -226,7 +226,7 @@ optused <- c(optused, filerefs(csvfile))
 
 ### `r setfile("SUPCRT92.csv")`
 ```{r SUPCRT92, results="asis", echo=FALSE}
-cat('These minerals and aqueous species, taken from the SUPCRT92 database, were present in earlier versions of CHNOSZ but have since been superseded by @Ber88 (minerals) and @NA03 (H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>). The thermodynamic properties and parameters are kept here as optional data for reproducing published calculations and making comparisons with newer data. The minerals here include all of the silicates and Al-bearing minerals from @HDNB78, as well as calcite, dolomite, hematite, and magnetite. Use <span style="color:red">`add.obigt("SUPCRT92")`</span> to load the data. Note that other minerals from SUPCRT92, including native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate those in the Berman dataset, are still present in the default database (**inorganic_cr.csv**).\n\n')
+cat('These minerals and aqueous species, taken from the SUPCRT92 database, were present in earlier versions of CHNOSZ but have since been superseded by @Ber88 (minerals) and @NA03 (H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>). The thermodynamic properties and parameters are kept here as optional data for reproducing published calculations and making comparisons with newer data. The minerals here include all of the silicates and Al-bearing minerals from @HDNB78, as well as calcite, dolomite, hematite, and magnetite. Use <span style="color:red">`add.obigt("SUPCRT92")`</span> to load the data. **NOTE:** Other minerals from SUPCRT92, including native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate those in the Berman dataset, are still present in the default database (**inorganic_cr.csv**).\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}
@@ -234,7 +234,7 @@ cat('These minerals and aqueous species, taken from the SUPCRT92 database, were 
 
 ### `r setfile("SLOP98.csv")`
 ```{r SLOP98, results="asis", echo=FALSE}
-cat('These species, many of which were taken from slop98.dat and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with other updates for aqueous Al species [@TS01], As species [@NA03], Au, Ag, and Cu species [@AZ01; @AZ10], Pd species [@TBZ+13], Zn species [@AT14], and Pt species [@TBB15]. The data are kept here to enable comparisons with newer data and reproduction of published calculations. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.\n\n')
+cat('These species, which were taken from or are linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default dateabase, including aqueous Al species [@TS01], As species [@NA03], Au, Ag, and Cu species [@AZ01; @AZ10], Pd species [@TBZ+13], Zn species [@AT14], and Pt species [@TBB15]. The data are kept here to enable comparisons with newer data and reproduction of published calculations. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data. **NOTE:** Many other species found in slop98.dat and later versions are still present in the default database.\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}
