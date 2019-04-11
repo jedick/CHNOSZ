@@ -27,7 +27,7 @@ diagram <- function(
   lty=NULL, lwd=par("lwd"), dotted=NULL, spline.method=NULL, contour.method="edge",
   # colors
   col=par("col"), col.names=par("col"), fill=NULL,
-  fill.NA="slategray1", limit.water=TRUE,
+  fill.NA="gray80", limit.water=TRUE,
   # field and line labels
   names=NULL, format.names=TRUE, bold=FALSE, italic=FALSE,
   font=par("font"), family=par("family"), adj=0.5, dy=0, srt=0,
@@ -547,14 +547,20 @@ diagram <- function(
       ### now on to the diagram itself
 
       # colors to fill predominance fields
-      # default to heat colors if we're on screen, or to transparent if we're adding to a plot
-      if(missing(fill)) {
-        if(add) fill <- "transparent"
-        else if(any(grepl(names(dev.cur()), c("X11cairo", "quartz", "windows")))) fill <- "heat"
-      }
-      if(is.null(fill)) fill <- "transparent"
+      if(is.null(fill) | length(fill)==0) fill <- "transparent"
       else if(isTRUE(fill[1]=="rainbow")) fill <- rainbow(ngroups)
       else if(isTRUE(fill[1] %in% c("heat", "terrain", "topo", "cm"))) fill <- get(paste0(fill[1], ".colors"))(ngroups)
+      else if(getRversion() >= "3.6.0") {
+        # choose an HCL palette 20190411
+        # matching adapted from hcl.colors()
+        fx <- function(x) tolower(gsub("[-, _, \\,, (, ), \\ , \\.]", "", x))
+        p <- charmatch(fx(fill), fx(grDevices::hcl.pals()))
+        if(!is.na(p)) {
+          if(!p < 1L) {
+            fill <- grDevices::hcl.colors(ngroups, fill)
+          }
+        }
+      }
       fill <- rep(fill, length.out=ngroups)
       # modify the default for fill.NA
       if(add & missing(fill.NA)) fill.NA <- "transparent"
