@@ -234,7 +234,7 @@ cat('These minerals and aqueous species, taken from the SUPCRT92 database, were 
 
 ### `r setfile("SLOP98.csv")`
 ```{r SLOP98, results="asis", echo=FALSE}
-cat('These species, which were taken from or are linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default dateabase, including aqueous Al species [@TS01], As species [@NA03], Au, Ag, and Cu species [@AZ01; @AZ10], Pd species [@TBZ+13], Zn species [@AT14], and Pt species [@TBB15]. The data are kept here to enable comparisons with newer data and reproduction of published calculations. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data. **NOTE:** Many other species found in slop98.dat and later versions are still present in the default database.\n\n')
+cat('These species, which were taken from or are linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default database, including aqueous Al species [@TS01], As species [@NA03], Au, Ag, and Cu species [@AZ01; @AZ10], Pd species [@TBZ+13], Zn species [@AT14], and Pt species [@TBB15]. The data are kept here to enable comparisons with newer data and reproduction of published calculations. Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data. **NOTE:** Many other species found in slop98.dat and later versions are still present in the default database.\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}
