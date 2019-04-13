@@ -683,7 +683,7 @@ species(c("chalcocite", "tenorite", "cuprite", "copper"))
 ```
 
 Note that chalcocite (Cu<sub>2</sub>S) undergoes phase transitions.
-To get the temperatures of the phase transitions from `thermo$obigt` (in Kelvin, regardless of the <span style="color:red">`T.units()`</span>), we can use <span style="color:green">`info()`</span>.
+To get the temperatures of the phase transitions from `thermo()$obigt` (in Kelvin, regardless of the <span style="color:red">`T.units()`</span>), we can use <span style="color:green">`info()`</span>.
 We see that at 200 °C (473.15 K) the second phase is stable; this one is automatially used by CHNOSZ for this diagram.
 ```{r info_chalcocite, message=FALSE}
 info(info("chalcocite", c("cr", "cr2", "cr3")))$T
@@ -810,10 +810,10 @@ Can we go the other direction: calculate the activities of basis species from th
 This question relates to the concept of chemical activity buffers.
 In CHNOSZ there are two ways to perform buffer calculations:
 
-1. Assign the name of a buffer (listed in `thermo$buffer`) to the basis species:
+1. Assign the name of a buffer (listed in `thermo()$buffer`) to the basis species:
 * more versatile (multiple activities can be buffered, e.g. both S<sub>2</sub> and O<sub>2</sub> by pyrite-pyrrhotite-magnetite);
 * the buffers are active in calculations of affinity of other species;
-* use <span style="color:red">`mod.buffer()`</span> to change or add buffers in `thermo$buffer`;
+* use <span style="color:red">`mod.buffer()`</span> to change or add buffers in `thermo()$buffer`;
 * [<span style="color:blue">`demo(buffer)`</span>](../demo) uses it for mineral buffers (solid lines).
 2. Use the `type` argument of <span style="color:green">`diagram()`</span> to solve for the activity of the indicated basis species:
 * more convenient (the buffers come from the currently defined species of interest), but only a single basis species can be buffered, and it's not used in the calculation of affinity;
@@ -1105,7 +1105,7 @@ Following the main workflow of CHNOSZ, <span style="color:green">`nonideal()`</s
 Intead, invoke the calculations by setting the `IS` argument in <span style="color:green">`subcrt()`</span> or <span style="color:green">`affinity()`</span>.
 There are a few things to remember when using activity coefficients:
 
-* H<sup>+</sup> is assumed to behave ideally, so its activity coefficient is 1 for any ionic strength. You can calculate activity coefficients of H<sup>+</sup> by setting `thermo$opt$ideal.H <<- FALSE`.
+* H<sup>+</sup> is assumed to behave ideally, so its activity coefficient is 1 for any ionic strength. You can calculate activity coefficients of H<sup>+</sup> by running `thermo("opt$ideal.H" = FALSE)`.
 
 * Using <span style="color:green">`subcrt()`</span> with `IS` not equal to zero, calculated values of `G` are the **adjusted** Gibbs energy at specified ionic strength [denoted by &Delta;*G*°(*I*); @Alb96].
 
@@ -1277,7 +1277,7 @@ Therefore, CHNOSZ has a data file with amino acid compositions of selected prote
 
 When proteins in CHNOSZ are identified by name, they include an underscore, such as in `LYSC_CHICK` (chicken lysozyme C).
 Use <span style="color:green">`pinfo()`</span> to search for one or more proteins by name; multiple proteins from the same organism can be specified using the `organism` argument.
-The name search returns the rownumbers of `thermo$protein` (i.e. `iprotein`, the protein indices).
+The name search returns the rownumbers of `thermo()$protein` (i.e. `iprotein`, the protein indices).
 Supply those protein indices to <span style="color:green">`pinfo()`</span> to get the amino acid compositions:
 ```{r pinfo_LYSC_CHICK}
 p1 <- pinfo("LYSC_CHICK")
@@ -1511,7 +1511,7 @@ y <- yeastgfp("ER.to.Golgi")
 ina <- is.na(y$abundance)
 ```
 
-Next, we get the amino acid compositions of the proteins and add them to `thermo$protein`:
+Next, we get the amino acid compositions of the proteins and add them to `thermo()$protein`:
 ```{r add_protein_yeast, message=FALSE}
 aa <- yeast.aa(y$protein[!ina])
 ip <- add.protein(aa)
@@ -1569,7 +1569,7 @@ This agrees with the assessment shown in Figure 4 of @Dic09 (but the updated gro
 
 Because affinities of proteins often vary strongly with oxygen fugacity and other variables, it can be helpful to express the values as differences from a baseline.
 The following example compares the affinities for formation of transcription factors involved in embryonic dorsal-ventral patterning with that of the morphogen, Sonic hedgehog (Shh), as a function of `r logfO2` and log*a*<sub>`r h2o`</sub> [@Dic15].
-We first list the UniProt names of Shh and 10 transcription factors, and get the `iprotein` indices (rownumbers of `thermo$protein`):
+We first list the UniProt names of Shh and 10 transcription factors, and get the `iprotein` indices (rownumbers of `thermo()$protein`):
 ```{r Shh_pname}
 pname <- c("SHH", "OLIG2", "NKX22", "FOXA2", "IRX3",
   "PAX6", "NKX62", "DBX1", "DBX2", "NKX61", "PAX7")
@@ -1642,7 +1642,7 @@ This thermodynamic description highlights possible links between the chemical co
 In the Rubisco example above, we saw the use of <span style="color:green">`read.fasta()`</span> to read amino acid sequences from a FASTA file.
 There are several other methods for inputting amino acid compositions.
 
-R's `read.csv()` can be used to read amino acid compositions from a CSV file with the same columns that are present in `thermo$protein`.
+R's `read.csv()` can be used to read amino acid compositions from a CSV file with the same columns that are present in `thermo()$protein`.
 Note the use of `as.is = TRUE` to prevent reading character data as factors.
 The `nrows` argument can be added to read that number of rows:
 ```{r read_csv}
@@ -1738,7 +1738,7 @@ protein.length(myaa)
 
 ## Adding proteins and using `iprotein`
 
-Once the amino acid compositions have been obtained, use <span style="color:red">`add.protein()`</span> to add these proteins to `thermo$protein`:
+Once the amino acid compositions have been obtained, use <span style="color:red">`add.protein()`</span> to add these proteins to `thermo()$protein`:
 ```{r add_protein}
 add.protein(myaa)
 ```
@@ -1815,7 +1815,7 @@ vars <- list(O2 = c(-50, -25), NH3 = c(-15, 10), H2O = c(-15, 10))
 
 Consider the amino acid abundances reported by @FMM_14.
 Here, we identify the amino acids using their one-letter abbreviations.
-Then, <span style="color:green">`aminoacids()`</span> is used to produce the full names, which in turn are used to search `thermo$obigt` for their formulas.
+Then, <span style="color:green">`aminoacids()`</span> is used to produce the full names, which in turn are used to search `thermo()$obigt` for their formulas.
 <span style="color:green">`makeup()`</span> is used to count the elements in the formulas:
 ```{r smoker_aa, message=FALSE}
 aa <- c("D", "T", "S", "E", "G", "A", "K", "H")
@@ -1919,7 +1919,7 @@ There is a danger of using too many, or unrepresentative variables, but in some 
 
 ## Viewing data sources: <span style="color:green">`thermo.refs()`</span>
 
-The database in CHNOSZ lists one or two sources for each entry, and citation information for the sources is listed in `thermo$refs`.
+The database in CHNOSZ lists one or two sources for each entry, and citation information for the sources is listed in `thermo()$refs`.
 You can locate and view the references with <span style="color:green">`thermo.refs()`</span>.
 Running the function without any arguments opens a browser window with the complete table of references.
 ```{marginfigure}
