@@ -253,6 +253,7 @@ You can search for the species by name:
 info("methane")
 ```
 
+The number that is returned can be used to identify the species for other functions in CHNOSZ.
 Multiple entries exist for methane; the index of the `aq` (aqueous) species is returned by default.
 ```{marginfigure}
 This convention applies to organic species, but for inorganic species, the English name refers to the gas (<span style='color:green'>`info("oxygen")`</span>) while the chemical formula is used to identify the aqueous species (<span style='color:green'>`info("O2")`</span>).
@@ -262,20 +263,12 @@ A second argument can be used to specify a different physical state:
 info("methane", "gas")
 ```
 
-```{r info_methane_test, echo=FALSE, results="hide"}
-# this prevents the vignette from compiling in case
-# database updates cause the species index of methane to change
-stopifnot(info("methane")==881)
-# it is up to the editor of this vignette to ensure that number
-# is used in the hard-coded examples below!
+Taking the species number of aqueous methane returned by <span style="color:green">`info()`</span>, use the function again to retrieve the set of standard molal thermodynamic properties and equations of state parameters:
+```{r info_imethane, message=FALSE}
+imethane <- info("methane")
+info(imethane)
 ```
 
-Knowing that aqueous methane is species number 881 in the database, you can again use <span style="color:green">`info()`</span> to retrieve the set of standard molal thermodynamic properties and equations of state parameters:
-```{r info_881, message=FALSE}
-info(881)
-```
-
-This number can be used as an argument (`ispecies`) for other functions in CHNOSZ to uniquely identify any species; some commonly used functions also accept the species names.
 Liquid water is species number 1; it has NA entries in the database because specialized functions are used to compute its properties:
 ```{r info_info_water}
 info(info("water"))
@@ -295,8 +288,7 @@ options(width = 80)
 ```
 
 The message includes e.g. "uracil" and "metacinnabar" because their names have some similarity to the search term.
-
-As "ribose" is the name of a species in the database, to find species with similar names, add an extra character to the search:
+Since "ribose" is the name of a species in the database, to find species with similar names, add an extra character to the search:
 ```{r info_ribose}
 info(" ribose")
 ```
@@ -306,21 +298,21 @@ The messages may be useful for browsing the database, but owing to their ambiguo
 ## Counting elements, chemical formulas, <span style="color:green">`ZC()`</span>
 
 Continuing with the example of methane, let's look at its chemical formula:
-```{r info_881_formula, message=FALSE}
-info(881)$formula
+```{r info_imethane_formula, message=FALSE}
+info(imethane)$formula
 ```
 
 We can use <span style="color:green">`makeup()`</span> to count the elements in the formula, followed by <span style="color:green">`as.chemical.formula()`</span> to rewrite the formula on one line:
-```{r makeup_881}
-makeup(881)
-as.chemical.formula(makeup(881))
+```{r makeup_imethane}
+makeup(imethane)
+as.chemical.formula(makeup(imethane))
 ```
 
 For organic species, a calculation of the average oxidation state of carbon (`r zc`) is possible given the species index, chemical formula, or elemental count:
-```{r ZC_881, message=FALSE}
-ZC(881)
-ZC(info(881)$formula)
-ZC(makeup(881))
+```{r ZC_imethane, message=FALSE}
+ZC(imethane)
+ZC(info(imethane)$formula)
+ZC(makeup(imethane))
 ```
 
 # Calculating thermodynamic properties
