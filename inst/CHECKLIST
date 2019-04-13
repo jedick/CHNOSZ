@@ -21,6 +21,9 @@ release checklist for CHNOSZ
 - run R CMD check using R compiled without long doubles (emulating Solaris checks on CRAN)
   (CFLAGS=-ffloat-store ./configure --disable-long-double)
 
+- run R CMD check with Latin-1 locale (catches errors on CRAN's debian-clang)
+  LC_CTYPE=en_US R CMD check CHNOSZ_x.x.x.tar.gz
+
 - reduce the size of vignettes: after installing/upgrading rmarkdown, replace files in
   rmarkdown/rmd/h/bootstrap/fonts/ with empty files
 
