@@ -26,7 +26,8 @@ mod.obigt <- function(...) {
   # this is needed if we are called with a list as the actual argument
   if(is.list(args[[1]])) args <- args[[1]]
   if(length(args) < 2) stop("please supply at least a species name and a property to update")
-  if(is.null(names(args))) stop("please supply named arguments")
+  if(is.null(names(args))) stop("all arguments after the first should be named")
+  if(any(tail(nchar(names(args)), -1)==0)) stop("all arguments after the first should be named")
   # if the first argument is numeric, it's the species index
   if(is.numeric(args[[1]][1])) {
     ispecies <- args[[1]]
