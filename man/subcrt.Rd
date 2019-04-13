@@ -267,7 +267,7 @@ title(main=paste("Reduction of NAD coupled to oxidation of glucose",
 # but we go to -30 knowing properties will become NA
 sb <- subcrt(c("H2O", "Na+"), T=seq(-30, 10), P=1)$out
 # start plot with extra room on right
-par(mar=c(5, 4, 4, 4))
+opar <- par(mar=c(5, 4, 4, 4))
 # plot G
 plot(sb$water$T, sb$water$G, ylim=c(-63000, -56000), xlab=axis.label("T"),
   ylab=axis.label("DG0"))
@@ -284,6 +284,7 @@ H2O <- expr.species("H2O")
 Na <- expr.species("Na+")
 degC <- expr.units("T")
 title(main=substitute(H2O~and~Na~to~-20~degC, list(H2O=H2O, Na=Na, degC=degC)))
+par(opar)
 
 ## Calculations using a variable-pressure standard state
 thermo("opt$varP" = TRUE)

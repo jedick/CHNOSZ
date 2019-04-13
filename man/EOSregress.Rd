@@ -137,7 +137,7 @@ EOScalc(EOSlm$coefficients, 298.15, 1)
 CH4coeffs <- EOScoeffs("CH4", "Cp")
 ## make plots comparing the regressions
 ## with the accepted EOS parameters of CH4
-par(mfrow=c(2,2))
+opar <- par(mfrow=c(2,2))
 EOSplot(d, T.max=600)
 title("Cp of CH4(aq), fit to 600 K")
 legend("bottomleft", pch=1, legend="Hnědkovský and Wood, 1997")
@@ -147,6 +147,7 @@ EOSplot(d, T.max=600, T.plot=600)
 title("Cp fit to 600 K, plot to 600 K")
 EOSplot(d, coefficients=CH4coeffs, T.plot=600)
 title("Cp from EOS parameters in database")
+par(opar)
 
 # continuing from above, with user-defined variables
 Theta <- 228  # K 
@@ -173,7 +174,7 @@ d$P <- convert(d$P, "bar")
 varHKF <- c("invTTheta", "QBorn")
 # alpha is the expansivity coefficient of water
 varal <- c("invTTheta", "alpha")
-par(mfrow=c(2,2))
+opar <- par(mfrow=c(2,2))
 # for both HKF and the expansivity equation
 # we'll fit up to a temperature limit
 EOSplot(d, varHKF, T.max=663, T.plot=625)
@@ -185,6 +186,7 @@ EOSplot(d, varHKF, T.max=663)
 title("V of CH4(aq), HKF equation")
 EOSplot(d, varal, T.max=663)
 title("V of CH4(aq), expansivity equation")
+par(opar)
 # note that the volume regression using the HKF gives
 # a result for omega (coefficient on Q) that is
 # not consistent with the high-T heat capacities

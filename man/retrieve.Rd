@@ -69,6 +69,7 @@ iMn <- retrieve("Mn", c("O", "H"), "aq")
 species(iMn)
 a <- affinity(pH = c(6, 14), Eh = c(-1, 1))
 diagram(a, fill = "terrain")
+\dontshow{par(thermo()$opar)}
 }
 
 \concept{Extended workflow}
