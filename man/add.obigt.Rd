@@ -35,7 +35,7 @@ If \code{species} is NULL (default), all species listed in the file are used.
 If \code{species} is given and matches the name(s) of species in the file, only those species are added to the database.
 
 By default, species in the file replace any existing species having the same combination of name and state.
-Set \code{force} to FALSE to avoid replacing species that are present in (\code{thermo$obigt}).
+Set \code{force} to FALSE to avoid replacing species that are present in (\code{thermo()$obigt}).
 
 Given the default setting of \code{E.units}, the function does not perform any unit conversions.
 If \code{E.units} is set to \samp{J}, then the thermodynamic parameters are converted from units of Joules to calories, as used in the CHNOSZ database. 
@@ -50,11 +50,11 @@ When adding new species, a chemical formula should be included along with the va
 The formula is taken from the \samp{formula} argument, or if that is missing, is taken to be the same as the \samp{name} of the species.
 An error results if the formula is not valid (i.e. can not be parsed by\code{\link{makeup}}).
 Additional arguments refer to the name of the property(s) to be updated and are matched to any part of compound column names in \code{\link{thermo}$obigt}, such as \samp{z} or \samp{T} in \samp{z.T}.
-Unless \samp{state} is specified as one of the properties, its value is taken from \code{thermo$opt$state}.
-When adding species, properties that are not specified become NA, except for \samp{state}, which takes a default value from \code{thermo$opt$state}, and \samp{z.T}, which for aqueous species is set to the charge calculated from the chemical formula (otherwise, NA charge for newly added species would trigger the \code{\link{AkDi}} model).
+Unless \samp{state} is specified as one of the properties, its value is taken from \code{thermo()$opt$state}.
+When adding species, properties that are not specified become NA, except for \samp{state}, which takes a default value from \code{thermo()$opt$state}, and \samp{z.T}, which for aqueous species is set to the charge calculated from the chemical formula (otherwise, NA charge for newly added species would trigger the \code{\link{AkDi}} model).
 The values provided should be in the units specifed in the documentation for the \code{thermo} data object, including any order-of-magnitude scaling factors.
 
-\code{today} returns the current date in the format adopted for \code{thermo$obigt} (inherited from SUPCRT-format data files) e.g. \samp{13.May.12} for May 13, 2012.
+\code{today} returns the current date in the format adopted for \code{thermo()$obigt} (inherited from SUPCRT-format data files) e.g. \samp{13.May.12} for May 13, 2012.
 }
 
 \value{

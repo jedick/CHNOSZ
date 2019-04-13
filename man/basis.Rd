@@ -26,7 +26,7 @@ Alternatively, the first argument may consist of numeric values indicating the s
 The special names \samp{pH}, \samp{pe} and \samp{Eh} can be included in the \code{species} argument; they get translated into the names of the proton (\samp{H+}) and electron (\samp{e-}) as appropriate.
 
 The physical states or logarithms of activities of species in the basis definition can be changed by calling \code{basis} with the formulas of species that are in the basis set, or their species indices.
-If either of the second or third arguments to \code{basis} is of type character, it refers to the name of a state (if present in \code{thermo$obigt$state}) or to the name of a chemical activity \code{\link{buffer}} (if present in \code{thermo$buffers$name}).
+If either of the second or third arguments to \code{basis} is of type character, it refers to the name of a state (if present in \code{thermo()$obigt$state}) or to the name of a chemical activity \code{\link{buffer}} (if present in \code{thermo()$buffers$name}).
 If either of these arguments is numeric it specifies the logarithms of activities (or fugacities for gases) of the basis species.
 In case \samp{pH}, \samp{pe} or \samp{Eh} is named, the logarithm of activity of the basis species is converted from these values.
 For example, a value of 7 for pH is stored as a logarithm of activity of -7.
@@ -57,7 +57,7 @@ The logarithms of activities of amino acids in the \samp{QEC4} basis are -4 (i.e
 }
 
 \value{
-Returns the value of \code{thermo$basis} after any modifications; or, if \code{delete} is TRUE, its value before deletion (invisibly).
+Returns the value of \code{thermo()$basis} after any modifications; or, if \code{delete} is TRUE, its value before deletion (invisibly).
 }
 
 \seealso{

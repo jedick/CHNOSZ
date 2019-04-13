@@ -37,7 +37,7 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
 
   \itemize{
      
-    \item \code{thermo$opt} 
+    \item \code{thermo()$opt} 
     List of computational settings. Square brackets indicate default values.
     \tabular{lll}{
       \code{cutoff} \tab numeric \tab Cutoff below which values are taken to be zero [1e-10] (see \code{\link{makeup}})\cr
@@ -60,7 +60,7 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
       \code{maxcores} \tab numeric \tab Maximum number of cores for parallel calculations with \code{\link{palply}} [\code{2}]
 }
 
-    \item \code{thermo$element}
+    \item \code{thermo()$element}
   Dataframe containing the thermodynamic properties of elements taken from Cox et al., 1989 and Wagman et al., 1982.
   The standard molal entropy (\eqn{S}(\code{Z})) at 25 \degC and 1 bar for the \dQuote{element} of charge (\code{Z}) was calculated from \eqn{S}(H2,g) + 2\eqn{S}(\code{Z}) =  2\eqn{S}(H+), where the standard molal entropies of H2,g and H+ were taken from Cox et al., 1989.
   The mass of \code{Z} is taken to be zero.
@@ -77,15 +77,15 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
       \tab \tab compound at 25 \degC and 1 bar
     }
 
-    \item \code{thermo$obigt}
+    \item \code{thermo()$obigt}
 
   This dataframe is a thermodynamic database of standard molal thermodynamic properties and equations of state parameters of species.
   Note the following database conventions:
   \itemize{
-     \item The combination of \code{name} and \code{state} defines a species in \code{thermo$obigt}. A species can not be duplicated (this is checked when running \code{reset()}).
+     \item The combination of \code{name} and \code{state} defines a species in \code{thermo()$obigt}. A species can not be duplicated (this is checked when running \code{reset()}).
      \item English names of inorganic gases are used only for the gas state. The dissolved species is named with the chemical formula. Therefore, \code{info("oxygen")} refers to the gas, and \code{info("O2")} refers to the aqueous species.
      \item Properties of most aqueous species (\code{state} = \samp{aq}) are calculated using the revised Helgeson-Kirkham-Flowers (HKF) model (see \code{\link{hkf}}).
-     \item Properties of aqueous species with an NA value of \code{Z} (the final column of thermo$obigt) are calculated using the Akinfiev-Diamond model (see \code{\link{AkDi}}).
+     \item Properties of aqueous species with an NA value of \code{Z} (the final column of thermo()$obigt) are calculated using the Akinfiev-Diamond model (see \code{\link{AkDi}}).
      \item Properties of most non-aqueous species (liquids, gases, and minerals) are calculated using a heat capacity polynomial expression with up to six terms (see \code{\link{cgl}}).
      \item Properties of minerals with NA values of all heat capacity parameters are calculated using the Berman model (see \code{\link{berman}}).
   } 
@@ -94,7 +94,7 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
   The \acronym{OBIGT} database was originally developed for that program, and was the original basis for the database in CHNOSZ.
   There may be an additional meaning for the acronym: \dQuote{One BIG Table} of thermodynamic data.
 
-  Each entry is referenced to one or two literature sources listed in \code{thermo$refs}.
+  Each entry is referenced to one or two literature sources listed in \code{thermo()$refs}.
   Use \code{\link{thermo.refs}} to look up the citation information for the references.
   See the vignette \emph{Thermodynamic data in CHNOSZ} for a complete description of the sources of data.
   The original \acronym{OBIGT} database was influenced by the \acronym{SUPCRT92} (Johnson et al., 1992) and \acronym{slop98.dat} data files (Shock et al., 1998), and the references in those files are included here.
@@ -106,7 +106,7 @@ This process was repeated as necessary to generate the standard molar properties
 A consequence of tabulating the standard molar thermodynamic properties of the phase species is that the values of \eqn{(dP/dT)} and \eqn{{\Delta}H^{\circ}}{DeltaH0} of phase transitions can be calculated using the equations of state and therefore do not need to be stored in the thermodynamic database.
 However, the transition temperatures (\eqn{T_{tr}}{Ttr}) generally can not be assessed by comparing the Gibbs energies of phase species and are tabulated in the database.
 
-The identification of species and their standard molal thermodynamic properties at 25 \degC and 1 bar are located in the first 12 columns of \code{thermo$obigt}:
+The identification of species and their standard molal thermodynamic properties at 25 \degC and 1 bar are located in the first 12 columns of \code{thermo()$obigt}:
 
     \tabular{lll}{
       \code{name}     \tab character \tab Species name\cr
@@ -170,7 +170,7 @@ Columns 13-20 for aqueous species using the Akinfiev-Diamond model. Note that th
       \code{Z} \tab numeric \tab \eqn{Z} NA \cr
     }
 
-    \item \code{thermo$refs}
+    \item \code{thermo()$refs}
     Dataframe of references to sources of thermodynamic data.
     \tabular{lll}{
       \code{key} \tab character \tab Source key\cr
@@ -181,7 +181,7 @@ Columns 13-20 for aqueous species using the Akinfiev-Diamond model. Note that th
       \code{URL} \tab character \tab URL\cr
     }
 
-    \item \code{thermo$buffers}
+    \item \code{thermo()$buffers}
 
     Dataframe which contains definitions of buffers of chemical activity. Each named buffer can be composed of one or more species, which may include any species in the thermodynamic database and/or any protein. The calculations provided by \code{\link{buffer}} do not take into account phase transitions of minerals, so individual phase species of such minerals must be specified in the buffers.
     \tabular{lll}{
@@ -191,7 +191,7 @@ Columns 13-20 for aqueous species using the Akinfiev-Diamond model. Note that th
       \code{logact} \tab numeric \tab Logarithm of activity (fugacity for gases)
     }
 
-    \item \code{thermo$protein}
+    \item \code{thermo()$protein}
     Data frame of amino acid compositions of selected proteins. Most of the compositions were taken from the SWISS-PROT/UniProt online database (Boeckmann et al., 2003) and the protein and organism names usually follow the conventions adopted there. In some cases different isoforms of proteins are identified using modifications of the protein names; for example, \samp{MOD5.M} and \code{MOD5.N} proteins of \samp{YEAST} denote the mitochondrial and nuclear isoforms of this protein. See \code{\link{pinfo}} to search this data frame by protein name, and other functions to work with the amino acid compositions.
     \tabular{lll}{
       \code{protein} \tab character \tab Identification of protein\cr
@@ -202,34 +202,34 @@ Columns 13-20 for aqueous species using the Akinfiev-Diamond model. Note that th
       \code{Ala}\dots\code{Tyr} \tab numeric \tab Number of each amino acid in the protein
     }
 
-    \item \code{thermo$groups}
+    \item \code{thermo()$groups}
     This is a dataframe with 22 columns for the amino acid sidechain, backbone and protein backbone groups ([Ala]..[Tyr],[AABB],[UPBB]) whose rows correspond to the elements C, H, N, O, S. It is used to quickly calculate the chemical formulas of proteins that are selected using the \code{iprotein} argument in \code{\link{affinity}}.
 
-    \item \code{thermo$basis}
+    \item \code{thermo()$basis}
     Initially \code{NULL}, reserved for a dataframe written by \code{\link{basis}} upon definition of the basis species. The number of rows of this dataframe is equal to the number of columns in \dQuote{...} (one for each element).
      \tabular{lll}{
         \code{...} \tab numeric \tab One or more columns of stoichiometric\cr
         \tab \tab coefficients of elements in the basis species\cr
-        \code{ispecies} \tab numeric \tab Rownumber of basis species in \code{thermo$obigt}\cr
+        \code{ispecies} \tab numeric \tab Rownumber of basis species in \code{thermo()$obigt}\cr
         \code{logact} \tab numeric \tab Logarithm of activity or fugacity of basis species\cr
         \code{state} \tab character \tab Physical state of basis species\cr
      }
 
-    \item \code{thermo$species}
-    Initially \code{NULL}, reserved for a dataframe generated by \code{\link{species}} to define the species of interest. The number of columns in \dQuote{...} is equal to the number of basis species (i.e., rows of \code{thermo$basis}).
+    \item \code{thermo()$species}
+    Initially \code{NULL}, reserved for a dataframe generated by \code{\link{species}} to define the species of interest. The number of columns in \dQuote{...} is equal to the number of basis species (i.e., rows of \code{thermo()$basis}).
     \tabular{lll}{
        \code{...} \tab numeric \tab One or more columns of stoichiometric\cr
        \tab \tab coefficients of basis species in the species of interest\cr
-       \code{ispecies} \tab numeric \tab Rownumber of species in \code{thermo$obigt}\cr
+       \code{ispecies} \tab numeric \tab Rownumber of species in \code{thermo()$obigt}\cr
        \code{logact} \tab numeric \tab Logarithm of activity or fugacity of species\cr
        \code{state} \tab character \tab Physical state of species\cr
        \code{name} \tab character \tab Name of species\cr
     }
 
-    \item \code{thermo$stoich}
+    \item \code{thermo()$stoich}
     A precalculated stoichiometric matrix for the default database. This is a matrix, not a data frame, and as such can accept duplicated row names, corresponding to chemical formulas of the species. See \code{\link{retrieve}}, and the first test in \code{testthat/test-retrieve.R} for how to update this.
     \tabular{lll}{
-       \code{rownames} \tab character \tab Chemical formulas from \code{thermo$obigt}\cr
+       \code{rownames} \tab character \tab Chemical formulas from \code{thermo()$obigt}\cr
        \code{...} \tab numeric \tab Stoichiometry, one column for each element present in any species
     }
 
@@ -250,7 +250,7 @@ system.file("extdata", package="CHNOSZ")
 # and the .csv files have optional data that can be loaded with add.obigt()
 dir(system.file("extdata/OBIGT", package = "CHNOSZ"))
 
-## exploring thermo$obigt
+## exploring thermo()$obigt
 # what physical states there are
 unique(thermo()$obigt$state)
 # formulas of ten random species

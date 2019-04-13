@@ -32,7 +32,7 @@ The \code{property} for this function can be one of \samp{P.sigma} (saturation v
 \code{rho.IAPWS95} implements a root-finding technique (using \code{\link{uniroot}}) to determine the values of density for the stable phase of \H2O at the given temperature and pressure.
 The \code{state} option is used internally in order to determine the stable phase at conditions close to saturation (0.9999*\Psat <= P <= 1.00005*\Psat, where \Psat is the saturation pressure calculated by \code{\link{WP02.auxiliary}}).
 Alternatively, the user can specify a \code{state} of \samp{liquid} or \samp{vapor} to force the calculation of density for the corresponding phase, even if it is metastable (e.g. superheated water, supercooled steam; this option has no effect in the supercritical region).
-The \code{state} is set in calls by \code{\link{water.IAPWS95}} to the value in \code{thermo$opt$IAPWS.sat} (default \samp{liquid}) so that higher-level functions (\code{\link{water}}, \code{\link{subcrt}}) take properties for that state along the saturation curve.
+The \code{state} is set in calls by \code{\link{water.IAPWS95}} to the value in \code{thermo()$opt$IAPWS.sat} (default \samp{liquid}) so that higher-level functions (\code{\link{water}}, \code{\link{subcrt}}) take properties for that state along the saturation curve.
 Diagnostic messages are printed if \code{trace} is positive (it is also included in the call to \code{uniroot}).
 
 \code{water.AW90} provides values of the static dielectric constant (\code{epsilon}) calculated using equations given by Archer and Wang, 1990.
@@ -57,7 +57,7 @@ P.sigma <- WP02.auxiliary("P.sigma", T)
 # ... but alternates between being just on the liquid or vapor side
 # (low rho: steam; high rho: water)
 rho.IAPWS95(T, convert(P.sigma, "bar"))
-# thermo$opt$IAPWS.sat allows for choosing liquid or vapor or ""
+# thermo()$opt$IAPWS.sat allows for choosing liquid or vapor or ""
 thermo("opt$IAPWS.sat" = "")
 # shows artifactual vapor-liquid transition
 water.IAPWS95("V", T, "Psat")

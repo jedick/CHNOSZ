@@ -15,7 +15,7 @@ Calculate thermodynamic properties of minerals using the equations of Berman (19
   \item{name}{character, name of mineral}
   \item{T}{numeric, temperature(s) at which to calculate properties (K)}
   \item{P}{numeric, pressure(s) at which to calculate properties (bar)}
-  \item{thisinfo}{dataframe, row for mineral from \code{thermo$obigt}}
+  \item{thisinfo}{dataframe, row for mineral from \code{thermo()$obigt}}
   \item{check.G}{logical, check consistency of G, H, and S?}
   \item{calc.transition}{logical, include calculation of polymorphic transition properties?}
   \item{calc.disorder}{logical, include calculation of disordering properties?}
@@ -24,7 +24,7 @@ Calculate thermodynamic properties of minerals using the equations of Berman (19
 
 \details{
 This function calculates the thermodynamic properties of minerals at high \P and \T using equations given by Berman (1988).
-These minerals should be listed in \code{thermo$obigt} with the state \samp{cr} and chemical formula, and optionally an abbreviation and references, but all other properties set to NA.
+These minerals should be listed in \code{thermo()$obigt} with the state \samp{cr} and chemical formula, and optionally an abbreviation and references, but all other properties set to NA.
 
 The standard state thermodynamic properties and parameters for the calculations are stored in data files under \code{extdata/Berman}, or can be read from a user-created file (if available) named \samp{berman.csv} in the working directory.
 
@@ -43,7 +43,7 @@ Missing (or NA) values are permitted for the transition and disorder parameters,
 The data files have the following 30 columns:
 
     \tabular{lll}{
-      \code{name} \tab mineral name (must match an entry with a formula but NA properties in \code{thermo$obigt})\cr
+      \code{name} \tab mineral name (must match an entry with a formula but NA properties in \code{thermo()$obigt})\cr
       \code{GfPrTr} \tab standard Gibbs energy at 298.15 K and 1 bar (J mol\S{-1}) (Benson-Helgeson convention)\cr
       \code{HfPrTr} \tab standard enthalpy at 298.15 K and 1 bar (J mol\S{-1})\cr
       \code{SPrTr} \tab standard entropy at 298.15 K and 1 bar (J mol\S{-1} K\S{-1})\cr
@@ -69,7 +69,7 @@ The function outputs apparent Gibbs energies according to the Benson-Helgeson co
 If \code{check.G} is TRUE, the tabulated value of \code{GfTrPr} (Benson-Helgeson) is compared with that calculated from \code{HfPrTr} - 298.15*\code{DSPrTr} (\code{DSPrTr} is the difference between the entropies of the elements in the formula and \code{SPrTr} in the table).
 A warning is produced if the absolute value of the difference between tabulated and calculated \code{GfTrPr} is greater than 1000 J/mol.
 
-Providing \code{thisinfo} avoids searching for the mineral in \code{thermo$obigt}, potentially saving some running time.
+Providing \code{thisinfo} avoids searching for the mineral in \code{thermo()$obigt}, potentially saving some running time.
 If the function is called with missing \code{name}, the parameters for all available minerals are returned.
 }
 
@@ -80,7 +80,7 @@ A data frame with \code{T} (K), \code{P} (bar), \code{G}, \code{H}, \code{S}, an
 \examples{
 \dontshow{reset()}
 # other than the formula, the parameters aren't stored in
-# thermo$obigt, so this shows NAs
+# thermo()$obigt, so this shows NAs
 info(info("quartz", "cr"))
 # properties of alpha-quartz (aQz) at 298.15 K and 1 bar
 berman("quartz")
@@ -167,7 +167,7 @@ stopifnot((Gex_BA96 - Gex_Ber88)[1] > 0)
 # the curves cross at about 725 deg C (BA96 Fig. 8)
 # (actually, in our calculation they cross closer to 800 deg C)
 stopifnot(T[which.min(abs(Gex_BA96 - Gex_Ber88))] == 800)
-# reset the database (thermo$opt$E.units, thermo$obigt, and thermo$opt$Berman)
+# reset the database (thermo()$opt$E.units, thermo()$obigt, and thermo()$opt$Berman)
 reset()
 }
 

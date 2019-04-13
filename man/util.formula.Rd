@@ -25,7 +25,7 @@ Calculate the standard molal entropy of elements in a compound; calculate the st
 \arguments{
   \item{makeup}{numeric, object returned by \code{makeup}}
   \item{drop.zero}{logical, drop elements with a coefficient of zero?}
-  \item{formula}{character, chemical formulas, or numeric, rownumbers in \code{thermo$obigt}}
+  \item{formula}{character, chemical formulas, or numeric, rownumbers in \code{thermo()$obigt}}
   \item{G}{numeric, standard molal Gibbs energy of formation from the elements}
   \item{H}{numeric, standard molal enthalpy of formation from the elements}
   \item{S}{numeric, standard molal molal entropy}

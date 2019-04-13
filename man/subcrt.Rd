@@ -15,7 +15,7 @@
 }
 
 \arguments{
-  \item{species}{character, name or formula of species, or numeric, rownumber of species in \code{thermo$obigt}}
+  \item{species}{character, name or formula of species, or numeric, rownumber of species in \code{thermo()$obigt}}
   \item{coeff}{numeric, reaction coefficients on species}
   \item{state}{character, state(s) of species}
   \item{property}{character, property(s) to calculate}
@@ -87,7 +87,7 @@ Certain features of \acronym{SUPCRT92} are not available here, for example, calc
 
 For calculations below 273.16 K, the pressure should be set to 1, as \Psat is not defined in these conditions.
 
-If \code{thermo$opt$varP} is \code{TRUE}, standard Gibbs energies of gases will be converted from a standard state at 1 bar (as used in SUPCRT) to a variable pressure standard state (see chapter 12 in Anderson and Crerar, 1993).
+If \code{thermo()$opt$varP} is \code{TRUE}, standard Gibbs energies of gases will be converted from a standard state at 1 bar (as used in SUPCRT) to a variable pressure standard state (see chapter 12 in Anderson and Crerar, 1993).
 This is useful for constructing e.g. boiling curves for organic compounds.
 }
 

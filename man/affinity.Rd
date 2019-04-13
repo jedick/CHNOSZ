@@ -71,7 +71,7 @@ However, if one or more of \code{pe}, \code{Eh} or \code{pH} is among the variab
 }
 
 \seealso{
-\code{\link{ionize.aa}}, activated if proteins are among the species of interest, \samp{H+} is in the basis, and \code{thermo$opt$ionize} is TRUE.
+\code{\link{ionize.aa}}, activated if proteins are among the species of interest and \samp{H+} is in the basis.
 \code{\link{equilibrate}} for using the results of \code{affinity} to calculate equilibrium activities of species, and \code{\link{diagram}} to plot the results.
 }
 

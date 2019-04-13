@@ -42,13 +42,13 @@ When \code{ret} is \samp{count}, the names of the proteins in the resulting data
 If {id} is not given, and a UniProt FASTA header is detected (regular expression \code{"\\|......\\|.*_"}), information there (accession, name, organism) is split into the \code{protein}, \code{abbrv}, and {organism} columns of the resulting data frame.
 
 \code{count.aa} counts the occurrences of each amino acid or nucleic-acid base in a sequence (\code{seq}).
-For amino acids, the columns in the returned data frame are in the same order as \code{thermo$protein}.
+For amino acids, the columns in the returned data frame are in the same order as \code{thermo()$protein}.
 The matching of letters is case-insensitive.
 A warning is generated if any character in \code{seq}, excluding spaces, is not one of the single-letter amino acid or nucleobase abbreviations.
 \code{start} and/or \code{stop} can be provided to count a fragment of the sequence (extracted using \code{\link{substr}}).
 If only one of \code{start} or \code{stop} is present, the other defaults to 1 (\code{start}) or the length of the sequence (\code{stop}).
 
-\code{uniprot.aa} returns a data frame of amino acid composition, in the format of \code{thermo$protein}, retrieved from the protein sequence if it is available from UniProt (\url{http://uniprot.org}).
+\code{uniprot.aa} returns a data frame of amino acid composition, in the format of \code{thermo()$protein}, retrieved from the protein sequence if it is available from UniProt (\url{http://uniprot.org}).
 The \code{protein} argument corresponds to the \samp{Entry name} on the UniProt search pages.
 
 }
@@ -58,7 +58,7 @@ The \code{protein} argument corresponds to the \samp{Entry name} on the UniProt 
 }
 
 \seealso{
-\code{\link{seq2aa}}, like \code{count.aa}, counts amino acids in a user-input sequence, but returns a data frame in the format of \code{thermo$protein}.
+\code{\link{seq2aa}}, like \code{count.aa}, counts amino acids in a user-input sequence, but returns a data frame in the format of \code{thermo()$protein}.
 \code{\link{nucleic.formula}} for an example of counting nucleobases in a DNA sequence.
 }
 
@@ -77,7 +77,7 @@ protein.length(aa)
 # download amino acid composition of a protein
 # start at position 2 to remove the initiator methionine
 aa <- uniprot.aa("ALAT1_HUMAN", start=2)
-# add it to thermo$protein
+# add it to thermo()$protein
 ip <- add.protein(aa)
 # now it's possible to calculate some properties
 protein.length(ip)

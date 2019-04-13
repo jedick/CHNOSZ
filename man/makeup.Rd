@@ -31,7 +31,7 @@ Any sequence of one uppercase letter followed by zero or more lowercase letters 
 \code{makeup} will issue a warning for elemental symbols that are not present in \code{\link{thermo}$element}.
 
 \code{makeup} can handle numeric and length > 1 values for the \code{formula} argument.
-If the argument is numeric, it identifies row number(s) in \code{thermo$obigt} from which to take the formulas of species.
+If the argument is numeric, it identifies row number(s) in \code{thermo()$obigt} from which to take the formulas of species.
 If \code{formula} has length > 1, the function returns a list containing the elemental counts in each of the formulas.
 If \code{count.zero} is TRUE, the elemental counts for each formula include zeros to indicate elements that are only present in any of the other formulas.
 
@@ -67,8 +67,8 @@ makeup("Fe3+")
 # these all represent a single negative charge, i.e., electron
 makeup("-1")
 makeup("Z-1+0")
-makeup("Z0-1")   # the "old" formula for the electron in thermo$obigt
-makeup("(Z-1)")  # the current formula in thermo$obigt
+makeup("Z0-1")   # the "old" formula for the electron in thermo()$obigt
+makeup("(Z-1)")  # the current formula in thermo()$obigt
 
 # hypothetical compounds with negative numbers of elements
 makeup("C-4(O-2)")   # -4 carbon, -2 oxygen

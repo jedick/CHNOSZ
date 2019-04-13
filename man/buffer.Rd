@@ -13,7 +13,7 @@ Calculate values of activity or fugacity of basis species buffered by an assembl
 }
 
 \arguments{
-  \item{name}{character, name of buffer to add to or find in \code{thermo$buffers}.}
+  \item{name}{character, name of buffer to add to or find in \code{thermo()$buffers}.}
   \item{species}{character, names or formulas of species in a buffer.}
   \item{state}{character, physical states of species in buffer.}
   \item{logact}{numeric, logarithms of activities of species in buffer.}
@@ -38,7 +38,7 @@ Buffer definitions can be added to this dataframe with \code{mod.buffer}.
 It is possible to set the logarithms of activities of the species in the buffer through the \code{logact} argument; if this is missing unit activity is assigned to crystalline species in buffer, otherwise (for aqueous species) the default value of activity is 10\eqn{^{-3}}{^-3}.
 If \code{name} identifies an already defined buffer, this function modifies the logarithms of activities or states of species in that buffer, optionally restricted to only those species given in \code{species}.
 
-It is possible to assign different buffers to different basis species, in which case the order of their calculation depends on their order in \code{thermo$buffers}.
+It is possible to assign different buffers to different basis species, in which case the order of their calculation depends on their order in \code{thermo()$buffers}.
 This function is compatible with systems of proteins, but note that for buffers \emph{made} of proteins the buffer calculations presently use whole protein formulas (instead of residue equivalents) and consider nonionized proteins only.
 }
 

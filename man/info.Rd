@@ -24,7 +24,7 @@ The result of this call is a numeric value, which can be provided as an argument
 The searches of the indicated \code{species} are made among the names, chemical formulas, and abbreviations (in the \samp{abbrv} column) in the thermodynamic database.
 If the text of the \code{species} is matched the index of that species is returned.
 If there are multiple matches for the \code{species}, and \code{state} is NULL, the index of first match is returned.
-The order of entries in \code{thermo$obigt} is grouped by states in the order \samp{aq}, \samp{cr}, \samp{gas}, \samp{liq}, so for species in both aqueous and gaseous states the index of the aqueous species is returned, unless \code{state} is set to \samp{gas}.
+The order of entries in \code{thermo()$obigt} is grouped by states in the order \samp{aq}, \samp{cr}, \samp{gas}, \samp{liq}, so for species in both aqueous and gaseous states the index of the aqueous species is returned, unless \code{state} is set to \samp{gas}.
 
 Names of species including an underscore character are indicative of proteins, e.g. \samp{LYSC_CHICK}.
 If the name of a protein is provided to \code{info} and the composition of the protein can be found using \code{\link{protein}}, the thermodyamic properties and parameters of the nonionized protein (calculated using amino acid group additivity) are added to the thermodynamic database.
@@ -33,8 +33,8 @@ Included in the return value, as for other species, is the index of the protein 
 If no exact matches are found, \code{info} searches the database for similar names or formulas using \code{\link{agrep}}.
 If any of these are found, the results are summarized on the screen, but the function always returns NA in this case.
 
-With a numeric argument, the rows of \code{thermo$obigt} indicated by \code{ispecies} are returned, after removing any order-of-magnitude scaling factors.
-If these species are all aqueous or are all not aqueous, the compounded column names used in \code{thermo$obigt} are replaced with names appropriate for the corresponding equations of state.
+With a numeric argument, the rows of \code{thermo()$obigt} indicated by \code{ispecies} are returned, after removing any order-of-magnitude scaling factors.
+If these species are all aqueous or are all not aqueous, the compounded column names used in \code{thermo()$obigt} are replaced with names appropriate for the corresponding equations of state.
 A missing value of one of the standard molal Gibbs energy (\code{G}) or enthalpy (\code{H}) of formation from the elements or entropy (\code{S}) is calculated from the other two, if available.
 If \code{check.it} is TRUE, several checks of self consistency among the thermodynamic properties and parameters are performed using \code{\link{checkGHS}} and \code{\link{checkEOS}}.
 }

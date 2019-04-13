@@ -12,7 +12,7 @@
 }
 
 \arguments{
-  \item{aa}{data frame, amino acid composition in the format of \code{thermo$protein}}
+  \item{aa}{data frame, amino acid composition in the format of \code{thermo()$protein}}
   \item{property}{character, property to calculate}
   \item{T}{numeric, temperature in \degC}
   \item{P}{numeric, pressure in bar, or \samp{Psat} for vapor pressure of \H2O above 100 \degC}
@@ -36,7 +36,7 @@
 \examples{\dontshow{reset()}
 ## Charge of LYSC_CHICK as a function of pH and T
 # After Fig. 10 of Dick et al., 2006
-# the rownumber of the protein in thermo$protein
+# the rownumber of the protein in thermo()$protein
 ip <- pinfo("LYSC_CHICK")
 # its amino acid composition
 aa <- pinfo(ip)

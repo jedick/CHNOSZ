@@ -61,8 +61,8 @@ Alternatively, set the extended term parameter to zero with \samp{bgamma0}.
 \section{Neutral Species}{
 For neutral species, the Setch{\eacute}now equation is used, as described in Shvarov and Bastrakov, 1999.
 If \code{\link{thermo}$opt$Setchenow} is \samp{bgamma0} (the default), the extended term parameter is set to zero and the only non-zero term is the mole fraction to molality conversion factor (using the value of \code{m_star}).
-If \code{thermo$opt$Setchenow} is \samp{bgamma}, the extended term paramter is taken from the setting for the charged species (which can be either \samp{Bdot} or \samp{bgamma}).
-Set \code{thermo$opt$Setchenow} to any other value to disable the calculations for neutral species.
+If \code{thermo()$opt$Setchenow} is \samp{bgamma}, the extended term paramter is taken from the setting for the charged species (which can be either \samp{Bdot} or \samp{bgamma}).
+Set \code{thermo()$opt$Setchenow} to any other value to disable the calculations for neutral species.
 }
 
 \section{b_gamma}{

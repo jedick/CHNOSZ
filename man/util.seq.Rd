@@ -27,7 +27,7 @@
 \details{
 
 \code{aminoacids} returns the one-letter abbreviations (\code{nchar}=\samp{1}) or the three-letter abbreviations (\code{nchar}=\samp{3}) or the names of the neutral amino acids (\code{nchar}=\samp{""}) or the names of the amino acids with ionized side chains (\code{nchar}=\samp{"Z"}).
-The output includes 20 amino acids in alphabetic order by 1-letter abbreviation (the order used in \code{thermo$protein}), unless \code{which} is provided, indicating the desired amino acids (either as 1- or 3-letter abbreviations or names of the neutral amino acids).
+The output includes 20 amino acids in alphabetic order by 1-letter abbreviation (the order used in \code{thermo()$protein}), unless \code{which} is provided, indicating the desired amino acids (either as 1- or 3-letter abbreviations or names of the neutral amino acids).
 
 
 \code{nucleic.formula} returns a string representation of the chemical formula for each nucleic-acid composition contained in \code{nucleic}.

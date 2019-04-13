@@ -35,14 +35,14 @@
 }
 
 \details{
-For character \code{protein}, \code{pinfo} returns the rownumber(s) of \code{thermo$protein} that match the protein names.
+For character \code{protein}, \code{pinfo} returns the rownumber(s) of \code{thermo()$protein} that match the protein names.
 The names can be supplied in the single \code{protein} argument (with an underscore, denoting protein_organism) or as pairs of \code{protein}s and \code{organism}s.
 NA is returned for any unmatched proteins, including those for which no \code{organism} is given or that do not have an underscore in \code{protein}.
 
-Alternatively, if \code{regexp} is TRUE, the \code{protein} argument is used as a pattern (regular expression); rownumbers of all matches of \code{thermo$protein$protein} to this pattern are returned.
-When using \code{regexp}, the \code{organism} can optionally be provided to return only those entries that also match \code{thermo$protein$organism}.
+Alternatively, if \code{regexp} is TRUE, the \code{protein} argument is used as a pattern (regular expression); rownumbers of all matches of \code{thermo()$protein$protein} to this pattern are returned.
+When using \code{regexp}, the \code{organism} can optionally be provided to return only those entries that also match \code{thermo()$protein$organism}.
 
-For numeric \code{protein}, \code{pinfo} returns the corresponding row(s) of \code{thermo$protein}.
+For numeric \code{protein}, \code{pinfo} returns the corresponding row(s) of \code{thermo()$protein}.
 Set \code{residue} to TRUE to return the per-residue composition (i.e. amino acid composition of the protein divided by total number of residues).
 
 For dataframe \code{protein}, \code{pinfo} returns it unchanged, except for possibly the per-residue calculation.
@@ -55,21 +55,21 @@ The following functions accept any specification of protein(s) described above f
 The amino acid compositions are multiplied by the output of \code{\link{group.formulas}} to generate the result. 
 
 \code{protein.obigt} calculates the thermodynamic properties and equations-of-state parameters for the completely nonionized proteins using group additivity with parameters taken from Dick et al., 2006 (aqueous proteins) and LaRowe and Dick, 2012 (crystalline proteins and revised aqueous methionine sidechain group).
-The return value is a data frame in the same format as \code{thermo$obigt}.
+The return value is a data frame in the same format as \code{thermo()$obigt}.
 \code{state} indicates the physical state for the parameters used in the calculation (\samp{aq} or \samp{cr}).
 
 The following functions also depend on an existing definition of the basis species:
 
 \code{protein.basis} calculates the numbers of the basis species (i.e. opposite of the coefficients in the formation reactions) that can be combined to form the composition of each of the proteins.
-The basis species must be present in \code{thermo$basis}, and if \samp{H+} is among the basis species, the ionization states of the proteins are included.
-The ionization state of the protein is calculated at the pH defined in \code{thermo$basis} and at the temperature specified by the \code{T} argument.
+The basis species must be present in \code{thermo()$basis}, and if \samp{H+} is among the basis species, the ionization states of the proteins are included.
+The ionization state of the protein is calculated at the pH defined in \code{thermo()$basis} and at the temperature specified by the \code{T} argument.
 If \code{normalize} is TRUE, the coefficients on the basis species are divided by the lengths of the proteins. 
 
-  \code{protein.equil} produces a series of messages showing step-by-step a calculation of the chemical activities of proteins in metastable equilibrium. For the first protein, it shows the standard Gibbs energies of the reaction to form the nonionized protein from the basis species and of the ionization reaction of the protein (if \samp{H+} is in the basis), then the standard Gibbs energy/RT of the reaction to form the (possibly ionized) protein per residue. The per-residue values of \samp{logQstar} and \samp{Astar/RT} are also shown for the first protein. Equilibrium calculations are then performed, only if more than one protein is specified. This calculation applies the Boltzmann distribution to the calculation of the equilibrium degrees of formation of the residue equivalents of the proteins, then converts them to activities of proteins taking account of \code{loga.protein} and protein length. If the \code{protein} argument is numeric (indicating rownumbers in \code{thermo$protein}), the values of \samp{Astar/RT} are compared with the output of \code{\link{affinity}}, and those of the equilibrium degrees of formation of the residues and the chemical activities of the proteins with the output of \code{\link{diagram}}. If the values in any of these tests are are not \code{\link{all.equal}} an error is produced indicating a bug. 
+  \code{protein.equil} produces a series of messages showing step-by-step a calculation of the chemical activities of proteins in metastable equilibrium. For the first protein, it shows the standard Gibbs energies of the reaction to form the nonionized protein from the basis species and of the ionization reaction of the protein (if \samp{H+} is in the basis), then the standard Gibbs energy/RT of the reaction to form the (possibly ionized) protein per residue. The per-residue values of \samp{logQstar} and \samp{Astar/RT} are also shown for the first protein. Equilibrium calculations are then performed, only if more than one protein is specified. This calculation applies the Boltzmann distribution to the calculation of the equilibrium degrees of formation of the residue equivalents of the proteins, then converts them to activities of proteins taking account of \code{loga.protein} and protein length. If the \code{protein} argument is numeric (indicating rownumbers in \code{thermo()$protein}), the values of \samp{Astar/RT} are compared with the output of \code{\link{affinity}}, and those of the equilibrium degrees of formation of the residues and the chemical activities of the proteins with the output of \code{\link{diagram}}. If the values in any of these tests are are not \code{\link{all.equal}} an error is produced indicating a bug. 
 }
 
 \examples{\dontshow{reset()}
-# search by name in thermo$protein
+# search by name in thermo()$protein
 ip1 <- pinfo("LYSC_CHICK")
 ip2 <- pinfo("LYSC", "CHICK")
 # these are the same
@@ -86,7 +86,7 @@ ip4 <- pinfo("MYGPHYCA")
 stopifnot(is.na(ip4))
 
 ## example for chicken lysozyme C
-# index in thermo$protein
+# index in thermo()$protein
 ip <- pinfo("LYSC_CHICK")
 # amino acid composition
 pinfo(ip)
