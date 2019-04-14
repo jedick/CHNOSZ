@@ -15,8 +15,8 @@ test_that("info.numeric() produces expected errors and messages", {
   expect_error(info.numeric(9999), "species index 9999 not found in thermo\\$obigt")
   iargon <- info("argon", "gas")
   expect_message(info.numeric(iargon), "Cp of argon\\(gas\\) is NA; set by EOS parameters to 4.97")
-  iAlAc3 <- info("Am(Ac)3")
-  expect_message(info.numeric(iAlAc3), "V of Am\\(Ac\\)3\\(aq\\) is NA; set by EOS parameters to 110.3")
+  iMgSO4 <- info("MgSO4")
+  expect_message(info.numeric(iMgSO4), "V of MgSO4\\(aq\\) is NA; set by EOS parameters to 1.34")
 })
 
 test_that("info.approx() produces expected messages", {
