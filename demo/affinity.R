@@ -1,6 +1,7 @@
 ## affinities of metabolic reactions
 ## after Amend and Shock, 2001, Fig. 7
-##  Amend, J. P. and Shock, E. L. (2001) Energetics of overall metabolic reactions of thermophilic and hyperthermophilic Archaea and Bacteria. \emph{FEMS Microbiol. Rev.} \bold{25}, 175--243. \url{https://doi.org/10.1016/S0168-6445(00)00062-0}
+##  Amend, J. P. and Shock, E. L. (2001) Energetics of overall metabolic reactions of thermophilic and hyperthermophilic Archaea and Bacteria.
+##  FEMS Microbiol. Rev. 25, 175--243. https://doi.org/10.1016/S0168-6445(00)00062-0
 # use aq state for all basis species (including O2)
 basis(c("CO2", "H2", "NH3", "O2", "H2S", "H+"), "aq")
 # we're going to make H2O
@@ -44,7 +45,8 @@ par(opar)
 
 ## amino acid synthesis at low and high temperatures
 ## after Amend and Shock, 1998
-##  Amend, J. P. and Shock, E. L. (1998) Energetics of amino acid synthesis in hydrothermal ecosystems. \emph{Science} \bold{281}, 1659--1662. \url{https://doi.org/10.1126/science.281.5383.1659}
+##  Amend, J. P. and Shock, E. L. (1998) Energetics of amino acid synthesis in hydrothermal ecosystems.
+##  Science 281, 1659--1662. https://doi.org/10.1126/science.281.5383.1659
 # select the basis species and species of interest
 # and set their activities, first for the 18 degree C case
 basis(c("H2O", "CO2", "NH4+", "H2", "H+", "H2S"),

@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.1-20 (2019-04-14)
+CHANGES IN CHNOSZ 1.3.1-21 (2019-04-15)
 ---------------------------------------
 
 - Add thermo/stoich.csv.xz (loaded as thermo()$stoich), containing a
@@ -28,6 +28,8 @@ CHANGES IN CHNOSZ 1.3.1-20 (2019-04-14)
 - Move transuranic actinide complexes to optional data (SLOP98), as
   entropies of the elements at 298.15 K are not available to check the
   self-consistency of the GHS values for the complexes.
+
+- Add demo/contour.R for gold solubility contours on logfO2-pH diagram.
 
 CHANGES IN CHNOSZ 1.3.1 (2019-03-02)
 ------------------------------------

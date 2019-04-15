@@ -29,7 +29,7 @@ examples <- function(save.png=FALSE) {
 
 demos <- function(which=c("sources", "protein.equil", "affinity", "NaCl", "density", 
   "ORP", "revisit", "findit", "ionize", "buffer", "protbuff", "yeastgfp", "glycinate",
-  "mosaic", "copper", "solubility", "gold", "wjd", "bugstab", "Shh", "saturation",
+  "mosaic", "copper", "solubility", "gold", "contour", "wjd", "bugstab", "Shh", "saturation",
   "adenine", "DEW", "lambda", "TCA", "go-IU", "bison", "AkDi"), save.png=FALSE) {
   # run one or more demos from CHNOSZ with ask=FALSE, and return the value of the last one
   for(i in 1:length(which)) {

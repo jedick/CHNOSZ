@@ -16,8 +16,9 @@
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
     "protbuff", "yeastgfp", "glycinate", "mosaic", "copper",
-    "solubility", "gold", "wjd", "bugstab", "Shh", "saturation",
-    "adenine", "DEW", "lambda", "TCA", "go-IU", "bison", "AkDi"),
+    "solubility", "gold", "contour", "wjd", "bugstab", "Shh",
+    "saturation", "adenine", "DEW", "lambda", "TCA", "go-IU",
+    "bison", "AkDi"),
     save.png=FALSE)
 }
 
@@ -47,6 +48,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{copper} \tab Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001) \cr
     \code{solubility} \tab Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
     \code{gold} \tab Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009) \cr
+    \code{contour} \tab Gold solubility contours on log fO2 - pH diagram (Williams-Jones et al., 2009) \cr
     \code{wjd} \tab \eqn{G}{G} minimization: prebiological atmospheres (Dayhoff et al., 1964) and cell periphery of yeast \cr
     \code{dehydration} \tab \logK of dehydration reactions; SVG file contains tooltips and links \cr
     \code{bugstab} \tab Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
