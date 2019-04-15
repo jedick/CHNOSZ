@@ -13,6 +13,7 @@ yeastgfp        Subcellular locations: log fO2 - log aH2O and log a - log fO2 di
 glycinate       Metal-glycinate complexes
 mosaic          Eh-pH diagram for iron oxides, sulfides and carbonate with two sets of changing basis species
 copper          Another example of mosaic(): complexation of copper with glycine species
+arsenic         Another example of mosaic(): Eh-pH diagram for the system As-O-H-S
 solubility      Solubility of calcite and CO2(gas) as a function of pH
 gold            Solubility of gold
 contour         Gold solubility contours on log fO2 - pH diagram

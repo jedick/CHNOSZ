@@ -79,59 +79,6 @@ mtitle(c("Dawsonite - aqueous species", "After Zimmer et al., 2016 Fig. 2"), cex
 # doi:10.1016/j.cageo.2016.02.013
 
 ###########
-### plot 3: Eh-pH diagram for As-O-H-S
-###########
-basis(c("As", "H2O", "H2S", "H+", "e-"))
-basis(c("H2S"), c(-3))
-As_aq <- c("H3AsO4", "H2AsO4-", "HAsO4-2", "AsO4-3", "H3AsO3", "H2AsO3-", "HAsO3-2", "AsO3-3")
-AsS_aq <- c("AsS(OH)HS-", "As3S4(HS)2-")
-As_cr <- "As"
-AsS_cr <- c("realgar,alpha", "realgar,beta", "orpiment", "orpiment,amorphous")
-FeAs_cr <- c("arsenopyrite", "scorodite", "ferric arsenate,amorphous")
-#species(c(As_aq, AsS_aq, As_cr, AsS_cr, FeAs_cr))
-species(c(As_aq, AsS_aq, As_cr, AsS_cr))
-species(c(As_aq, AsS_aq), -5)
-## a simple diagram, but using only H2S at all pH
-#a <- affinity(pH=c(0, 14), Eh=c(-1, 1.5))
-#diagram(a)
-# the S basis species depends on pH
-bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
-# calculate affinties of formation reactions using the speciated S basis species
-res <- 300
-# the default has blend = TRUE, unlike LZ11's diagram where
-# it appears the S-basis species are switched in an on/off fashion
-m <- mosaic(bases, pH=c(0, 14, res), Eh=c(-0.8, 0.8, res))
-# adjust colors and names
-fill <- rev(heat.colors(nrow(species())))
-fill[11:15] <- "darkgrey"
-m$A.species$species$name <- gsub(",alpha", "", m$A.species$species$name)
-diagram(m$A.species, fill=fill)
-dprop <- describe.property(c("T", "P"), c(25, 1))
-legend("bottomleft", legend=dprop, bty="n")
-t1 <- quote("As-O-H-S, "~list(Sigma*S==10^-3~M, Sigma*As==10^-5~M))
-t2 <- "After Lu and Zhu, 2011 Fig. 2b"
-# doi:10.1007/s12665-010-0652-x
-mtitle(as.expression(c(t1, t2)), cex=0.95)
-
-###########
-### plot 4: aqueous Al species
-###########
-basis(c("Al+3", "F-", "H+", "O2", "H2O"))
-AlOH <- c("Al(OH)4-", "Al(OH)3", "Al(OH)2+", "AlOH+2")
-Al <- "Al+3"
-AlF <- c("AlF+2", "AlF2+", "AlF3", "AlF4-")
-AlOHF <- c("Al(OH)2F2-", "Al(OH)2F", "AlOHF2")
-species(c(AlOH, Al, AlF, AlOHF), "aq")
-res <- 300
-a <- affinity(pH=c(0.5, 6.5, res), `F-`=c(-2, -9, res), T=200)
-diagram(a, fill=rev(cm.colors(nrow(species()))))
-dprop <- describe.property(c("T", "P"), c(200, "Psat"))
-legend("topright", legend=dprop, bty="n")
-mtitle(c("Aqueous aluminum species",
-         "After Tagirov and Schott, 2001 Fig. 4d"), cex=0.95)
-# doi:10.1016/S0016-7037(01)00705-0
-
-###########
 ### clean up: restore thermodynamic database to default
 ###########
 reset()

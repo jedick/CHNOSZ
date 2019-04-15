@@ -264,6 +264,22 @@ water.lines(d, lwd=2)
 text(3, 22, describe.basis(thermo()$basis[2:3,], digits=2, oneline=TRUE))
 text(3, 21, describe.property(c("T", "P"), c(25, 1), oneline=TRUE))
 
+## aqueous Al species, after Tagirov and Schott, 2001
+# this uses a HCL palette for the fill colors
+basis(c("Al+3", "F-", "H+", "O2", "H2O"))
+AlOH <- c("Al(OH)4-", "Al(OH)3", "Al(OH)2+", "AlOH+2")
+Al <- "Al+3"
+AlF <- c("AlF+2", "AlF2+", "AlF3", "AlF4-")
+AlOHF <- c("Al(OH)2F2-", "Al(OH)2F", "AlOHF2")
+species(c(AlOH, Al, AlF, AlOHF), "aq")
+res <- 300
+a <- affinity(pH = c(0.5, 6.5, res), `F-` = c(-2, -9, res), T = 200)
+diagram(a, fill = "pastel")
+dprop <- describe.property(c("T", "P"), c(200, "Psat"))
+legend("topright", legend = dprop, bty = "n")
+mtitle(c("Aqueous aluminum species",
+         "After Tagirov and Schott, 2001 Fig. 4d"), cex = 0.95)
+
 ## Temperature-Pressure: kayanite-sillimanite-andalusite
 # cf. Fig. 49 of Helgeson et al., 1978
 # this is a system of one component (Al2SiO5), however:
@@ -300,6 +316,9 @@ stopifnot(species()$name[d$predominant[99, 101]]=="sillimanite")
   LaRowe, D. E. and Helgeson, H. C. (2007) Quantifying the energetics of metabolic reactions in diverse biogeochemical systems: electron flow and ATP synthesis. \emph{Geobiology} \bold{5}, 153--168. \url{https://doi.org/10.1111/j.1472-4669.2007.00099.x}
 
   Majzlan, J., Navrotsky, A., McClesky, R. B. and Alpers, C. N. (2006) Thermodynamic properties and crystal structure refinement of ferricopiapite, coquimbite, rhomboclase, and Fe\s{2}(SO\s{4})\s{3}(H\s{2}O)\s{5}. \emph{Eur. J. Mineral.} \bold{18}, 175--186. \url{https://doi.org/10.1127/0935-1221/2006/0018-0175}
+
+  Tagirov, B. and Schott, J. (2001) Aluminum speciation in crustal fluids revisited. \emph{Geochim. Cosmochim. Acta} \bold{65}, 3965--3992. \url{https://doi.org/10.1016/S0016-7037(01)00705-0}
+
 }
 
 \concept{Main workflow}

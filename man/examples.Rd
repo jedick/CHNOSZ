@@ -16,8 +16,8 @@
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
     "protbuff", "yeastgfp", "glycinate", "mosaic", "copper",
-    "solubility", "gold", "contour", "wjd", "bugstab", "Shh",
-    "saturation", "adenine", "DEW", "lambda", "TCA", "go-IU",
+    "arsenic", "solubility", "gold", "contour", "wjd", "bugstab",
+    "Shh", "saturation", "adenine", "DEW", "lambda", "TCA", "go-IU",
     "bison", "AkDi"),
     save.png=FALSE)
 }
@@ -46,6 +46,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{glycinate} \tab Metal-glycinate complexes (Shock and Koretsky, 1995; Azadi et al., 2019) \cr
     \code{mosaic} \tab Eh-pH diagram with two sets of changing basis species (Garrels and Christ, 1965) \cr
     \code{copper} \tab Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001) \cr
+    \code{arsenic} \tab Another example of \code{\link{mosaic}}: Eh-pH diagram for the system As-O-H-S (Lu and Zhu, 2011) \cr
     \code{solubility} \tab Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
     \code{gold} \tab Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009) \cr
     \code{contour} \tab Gold solubility contours on log fO2 - pH diagram (Williams-Jones et al., 2009) \cr
@@ -120,6 +121,8 @@ Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibri
 Johnson, J. W., Oelkers, E. H. and Helgeson, H. C. (1992) SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000\degC. \emph{Comp. Geosci.} \bold{18}, 899--947. \url{https://doi.org/10.1016/0098-3004(92)90029-Q}
 
 Lowe, A. R., Cox, J. S. and Tremaine, P. R. (2017) Thermodynamics of aqueous adenine: Standard partial molar volumes and heat capacities of adenine, adeninium chloride, and sodium adeninate from \emph{T} = 278.15 K to 393.15 K. \emph{J. Chem. Thermodyn.} \bold{112}, 129--145. \url{https://doi.org/10.1016/j.jct.2017.04.005}
+
+Lu, P. and Zhu, C. (2011) Arsenic Eh--pH diagrams at 25\degC and 1 bar. \emph{Environ. Earth Sci.} \bold{62}, 1673--1683. \url{https://doi.org/10.1007/s12665-010-0652-x}
   
 Manning, C. E., Shock, E. L. and Sverjensky, D. A. (2013) The chemistry of carbon in aqueous fluids at crustal and upper-mantle conditions: Experimental and theoretical constraints. \emph{Rev. Mineral. Geochem.} \bold{75}, 109--148. \url{https://doi.org/10.2138/rmg.2013.75.5}
 
