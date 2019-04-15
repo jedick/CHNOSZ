@@ -48,6 +48,8 @@
     \item \code{rubisco.csv} UniProt IDs for Rubisco, ranges of optimal growth temperature of organisms, domain and name of organisms, and URL of reference for growth temperature, from Dick, 2014. See the vignette \code{anintro.Rmd} for an example that uses this file.
     \item \code{bluered.txt} Blue - light grey - red color palette, computed using \CRANpkg{colorspace}\code{::diverge_hcl(1000,} \code{c = 100, l = c(50, 90), power = 1)}. This is used by \code{\link{ZC.col}}.
     \item \code{AD03_Fig1?.csv} Experimental data points digitized from Figure 1 of Akinfiev and Diamond, 2003, used in \code{\link{demos}("AkDi")}.
+    \item \code{TKSS14_Fig2.csv} Experimental data points digitized from Figure 2 of Tutolo et al., 2014, used in \code{\link{demos}("go-IU")}.
+    \item \code{Mer75_Table4.csv} Values of log(aK+/aH+) and log(aNa+/aH+) from Table 4 of Merino, 1975, used in \code{\link{demos}("go-IU")}.
   }
 
   Files in \code{fasta} contain protein sequences:
@@ -151,6 +153,8 @@ Hnědkovský, L. and Wood, R. H. (1997) Apparent molar heat capacities of aqueou
 
 Joint Genome Institute (2007) Bison Pool Environmental Genome. Protein sequence files downloaded from IMG/M (\url{http://img.jgi.doe.gov/cgi-bin/m/main.cgi?section=FindGenomes&page=findGenomes})
 
+Merino, E. (1975) Diagenesis in teriary sandstones from Kettleman North Dome, California. II. Interstitial solutions: distribution of aqueous species at 100&deg;C and chemical relation to diagenetic mineralogy. \emph{Geochim. Cosmochim. Acta} \bold{39}, 1629--1645. \url{https://doi.org/10.1016/0016-7037(75)90085-X}
+
 Privalov, P. L. and Makhatadze, G. I. (1990) Heat capacity of proteins. II. Partial molar heat capacity of the unfolded polypeptide chain of proteins: Protein unfolding effects. \emph{J. Mol. Biol.} \bold{213}, 385--391. \url{https://doi.org/10.1016/S0022-2836(05)80198-6}
 
 Richard, L. and Helgeson, H. C. (1998) Calculation of the thermodynamic properties at elevated temperatures and pressures of saturated and aromatic high molecular weight solid and liquid hydrocarbons in kerogen, bitumen, petroleum, and other organic matter of biogeochemical interest. \emph{Geochim. Cosmochim. Acta} \bold{62}, 3591--3636. \url{https://doi.org/10.1016/S0016-7037(97)00345-1}
@@ -170,6 +174,8 @@ Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H.
 Shock, E. L. and Schulte, M. D. (1998) Organic synthesis during fluid mixing in hydrothermal systems. \emph{J. Geophys. Res.} \bold{103}, 28513--28527. \url{https://doi.org/10.1029/98JE02142}
 
 Tai, S. L., Boer, V. M., Daran-Lapujade, P., Walsh, M. C., de Winde, J. H., Daran, J.-M. and Pronk, J. T. (2005) Two-dimensional transcriptome analysis in chemostat cultures: Combinatorial effects of oxygen availability and macronutrient limitation in \emph{Saccharomyces cerevisiae}. \emph{J. Biol. Chem.} \bold{280}, 437--447. \url{https://doi.org/10.1074/jbc.M410573200}
+
+Tutolo, B. M., Kong, X.-Z., Seyfried, W. E., Jr. and Saar, M. O. (2014) Internal consistency in aqueous geochemical data revisited: Applications to the aluminum system. \emph{Geochim. Cosmochim. Acta} \bold{133}, 216--234. \url{https://doi.org/10.1016/j.gca.2014.02.036}
 
 YeastGFP project. Yeast GFP Fusion Localization Database, http://yeastgfp.ucsf.edu; Current location: \url{http://yeastgfp.yeastgenome.org}
 }

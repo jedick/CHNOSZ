@@ -16,7 +16,7 @@ copper          Another example of mosaic(): complexation of copper with glycine
 arsenic         Another example of mosaic(): Eh-pH diagram for the system As-O-H-S
 solubility      Solubility of calcite and CO2(gas) as a function of pH
 gold            Solubility of gold
-contour         Gold solubility contours on log fO2 - pH diagram
+contour         Gold solubility contours on a log fO2 - pH diagram
 wjd             Gibbs energy minimization: prebiological atmospheres and cell periphery of yeast
 dehydration     log K of dehydration reactions; SVG file contains tooltips and links
 bugstab         Formation potential of microbial proteins in colorectal cancer
@@ -26,7 +26,7 @@ adenine         HKF parameters regressed from heat capacity and volume of aqueou
 DEW             Deep Earth Water (DEW) model for high pressures
 lambda          Thermodynamic properties of lambda transition in quartz
 TCA             Standard Gibbs energies of steps of the citric acid cycle
-go-IU           Diagrams using thermodynamic data in the SUPCRTBL compilation
+go-IU           Reactions involving Al-bearing minerals
 carboxylase     Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase
 bison           Average oxidation state of carbon in proteins for phyla at Bison Pool
 AkDi            Henry's constant of dissolved gases

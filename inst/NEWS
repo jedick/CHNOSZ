@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.1-24 (2019-04-15)
+CHANGES IN CHNOSZ 1.3.1-25 (2019-04-15)
 ---------------------------------------
 
 - Add thermo/stoich.csv.xz (loaded as thermo()$stoich), containing a
@@ -39,6 +39,8 @@ CHANGES IN CHNOSZ 1.3.1-24 (2019-04-15)
   thermo.axis() after diagram() to overlay a grid.
 
 - Add demo/arsenic.R (Eh-pH diagram after Lu and Zhu, 2011).
+
+- demo/go-IU.R: add plots from Tutolo et al., 2014.
 
 CHANGES IN CHNOSZ 1.3.1 (2019-03-02)
 ------------------------------------

@@ -49,7 +49,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{arsenic} \tab Another example of \code{\link{mosaic}}: Eh-pH diagram for the system As-O-H-S (Lu and Zhu, 2011) \cr
     \code{solubility} \tab Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
     \code{gold} \tab Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009) \cr
-    \code{contour} \tab Gold solubility contours on log fO2 - pH diagram (Williams-Jones et al., 2009) \cr
+    \code{contour} \tab Gold solubility contours on a log fO2 - pH diagram (Williams-Jones et al., 2009) \cr
     \code{wjd} \tab \eqn{G}{G} minimization: prebiological atmospheres (Dayhoff et al., 1964) and cell periphery of yeast \cr
     \code{dehydration} \tab \logK of dehydration reactions; SVG file contains tooltips and links \cr
     \code{bugstab} \tab Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
@@ -59,7 +59,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{DEW} \tab Deep Earth Water (DEW) model for high pressures (Sverjensky et al., 2014a and 2014b) \cr
     \code{lambda} \tab Effects of lambda transition on thermodynamic properties of quartz (Berman, 1988) \cr
     \code{TCA} \tab Standard Gibbs energies of the tricarboxylic (citric) acid cycle (Canovas and Shock, 2016) \cr
-    \code{go-IU} \tab Diagrams using thermodynamic data in the SUPCRTBL compilation (Zimmer et al., 2016) \cr
+    \code{go-IU} \tab Reactions involving Al-bearing minerals (Zimmer et al., 2016; Tutolo et al., 2014) \cr
     \code{carboxylase} \tab Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase \cr
     \code{bison} \tab Average oxidation state of carbon in proteins for phyla at Bison Pool (Dick and Shock, 2013) \cr
     \code{AkDi} \tab Henry's constant of dissolved gases (Akinfiev and Diamond, 2003) \cr
@@ -141,6 +141,8 @@ Sverjensky, D. A., Harrison, B. and Azzolini, D. (2014a) Water in the deep Earth
 Sverjensky, D. A., Hemley, J. J. and D'Angelo, W. M. (1991) Thermodynamic assessment of hydrothermal alkali feldspar-mica-aluminosilicate equilibria. \emph{Geochim. Cosmochim. Acta} \bold{55}, 989-1004. \url{https://doi.org/10.1016/0016-7037(91)90157-Z}
 
 Sverjensky, D. A., Stagno, V. and Huang, F. (2014b) Important role for organic carbon in subduction-zone fluids in the deep carbon cycle. \emph{Nat. Geosci.} \bold{7}, 909--913. \url{https://doi.org/10.1038/ngeo2291}
+
+Tutolo, B. M., Kong, X.-Z., Seyfried, W. E., Jr. and Saar, M. O. (2014) Internal consistency in aqueous geochemical data revisited: Applications to the aluminum system. \emph{Geochim. Cosmochim. Acta} \bold{133}, 216--234. \url{https://doi.org/10.1016/j.gca.2014.02.036}
 
 Williams-Jones, A. E., Bowell, R. J. and Migdisov, A. A. (2009) Gold in solution. \emph{Elements} \bold{5}, 281--287. \url{https://doi.org/10.2113/gselements.5.5.281}
 
