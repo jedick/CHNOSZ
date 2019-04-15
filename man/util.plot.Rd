@@ -20,9 +20,9 @@
     mar = NULL, lwd = par("lwd"), side = c(1,2,3,4), 
     mgp = c(1.7, 0.3, 0), cex.axis = par("cex"), col = par("col"),
     yline = NULL, axs = "i", do.box = TRUE, las = 1,
-    xline = NULL, ...)
+    xline = NULL, grid = "", col.grid = "gray", ...)
   thermo.axis(lab = NULL, side = 1:4, line = 1.5, cex = par("cex"),
-    lwd = par("lwd"), col = par("col"))
+    lwd = par("lwd"), col = par("col"), grid = "", col.grid = "gray")
   label.plot(x, xfrac = 0.05, yfrac = 0.95, paren = FALSE,
     italic = FALSE, ...)
   usrfig()
@@ -51,6 +51,8 @@
   \item{do.box}{logical, draw a box around the plot?}
   \item{las}{numeric, style for axis labels}
   \item{xline}{numeric, margin line on which to plot \eqn{x}{x}-axis name}
+  \item{grid}{character, type of grid (\samp{major}, \samp{minor}, or \samp{both})}
+  \item{col.grid}{character, color of the grid lines}
   \item{...}{further arguments passed to \code{par} or \code{mtext}}
   \item{lab}{character, axis label}
   \item{line}{numeric, margin line on which to place axis label or plot title}
@@ -74,6 +76,9 @@
 Plot parameters (see \code{\link{par}}) including \code{cex}, \code{mar}, \code{lwd}, \code{mgp} and \code{axs} can be given, as well as a numeric vector in \code{side} identifying which sides of the plot receive tick marks.
 \code{yline}, if present, denotes the margin line (default \code{\link{par}('mgp')[1]}) where the y-axis name is plotted.
 \code{thermo.axis} is the function that actually adds the axes, including inward-pointing major and minor tick marks (often used for thermodynamic property diagrams).
+
+Use \code{grid} to add a grid to the plot, corresponding to either the major ticks (solid lines), minor ticks (dashed lines), or both.
+The grid can be made by adding \code{grid} argument to \code{\link{diagram}}, or by calling \code{thermo.axis} after \code{diagram} (see example).
 
 \code{water.lines} plots lines representing the oxidation and reduction stability limits of water on Eh/pe/\logfO2/\logfH2 vs pH/\T/\P diagrams.
 The x- and y-variables and their ranges are taken from \code{eout}.
@@ -102,6 +107,24 @@ This function is intended to generate colors for distinguishing average oxidatio
 
 \seealso{
 \code{\link{diagram}} uses \code{thermo.plot.new} to set up a new plot, unless the argument \code{tplot} is set to FALSE in \code{diagram}.
+}
+
+\examples{
+basis(c("H2S", "H2O", "H+", "e-"))
+species(c("HS-", "H2S", "HSO4-", "SO4-2"))
+a <- affinity(pH = c(0, 12), Eh = c(-1, 1), T = 200)
+opar <- par(mfrow=c(2, 2))
+diagram(a, grid = "both")
+title(main = 'diagram(a, grid = "both")')
+diagram(a, grid = "major")
+title(main = 'diagram(a, grid = "major")')
+diagram(a, grid = "minor")
+title(main = 'diagram(a, grid = "minor")')
+diagram(a, fill = "set3")
+thermo.axis(grid = "major", col.grid = "slategray")
+title(main = 'thermo.axis(grid = "major")')
+par(thermo()$opar)
+par(opar)
 }
 
 \concept{Utility functions}

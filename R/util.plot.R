@@ -3,7 +3,7 @@
 
 thermo.plot.new <- function(xlim,ylim,xlab,ylab,cex=par('cex'),mar=NULL,lwd=par('lwd'),side=c(1,2,3,4),
   mgp=c(1.7,0.3,0),cex.axis=par('cex'),col=par('col'),yline=NULL,axs='i',do.box=TRUE,
-  las=1,xline=NULL, ...) {
+  las=1,xline=NULL, grid = "", col.grid = "gray", ...) {
   # start a new plot with some customized settings
   thermo <- get("thermo", CHNOSZ)
   # 20120523 store the old par in thermo$opar
@@ -31,8 +31,8 @@ thermo.plot.new <- function(xlim,ylim,xlab,ylab,cex=par('cex'),mar=NULL,lwd=par(
   if(is.null(yline)) yline <- mgp[1]
   thermo.axis(ylab,side=2,line=yline,cex=cex.axis,lwd=NULL)
   # (optional) tick marks
-  if(1 %in% side) thermo.axis(NULL,side=1,lwd=lwd)
-  if(2 %in% side) thermo.axis(NULL,side=2,lwd=lwd)
+  if(1 %in% side) thermo.axis(NULL,side=1,lwd=lwd, grid = grid, col.grid = col.grid)
+  if(2 %in% side) thermo.axis(NULL,side=2,lwd=lwd, grid = grid, col.grid = col.grid)
   if(3 %in% side) thermo.axis(NULL,side=3,lwd=lwd)
   if(4 %in% side) thermo.axis(NULL,side=4,lwd=lwd)
 }
@@ -198,13 +198,19 @@ ZC.col <- function(z) {
 #   with some default style settings (rotation of numeric labels)
 # With the default arguments (no labels specified), it plots only the axis lines and tick marks
 #   (used by diagram() for overplotting the axis on diagrams filled with colors).
-thermo.axis <- function(lab=NULL,side=1:4,line=1.5,cex=par('cex'),lwd=par('lwd'),col=par('col')) {
+thermo.axis <- function(lab=NULL,side=1:4,line=1.5,cex=par('cex'),lwd=par('lwd'),col=par('col'), grid = "", col.grid="gray") {
   if(!is.null(lwd)) {
-    ## plot major tick marks and numeric labels
     for(thisside in side) {
+
+      ## get the positions of major tick marks and make grid lines
+      at <- axis(thisside,labels=FALSE,tick=TRUE) 
+      if(grid %in% c("major", "both") & thisside==1) abline(v = at, col=col.grid)
+      if(grid %in% c("major", "both") & thisside==2) abline(h = at, col=col.grid)
+      ## plot major tick marks and numeric labels
       do.label <- TRUE
       if(missing(side) | (missing(cex) & thisside %in% c(3,4))) do.label <- FALSE
       at <- axis(thisside,labels=do.label,tick=TRUE,lwd=lwd,col=col,col.axis=col) 
+
       ## plot minor tick marks
       # the distance between major tick marks
       da <- abs(diff(at[1:2]))
@@ -242,6 +248,9 @@ thermo.axis <- function(lab=NULL,side=1:4,line=1.5,cex=par('cex'),lwd=par('lwd')
       daxt <- (axt - myusr[1])/di
       daxt <- (daxt-round(daxt))*di
       at <- at + daxt
+      ## get the positions of major tick marks and make grid lines
+      if(grid %in% c("minor", "both") & thisside==1) abline(v = at, col=col.grid, lty = 3)
+      if(grid %in% c("minor", "both") & thisside==2) abline(h = at, col=col.grid, lty = 3)
       tcl <- par('tcl') * 0.5
       axis(thisside,labels=FALSE,tick=TRUE,lwd=lwd,col=col,col.axis=col,at=at,tcl=tcl)
     }
