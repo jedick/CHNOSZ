@@ -5,17 +5,64 @@
 # 20110516 use grand summary of solid phases, handle data blocks
 #   with blank rows, add progress messages, get activity of water
 # 20110805 add mineral saturation states and speciation summaries
+# 20190415 add detection of version 7 or 8
 
 eqdata <- function(file, species, property="log act", outfile=TRUE) {
 
-  # the available properties for different types of data:
-  # solid phases, aqueous species, mineral saturation states, speciation summary
-  props <- list(
-    solid = c("product", "log moles", "moles", "grams", "volume, cc"),
-    aqueous = c("species", "moles", "grams", "conc", "log conc", "log g", "log act"),
-    mineral = c("affinity, kcal"),
-    speciation = c("molal conc", "per cent")
-  )
+  # first read the entire file
+  lines <- readLines(file)
+  cat(paste("eqdata: read", length(lines), "lines from", file, "\n"))
+  # detect version 7 or 8
+  # grep for "ersion" to match "version" or "Version"
+  vline <- lines[grep("ersion", lines)[1]]
+  version <- strsplit(vline, "ersion ")[[1]][2]
+  v <- substr(version, 1, 1)
+  if(!v %in% c("7", "8")) stop("EQ3/6 version", version, "is unsupported")
+
+  if(v=="7") {
+    # the available properties for different types of data:
+    # solid phases, aqueous species, mineral saturation states, speciation summary
+    props <- list(
+      solid = c("product", "log moles", "moles", "grams", "volume, cc"),
+      aqueous = c("species", "moles", "grams", "conc", "log conc", "log g", "log act"),
+      mineral = c("affinity, kcal"),
+      speciation = c("molal conc", "per cent")
+    )
+    # header lines that begin the result block for this data type
+    headers <- list(
+      # summary of solid product phases
+      #solid = " product                    log moles        moles",
+      # grand summary of solid phases
+      solid = "      phase/end-member       log moles        moles",
+      aqueous = "   species                moles        grams",
+      mineral = "   mineral        affinity, kcal    state",
+      speciation = paste("aqueous species accounting for 99% or more of",species)
+    )
+    # lines that let us know the data block has ended
+    enders <- list(
+      solid = "--- mineral saturation state summary ---",
+      aqueous = "--- major aqueous species contributing to mass balances ---",
+      mineral = "--- summary of gas species ---",
+      speciation = "- - - - - - - - - - - - - - - - - - - - - - -"
+    )
+  }
+
+  # This code does not completely support version 8.
+  # TODO: add headers for solid, mineral, and speciation blocks
+  # FIXME: getziT() does not work
+  if(v=="8") {
+    props <- list(
+      aqueous = c("Species", "Molality", "Log Molality", "Log Gamma", "Log Activity")
+    )
+    headers <- list(
+      aqueous = "    Species                  Molality"
+    )
+    enders <- list(
+      aqueous = "Species with molalities less than"
+    )
+    # change the default property="log act" to "Log Activity"
+    if(property=="log act") property <- "Log Activity"
+  }
 
   ## process the 'property' argument to
   ## figure out the data type for the requested property
@@ -38,24 +85,7 @@ eqdata <- function(file, species, property="log act", outfile=TRUE) {
     if(length(species) > 1) 
       stop("speciation data can only be had for a single basis species")
   }
-  # header lines that begin the result block for this data type
-  headers <- list(
-    # summary of solid product phases
-    #solid = " product                    log moles        moles",
-    # grand summary of solid phases
-    solid = "      phase/end-member       log moles        moles",
-    aqueous = "   species                moles        grams",
-    mineral = "   mineral        affinity, kcal    state",
-    speciation = paste("aqueous species accounting for 99% or more of",species)
-  )
   header <- headers[[itype]]
-  # lines that let us know the data block has ended
-  enders <- list(
-    solid = "--- mineral saturation state summary ---",
-    aqueous = "--- major aqueous species contributing to mass balances ---",
-    mineral = "--- summary of gas species ---",
-    speciation = "- - - - - - - - - - - - - - - - - - - - - - -"
-  )
   ender <- enders[[itype]]
   ## done processing 'property' argument
 
@@ -151,9 +181,6 @@ eqdata <- function(file, species, property="log act", outfile=TRUE) {
   }
 
   # put it all together
-  # first read the entire file
-  lines <- readLines(file)
-  cat(paste("eqdata: read", length(lines), "lines from", file, "\n"))
   # get the line numbers where the data blocks start
   # without fixed=TRUE this fails for e.g. zn+2 !!
   ihead <- grep(header, lines, fixed=TRUE)

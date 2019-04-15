@@ -259,6 +259,8 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
     vars[[iH]] <- "pH"
     vals[[iH]] <- -args$vals[[iH]]
   }
+  # use the variable names for the vals list 20190415
+  names(vals) <- vars
 
   # content of return value depends on buffer request
   if(return.buffer) return(c(tb, list(vars=vars, vals=vals)))

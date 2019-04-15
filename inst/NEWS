@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.1-21 (2019-04-15)
+CHANGES IN CHNOSZ 1.3.1-22 (2019-04-15)
 ---------------------------------------
 
 - Add thermo/stoich.csv.xz (loaded as thermo()$stoich), containing a
@@ -30,6 +30,9 @@ CHANGES IN CHNOSZ 1.3.1-21 (2019-04-15)
   self-consistency of the GHS values for the complexes.
 
 - Add demo/contour.R for gold solubility contours on logfO2-pH diagram.
+
+- In the output of affinity(), the list of 'vals' (the values of the
+  input variables) now has names corresponding to the variables.
 
 CHANGES IN CHNOSZ 1.3.1 (2019-03-02)
 ------------------------------------
