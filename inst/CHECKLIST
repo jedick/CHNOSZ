@@ -33,7 +33,7 @@ release checklist for CHNOSZ
 - vignettes/obigt.bib: check correct year for CHNOSZ reference
 
 - documentation links: after installation, run doc/mklinks.sh
-  and insert the modified anintro.html in the package
+  and put the modified anintro.html and obigt.html in the package
 
 - backwards compatibility: build and check the package with the
   *minimum* R version (from the DESCRIPTION file)

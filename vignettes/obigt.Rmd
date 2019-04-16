@@ -250,7 +250,7 @@ cat('Data for these amino acids and related species were present in earlier vers
 
 ### `r setfile("AS04.csv")`
 ```{r AS04, results="asis", echo=FALSE}
-cat('This file has data for aqueous SiO<sub>2</sub> from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>. Use <span style="color:red">`add.obigt("AS04")`</span> to load the data; see [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.\n\n')
+cat('This file has data for aqueous SiO<sub>2</sub> from @AS04 and a modified HSiO<sub>3</sub><sup>-</sup> to be consistent with the SiO<sub>2</sub> here. This file also has H<sub>4</sub>SiO<sub>4</sub> from an earlier publication [@Ste01] that is roughly consistent with SiO<sub>2</sub> here (see <span style="color:red">`?add.obigt`</span>). Use <span style="color:red">`add.obigt("AS04")`</span> to load the data; see  [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html) for an example.\n\n')
 ```
 
 ```{r optreflist, results="asis", echo=FALSE}

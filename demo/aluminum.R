@@ -89,12 +89,18 @@ plot(dat, type = "p", xlim = c(3.5, 1.5), ylim = c(-2, 14), xlab = "1000/T(K)", 
 # plot line: default database
 invTK <- seq(3.5, 1.6, -0.02)
 T <- 1000/invTK - 273.15
-sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "H4SiO4"), c(-1, -2, -5, 2, 2), T = T)
+sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2", "H2O"), c(-1, -2, -5, 2, 2, 4), T = T)
 pK <- -sres$out$logK
 lines(invTK, pK, lwd = 1.5)
+# plot line: default database with AS04 SiO2
+add.obigt("AS04")
+sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2", "H2O"), c(-1, -2, -5, 2, 2, 4), T = T)
+pK <- -sres$out$logK
+lines(invTK, pK, col = "red", lty = 2)
+reset()
 # plot line: SUPCRT92
 add.obigt("SUPCRT92")
-sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "H4SiO4"), c(-1, -2, -5, 2, 2), T = T)
+sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2", "H2O"), c(-1, -2, -5, 2, 2, 4), T = T)
 pK <- -sres$out$logK
 lines(invTK, pK, col = "blue", lty = 2)
 # add title and legend
@@ -102,8 +108,8 @@ par(xpd = NA)
 title(main = describe.reaction(sres$reaction), cex.main = 1.1)
 par(xpd = FALSE)
 legend("topright", c("Kaolinite solubility", "After Tutolo et al., 2014 Fig. 2"), bty = "n")
-legend("bottomleft", lty = c(0, 2, 1), pch = c(1, NA, NA), lwd = c(1, 1, 1.5), col = c("black", "blue", "black"),
-       legend = c("Tutolo et al., 2014", "SUPCRT92", "CHNOSZ"), bty = "n", cex = 0.9)
+legend("bottomleft", lty = c(0, 2, 1, 2), pch = c(1, NA, NA, NA), lwd = c(1, 1, 1.5, 1), col = c("black", "blue", "black", "red"),
+       legend = c("Tutolo et al., 2014", "SUPCRT92", "CHNOSZ", 'add.obigt("AS04")'), bty = "n", cex = 0.9)
 reset()
 
 ###########

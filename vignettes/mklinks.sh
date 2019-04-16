@@ -37,7 +37,7 @@ sed -i '120,$s/<code>equilibrate()<\/code>/<code><a href="..\/html\/equilibrate.
 sed -i '120,$s/<code>diagram()<\/code>/<code><a href="..\/html\/diagram.html" style="background-image:none;">diagram()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>basis()<\/code>/<code><a href="..\/html\/basis.html" style="background-image:none;">basis()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>species()<\/code>/<code><a href="..\/html\/species.html" style="background-image:none;">species()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>reset()<\/code>/<code><a href="..\/html\/thermo.html" style="background-image:none;">reset()<\/a><\/code>/g' anintro.html
+sed -i '120,$s/<code>reset()<\/code>/<code><a href="..\/html\/reset.html" style="background-image:none;">reset()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>describe.reaction()<\/code>/<code><a href="..\/html\/util.expression.html" style="background-image:none;">describe.reaction()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>swap.basis()<\/code>/<code><a href="..\/html\/swap.basis.html" style="background-image:none;">swap.basis()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>water.lines()<\/code>/<code><a href="..\/html\/util.plot.html" style="background-image:none;">water.lines()<\/a><\/code>/g' anintro.html
@@ -45,6 +45,7 @@ sed -i '120,$s/<code>ratlab()<\/code>/<code><a href="..\/html\/util.expression.h
 sed -i '120,$s/<code>mosaic()<\/code>/<code><a href="..\/html\/mosaic.html" style="background-image:none;">mosaic()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>convert()<\/code>/<code><a href="..\/html\/util.units.html" style="background-image:none;">convert()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>mod.buffer()<\/code>/<code><a href="..\/html\/buffer.html" style="background-image:none;">mod.buffer()<\/a><\/code>/g' anintro.html
+sed -i '120,$s/<code>reset\$/<code><a href="..\/html\/thermo.html" style="background-image:none;">reset<\/a>\$/g' anintro.html
 sed -i '120,$s/<code>solubility()<\/code>/<code><a href="..\/html\/solubility.html" style="background-image:none;">solubility()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>ZC.col()<\/code>/<code><a href="..\/html\/util.plot.html" style="background-image:none;">ZC.col()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>aminoacids(\&quot;\&quot;)<\/code>/<code><a href="..\/html\/util.seq.html" style="background-image:none;">aminoacids(\&quot;\&quot;)<\/a><\/code>/g' anintro.html
@@ -95,3 +96,8 @@ sed -i '120,$s/seq()/<a href="..\/..\/base\/html\/seq.html" style="background-im
 sed -i '120,$s/substitute()/<a href="..\/..\/base\/html\/substitute.html" style="background-image:none;">substitute()<\/a>/g' anintro.html
 sed -i '120,$s/for()/<a href="..\/..\/base\/html\/Control.html" style="background-image:none;">for()<\/a>/g' anintro.html
 sed -i '120,$s/browseURL()/<a href="..\/..\/utils\/html\/browseURL.html" style="background-image:none;">browseURL()<\/a>/g' anintro.html
+
+# add links to obigt.Rmd
+sed -i '120,$s/<code>add.obigt()<\/code>/<code><a href="..\/html\/add.obigt.html" style="color:red;">add.obigt()<\/a><\/code>/g' obigt.html
+sed -i '120,$s/<code>reset()<\/code>/<code><a href="..\/html\/reset.html" style="color:red;">reset()<\/a><\/code>/g' obigt.html
+sed -i 's/<code>?add.obigt<\/code>/<code><a href="..\/html\/add.obigt.html" style="color:red;">?add.obigt<\/a><\/code>/g' obigt.html
