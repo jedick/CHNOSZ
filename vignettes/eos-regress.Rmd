@@ -18,7 +18,7 @@ output:
 vignette: >
   %\VignetteIndexEntry{Regressing thermodynamic data}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 bibliography: vig.bib
 link-citations: yes
 csl: elementa.csl
