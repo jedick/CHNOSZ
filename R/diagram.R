@@ -629,7 +629,13 @@ diagram <- function(
           else linesout <- contour.lines(predominant, xlim.calc, ylim.calc, lty=lty, col=col, lwd=lwd)
         }
         # re-draw the tick marks and axis lines in case the fill obscured them
-        if(tplot & !identical(fill, "transparent")) thermo.axis()
+        has.color <- FALSE
+        if(!identical(unique(fill), "transparent")) has.color <- TRUE
+        if(any(is.na(zs)) & !identical(fill.NA, "transparent")) has.color <- TRUE
+        if(tplot & !add & has.color) {
+          thermo.axis()
+          box()
+        }
       } # done with the 2D plot!
       out2D <- list(namesx=pn$namesx, namesy=pn$namesy)
     } # end if(nd==2)
@@ -661,7 +667,7 @@ strip <- function(affinity, ispecies=NULL, col=NULL, ns=NULL,
   plot.xlim <- c(xlim[1]-xpad,xlim[2]+xpad)
   ymax <- nstrip+0.3
   thermo.plot.new(xlim=plot.xlim,ylim=c(ymin,ymax),xlab=xlab,ylab="",
-      side=c(1,3),mar=par('mar'),do.box=FALSE)
+      side=c(1,3),mar=par('mar'),plot.box=FALSE)
   if(!is.null(xticks)) {
     # mark the positions of the sites on the x-axis
     for(i in 1:5) lines(rep(xticks[i],2),c(ymin,ymin+0.1),lwd=6,col=col[i])

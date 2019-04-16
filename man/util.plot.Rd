@@ -19,10 +19,11 @@
   thermo.plot.new(xlim, ylim, xlab, ylab, cex = par("cex"),
     mar = NULL, lwd = par("lwd"), side = c(1,2,3,4), 
     mgp = c(1.7, 0.3, 0), cex.axis = par("cex"), col = par("col"),
-    yline = NULL, axs = "i", do.box = TRUE, las = 1,
+    yline = NULL, axs = "i", plot.box = TRUE, las = 1,
     xline = NULL, grid = "", col.grid = "gray", ...)
   thermo.axis(lab = NULL, side = 1:4, line = 1.5, cex = par("cex"),
-    lwd = par("lwd"), col = par("col"), grid = "", col.grid = "gray")
+    lwd = par("lwd"), col = par("col"), grid = "", col.grid = "gray",
+    plot.line = FALSE)
   label.plot(x, xfrac = 0.05, yfrac = 0.95, paren = FALSE,
     italic = FALSE, ...)
   usrfig()
@@ -48,11 +49,12 @@
   \item{col}{character, line color}
   \item{yline}{numeric, margin line on which to plot \eqn{y}{y}-axis name}
   \item{axs}{character, setting for axis limit calculation}
-  \item{do.box}{logical, draw a box around the plot?}
+  \item{plot.box}{logical, draw a box around the plot?}
   \item{las}{numeric, style for axis labels}
   \item{xline}{numeric, margin line on which to plot \eqn{x}{x}-axis name}
   \item{grid}{character, type of grid (\samp{major}, \samp{minor}, or \samp{both})}
   \item{col.grid}{character, color of the grid lines}
+  \item{plot.line}{logical, draw axis lines?}
   \item{...}{further arguments passed to \code{par} or \code{mtext}}
   \item{lab}{character, axis label}
   \item{line}{numeric, margin line on which to place axis label or plot title}

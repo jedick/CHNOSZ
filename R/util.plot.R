@@ -2,7 +2,7 @@
 # Functions to create and modify plots
 
 thermo.plot.new <- function(xlim,ylim,xlab,ylab,cex=par('cex'),mar=NULL,lwd=par('lwd'),side=c(1,2,3,4),
-  mgp=c(1.7,0.3,0),cex.axis=par('cex'),col=par('col'),yline=NULL,axs='i',do.box=TRUE,
+  mgp=c(1.7,0.3,0),cex.axis=par('cex'),col=par('col'),yline=NULL,axs='i',plot.box=TRUE,
   las=1,xline=NULL, grid = "", col.grid = "gray", ...) {
   # start a new plot with some customized settings
   thermo <- get("thermo", CHNOSZ)
@@ -24,17 +24,17 @@ thermo.plot.new <- function(xlim,ylim,xlab,ylab,cex=par('cex'),mar=NULL,lwd=par(
   par(mar=mar,mgp=mgp,tcl=0.3,las=las,xaxs=axs,yaxs=axs,cex=cex,lwd=lwd,col=col,fg=col, ...)
   plot.new()
   plot.window(xlim=xlim,ylim=ylim)
-  if(do.box) box()
+  if(plot.box) box()
   # labels
   if(is.null(xline)) xline <- mgp[1]
   thermo.axis(xlab,side=1,line=xline,cex=cex.axis,lwd=NULL)
   if(is.null(yline)) yline <- mgp[1]
   thermo.axis(ylab,side=2,line=yline,cex=cex.axis,lwd=NULL)
   # (optional) tick marks
-  if(1 %in% side) thermo.axis(NULL,side=1,lwd=lwd, grid = grid, col.grid = col.grid)
-  if(2 %in% side) thermo.axis(NULL,side=2,lwd=lwd, grid = grid, col.grid = col.grid)
-  if(3 %in% side) thermo.axis(NULL,side=3,lwd=lwd)
-  if(4 %in% side) thermo.axis(NULL,side=4,lwd=lwd)
+  if(1 %in% side) thermo.axis(NULL,side=1,lwd=lwd, grid = grid, col.grid = col.grid, plot.line = !plot.box)
+  if(2 %in% side) thermo.axis(NULL,side=2,lwd=lwd, grid = grid, col.grid = col.grid, plot.line = !plot.box)
+  if(3 %in% side) thermo.axis(NULL,side=3,lwd=lwd, plot.line = !plot.box)
+  if(4 %in% side) thermo.axis(NULL,side=4,lwd=lwd, plot.line = !plot.box)
 }
 
 label.plot <- function(x, xfrac=0.05, yfrac=0.95, paren=FALSE, italic=FALSE, ...) {
@@ -198,18 +198,24 @@ ZC.col <- function(z) {
 #   with some default style settings (rotation of numeric labels)
 # With the default arguments (no labels specified), it plots only the axis lines and tick marks
 #   (used by diagram() for overplotting the axis on diagrams filled with colors).
-thermo.axis <- function(lab=NULL,side=1:4,line=1.5,cex=par('cex'),lwd=par('lwd'),col=par('col'), grid = "", col.grid="gray") {
+thermo.axis <- function(lab=NULL,side=1:4,line=1.5,cex=par('cex'),lwd=par('lwd'),col=par('col'), grid = "", col.grid="gray", plot.line=FALSE) {
   if(!is.null(lwd)) {
     for(thisside in side) {
 
       ## get the positions of major tick marks and make grid lines
-      at <- axis(thisside,labels=FALSE,tick=TRUE) 
+      at <- axis(thisside,labels=FALSE,tick=FALSE) 
       if(grid %in% c("major", "both") & thisside==1) abline(v = at, col=col.grid)
       if(grid %in% c("major", "both") & thisside==2) abline(h = at, col=col.grid)
       ## plot major tick marks and numeric labels
       do.label <- TRUE
       if(missing(side) | (missing(cex) & thisside %in% c(3,4))) do.label <- FALSE
-      at <- axis(thisside,labels=do.label,tick=TRUE,lwd=lwd,col=col,col.axis=col) 
+      # col and col.ticks: plot the tick marks but no line (we make it with box() in thermo.plot.new()) 20190416
+      # mat: don't plot ticks at the plot limits 20190416
+      if(thisside %in% c(1, 3)) pat <- par("usr")[1:2]
+      if(thisside %in% c(2, 4)) pat <- par("usr")[3:4]
+      mat <- setdiff(at, pat)
+      if(plot.line) axis(thisside, at=mat, labels=do.label, tick=TRUE, lwd=lwd, col.axis=col, col=col)
+      else axis(thisside, at=mat, labels=do.label, tick=TRUE, lwd=lwd, col.axis=col, col = NA, col.ticks = col)
 
       ## plot minor tick marks
       # the distance between major tick marks
@@ -252,7 +258,9 @@ thermo.axis <- function(lab=NULL,side=1:4,line=1.5,cex=par('cex'),lwd=par('lwd')
       if(grid %in% c("minor", "both") & thisside==1) abline(v = at, col=col.grid, lty = 3)
       if(grid %in% c("minor", "both") & thisside==2) abline(h = at, col=col.grid, lty = 3)
       tcl <- par('tcl') * 0.5
-      axis(thisside,labels=FALSE,tick=TRUE,lwd=lwd,col=col,col.axis=col,at=at,tcl=tcl)
+      at <- setdiff(at, pat)
+      if(plot.line) axis(thisside,labels=FALSE,tick=TRUE,lwd=lwd,col.axis=col,at=at,tcl=tcl, col = col)
+      else axis(thisside,labels=FALSE,tick=TRUE,lwd=lwd,col.axis=col,at=at,tcl=tcl, col = NA, col.ticks = col)
     }
   }
   # rotate labels on side axes

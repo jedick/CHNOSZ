@@ -59,9 +59,10 @@ reset()
 # (averages for each temperature in a single run)
 T <- c(100.1, 100.1, 150.1, 100.1, 150.1, 99.8, 99.8, 200.7, 99.8, 50.1, 75.1, 100.3, 150.1)
 logK <- -c(14.825, 14.735, 13.625, 14.79, 13.665, 14.725, 14.1775, 12.74, 14.4925, 16.8625, 15.61, 14.51, 13.455)
-plot(T, logK, xlim = c(25, 250), ylim = c(-18, -10), xlab = axis.label("T"), ylab = axis.label("logK"))
-T <- 0:250
+thermo.plot.new(c(25, 250), c(-18, -10), axis.label("T"), axis.label("logK"))
+points(T, logK)
 # calculation 1: CHNOSZ default
+T <- 0:250
 species <- c("dawsonite", "H2O", "Al(OH)4-", "HCO3-", "Na+", "H+")
 coeffs <- c(-1, -2, 1, 1, 1, 1)
 Daw1 <- subcrt(species, coeffs, T = T)
@@ -85,7 +86,8 @@ reset()
 ###########
 # After Tutolo et al., 2014, Fig. 2 (doi:10.1016/j.gca.2014.02.036)
 dat <- read.csv(system.file("extdata/cpetc/TKSS14_Fig2.csv", package = "CHNOSZ"))
-plot(dat, type = "p", xlim = c(3.5, 1.5), ylim = c(-2, 14), xlab = "1000/T(K)", ylab = "pK")
+thermo.plot.new(c(3.5, 1.5), c(-2, 14), quote(1000 / italic(T)*"(K)"), "pK")
+points(dat)
 # plot line: default database
 invTK <- seq(3.5, 1.6, -0.02)
 T <- 1000/invTK - 273.15
@@ -105,7 +107,7 @@ pK <- -sres$out$logK
 lines(invTK, pK, col = "blue", lty = 2)
 # add title and legend
 par(xpd = NA)
-title(main = describe.reaction(sres$reaction), cex.main = 1.1)
+title(main = describe.reaction(sres$reaction), cex.main = 1)
 par(xpd = FALSE)
 legend("topright", c("Kaolinite solubility", "After Tutolo et al., 2014 Fig. 2"), bty = "n")
 legend("bottomleft", lty = c(0, 2, 1, 2), pch = c(1, NA, NA, NA), lwd = c(1, 1, 1.5, 1), col = c("black", "blue", "black", "red"),
