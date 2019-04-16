@@ -1,6 +1,5 @@
-# CHNOSZ/demo/go-IU.R 
+# CHNOSZ/demo/aluminum.R 
 # 20171018 comparisons with calculations of SUPCRTBL
-#   (BL = Bloomington campus of Indiana University)
 # 20190415 add diagrams from Tutolo et al., 2014
 
 ## set up plotting area

@@ -274,7 +274,7 @@ AlOHF <- c("Al(OH)2F2-", "Al(OH)2F", "AlOHF2")
 species(c(AlOH, Al, AlF, AlOHF), "aq")
 res <- 300
 a <- affinity(pH = c(0.5, 6.5, res), `F-` = c(-2, -9, res), T = 200)
-diagram(a, fill = "pastel")
+diagram(a, fill = "terrain")
 dprop <- describe.property(c("T", "P"), c(200, "Psat"))
 legend("topright", legend = dprop, bty = "n")
 mtitle(c("Aqueous aluminum species",

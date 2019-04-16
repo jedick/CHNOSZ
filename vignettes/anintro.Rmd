@@ -1975,7 +1975,7 @@ A comparison of log*K* of metal-glycinate complexes using the updated data is in
 
 <span style="color:red">`add.obigt("AS04")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
 These data are included to help transition to the "higher solubility of quartz paradigm" [@WJ17], but are not included in the default database in order to maintain compatibility with existing data for minerals that are linked to the older aqueous `r sio2` data.
-See [<span style="color:blue">`demo(go-IU)`</span>](../demo) for an example.
+See [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.
 
 <span style="color:red">`add.obigt("DEW")`</span> -- These are aqueous species, with modified parameters, that are intended for use with the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model [@SHA14].
 You should also run <span style="color:red">`water("DEW")`</span> to activate the equations in the model; then, they will be used by <span style="color:green">`subcrt()`</span> and <span style="color:green">`affinity()`</span>.

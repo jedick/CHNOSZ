@@ -17,7 +17,7 @@
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
     "protbuff", "yeastgfp", "glycinate", "mosaic", "copper",
     "arsenic", "solubility", "gold", "contour", "wjd", "bugstab",
-    "Shh", "saturation", "adenine", "DEW", "lambda", "TCA", "go-IU",
+    "Shh", "saturation", "adenine", "DEW", "lambda", "TCA", "aluminum",
     "bison", "AkDi"),
     save.png=FALSE)
 }
@@ -59,7 +59,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{DEW} \tab Deep Earth Water (DEW) model for high pressures (Sverjensky et al., 2014a and 2014b) \cr
     \code{lambda} \tab Effects of lambda transition on thermodynamic properties of quartz (Berman, 1988) \cr
     \code{TCA} \tab Standard Gibbs energies of the tricarboxylic (citric) acid cycle (Canovas and Shock, 2016) \cr
-    \code{go-IU} \tab Reactions involving Al-bearing minerals (Zimmer et al., 2016; Tutolo et al., 2014) \cr
+    \code{aluminum} \tab Reactions involving Al-bearing minerals (Zimmer et al., 2016; Tutolo et al., 2014) \cr
     \code{carboxylase} \tab Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase \cr
     \code{bison} \tab Average oxidation state of carbon in proteins for phyla at Bison Pool (Dick and Shock, 2013) \cr
     \code{AkDi} \tab Henry's constant of dissolved gases (Akinfiev and Diamond, 2003) \cr
