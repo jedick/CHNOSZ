@@ -66,7 +66,7 @@ species <- c("dawsonite", "H2O", "Al(OH)4-", "HCO3-", "Na+", "H+")
 coeffs <- c(-1, -2, 1, 1, 1, 1)
 Daw1 <- subcrt(species, coeffs, T = T)
 # calculation 2: dawsonite with Cp = 0
-mod.obigt("dawsonite", Cp = 0)
+mod.obigt("dawsonite", Cp = 0, a = 0, b = 0, c = 0)
 Daw2 <- subcrt(species, coeffs, T = T)
 ## plot the calculated logKs
 lines(T, Daw1$out$logK, lwd = 1.5)
@@ -76,7 +76,7 @@ points(seq(25, 250, 25), c(-17.829, -16.523, -15.402, -14.425, -13.568, -12.815,
 ## add legend and title
 title(main = describe.reaction(Daw1$reaction), cex.main = 0.95)
 legend("bottomright", lty = c(0, 0, 1, 2), pch = c(1, 4, NA, NA), col = c("black", "red", "black", "red"), lwd = c(1, 1, 1.5, 1),
-       bty = "n", cex = 0.9, legend = c("Ben\u00e9z\u00e9th et al., 2007", "SUPCRTBL", "CHNOSZ", 'mod.obigt("dawsonite", Cp = 0)'))
+       bty = "n", cex = 0.9, legend = c("Ben\u00e9z\u00e9th et al., 2007", "SUPCRTBL", "CHNOSZ", 'Cp(dawsonite) = 0'))
 legend("topleft", c("Dawsonite solubility", "After Zimmer et al., 2016 Fig. 2"), bty = "n")
 reset()
 
