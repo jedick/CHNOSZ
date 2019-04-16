@@ -33,8 +33,8 @@ options(digits = 6)
 
 ```{r HTML, include=FALSE}
 ## some frequently used HTML expressions
-V0 <- "<i>V</i>°"
-Cp0 <- "<i>C<sub>P</sub></i>°"
+V0 <- "<i>V</i>&deg;"
+Cp0 <- "<i>C<sub>P</sub></i>&deg;"
 c1 <- "<i>c</i><sub>1</sub>"
 c2 <- "<i>c</i><sub>2</sub>"
 a1 <- "<i>a</i><sub>1</sub>"
@@ -45,7 +45,7 @@ h4sio4 <- "H<sub>4</sub>SiO<sub>4</sub>"
 sio2 <- "SiO<sub>2</sub>"
 h2o <- "H<sub>2</sub>O"
 ch4 <- "CH<sub>4</sub>"
-wPrTr <- "ω<sub><i>P<sub>r</sub></i>,<i>T<sub>r</sub></i></sub>"
+wPrTr <- "&omega;<sub><i>P<sub>r</sub></i>,<i>T<sub>r</sub></i></sub>"
 ```
 
 ```{r setup, include=FALSE}
@@ -87,23 +87,23 @@ Different terms in these equations give the "non-solvation" and "solvation" cont
 
 The equations were originally described by @HKF81; for `r Cp0` the equation is
 
-> `r Cp0` = `r c1` + `r c2` / (*T* - Θ)<sup>2</sup> + ω*TX*
+> `r Cp0` = `r c1` + `r c2` / (*T* - &theta;)<sup>2</sup> + &omega;*TX*
 
-Here, `r c1` and `r c2` are the non-solvation parameters, and ω is the solvation parameter.
-Θ is equal to 228 K, and *X* is one of the "Born functions" that relates the solvation process to the dielectric properties of water.
-For neutral species, all of the parameters, including the "effective" value of ω, are constant.
-However, **for charged species, ω has non-zero derivatives at *T* > 100 °C, increasing with temperature**, that depend on the charge and ionic radius.
+Here, `r c1` and `r c2` are the non-solvation parameters, and &omega; is the solvation parameter.
+&theta; is equal to 228 K, and *X* is one of the "Born functions" that relates the solvation process to the dielectric properties of water.
+For neutral species, all of the parameters, including the "effective" value of &omega;, are constant.
+However, **for charged species, &omega; has non-zero derivatives at *T* > 100 &deg;C, increasing with temperature**, that depend on the charge and ionic radius.
 Revisions by @TH88 and @SOJSH92 refined the equations to improve their high-*T* and *P* behavior.
 
 # A note on the algorithms
 
 The regression functions are essentially a wrapper around the <span style="color:green">`water()`</span>-related functions in CHNOSZ and `lm()` in R.
 The former provide values of the Born functions.
-Accordingly, numerical values for all of the *variables* in the equations (e.g. 1/(*T* - Θ)<sup>2</sup> and *TX*) can be calculated at each experimental *T* and *P*.
+Accordingly, numerical values for all of the *variables* in the equations (e.g. 1/(*T* - &theta;)<sup>2</sup> and *TX*) can be calculated at each experimental *T* and *P*.
 
 Applying a linear model (`lm`), the *coefficients* in the model can be obtained.
-In this case, they correspond to the HKF parameters, e.g. `c1` (the intercept), `c2` and ω.
-The coefficients **in this model** are constants, restricing application of the model to neutral (uncharged) species, for which the high-temperature derivatives of ω are 0.
+In this case, they correspond to the HKF parameters, e.g. `c1` (the intercept), `c2` and &omega;.
+The coefficients **in this model** are constants, restricing application of the model to neutral (uncharged) species, for which the high-temperature derivatives of &omega; are 0.
 Further below, a procedure is described to iteratively solve the equations for charged species.
 
 # An example for neutral species
@@ -132,7 +132,7 @@ Cpdat$P <- convert(Cpdat$P, "bar")
 
 Next, we specify the terms in the HKF equations and perform the regression using <span style="color:green">`EOSregress()`</span>.
 In the second call to <span style="color:green">`EOSregress()`</span> below, only for *T* < 600 K are included in the regression.
-The coefficients here correspond to `r c1`, `r c2` and ω in the HKF equations.
+The coefficients here correspond to `r c1`, `r c2` and &omega; in the HKF equations.
 
 ```{r EOSregress}
 var <- c("invTTheta2", "TXBorn")
@@ -170,7 +170,7 @@ EOScoeffs("CH4", "Cp")
 
 ## Setting the value of omega
 
-Given both high-temperature volumetric and calorimetric data for neutral species, the effective value of ω is most reliably regressed from the latter [@SSW01].
+Given both high-temperature volumetric and calorimetric data for neutral species, the effective value of &omega; is most reliably regressed from the latter [@SSW01].
 Let's regress volumetric data using a value of omega taken from the heat capacity regression.
 First, read the data from @HWM96.
 
@@ -182,19 +182,19 @@ Vdat$P <- convert(Vdat$P, "bar")
 
 Compressibilities of species (measured or estimated) are implied by the full set of HKF volumetric parameters (`r a1`, `r a2`, `r a3`, `r a4`).
 In this example we model volumes at nearly constant *P*.
-Therefore, we can use a simpler equation for `r V0` written in terms of the "isobaric fit parameters" (Tanger and Helgeson 1988, p. 35) σ and ξ, together with the solvation contribution that depends on the *Q* Born function:
+Therefore, we can use a simpler equation for `r V0` written in terms of the "isobaric fit parameters" (Tanger and Helgeson 1988, p. 35) &sigma; and &xi;, together with the solvation contribution that depends on the *Q* Born function:
 
-> `r V0` = σ + ξ / (*T* - Θ) - ω*Q*
+> `r V0` = &sigma; + &xi; / (*T* - &theta;) - &omega;*Q*
 
 ```{marginfigure}
 <span style="color:green">`EOSvar()`</span> actually returns the negative of *Q*, so the omega symbol here carries no negative sign.
 ```
 
-Now we calculate the *Q* Born function using <span style="color:green">`EOSvar()`</span> and multiply by ω (from the heat capacity regression) to get the solvation volume at each experimental temperature and pressure.
+Now we calculate the *Q* Born function using <span style="color:green">`EOSvar()`</span> and multiply by &omega; (from the heat capacity regression) to get the solvation volume at each experimental temperature and pressure.
 Subtract the solvation volume from the experimental volumes and create a new data frame holding the calculated "non-solvation" volume.
 
 ```{marginfigure}
-Because we are dealing with volumes, the units of ω are converted according to 1 cal = 41.84 cm<sup>3</sup>∙bar.
+Because we are dealing with volumes, the units of &omega; are converted according to 1 cal = 41.84 cm<sup>3</sup> bar.
 ```
 
 ```{r Vdat_non}
@@ -228,7 +228,7 @@ EOSplot(Vdat, coefficients = Vcoeffs, add = TRUE)
 
 Finally, plot the data and regressions.
 The first plot shows all the data, and the second the low-temperature subset (*T* < 600 K).
-The solid line is the two-term fit for σ and ξ (using ω from the heat capacity regression), and the dashed line shows the volumes calculated using the parameters in the database.
+The solid line is the two-term fit for &sigma; and &xi; (using &omega; from the heat capacity regression), and the dashed line shows the volumes calculated using the parameters in the database.
 The plot legends give the parameters from the two-term fit (first plot), or from the database (second plot).
 
 ```{r Vplot, eval=FALSE}
@@ -252,10 +252,10 @@ prop.PT <- subcrt("Na+", T = T, P = P, grid = "T", convert = FALSE)$out[[1]]
 Nadat <- prop.PT[, c("T", "P", "Cp")]
 ```
 
-As noted above, ω for electrolytes is not a constant.
-What happens if we apply the constant-ω model anyway, knowing it's not applicable (especially at high temperature)?
+As noted above, &omega; for electrolytes is not a constant.
+What happens if we apply the constant-&omega; model anyway, knowing it's not applicable (especially at high temperature)?
 
-```{r Nalm, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Heat capacity of Na<sup>+</sup> (inapplicable: constant ω).", dpi=dpi, out.width=672, out.height=336, pngquant=pngquant}
+```{r Nalm, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Heat capacity of Na<sup>+</sup> (inapplicable: constant &omega;).", dpi=dpi, out.width=672, out.height=336, pngquant=pngquant}
 var <- c("invTTheta2", "TXBorn")
 Nalm <- EOSregress(Nadat, var, T.max = 600)
 EOSplot(Nadat, coefficients = Nalm$coefficients, fun.legend = NULL)
@@ -263,13 +263,13 @@ EOSplot(Nadat, add = TRUE, lty = 3)
 ```
 
 As before, the solid line is a fit to relatively low-temperature (*T* < 600 K) data, and the dotted line a fit to the entire temperature range of the data.
-The fits using constant ω are clearly not acceptable.
+The fits using constant &omega; are clearly not acceptable.
 
 There is, however, a way out.
 A different variable, `Cp_s_var`, can be used to specify the calculation of the "solvation" heat capacity in the HKF equations using the temperature- and pressure-dependent corrections for charged species.
 To use this variable, the values of `r wPrTr` (omega at the reference temperature and pressure) and *Z* (charge) must be given, in addition to *T* and *P*.
 Of course, right now we *don't know* the value of `r wPrTr`---it is the purpose of the regression to find it!
-But we can make a first guess using the value of ω found above.
+But we can make a first guess using the value of &omega; found above.
 
 ```{r Navars1}
 var1 <- c("invTTheta2", "Cp_s_var")
@@ -277,9 +277,9 @@ omega.guess <- coef(Nalm)[3]
 ```
 
 Then, we can use an iterative procedure that refines successive guesses of `r wPrTr`.
-The convergence criterion is measured by the difference in sequential regressed values of ω.
+The convergence criterion is measured by the difference in sequential regressed values of &omega;.
 
-```{r Nawhile, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Heat capacity of Na<sup>+</sup> (variable ω).", dpi=dpi, out.width=672, out.height=336, pngquant=pngquant}
+```{r Nawhile, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Heat capacity of Na<sup>+</sup> (variable &omega;).", dpi=dpi, out.width=672, out.height=336, pngquant=pngquant}
 diff.omega <- 999
 while(abs(diff.omega) > 1) {
   Nalm1 <- EOSregress(Nadat, var1, omega.PrTr = tail(omega.guess, 1), Z = 1)
@@ -297,11 +297,11 @@ The regressed values of the HKF coefficients (shown in the plot legend) are very
 ## Doing it for volume
 
 Just like above, but using synthetic `r V0` data.
-Note that the regressed value of ω has volumetric units (cm<sup>3</sup>∙bar/mol), while `omega.PrTr` is in caloric units (cal/mol).
+Note that the regressed value of &omega; has volumetric units (cm<sup>3</sup> bar/mol), while `omega.PrTr` is in caloric units (cal/mol).
 Compared to `r Cp0`, the regression of `r V0` is very finicky.
-Given a starting guess of `r wPrTr` of 1400000 cm<sup>3</sup>∙bar/mol, the iteration converges on 1394890 instead of the "true" database value of 1383230 (represented by dashed line in the plot).
+Given a starting guess of `r wPrTr` of 1400000 cm<sup>3</sup> bar/mol, the iteration converges on 1394890 instead of the "true" database value of 1383230 (represented by dashed line in the plot).
 
-```{r NaVolume, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Volume of Na<sup>+</sup> (variable ω).", results="hide", message=FALSE, echo=FALSE, dpi=dpi, out.width=672, out.height=336, pngquant=pngquant}
+```{r NaVolume, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Volume of Na<sup>+</sup> (variable &omega;).", results="hide", message=FALSE, echo=FALSE, dpi=dpi, out.width=672, out.height=336, pngquant=pngquant}
 T <- convert(seq(0, 600, 25), "K")
 P <- 1000
 prop.PT <- subcrt("Na+", T = T, P = P, grid = "T", convert = FALSE)$out[[1]]
@@ -338,7 +338,7 @@ add.obigt("AS04")
 
 The pseudo-reaction with zero properties, `r h4sio4` = `r sio2`  + 2 `r h2o`, defines the properties of the pseudospecies `r h4sio4`.
 First we go about calculating the properties of `r sio2` + 2 `r h2o`.
-We do this over a range of *T* and *P*, but include many points near 25 °C to improve the fit of the regression in that region:
+We do this over a range of *T* and *P*, but include many points near 25 &deg;C to improve the fit of the regression in that region:
 `r op <- options(warn = -1)`
 ```{r SiO2_2H2O, message=FALSE}
 s_25C <- subcrt(c("SiO2", "H2O"), c(1, 2), T = 25)$out
@@ -350,14 +350,14 @@ s_P1000 <- subcrt(c("SiO2", "H2O"), c(1, 2), T = seq(0, 1000, 100), P = 1000)$ou
 ```
 `r options(op)`
 
-Now we can start making the new species, with thermodynamic properties calculated at 25 °C:
+Now we can start making the new species, with thermodynamic properties calculated at 25 &deg;C:
 ```{r new_H4SiO4}
 mod.obigt("calc-H4SiO4", formula = "H4SiO4", ref1 = "this_vignette",
           date = today(), G = s_25C$G, H = s_25C$H, S = s_25C$S,
           Cp = s_25C$Cp, V = s_25C$V, z = 0)
 ```
 
-To prepare for the regression, combine the calculated data and convert °C to K:
+To prepare for the regression, combine the calculated data and convert &deg;C to K:
 ```{r substuff}
 substuff <- rbind(s_near25, s_lowT, s_Psat, s_P500, s_P1000)
 substuff$T <- convert(substuff$T, "K")
@@ -375,7 +375,7 @@ mod.obigt("calc-H4SiO4", c1 = Cpcoeffs[1],
 ```
 
 Let's get ready to regress `r V0` data.
-We use the strategy shown above to calculate non-solvation volume using ω from the `r Cp0` regression:
+We use the strategy shown above to calculate non-solvation volume using &omega; from the `r Cp0` regression:
 ```{r V_H4SiO4_nonsolvation}
 Vdat <- substuff[, c("T", "P", "V")]
 QBorn <- EOSvar("QBorn", T = Vdat$T, P = Vdat$P)
@@ -414,20 +414,20 @@ s2 <- subcrt(c("H4SiO4", "SiO2", "H2O"), c(-1, 1, 2))
 lines(s2$out$T, s2$out$G, lty = 2)
 abline(h = 0, lty = 3)
 legend("topright", legend = c("calc-H4SiO4 (this vignette)",
-  "H4SiO4", "(Stefánsson, 2001)"), lty = c(1, 2, NA), bty = "n")
+  "H4SiO4", "(Stef\u00e1nsson, 2001)"), lty = c(1, 2, NA), bty = "n")
 text(225, 250, describe.reaction(s1$reaction))
 ```
 
-Let's compare `H4SiO4` from Stefánsson (2001) and the `calc-H4SiO4` we just made with the calculated properties of `r sio2` + 2 `r h2o` as a function of temperature:
+Let's compare `H4SiO4` from Stef&aacute;nsson (2001) and the `calc-H4SiO4` we just made with the calculated properties of `r sio2` + 2 `r h2o` as a function of temperature:
 ```{r subcrt_H4SiO4, eval=FALSE}
 ```
 
 Ideally, the lines would be horizontal with a _y_-interecept of 0.
-However, both the `calc-H4SiO4` we made here and the `H4SiO4` from Stefánsson (2001) show deviations that increase at higher temperatures.
+However, both the `calc-H4SiO4` we made here and the `H4SiO4` from Stef&aacute;nsson (2001) show deviations that increase at higher temperatures.
 While they are not quite negligible, these deviations are comparatively small.
 For example, the almost 200 cal/mol offset in &Delta;<i>G</i>&deg; at 350 &deg;C corresponds to a difference in log<i>K</i> of only -0.07.
 
-The following example uses the `H4SiO4` from Stefánsson (2001) to make an activity diagram for the K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O system.
+The following example uses the `H4SiO4` from Stef&aacute;nsson (2001) to make an activity diagram for the K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O system.
 This is similar to diagrams found, for example, on p. 361 of [Garrels and Christ, 1965](http://www.worldcat.org/oclc/517586) and Figure 3 of [Steinmann et al., 1994](http://ccm.geoscienceworld.org/content/42/2/197), but is quantitatively a closer match to the diagram in the [User's Guide to PHREEQC](https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/html/final-75.html).
 
 ```{r activity_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, echo=TRUE, results="hide", message=FALSE, dpi=dpi, out.width="100%", cache=TRUE, fig.cap="Activity diagram for K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O.", pngquant=pngquant}
