@@ -39,9 +39,9 @@ lines(T, -r3$out$logK, col = "red", lty = 2)
 points(seq(125, 350, 25), -c(3.489, 3.217, 2.967, 2.734, 2.517, 2.314, 2.124, 1.946, 1.781, 1.628), pch = 4, col = "red")
 ## add legend and title
 title(main = describe.reaction(r1$reaction), cex.main = 1.1)
-legend("bottomright", lty = c(0, 0, 2, 1, 2), pch = c(1, 4, NA, NA, NA), lwd = c(1, 1, 1, 1.5, 1),
-       col = c("black", "red", "black", "black", "red"), bty = "n", cex = 0.9,
-       legend = c("Hemley et al., 1980", "SUPCRTBL", "SUPCRT92", "CHNOSZ", 'add.obigt("AS04")'))
+legend("bottomright", lty = c(0, 2, 0, 1, 2), pch = c(1, NA, 4, NA, NA), lwd = c(1, 1, 1, 1.5, 1),
+       col = c("black", "black", "red", "black", "red"), bty = "n", cex = 0.9,
+       legend = c("Hemley et al., 1980", "SUPCRT92", "SUPCRTBL", "CHNOSZ", 'add.obigt("AS04")'))
 legend("topleft", c("Boehmite - Kaolinite", "After Zhu and Lu, 2009 Fig. A1"), bty = "n")
 reset()
 # Helgeson et al., 1978 (HDNB78): http://www.worldcat.org/oclc/13594862
@@ -66,18 +66,21 @@ T <- 0:250
 species <- c("dawsonite", "H2O", "Al(OH)4-", "HCO3-", "Na+", "H+")
 coeffs <- c(-1, -2, 1, 1, 1, 1)
 Daw1 <- subcrt(species, coeffs, T = T)
+lines(T, Daw1$out$logK, lwd = 1.5)
 # calculation 2: dawsonite with Cp = 0
 mod.obigt("dawsonite", Cp = 0, a = 0, b = 0, c = 0)
 Daw2 <- subcrt(species, coeffs, T = T)
-## plot the calculated logKs
-lines(T, Daw1$out$logK, lwd = 1.5)
 lines(T, Daw2$out$logK, col = "red", lty = 2)
 ## add points calculated using the SUPCRTBL package
-points(seq(25, 250, 25), c(-17.829, -16.523, -15.402, -14.425, -13.568, -12.815, -12.154, -11.581, -11.094, -10.699), pch=4, col="red")
+#points(seq(25, 250, 25), c(-17.829, -16.523, -15.402, -14.425, -13.568, -12.815, -12.154, -11.581, -11.094, -10.699), pch=4, col="red")
+## 20190417: recalculated using the SUPCRTBL package (timestamp: 20190309)
+##   with a locally updated data file that includes heat capacity coefficients of dawsonite
+##   from Robie and Hemingway, 1995, with typos corrected in Tutolo et al., 2014
+points(seq(25, 250, 25), c(-17.829, -16.546, -15.485, -14.599, -13.856, -13.236, -12.724, -12.312, -11.997, -11.782), pch=4, col="red")
 ## add legend and title
 title(main = describe.reaction(Daw1$reaction), cex.main = 0.95)
-legend("bottomright", lty = c(0, 0, 1, 2), pch = c(1, 4, NA, NA), col = c("black", "red", "black", "red"), lwd = c(1, 1, 1.5, 1),
-       bty = "n", cex = 0.9, legend = c("Ben\u00e9z\u00e9th et al., 2007", "SUPCRTBL", "CHNOSZ", 'Cp(dawsonite) = 0'))
+legend("bottomright", lty = c(0, 0, 0, 1, 2), pch = c(1, 4, NA, NA, NA), col = c("black", "red", NA, "black", "red"), lwd = c(1, 1, 0, 1.5, 1),
+       bty = "n", cex = 0.9, legend = c("Ben\u00e9z\u00e9th et al., 2007", "SUPCRTBL with modified", "  data for Cp of dawsonite", "CHNOSZ", "Cp(dawsonite) = 0"))
 legend("topleft", c("Dawsonite solubility", "After Zimmer et al., 2016 Fig. 2"), bty = "n")
 reset()
 
@@ -91,27 +94,31 @@ points(dat)
 # plot line: default database
 invTK <- seq(3.5, 1.6, -0.02)
 T <- 1000/invTK - 273.15
-sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2", "H2O"), c(-1, -2, -5, 2, 2, 4), T = T)
+sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2"), c(-1, -2, -1, 2, 2), T = T)
 pK <- -sres$out$logK
 lines(invTK, pK, lwd = 1.5)
 # plot line: default database with AS04 SiO2
 add.obigt("AS04")
-sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2", "H2O"), c(-1, -2, -5, 2, 2, 4), T = T)
+sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2"), c(-1, -2, -1, 2, 2), T = T)
 pK <- -sres$out$logK
 lines(invTK, pK, col = "red", lty = 2)
 reset()
 # plot line: SUPCRT92
 add.obigt("SUPCRT92")
-sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2", "H2O"), c(-1, -2, -5, 2, 2, 4), T = T)
+sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2"), c(-1, -2, -1, 2, 2), T = T)
 pK <- -sres$out$logK
 lines(invTK, pK, col = "blue", lty = 2)
+# add points calculated using the SUPCRTBL package
+T <- seq(25, 300, 25)
+invTK <- 1000/(T + 273.15)
+points(invTK, c(12.621, 11.441, 10.383, 9.402, 8.477, 7.597, 6.756, 5.948, 5.171, 4.422, 3.703, 3.023), pch = 4, col = "red")
 # add title and legend
 par(xpd = NA)
-title(main = describe.reaction(sres$reaction), cex.main = 1)
+title(main = describe.reaction(sres$reaction), cex.main = 1.1)
 par(xpd = FALSE)
 legend("topright", c("Kaolinite solubility", "After Tutolo et al., 2014 Fig. 2"), bty = "n")
-legend("bottomleft", lty = c(0, 2, 1, 2), pch = c(1, NA, NA, NA), lwd = c(1, 1, 1.5, 1), col = c("black", "blue", "black", "red"),
-       legend = c("Tutolo et al., 2014", "SUPCRT92", "CHNOSZ", 'add.obigt("AS04")'), bty = "n", cex = 0.9)
+legend("bottomleft", lty = c(0, 2, 0, 1, 2), pch = c(1, NA, 4, NA, NA), lwd = c(1, 1, 1, 1.5, 1), col = c("black", "blue", "red", "black", "red"),
+       legend = c("Tutolo et al., 2014", "SUPCRT92", "SUPCRTBL", "CHNOSZ", 'add.obigt("AS04")'), bty = "n", cex = 0.9)
 reset()
 
 ###########
@@ -133,12 +140,17 @@ points(dat$log.aK..aH.., dat$log.aNa..aH..)
 add.obigt("SUPCRT92")
 a <- affinity("K+" = c(4, 7), "Na+" = c(6, 9), T = 100, P = 150)
 diagram(a, col = "blue", lty = 2, add = TRUE, names = NULL)
+# add SUPCRTBL calculation
+logK_BL <- 2.092
+logaK <- seq(4, 7, 0.5)
+logaNa <- logaK + logK_BL
+points(logaK, logaNa, pch = 4, col = "red")
 # add title and legend
 sres <- subcrt(c("albite", "K+", "K-feldspar", "Na+"), c(-1, -1, 1, 1))
 title(main = describe.reaction(sres$reaction), cex.main = 1.1)
 legend("topleft", c("Albite - K-feldspar", "After Tutolo et al., 2014 Fig. 5"), bty = "n", cex = 0.9)
-legend("bottomright", lty = c(0, 2, 1), pch = c(1, NA, NA), lwd = c(1, 1, 1.5), col = c("black", "blue", "black"),
-       legend = c("Merino, 1975", "SUPCRT92", "CHNOSZ"), bty = "n", cex = 0.9)
+legend("bottomright", lty = c(0, 2, 0, 1), pch = c(1, NA, 4, NA), lwd = c(1, 1, 1, 1.5), col = c("black", "blue", "red", "black"),
+       legend = c("Merino, 1975", "SUPCRT92", "SUPCRTBL", "CHNOSZ"), bty = "n", cex = 0.9)
 legend("right", describe.property(c("T", "P"), c(T, P)), bty = "n")
 reset()
 
