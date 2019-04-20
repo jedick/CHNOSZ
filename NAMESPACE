@@ -78,3 +78,5 @@ importFrom("stats", "D", "as.formula", "cor", "lm", "loess.smooth",
 importFrom("utils", "browseURL", "capture.output", "combn", "demo",
   "example", "head", "installed.packages", "read.csv", "tail",
   "write.csv", "write.table", "read.table")
+# 20190420 new R functions for HCL color palettes
+if (getRversion() >= "3.6.0") importFrom("grDevices", "hcl.pals", "hcl.colors")

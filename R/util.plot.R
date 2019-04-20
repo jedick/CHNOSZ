@@ -214,8 +214,10 @@ thermo.axis <- function(lab=NULL,side=1:4,line=1.5,cex=par('cex'),lwd=par('lwd')
       if(thisside %in% c(1, 3)) pat <- par("usr")[1:2]
       if(thisside %in% c(2, 4)) pat <- par("usr")[3:4]
       mat <- setdiff(at, pat)
-      if(plot.line) axis(thisside, at=mat, labels=do.label, tick=TRUE, lwd=lwd, col.axis=col, col=col)
-      else axis(thisside, at=mat, labels=do.label, tick=TRUE, lwd=lwd, col.axis=col, col = NA, col.ticks = col)
+      if(plot.line) axis(thisside, at=mat, labels=FALSE, tick=TRUE, lwd=lwd, col.axis=col, col=col)
+      else axis(thisside, at=mat, labels=FALSE, tick=TRUE, lwd=lwd, col.axis=col, col = NA, col.ticks = col)
+      # plot only the labels at all major tick points (including plot limits) 20190417
+      if(do.label) axis(thisside, at=at, tick=FALSE, col=col)
 
       ## plot minor tick marks
       # the distance between major tick marks

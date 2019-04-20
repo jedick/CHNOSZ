@@ -554,10 +554,10 @@ diagram <- function(
         # choose an HCL palette 20190411
         # matching adapted from hcl.colors()
         fx <- function(x) tolower(gsub("[-, _, \\,, (, ), \\ , \\.]", "", x))
-        p <- charmatch(fx(fill), fx(grDevices::hcl.pals()))
+        p <- charmatch(fx(fill), fx(hcl.pals()))
         if(!is.na(p)) {
           if(!p < 1L) {
-            fill <- grDevices::hcl.colors(ngroups, fill)
+            fill <- hcl.colors(ngroups, fill)
           }
         }
       }
@@ -740,4 +740,3 @@ find.tp <- function(x) {
   # return the indices
   return(id[imax, ])
 }
-

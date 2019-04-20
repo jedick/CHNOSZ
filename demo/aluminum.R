@@ -80,7 +80,7 @@ points(seq(25, 250, 25), c(-17.829, -16.546, -15.485, -14.599, -13.856, -13.236,
 ## add legend and title
 title(main = describe.reaction(Daw1$reaction), cex.main = 0.95)
 legend("bottomright", lty = c(0, 0, 0, 1, 2), pch = c(1, 4, NA, NA, NA), col = c("black", "red", NA, "black", "red"), lwd = c(1, 1, 0, 1.5, 1),
-       bty = "n", cex = 0.9, legend = c("Ben\u00e9z\u00e9th et al., 2007", "SUPCRTBL with modified", "  data for Cp of dawsonite", "CHNOSZ", "Cp(dawsonite) = 0"))
+       bty = "n", cex = 0.9, legend = c("Ben\u00e9z\u00e9th et al., 2007", "SUPCRTBL with Cp", "  coefficients for dawsonite", "CHNOSZ", "Cp(dawsonite) = 0"))
 legend("topleft", c("Dawsonite solubility", "After Zimmer et al., 2016 Fig. 2"), bty = "n")
 reset()
 
@@ -89,7 +89,7 @@ reset()
 ###########
 # After Tutolo et al., 2014, Fig. 2 (doi:10.1016/j.gca.2014.02.036)
 dat <- read.csv(system.file("extdata/cpetc/TKSS14_Fig2.csv", package = "CHNOSZ"))
-thermo.plot.new(c(3.5, 1.5), c(-2, 14), quote(1000 / italic(T)*"(K)"), "pK")
+thermo.plot.new(c(3.5, 1.5), c(-2, 14), quote(1000 / italic(T)*"(K)"), quote(p*italic(K)))
 points(dat)
 # plot line: default database
 invTK <- seq(3.5, 1.6, -0.02)
@@ -97,7 +97,7 @@ T <- 1000/invTK - 273.15
 sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2"), c(-1, -2, -1, 2, 2), T = T)
 pK <- -sres$out$logK
 lines(invTK, pK, lwd = 1.5)
-# plot line: default database with AS04 SiO2
+# plot line: SiO2 from Apps and Spycher, 2004
 add.obigt("AS04")
 sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2"), c(-1, -2, -1, 2, 2), T = T)
 pK <- -sres$out$logK
@@ -117,8 +117,8 @@ par(xpd = NA)
 title(main = describe.reaction(sres$reaction), cex.main = 1.1)
 par(xpd = FALSE)
 legend("topright", c("Kaolinite solubility", "After Tutolo et al., 2014 Fig. 2"), bty = "n")
-legend("bottomleft", lty = c(0, 2, 0, 1, 2), pch = c(1, NA, 4, NA, NA), lwd = c(1, 1, 1, 1.5, 1), col = c("black", "blue", "red", "black", "red"),
-       legend = c("Tutolo et al., 2014", "SUPCRT92", "SUPCRTBL", "CHNOSZ", 'add.obigt("AS04")'), bty = "n", cex = 0.9)
+legend("bottomleft", lty = c(0, 0, 2, 0, 1, 2), pch = c(1, NA, NA, 4, NA, NA), lwd = c(1, 1, 1, 1, 1.5, 1), col = c("black", "black", "blue", "red", "black", "red"),
+       legend = c("Various sources \u2013", "  see Tutolo et al., 2014", "SUPCRT92", "SUPCRTBL", "CHNOSZ", 'add.obigt("AS04")'), bty = "n", cex = 0.9)
 reset()
 
 ###########
@@ -132,7 +132,7 @@ species(c("albite", "K-feldspar"))
 T <- 100
 P <- 150
 a <- affinity("K+" = c(4, 7), "Na+" = c(6, 9), T = T, P = P)
-diagram(a, lwd = 1.5, xlab = ratlab("K+"), ylab = ratlab("Na+"))
+diagram(a, lwd = 1.5, xlab = ratlab("K+"), ylab = ratlab("Na+"), names = NULL)
 # plot experimental data
 dat <- read.csv(system.file("extdata/cpetc/Mer75_Table4.csv", package = "CHNOSZ"))
 points(dat$log.aK..aH.., dat$log.aNa..aH..)
@@ -151,7 +151,7 @@ title(main = describe.reaction(sres$reaction), cex.main = 1.1)
 legend("topleft", c("Albite - K-feldspar", "After Tutolo et al., 2014 Fig. 5"), bty = "n", cex = 0.9)
 legend("bottomright", lty = c(0, 2, 0, 1), pch = c(1, NA, 4, NA), lwd = c(1, 1, 1, 1.5), col = c("black", "blue", "red", "black"),
        legend = c("Merino, 1975", "SUPCRT92", "SUPCRTBL", "CHNOSZ"), bty = "n", cex = 0.9)
-legend("right", describe.property(c("T", "P"), c(T, P)), bty = "n")
+legend("left", describe.property(c("T", "P"), c(T, P)), bty = "n")
 reset()
 
 par(opar)

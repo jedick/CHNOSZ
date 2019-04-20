@@ -123,8 +123,8 @@ plot(Kit14$out$T, Kit14$out$G/1000, type = "l", ylim = c(10, 35),
 lines(DLH06$out$T, DLH06$out$G/1000, lty = 2)
 legend("topleft", c("Dick et al., 2006", "Kitadai, 2014"), lty = c(2, 1))
 title(main = "AABB = UPBB + H2O; after Figure 9 of Kitadai, 2014")
-# reset to default database
-obigt()
+# reset database *and* settings (units)
+reset()
 
 # Another use of add.obigt(): calculate Delta G of
 # H4SiO4 = SiO2 + 2H2O using different data for SiO2.

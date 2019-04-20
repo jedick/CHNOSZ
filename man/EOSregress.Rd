@@ -121,7 +121,7 @@ The vignette \emph{Regressing thermodynamic data} has more references and exampl
 \dontshow{reset()}
 ## fit experimental heat capacities of CH4
 ## using revised Helgeson-Kirkham-Flowers equations
-# read the data from Hnědkovský and Wood, 1997
+# read the data from Hnedkovsky and Wood, 1997
 f <- system.file("extdata/cpetc/Cp.CH4.HW97.csv", package="CHNOSZ")
 d <- read.csv(f)
 # have to convert J to cal and MPa to bar

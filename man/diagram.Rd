@@ -136,7 +136,7 @@ On 2-D diagrams, the fields represent the species with the highest equilibrium a
 \code{fill} determines the color of the predominance fields, \code{col} that of the boundary lines.
 The default of NULL for \code{fill} produces transparent predominance fields.
 \code{fill} can be any \code{\link{colors}}, or the word \samp{rainbow}, \samp{heat}, \samp{terrain}, \samp{topo}, or \samp{cm}, indicating a palette from \pkg{grDevices}.
-Starting with \R version 3.6.0, \code{fill} can be the name of any available HCL color palette, matched in the same way as the \code{palette} argument of \code{\link{hcl.colors}}.
+Starting with \R version 3.6.0, \code{fill} can be the name of any available HCL color palette, matched in the same way as the \code{palette} argument of \code{hcl.colors}.
 
 \code{fill.NA} gives the color for empty fields, i.e. points for which NA values are present, possibly by using \code{\link{equilibrate}} at extreme conditions (see \code{test-diagram.Rd}).
 \code{fill.NA} is also used to specify the color outside the water stability limits on Eh-pH or pe-pH diagrams, when \code{limit.water} is TRUE.

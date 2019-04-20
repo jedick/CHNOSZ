@@ -91,9 +91,11 @@ retrieve <- function(elements = NULL, ligands = NULL, state = NULL, add.charge =
       # for a chemical system, all species are included that do not contain any other elements
       ispecies <- unique(unlist(ispecies))
       ielements <- colnames(thermo()$stoich) %in% elements
-      otherstoich <- thermo()$stoich[, !ielements]
-      iother <- rowSums(otherstoich[ispecies, ] != 0) > 0
-      ispecies <- ispecies[!iother]
+      if(any(!ielements)) {
+        otherstoich <- thermo()$stoich[, !ielements]
+        iother <- rowSums(otherstoich[ispecies, ] != 0) > 0
+        ispecies <- ispecies[!iother]
+      }
     } else {
       # get species that have all the elements; the species must be present in each vector
       # Reduce() hint from https://stackoverflow.com/questions/27520310/union-of-intersecting-vectors-in-a-list-in-r

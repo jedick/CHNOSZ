@@ -105,7 +105,7 @@ chloride <- function(T, P, m_NaCl, m_KCl) {
   NaCl <- NaCl(T = T, P = P, m_tot = m_NaCl + m_KCl)
   # calculate logK of K+ + Cl- = KCl, adjusted for ionic strength
   logKadj <- subcrt(c("K+", "Cl-", "KCl"), c(-1, -1, 1), T = T, P = P, IS = NaCl$IS)$out$logK
-  # what is the molality of K+ from 0.5 mol/kg KCl, assuming total chloride from above
+  # what is the molality of K+ from 0.5 mol KCl in solution with 2 mol total Cl
   m_K <- m_KCl / (10^logKadj * NaCl$m_Cl + 1)
   list(IS = NaCl$IS, m_Cl = NaCl$m_Cl, m_K = m_K)
 }

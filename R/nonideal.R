@@ -326,9 +326,9 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
     T40 <- c(175, seq(300, 1000, 5)); lines(T40, S40(T40), col=col[11])
     T50 <- c(225, seq(300, 1000, 5)); lines(T50, S50(T50), col=col[12])
     T60 <- c(250, seq(300, 1000, 5)); lines(T60, S60(T60), col=col[13])
-    legend("topleft", pch=c(0, 1, 2, 5, 6),
+    legend("topleft", pch=c(0, 1, 2, 5, 6), bty = "n",
            legend=c("Helgeson, 1969", "Helgeson et al., 1981", "Manning et al., 2013", "spline control point", "high-P extrapolation"))
-    legend("bottomright", col=c(NA, rev(col)), lty=1,
+    legend("bottomright", col=c(NA, rev(col)), lty=1, bty = "n",
            legend=c("kbar", "60", "50", "40", "30", "20", "10", "5", "4", "3", "2", "1", "0.5", "Psat"))
     title(main=expression("Deybe-H\u00FCckel extended term ("*italic(b)[gamma]*") parameter"))
   } else if(showsplines=="P") {
@@ -370,8 +370,8 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
     P <- seq(10000, 60000, 50); lines(log10(P), bgamma(800, P), col=col[9])
     P <- seq(10000, 60000, 50); lines(log10(P), bgamma(900, P), col=col[10])
     P <- seq(10000, 60000, 50); lines(log10(P), bgamma(1000, P), col=col[11])
-    legend("topleft", col=c(NA, col), lty=1, legend=c("degrees C", 25, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000))
-    legend("bottomright", pch=1, legend="points from iso-P splines")
+    legend("topleft", col=c(NA, col), lty=1, bty = "n", legend=c("degrees C", 25, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000))
+    legend("bottomright", pch=1, bty = "n", legend="points from iso-P splines")
     title(main=expression("Deybe-H\u00FCckel extended term ("*italic(b)[gamma]*") parameter"))
   } else {
     # make T and P the same length
