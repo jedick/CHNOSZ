@@ -18,32 +18,31 @@ T <- 125:350
 thermo.plot.new(xlim = range(T), ylim = c(-3.5, -1.5), xlab = axis.label("T"), ylab = axis.label("SiO2"))
 points(xT, xlogaSiO2)
 basis(delete = TRUE)
-## first calculation: as in SUPCRT92
-add.obigt("SUPCRT92") # gets kaolinite and boehmite from HDNB78
-r1 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
-# we need exceed.Ttr = TRUE because the T limit for boehmite is 500 K (Helgeson et al., 1978)
-## second calculation: CHNOSZ default
+## first calculation: CHNOSZ default
 # kaolinite from Berman, 1988
 # boehmite from Hemingway et al., 1991
-# SiO2 from Apps and Spycher, 2004
-reset()
+r1 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
+## second calculation: minerals as in SUPCRT92
+add.obigt("SUPCRT92") # gets kaolinite and boehmite from HDNB78
+# we need exceed.Ttr = TRUE because the T limit for boehmite is 500 K (Helgeson et al., 1978)
 r2 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
-## third calculation: get SiO2(aq) from SHS89
+reset()
+## third calculation: get SiO2(aq) from Apps and Spycher, 2004
 add.obigt("AS04")
 r3 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
+reset()
 ## log activity of SiO2 is -ve logK
-lines(T, -r1$out$logK, col = "blue1", lty = 2)
-lines(T, -r2$out$logK, lwd = 1.5)
+lines(T, -r1$out$logK, lwd = 1.5)
+lines(T, -r2$out$logK, col = "blue1", lty = 2)
 lines(T, -r3$out$logK, col = "red", lty = 2)
 ## add points calculated using the SUPCRTBL package
 points(seq(125, 350, 25), -c(3.489, 3.217, 2.967, 2.734, 2.517, 2.314, 2.124, 1.946, 1.781, 1.628), pch = 4, col = "red")
 ## add legend and title
-title(main = describe.reaction(r1$reaction), cex.main = 1.1)
+title(main = describe.reaction(r2$reaction), cex.main = 1.1)
 legend("bottomright", lty = c(0, 2, 0, 1, 2), pch = c(1, NA, 4, NA, NA), lwd = c(1, 1, 1, 1.5, 1),
-       col = c("black", "black", "red", "black", "red"), bty = "n", cex = 0.9,
+       col = c("black", "blue", "red", "black", "red"), bty = "n", cex = 0.9,
        legend = c("Hemley et al., 1980", "SUPCRT92", "SUPCRTBL", "CHNOSZ", 'add.obigt("AS04")'))
 legend("topleft", c("Boehmite - Kaolinite", "After Zhu and Lu, 2009 Fig. A1"), bty = "n")
-reset()
 # Helgeson et al., 1978 (HDNB78): http://www.worldcat.org/oclc/13594862
 # Shock et al., 1989 (SHS89): doi:10.1016/0016-7037(89)90341-4
 # Berman, 1988 (Ber88): doi:10.1093/petrology/29.2.445

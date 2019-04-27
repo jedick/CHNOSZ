@@ -119,7 +119,7 @@ Abbreviations used below are: Cp (heat capacity), GHS (standard Gibbs energy, en
 
 * Data from SUPCRT92 which have been superseded by the Berman data are listed under **Optional Data** / **SUPCRT92**.
 
-* Superseded data from SLOP98 (inlucding Al, As, and Au species) are listed under **Optional Data** / **SLOP98**.
+* Superseded data from SLOP98 (including Al, As, and Au species) are listed under **Optional Data** / **SLOP98**.
 
 # Sources of data {.tabset .tabset-fade}
 

@@ -31,7 +31,7 @@ NEW FEATURES
   2014.
 
 - Add argument 'plot.box' (default TRUE) to thermo.plot.new() and
-  'plot.line' (default FALSE) to thermo.axis() to prevent unecessary
+  'plot.line' (default FALSE) to thermo.axis() to prevent unnecessary
   plotting of axis lines. thermo.axis() also avoids plotting tick
   marks at the plot limits.
 

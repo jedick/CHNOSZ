@@ -265,7 +265,6 @@ text(3, 22, describe.basis(thermo()$basis[2:3,], digits=2, oneline=TRUE))
 text(3, 21, describe.property(c("T", "P"), c(25, 1), oneline=TRUE))
 
 ## aqueous Al species, after Tagirov and Schott, 2001
-# this uses a HCL palette for the fill colors
 basis(c("Al+3", "F-", "H+", "O2", "H2O"))
 AlOH <- c("Al(OH)4-", "Al(OH)3", "Al(OH)2+", "AlOH+2")
 Al <- "Al+3"
