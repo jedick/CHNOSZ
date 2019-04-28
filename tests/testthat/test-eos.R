@@ -101,9 +101,10 @@ test_that("AkDi produces expected results", {
 
   # compare Gibbs energies at 25 degrees calculated with AkDi model to database values
   iAkDi <- add.obigt("AkDi")
-  # remove Si(OH)4 and As(OH)3 because no HKF aqueous species are available
-  iAkDi <- head(iAkDi, -2)
-  # this would produce an error if any of the corresponding gases were unavailable
+  # remove hydroxides because they aren't in the default database (except B(OH)3(aq))
+  iAkDi <- iAkDi[-grep("OH", info(iAkDi)$name)]
+  # this would produce an error if any calculations failed
+  # (e.g. because gases corresponding to any aqueous species were unavailable)
   sAkDi <- subcrt(iAkDi, T = 25)
   GAkDi <- do.call(rbind, sAkDi$out)$G
   # now get the parameters from default OBIGT

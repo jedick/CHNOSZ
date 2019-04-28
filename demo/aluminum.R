@@ -22,26 +22,32 @@ basis(delete = TRUE)
 # kaolinite from Berman, 1988
 # boehmite from Hemingway et al., 1991
 r1 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
-## second calculation: minerals as in SUPCRT92
-add.obigt("SUPCRT92") # gets kaolinite and boehmite from HDNB78
-# we need exceed.Ttr = TRUE because the T limit for boehmite is 500 K (Helgeson et al., 1978)
+## second calculation: get SiO2(aq) from Apps and Spycher, 2004
+add.obigt("AS04")
 r2 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
 reset()
-## third calculation: get SiO2(aq) from Apps and Spycher, 2004
-add.obigt("AS04")
-r3 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
+## third calculation: get Si(OH)4 from Akinfiev and Plyasunov, 2014
+add.obigt("AkDi")
+r3 <- subcrt(c("boehmite", "Si(OH)4", "H2O", "kaolinite"), c(-1, -1, 1.5, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
+reset()
+## fourth calculation: minerals as in SUPCRT92
+add.obigt("SUPCRT92") # gets kaolinite and boehmite from HDNB78
+# we need exceed.Ttr = TRUE because the T limit for boehmite is 500 K (Helgeson et al., 1978)
+r4 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
 reset()
 ## log activity of SiO2 is -ve logK
 lines(T, -r1$out$logK, lwd = 1.5)
-lines(T, -r2$out$logK, col = "blue1", lty = 2)
-lines(T, -r3$out$logK, col = "red", lty = 2)
+lines(T, -r2$out$logK, col = "red", lty = 2)
+lines(T, -r3$out$logK, col = "purple", lty = 3)
+lines(T, -r4$out$logK, col = "blue1", lty = 4)
 ## add points calculated using the SUPCRTBL package
 points(seq(125, 350, 25), -c(3.489, 3.217, 2.967, 2.734, 2.517, 2.314, 2.124, 1.946, 1.781, 1.628), pch = 4, col = "red")
 ## add legend and title
-title(main = describe.reaction(r2$reaction), cex.main = 1.1)
-legend("bottomright", lty = c(0, 2, 0, 1, 2), pch = c(1, NA, 4, NA, NA), lwd = c(1, 1, 1, 1.5, 1),
-       col = c("black", "blue", "red", "black", "red"), bty = "n", cex = 0.9,
-       legend = c("Hemley et al., 1980", "SUPCRT92", "SUPCRTBL", "CHNOSZ", 'add.obigt("AS04")'))
+title(main = describe.reaction(r4$reaction), cex.main = 1.1)
+legend("bottomright", lty = c(0, 0, 1, 2, 3, 0), pch = c(1, 4, NA, NA, NA, NA), lwd = c(1, 1, 1.5, 1, 1, 0),
+       col = c("black", "red", "black", "red", "purple", NA), bty = "n", cex = 0.9,
+       legend = c("Hemley et al., 1980", "SUPCRTBL", "CHNOSZ", 'add.obigt("AS04")', 'add.obigt("AkDi")', ""))
+legend("bottomright", lty = 4, pch = NA, lwd = 1, col = "blue", legend = 'add.obigt("SUPCRT92")', bty = "n", cex = 0.9)
 legend("topleft", c("Boehmite - Kaolinite", "After Zhu and Lu, 2009 Fig. A1"), bty = "n")
 # Helgeson et al., 1978 (HDNB78): http://www.worldcat.org/oclc/13594862
 # Shock et al., 1989 (SHS89): doi:10.1016/0016-7037(89)90341-4
@@ -102,11 +108,18 @@ sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2"), c(-1, -2, -1, 2
 pK <- -sres$out$logK
 lines(invTK, pK, col = "red", lty = 2)
 reset()
+# plot line: Si(OH)4 from Akinfiev and Plyasunov, 2014
+add.obigt("AkDi")
+sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "Si(OH)4"), c(-1, -2, -5, 2, 2), T = T)
+pK <- -sres$out$logK
+lines(invTK, pK, col = "purple", lty = 3)
+reset()
 # plot line: SUPCRT92
 add.obigt("SUPCRT92")
 sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2"), c(-1, -2, -1, 2, 2), T = T)
 pK <- -sres$out$logK
-lines(invTK, pK, col = "blue", lty = 2)
+lines(invTK, pK, col = "blue", lty = 4)
+reset()
 # add points calculated using the SUPCRTBL package
 T <- seq(25, 300, 25)
 invTK <- 1000/(T + 273.15)
@@ -116,9 +129,10 @@ par(xpd = NA)
 title(main = describe.reaction(sres$reaction), cex.main = 1.1)
 par(xpd = FALSE)
 legend("topright", c("Kaolinite solubility", "After Tutolo et al., 2014 Fig. 2"), bty = "n")
-legend("bottomleft", lty = c(0, 0, 2, 0, 1, 2), pch = c(1, NA, NA, 4, NA, NA), lwd = c(1, 1, 1, 1, 1.5, 1), col = c("black", "black", "blue", "red", "black", "red"),
-       legend = c("Various sources \u2013", "  see Tutolo et al., 2014", "SUPCRT92", "SUPCRTBL", "CHNOSZ", 'add.obigt("AS04")'), bty = "n", cex = 0.9)
-reset()
+legend("bottomleft", lty = c(0, 0, 0, 1, 2, 3, 4), pch = c(1, NA, 4, NA, NA, NA, NA),
+       lwd = c(1, 1, 1, 1.5, 1, 1, 1), col = c("black", "black", "red", "black", "red", "purple", "blue"),
+       legend = c("Various sources \u2013", "  see Tutolo et al., 2014", "SUPCRTBL", "CHNOSZ", 'add.obigt("AS04")', 'add.obigt("AkDi")', 'add.obigt("SUPCRT92")'),
+       bty = "n", cex = 0.9)
 
 ###########
 ### plot 4: albite - K-feldspar exchange
@@ -138,7 +152,7 @@ points(dat$log.aK..aH.., dat$log.aNa..aH..)
 # plot line calculated using SUPCRT92 data
 add.obigt("SUPCRT92")
 a <- affinity("K+" = c(4, 7), "Na+" = c(6, 9), T = 100, P = 150)
-diagram(a, col = "blue", lty = 2, add = TRUE, names = NULL)
+diagram(a, col = "blue", lty = 4, add = TRUE, names = NULL)
 # add SUPCRTBL calculation
 logK_BL <- 2.092
 logaK <- seq(4, 7, 0.5)
@@ -148,8 +162,9 @@ points(logaK, logaNa, pch = 4, col = "red")
 sres <- subcrt(c("albite", "K+", "K-feldspar", "Na+"), c(-1, -1, 1, 1))
 title(main = describe.reaction(sres$reaction), cex.main = 1.1)
 legend("topleft", c("Albite - K-feldspar", "After Tutolo et al., 2014 Fig. 5"), bty = "n", cex = 0.9)
-legend("bottomright", lty = c(0, 2, 0, 1), pch = c(1, NA, 4, NA), lwd = c(1, 1, 1, 1.5), col = c("black", "blue", "red", "black"),
-       legend = c("Merino, 1975", "SUPCRT92", "SUPCRTBL", "CHNOSZ"), bty = "n", cex = 0.9)
+legend("bottomright", lty = c(0, 0, 1, 0), pch = c(1, 4, NA, NA), lwd = c(1, 1, 1.5, 0), col = c("black", "red", "black", NA),
+       legend = c("Merino, 1975", "SUPCRTBL", "CHNOSZ", ""), bty = "n", cex = 0.9)
+legend("bottomright", lty = 4, pch = NA, lwd = 1, col = "blue", legend = 'add.obigt("SUPCRT92")', bty = "n", cex = 0.9)
 legend("left", describe.property(c("T", "P"), c(T, P)), bty = "n")
 reset()
 
