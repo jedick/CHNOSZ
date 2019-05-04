@@ -75,7 +75,12 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
   for(i in 1:length(bases)) {
     message("mosaic: calculating affinities of basis species group ", i, ": ", paste(bases[[i]], collapse=" "))
     species(delete = TRUE)
-    species(bases[[i]])
+    # 20190504: when equilibrating the changing basis species, use a total activity equal to the activity from the basis definition
+    act.total <- 10^basis0$logact[ibasis0[i]]
+    # for now, assume that the changing basis species react with a 1:1 stoichiometry
+    # TODO: retrieve the actual balancing coefficients
+    logact.each <- log10(act.total / length(bases[[i]]))
+    species(bases[[i]], logact.each)
     A.bases[[i]] <- suppressMessages(affinity(..., sout = sout))
   }
 
@@ -98,6 +103,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
   # calculate equilibrium mole fractions for each group of basis species
   group.fraction <- list()
   if(blend) {
+    e.out <- list()
     for(i in 1:length(A.bases)) {
       # this isn't needed (and doesn't work) if all the affinities are NA 20180925
       if(any(!sapply(A.bases[[1]]$values, is.na))) {
@@ -106,6 +112,8 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
         a.equil <- lapply(e$loga.equil, function(x) 10^x)
         a.tot <- Reduce("+", a.equil)
         group.fraction[[i]] <- lapply(a.equil, function(x) x / a.tot)
+        # include the equilibrium activities in the output of this function 20190504
+        e.out[[1]] <- e
       } else {
         group.fraction[[i]] <- A.bases[[i]]$values
       }
@@ -156,5 +164,6 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
   # for argument recall, include all arguments in output 20190120
   allargs <- c(list(bases = bases, blend = blend, mixing = mixing), list(...))
   # return the affinities for the species and basis species
-  return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases))
+  if(blend) return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases, e.out = e.out))
+  else return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases))
 }

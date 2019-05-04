@@ -20,7 +20,7 @@ Calculate chemical affinities of formation reactions of species using basis spec
 
 \details{
 
-\code{mosaic} can be used to calculate the affinities of formation of species when the relative abundances of basis species listed in \code{bases} changes over the range of conditions, due to e.g. ionization, complexation or redox reactions.
+\code{mosaic} can be used to calculate the affinities of formation of species when the relative abundances of the basis species listed in \code{bases} change over the range of conditions, due to e.g. ionization, complexation or redox reactions.
 This is a way to \dQuote{speciate the basis species}.
 For example, the speciation of sulfur (\samp{SO4-2}, \samp{HSO4-}, \samp{HS-} and \samp{H2S}) as a function of Eh and pH affects the formation affinities, and therefore relative stabilities of iron oxide and sulfide minerals.
 Chemical activity diagrams constructed by assembling sub-diagrams corresponding to the predominant basis species can described as \dQuote{mosaic diagrams}.
@@ -28,10 +28,11 @@ Chemical activity diagrams constructed by assembling sub-diagrams corresponding 
 The function calculates the affinities using all combination of basis species given as vector arguments to \code{bases} and \code{bases2}.
 The first species listed in each group should be in the current basis definition, and all the basis species in each group should be related to the first basis species there (i.e. all share the same element).
 A second, independent set of basis species can be provided in \code{bases2} (for example \samp{CO3-2}, \samp{HCO3-}, \samp{CO2}, if the first set of basis species are the sulfur-bearing ones listed above).
-The arguments in \code{...} are passed to \code{affinity} to specify the conditions.
+The arguments in \code{...} are passed to \code{affinity} to specify the variable conditions, such as temperature, pressure, and activities of other basis species.
 
-If \code{blend} is TRUE (the default), the function combines the affinities of the formation reactions in proportion to the relative abundances of the basis species at each condition.
-Additionally, if \code{mixing} is TRUE (the default), a term is included to account for the Gibbs energy of ideal mixing.
+If \code{blend} is TRUE (the default), the relative abundances of the basis species in each group are calculated using \code{\link{equilibrate}}, with the total activity taken from the corresponding basis species in the incoming \code{\link{basis}} definition.
+Then, the function calculates overall affinities of the formation reactions of each species by combining reactions written using individual basis species in proportion to the relative abundances of the basis species.
+Additionally, if \code{mixing} is TRUE (the default), a term is included to account for the Gibbs energy of ideal mixing of the basis species.
 See the second example in \code{\link{solubility}} for a numerical test of the calculations using \code{blend} and \code{mixing}.
 If \code{blend} is FALSE, the function returns the affinities calculated using the single predominant basis species in \code{bases} at each condition (in this case, the \code{mixing} argument has no effect).
 
@@ -45,7 +46,8 @@ This overcomes the prior limitation of only having two changing groups of basis 
 
 \value{
 A list containing \code{A.species} (affinities of formation of the species with changing basis species) and \code{A.bases} (affinities of formation of the basis species in terms of the first basis species), each having same structure as the list returned by \code{\link{affinity}}.
-If \code{bases2} is provided, the list also contains \code{A.bases2} (affinities of formation of the second set of basis species).
+If \code{blend} is TRUE, the output also contains \code{e.out} (the output of \code{\link{equilibrate}} for each group of basis species)
+If \code{bases2} is provided, the list also contains \code{A.bases2} (affinities of formation of the second group of basis species).
 }
 
 \seealso{

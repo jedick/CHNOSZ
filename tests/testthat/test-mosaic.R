@@ -23,7 +23,7 @@ test_that("results are consistent with affinity()", {
 
 test_that("blend=TRUE produces reasonable values", {
   # a more rigorous test than above. this was failing because loga.tot (actually, a.tot)
-  # was computed incorrectly, by sum'ing an unlist'ed list (the affinities of basis species)
+  # was computed incorrectly, by sum()ing an unlist()ed list (the affinities of basis species)
   # to produce a single value; corrected by using Reduce for addition of vectors/arrays in the list.
   # example adapted from ?mosaic
   basis(c("FeO", "SO4-2", "H2O", "H+", "e-"))

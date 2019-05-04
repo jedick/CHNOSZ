@@ -1,8 +1,13 @@
-CHANGES IN CHNOSZ 1.3.2-3 (2019-04-28)
+CHANGES IN CHNOSZ 1.3.2-4 (2019-05-04)
 --------------------------------------
 
 - demo/aluminum.R: add calculations using Si(OH)4 from Akinfiev-Diamond
   model (SiO2 in these reactions is replaced by Si(OH)4 - 2 H2O).
+
+- In mosaic(), equilibrate groups of changing basis species using total
+  activity taken from the corresponding basis species in the incoming
+  basis() definition, and return the result of equilibrate() in the
+  output.
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)
 ------------------------------------
