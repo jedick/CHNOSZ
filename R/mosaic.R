@@ -3,6 +3,7 @@
 # 20141220 jmd initial version
 # 20190129 complete rewrite to use any number of groups of changing basis species
 #   and improve speed by pre-calculating subcrt values (sout)
+# 20190505 bug fix: adjust affinities of species formation reactions for mole fractions of basis species
 
 ## if this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("basis.R")
@@ -10,7 +11,7 @@
 #source("util.args.R")
 
 # function to calculate affinities with mosaic of basis species
-mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
+mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
 
   # argument recall 20190120
   # if the first argument is the result from a previous mosaic() calculation,
@@ -41,7 +42,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
       hasbases2 <- TRUE
     }
     otherargs <- list(...)
-    allargs <- c(list(bases = bases, blend = blend, mixing = mixing), otherargs)
+    allargs <- c(list(bases = bases, blend = blend), otherargs)
     out <- do.call(mosaic, allargs)
     # replace A.bases (affinity calculations for all groups of basis species) with backwards-compatbile A.bases and A.bases2
     if(hasbases2) A.bases2 <- out$A.bases[[2]]
@@ -103,7 +104,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
   # calculate equilibrium mole fractions for each group of basis species
   group.fraction <- list()
   if(blend) {
-    e.out <- list()
+    e.bases <- list()
     for(i in 1:length(A.bases)) {
       # this isn't needed (and doesn't work) if all the affinities are NA 20180925
       if(any(!sapply(A.bases[[1]]$values, is.na))) {
@@ -113,7 +114,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
         a.tot <- Reduce("+", a.equil)
         group.fraction[[i]] <- lapply(a.equil, function(x) x / a.tot)
         # include the equilibrium activities in the output of this function 20190504
-        e.out[[1]] <- e
+        e.bases[[1]] <- e
       } else {
         group.fraction[[i]] <- A.bases[[i]]$values
       }
@@ -139,17 +140,28 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
   for(i in 1:length(ispecies)) ind.mat[[i]] <- 1:length(ispecies[[i]])
   ind.mat <- as.matrix(expand.grid(ind.mat))
 
-  # calculate mole fractions for each combination of basis species
-  for(i in 1:nrow(ind.mat)) {
-    # multiply fractions from each group
-    for(j in 1:ncol(ind.mat)) {
-      if(j==1) x <- group.fraction[[j]][[ind.mat[i, j]]]
-      else x <- x * group.fraction[[j]][[ind.mat[i, j]]]
+  # loop over combinations of basis species
+  for(icomb in 1:nrow(ind.mat)) {
+    # loop over groups of changing basis species
+    for(igroup in 1:ncol(ind.mat)) {
+      # get mole fractions for this particular basis species
+      basisx <- group.fraction[[igroup]][[ind.mat[icomb, igroup]]]
+      # loop over species
+      for(jspecies in 1:length(aff.species[[icomb]]$values)) {
+        # get coefficient of this basis species in the formation reaction for this species
+        nbasis <- aff.species[[icomb]]$species[jspecies, ibasis0[igroup]]
+        # adjust affinity of species for mole fractions (i.e. lower activity) of basis species 20190505
+        aff.adjust <- nbasis * log10(basisx)
+        # avoid infinite values (from log10(0))
+        isfin <- is.finite(aff.adjust)
+        aff.species[[icomb]]$values[[jspecies]][isfin] <- aff.species[[icomb]]$values[[jspecies]][isfin] + aff.adjust[isfin]
+      }
+      # multiply fractions of basis species from each group to get overall fraction
+      if(igroup==1) groupx <- basisx
+      else groupx <- groupx * basisx
     }
     # multiply affinities by the mole fractions of basis species
-    # include mixing term (-x*log10(x)) 20190121
-    if(blend & mixing) aff.species[[i]]$values <- lapply(aff.species[[i]]$values, function(values) values * x - x * log10(x))
-    else aff.species[[i]]$values <- lapply(aff.species[[i]]$values, function(values) values * x)
+    aff.species[[icomb]]$values <- lapply(aff.species[[icomb]]$values, function(values) values * groupx)
   }
   
   # get total affinities for the species
@@ -162,8 +174,8 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...) {
   }
 
   # for argument recall, include all arguments in output 20190120
-  allargs <- c(list(bases = bases, blend = blend, mixing = mixing), list(...))
+  allargs <- c(list(bases = bases, blend = blend), list(...))
   # return the affinities for the species and basis species
-  if(blend) return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases, e.out = e.out))
+  if(blend) return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases, e.bases = e.bases))
   else return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases))
 }

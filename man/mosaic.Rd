@@ -7,14 +7,13 @@ Calculate chemical affinities of formation reactions of species using basis spec
 }
 
 \usage{
-  mosaic(bases, bases2 = NULL, blend = TRUE, mixing = TRUE, ...)
+  mosaic(bases, bases2 = NULL, blend = TRUE, ...)
 }
 
 \arguments{
   \item{bases}{character, basis species to be changed in the calculation, or list, containing vectors for each group of changing basis species}
   \item{bases2}{character, second set of changing basis species}
   \item{blend}{logical, use relative abundances of basis species?}
-  \item{mixing}{logical, include a term for the Gibbs energy of mixing?}
   \item{...}{additional arguments to be passed to \code{\link{affinity}}}
 }
 
@@ -32,9 +31,7 @@ The arguments in \code{...} are passed to \code{affinity} to specify the variabl
 
 If \code{blend} is TRUE (the default), the relative abundances of the basis species in each group are calculated using \code{\link{equilibrate}}, with the total activity taken from the corresponding basis species in the incoming \code{\link{basis}} definition.
 Then, the function calculates overall affinities of the formation reactions of each species by combining reactions written using individual basis species in proportion to the relative abundances of the basis species.
-Additionally, if \code{mixing} is TRUE (the default), a term is included to account for the Gibbs energy of ideal mixing of the basis species.
-See the second example in \code{\link{solubility}} for a numerical test of the calculations using \code{blend} and \code{mixing}.
-If \code{blend} is FALSE, the function returns the affinities calculated using the single predominant basis species in \code{bases} at each condition (in this case, the \code{mixing} argument has no effect).
+If \code{blend} is FALSE, the function returns the affinities calculated using the single predominant basis species in \code{bases} at each condition.
 
 A more flexible method of specifying multiple sets of basis species is now available.
 Instead of using \code{bases} and \code{bases2}, supply a list for just the \code{bases} argument.
@@ -46,12 +43,13 @@ This overcomes the prior limitation of only having two changing groups of basis 
 
 \value{
 A list containing \code{A.species} (affinities of formation of the species with changing basis species) and \code{A.bases} (affinities of formation of the basis species in terms of the first basis species), each having same structure as the list returned by \code{\link{affinity}}.
-If \code{blend} is TRUE, the output also contains \code{e.out} (the output of \code{\link{equilibrate}} for each group of basis species)
+If \code{blend} is TRUE, the output also contains \code{e.bases} (the output of \code{\link{equilibrate}} for each group of basis species)
 If \code{bases2} is provided, the list also contains \code{A.bases2} (affinities of formation of the second group of basis species).
 }
 
 \seealso{
 \code{demo("mosaic")}, extending the example below by addition of carbonate species in \code{bases2}, and using thermodynamic data from Garrels and Christ, 1965.
+The help page of \code{\link{solubility}} has an example combining \code{mosaic} with solubility calculations.
 }
 
 \examples{

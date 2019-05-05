@@ -35,13 +35,10 @@ test_that("blend=TRUE produces reasonable values", {
   # calculate affinities using the predominant basis species
   pH <- c(0, 14, 29)
   m1 <- mosaic(bases, pH = pH, blend = FALSE)
-  # calculate affinities with smooth transitions between basis species, including a mixing energy
+  # calculate affinities with smooth transitions between basis species
   m2 <- mosaic(bases, pH = pH)
   # these species have no S so the results should be similar,
-  # 20190121 except for a negative free energy of mixing (positive affinity)
-  expect_true(all(m2$A.species$values[[1]] - m1$A.species$values[[1]] > 0))
-  # the differences increase, then decrease
-  expect_equal(unique(sign(diff(as.numeric(m2$A.species$values[[1]] - m1$A.species$values[[1]])))), c(1, -1))
+  expect_equivalent(m2$A.species$values[[1]], m1$A.species$values[[1]])
   # now with S-bearing species ...
   species(c("pyrrhotite", "pyrite"))
   m3 <- mosaic(bases, pH = pH, blend = FALSE)
@@ -49,8 +46,71 @@ test_that("blend=TRUE produces reasonable values", {
   # the results are different ...
   expect_equal(sapply(m3$A.species$values, "[", 13), sapply(m4$A.species$values, "[", 13), tol=1e-1)
   # but more similar at extreme pH values
-  expect_equal(sapply(m3$A.species$values, "[", 1), sapply(m4$A.species$values, "[", 1), tol=1e-6)
-  expect_equal(sapply(m3$A.species$values, "[", 29), sapply(m4$A.species$values, "[", 29), tol=1e-10)
+  expect_equal(sapply(m3$A.species$values, "[", 1), sapply(m4$A.species$values, "[", 1), tol=1e-7)
+  expect_equal(sapply(m3$A.species$values, "[", 29), sapply(m4$A.species$values, "[", 29), tol=1e-13)
+})
+
+test_that("mosaic() - equilibrate() produces equilibrium activities", {
+  # test added 20190505, based on an calculation sent by Kirt Robinson
+  basis(c("CO2", "NH3", "O2", "H2O", "H+"))
+  species(c("acetamide", "acetic acid", "acetate"))
+  m <- mosaic(c("NH3", "NH4+"), pH = c(0, 14))
+  e <- equilibrate(m$A.species)
+  # calculate logK for form acetamide from predominant species at low pH
+  s1 <- subcrt(c("acetic acid", "NH4+", "acetamide", "water", "H+"), c(-1, -1, 1, 1, 1), T = 25)
+  logK1 <- s1$out$logK
+  # values of activities
+  loga_acetic <- e$loga.equil[[2]]
+  loga_NH4 <- m$e.bases[[1]]$loga.equil[[2]]
+  loga_acetamide <- e$loga.equil[[1]]
+  loga_H2O <- m$e.bases[[1]]$basis$logact[[4]]
+  loga_Hplus <- - m$e.bases[[1]]$vals$pH
+  logQ1 <- - loga_acetic - loga_NH4 + loga_acetamide + loga_H2O + loga_Hplus
+  A1 <- logQ1 - logK1
+  ## in CHNOSZ versions before 1.3.2-5 (20190505), the affinity was zero at the pH extremes,
+  ## but peaked with a value of 0.3 (log10(2)) at pH 9.2 (equal activities of NH3 and NH4+)
+  #plot(m$e.bases[[1]]$vals$pH, A1, type = "l")
+  #title(main = describe.reaction(s1$reaction))
+  expect_equivalent(A1, rep(0, length(A1)))
+})
+
+test_that("mosaic() - solubility() produces equilibrium activities", {
+  # test added 20190505, simplified from demo/contour.R with varying pH at constant logfO2
+  # define temperature and pressure
+  T <- 250
+  P <- 500
+  # set up system
+  basis(c("Au", "Cl-", "H2S", "H2O", "oxygen", "H+"))
+  species(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
+  # this get us close to total S = 0.01 m
+  basis("H2S", -2)
+  # set a low logfO2 to get into H2S - HS- fields
+  basis("O2", -40)
+  # calculate solution composition for 1 mol/kg NaCl
+  NaCl <- NaCl(T = T, P = P, m_tot = 1)
+  basis("Cl-", log10(NaCl$m_Cl))
+  # calculate affinity with changing basis species
+  bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+  m <- mosaic(bases, pH = c(2, 10), T = 250, P = 500, IS = NaCl$IS)
+  # calculate solubility
+  s <- solubility(m$A.species)
+  # calculate logK to form Au(HS)2- in H2S stability region
+  # include IS here to compute adjusted logK
+  s1 <- subcrt(c("Au", "H2S", "oxygen", "Au(HS)2-", "H2O", "H+"), c(-1, -2, -0.25, 1, 0.5, 1), T = T, P = P, IS = NaCl$IS)
+  logK1 <- s1$out$logK
+  # calculate logQ with the given or computed activities
+  loga_Au <- m$A.bases$basis$logact[[1]]
+  loga_H2S <- m$e.bases[[1]]$loga.equil[[1]]
+  logf_O2 <- m$A.bases$basis$logact[[5]]
+  loga_AuHS2minus <- s$loga.equil[[1]]
+  loga_H2O <- m$A.bases$basis$logact[[4]]
+  loga_Hplus <- - m$A.bases$vals$pH
+  logQ1 <- - 1 * loga_Au - 2 * loga_H2S - 0.25 * logf_O2 + 1 * loga_AuHS2minus + 0.5 * loga_H2O + 1 * loga_Hplus
+  # calculate affinity - should be zero!
+  A1 <- logQ1 - logK1
+  #plot(m$A.bases$vals$pH, A1, type = "l")
+  #title(main = describe.reaction(s1$reaction))
+  expect_equivalent(A1, rep(0, length(A1)))
 })
 
 # TODO: test that basis specifications can be exchanged between bases and bases2 without altering output

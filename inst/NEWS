@@ -1,13 +1,40 @@
-CHANGES IN CHNOSZ 1.3.2-4 (2019-05-04)
+CHANGES IN CHNOSZ 1.3.2-5 (2019-05-05)
 --------------------------------------
 
-- demo/aluminum.R: add calculations using Si(OH)4 from Akinfiev-Diamond
-  model (SiO2 in these reactions is replaced by Si(OH)4 - 2 H2O).
+BUG FIXES
+
+- In mosaic(), affinities of formation of species should not only be
+  weighted by the mole fraction of the changing basis species, but they
+  should be calculated using activities of basis species that are
+  adjusted (i.e. lowered) according to their mole fractions. Previously,
+  constant activities were used for each changing basies species,
+  leading to an artificial inflation of affinities of species,
+  especially near the transitions where the changing basis species are
+  nearly equal in abundance.
+
+- The 'mixing' argument of mosaic() has been removed, as it no longer
+  provides correct results and is not needed with the improved handling
+  of activities of basis species.
+
+OTHER CHANGES
+
+- Tests have been added to test-mosaic.R to check that activitives
+  produced by mosaic() - equilibrate() and mosaic() - solubility()
+  really are equilibrium activities, i.e. that the affinities of
+  reactions between species are equivalent to zero, especially near the
+  transitions of basis species.
 
 - In mosaic(), equilibrate groups of changing basis species using total
   activity taken from the corresponding basis species in the incoming
-  basis() definition, and return the result of equilibrate() in the
-  output.
+  basis() definition. This is not directly related to the bug above, but
+  provides a means to constrain the amount of an element in the basis
+  species.
+
+- In mosaic(), include the result of equilibrate() for each group of
+  basis species in the output ('e.bases').
+
+- demo/aluminum.R: add calculations using Si(OH)4 from Akinfiev-Diamond
+  model (SiO2 in these reactions is replaced by Si(OH)4 - 2 H2O).
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)
 ------------------------------------
