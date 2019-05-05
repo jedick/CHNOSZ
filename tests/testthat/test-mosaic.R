@@ -113,4 +113,45 @@ test_that("mosaic() - solubility() produces equilibrium activities", {
   expect_equivalent(A1, rep(0, length(A1)))
 })
 
+test_that("mosaic() - equilibrate() produces equilibrium activities that are consistent with
+          stability differences of minerals and multiple groups of changing basis species", {
+  # test added 20190505, adapted from demo/mosaic.R:
+  #   select a constant pH close to equal activities of CO2 - HCO3-,
+  #   and a range of Eh that crosses the upper and lower boundaries
+  #   of pyrite with siderite (including the H2S - SO4-2 transition)
+  basis(c("FeO", "SO4-2", "H2O", "H+", "e-", "CO3-2"))
+  basis("SO4-2", -6)
+  basis("CO3-2", 0)
+  basis("pH", 6.3)
+  species(c("pyrrhotite", "pyrite", "hematite", "magnetite", "siderite"))
+  # two sets of changing basis species:
+  # speciate SO4-2, HSO4-, HS-, H2S as a function of Eh and pH
+  # speciate CO3-2, HCO3-, CO2 as a function of pH
+  bases <- list(c("SO4-2", "HSO4-", "HS-", "H2S"),
+                c("CO3-2", "HCO3-", "CO2"))
+  # calculate affinities using the relative abundances of different basis species
+  m <- mosaic(bases, Eh = c(-0.5, 0))
+  # calculate logK for pyrite-siderite reaction using arbitrarily chosen basis species
+  s1 <- subcrt(c("pyrite", "CO2", "H2O", "H+", "e-", "siderite", "H2S"), c(-1, -1, -1, -2, -2, 1, 2), T = 25)
+  logK <- s1$out$logK
+  # get activities of minerals, water, and H+
+  loga_pyrite <- loga_siderite <- loga_H2O <- 0
+  loga_Hplus <- m$A.bases[[1]]$basis$logact[[4]]
+  # get activities of basis species
+  loga_eminus <- - convert(m$A.bases[[1]]$vals$Eh, "pe")
+  loga_H2S <- m$E.bases[[1]]$loga.equil[[4]]
+  loga_CO2 <- m$E.bases[[2]]$loga.equil[[3]]
+  # calculate affinity
+  logQ <- -1 * loga_pyrite - 1 * loga_CO2 - 1 * loga_H2O - 2 * loga_Hplus - 2 * loga_eminus + 1 * loga_siderite + 2 * loga_H2S
+  A <- logQ - logK
+  # the "hand-calculated" value and the affinity calculated by the function should be equal
+  Adiff <- A - (m$A.species$values[[2]] - m$A.species$values[[5]])
+  #par(mfrow = c(2, 1))
+  #diagram(m$A.species)
+  #plot(m$A.bases[[1]]$vals$Eh, Adiff, type = "l")
+  #title(main = "A(single basis species) - A(all basis species)")
+  #legend("topleft", legend = describe.reaction(s1$reaction))
+  expect_equivalent(Adiff, rep(0, length(Adiff)))
+})
+
 # TODO: test that basis specifications can be exchanged between bases and bases2 without altering output
