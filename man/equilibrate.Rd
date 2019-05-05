@@ -3,6 +3,7 @@
 \alias{equilibrate}
 \alias{equil.boltzmann}
 \alias{equil.reaction}
+\alias{moles}
 \title{Equilibrium Chemical Activities of Species}
 \description{
 Calculate equilibrium chemical activities of species from the affinities of formation of the species at unit activity. 
@@ -14,10 +15,11 @@ Calculate equilibrium chemical activities of species from the affinities of form
     method=c("boltzmann", "reaction"), tol=.Machine$double.eps^0.25)
   equil.boltzmann(Astar, n.balance, loga.balance)
   equil.reaction(Astar, n.balance, loga.balance, tol=.Machine$double.eps^0.25)
+  moles(eout)
 }
 
 \arguments{
-  \item{aout}{list, output from \code{\link{affinity}}}
+  \item{aout}{list, output from \code{\link{affinity}}} or \code{\link{mosaic}}
   \item{balance}{character or numeric, how to balance the transformations}
   \item{ispecies}{numeric, which species to include}
   \item{normalize}{logical, normalize the molar formulas of species by the balancing coefficients?}
@@ -27,6 +29,7 @@ Calculate equilibrium chemical activities of species from the affinities of form
   \item{loga.balance}{numeric (single value or vector), logarithm of total activity of balanced quantity}
   \item{method}{character, equilibration method to use}
   \item{tol}{numeric, convergence tolerance for \code{\link{uniroot}}}
+  \item{eout}{list, output from \code{\link{equilibrate}}}
 }
 
 \details{
@@ -66,6 +69,8 @@ The default behavior can be overriden by specifying either \samp{boltzmann} or \
 Using \code{equil.reaction} may be needed for systems with huge (negative or positive) affinities, where \code{equil.boltzmann} produces a NaN result.
 
 \code{ispecies} can be supplied to identify a subset of the species to include in the calculation.
+
+\code{moles} simply calculates the total number of moles of elements corresponding to the activities of formed species in the output from \code{equilibrate}.
 }
 
 \section{Algorithms}{

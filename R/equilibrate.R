@@ -266,6 +266,39 @@ equil.reaction <- function(Astar, n.balance, loga.balance, tol=.Machine$double.e
   return(logact)
 }
 
+# a function to calculate the total moles of the elements in the output from equilibrate 20190505
+moles <- function(eout) {
+  # exponentiate loga.equil to get activities
+  act <- lapply(eout$loga.equil, function(x) 10^x)
+  # initialize list for moles of basis species
+  nbasis <- rep(list(act[[1]] * 0), nrow(eout$basis))
+  # loop over species
+  for(i in 1:nrow(eout$species)) {
+    # loop over basis species
+    for(j in 1:nrow(eout$basis)) {
+      # the coefficient of this basis species in the formation reaction of this species
+      n <- eout$species[i, j]
+      # accumulate the number of moles of basis species
+      nbasis[[j]] <- nbasis[[j]] + act[[i]] * n
+    }
+  }
+  # initialize list for moles of elements (same as number of basis species)
+  nelem <- rep(list(act[[1]] * 0), nrow(eout$basis))
+  # loop over basis species
+  for(i in 1:nrow(eout$basis)) {
+    # loop over elements
+    for(j in 1:nrow(eout$basis)) {
+      # the coefficient of this element in the formula of this basis species
+      n <- eout$basis[i, j]
+      # accumulate the number of moles of elements
+      nelem[[j]] <- nelem[[j]] + nbasis[[i]] * n
+    }
+  }
+  # add element names
+  names(nelem) <- colnames(eout$basis)[1:nrow(eout$basis)]
+  nelem
+}
+
 ### unexported functions ###
 
 # return a list containing the balancing coefficients (n.balance) and a textual description (balance)
