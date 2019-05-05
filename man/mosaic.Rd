@@ -43,7 +43,7 @@ This overcomes the prior limitation of only having two changing groups of basis 
 
 \value{
 A list containing \code{A.species} (affinities of formation of the species with changing basis species) and \code{A.bases} (affinities of formation of the basis species in terms of the first basis species), each having same structure as the list returned by \code{\link{affinity}}.
-If \code{blend} is TRUE, the output also contains \code{e.bases} (the output of \code{\link{equilibrate}} for each group of basis species)
+If \code{blend} is TRUE, the output also contains \code{E.bases} (the output of \code{\link{equilibrate}} for each group of basis species)
 If \code{bases2} is provided, the list also contains \code{A.bases2} (affinities of formation of the second group of basis species).
 }
 

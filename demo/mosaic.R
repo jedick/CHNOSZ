@@ -33,10 +33,17 @@ water.lines(m1$A.species, col = "seagreen", lwd = 1.5)
 species(c("Fe+2", "Fe+3"), -4)
 m2 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T)
 diagram(m2$A.species, add = TRUE, names = NULL)
-title(main=paste("Iron oxides, sulfides and carbonate in water, log(total S) = -6,",
-  "log(total C)=0, after Garrels and Christ, 1965", sep = "\n"))
-# overlay the carbonate basis species predominance fields
+# overlay the sulfur and carbonate basis species predominance fields
+d <- diagram(m1$A.bases, add = TRUE, col = "red", col.names = "red", lty = 3, limit.water = FALSE)
 d <- diagram(m1$A.bases2, add = TRUE, col = "blue", names = NULL, lty = 3, limit.water = FALSE)
 text(d$namesx, -0.8, as.expression(sapply(m1$A.bases2$species$name, expr.species)), col = "blue")
+# add legend and title
+dP <- describe.property(c("T", "P"), c(25, 1))
+legend("top", dP, bty = "n")
+dS <- expression(sum(S)*"(aq)" == 10^-6~italic(m))
+dC <- expression(sum(C)*"(aq)" == 1~italic(m))
+legend("topright", c(dS, dC), bty = "n")
+title(main=paste("Iron minerals, sulfur, and carbonate in water,",
+  "after Garrels and Christ, 1965, Figure 7.21", sep = "\n"), font.main = 1)
 # reset the database, as it was changed in this example
 reset()

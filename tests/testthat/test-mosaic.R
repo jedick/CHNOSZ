@@ -61,15 +61,15 @@ test_that("mosaic() - equilibrate() produces equilibrium activities", {
   logK1 <- s1$out$logK
   # values of activities
   loga_acetic <- e$loga.equil[[2]]
-  loga_NH4 <- m$e.bases[[1]]$loga.equil[[2]]
+  loga_NH4 <- m$E.bases[[1]]$loga.equil[[2]]
   loga_acetamide <- e$loga.equil[[1]]
-  loga_H2O <- m$e.bases[[1]]$basis$logact[[4]]
-  loga_Hplus <- - m$e.bases[[1]]$vals$pH
+  loga_H2O <- m$E.bases[[1]]$basis$logact[[4]]
+  loga_Hplus <- - m$E.bases[[1]]$vals$pH
   logQ1 <- - loga_acetic - loga_NH4 + loga_acetamide + loga_H2O + loga_Hplus
   A1 <- logQ1 - logK1
   ## in CHNOSZ versions before 1.3.2-5 (20190505), the affinity was zero at the pH extremes,
   ## but peaked with a value of 0.3 (log10(2)) at pH 9.2 (equal activities of NH3 and NH4+)
-  #plot(m$e.bases[[1]]$vals$pH, A1, type = "l")
+  #plot(m$E.bases[[1]]$vals$pH, A1, type = "l")
   #title(main = describe.reaction(s1$reaction))
   expect_equivalent(A1, rep(0, length(A1)))
 })
@@ -100,7 +100,7 @@ test_that("mosaic() - solubility() produces equilibrium activities", {
   logK1 <- s1$out$logK
   # calculate logQ with the given or computed activities
   loga_Au <- m$A.bases$basis$logact[[1]]
-  loga_H2S <- m$e.bases[[1]]$loga.equil[[1]]
+  loga_H2S <- m$E.bases[[1]]$loga.equil[[1]]
   logf_O2 <- m$A.bases$basis$logact[[5]]
   loga_AuHS2minus <- s$loga.equil[[1]]
   loga_H2O <- m$A.bases$basis$logact[[4]]

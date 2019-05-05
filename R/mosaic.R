@@ -104,7 +104,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
   # calculate equilibrium mole fractions for each group of basis species
   group.fraction <- list()
   if(blend) {
-    e.bases <- list()
+    E.bases <- list()
     for(i in 1:length(A.bases)) {
       # this isn't needed (and doesn't work) if all the affinities are NA 20180925
       if(any(!sapply(A.bases[[1]]$values, is.na))) {
@@ -114,7 +114,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
         a.tot <- Reduce("+", a.equil)
         group.fraction[[i]] <- lapply(a.equil, function(x) x / a.tot)
         # include the equilibrium activities in the output of this function 20190504
-        e.bases[[1]] <- e
+        E.bases[[i]] <- e
       } else {
         group.fraction[[i]] <- A.bases[[i]]$values
       }
@@ -176,6 +176,6 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
   # for argument recall, include all arguments in output 20190120
   allargs <- c(list(bases = bases, blend = blend), list(...))
   # return the affinities for the species and basis species
-  if(blend) return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases, e.bases = e.bases))
+  if(blend) return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases, E.bases = E.bases))
   else return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases))
 }

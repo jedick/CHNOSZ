@@ -7,21 +7,20 @@ BUG FIXES
   weighted by the mole fraction of the changing basis species, but they
   should be calculated using activities of basis species that are
   adjusted (i.e. lowered) according to their mole fractions. Previously,
-  constant activities were used for each changing basies species,
+  constant activities were used for each changing basis species,
   leading to an artificial inflation of affinities of species,
   especially near the transitions where the changing basis species are
   nearly equal in abundance.
 
-- The 'mixing' argument of mosaic() has been removed, as it no longer
-  provides correct results and is not needed with the improved handling
-  of activities of basis species.
+- The 'mixing' argument of mosaic() has been removed; it is no longer
+  needed with the improved handling of activities of basis species.
 
 OTHER CHANGES
 
 - Tests have been added to test-mosaic.R to check that activitives
   produced by mosaic() - equilibrate() and mosaic() - solubility()
   really are equilibrium activities, i.e. that the affinities of
-  reactions between species are equivalent to zero, especially near the
+  reactions between species are zero everywhere, in particular near the
   transitions of basis species.
 
 - In mosaic(), equilibrate groups of changing basis species using total
@@ -31,7 +30,7 @@ OTHER CHANGES
   species.
 
 - In mosaic(), include the result of equilibrate() for each group of
-  basis species in the output ('e.bases').
+  basis species in the output ('E.bases').
 
 - demo/aluminum.R: add calculations using Si(OH)4 from Akinfiev-Diamond
   model (SiO2 in these reactions is replaced by Si(OH)4 - 2 H2O).
