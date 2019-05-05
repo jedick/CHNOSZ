@@ -9,9 +9,26 @@
 equilibrate <- function(aout, balance=NULL, loga.balance=NULL, 
   ispecies=1:length(aout$values), normalize=FALSE, as.residue=FALSE,
   method=c("boltzmann", "reaction"), tol=.Machine$double.eps^0.25) {
-  ### set up calculation of equilibrium activities of species from the affinities 
-  ### of their formation reactions from basis species at known activities
+  ### calculate equilibrium activities of species from the affinities 
+  ### of their formation reactions from basis species at given activities
   ### split from diagram() 20120925 jmd
+  ## if aout is the output from mosaic(), combine the equilibrium activities of basis species
+  ## and formed species into an object that can be plotted with diagram() 20190505
+  if(aout$fun == "mosaic") {
+    # calculate equilibrium activities of species
+    if(missing(ispecies)) ispecies <- 1:length(aout$A.species$values)
+    if(missing(method)) eqc <- equilibrate(aout$A.species, balance = balance, loga.balance = loga.balance,
+      ispecies = ispecies, normalize = normalize, as.residue = as.residue, tol = tol)
+    else eqc <- equilibrate(aout$A.species, balance = balance, loga.balance = loga.balance,
+      ispecies = ispecies, normalize = normalize, as.residue = as.residue, method = method, tol = tol)
+    # make combined object for basis species and species:
+    # put together the species matrix and logarithms of equilibrium activity
+    eqc$species <- rbind(aout$E.bases[[1]]$species, eqc$species)
+    eqc$loga.equil <- c(aout$E.bases[[1]]$loga.equil, eqc$loga.equil)
+    # we also need to combine 'values' (values of affinity) because diagram() uses this to get the number of species
+    eqc$values <- c(aout$E.bases[[1]]$values, eqc$values)
+    return(eqc)
+  }
   ## number of possible species
   nspecies <- length(aout$values)
   ## get the balancing coefficients

@@ -32,10 +32,11 @@ Calculate equilibrium chemical activities of species from the affinities of form
 \details{
 \code{equilibrate} calculates the chemical activities of species in metastable equilibrium, for constant temperature, pressure and chemical activities of basis species, using specified balancing constraints on reactions between species.
 
-It takes as input \code{aout}, the output from \code{\link{affinity}}, which may be calculated from a multidimensional grid of conditions.
+It takes as input \code{aout}, the output from \code{\link{affinity}}, giving the chemical affinities of formation reaction of each species, which may be calculated on a multidimensional grid of conditions.
+Alternatively, \code{aout} can be the output from \code{\link{mosaic}}, in which case the equilibrium activities of the formed species are calculated and combined with those of the changing basis species to make an object that can be plotted with \code{\link{diagram}}.
+
 The equilibrium chemical activities of species are calculated using either the \code{equil.reaction} or \code{equil.boltzmann} functions, the latter only if the balance is on one mole of species.
 
-\code{aout} contains the chemical affinities of formation reactions of each species of interest.
 \code{equilibrate} needs to be provided constraints on how to balance the reactions representing transformations between the species.
 \code{balance} indicates the balancing component, according to the following scheme:
 
@@ -125,6 +126,22 @@ pKa.equil <- seq(0, 14, length.out=res)[ipKa]
 logK <- subcrt(c("CO2","H2O","HCO3-","H+"), c(-1, -1, 1, 1), T=25)$out$logK
 # we could decrease tolerance here by increasing res
 stopifnot(all.equal(pKa.equil, -logK, tolerance=1e-2))
+
+# equilibrate with mosaic: balancing on N and C
+loga_N <- -4
+loga_C <- -3
+basis(c("CO2", "NH3", "O2", "H2O", "H+"))
+basis("NH3", loga_N)
+species(c("acetamide", "acetic acid", "acetate"))
+# this calculates equilibrium activities of NH3 and NH4+ for given loga_N
+# and calculates the corresponding affinities of the formed species
+m <- mosaic(c("NH3", "NH4+"), pH = c(0, 14))
+# this calculated equilibrium activities of the formed species for given loga_C
+# and combines them with the activities of the changing basis species (NH3 and NH4+)
+eqc <- equilibrate(m, loga.balance = loga_C)
+diagram(eqc, ylim = c(-10, -2))
+title(main = paste("log(total N in basis species) =", loga_N,
+                   "\nlog(total C in formed species) =", loga_C), font.main = 1)
 }
 
 \references{
