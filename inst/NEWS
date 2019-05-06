@@ -1,15 +1,14 @@
-CHANGES IN CHNOSZ 1.3.2-9 (2019-05-05)
---------------------------------------
+CHANGES IN CHNOSZ 1.3.2-10 (2019-05-06)
+---------------------------------------
 
 BUG FIXES
 
-- In mosaic(), affinities of formation of species were not calculated
-  using activities of basis species that are adjusted (i.e. lowered)
-  according to their mole fractions. Previously, constant activities
-  were used for each changing basis species, leading to an artificial
-  inflation of the affinities of species, especially near the
-  transitions where the changing basis species are nearly equal in
-  abundance.
+- In mosaic(), constant activities were used for each changing basis
+  species, leading to an artificial inflation of the affinities of
+  species around the transitions where the basis species become equally
+  abundant. Now, affinities of formation of species are calculated using
+  activities of basis species that are adjusted (i.e. lowered) according
+  to their relative abundances.
 
 - The 'mixing' argument of mosaic() has been removed; it is no longer
   needed with the improved handling of activities of basis species.
@@ -22,11 +21,10 @@ OTHER CHANGES
   species are zero everywhere, in particular near the transitions of
   basis species.
 
-- In mosaic(), groups of changing basis species are equilibrated using
-  a total activity given by the activity of the starting basis species
-  in the incoming basis() definition. This is not directly related to
-  the bug above, but instead provides a means to constrain the amount of
-  an element in the basis species.
+- In mosaic(), groups of changing basis species are equilibrated for a
+  total activity given by the activity of the starting basis species in
+  the incoming basis() definition. This provides a means to specify the
+  the amount of a conserved element in the basis species.
 
 - In mosaic(), include the result of equilibrate() for each group of
   basis species in the output ('E.bases').
@@ -39,7 +37,7 @@ NEW FEATURES
   plotted with diagram(). This can be useful for conserving two elements
   in a system: one in the basis species, the other in the formed
   species. Thanks to Kirt Robinson for the feature request and test
-  system.
+  system for acetamide, which has been added to ?equilibrate.
 
 - Add function moles(), to calculate the total number of moles of
   elements in the output from equilibrate().

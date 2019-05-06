@@ -51,7 +51,7 @@ test_that("blend=TRUE produces reasonable values", {
 })
 
 test_that("mosaic() - equilibrate() produces equilibrium activities", {
-  # test added 20190505, based on an calculation sent by Kirt Robinson
+  # test added 20190505, based on a calculation sent by Kirt Robinson
   basis(c("CO2", "NH3", "O2", "H2O", "H+"))
   species(c("acetamide", "acetic acid", "acetate"))
   m <- mosaic(c("NH3", "NH4+"), pH = c(0, 14))
