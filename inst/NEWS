@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-10 (2019-05-06)
+CHANGES IN CHNOSZ 1.3.2-11 (2019-05-07)
 ---------------------------------------
 
 BUG FIXES
@@ -44,6 +44,9 @@ NEW FEATURES
 
 - demo/aluminum.R: add calculations using Si(OH)4 from the Akinfiev-
   Diamond model (SiO2 in these reactions is replaced by Si(OH)4 - 2 H2O).
+
+- subcrt(): stop with an error if length(logact) is not the same as the
+  number of species.
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)
 ------------------------------------

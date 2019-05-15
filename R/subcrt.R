@@ -56,8 +56,10 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   if(length(notprop) > 1) stop(paste("invalid property names:", paste(notprop, collapse=" ")))
   # length checking
   if(do.reaction & length(species)!=length(coeff)) 
-    stop('coeff must be same length as the number of species.')
-  if(!is.null(logact)) logact <- rep(logact,length.out=length(coeff))
+    stop("the length of 'coeff' must equal the number of species")
+  if(!is.null(logact)) {
+    if(length(logact)!=length(species)) stop("the length of 'logact' must equal the number of species")
+  }
   # normalize temperature units
   if(!missing(T)) {
     if(convert) T <- envert(T,'K')
