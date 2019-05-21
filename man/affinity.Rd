@@ -9,7 +9,7 @@ Calculate the chemical affinities of formation reactions of species.
 \usage{
   affinity(..., property = NULL, sout = NULL, exceed.Ttr = FALSE,
     exceed.rhomin = FALSE, return.buffer = FALSE, return.sout = FALSE,
-    balance = "PBB", iprotein = NULL, loga.protein = -3)
+    balance = "PBB", iprotein = NULL, loga.protein = -3, transect = NULL)
 }
 
 \arguments{
@@ -23,6 +23,7 @@ Calculate the chemical affinities of formation reactions of species.
   \item{balance}{character. This argument is used to identify a conserved basis species (or \samp{PBB}) in a chemical activity buffer. Default is \samp{PBB}.}
   \item{iprotein}{numeric, indices of proteins in \code{\link{thermo}$protein} for which to calculate properties}
   \item{loga.protein}{numeric, logarithms of activities of proteins identified in \code{iprotein}}
+  \item{transect}{logical, force a transect calculation, even for three or fewer values of the variables?}
 }
 
 \details{

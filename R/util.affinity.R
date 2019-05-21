@@ -238,7 +238,7 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
   return(list(sout=sout,a=a))
 }
 
-energy.args <- function(args) {
+energy.args <- function(args, transect = FALSE) {
   ## extracted from affinity() and modified 20090329 jmd
   # takes a list of arguments which define the dimensions
   # over which to calculate logQ, logK and affinity
@@ -248,7 +248,7 @@ energy.args <- function(args) {
   ## inputs are like c(T1,T2,res)
   # and outputs are like seq(T1,T2,length.out=res)
   # unless transect: do the variables specify a transect? 20090627
-  transect <- any(sapply(args,length) > 3)
+  transect <- any(transect, any(sapply(args,length) > 3))
   ## convert T, P args and take care of 
   # single values for T, P or IS
   T <- 298.15
