@@ -23,7 +23,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
     cex = par("cex"), cex.names = 1, cex.axis = par("cex"),
     # line styles
     lty = NULL, lwd = par("lwd"), dotted = NULL, spline.method = NULL,
-    contour.method = "edge",
+    contour.method = "edge", levels = NULL,
     # colors
     col = par("col"), col.names = par("col"), fill = NULL,
     fill.NA = "gray80", limit.water = TRUE,
@@ -64,6 +64,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{dotted}{numeric, how often to skip plotting points on predominance field boundaries (to gain the effect of dotted or dashed boundary lines)}
   \item{spline.method}{character, method used in \code{\link{splinefun}}}
   \item{contour.method}{character, labelling method used in \code{\link{contour}} (use NULL for no labels).}
+  \item{levels}{numeric, levels at which to draw contour lines}
   \item{col}{character, color of activity lines (1D diagram) or predominance field boundaries (2D diagram), or colors of bars in a strip diagram (\code{strip})}
   \item{col.names}{character, colors for labels of species}
   \item{fill}{character, colors used to fill predominance fields}

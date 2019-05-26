@@ -26,7 +26,9 @@ bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 m <- mosaic(bases, pH = c(2, 10, res), O2 = c(-41, -29, res), T = T, P = P, IS = NaCl$IS, blend = blend)
 # calculate and plot solubility
 s <- solubility(m$A.species)
-diagram(s, type="loga.balance")
+# convert to ppb
+s <- convert(s, "ppb")
+diagram(s, type="loga.balance", levels = c(1, 10, 100, 1000))
 # show predominance fields
 diagram(m$A.bases, add=TRUE, col = "red", col.names = "red", limit.water = FALSE, lty = 2, italic = TRUE)
 diagram(m$A.species, add=TRUE, col = "blue", col.names = "blue", limit.water = FALSE, lwd = 2, bold = TRUE)

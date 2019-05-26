@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-12 (2019-05-21)
+CHANGES IN CHNOSZ 1.3.2-13 (2019-05-26)
 ---------------------------------------
 
 BUG FIXES
@@ -13,7 +13,7 @@ BUG FIXES
 - The 'mixing' argument of mosaic() has been removed; it is no longer
   needed with the improved handling of activities of basis species.
 
-NEW FEATURES
+NEW FEATURES: MOSAIC
 
 - In mosaic(), groups of changing basis species are equilibrated for a
   total activity given by the activity of the starting basis species in
@@ -28,28 +28,39 @@ NEW FEATURES
   species. Thanks to Kirt Robinson for the feature request and test
   system for acetamide, which has been added to ?equilibrate.
 
-- Add function moles(), to calculate the total number of moles of
-  elements in the output from equilibrate().
-
-- Add 'transect' argument to affinity(), to allow forcing transect mode
-  for any number of values of the variables.
-
-OTHER CHANGES
-
 - Add tests to test-mosaic.R to check that activitives produced by
   mosaic() - equilibrate() and mosaic() - solubility() really are
   equilibrium activities, i.e. that the affinities of reactions between
   species are zero everywhere, in particular near the transitions of
   basis species.
 
-- In mosaic(), include the result of equilibrate() for each group of
-  basis species in the output ('E.bases').
+- In mosaic(), include the relative abundances in each group of basis
+  species in the output ('E.bases').
+
+NEW FEATURES: SOLUBILITY
+
+- convert() now handles the output from solubility(), for converting
+  calculated concentrations to ppm or ppb.
+
+- diagram() has a new argument 'levels' for specifying the levels at
+  which to draw solubility contours.
+
+- demo/contour.R has been updated to show the 1, 10, 100, 1000 ppb
+  contours for Au solubility.
+
+OTHER CHANGES
+
+- Add function moles(), to calculate the total number of moles of
+  elements in the output from equilibrate().
 
 - demo/aluminum.R: add calculations using Si(OH)4 from the Akinfiev-
   Diamond model (SiO2 in these reactions is replaced by Si(OH)4 - 2 H2O).
 
 - subcrt(): stop with an error if length(logact) is not the same as the
   number of species.
+
+- Add 'transect' argument to affinity(), to allow forcing transect mode
+  for any number of values of the variables.
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)
 ------------------------------------

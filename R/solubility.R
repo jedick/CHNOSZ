@@ -146,8 +146,9 @@ solubility <- function(aout, dissociation=NULL, find.IS=FALSE, in.terms.of=NULL)
     loga.balance <- loga.balance - log10(coeff)
   }
 
-  # make the output
-  # (we don't deal with normalized formulas yet, so for now m.balance==n.balance)
-  c(aout, list(balance=bout$balance, m.balance=bout$n.balance, n.balance=bout$n.balance,
+  # make the output (we don't deal with normalized formulas yet, so for now m.balance==n.balance)
+  # indicate the function used to make this output 20190525
+  aout$fun <- "solubility"
+  c(aout, list(balance=bout$balance, m.balance=bout$n.balance, n.balance=bout$n.balance, in.terms.of=in.terms.of,
     loga.balance=loga.balance, Astar=loga.equil, loga.equil=loga.equil))
 }

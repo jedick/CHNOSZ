@@ -24,7 +24,7 @@ diagram <- function(
   # sizes
   cex=par("cex"), cex.names=1, cex.axis=par("cex"),
   # line styles
-  lty=NULL, lwd=par("lwd"), dotted=NULL, spline.method=NULL, contour.method="edge",
+  lty=NULL, lwd=par("lwd"), dotted=NULL, spline.method=NULL, contour.method="edge", levels=NULL,
   # colors
   col=par("col"), col.names=par("col"), fill=NULL,
   fill.NA="gray80", limit.water=TRUE,
@@ -613,7 +613,8 @@ diagram <- function(
           # contour solubilities (loga.balance), or properties using first species only
           if(length(plotvals) > 1) warning("showing only first species in 2-D property diagram")
           zs <- plotvals[[1]]
-          contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, method=contour.method[1])
+          if(is.null(levels)) contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, method=contour.method[1])
+          else contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, method=contour.method[1], levels = levels)
         }
         pn <- list(namesx=NULL, namesy=NULL)
       } else {

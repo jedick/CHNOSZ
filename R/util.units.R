@@ -44,8 +44,30 @@ convert <- function(value, units, T=298.15,
   P=1, pH=7, logaH2O=0) {
   # converts value(s) to the specified units
 
+  # process a list value if it's the output from solubility 20190525
+  if(is.list(value) & !is.data.frame(value)) {
+    if(!isTRUE(value$fun == "solubility")) stop("'value' is a list but is not the output from solubility()")
+    if(!is.character(units)) stop("please specify a character argument for the destination units (ppm or ppb)")
+    # determine the element from 'balance' or 'in.terms.of', if it's available
+    element <- value$in.terms.of
+    if(is.null(element)) element <- value$balance
+    # exponentiate log.balance to get molality
+    moles <- 10^value$loga.balance
+    # convert moles to mass (g)
+    grams.per.mole <- mass(element)
+    grams <- moles * grams.per.mole
+    # convert grams to ppm
+    # 1 ppm = 1 mg / kg H2O
+    if(units=="ppm") ppx <- grams * 1e3
+    if(units=="ppb") ppx <- grams * 1e6
+    # put the values in place
+    value$loga.balance <- ppx
+    # return the updated object
+    return(value)
+  }
+
+  ### argument handling for non-list value
   if(is.null(value)) return(NULL)
-  ### argument handling
   if(!is.character(units)) stop(paste('convert: please specify',
     'a character argument for the destination units.\n',
     'possibilities include (G or logK) (C or K) (J or cal) (cm3bar or calories) (Eh or pe)\n',
