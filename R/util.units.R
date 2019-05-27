@@ -47,21 +47,34 @@ convert <- function(value, units, T=298.15,
   # process a list value if it's the output from solubility 20190525
   if(is.list(value) & !is.data.frame(value)) {
     if(!isTRUE(value$fun == "solubility")) stop("'value' is a list but is not the output from solubility()")
-    if(!is.character(units)) stop("please specify a character argument for the destination units (ppm or ppb)")
+    if(!is.character(units)) stop("please specify a character argument for the destination units (e.g. ppm or logppm)")
     # determine the element from 'balance' or 'in.terms.of', if it's available
     element <- value$in.terms.of
     if(is.null(element)) element <- value$balance
-    # exponentiate log.balance to get molality
-    moles <- 10^value$loga.balance
-    # convert moles to mass (g)
     grams.per.mole <- mass(element)
-    grams <- moles * grams.per.mole
-    # convert grams to ppm
-    # 1 ppm = 1 mg / kg H2O
-    if(units=="ppm") ppx <- grams * 1e3
-    if(units=="ppb") ppx <- grams * 1e6
-    # put the values in place
-    value$loga.balance <- ppx
+    message(paste("solubility: converting to", units, "by weight using the mass of", element))
+    ppfun <- function(loga, units, grams.per.mole) {
+      # exponentiate loga to get molality
+      moles <- 10^loga
+      # convert moles to mass (g)
+      grams <- moles * grams.per.mole
+      # convert grams to ppb, ppm, or ppt
+      ppx <- NULL
+      # 1 ppt = 1 g / kg H2O
+      # 1 ppm = 1 mg / kg H2O
+      if(grepl("ppt", units)) ppx <- grams * 1e0
+      if(grepl("ppm", units)) ppx <- grams * 1e3
+      if(grepl("ppb", units)) ppx <- grams * 1e6
+      if(is.null(ppx)) stop(paste("units", units, "not available for conversion"))
+      # use the logarithm if specified
+      if(grepl("log", units)) ppx <- log10(ppx)
+      ppx
+    }
+    # do the conversion for the conserved basis species, then each species
+    value$loga.balance <- ppfun(value$loga.balance, units, grams.per.mole)
+    value$loga.equil <- lapply(value$loga.equil, ppfun, units = units, grams.per.mole = grams.per.mole)
+    # identify the units in the function text
+    value$fun <- paste(value$fun, units, sep = ".")
     # return the updated object
     return(value)
   }

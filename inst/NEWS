@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-13 (2019-05-26)
+CHANGES IN CHNOSZ 1.3.2-14 (2019-05-27)
 ---------------------------------------
 
 BUG FIXES
@@ -47,6 +47,9 @@ NEW FEATURES: SOLUBILITY
 
 - demo/contour.R has been updated to show the 1, 10, 100, 1000 ppb
   contours for Au solubility.
+
+- Add demo/sphalerite.R for calculations of solubility of sphalerite,
+  converted to log ppm (after Akinfiev and Tagirov, 2014).
 
 OTHER CHANGES
 

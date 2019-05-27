@@ -289,7 +289,14 @@ diagram <- function(
       # initialize the plot
       if(!add) {
         if(missing(xlab)) xlab <- axis.label(eout$vars[1], basis=eout$basis, molality=molality)
-        if(missing(ylab)) ylab <- axis.label(plotvar, units="", molality=molality)
+        if(missing(ylab)) {
+          ylab <- axis.label(plotvar, units="", molality=molality)
+          # use ppb, ppm, ppt (or log ppb etc.) for converted values of solubility 20190526
+          if(grepl("solubility.", eout$fun, fixed=TRUE)) {
+            ylab <- strsplit(eout$fun, ".", fixed=TRUE)[[1]][2]
+            ylab <- gsub("log", "log ", ylab)
+          }
+        }
         # to get range for y-axis, use only those points that are in the xrange
         if(is.null(ylim)) {
           isx <- xvalues >= min(xlim) & xvalues <= max(xlim)

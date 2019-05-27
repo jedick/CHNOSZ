@@ -45,10 +45,15 @@ Note that \samp{Eh} and \samp{E0} both stand for the value of Eh (oxidation-redu
      oxidation potential \tab volt, [none] \tab \code{Eh}, \code{pe} \cr
      oxidation potential \tab volt, [none] \tab \code{E0}, \code{logfO2} \cr
   }
+
+Another use of the function is to convert the results from \code{\link{solubility}} into parts per billion, million, or thousand.
+These destination units are specified by \samp{ppb}, \samp{ppm}, or \samp{ppt}.
+Additionally, the logarithms can be chosen with \samp{logppb}, \samp{logppm}, and \samp{logppt}.
+See \code{\link{demo}("contour")} and \code{\link{demo}("sphalerite")} for examples.
 }
 
 \examples{\dontshow{reset()}
-## examples using convert
+### direct usage of convert
 # temperature (Kelvin) to degrees C
 convert(273.15, "C")
 # temperature (degrees C) to Kelvin
@@ -70,7 +75,7 @@ convert(10, "cal")
 # cm3bar to calories		
 convert(10, "calories")
 
-### examples showing unit settings
+### setting the units
 # make K the units for temperature arguments to subcrt() and affinity()
 T.units("K") 
 # return to default - degrees C

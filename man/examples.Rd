@@ -16,9 +16,9 @@
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
     "protbuff", "yeastgfp", "glycinate", "mosaic", "copper",
-    "arsenic", "solubility", "gold", "contour", "wjd", "bugstab",
-    "Shh", "saturation", "adenine", "DEW", "lambda", "TCA", "aluminum",
-    "bison", "AkDi"),
+    "arsenic", "solubility", "gold", "contour", "sphalerite", "wjd",
+    "bugstab", "Shh", "saturation", "adenine", "DEW", "lambda", "TCA",
+    "aluminum", "bison", "AkDi"),
     save.png=FALSE)
 }
 
@@ -50,6 +50,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{solubility} \tab Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
     \code{gold} \tab Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009) \cr
     \code{contour} \tab Gold solubility contours on a log fO2 - pH diagram (Williams-Jones et al., 2009) \cr
+    \code{sphalerite} \tab Solubility of sphalerite (Akinfiev and Tagirov, 2014) \cr
     \code{wjd} \tab \eqn{G}{G} minimization: prebiological atmospheres (Dayhoff et al., 1964) and cell periphery of yeast \cr
     \code{dehydration} \tab \logK of dehydration reactions; SVG file contains tooltips and links \cr
     \code{bugstab} \tab Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
@@ -87,6 +88,8 @@ However, \acronym{SUPCRT} does not output thermodynamic properties above 350 \de
 
 \references{
 Akinfiev, N. N. and Diamond, L. W. (2003) Thermodynamic description of aqueous nonelectrolytes at infinite dilution over a wide range of state parameters. \emph{Geochim. Cosmochim. Acta} \bold{67}, 613--629. \url{https://doi.org/10.1016/S0016-7037(02)01141-9}
+
+Akinfiev, N. N. and Tagirov, B. R. (2014) Zn in hydrothermal systems: Thermodynamic description of hydroxide, chloride, and hydrosulfide complexes. \emph{Geochem. Int.} \bold{52}, 197--214. \url{https://doi.org/10.1134/S0016702914030021}
 
 Akinfiev, N. N. and Zotov, A. V. (2001) Thermodynamic description of chloride, hydrosulfide, and hydroxo complexes of Ag(I), Cu(I), and Au(I) at temperatures of 25-500\degC and pressures of 1-2000 bar. \emph{Geochem. Int.} \bold{39}, 990--1006. \url{http://pleiades.online/cgi-perl/search.pl/?type=abstract&name=geochem&number=10&year=1&page=990}
 
