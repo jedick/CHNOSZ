@@ -1,5 +1,29 @@
-CHANGES IN CHNOSZ 1.3.2-16 (2019-05-29)
+CHANGES IN CHNOSZ 1.3.2-17 (2019-05-30)
 ---------------------------------------
+
+NEW FEATURES: ENERGY UNITS
+
+- The csv data files in OBIGT now have a column named "E_units", which
+  is used to specify the energy units for each species (cal or J).
+
+- The messages produced by checkGHS() and checkEOS() use cal or J
+  depending on the units in the database. 
+
+- TODO: adjust units of missing properties and subcrt() output.
+
+NEW FEATURES: SOLUBILITY UNITS
+
+- convert() now handles the output from solubility(), for converting
+  calculated concentrations to ppm or ppb.
+
+- diagram() has a new argument 'levels' for specifying the levels at
+  which to draw solubility contours.
+
+- demo/contour.R has been updated to show the 1, 10, 100, 1000 ppb
+  contours for Au solubility.
+
+- Add demo/sphalerite.R for calculations of solubility of sphalerite,
+  converted to log ppm (after Akinfiev and Tagirov, 2014).
 
 BUG FIXES
 
@@ -12,12 +36,6 @@ BUG FIXES
 
 - The 'mixing' argument of mosaic() has been removed; it is no longer
   needed with the improved handling of activities of basis species.
-
-NEW FEATURES: ENERGY UNITS
-
-- The csv data files in OBIGT now have a column named "E_units", which
-  is used to specify the energy units for each species (cal or J).
-  (Not operational yet).
 
 NEW FEATURES: MOSAIC
 
@@ -43,20 +61,6 @@ NEW FEATURES: MOSAIC
 - In mosaic(), include the relative abundances in each group of basis
   species in the output ('E.bases').
 
-NEW FEATURES: SOLUBILITY
-
-- convert() now handles the output from solubility(), for converting
-  calculated concentrations to ppm or ppb.
-
-- diagram() has a new argument 'levels' for specifying the levels at
-  which to draw solubility contours.
-
-- demo/contour.R has been updated to show the 1, 10, 100, 1000 ppb
-  contours for Au solubility.
-
-- Add demo/sphalerite.R for calculations of solubility of sphalerite,
-  converted to log ppm (after Akinfiev and Tagirov, 2014).
-
 OTHER CHANGES
 
 - Add function moles(), to calculate the total number of moles of
@@ -71,7 +75,7 @@ OTHER CHANGES
 - Add 'transect' argument to affinity(), to allow forcing transect mode
   for any number of values of the variables.
 
-- Correct the a1 value for acetamide (Shock, 1993). Thanks to Kirt
+- Correct the value of a1 for acetamide (Shock, 1993). Thanks to Kirt
   Robinson.
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)

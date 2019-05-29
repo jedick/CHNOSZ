@@ -111,6 +111,7 @@
     \item \code{RH98_Table15.csv} Group stoichiometries for high molecular weight crystalline and liquid organic compounds taken from Table 15 of Richard and Helgeson, 1998. The first three columns have the \code{compound} name, \code{formula} and physical \code{state} (\samp{cr} or \samp{liq}). The remaining columns have the numbers of each group in the compound; the names of the groups (columns) correspond to species in \code{\link{thermo}$obigt}. The compound named \samp{5a(H),14a(H)-cholestane} in the paper has been changed to \samp{5a(H),14b(H)-cholestane} here to match the group stoichiometry given in the table. See \code{\link{RH2obigt}} for a function that uses this file.
     \item \code{DLEN67.csv} Standard Gibbs energies of formation, in kcal/mol, from Dayhoff et al., 1967, for nitrogen (N2) plus 17 compounds shown in Fig. 2 of Dayhoff et al., 1964, at 300, 500, 700 and 1000 K. See \code{demo("wjd")} and the vignette \code{wjd.Rmd} for examples that use this file.
     \item \code{SK95.csv} contains thermodynamic data for alanate, glycinate, and their complexes with metals, taken from Shock and Koretsky (1995) as corrected in slop98.dat. The data are used in the package tests (\code{test-recalculate.R}) to check the recalculated values of G, H, and S in \code{thermo()$obigt} using properties for alanate and glycinate from Amend and Helgeson (1997).
+    \item \code{LA19_test.csv} contains thermodynamic data for dimethylamine and trimethylamine from LaRowe and Amend (2019) in energy units of both J and cal. This file is used in \code{test-util.data.R}) to check the messages produced by \code{\link{checkGHS}} and \code{\link{checkEOS}}.
   }
 
 
@@ -152,6 +153,8 @@ Hnědkovský, L., Wood, R. H. and Majer, V. (1996) Volumes of aqueous solutions 
 Hnědkovský, L. and Wood, R. H. (1997) Apparent molar heat capacities of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 304 K to 704 K at a pressure of 28 MPa. \emph{J. Chem. Thermodyn.} \bold{29}, 731--747. \url{https://doi.org/10.1006/jcht.1997.0192}
 
 Joint Genome Institute (2007) Bison Pool Environmental Genome. Protein sequence files downloaded from IMG/M (\url{https://img.jgi.doe.gov/})
+
+LaRowe, D. E. and Amend, J. P. (2019) The energetics of fermentation in natural settings. \emph{Geomicrobiol. J.} \bold{36}, 492--505. \url{https://doi.org/10.1080/01490451.2019.1573278}
 
 Merino, E. (1975) Diagenesis in teriary sandstones from Kettleman North Dome, California. II. Interstitial solutions: distribution of aqueous species at 100&deg;C and chemical relation to diagenetic mineralogy. \emph{Geochim. Cosmochim. Acta} \bold{39}, 1629--1645. \url{https://doi.org/10.1016/0016-7037(75)90085-X}
 

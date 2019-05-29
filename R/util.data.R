@@ -1,6 +1,9 @@
 # CHNOSZ/util.data.R
 # check entries in the thermodynamic database
 
+## if this file is interactively sourced, the following are also needed to provide unexported functions:
+#source("util.formula.R")
+
 thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
   ## return references for thermodynamic data.
   ## 20110615 browse.refs() first version
@@ -172,7 +175,7 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
       refval <- eos$Cp
       calcval <- eos$c1 + eos$c2/(298.15-Theta)^2 + eos$omega*298.15*X
       tol <- thermo$opt$Cp.tol
-      units <- "cal K-1 mol-1"
+      units <- paste(eos$E_units, "K-1 mol-1")
     } else if(prop=="V") {
       # value of Q consistent with IAPWS95
       Q <- 0.00002483137
@@ -181,6 +184,7 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
       refval <- eos$V
       calcval <- 41.84*eos$a1 + 41.84*eos$a2/2601 + 
         (41.84*eos$a3 + 41.84*eos$a4/2601) / (298.15-Theta) - Q * eos$omega
+      if(eos$E_units == "J") calcval <- convert(calcval, "cal")
       tol <- thermo$opt$V.tol
       units <- "cm3 mol-1"
     }
@@ -191,7 +195,7 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
       Tr <- 298.15
       calcval <- eos$a + eos$b*Tr + eos$c*Tr^-2 + eos$d*Tr^-0.5 + eos$e*Tr^2 + eos$f*Tr^eos$lambda
       tol <- thermo$opt$Cp.tol
-      units <- "cal K-1 mol-1"
+      units <- paste(eos$E_units, "K-1 mol-1")
     }
   }
   # calculate the difference
@@ -226,6 +230,7 @@ checkGHS <- function(ghs, ret.diff=FALSE) {
     message("checkGHS: formula of ", ghs$name[ina], "(", ghs$state[ina], ") is NA")
     Se <- NA
   } else Se <- entropy(as.character(ghs$formula))
+  if(ghs$E_units == "J") Se <- convert(Se, "J")
   refval <- ghs$G
   DH <- ghs$H
   S <- ghs$S
@@ -240,12 +245,12 @@ checkGHS <- function(ghs, ret.diff=FALSE) {
       diff <- calcval - refval
       if(abs(diff) > thermo$opt$G.tol) {
         message(paste("checkGHS: G of ", ghs$name, " ", ghs$state, " (", rownames(ghs),
-          ") differs by ", round(diff), " cal mol-1 from tabulated value", sep=""))
+          ") differs by ", round(diff), " ", ghs$E_units, " mol-1 from tabulated value", sep=""))
         return(calcval)
       }
     } else return(calcval)
   } else {
-    # calculating a value of G failed, perhaps b/c of missing elements
+    # calculating a value of G failed, perhaps because of missing elements
     return(NULL)
   }
   # return NA in most cases
@@ -391,10 +396,11 @@ dumpdata <- function(file=NULL) {
 # Take a data frame in the format of thermo$obigt of one or more rows,
 #   remove scaling factors from equations-of-state parameters,
 #   and apply new column names depending on the state.
+# And convert energy units from J to cal (used by subcrt()) 20190530
 # If fixGHS is TRUE a missing one of G, H or S for any species is calculated
 #   from the other two and the chemical formula of the species.
 # This function is used by both info and subcrt when retrieving entries from the thermodynamic database.
-obigt2eos <- function(obigt,state,fixGHS=FALSE) {
+obigt2eos <- function(obigt, state, fixGHS = FALSE, tocal = FALSE) {
   # remove scaling factors from EOS parameters
   # and apply column names depending on the EOS
   if(identical(state, "aq")) {
@@ -413,17 +419,23 @@ obigt2eos <- function(obigt,state,fixGHS=FALSE) {
     obigt[,14:21] <- t(t(obigt[,14:21]) * 10^c(0,-3,5,0,-5,0,0,0))
     colnames(obigt)[14:21] <- c('a','b','c','d','e','f','lambda','T')
   }
+  if(tocal) {
+    # convert values from Joules to calories 20190530
+    iJ <- obigt$E_units=="J"
+    if(any(iJ)) obigt[iJ, c(9:12, 14:20)] <- convert(obigt[iJ, c(9:12, 14:20)], "cal")
+  }
   if(fixGHS) {
     # fill in one of missing G, H, S
     # for use esp. by subcrt because NA for one of G, H or S 
-    # will hamper calculations at high T
+    # will preclude calculations at high T
     # which entries are missing just one
     imiss <- which(rowSums(is.na(obigt[,9:11]))==1)
     if(length(imiss) > 0) {
       for(i in 1:length(imiss)) {
         # calculate the missing value from the others
         ii <- imiss[i]
-        GHS <- as.numeric(GHS(as.character(obigt$formula[ii]),G=obigt[ii,9],H=obigt[ii,10],S=obigt[ii,11]))
+        GHS <- as.numeric(GHS(as.character(obigt$formula[ii]), G=obigt[ii,9], H=obigt[ii,10], S=obigt[ii,11],
+                              E_units = ifelse(tocal, "cal", obigt$E_units[ii])))
         icol <- which(is.na(obigt[ii,9:11]))
         obigt[ii,icol+8] <- GHS[icol]
       }

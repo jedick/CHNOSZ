@@ -54,7 +54,8 @@ An error results if the formula is not valid (i.e. can not be parsed by\code{\li
 Additional arguments refer to the name of the property(s) to be updated and are matched to any part of compound column names in \code{\link{thermo}$obigt}, such as \samp{z} or \samp{T} in \samp{z.T}.
 Unless \samp{state} is specified as one of the properties, its value is taken from \code{thermo()$opt$state}.
 When adding species, properties that are not specified become NA, except for \samp{state}, which takes a default value from \code{thermo()$opt$state}, and \samp{z.T}, which for aqueous species is set to the charge calculated from the chemical formula (otherwise, NA charge for newly added species would trigger the \code{\link{AkDi}} model).
-The values provided should be in the units specifed in the documentation for the \code{thermo} data object, including any order-of-magnitude scaling factors.
+The values provided should have energy units correponding to the current setting (\code{\link{E.units}}), but this can be overridden by giving a value for \samp{E_units} in the new data.
+The values provided should also include any order-of-magnitude scaling factors (see \code{\link{thermo}}).
 
 \code{today} returns the current date in the format adopted for \code{thermo()$obigt} (inherited from SUPCRT-format data files) e.g. \samp{13.May.12} for May 13, 2012.
 }

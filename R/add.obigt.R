@@ -63,6 +63,8 @@ mod.obigt <- function(...) {
     newrows$state <- thermo$opt$state
     # the formula defaults to the name
     newrows$formula <- args$name[inew]
+    # the units should also be set 20190530
+    newrows$E_units <- thermo$opt$E.units
     # fill in the columns
     newrows[, icol] <- args[inew, ]
     # now check the formulas
@@ -89,7 +91,7 @@ mod.obigt <- function(...) {
     ntotal <- nrow(thermo$obigt)
     ispecies[inew] <- (ntotal-length(inew)+1):ntotal
     # inform user
-    message(paste("mod.obigt: added ", newrows$name, "(", newrows$state, ")", sep="", collapse="\n"))
+    message(paste("mod.obigt: added ", newrows$name, "(", newrows$state, ")", " with energy units of ", newrows$E_units, sep="", collapse="\n"))
   }
   if(length(iold) > 0) {
     # loop over species

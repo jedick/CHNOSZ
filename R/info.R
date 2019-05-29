@@ -1,7 +1,7 @@
 # CHNOSZ/info.R
 # search database for species names or formulas
 # and retrieve thermodynamic properties of species
-# 20061024 extraced from species.R jmd
+# 20061024 extracted from species.R jmd
 # 20120507 code rewrite and split into info.[character,approx,numeric];
 #   these functions expect arguments of length 1; 
 #   info() handles longer arguments
@@ -201,7 +201,7 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   # now perform consistency checks for GHS and EOS parameters if check.it=TRUE
   # don't do it for the AkDi species 20190219
   if(check.it & !"xi" %in% colnames(this)) {
-    # check GHS if they were all present
+    # check GHS if they are all present
     if(sum(naGHS)==0) calcG <- checkGHS(this)
     # check tabulated heat capacities against EOS parameters
     calcCp <- checkEOS(this, this$state, "Cp")

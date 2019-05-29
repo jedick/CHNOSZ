@@ -34,14 +34,6 @@ test_that("RH2obigt() gives group additivity results consistent with database va
   expect_true(max(abs(obigt.calc$a3.c - obigt.ref$a3.c)) < 1e-14)
 })
 
-test_that("add.obigt() is backwards compatibile for a file that doesn't have an E_units column", {
-  file <- system.file("extdata/adds/BZA10.csv", package="CHNOSZ")
-  rc <- read.csv(file)
-  expect_false("E_units" %in% colnames(rc))
-  inew <- add.obigt(file)
-  expect_true(unique(info(inew)$E_units) == "cal")
-})
-
 test_that("add.obigt() replaces existing entries without changing species index", {
   # store the original species index of CdCl2
   iCdCl2 <- info("CdCl2", "aq")
@@ -62,6 +54,27 @@ test_that("reset() and obigt() produce the same database", {
   obigt()
   d2 <- thermo()$obigt
   expect_equal(d1, d2)
+})
+
+test_that("add.obigt() is backwards compatibile for a file that doesn't have an E_units column", {
+  # test added 20190529
+  file <- system.file("extdata/adds/BZA10.csv", package="CHNOSZ")
+  rc <- read.csv(file)
+  expect_false("E_units" %in% colnames(rc))
+  inew <- add.obigt(file)
+  expect_true(unique(info(inew)$E_units) == "cal")
+})
+
+test_that("we get consistent messages for cal and J", {
+  # add data for dimethylamine and trimethylamine in different units (cal or J)
+  # TODO: and with missing values for G, Cp, and V
+  add.obigt(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ"))
+  expect_message(info(info("DMA_cal")), "-1.92 cal")
+  expect_message(info(info("DMA_J")), "-8.02 J")
+  # for TMA, only a checkGHS message for the entry in J is produced,
+  # because it's above the threshold of 100 set in thermo()$opt$G.tol
+  expect_silent(info(info("TMA_cal")))
+  expect_message(info(info("TMA_J")), "-102 J")
 })
 
 # reference

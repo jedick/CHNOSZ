@@ -80,7 +80,7 @@ entropy <- function(formula) {
   return(entropy)
 }
 
-GHS <- function(formula, G=NA, H=NA, S=NA, T=298.15) {
+GHS <- function(formula, G=NA, H=NA, S=NA, T=298.15, E_units = "cal") {
   # for all NA in G, H and S, do nothing
   # for no  NA in G, H and S, do nothing
   # for one NA in G, H and S, calculate its value from the other two:
@@ -92,6 +92,7 @@ GHS <- function(formula, G=NA, H=NA, S=NA, T=298.15) {
     stop("formula, G, H and S arguments are not same length")
   # calculate Se (entropy of elements)
   Se <- entropy(formula)
+  if(E_units == "J") Se <- convert(Se, "J")
   # calculate one of G, H, or S if the other two are given
   GHS <- lapply(seq_along(G), function(i) {
     G <- G[i]

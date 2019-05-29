@@ -38,7 +38,10 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
   \itemize{
      
     \item \code{thermo()$opt} 
-    List of computational settings. Square brackets indicate default values.
+    List of computational settings.
+    Square brackets indicate default values.
+    Note that the units of \code{G.tol} and \code{Cp.tol} depend on the \code{E_units} for each species in \code{thermo()$obigt}.
+    Therefore, species with \code{E_units} of \samp{J} have a lower absolute tolerance for producing messages (because Joules are smaller than calories).
     \tabular{lll}{
       \code{cutoff} \tab numeric \tab Cutoff below which values are taken to be zero [1e-10] (see \code{\link{makeup}})\cr
       \code{E.units} \tab character \tab The user's units of energy ([\samp{cal}] or \samp{J}) (see \code{\link{subcrt}})\cr
