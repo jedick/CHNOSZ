@@ -14,7 +14,7 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
   for(k in 1:nrow(parameters)) {
     # the parameters for *this* species
     PAR <- parameters[k, ]
-    if(all(is.na(PAR[8:20]))) {
+    if(all(is.na(PAR[9:21]))) {
       # use Berman equations (parameters not in thermo$obigt)
       properties <- berman(PAR$name, T=T, P=P, thisinfo=PAR)
       iprop <- match(property, colnames(properties))
@@ -29,10 +29,10 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
       colnames(values) <- property
       # a test for availability of heat capacity coefficients (a, b, c, d, e, f)
       # based on the column assignments in thermo$obigt
-      if(any(!is.na(PAR[, 13:18]))) {
+      if(any(!is.na(PAR[, 14:19]))) {
         # we have at least one of the heat capacity coefficients;
         # zero out any NA's in the rest (leave lambda and T of transition (columns 19-20) alone)
-        PAR[, 13:18][, is.na(PAR[, 13:18])] <- 0
+        PAR[, 14:19][, is.na(PAR[, 14:19])] <- 0
         # calculate the heat capacity and its integrals
         Cp <- PAR$a + PAR$b*T + PAR$c*T^-2 + PAR$d*T^-0.5 + PAR$e*T^2 + PAR$f*T^PAR$lambda
         intCpdT <- PAR$a*(T - Tr) + PAR$b*(T^2 - Tr^2)/2 + PAR$c*(1/T - 1/Tr)/-1 + PAR$d*(T^0.5 - Tr^0.5)/0.5 + PAR$e*(T^3-Tr^3)/3

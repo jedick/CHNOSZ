@@ -47,8 +47,8 @@ mod.obigt <- function(...) {
   icol <- match(names(args), cnames)
   if(any(is.na(icol))) stop(paste("properties not in thermo$obigt:", paste(names(args)[is.na(icol)], collapse=" ")) )
   # the column numbers for properties that matched after the split
-  icol[icol > 40] <- icol[icol > 40] - 40
-  icol[icol > 20] <- icol[icol > 20] - 20
+  icol[icol > 42] <- icol[icol > 42] - 42
+  icol[icol > 21] <- icol[icol > 21] - 21
   # which species are new and which are old
   inew <- which(is.na(ispecies))
   iold <- which(!is.na(ispecies))
@@ -129,8 +129,11 @@ add.obigt <- function(file, species=NULL, force=TRUE, E.units="cal") {
     if(length(isys)==1) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package="CHNOSZ")
   }
   # read data from the file
-  # we need explicit colClasses here to avoid automatic detection as character for long numeric values in R 3.1.0  20190302
-  to2 <- read.csv(file, as.is=TRUE, colClasses=c(rep("character", 7), rep("numeric", 13)))
+#  # we need explicit colClasses here to avoid automatic detection as character for long numeric values in R 3.1.0  20190302
+#  to2 <- read.csv(file, as.is=TRUE, colClasses=c(rep("character", 7), rep("numeric", 13)))
+  to2 <- read.csv(file, as.is=TRUE)
+  # add E_units column if it's missing 20190529
+  if(!"E_units" %in% colnames(to2)) to2 <- data.frame(to2[, 1:7], E_units = "cal", to2[, 8:20], stringsAsFactors = FALSE)
   # load only selected species if requested
   if(!is.null(species)) {
     idat <- match(species, to2$name)

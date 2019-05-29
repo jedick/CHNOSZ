@@ -40,6 +40,8 @@ Set \code{force} to FALSE to avoid replacing species that are present in (\code{
 Given the default setting of \code{E.units}, the function does not perform any unit conversions.
 If \code{E.units} is set to \samp{J}, then the thermodynamic parameters are converted from units of Joules to calories, as used in the CHNOSZ database. 
 
+For backwards compatibility, the \code{E_units} column of the input can be missing; then, it is assigned a value of \samp{cal}.
+
 When adding species, there is no attempt made to keep the order of physical states in the database (aq-cr-liq-gas); the function simply adds new rows to the end of \code{thermo}$obigt.
 As a result, retrieving the properties of an added aqueous species using \code{\link{info}} requires an explicit \code{state="aq"} argument to that function if a species with the same name is present in one of the cr, liq or gas states.
 

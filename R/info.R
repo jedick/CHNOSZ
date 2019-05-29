@@ -6,6 +6,9 @@
 #   these functions expect arguments of length 1; 
 #   info() handles longer arguments
 
+## if this file is interactively sourced, the following are also needed to provide unexported functions:
+#source("util.data.R")
+
 info <- function(species=NULL, state=NULL, check.it=TRUE) {
   ## return information for one or more species in thermo$obigt
   ## if no species are requested, summarize the available data  20101129
@@ -186,14 +189,14 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   # use new obigt2eos function here
   this <- obigt2eos(this, this$state)
   # identify any missing GHS values
-  naGHS <- is.na(this[8:10])
+  naGHS <- is.na(this[9:11])
   # a missing one of G, H or S can cause problems for subcrt calculations at high T
   if(sum(naGHS)==1) {
     # calculate a single missing one of G, H, or S from the others
-    GHS <- as.numeric(GHS(as.character(this$formula), G=this[,8], H=this[,9], S=this[,10]))
-    message("info.numeric: ", colnames(this)[8:10][naGHS], " of ",
+    GHS <- as.numeric(GHS(as.character(this$formula), G=this[,9], H=this[,10], S=this[,11]))
+    message("info.numeric: ", colnames(this)[9:11][naGHS], " of ",
       this$name, "(", this$state, ") is NA; set to ", round(GHS[naGHS],2))
-    this[, which(naGHS)+7] <- GHS[naGHS]
+    this[, which(naGHS)+8] <- GHS[naGHS]
   } 
   # now perform consistency checks for GHS and EOS parameters if check.it=TRUE
   # don't do it for the AkDi species 20190219

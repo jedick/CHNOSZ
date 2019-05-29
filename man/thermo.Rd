@@ -106,7 +106,7 @@ This process was repeated as necessary to generate the standard molar properties
 A consequence of tabulating the standard molar thermodynamic properties of the phase species is that the values of \eqn{(dP/dT)} and \eqn{{\Delta}H^{\circ}}{DeltaH0} of phase transitions can be calculated using the equations of state and therefore do not need to be stored in the thermodynamic database.
 However, the transition temperatures (\eqn{T_{tr}}{Ttr}) generally can not be assessed by comparing the Gibbs energies of phase species and are tabulated in the database.
 
-The identification of species and their standard molal thermodynamic properties at 25 \degC and 1 bar are located in the first 12 columns of \code{thermo()$obigt}:
+The identification of species and their standard molal thermodynamic properties at 25 \degC and 1 bar are located in the first 13 columns of \code{thermo()$obigt}:
 
     \tabular{lll}{
       \code{name}     \tab character \tab Species name\cr
@@ -116,6 +116,7 @@ The identification of species and their standard molal thermodynamic properties 
       \code{ref1}  \tab character \tab Primary source\cr
       \code{ref2}  \tab character \tab Secondary source\cr
       \code{date}     \tab character \tab Date of data entry (formatted as in SUPCRT92)\cr
+      \code{E_units}     \tab character \tab Units of energy: cal or J\cr
       \code{G}        \tab numeric   \tab Standard molal Gibbs energy of formation\cr
       \tab \tab from the elements (cal mol\eqn{^{-1}}{^-1})\cr
       \code{H}        \tab numeric   \tab Standard molal enthalpy of formation\cr

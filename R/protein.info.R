@@ -82,8 +82,8 @@ protein.obigt <- function(protein, organism=NULL, state=thermo()$opt$state) {
   obigt <- get("thermo", CHNOSZ)$obigt
   obigt_state <- paste(obigt$name, obigt$state)
   igroup <- match(groups_state, obigt_state)
-  # the properties are in columns 8-20 of thermo$obigt
-  groupprops <- obigt[igroup, 8:20]
+  # the properties are in columns 9-21 of thermo$obigt
+  groupprops <- obigt[igroup, 9:21]
   # the elements in each of the groups
   groupelements <- i2A(igroup)
   # a function to work on a single row of aa
@@ -110,7 +110,7 @@ protein.obigt <- function(protein, organism=NULL, state=thermo()$opt$state) {
     message(name, " (", f, ", ", appendLF=FALSE)
     message(round(length, 3), " residues)")
     ref <- aa$ref
-    header <- data.frame(name=name, abbrv=NA, formula=f, state=state, ref1=ref, ref2=NA, date=NA, stringsAsFactors=FALSE)
+    header <- data.frame(name=name, abbrv=NA, formula=f, state=state, ref1=ref, ref2=NA, date=NA, E_units = "cal", stringsAsFactors=FALSE)
     eosout <- cbind(header, eos)
     return(eosout)
   }

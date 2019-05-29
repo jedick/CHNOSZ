@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-15 (2019-05-29)
+CHANGES IN CHNOSZ 1.3.2-16 (2019-05-29)
 ---------------------------------------
 
 BUG FIXES
@@ -12,6 +12,12 @@ BUG FIXES
 
 - The 'mixing' argument of mosaic() has been removed; it is no longer
   needed with the improved handling of activities of basis species.
+
+NEW FEATURES: ENERGY UNITS
+
+- The csv data files in OBIGT now have a column named "E_units", which
+  is used to specify the energy units for each species (cal or J).
+  (Not operational yet).
 
 NEW FEATURES: MOSAIC
 

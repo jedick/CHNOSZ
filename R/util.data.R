@@ -226,9 +226,9 @@ checkGHS <- function(ghs, ret.diff=FALSE) {
     message("checkGHS: formula of ", ghs$name[ina], "(", ghs$state[ina], ") is NA")
     Se <- NA
   } else Se <- entropy(as.character(ghs$formula))
-  refval <- ghs[,8]
-  DH <- ghs[,9]
-  S <- ghs[,10]
+  refval <- ghs$G
+  DH <- ghs$H
+  S <- ghs$S
   Tr <- 298.15
   calcval <- DH - Tr * (S - Se)
   # now on to the comparison
@@ -352,7 +352,7 @@ RH2obigt <- function(compound=NULL, state="cr", file=system.file("extdata/adds/R
     ina <- is.na(ispecies)
     if(any(ina)) stop(paste("group(s)", paste(colnames(thisdat)[igroup][ina], collapse=" "), "not found in", thisdat$state, "state"))
     # group additivity of properties and parameters: add contributions from all groups
-    thiseos <- t(colSums(get("thermo", CHNOSZ)$obigt[ispecies, 8:20] * as.numeric(thisdat[, igroup])))
+    thiseos <- t(colSums(get("thermo", CHNOSZ)$obigt[ispecies, 9:21] * as.numeric(thisdat[, igroup])))
     # group additivity of chemical formula
     formula <- as.chemical.formula(colSums(i2A(ispecies) * as.numeric(thisdat[, igroup])))
     # check if the formula is the same as in the file
@@ -360,7 +360,7 @@ RH2obigt <- function(compound=NULL, state="cr", file=system.file("extdata/adds/R
       stop(paste("formula", formula, "of", comate.dat[i], "(from groups) is not identical to", thisdat$formula, "(listed in file)" ))
     # build the front part of obigt data frame
     thishead <- data.frame(name=thisdat$compound, abbrv=NA, formula=formula, state=thisdat$state, 
-      ref1=NA, ref2=NA, date=today(), stringsAsFactors=FALSE)
+      ref1=NA, ref2=NA, date=today(), E_units = "cal", stringsAsFactors=FALSE)
     # insert the result into the output
     out <- rbind(out, cbind(thishead, thiseos))
   }
@@ -399,33 +399,33 @@ obigt2eos <- function(obigt,state,fixGHS=FALSE) {
   # and apply column names depending on the EOS
   if(identical(state, "aq")) {
     # species in the Akinfiev-Diamond model (AkDi) have NA for Z 20190219
-    isAkDi <- is.na(obigt[, 20])
+    isAkDi <- is.na(obigt[, 21])
     # remove scaling factors for the HKF species, but not for the AkDi species
     # protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
     # (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302
-    if(any(!isAkDi)) obigt[!isAkDi, 13:20] <- t(t(obigt[!isAkDi, 13:20]) * 10^c(-1,2,0,4,0,4,5,0))
+    if(any(!isAkDi)) obigt[!isAkDi, 14:21] <- t(t(obigt[!isAkDi, 14:21]) * 10^c(-1,2,0,4,0,4,5,0))
     # for AkDi species, set NA values in remaining columns (for display only)
-    if(any(isAkDi)) obigt[isAkDi, 16:19] <- NA
+    if(any(isAkDi)) obigt[isAkDi, 17:20] <- NA
     # if all of the species are AkDi, change the variable names
-    if(all(isAkDi)) colnames(obigt)[13:20] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
-    else colnames(obigt)[13:20] <- c('a1','a2','a3','a4','c1','c2','omega','Z') 
+    if(all(isAkDi)) colnames(obigt)[14:21] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
+    else colnames(obigt)[14:21] <- c('a1','a2','a3','a4','c1','c2','omega','Z') 
   } else {
-    obigt[,13:20] <- t(t(obigt[,13:20]) * 10^c(0,-3,5,0,-5,0,0,0))
-    colnames(obigt)[13:20] <- c('a','b','c','d','e','f','lambda','T')
+    obigt[,14:21] <- t(t(obigt[,14:21]) * 10^c(0,-3,5,0,-5,0,0,0))
+    colnames(obigt)[14:21] <- c('a','b','c','d','e','f','lambda','T')
   }
   if(fixGHS) {
     # fill in one of missing G, H, S
     # for use esp. by subcrt because NA for one of G, H or S 
     # will hamper calculations at high T
     # which entries are missing just one
-    imiss <- which(rowSums(is.na(obigt[,8:10]))==1)
+    imiss <- which(rowSums(is.na(obigt[,9:11]))==1)
     if(length(imiss) > 0) {
       for(i in 1:length(imiss)) {
         # calculate the missing value from the others
         ii <- imiss[i]
-        GHS <- as.numeric(GHS(as.character(obigt$formula[ii]),G=obigt[ii,8],H=obigt[ii,9],S=obigt[ii,10]))
-        icol <- which(is.na(obigt[ii,8:10]))
-        obigt[ii,icol+7] <- GHS[icol]
+        GHS <- as.numeric(GHS(as.character(obigt$formula[ii]),G=obigt[ii,9],H=obigt[ii,10],S=obigt[ii,11]))
+        icol <- which(is.na(obigt[ii,9:11]))
+        obigt[ii,icol+8] <- GHS[icol]
       }
     }
   }

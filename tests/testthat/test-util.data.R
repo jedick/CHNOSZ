@@ -34,6 +34,14 @@ test_that("RH2obigt() gives group additivity results consistent with database va
   expect_true(max(abs(obigt.calc$a3.c - obigt.ref$a3.c)) < 1e-14)
 })
 
+test_that("add.obigt() is backwards compatibile for a file that doesn't have an E_units column", {
+  file <- system.file("extdata/adds/BZA10.csv", package="CHNOSZ")
+  rc <- read.csv(file)
+  expect_false("E_units" %in% colnames(rc))
+  inew <- add.obigt(file)
+  expect_true(unique(info(inew)$E_units) == "cal")
+})
+
 test_that("add.obigt() replaces existing entries without changing species index", {
   # store the original species index of CdCl2
   iCdCl2 <- info("CdCl2", "aq")
