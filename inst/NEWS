@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-14 (2019-05-27)
+CHANGES IN CHNOSZ 1.3.2-15 (2019-05-29)
 ---------------------------------------
 
 BUG FIXES
@@ -64,6 +64,9 @@ OTHER CHANGES
 
 - Add 'transect' argument to affinity(), to allow forcing transect mode
   for any number of values of the variables.
+
+- Correct the a1 value for acetamide (Shock, 1993). Thanks to Kirt
+  Robinson.
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)
 ------------------------------------

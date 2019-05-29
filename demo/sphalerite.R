@@ -1,6 +1,6 @@
-# chnosz/demo/sphalerite.R
+# CHNOSZ/demo/sphalerite.R
 # sphalerite solubility after Akinfiev and Tagirov, 2014, Fig. 13
-# 20190526
+# 20190526 jmd initial version
 
 # set up chemical system
 basis(c("ZnS", "Cl-", "H2S", "H2O", "O2", "H+"))

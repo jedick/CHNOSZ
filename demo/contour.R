@@ -34,8 +34,8 @@ diagram(m$A.bases, add=TRUE, col = "red", col.names = "red", limit.water = FALSE
 diagram(m$A.species, add=TRUE, col = "blue", col.names = "blue", limit.water = FALSE, lwd = 2, bold = TRUE)
 # add legend and title
 dP <- describe.property(c("T", "P"), c(250, 500))
-legend("top", dP, bty = "n")
+legend("top", dP, bty = "n", inset = c(0, 0.06))
 dNaCl <- expression(NaCl == 1~mol~kg^-1)
 dS <- expression(sum(S) ~"in basis" == 0.01~mol~kg^-1)
-legend("topright", c(dNaCl, dS), bty = "n")
-title(main = ("After Williams-Jones et al., 2009, Fig. 3"), font.main = 1)
+legend("topright", c(dNaCl, dS), bty = "n", inset = c(0, 0.05))
+title(main = ("Solubility of gold (ppb), after Williams-Jones et al., 2009, Fig. 3"), font.main = 1)
