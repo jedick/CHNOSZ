@@ -9,7 +9,7 @@ Add or modify species in the thermodynamic database.
 }
 
 \usage{
-  add.obigt(file, species = NULL, force = TRUE, E.units = "cal")
+  add.obigt(file, species = NULL, force = TRUE)
   mod.obigt(...)
   today()
 }
@@ -18,13 +18,13 @@ Add or modify species in the thermodynamic database.
   \item{file}{character, path to a file}
   \item{species}{character, names of species to load from file}
   \item{force}{logical, force replacement of already existing species?}
-  \item{E.units}{character, units of energy, \samp{cal} or \samp{J}}
   \item{...}{character or numeric, properties of species to modify in the thermodynamic database}
 }
 
 \details{
 \code{\link{add.obigt}} is used to update the thermodynamic database (\code{\link{thermo}$obigt}) in the running session.
 The format (column names) of the specified file must be the same as the \code{extdata/OBIGT/*.csv} files provided with CHNOSZ.
+Howvever, for backwards compatibility, the \code{E_units} column of the input can be missing; then, it is assigned a value of \samp{cal}.
 
 \code{file} is first matched against the names of files in the \code{extdata/OBIGT} directory packaged with CHNOSZ.
 In this case, the filename suffixes are removed, so \samp{DEW_aq}, \samp{organic_aq}, and \samp{organic_cr} are valid names.
@@ -37,12 +37,7 @@ If \code{species} is given and matches the name(s) of species in the file, only 
 By default, species in the file replace any existing species having the same combination of name and state.
 Set \code{force} to FALSE to avoid replacing species that are present in (\code{thermo()$obigt}).
 
-Given the default setting of \code{E.units}, the function does not perform any unit conversions.
-If \code{E.units} is set to \samp{J}, then the thermodynamic parameters are converted from units of Joules to calories, as used in the CHNOSZ database. 
-
-For backwards compatibility, the \code{E_units} column of the input can be missing; then, it is assigned a value of \samp{cal}.
-
-When adding species, there is no attempt made to keep the order of physical states in the database (aq-cr-liq-gas); the function simply adds new rows to the end of \code{thermo}$obigt.
+When adding (not replacing) species, there is no attempt made to keep the order of physical states in the database (aq-cr-liq-gas); the function simply adds new rows to the end of \code{thermo}$obigt.
 As a result, retrieving the properties of an added aqueous species using \code{\link{info}} requires an explicit \code{state="aq"} argument to that function if a species with the same name is present in one of the cr, liq or gas states.
 
 \code{mod.obigt} changes one or more of the properties of species or adds species to the thermodynamic database.

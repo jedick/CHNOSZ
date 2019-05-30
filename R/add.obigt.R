@@ -112,7 +112,7 @@ mod.obigt <- function(...) {
   return(ispecies)
 }
 
-add.obigt <- function(file, species=NULL, force=TRUE, E.units="cal") {
+add.obigt <- function(file, species=NULL, force=TRUE) {
   # add/replace entries in thermo$obigt from values saved in a file
   # only replace if force==TRUE
   thermo <- get("thermo", CHNOSZ)
@@ -151,20 +151,6 @@ add.obigt <- function(file, species=NULL, force=TRUE, E.units="cal") {
   does.exist <- id2 %in% id1
   ispecies.exist <- na.omit(match(id2, id1))
   nexist <- sum(does.exist)
-  # convert from J if necessary
-  if(tolower(E.units)=="j") {
-    # loop over each row
-    for(i in 1:nrow(to2)) {
-      # GHS and EOS parameters
-      icol <- (8:18)
-      # if it's aqueous, also include omega
-      if(to2$state[i]=="aq") icol <-(8:19)
-      # don't touch volume (in column 12)
-      icol <- icol[icol!=12]
-      # convert to calories
-      to2[i,icol] <- convert(to2[i,icol],"cal")
-    }
-  }
   # keep track of the species we've added
   inew <- numeric()
   if(force) {
@@ -188,8 +174,10 @@ add.obigt <- function(file, species=NULL, force=TRUE, E.units="cal") {
   thermo$obigt <- to1
   rownames(thermo$obigt) <- 1:nrow(thermo$obigt)
   assign("thermo", thermo, CHNOSZ)
+  # give the user a message
+  Etxt <- paste(unique(to2$E_units), collapse = " and ")
   message("add.obigt: read ", length(does.exist), " rows; made ", 
-    nexist, " replacements, ", nrow(to2), " additions, units = ", E.units)
+    nexist, " replacements, ", nrow(to2), " additions [energy units: ", Etxt, "]")
   message("add.obigt: use obigt() or reset() to restore default database")
   return(invisible(inew))
 }
