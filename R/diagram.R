@@ -24,7 +24,7 @@ diagram <- function(
   # sizes
   cex=par("cex"), cex.names=1, cex.axis=par("cex"),
   # line styles
-  lty=NULL, lwd=par("lwd"), dotted=NULL, spline.method=NULL, contour.method="edge", levels=NULL,
+  lty=NULL, lty.cr=NULL, lwd=par("lwd"), dotted=NULL, spline.method=NULL, contour.method="edge", levels=NULL,
   # colors
   col=par("col"), col.names=par("col"), fill=NULL,
   fill.NA="gray80", limit.water=TRUE,
@@ -228,7 +228,8 @@ diagram <- function(
     ## make up some names for lines/fields if they are missing
     is.pname <- FALSE
     onames <- names
-    if(missing(names) | all(is.numeric(names))) {
+    if(isTRUE(is.na(names)) | isFALSE(names)) names <- ""
+    else if(is.null(names) | all(is.numeric(names)) | isTRUE(names)) {
       # properties of basis species or reactions?
       if(eout$property %in% c("G.basis", "logact.basis")) names <- rownames(eout$basis)
       else {
@@ -256,8 +257,8 @@ diagram <- function(
     }
     # numeric values indicate a subset 20181007
     if(all(is.numeric(onames))) {
-      if(all(onames > 0)) names[-onames] <- ""
-      else if(all(onames < 0)) names[-onames] <- ""
+      if(isTRUE(all(onames > 0))) names[-onames] <- ""
+      else if(isTRUE(all(onames < 0))) names[-onames] <- ""
       else stop("numeric 'names' should be all positive or all negative")
     }
 
@@ -510,12 +511,16 @@ diagram <- function(
               # loop in case contourLines returns multiple lines
               for(k in 1:length(cLines)) {
                 # draw the lines
-                lines(cLines[[k]][2:3], lty=lty, col=col, lwd=lwd)
+                if(!is.null(lty.cr)) {
+                  # use lty.cr for cr-cr boundaries 20190530
+                  if(all(grepl("cr", eout$species$state[c(zvals[i], zvals[j])]))) lines(cLines[[k]][2:3], lty=lty.cr, col=col, lwd=lwd)
+                  else lines(cLines[[k]][2:3], lty=lty, col=col, lwd=lwd)
+                } else lines(cLines[[k]][2:3], lty=lty, col=col, lwd=lwd)
                 # keep the x and y values (list components 2 and 3)
                 linesout[[iout]] <- cLines[[k]][[2]]
-                names(linesout)[iout] <- paste0("x", k, "_", i, ".", j)
+                names(linesout)[iout] <- paste0("x", k, "_", zvals[i], ".", zvals[j])
                 linesout[[iout+1]] <- cLines[[k]][[3]]
-                names(linesout)[iout+1] <- paste0("y", k, "_", i, ".", j)
+                names(linesout)[iout+1] <- paste0("y", k, "_", zvals[i], ".", zvals[j])
                 iout <- iout + 2
               }
             }

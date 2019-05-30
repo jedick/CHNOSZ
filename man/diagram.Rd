@@ -22,7 +22,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
     # character sizes
     cex = par("cex"), cex.names = 1, cex.axis = par("cex"),
     # line styles
-    lty = NULL, lwd = par("lwd"), dotted = NULL, spline.method = NULL,
+    lty = NULL, lty.cr = NULL, lwd = par("lwd"), dotted = NULL, spline.method = NULL,
     contour.method = "edge", levels = NULL,
     # colors
     col = par("col"), col.names = par("col"), fill = NULL,
@@ -60,6 +60,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{cex.names}{numeric, character expansion factor to be used for names of species on plots}
   \item{cex.axis}{numeric, character expansion factor for names of axes}
   \item{lty}{numeric, line types to be used in plots}
+  \item{lty.cr}{numeric, line types for cr-cr boundaries (between two minerals)}
   \item{lwd}{numeric, line width}
   \item{dotted}{numeric, how often to skip plotting points on predominance field boundaries (to gain the effect of dotted or dashed boundary lines)}
   \item{spline.method}{character, method used in \code{\link{splinefun}}}
@@ -106,8 +107,9 @@ A new plot is started unless \code{add} is TRUE.
 If \code{plot.it} is FALSE, no plot will be generated but all the intermediate computations will be performed and the results returned.
 
 Line or field labels use the names of the species as provided in \code{eout}; formatting is applied to chemical formuls unless \code{format.names} is FALSE.
-Use the \code{names} argument to override the default species names.
-Alternatively, supply a numeric value to \code{names} to indicate the subset of default names that should or shouldn't be plotted (positive and negative indices, respectively).
+Set \code{names} to NULL or TRUE to plot the names, or NA or FALSE to prevent plotting the names.
+A character argument overrides the default species names; \code{""} can be used to indicate blank names for any species.
+Alternatively, supply a numeric value to \code{names} to indicate a subset of default names that should or shouldn't be plotted (positive and negative indices, respectively).
 Use \code{col.names} and \code{cex.names} to change the colors and size of the labels.
 Use \code{cex} and \code{cex.axis} to adjust the overall character expansion factors (see \code{\link{par}}) and those of the axis labels.
 The x- and y-axis labels are automatically generated unless they are supplied in \code{xlab} and \code{ylab}. 
@@ -129,6 +131,7 @@ Otherwise, a \code{\link{legend}} is placed at the location identified by \code{
 If \code{alpha} is TRUE, the fractional degrees of formation (ratios of activities to total activity) are plotted.
 Or, setting \code{alpha} to \samp{balance} allows the activities to be multiplied by the number of the balancing component; this is useful for making \dQuote{percent carbon} diagrams where the species differ in carbon number.
 The line type and line width can be controlled with \code{lty} and \code{lwd}, respectively.
+Set \code{lty.cr} to 0 to disable drawing lines between minerals; this can be used to show only aqueous species activity contours.
 To connect the points with splines instead of lines, set \code{spline.method} to one of the methods in \code{\link{splinefun}}.
 }
 

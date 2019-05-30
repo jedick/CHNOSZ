@@ -68,7 +68,7 @@ test_that("add.obigt() is backwards compatibile for a file that doesn't have an 
 test_that("info() gives consistent messages for cal and J", {
   # test added 20190529
   # add data for dimethylamine and trimethylamine in different units (cal or J)
-  add.obigt(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ"))
+  expect_message(add.obigt(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ")), "energy units: J and cal")
   expect_message(info(info("DMA_cal")), "-1.92 cal")
   expect_message(info(info("DMA_J")), "-8.02 J")
   # for TMA, only a checkGHS message for the entry in J is produced,
