@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-20 (2019-05-30)
+CHANGES IN CHNOSZ 1.3.2-21 (2019-05-30)
 ---------------------------------------
 
 NEW FEATURES: ENERGY UNITS
@@ -82,6 +82,10 @@ OTHER CHANGES
 
 - Correct the value of a1 for acetamide (Shock, 1993). Thanks to Kirt
   Robinson.
+
+- Add properties of aqueous species (dimethylamine, trimethylamine,
+  resorcinol, phloroglucinol, cyclohexane carboxylate, and cyclohexane
+  carboxylic acid) from LaRowe and Amend, 2019.
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)
 ------------------------------------

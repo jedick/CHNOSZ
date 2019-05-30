@@ -277,7 +277,7 @@ check.obigt <- function() {
     # first get the aqueous species
     isaq <- tdata$state=="aq"
     if(any(isaq)) {
-      eos.aq <- obigt2eos(tdata[isaq,],"aq")
+      eos.aq <- obigt2eos(tdata[isaq,],"aq", tocal = TRUE)
       DCp.aq <- checkEOS(eos.aq,"aq","Cp",ret.diff=TRUE)
       DV.aq <- checkEOS(eos.aq,"aq","V",ret.diff=TRUE)
       cat(paste("check.obigt: GHS for",sum(isaq),"aq species in",what,"\n"))
@@ -289,7 +289,7 @@ check.obigt <- function() {
     }
     # then other species, if they are present
     if(sum(!isaq) > 0) {
-      eos.cgl <- obigt2eos(tdata[!isaq,],"cgl")
+      eos.cgl <- obigt2eos(tdata[!isaq,],"cgl", tocal = TRUE)
       DCp.cgl <- checkEOS(eos.cgl,"cgl","Cp",ret.diff=TRUE)
       cat(paste("check.obigt: GHS for",sum(!isaq),"cr,gas,liq species in",what,"\n"))
       DG.cgl <- checkGHS(eos.cgl,ret.diff=TRUE)

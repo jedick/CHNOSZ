@@ -56,7 +56,9 @@ A message is printed and the calculated difference is returned if it exceeds the
 The calculation requires that G, H and S, and the chemical formula of the species all be present.
 
 \code{check.obigt} is a function to check self-consistency of each entry in the thermodynamic database, using \code{checkEOS} and \code{checkGHS}.
-The output is a table listing only species that exceed at least one of the tolerance limits, giving the species index (rownumber in `thermo()$obigt`), species name and state, and DCp, DV and DG, for the calculated differences (only those above the tolerances are given). This function is used to generate the file found at \code{extdata/thermo/obigt_check.csv}.
+The output is a table listing only species that exceed at least one of the tolerance limits, giving the species index (rownumber in `thermo()$obigt`), species name and state, and DCp, DV and DG, for the calculated differences (only those above the tolerances are given).
+All values are given in calories, regardless of the units present in the data files.
+This function is used to generate the file found at \code{extdata/thermo/obigt_check.csv}.
 
 \code{dumpdata} returns all of the available data, from both the default and optional data files, or writes it to a file if \code{file} is not NULL.
 The format is the same as \code{\link{thermo}$obigt}, except for a single prepended column named \samp{source}, giving the source of the data (\samp{OBIGT} refers to the default database, and \samp{DEW}, \samp{SLOP98}, and \samp{SUPCRT92} are the optional data files).

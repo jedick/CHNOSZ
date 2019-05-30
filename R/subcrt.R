@@ -314,7 +314,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     # calculate properties using Akinfiev-Diamond model 20190219
     if(any(isAkDi)) {
       # get the parameters with the right names
-      param <- obigt2eos(param[isAkDi, ], "aq")
+      param <- obigt2eos(param[isAkDi, ], "aq", tocal = TRUE)
       p.aq[isAkDi] <- AkDi(eosprop, parameters = param, T = T, P = P, isPsat = isPsat)
     }
     # calculate activity coefficients if ionic strength is not zero
@@ -333,7 +333,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   iscgl <- reaction$state %in% cglstates & reaction$name != "water"
 
   if(TRUE %in% iscgl) {
-    param <- obigt2eos(thermo$obigt[iphases[iscgl],], "cgl", fixGHS = TRUE)
+    param <- obigt2eos(thermo$obigt[iphases[iscgl],], "cgl", fixGHS = TRUE, tocal = TRUE)
     p.cgl <- cgl(eosprop, parameters = param, T = T, P = P)
     # replace Gibbs energies with NA where the
     # phases are beyond their temperature range
