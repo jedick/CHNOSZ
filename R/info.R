@@ -193,9 +193,9 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   # a missing one of G, H or S can cause problems for subcrt calculations at high T
   if(sum(naGHS)==1) {
     # calculate a single missing one of G, H, or S from the others
-    GHS <- as.numeric(GHS(as.character(this$formula), G=this[,9], H=this[,10], S=this[,11]))
+    GHS <- as.numeric(GHS(as.character(this$formula), G=this[,9], H=this[,10], S=this[,11], E_units=this$E_units))
     message("info.numeric: ", colnames(this)[9:11][naGHS], " of ",
-      this$name, "(", this$state, ") is NA; set to ", round(GHS[naGHS],2))
+      this$name, "(", this$state, ") is NA; set to ", round(GHS[naGHS],2), " ", this$E_units, " mol-1")
     this[, which(naGHS)+8] <- GHS[naGHS]
   } 
   # now perform consistency checks for GHS and EOS parameters if check.it=TRUE
@@ -207,7 +207,7 @@ info.numeric <- function(ispecies, check.it=TRUE) {
     calcCp <- checkEOS(this, this$state, "Cp")
     # fill in NA heat capacity
     if(!is.na(calcCp) & is.na(this$Cp)) {
-      message("info.numeric: Cp of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcCp, 2))
+      message("info.numeric: Cp of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcCp, 2), " ", this$E_units, " K-1 mol-1")
       this$Cp <- as.numeric(calcCp)
     }
     # check tabulated volumes - only for aq (HKF equation)
@@ -215,7 +215,7 @@ info.numeric <- function(ispecies, check.it=TRUE) {
       calcV <- checkEOS(this, this$state, "V")
       # fill in NA volume
       if(!is.na(calcV) & is.na(this$V)) {
-        message("info.numeric: V of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcV, 2))
+        message("info.numeric: V of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcV, 2), " cm3 mol-1")
         this$V <- as.numeric(calcV)
       }
     }

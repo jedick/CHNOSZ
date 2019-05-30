@@ -282,7 +282,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   # aqueous species and H2O properties
   if(TRUE %in% isaq) {
     # 20110808 get species parameters using obigt2eos() (faster than using info())
-    param <- obigt2eos(thermo$obigt[iphases[isaq],], "aq", fixGHS = TRUE)
+    param <- obigt2eos(thermo$obigt[iphases[isaq],], "aq", fixGHS = TRUE, tocal = TRUE)
     # aqueous species with NA for Z use the AkDi model
     isAkDi <- is.na(param$Z)
     # always get density

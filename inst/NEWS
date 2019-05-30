@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-17 (2019-05-30)
+CHANGES IN CHNOSZ 1.3.2-19 (2019-05-30)
 ---------------------------------------
 
 NEW FEATURES: ENERGY UNITS
@@ -9,7 +9,11 @@ NEW FEATURES: ENERGY UNITS
 - The messages produced by checkGHS() and checkEOS() use cal or J
   depending on the units in the database. 
 
-- TODO: adjust units of missing properties and subcrt() output.
+- All properties returned by info() reflect the units in the database
+  for each species (no conversion is done).
+
+- All properties returned by subcrt() continue to follow the user's
+  units setting (in E.units(), default cal).
 
 NEW FEATURES: SOLUBILITY UNITS
 
