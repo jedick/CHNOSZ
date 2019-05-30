@@ -60,7 +60,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   if(!is.null(logact)) {
     if(length(logact)!=length(species)) stop("the length of 'logact' must equal the number of species")
   }
-  # normalize temperature units
+  # normalize temperature and pressure units
   if(!missing(T)) {
     if(convert) T <- envert(T,'K')
     else if(!missing(convert) & convert) T <- envert(T,'K')
@@ -191,21 +191,25 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   isH2O <- reaction$name=='water' & reaction$state=='liq'
   isaq <- reaction$state=='aq'
 
-  ut <- T
-  if(identical(grid,'IS')) ut <- unique(ut)
-  if(length(ut)==1) T.text <- paste(ut,'K') else {
-    T.text <- paste(length(ut),'values of T')
-  }
-  if(length(P)==1) {
-    if(can.be.numeric(P)) P.text <- paste(round(as.numeric(P),2),'bar')
-    else P.text <- "P"
-  } else P.text <- 'P'
-  if(identical(P[[1]],'Psat')) P.text <- P
-  if(any(c(isH2O,isaq))) P.text <- paste(P.text,' (wet)',sep='')
+  # produce message about conditions
   if(length(species)==1 & convert==FALSE) {
-    # no message produced here
+    # no message produced here (internal calls from other functions)
   } else {
-    message(paste('subcrt:',length(species),'species at',T.text,'and',P.text))
+    # include units here 20190530
+    uT <- outvert(T, "K")
+    if(identical(grid,'IS')) uT <- unique(uT)
+    if(length(uT)==1) T.text <- paste(uT, T.units()) else {
+      T.text <- paste0(length(uT), " values of T (", T.units(), ")")
+    }
+    uP <- outvert(P, "bar")
+    if(length(P)==1) {
+      if(can.be.numeric(P)) P.text <- paste(round(as.numeric(uP),2), P.units())
+      else P.text <- paste0("P (", P.units(), ")")
+    } else P.text <- paste0("P (", P.units(), ")")
+    if(identical(P[[1]],'Psat')) P.text <- P
+    if(any(c(isH2O,isaq))) P.text <- paste(P.text,' (wet)',sep='')
+    E.text <- paste0("[energy units: ", E.units(), "]")
+    message(paste("subcrt:", length(species), "species at", T.text, "and", P.text, E.text))
   }
 
   # inform about unbalanced reaction
@@ -237,7 +241,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
           b.state <- as.character(thermo$basis$state)[bc[1,]!=0]
           bc <- bc.new
           # special thing for Psat
-          if(P.text=='Psat') P <- P.text
+          if(identical(P[[1]], "Psat")) P <- "Psat"
           else P <- outvert(P,"bar")
           # add to logact values if present
           if(!is.null(logact)) {
