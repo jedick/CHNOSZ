@@ -126,7 +126,7 @@ Names of species (as provided in \code{reaction}) are shown instead of chemical 
 }
 
 \seealso{
-\code{demo("saturation")} for examples of \code{syslab} and \code{ratlab}.
+  \code{\link{util.legend}}; \code{demo("saturation")} for examples of \code{syslab} and \code{ratlab}.
 }
 
 \examples{\dontshow{reset()}
