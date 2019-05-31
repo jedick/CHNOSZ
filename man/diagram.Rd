@@ -107,7 +107,7 @@ A new plot is started unless \code{add} is TRUE.
 If \code{plot.it} is FALSE, no plot will be generated but all the intermediate computations will be performed and the results returned.
 
 Line or field labels use the names of the species as provided in \code{eout}; formatting is applied to chemical formuls unless \code{format.names} is FALSE.
-Set \code{names} to NULL or TRUE to plot the names, or NA or FALSE to prevent plotting the names.
+Set \code{names} to TRUE or NULL to plot the names, or FALSE or NA to prevent plotting the names.
 A character argument overrides the default species names; \code{""} can be used to indicate blank names for any species.
 Alternatively, supply a numeric value to \code{names} to indicate a subset of default names that should or shouldn't be plotted (positive and negative indices, respectively).
 Use \code{col.names} and \code{cex.names} to change the colors and size of the labels.

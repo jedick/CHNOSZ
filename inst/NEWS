@@ -1,7 +1,7 @@
 CHANGES IN CHNOSZ 1.3.2-24 (2019-05-30)
 ---------------------------------------
 
-NEW FEATURES: ENERGY UNITS
+NEW FEATURE: ENERGY UNITS
 
 - The csv data files in OBIGT now have a column named "E_units", which
   is used to specify the energy units for each species (cal or J).
@@ -20,7 +20,7 @@ NEW FEATURES: ENERGY UNITS
   user-supplied file with no "E_units" column. In this case, the units
   are set to cal.
 
-NEW FEATURES: SOLUBILITY UNITS
+NEW FEATURE: SOLUBILITY UNITS
 
 - convert() now handles the output from solubility(), for converting
   calculated concentrations to ppm or ppb.

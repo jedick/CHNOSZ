@@ -138,7 +138,7 @@ for(T in Ts) {
   a <- affinity(IS=c(0, 0.14), T=T)
   e <- equilibrate(a)
   if(T==25) diagram(e, ylim=c(-3.0, -2.6), legend.x=NULL)
-  else diagram(e, add=TRUE, names=NULL, col="red")
+  else diagram(e, add=TRUE, names=FALSE, col="red")
 }
 title(main="Non-ideality model for phosphate species")
 dp <- describe.property(c("pH", "T", "T"), c(7, Ts))
@@ -149,7 +149,7 @@ text(0.07, -2.90, expr.species("H2PO4-"))
 a <- affinity(IS=c(0, 0.14), pH=c(6, 13), T=Ts[1])
 d <- diagram(a, fill=NULL)
 a <- affinity(IS=c(0, 0.14), pH=c(6, 13), T=Ts[2])
-d <- diagram(a, add=TRUE, names=NULL, col="red")
+d <- diagram(a, add=TRUE, names=FALSE, col="red")
 par(opar)
 
 

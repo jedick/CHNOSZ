@@ -18,7 +18,7 @@ a <- affinity(O2=c(-85, -60), iprotein=ip)
 # show the equilibrium activities
 opar <- par(mfrow=c(2, 2))
 e <- equilibrate(a, loga.balance=0, normalize=TRUE)
-diagram(e, names=NULL)
+diagram(e, names=FALSE)
 # make a title
 expr <- as.expression(substitute(x~loc~"proteins in"~
   italic("S. cerevisiae"), list(x=length(ip), loc=loc)))

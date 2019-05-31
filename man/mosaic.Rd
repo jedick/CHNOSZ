@@ -75,7 +75,7 @@ water.lines(d, col = "seagreen", lwd = 1.5)
 # show lines for Fe(aq) = 10^-4 M
 species(c("Fe+2", "Fe+3"), -4)
 m2 <- mosaic(bases, pH = pH, Eh = Eh, T = T)
-diagram(m2$A.species, add = TRUE, names = NULL)
+diagram(m2$A.species, add = TRUE, names = FALSE)
 title(main=paste("Iron oxides and sulfides in water, log(total S) = -6",
   "After Garrels and Christ, 1965", sep="\n"))
 legend("bottomleft", c("log(act_Fe) = -4", "log(act_Fe) = -6"), lwd = c(2, 1), bty = "n")

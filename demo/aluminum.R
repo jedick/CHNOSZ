@@ -145,14 +145,14 @@ species(c("albite", "K-feldspar"))
 T <- 100
 P <- 150
 a <- affinity("K+" = c(4, 7), "Na+" = c(6, 9), T = T, P = P)
-diagram(a, lwd = 1.5, xlab = ratlab("K+"), ylab = ratlab("Na+"), names = NULL)
+diagram(a, lwd = 1.5, xlab = ratlab("K+"), ylab = ratlab("Na+"), names = FALSE)
 # plot experimental data
 dat <- read.csv(system.file("extdata/cpetc/Mer75_Table4.csv", package = "CHNOSZ"))
 points(dat$log.aK..aH.., dat$log.aNa..aH..)
 # plot line calculated using SUPCRT92 data
 add.obigt("SUPCRT92")
 a <- affinity("K+" = c(4, 7), "Na+" = c(6, 9), T = 100, P = 150)
-diagram(a, col = "blue", lty = 4, add = TRUE, names = NULL)
+diagram(a, col = "blue", lty = 4, add = TRUE, names = FALSE)
 # add SUPCRTBL calculation
 logK_BL <- 2.092
 logaK <- seq(4, 7, 0.5)

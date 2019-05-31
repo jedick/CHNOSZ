@@ -28,12 +28,8 @@ plotfun <- function(T = 400, P = 500, m_tot = 0.1, pHmin = 4, logppmmax = 3) {
   abline(v = pKw / 2, lty = 2, lwd = 2, col = "blue1")
 
   # add legend
-  lNaCl <- substitute(italic(m)[NaCl] == x~mol~kg^-1, list(x = m_tot))
-  lT <- substitute(x*degree*C, list(x = T))
-  if(identical(P, "Psat")) lP <- quote(italic(P)[sat]) else lP <- substitute(x~bar, list(x = P))
-  lTP <- substitute(list(x, y), list(x = lT, y = lP))
-  ltxt <- as.expression(c(lNaCl, lTP))
-  legend("topright", legend = ltxt, bty = "n")
+  l <- lex(lNaCl(m_tot), lTP(T, P))
+  legend("topright", legend = l, bty = "n")
 }
 
 plotfun()

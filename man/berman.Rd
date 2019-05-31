@@ -115,7 +115,7 @@ diagram(a, xlab = ratlab("K+", molality = TRUE), lty = 0, fill = "terrain")
 # add the lines, extending into the low-density region (exceed.rhomin = TRUE)
 a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, 
               exceed.Ttr = TRUE, exceed.rhomin = TRUE)
-diagram(a, add = TRUE, names = NULL, col = "red", lwd = 1.5)
+diagram(a, add = TRUE, names = FALSE, col = "red", lwd = 1.5)
 # the list of references:
 ref1 <- thermo.refs(species()$ispecies)$key
 ## now use the (default) data from Berman, 1988
@@ -129,7 +129,7 @@ stopifnot(info(basis()$ispecies[iSiO2])$name == "quartz")
 # Berman's dataset doesn't have the upper temperature limits,
 # so we don't need exceed.Ttr here
 a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, exceed.rhomin = TRUE)
-diagram(a, add = TRUE, names = NULL, col = "blue", lwd = 1.5)
+diagram(a, add = TRUE, names = FALSE, col = "blue", lwd = 1.5)
 # the list of references:
 ref2 <- thermo.refs(species()$ispecies)$key
 ref2 <- paste(ref2, collapse = ", ")

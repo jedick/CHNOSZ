@@ -602,7 +602,7 @@ for(loga in c(-1, 0, -2, -3)) {
   species("Cu+2", loga) 
   a <- affinity(pH=c(1.6, 7.6, 400), Eh=c(-0.2, 1, 400))
   if(loga==-1) d <- diagram(a)
-  else d <- diagram(a, add=TRUE, names=NULL)
+  else d <- diagram(a, add=TRUE, names=FALSE)
   iCu <- which(d$predominant == 1, arr.ind=TRUE)
   text(a$vals[[1]][max(iCu[, 1])] - 0.03, a$vals[[2]][min(iCu[, 2])] + 0.2, adj=1, loga)
 }

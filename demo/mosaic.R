@@ -32,10 +32,10 @@ water.lines(m1$A.species, col = "seagreen", lwd = 1.5)
 # show lines for Fe(aq) = 10^-4 M
 species(c("Fe+2", "Fe+3"), -4)
 m2 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T)
-diagram(m2$A.species, add = TRUE, names = NULL)
+diagram(m2$A.species, add = TRUE, names = FALSE)
 # overlay the sulfur and carbonate basis species predominance fields
 d <- diagram(m1$A.bases, add = TRUE, col = "red", col.names = "red", lty = 3, limit.water = FALSE)
-d <- diagram(m1$A.bases2, add = TRUE, col = "blue", names = NULL, lty = 3, limit.water = FALSE)
+d <- diagram(m1$A.bases2, add = TRUE, col = "blue", names = FALSE, lty = 3, limit.water = FALSE)
 text(d$namesx, -0.8, as.expression(sapply(m1$A.bases2$species$name, expr.species)), col = "blue")
 # add legend and title
 dP <- describe.property(c("T", "P"), c(25, 1))

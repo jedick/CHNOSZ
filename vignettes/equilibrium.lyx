@@ -2676,7 +2676,7 @@ for(loga in c(-1, 0, -2, -3)) {
 
 \begin_layout Plain Layout
 
-  else d <- diagram(a, add=TRUE, names=NULL)
+  else d <- diagram(a, add=TRUE, names=FALSE)
 \end_layout
 
 \begin_layout Plain Layout

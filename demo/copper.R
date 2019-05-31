@@ -40,7 +40,7 @@ names <- c(Cu_s, Cu_aq, CuGly)
 # mosaic diagram with speciate glycine as a function of pH
 m <- mosaic(bases=Gly, pH=c(0, 16, 500), Eh=c(-0.6, 1.0, 500))
 fill <- c(rep("lightgrey", 3), rep("white", 4), rep("lightblue", 4))
-d <- diagram(m$A.species, fill=fill, names=NULL, xaxs="i", yaxs="i", fill.NA="pink2")
+d <- diagram(m$A.species, fill=fill, names=FALSE, xaxs="i", yaxs="i", fill.NA="pink2")
 # to make the labels look nicer
 names <- names[sort(unique(as.numeric(d$predominant)))]
 for(i in 1:length(names)) {
@@ -56,7 +56,7 @@ for(i in 1:length(names)) {
 }
 
 # add glycine ionization lines
-d <- diagram(m$A.bases, add=TRUE, col="darkblue", lty=3, names=NULL, limit.water=FALSE)
+d <- diagram(m$A.bases, add=TRUE, col="darkblue", lty=3, names=FALSE, limit.water=FALSE)
 text(d$namesx, -0.5, Gly, col="darkblue")
 
 # add water lines and title
