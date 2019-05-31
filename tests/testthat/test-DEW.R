@@ -68,7 +68,7 @@ test_that("Gibbs energies of species are calculated correctly", {
   add.obigt("DEW_aq")
   RG_HCl <- subcrt("HCl", P=P, T=T)$out[[1]]$G
   DEWG_HCl <- c(-28784.99, -58496.85, -26520.94, -55276.92, -21928.89, -50337.19, -8014.34, -36746.87)
-  expect_equal(RG_HCl, DEWG_HCl, tolerance = 1e-7)
+  expect_equal(RG_HCl, DEWG_HCl, tolerance = 1e-5)
   RG_Cl <- subcrt("Cl-", P=P, T=T)$out[[1]]$G
   DEWG_Cl <- c(-30054.59, -22839.35, -27910.68, -28094.07, -23568.45, -27959.67, -10443.07, -18744.93)
   expect_equal(RG_Cl, DEWG_Cl, tolerance = 1e-7)

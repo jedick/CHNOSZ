@@ -228,8 +228,8 @@ diagram <- function(
     ## make up some names for lines/fields if they are missing
     is.pname <- FALSE
     onames <- names
-    if(isTRUE(is.na(names)) | isFALSE(names)) names <- ""
-    else if(is.null(names) | all(is.numeric(names)) | isTRUE(names)) {
+    if(identical(names, FALSE) | identical(names, NA)) names <- ""
+    else if(!is.character(names)) {
       # properties of basis species or reactions?
       if(eout$property %in% c("G.basis", "logact.basis")) names <- rownames(eout$basis)
       else {

@@ -131,8 +131,6 @@ add.obigt <- function(file, species=NULL, force=TRUE) {
     if(length(isys)==1) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package="CHNOSZ")
   }
   # read data from the file
-#  # we need explicit colClasses here to avoid automatic detection as character for long numeric values in R 3.1.0  20190302
-#  to2 <- read.csv(file, as.is=TRUE, colClasses=c(rep("character", 7), rep("numeric", 13)))
   to2 <- read.csv(file, as.is=TRUE)
   # add E_units column if it's missing 20190529
   if(!"E_units" %in% colnames(to2)) to2 <- data.frame(to2[, 1:7], E_units = "cal", to2[, 8:20], stringsAsFactors = FALSE)
