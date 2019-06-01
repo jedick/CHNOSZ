@@ -24,7 +24,8 @@ diagram <- function(
   # sizes
   cex=par("cex"), cex.names=1, cex.axis=par("cex"),
   # line styles
-  lty=NULL, lty.cr=NULL, lwd=par("lwd"), dotted=NULL, spline.method=NULL, contour.method="edge", levels=NULL,
+  lty=NULL, lty.cr=NULL, lty.aq=NULL, lwd=par("lwd"), dotted=NULL,
+  spline.method=NULL, contour.method="edge", levels=NULL,
   # colors
   col=par("col"), col.names=par("col"), fill=NULL,
   fill.NA="gray80", limit.water=TRUE,
@@ -511,11 +512,16 @@ diagram <- function(
               # loop in case contourLines returns multiple lines
               for(k in 1:length(cLines)) {
                 # draw the lines
+                mylty <- lty
                 if(!is.null(lty.cr)) {
                   # use lty.cr for cr-cr boundaries 20190530
-                  if(all(grepl("cr", eout$species$state[c(zvals[i], zvals[j])]))) lines(cLines[[k]][2:3], lty=lty.cr, col=col, lwd=lwd)
-                  else lines(cLines[[k]][2:3], lty=lty, col=col, lwd=lwd)
-                } else lines(cLines[[k]][2:3], lty=lty, col=col, lwd=lwd)
+                  if(all(grepl("cr", eout$species$state[c(zvals[i], zvals[j])]))) mylty <- lty.cr
+                }
+                if(!is.null(lty.aq)) {
+                  # use lty.aq for aq-aq boundaries 20190531
+                  if(all(grepl("aq", eout$species$state[c(zvals[i], zvals[j])]))) mylty <- lty.aq
+                }
+                lines(cLines[[k]][2:3], lty=mylty, col=col, lwd=lwd)
                 # keep the x and y values (list components 2 and 3)
                 linesout[[iout]] <- cLines[[k]][[2]]
                 names(linesout)[iout] <- paste0("x", k, "_", zvals[i], ".", zvals[j])

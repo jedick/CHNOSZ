@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-24 (2019-05-30)
+CHANGES IN CHNOSZ 1.3.2-27 (2019-06-01)
 ---------------------------------------
 
 NEW FEATURE: ENERGY UNITS
@@ -40,6 +40,8 @@ NEW FEATURES: DIAGRAMS
   between minerals (two crystalline phases). Setting lty.cr = 0
   suppresses the lines, which is useful for plotting only the activities
   of aqueous species (another way of making solubility diagrams).
+
+- Also add 'lty.aq' to specify the line type between aqueous species.
 
 - The 'names' argument of diagram() recognizes more values, making it
   easier to use in scripts. A value of NULL or TRUE plots the names, and
