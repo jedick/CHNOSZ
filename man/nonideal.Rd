@@ -96,7 +96,7 @@ nonideal("Bdot") # the default
 ## what's the activity coefficient of Na+ at
 ## 25 degC and 1 bar and an ionic strength of 0.7?
 sres <- subcrt("Na+", T = 25, IS = 0.7)
-# exponentiate to convert log(gamma) to gamma
+# exponentiate to convert log10(gamma) to gamma
 10^sres$out[[1]]$loggam
 # now use a different method
 nonideal("bgamma")
@@ -121,9 +121,9 @@ gamma <- rep(list(gamtab), length(IS))
 names(gamma) <- IS
 # loop over the values of ionic strength
 for(i in seq_along(IS)) {
-  # calculate properties of species, including activity coefficient (gamma)
+  # calculate properties of species, including logarithm of activity coefficient
   sres <- subcrt(species, T = T, IS = IS[i])
-  # exponentiate to convert log(gamma) to gamma, and put the values into the tables
+  # exponentiate to convert log10(gamma) to gamma, and put the values into the tables
   for(j in seq_along(species)) gamma[[i]][, j] <- 10^sres$out[[j]]$loggam
 }
 # print the output and make a plot
