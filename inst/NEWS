@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-29 (2019-06-01)
+CHANGES IN CHNOSZ 1.3.2-30 (2019-06-03)
 ---------------------------------------
 
 NEW FEATURE: ENERGY UNITS
@@ -61,6 +61,17 @@ BUG FIXES
 
 - The 'mixing' argument of mosaic() has been removed; it is no longer
   needed with the improved handling of activities of basis species.
+
+- Using the "Alberty" method, nonideal() calculated incorrect values of
+  adjusted H, S, and Cp at given ionic strength. The correct equations
+  are now used (taken from Alberty, 2001), and checks of the self-
+  consistency of the calculated values and comparisons with the
+  Debye-Huckel limiting slopes for G, H, and Cp have been added to
+  test-nonideal.R.
+
+- For improved calculation of the Debye-Huckel limiting slopes, the
+  equation for the Debye-Huckel constant was changed to use the equation
+  given by Clarke and Glew, 1980 (valid to 150 °C).
 
 IMPROVEMENTS TO MOSAIC
 

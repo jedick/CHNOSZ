@@ -118,3 +118,47 @@ test_that("activity coefficients are similar to those from HCh", {
   expect_maxdiff(gamNaCl.300, gamNaCl.HCh$`300`, 0.09)
   expect_maxdiff(gamNaCl.500, gamNaCl.HCh$`500`, 0.10)
 })
+
+# 20190603
+test_that("G, H, S, and Cp corrections are calculated consistently", {
+  nonideal("Alberty")
+
+  # first test: DG = DH - T * DS
+  T <- seq(25, 100, 25)
+  GHSstd <- subcrt("Na+", T = T)$out[[1]][, c("G", "H", "S")]
+  GHSadj <- subcrt("Na+", T = T, IS = 0.25)$out[[1]][, c("G", "H", "S")]
+  D <- GHSadj - GHSstd
+  TK <- convert(T, "K")
+  expect_equal(D$G, D$H - TK * D$S)
+
+  # second test: Cp = dH/dT
+  # calculate the derivative numerically at 50 degC
+  T <- c(49.9, 50.1)
+  # first do it for standard properties (at I = 0) to make sure the test is set up correctly
+  Cpstd <- subcrt("Na+", T = 50)$out[[1]][, "Cp"]
+  Hstd <- subcrt("Na+", T = T)$out[[1]][, "H"]
+  expect_equal(Cpstd, diff(Hstd) / diff(T), tol = 1e-6)
+  # now at I = 0.25 mol kg-1
+  Cpadj <- subcrt("Na+", T = 50, IS = 0.25)$out[[1]][, "Cp"]
+  Hadj <- subcrt("Na+", T = T, IS = 0.25)$out[[1]][, "H"]
+  expect_equal(Cpadj, diff(Hadj) / diff(T), tol = 1e-6)
+
+  # another way to test things: compare our calculations with values of the Debye-Huckel limiting slopes (Alberty, 2001, Table 1)
+  Glim <- c(2.56494, 2.70073, 2.84196, 2.91482, 2.98934, 3.14349)
+  Hlim <- c(1.075, 1.213, 1.3845, 1.4775, 1.5775, 1.800)
+  Cplim <- c(13.255, 15.41, 17.90, 19.27, 20.725, 23.885)
+  T <- c(0, 10, 20, 25, 30, 40)
+  E.units("J")
+  IS <- 0.25
+  GHSCpstd <- subcrt("Na+", T = T)$out[[1]][, c("G", "H", "S", "Cp")]
+  GHSCpadj <- subcrt("Na+", T = T, IS = IS)$out[[1]][, c("G", "H", "S", "Cp")]
+  D <- GHSCpadj - GHSCpstd
+  # now make the checks
+  IBterm <- IS ^ 0.5 / (1 + 1.6 * IS ^ 0.5)
+  expect_equal(Glim * 1000, - D$G / IBterm, tol = 1e-4)
+  expect_equal(Hlim * 1000, D$H / IBterm, tol = 1e-3)
+  expect_equal(Cplim, D$Cp / IBterm, tol = 1e-4)
+
+  # all done, reset nonideal and E.units options
+  reset()
+})

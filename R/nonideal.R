@@ -42,24 +42,26 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     B <- 1.6 # L^0.5 mol^-0.5 (Alberty, 2003 p. 47)
     # equation for A from Clarke and Glew, 1980
     #A <- expression(-16.39023 + 261.3371/T + 3.3689633*log(T)- 1.437167*(T/100) + 0.111995*(T/100)^2)
-    # equation for A (alpha) from Alberty, 2003 p. 48
-    A <- expression(1.10708 - 1.54508E-3 * T + 5.95584E-6 * T^2)
-    # from examples for deriv to take first and higher-order derivatives
+    # A = alpha / 3 (Alberty, 2001)
+    alpha <- expression(3 * (-16.39023 + 261.3371/T + 3.3689633*log(T)- 1.437167*(T/100) + 0.111995*(T/100)^2))
+    ## equation for alpha from Alberty, 2003 p. 48
+    #alpha <- expression(1.10708 - 1.54508E-3 * T + 5.95584E-6 * T^2)
+    # from examples for deriv() to take first and higher-order derivatives
     DD <- function(expr, name, order = 1) {
       if(order < 1) stop("'order' must be >= 1")
       if(order == 1) D(expr, name)
       else DD(D(expr, name), name, order - 1)
     }
     # Alberty, 2003 Eq. 3.6-1
-    loggamma <- function(a, Z, I, B) - a * Z^2 * I^(1/2) / (1 + B * I^(1/2))
-    # TODO: check the following equations 20080208 jmd
+    lngamma <- function(alpha, Z, I, B) - alpha * Z^2 * I^(1/2) / (1 + B * I^(1/2))
     R <- 1.9872  # gas constant, cal K^-1 mol^-1
-    # 20171013 convert loggamma to common logarithm
-    if(prop=="loggamma") return(loggamma(eval(A), Z, I, B) / log(10))
-    else if(prop=="G") return(R * T * loggamma(eval(A), Z, I, B))
-    else if(prop=="H") return(R * T^2 * loggamma(eval(DD(A, "T", 1)), Z, I, B))
-    else if(prop=="S") return(- R * T * loggamma(eval(DD(A, "T", 1)), Z, I, B))
-    else if(prop=="Cp") return(R * T^2 *loggamma(eval(DD(A, "T", 2)), Z, I, B))
+    # 20171013 convert lngamma to common logarithm
+    # 20190603 use equations for H, S, and Cp from Alberty, 2001 (doi:10.1021/jp011308v)
+    if(prop=="loggamma") return(lngamma(eval(alpha), Z, I, B) / log(10))
+    else if(prop=="G") return(R * T * lngamma(eval(alpha), Z, I, B))
+    else if(prop=="H") return(- R * T^2 * lngamma(eval(DD(alpha, "T", 1)), Z, I, B))
+    else if(prop=="S") return( ( - R * T^2 * lngamma(eval(DD(alpha, "T", 1)), Z, I, B) - R * T * lngamma(eval(alpha), Z, I, B) ) / T)
+    else if(prop=="Cp") return(- 2 * R * T * lngamma(eval(DD(alpha, "T", 1)), Z, I, B) - R * T^2 * lngamma(eval(DD(alpha, "T", 2)), Z, I, B))
   }
   
   # function for Debye-Huckel equation with b_gamma or B-dot extended term parameter (Helgeson, 1969)

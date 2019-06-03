@@ -39,11 +39,13 @@ Those functions then call \code{nonideal} with all the arguments needed to perfo
 The default is to not apply calculations for the proton (\Hplus) and electron (\eminus); this makes sense if you are setting the pH, i.e. activity of \Hplus, to some value.
 To apply the calculations to H+ and/or e-, change \code{\link{thermo}$opt$ideal.H} or \code{ideal.e} to FALSE (see examples).
 
-For the \samp{Alberty} method, the values of \code{IS} are combined with Alberty's (2003) equation 3.6-1 (extended Debye-Hückel equation) and its derivatives, to calculate adjusted molal properties at the specified ionic strength(s) and temperature(s).
+For the \samp{Alberty} method, the values of \code{IS} are combined with Alberty's (2003) equation 3.6-1 (extended Debye-Hückel equation with an empirical term valid up to 0.25 M ionic strength) and its derivatives (Alberty, 2001), to calculate adjusted molal properties at the specified ionic strength(s) and temperature(s).
+The calculations use the equation for the Debye-Hückel constant given by Clarke and Glew, 1980, which is valid between 0 and 150 °C at saturated water vapor pressure (\Psat).
 
-For the \samp{Bdot} method (the default), the \dQuote{B-dot} form of the extended Debye-Hückel equation equation is used.
-The distance of closest approach (the \dQuote{ion size parameter}) is taken from the UT_SIZES.REF file of the HCh package (Shvarov and Bastrakov, 1992), which is based on Table 2.7 of Garrels and Christ, 1965.
-The extended term parameter is expressed as \dQuote{B-dot}, which is a function only of temperature (Helgeson, 1969).
+For the \samp{Bdot} method (the default), the \dQuote{B-dot} form of the extended Debye-Hückel equation is used.
+This equation is valid at ionic strengths up to approximately 3 mol / kg (Hörbrand et al., 2018).
+The distance of closest approach for different ions (the \dQuote{ion size parameter}) is taken from the UT_SIZES.REF file of the HCh package (Shvarov and Bastrakov, 1992), which is based on Table 2.7 of Garrels and Christ, 1965.
+The extended term parameter for NaCl-dominated solutions, known as \dQuote{B-dot}, is described by an equation that is a function only of temperature (Helgeson, 1969).
 To set the extended term parameter to zero, use the \samp{Bdot0} method.
 
 For the \samp{bgamma} method, the \dQuote{b_gamma} equation is used.
@@ -147,26 +149,26 @@ thermo("opt$ideal.H" = TRUE)
 
 ## An example using IS with affinity():
 ## speciation of phosphate as a function of ionic strength
-opar <- par(mfrow=c(2, 1))
+opar <- par(mfrow = c(2, 1))
 basis("CHNOPS+")
 Ts <- c(25, 100)
 species(c("PO4-3", "HPO4-2", "H2PO4-"))
 for(T in Ts) {
-  a <- affinity(IS=c(0, 0.14), T=T)
+  a <- affinity(IS = c(0, 0.14), T = T)
   e <- equilibrate(a)
-  if(T==25) diagram(e, ylim=c(-3.0, -2.6), legend.x=NULL)
-  else diagram(e, add=TRUE, names=FALSE, col="red")
+  if(T==25) diagram(e, ylim = c(-3.0, -2.6), legend.x = NULL)
+  else diagram(e, add = TRUE, names = FALSE, col = "red")
 }
 title(main="Non-ideality model for phosphate species")
 dp <- describe.property(c("pH", "T", "T"), c(7, Ts))
-legend("topright", lty=c(NA, 1, 1), col=c(NA, "black", "red"), legend=dp)
+legend("topright", lty = c(NA, 1, 1), col = c(NA, "black", "red"), legend = dp)
 text(0.07, -2.76, expr.species("HPO4-2"))
 text(0.07, -2.90, expr.species("H2PO4-"))
 ## phosphate predominance f(IS,pH)
-a <- affinity(IS=c(0, 0.14), pH=c(6, 13), T=Ts[1])
-d <- diagram(a, fill=NULL)
-a <- affinity(IS=c(0, 0.14), pH=c(6, 13), T=Ts[2])
-d <- diagram(a, add=TRUE, names=FALSE, col="red")
+a <- affinity(IS = c(0, 0.14), pH = c(6, 13), T = Ts[1])
+d <- diagram(a, fill = NULL)
+a <- affinity(IS = c(0, 0.14), pH = c(6, 13), T = Ts[2])
+d <- diagram(a, add = TRUE, names = FALSE, col = "red")
 par(opar)
 
 ## activity coefficients for monovalent ions at 700 degC, 10 kbar
@@ -176,20 +178,14 @@ nonideal("bgamma")
 IS <- c(0.001, 0.01, 0.1, 1, 2, 2.79)
 # we're above 5000 bar, so need to use IAPWS-95 or DEW
 oldwat <- water("DEW")
-wprop <- water(c("A_DH", "B_DH"), T=convert(700, "K"), P=10000)
+sres <- subcrt("Na+", T = 700, P = 10000, IS = IS)
 water(oldwat)
-# just use an empty table for a single species
-speciesprops <- list(data.frame(G=rep(0, length(IS))))
-# choose any monovalent species
-(nonidealprops <- nonideal("Na+", speciesprops, IS=IS,
-  T=convert(700, "K"), P=10000, A_DH=wprop$A_DH, B_DH=wprop$B_DH))
-# we get the nonideal Gibbs energy contribution and
-# the activity coefficient; check values of the latter
+# compare the calculated activity coefficient to values from Manning's figure
 Manning_gamma <- c(0.93, 0.82, 0.65, 0.76, 1.28, 2)
-gamma <- 10^nonidealprops[[1]]$loggam
+gamma <- 10^sres$out[[1]]$loggam
 # the error is larger at higher IS
 stopifnot(maxdiff(gamma[1], Manning_gamma[1]) < 0.01)
-stopifnot(maxdiff(gamma, Manning_gamma) < 0.23)
+stopifnot(maxdiff(gamma, Manning_gamma) < 0.2)
 
 ## Plot the data and splines used for calculating b_gamma
 ## (extended term parameter)
@@ -228,13 +224,19 @@ nonideal("Bdot")  # or reset()
 }
 
 \references{
+Alberty, R. A. (2001) Effect of temperature on standard transformed Gibbs energies of formation of reactants at specified pH and ionic strength and apparent equilibrium constants of biochemical reactions. \emph{J. Phys. Chem. B} \bold{105}, 7865--7870. \url{https://doi.org/10.1021/jp011308v}
+
 Alberty, R. A. (2003) \emph{Thermodynamics of Biochemical Reactions}, John Wiley & Sons, Hoboken, New Jersey, 397 p. \url{http://www.worldcat.org/oclc/51242181}
+
+Clarke, E. C. W. and Glew, D. N. (1980) Evaluation of Debye-Hückel limiting slopes for water between 0 and 150 °C. \emph{J. Chem. Soc. Faraday Trans.} \bold{76}, 1911--1916. \url{https://doi.org/10.1039/f19807601911}
 
 Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibria}, Harper & Row, New York, 450 p. \url{http://www.worldcat.org/oclc/517586}
 
 Helgeson, H. C. (1969) Thermodynamics of hydrothermal systems at elevated temperatures and pressures. \emph{Am. J. Sci.} \bold{267}, 729--804. \url{https://doi.org/10.2475/ajs.267.7.729}
 
 Helgeson, H. C., Kirkham, D. H. and Flowers, G. C. (1981) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures. IV. Calculation of activity coefficients, osmotic coefficients, and apparent molal and standard and relative partial molal properties to 600\degC and 5 Kb. \emph{Am. J. Sci.} \bold{281}, 1249--1516. \url{https://doi.org/10.2475/ajs.281.10.1249}
+
+Hörbrand, T., Baumann, T. and Moog, H. C. (2018) Validation of hydrogeochemical databases for problems in deep geothermal energy. \emph{Geotherm. Energy} \bold{6}, 20. \url{https://doi.org/10.1186/s40517-018-0106-3}
 
 Manning, C. E. (2013) Thermodynamic modeling of fluid-rock interaction at mid-crustal to upper-mantle conditions. \emph{Rev. Mineral. Geochem.} \bold{76}, 135--164. \url{https://doi.org/10.2138/rmg.2013.76.5}
 

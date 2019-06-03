@@ -10,6 +10,7 @@
 #source("util.data.R")
 #source("species.R")
 #source("AkDi.R")
+#source("nonideal.R")
 
 subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "H", "S", "V", "Cp"),
   T = seq(273.15, 623.15, 25), P = "Psat", grid = NULL, convert = TRUE, exceed.Ttr = FALSE,
