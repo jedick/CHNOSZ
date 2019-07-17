@@ -45,7 +45,7 @@ The calculations use the equation for the Debye-Hückel constant given by Clarke
 For the \samp{Bdot} method (the default), the \dQuote{B-dot} form of the extended Debye-Hückel equation is used.
 This equation is valid at ionic strengths up to approximately 3 mol / kg (Hörbrand et al., 2018).
 The distance of closest approach for different ions (the \dQuote{ion size parameter}) is taken from the UT_SIZES.REF file of the HCh package (Shvarov and Bastrakov, 1992), which is based on Table 2.7 of Garrels and Christ, 1965.
-The extended term parameter for NaCl-dominated solutions, known as \dQuote{B-dot}, is described by an equation that is a function only of temperature (Helgeson, 1969).
+The extended term parameter for NaCl-dominated solutions, known as \dQuote{B-dot}, is calculated as a function only of temperature (Helgeson, 1969).
 To set the extended term parameter to zero, use the \samp{Bdot0} method.
 
 For the \samp{bgamma} method, the \dQuote{b_gamma} equation is used.

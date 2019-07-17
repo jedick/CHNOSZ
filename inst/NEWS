@@ -39,7 +39,8 @@ NEW FEATURES: DIAGRAMS
 - diagram(): add 'lty.cr' argument to specify line type for boundaries
   between minerals (two crystalline phases). Setting lty.cr = 0
   suppresses the lines, which is useful for plotting only the activities
-  of aqueous species (another way of making solubility diagrams).
+  of aqueous species (another way of making solubility diagrams for some
+  systems).
 
 - Also add 'lty.aq' to specify the line type between aqueous species.
 

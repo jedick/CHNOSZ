@@ -132,7 +132,8 @@ logK <- subcrt(c("CO2","H2O","HCO3-","H+"), c(-1, -1, 1, 1), T=25)$out$logK
 # we could decrease tolerance here by increasing res
 stopifnot(all.equal(pKa.equil, -logK, tolerance=1e-2))
 
-# equilibrate with mosaic: balancing on N and C
+# equilibrate with mosaic: balancing on two elements (N and C)
+# thanks to Kirt Robinson for the feature request and test system
 loga_N <- -4
 loga_C <- -3
 basis(c("CO2", "NH3", "O2", "H2O", "H+"))
@@ -141,7 +142,7 @@ species(c("acetamide", "acetic acid", "acetate"))
 # this calculates equilibrium activities of NH3 and NH4+ for given loga_N
 # and calculates the corresponding affinities of the formed species
 m <- mosaic(c("NH3", "NH4+"), pH = c(0, 14))
-# this calculated equilibrium activities of the formed species for given loga_C
+# this calculates equilibrium activities of the formed species for given loga_C
 # and combines them with the activities of the changing basis species (NH3 and NH4+)
 eqc <- equilibrate(m, loga.balance = loga_C)
 diagram(eqc, ylim = c(-10, -2))
