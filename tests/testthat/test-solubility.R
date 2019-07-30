@@ -48,5 +48,7 @@ test_that("solubility() catches some error conditions", {
   basis(c("calcite", "H2O", "Ca+2", "O2", "H+"))
   species(c("CO2", "HCO3-", "CO3-2"))
   a <- affinity()
-  expect_error(solubility(a), "Unsure whether the first formation reaction is a dissociation reaction.")
+  expect_message(solubility(a), "test for dissociation reaction returns FALSE")
+  # TODO: write a test to get this error 20190730
+  #expect_error(solubility(a), "Unsure whether the first formation reaction is a dissociation reaction.")
 })

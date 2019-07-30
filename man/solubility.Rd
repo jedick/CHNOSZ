@@ -7,7 +7,8 @@ Calculate chemical activities of species in equilibrium with a soluble basis spe
 }
 
 \usage{
-  solubility(aout, dissociation = NULL, find.IS = FALSE, in.terms.of = NULL)
+  solubility(aout, dissociation = NULL, find.IS = FALSE, in.terms.of = NULL,
+    codeanal = FALSE)
 }
 
 \arguments{
@@ -15,6 +16,7 @@ Calculate chemical activities of species in equilibrium with a soluble basis spe
   \item{dissociation}{logical, does the mineral undergo a dissociation reaction?}
   \item{find.IS}{logical, find the equilibrium ionic strength by iteration?}
   \item{in.terms.of}{character, express the total solubility in terms of moles of this species}
+  \item{codeanal}{logical, print output of internal variables for code analysis}
 }
 
 \details{
@@ -33,8 +35,8 @@ The equilibrium calculation must take account of the \emph{total} activity of th
 The solution is accomplished by recalculating the affinities, essentially working backward from the assumption that the dissociation didn't occur.
 The resulting activities correspond to equilibrium considering the system-wide activity of Ca\S{+2}.
 
-The function attempts to automatically detect whether dissociation reactions are involved by looking at the first species.
-If the formation reaction of that species includes \emph{both} the first and second basis species, the \code{dissociation} flag is set to TRUE.
+The function attempts to automatically detect whether dissociation reactions are involved.
+If the formation reactions of all species includes \emph{both} the first and second basis species, the \code{dissociation} flag is set to TRUE.
 An example reaction of this type can be found in demo(solubility): CaCO3 (first basis species) = Ca+2 (second basis species) + CO3-2 (first species).
 Note that if the conserved basis species is not the first basis species, then the automatic detection of \code{dissociation} will always return FALSE.
 Therefore, a reaction corresponding to Au (fourth basis species) + ... = ... gives \code{dissociation} = FALSE (see \code{demo(gold)}).
