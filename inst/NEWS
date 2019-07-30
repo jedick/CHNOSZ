@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-30 (2019-06-03)
+CHANGES IN CHNOSZ 1.3.2-32 (2019-07-28)
 ---------------------------------------
 
 NEW FEATURE: ENERGY UNITS
@@ -119,6 +119,8 @@ OTHER CHANGES
   resorcinol, phloroglucinol, cyclohexane carboxylate, and cyclohexane
   carboxylic acid) from LaRowe and Amend, 2019 and HKF parameters for
   dimethylammonium chloride from Shvedov and Tremaine, 1997.
+
+- Modify demo/saturation.R to use argument recall feature of affinity().
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)
 ------------------------------------

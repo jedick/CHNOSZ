@@ -27,7 +27,8 @@ diagram(a, xlab = ratlab("Mg+2"), ylab = ratlab("Ca+2"), fill = "terrain", yline
 basis("CO2", -1)
 species(delete = TRUE)
 species(c("calcite", "dolomite", "magnesite", "brucite"))
-a <- affinity("Mg+2" = c(4, 10, 500), "Ca+2" = c(5, 15, 500), T = 300, P = 1000)
+# use argument recall feature to rerun affinity over the same range of conditions
+a <- affinity(a)
 diagram(a, type = "saturation", add = TRUE, contour.method = c("edge", "edge", "flattest", "flattest"), lty = 2, cex = 1.4, col = "blue3")
 
 # add title and legend
