@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-32 (2019-07-28)
+CHANGES IN CHNOSZ 1.3.2-34 (2019-07-31)
 ---------------------------------------
 
 NEW FEATURE: ENERGY UNITS
@@ -20,7 +20,7 @@ NEW FEATURE: ENERGY UNITS
   user-supplied file with no "E_units" column. In this case, the units
   are set to cal.
 
-NEW FEATURE: SOLUBILITY UNITS
+NEW FEATURES: SOLUBILITY UNITS AND CODE ANALYSIS
 
 - convert() now handles the output from solubility(), for converting
   calculated concentrations to ppm or ppb.
@@ -33,6 +33,9 @@ NEW FEATURE: SOLUBILITY UNITS
 
 - Add demo/sphalerite.R for calculations of solubility of sphalerite,
   converted to log ppm (after Akinfiev and Tagirov, 2014).
+
+- solubility() has a new argument 'codeanal' that when set to TRUE
+  indicates the printing of messages used for code analysis.
 
 NEW FEATURES: DIAGRAMS
 

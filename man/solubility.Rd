@@ -16,7 +16,7 @@ Calculate chemical activities of species in equilibrium with a soluble basis spe
   \item{dissociation}{logical, does the mineral undergo a dissociation reaction?}
   \item{find.IS}{logical, find the equilibrium ionic strength by iteration?}
   \item{in.terms.of}{character, express the total solubility in terms of moles of this species}
-  \item{codeanal}{logical, print output of internal variables for code analysis}
+  \item{codeanal}{logical, print diagnostic messages and values of internal variables for code analysis}
 }
 
 \details{

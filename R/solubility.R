@@ -11,7 +11,7 @@
 #source("util.args.R")
 #source("util.character.R")
 
-solubility <- function(aout, dissociation=NULL, find.IS=FALSE, in.terms.of=NULL, codeanal = FALSE) {
+solubility <- function(aout, dissociation = NULL, find.IS = FALSE, in.terms.of = NULL, codeanal = FALSE) {
   ## concept: the logarithms of activities of species at equilibrium are equal to
   ## Astar, the affinities calculated for unit activities of species
 
@@ -28,11 +28,12 @@ solubility <- function(aout, dissociation=NULL, find.IS=FALSE, in.terms.of=NULL,
     nbasis <- nrow(aout$basis)
 if(codeanal) print(paste("number of basis species:", nbasis))
     if(nbasis > 1) {
+if(codeanal) print("-- testing for dissociation reactions:")
       # if the reaction to form the first species involves the second basis species, we consider it to be a dissociation reaction
       #if(aout$species[1, 2] != 0) {
       # change this to test for all species 20190730
       if(all(aout$species[2] != 0)) {
-if(codeanal) print("reaction to form the first species involves the second basis species")
+if(codeanal) print("   reactions to form all species involve the second basis species")
         # 20190123 (corundum calculation): if there are only H2O, H+, and e-
         # besides the first basis species, it's not a dissociation reaction
         nH2O <- sum(rownames(aout$basis) %in% c("H2O", "H+", "e-", "O2", "H2"))
@@ -42,11 +43,11 @@ if(codeanal) print("reaction to form the first species involves the second basis
             stop("Unsure whether the first formation reaction is a dissociation reaction.\nSet the 'dissociation' argument to TRUE or FALSE, or redefine the basis to put a product ion second.")
           }
           dissociation <- TRUE
-        }
-      }
-    }
+        } else if(codeanal) print("   the basis consists of only the conserved species and H2O-derived species")
+      } else if(codeanal) print("   at least one formation reaction doesn't involve the second basis species")
+    } else if(codeanal) print("-- no dissociation reactions are possible")
     message("solubility: test for dissociation reaction returns ", dissociation)
-  } else message("solubility: argument for dissociation reaction is ", dissociation)
+  } else message("solubility: from argument, dissociation ratio is ", dissociation)
 
   # get starting ionic strength (probably zero, but could be anything set by user)
   IS <- aout$IS
@@ -73,29 +74,38 @@ if(codeanal) print(paste0("balancing coefficients [", balance, "]: ", paste(n.ba
     ## unit activities of species, so we have to take away the activites
     Astar <- function(i) aout$values[[i]] + aout$species$logact[i]
     loga.equil <- lapply(1:length(aout$values), Astar)
-if(codeanal) for(ii in 1:length(loga.equil)) print(paste0("loga.equil [", aout$species$name[ii], "]: ", round(loga.equil[[ii]], 3)))
 
     ## for a dissociation on a *per reaction* (not system) basis,
     ## apply the divisor here and skip the if(dissociation){} part below
     ## (can be used to reproduce Fig. 4 of Manning et al., 2013)
-    if(is.numeric(dissociation)) loga.equil <- lapply(loga.equil, "/", dissociation)
+    if(is.numeric(dissociation)) {
+if(codeanal) for(ii in 1:length(loga.equil)) print(paste0("loga.equil0 [", aout$species$name[ii], "]: ", round(loga.equil[[ii]], 3)))
+if(codeanal) print(paste0("applying ", dissociation, "-fold dissociation correction (no interaction)"))
+      loga.equil <- lapply(loga.equil, "/", dissociation)
+    }
 
+
+    # get the total activity of the balancing basis species
     loga.balance <- logabfun(loga.equil, n.balance)
 if(codeanal) print(paste0("loga.balance [", balance, "]: ", round(loga.balance, 3)))
 
     # recalculate things for a dissociation reaction (like CaCO3 = Ca+2 + CO3+2)
     if(isTRUE(dissociation)) {
-      # the multiplicity becomes the exponent in the reaction quotient
-      loga.split <- loga.balance / 2
+      ndissoc <- 2
+if(codeanal) for(ii in 1:length(loga.equil)) print(paste0("loga.equil0 [", aout$species$name[ii], "]: ", round(loga.equil[[ii]], 3)))
+if(codeanal) print(paste0("applying ", ndissoc, "-fold dissociation correction (with interaction)"))
+      # the number of dissociated products is the exponent in the activity product
+      loga.dissoc <- loga.balance / ndissoc
       # the contribution to affinity
-      Asplit <- lapply(n.balance, "*", loga.split)
+      Adissoc <- lapply(n.balance, "*", loga.dissoc)
       # adjust the affinity and get new equilibrium activities
-      aout$values <- mapply("-", aout$values, Asplit, SIMPLIFY=FALSE)
+      aout$values <- mapply("-", aout$values, Adissoc, SIMPLIFY = FALSE)
       loga.equil <- lapply(1:length(aout$values), Astar)
-      # check that the new loga.balance == loga.split
-      # TODO: does this work for non-1:1 species?
       loga.balance <- logabfun(loga.equil, n.balance)
-      stopifnot(all.equal(loga.balance, loga.split))
+if(codeanal) print(paste0("loga.balance [", balance, "]: ", round(loga.balance, 3)))
+      # check that the new loga.balance == loga.dissoc
+      # TODO: does this work for non-1:1 species?
+      stopifnot(all.equal(loga.balance, loga.dissoc))
     }
 
     # get the old IS
@@ -114,7 +124,7 @@ if(codeanal) print(paste0("loga.balance [", balance, "]: ", round(loga.balance, 
     }
     # add ions present in the species of interest
     # instead of using aout$species$name, use info() to get formulas 20190309
-    species.formulas <- info(aout$species$ispecies)$formula
+    species.formulas <- suppressMessages(info(aout$species$ispecies)$formula)
     for(i in 1:length(loga.equil)) {
       species.ion <- species.formulas[i]
       Z.species.ion <- makeup(species.ion)["Z"]
@@ -156,13 +166,15 @@ if(codeanal) print(paste0("loga.balance [", balance, "]: ", round(loga.balance, 
     # divide the activity of the conserved basis species by the coefficient in the formation reaction
     ibalance <- which.balance(aout$species)
     coeff <- sbasis[, ibalance][1]
-if(codeanal) print(paste("coeff:", coeff))
     loga.balance <- loga.balance - log10(coeff)
+if(codeanal) print(paste0("loga.balance [in terms of ", in.terms.of, "]: ", round(loga.balance, 3)))
   }
 
   # make the output (we don't deal with normalized formulas yet, so for now m.balance==n.balance)
   # indicate the function used to make this output 20190525
   aout$fun <- "solubility"
+  # add names to loga.equil 20190731
+  names(loga.equil) <- aout$species$name
   c(aout, list(balance=bout$balance, m.balance=bout$n.balance, n.balance=bout$n.balance, in.terms.of=in.terms.of,
     loga.balance=loga.balance, Astar=loga.equil, loga.equil=loga.equil))
 }
