@@ -134,7 +134,7 @@ The meanings of the remaining columns depend on the model used for a particular 
 The names of these columns are compounded from those of the parameters in the HKF equations of state and general heat capacity polynomial; for example, column 13 is named \code{a1.a}.
 Scaling of the values by orders of magnitude is adopted for some of the parameters, following common usage in the literature.
 
-Columns 13-20 for aqueous species (parameters in the revised HKF equations of state):
+Columns 14-21 for aqueous species (parameters in the revised HKF equations of state):
 
     \tabular{lll}{
       \code{a1} \tab numeric \tab \eqn{a_1\times10}{a1 * 10} (cal mol\eqn{^{-1}}{^-1} bar\eqn{^{-1}}{^-1})\cr
@@ -147,7 +147,7 @@ Columns 13-20 for aqueous species (parameters in the revised HKF equations of st
       \code{Z}  \tab numeric \tab Charge
     }
 
-Columns 13-20 for crystalline, gas and liquid species (\eqn{Cp=a+bT+cT^{-2}+dT^{-0.5}+eT^2+fT^{\lambda}}{Cp = a + bT + cT^-2 + dT^-0.5 + eT^2 + fT^lambda}).
+Columns 14-21 for crystalline, gas and liquid species (\eqn{Cp=a+bT+cT^{-2}+dT^{-0.5}+eT^2+fT^{\lambda}}{Cp = a + bT + cT^-2 + dT^-0.5 + eT^2 + fT^lambda}).
 
     \tabular{lll}{
       \code{a} \tab numeric \tab \eqn{a} (cal K\eqn{^{-1}}{^-1} mol\eqn{^{-1}}{^-1})\cr
@@ -161,7 +161,7 @@ Columns 13-20 for crystalline, gas and liquid species (\eqn{Cp=a+bT+cT^{-2}+dT^{
       \tab \tab temperature limit of validity of extrapolation (K)
     }
 
-Columns 13-20 for aqueous species using the Akinfiev-Diamond model. Note that the \code{c} column is used to store the \eqn{\xi}{xi} parameter, and that \code{Z} must be NA to activate the code for this model. The remaining columns are not used.
+Columns 14-21 for aqueous species using the Akinfiev-Diamond model. Note that the \code{c} column is used to store the \eqn{\xi}{xi} parameter, and that \code{Z} must be NA to activate the code for this model. The remaining columns are not used.
 
     \tabular{lll}{
       \code{a} \tab numeric \tab \eqn{a} (cm\S{3} g\S{-1}) \cr
