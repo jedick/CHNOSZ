@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-34 (2019-07-31)
+CHANGES IN CHNOSZ 1.3.2-35 (2019-08-01)
 ---------------------------------------
 
 NEW FEATURE: ENERGY UNITS
@@ -124,6 +124,9 @@ OTHER CHANGES
   dimethylammonium chloride from Shvedov and Tremaine, 1997.
 
 - Modify demo/saturation.R to use argument recall feature of affinity().
+
+- Add data for zoisite, clinozoisite, and epidote from Gottschalk, 2004.
+  Thanks to Evgeniy Bastrakov for the data file.
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)
 ------------------------------------

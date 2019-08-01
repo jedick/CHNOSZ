@@ -64,8 +64,6 @@ tremolite,Tr,Ca2Mg5Si8O24H2,cr,Ber88,NA,01.Oct.17,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA
 "tridymite,low",lTr,SiO2,cr,Ber88,NA,01.Oct.17,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 wollastonite,Wo,CaSiO3,cr,Ber88,NA,01.Oct.17,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 pseudowollastonite,pWo,CaSiO3,cr,Ber88,NA,01.Oct.17,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-zoisite,Zo,Ca2Al3Si3O13H,cr,Ber88,NA,01.Oct.17,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-clinozoisite,cZo,Ca2Al3Si3O13H,cr,Ber88,NA,01.Oct.17,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 annite,Ann,Si3Fe3AlKH2O12,cr,Ber90,SHD91.2,03.Oct.17,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 fluormuscovite,Flms,KAl3Si3O10F2,cr,ZS92,NA,03.Oct.17,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 fluorphlogopite,Fphl,KMg3AlSi3O10F2,cr,ZS92,NA,03.Oct.17,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
@@ -89,3 +87,7 @@ sudoite,Sud,Mg2Al4Si3O10(OH)8,cr,VGT92,NA,06.Mar.19,cal,NA,NA,NA,NA,NA,NA,NA,NA,
 daphnite,Daph,Fe5Al2Si3O10(OH)8,cr,VPT01,NA,06.Mar.19,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 Mg-amesite,Mg-Am,Mg4Al4Si2O10(OH)8,cr,VPT01,NA,06.Mar.19,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 Fe-amesite,Fe-Am,Fe4Al4Si2O10(OH)8,cr,VPV05,NA,06.Mar.19,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+zoisite,Zo,Ca2Al3Si3O13H,cr,Got04,NA,01.Aug.19,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+clinozoisite,cZo,Ca2Al3Si3O13H,cr,Got04,NA,01.Aug.19,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+epidote,Ep,Ca2FeAl2Si3O12(OH),cr,Got04,NA,01.Aug.19,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+orthoepidote,oEp,Ca2FeAl2Si3O12(OH),cr,Got04,NA,01.Aug.19,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA

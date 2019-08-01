@@ -43,7 +43,7 @@ test_that("Berman and Helgeson tabulated properties have large differences for f
 
   # which minerals differ in S by more than 4 cal/K/mol?
   idiffS <- which(abs(prop_Berman$S - prop_Helgeson$S) > 4)
-  expect_match(mineral[idiffS], "albite|annite|almandine|fluortremolite|andradite|grunerite")
+  expect_match(mineral[idiffS], "epidote|annite|almandine|fluortremolite|andradite|grunerite")
 
   # which minerals differ in Cp by more than 4 cal/K/mol?
   idiffCp <- which(abs(prop_Berman$Cp - prop_Helgeson$Cp) > 4)

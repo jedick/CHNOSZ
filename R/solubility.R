@@ -87,11 +87,12 @@ if(codeanal) print(paste0("applying ", dissociation, "-fold dissociation correct
 
     # get the total activity of the balancing basis species
     loga.balance <- logabfun(loga.equil, n.balance)
-if(codeanal) print(paste0("loga.balance [", balance, "]: ", round(loga.balance, 3)))
+if(codeanal & !isTRUE(dissociation)) print(paste0("loga.balance [", balance, "]: ", round(loga.balance, 3)))
 
     # recalculate things for a dissociation reaction (like CaCO3 = Ca+2 + CO3+2)
     if(isTRUE(dissociation)) {
       ndissoc <- 2
+if(codeanal) print(paste0("loga.balance0 [", balance, "]: ", round(loga.balance, 3)))
 if(codeanal) for(ii in 1:length(loga.equil)) print(paste0("loga.equil0 [", aout$species$name[ii], "]: ", round(loga.equil[[ii]], 3)))
 if(codeanal) print(paste0("applying ", ndissoc, "-fold dissociation correction (with interaction)"))
       # the number of dissociated products is the exponent in the activity product
@@ -141,7 +142,9 @@ if(codeanal) print(paste0("loga.balance [", balance, "]: ", round(loga.balance, 
     # stop iterating if we reached the tolerance (or find.IS=FALSE)
     if(!find.IS | all(IS - IS.old < 1e-4)) break
     # on the first iteration, expand argument values for affinity() or mosaic()
-    if(niter==1) {
+    # (e.g. convert pH = c(0, 14) to pH = seq(0, 14, 128) so that it has the same length as the IS values)
+    # we don't do this if a$vals is NA 20190731
+    if(niter==1 & !is.na(aout$vals)) {
       if(thisfun=="affinity") for(i in 1:length(aout$vals)) {
         aout.save$args[[i]] <- aout$vals[[i]]
       }
