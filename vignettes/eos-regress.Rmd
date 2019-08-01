@@ -9,6 +9,7 @@ output:
     css: "vig.css"
     toc: true
     mathjax: null
+    highlight: null
   tufte::tufte_handout:
     citation_package: natbib
     latex_engine: xelatex
