@@ -5,7 +5,7 @@
 \alias{find.tp}
 \title{Chemical Activity Diagrams}
 \description{
-Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predominance) diagrams as a function of chemical activities of basis speecies, temperature and/or pressure.
+Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predominance) diagrams as a function of chemical activities of basis species, temperature and/or pressure.
 }
 
 \usage{
@@ -98,18 +98,28 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
 
 \details{
 
-\code{diagram} takes as its primary input the results from \code{\link{equilibrate}} and displays diagrams representing the equilibrium chemical activities of the species.
+This function displays diagrams representing either chemical affinities, or equilibrium chemical activities of species.
+The first argument is the output from \code{\link{affinity}}, \code{\link{equilibrate}}, or \code{\link{solubility}}.
 0-D diagrams, at a single point, are shown as \code{\link{barplot}}s.
 1-D diagrams, for a single variable on the x-axis, are plotted as lines.
 2-D diagrams, for two variables, are plotted as predominance fields.
-The allowed variables are any that \code{\link{affinity}} accepts: temperature, pressure, or the chemical activities of the basis species
+The allowed variables are any that \code{\link{affinity}} or the other functions accepts: temperature, pressure, or the chemical activities of the basis species.
+
+The \code{type} argument only applies when the output from \code{affinity} is being used.
+For \code{type} set to \samp{auto}, and 0 or 1 variables, the property computed by \code{\link{affinity}} for each species is plotted.
+This is usually the affinity of the formation reaction, but can be set to some other property, such as the equilibrium constant (\samp{logK}).
+For two variables, equilibrium predominance (maximum affinity) fields are plotted.
+This \dQuote{maximum affinity method} (Dick, 2019) uses balancing coefficients that are specified by the \code{balance} argument.
+If \code{type} is \samp{saturation}, the function plots the line for each species where the affinity of formation equals zero (see \code{demo("saturation")} for an example).
+If for a given species no saturation line is possible or the range of the diagram does not include the saturation line, the function prints a message instead.
+If \code{type} is the name of a basis species, then the equilibrium activity of the selected basis species in each of the formation reactions is plotted (see the \CO2-acetic acid example in \code{\link{buffer}}).
+In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines, with the method specified in \code{contour.method}.
 
 A new plot is started unless \code{add} is TRUE.
 If \code{plot.it} is FALSE, no plot will be generated but all the intermediate computations will be performed and the results returned.
 
-Line or field labels use the names of the species as provided in \code{eout}; formatting is applied to chemical formuls unless \code{format.names} is FALSE.
-Set \code{names} to TRUE or NULL to plot the names, or FALSE or NA to prevent plotting the names.
-A character argument overrides the default species names; \code{""} can be used to indicate blank names for any species.
+Line or field labels use the names of the species as provided in \code{eout}; formatting is applied to chemical formulas unless \code{format.names} is FALSE.
+Set \code{names} to TRUE or NULL to plot the names, or FALSE, NA, or \code{""} to prevent plotting the names, or a character argument to replace the default species names.
 Alternatively, supply a numeric value to \code{names} to indicate a subset of default names that should or shouldn't be plotted (positive and negative indices, respectively).
 Use \code{col.names} and \code{cex.names} to change the colors and size of the labels.
 Use \code{cex} and \code{cex.axis} to adjust the overall character expansion factors (see \code{\link{par}}) and those of the axis labels.
@@ -117,10 +127,6 @@ The x- and y-axis labels are automatically generated unless they are supplied in
 
 If \code{groups} is supplied, the activities of the species identified in each numeric element of this list are multiplied by the balance coefficients of the species, then summed together.
 The names of the list are used to label the lines or fields for the summed activities of the resulting groups.
-
-\code{find.tp} finds the locations in a matrix of integers that are surrounded by the greatest number of different values.
-The function counts the unique values in a 3x3 grid around each point and returns a matrix of indices (similar to \code{\link{which}(..., arr.ind = TRUE)}) for the maximum count (ties result in more than one pair of indices).
-It can be used with the output from \code{diagram} for calculations in 2 dimensions to approximately locate the triple points on the diagram.
 
 }
 
@@ -150,25 +156,11 @@ Note that the default for \code{fill.NA} is automatically changed to \samp{trans
 The default line-drawing algorithm uses \code{\link{contourLines}} to obtain smooth-looking diagonal and curved lines, at the expense of not coinciding exactly with the rectangular grid that is used for drawing colors.
 \code{lty}, \code{col}, and \code{lwd} can be specified, but limiting the lines via \code{xrange} is not currently supported.
 To go back to the old behavior for drawing lines, set \code{dotted} to \samp{0}.
-The old behavior does not follow \code{lty}; instead, the style of the boundary lines on 2-D diagrams can be altered by supplying one or more non-zero integers in \code{dotted}, which indicates the fraction of line segments to omit; a value of \samp{1} or NULL for \code{dotted} has the effect of not drawing the boundary lines.
+The old behavior does not respect \code{lty}; instead, the style of the boundary lines on 2-D diagrams can be altered by supplying one or more non-zero integers in \code{dotted}, which indicates the fraction of line segments to omit; a value of \samp{1} or NULL for \code{dotted} has the effect of not drawing the boundary lines.
 
 \code{normalize} and \code{as.residue} apply only to the 2-D diagrams, and only when \code{eout} is the output from \code{affinity}.
 With \code{normalize}, the activity boundaries are calculated as between the residues of the species (the species divided by the balance coefficients), then the activities are rescaled to the whole species formulas.
 With \code{as.residue}, the activity boundaries are calculated as between the residues of the species, and no rescaling is performed.
-}
-
-\section{Affinity Diagrams}{
-The function behaves differently when the output from \code{affinity} is being used instead of the equilibrium activities from \code{equilibrate}.
-If \code{type} is \samp{auto}, and the number of dimensions is 0 or 1, the property computed by \code{\link{affinity}} for each species is plotted.
-This is usually the affinity of the formation reaction, but can be set to some other property, such as the equilibrium constant (\samp{logK}).
-If \code{type} is \samp{auto}, and the number of dimensions is 2, then equilibrium predominance (maximum affinity) fields are plotted.
-This algorithm is based on a comparison of the affinities of the formation reactions scaled by the balancing coefficients that are determined by the \code{balance} argument.
-
-If \code{type} is \samp{saturation}, the function plots the line for each species where the affinity of formation equals zero; see \code{demo("saturation")} for an example.
-If for a given species no saturation line is possible or the range of the diagram is beyond the saturation line, the function prints a message instead.
-If \code{type} is the name of a basis species, the equilibrium activity of the selected basis species in each of the formation reactions is plotted (see the \CO2-acetic acid example in \code{\link{buffer}}).
-In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines, using the method specified in \code{contour.method}.
-The \samp{saturation} diagram can handle multiple species, but if \code{type} is the name a basis species, then only the first species of interest is used in the calculation, and a warning is produced if there is more than one.
 }
 
 \section{Activity Coefficients}{
@@ -178,7 +170,7 @@ So that the labels on diagrams are adjusted accordingly, \code{\link{diagram}} s
 The labeling as molality takes effect even if \code{IS} is set to 0; this way, by including (or not) the \code{IS = 0} argument to \code{affinity}, the user decides whether to label aqueous species variables as molality (or activity) for calculations at zero ionic strength (where molality = activity).
 }
 
-\section{Strip Diagrams}{
+\section{Other Functions}{
 A different incarnation of 1-D speciation diagrams is provided by \code{strip}.
 This function generates any number of strip diagrams in a single plot.
 The diagrams are made up of colors bars whose heights represent the relative abundances of species; the color bars are arranged in order of abundance and the total height of the stack of colors bars is constant.
@@ -189,10 +181,14 @@ Supplemental ticks can be added to the x-axis at the locations specified in \cod
 \code{ymin} can be decreased in order to add more space at the bottom of the plot, and \code{xpad} can be changed in order to increase or decrease the size of the x-axis relative to the width of the strips.
 An inset dot-and-line plot is created below each strip if \code{ns} is given.
 This argument has the same format as \code{ispecies}, and can be used e.g. to display the relative numbers of species for comparison with the stability calculations.
+
+\code{find.tp} finds the locations in a matrix of integers that are surrounded by the greatest number of different values.
+The function counts the unique values in a 3x3 grid around each point and returns a matrix of indices (similar to \code{\link{which}(..., arr.ind = TRUE)}) for the maximum count (ties result in more than one pair of indices).
+It can be used with the output from \code{diagram} for calculations in 2 dimensions to approximately locate the triple points on the diagram.
 }
 
 \section{Value}{
-  The function returns an \code{\link{invisible}} list containing, first, the contents of \code{eout}, i.e. the provided output of \code{\link{affinity}} or \code{\link{equilibrate}}.
+  \code{diagram} returns an \code{\link{invisible}} list containing, first, the contents of \code{eout}, i.e. the provided output of \code{\link{affinity}} or \code{\link{equilibrate}}.
   To this are added the name of the plotted variable in \code{plotvar}, the plotted values in \code{plotvals}, and the names used for labeling the plot in \code{names}.
   For 1-D diagrams, \code{plotvals} usually corresponds to the chemical activities of the species (i.e. \code{eout$loga.equil}), or, if \code{alpha} is \code{TRUE}, their mole fractions (degrees of formation).
   For 2-D diagrams, the output also contains \code{predominant}, giving the numbers (from the \code{\link{species}} definition) of the predominant (aka maximum-affinity) species at each grid point.
@@ -311,17 +307,19 @@ stopifnot(species()$name[d$predominant[99, 101]]=="sillimanite")
 
 \references{
 
-  Aksu, S. and Doyle, F. M. (2001) Electrochemistry of copper in aqueous glycine solutions. \emph{J. Electrochem. Soc.} \bold{148}, B51--B57. \url{https://doi.org/10.1149/1.1344532}
+Aksu, S. and Doyle, F. M. (2001) Electrochemistry of copper in aqueous glycine solutions. \emph{J. Electrochem. Soc.} \bold{148}, B51--B57. \url{https://doi.org/10.1149/1.1344532}
 
-  Helgeson, H. C. (1970) A chemical and thermodynamic model of ore deposition in hydrothermal systems. \emph{Mineral. Soc. Amer. Spec. Pap.} \bold{3}, 155--186. \url{http://www.worldcat.org/oclc/583263}
+Dick, J. M. (2019) CHNOSZ: Thermodynamic calculations and diagrams for geochemistry. \emph{Front. Earth Sci.} \bold{7}:180. \url{https://doi.org/10.3389/feart.2019.00180}
 
-  Helgeson, H. C., Delany, J. M., Nesbitt, H. W. and Bird, D. K. (1978) Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am. J. Sci.} \bold{278-A}, 1--229. \url{http://www.worldcat.org/oclc/13594862}
+Helgeson, H. C. (1970) A chemical and thermodynamic model of ore deposition in hydrothermal systems. \emph{Mineral. Soc. Amer. Spec. Pap.} \bold{3}, 155--186. \url{http://www.worldcat.org/oclc/583263}
 
-  LaRowe, D. E. and Helgeson, H. C. (2007) Quantifying the energetics of metabolic reactions in diverse biogeochemical systems: electron flow and ATP synthesis. \emph{Geobiology} \bold{5}, 153--168. \url{https://doi.org/10.1111/j.1472-4669.2007.00099.x}
+Helgeson, H. C., Delany, J. M., Nesbitt, H. W. and Bird, D. K. (1978) Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am. J. Sci.} \bold{278-A}, 1--229. \url{http://www.worldcat.org/oclc/13594862}
 
-  Majzlan, J., Navrotsky, A., McClesky, R. B. and Alpers, C. N. (2006) Thermodynamic properties and crystal structure refinement of ferricopiapite, coquimbite, rhomboclase, and Fe\s{2}(SO\s{4})\s{3}(H\s{2}O)\s{5}. \emph{Eur. J. Mineral.} \bold{18}, 175--186. \url{https://doi.org/10.1127/0935-1221/2006/0018-0175}
+LaRowe, D. E. and Helgeson, H. C. (2007) Quantifying the energetics of metabolic reactions in diverse biogeochemical systems: electron flow and ATP synthesis. \emph{Geobiology} \bold{5}, 153--168. \url{https://doi.org/10.1111/j.1472-4669.2007.00099.x}
 
-  Tagirov, B. and Schott, J. (2001) Aluminum speciation in crustal fluids revisited. \emph{Geochim. Cosmochim. Acta} \bold{65}, 3965--3992. \url{https://doi.org/10.1016/S0016-7037(01)00705-0}
+Majzlan, J., Navrotsky, A., McClesky, R. B. and Alpers, C. N. (2006) Thermodynamic properties and crystal structure refinement of ferricopiapite, coquimbite, rhomboclase, and Fe\s{2}(SO\s{4})\s{3}(H\s{2}O)\s{5}. \emph{Eur. J. Mineral.} \bold{18}, 175--186. \url{https://doi.org/10.1127/0935-1221/2006/0018-0175}
+
+Tagirov, B. and Schott, J. (2001) Aluminum speciation in crustal fluids revisited. \emph{Geochim. Cosmochim. Acta} \bold{65}, 3965--3992. \url{https://doi.org/10.1016/S0016-7037(01)00705-0}
 
 }
 

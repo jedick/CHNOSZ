@@ -28,14 +28,20 @@ Calculate the chemical affinities of formation reactions of species.
 
 \details{
 \code{affinity} calculates the chemical affinities of reactions to form the species of interest from the basis species.
-The equation used to calculate chemical affinity \emph{A} is \emph{A}=\eqn{RT\ln (K/Q)}{RT*ln(K/Q)}, where \eqn{K} denotes the equilibrium constant of the reaction and \eqn{Q} stands for the activity product of the species in the reaction.
+The equation used to calculate chemical affinity (\emph{A}), written for base-10 (decimal) logarithms, is \eqn{A/(2.303RT)}=\eqn{\log (K/Q)}{log(K/Q)}, where \eqn{K} is the equilibrium constant of the reaction, \eqn{Q} is the activity product of the species in the reaction, and 2.303 is the conversion factor from natural to decimal logarithms.
 The calculation of chemical affinities relies on the current definitions of the \code{\link{basis}} species and \code{\link{species}} of interest.
 Calculations are possible at single values of temperature, pressure, ionic strength and chemical activities of the basis species, or as a function of one or more of these variables. 
+
+The argument \code{property} can be changed to calculate other thermodynamic properties of formation reactions. 
+Valid properties are \samp{A} or NULL for chemical affinity, \samp{logK} or \samp{logQ} for logarithm of equilibrium constant and reaction activity product, or any of the properties available in \code{\link{subcrt}} except for \samp{rho}.
+The properties returned are those of the formation reactions of the species of interest from the basis species.
+It is also possible to calculate the properties of the species of interest themselves (not their formation reactions) by setting the \code{property} to \samp{G.species}, \samp{Cp.species}, etc.
+Except for \samp{A}, the properties of proteins or their reactions calculated in this manner are restricted to nonionized proteins.
 
 Zero, one, or more leading arguments to the function identify which of the chemical activities of basis species, temperature, pressure and/or ionic strength to vary.
 The names of each of these arguments may be the formula of any of the basis species of the system, or \samp{T}, \samp{P}, \samp{pe}, \samp{pH}, \samp{Eh}, or \samp{IS} (but names may not be repeated).
 The names of charged basis species such as \samp{K+} and \samp{SO4-2} should be quoted when used as arguments.
-The value of each argument is of the form \code{c(min, max)} or \code{c(min, max, res)} where \code{min} and \code{max} refer to the minimimum and maximum values of variable identified by the name of the argument, and \code{res} denotes the resolution, or number of points along which to do the calculations; \code{red} is assigned a default value of 128 if it is missing.
+The value of each argument is of the form \code{c(min, max)} or \code{c(min, max, res)} where \code{min} and \code{max} refer to the minimimum and maximum values of variable identified by the name of the argument, and \code{res} is the resolution, or number of points along which to do the calculations; \code{res} is assigned a default value of 128 if it is missing.
 For any arguments that refer to basis species, the numerical values are the logarithms of activity (or fugacity for gases) of that basis species.
 
 If \samp{T}, \samp{P}, and/or \samp{IS} are not among the \code{var}s, their constant values can be supplied in \code{T}, \code{P}, or \code{IS} (in mol kg\eqn{^{-1}}{^-1}).
@@ -51,12 +57,6 @@ This uses some optimizations to calculate the properties of many proteins in a f
 
 When the length(s) of the variables is(are) greater than 3, the function enters the \samp{transect} mode of operation.
 In this mode of operation, instead of performing the calculations on an \eqn{n}{n}-dimensional grid, the affinities are calculated on a transect of changing T, P, and/or chemical activity of basis species.
-
-The function can also be used to calculate other thermodynamic properties of formation reactions. 
-Valid properties are \samp{A} or NULL for chemical affinity, \samp{logK} or \samp{logQ} for logarithm of equilibrium constant and reaction activity product, or any of the properties available in \code{\link{subcrt}} except for \samp{rho}.
-The properties returned are those of the formation reactions of the species of interest from the basis species.
-It is also possible to calculate the properties of the species of interest themselves (not their formation reactions) by setting the \code{property} to \samp{G.species}, \samp{Cp.species}, etc.
-Except for \samp{A}, the properties of proteins or their reactions calculated in this manner are restricted to nonionized proteins.
 
 Argument recall is invoked by passing a previous result of \code{affinity} as the first argument.
 The function then calls itself using the settings from the previous calculation, with additions or modifications indicated by the remaining arguments in the current function call.
@@ -74,6 +74,7 @@ However, if one or more of \code{pe}, \code{Eh} or \code{pH} is among the variab
 \seealso{
 \code{\link{ionize.aa}}, activated if proteins are among the species of interest and \samp{H+} is in the basis.
 \code{\link{equilibrate}} for using the results of \code{affinity} to calculate equilibrium activities of species, and \code{\link{diagram}} to plot the results.
+\code{\link{demo}("saturation")} for an example using the argument recall feature.
 }
 
 \examples{
