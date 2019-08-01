@@ -61,7 +61,8 @@
   Files in \code{protein} contain amino acid compositions for proteins.
   \itemize{
     \item \code{Sce.csv.xz}
-      Data frame of amino acid composition of 6716 proteins from the \emph{Saccharomyces} Genome Database (SGD).
+      Data frame of amino acid composition of proteins from the \emph{Saccharomyces} Genome Database (SGD).
+      To save space in the package, out of 6716 proteins in the SGD, this file has the 4296 that are referenced in \code{abundance/yeastgfp.csv} or \code{abundance/TBD+05.csv}.
       Values in the first three columns are the \code{ORF} names of proteins, \code{SGDID}, and \code{GENE} names. The remaining twenty columns (\code{ALA}..\code{VAL}) contain the numbers of the respective amino acids in each protein.
       The sources of data for \samp{Sce.csv} are the files \samp{protein_properties.tab} and \samp{SGD_features.tab} (for the gene names), downloaded from \url{http://www.yeastgenome.org} on 2013-08-24.
       See \code{\link{yeast.aa}} for an example.
