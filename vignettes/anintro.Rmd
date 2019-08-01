@@ -2007,17 +2007,20 @@ See <span style="color:blue">`?thermo`</span> for details about what's in the da
 
 Use <span style="color:red">`mod.obigt()`</span> to add or modify the database in the current session.
 The function requires the name of a species and one or more properties to change.
+
+### Aqueous species
+
 Let's add data for the S<sub>3</sub><sup>-</sup> ion from @PD15.
 Although we could choose anything for the name (e.g. "trisulfur radical anion"), here we make it the same as the formula.
 The date for the entry is <span style="color:green">`today()`</span> (i.e. today's date using the date format inherited from SUPCRT92):
-```{r mod_obigt_S3_ghs, echo=1:2}
+```{r mod_obigt_S3_ghs}
 mod.obigt("S3-", formula = "S3-", state = "aq", ref1 = "PD15", date = today(),
           G = 13160, H = 10840, S = 28.6, Cp = 62.3, V = 37.7)
 ```
 
 The function prints a message saying that the species was added, and returns the species index of the new species.
 Now let's modify the same species by adding the HKF coefficients:
-```{r mod_obigt_S3_eos, echo=1:2}
+```{r mod_obigt_S3_eos}
 mod.obigt("S3-", state = "aq", a1 = 2.5, a2 = 19.9, a3 = 9.2, a4 = -3.6,
           c1 = 50.2, c2 = 9.6, omega = 0.8, z = -1)
 ```
@@ -2029,6 +2032,50 @@ subcrt(c("H2S", "SO4-2"), c(-2, -1), T = c(25, 500), P = c(1, 700))
 ```
 
 The reaction coefficients are identical to Reaction 4 of Pokrovski and Dubessy (2015), and the calculated values of log*K* match those shown in their Figure 5.
+
+### Solid species
+
+Let's add data for magnesiochromite from @KOSG00.
+The parameters in this paper are reported in Joules, so we set the `E_units` to J.
+The value for volume, in cm<sup>3</sup> mol<sup>-1</sup>, is from @RH95.
+```{r mod_obigt_magnesiochromite_ghs}
+H <- -1762000
+S <- 119.6
+V <- 43.56
+mod.obigt("magnesiochromite", formula = "MgCr2O4", state = "cr", ref1 = "KOSG00",
+          date = today(), E_units = "J", H = H, S = S, V = V)
+```
+
+Here are the heat capacity parameters for the "Haas-Fisher" polynomial equation ($Cp = a + bT + cT^{-2} + dT^{-0.5} + eT^2$).
+Order-of-magnitude multipliers are required for the values of `b` and `c` (and also `e` if it is present; see the description for columns 14-21 of the `obigt` data frame in <span style="color:blue">`?thermo`</span>).
+Note that an additional `f` term is available, which can have any exponent given by `lambda`, but it is not needed here.
+1500 K is a generic value for the high-temperature limit; experimental heat capacities were only reported up to 340 K (Klemme et al., 2000).
+```{r mod_obigt_magnesiochromite_eos}
+a <- 221.4
+b <- -0.00102030 * 1e3
+c <- -1757210 * 1e-5
+d <- -1247.9
+mod.obigt("magnesiochromite", E_units = "J", a = a, b = b, c = c, d = d,
+          e = 0, f = 0, lambda = 0, T = 1500)
+```
+
+Now we can use <span style="color:green">`subcrt()`</span> to calculate the heat capacity of magnesiochromite.
+For this calculation, we set the temperature units to K and the energy units to Joules.
+We also specify a pressure of 1 bar to prevent an error in the calculation of *P*<sub>sat</sub> below the freezing temperature of water.
+```{r subcrt_magnesiochromite}
+T.units("K")
+E.units("J")
+subcrt("magnesiochromite", property = "Cp", T = c(250, 300, 340), P = 1)
+```
+
+The calculated values are with 0.1 J K<sup>-1</sup> mol<sup>-1</sup> of those shown in Fig. 1 of Klemme et al. (2000).
+If we wanted to restore the units setting for later calculations with <span style="color:green">`subcrt()`</span>, we could use <span style="color:red">`reset()`</span>.
+However, that also resets the thermodynamic database, so we don't do it here, in order to run the check in the next section.
+Instead, we can just set the units to their defaults manually.
+```{r restore_units_magnesiochromite}
+T.units("C")
+E.units("cal")
+```
 
 ## Cross-checking data entries
 
