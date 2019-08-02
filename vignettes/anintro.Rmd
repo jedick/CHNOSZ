@@ -2030,28 +2030,31 @@ The function requires the name of a species and one or more properties to change
 
 ### Aqueous species
 
-Let's add data for the S<sub>3</sub><sup>-</sup> ion from @PD15.
-Although we could choose anything for the name (e.g. "trisulfur radical anion"), here we make it the same as the formula.
-The date for the entry is <span style="color:green">`today()`</span> (i.e. today's date using the date format inherited from SUPCRT92):
-```{r mod_obigt_S3_ghs}
-mod.obigt("S3-", formula = "S3-", state = "aq", ref1 = "PD15", date = today(),
-          G = 13160, H = 10840, S = 28.6, Cp = 62.3, V = 37.7)
+Let's add data for CoCl<sub>4</sub><sup>-2</sup> from @LBT_11.
+The values are taken from Table 5 of that paper; as is common for parameters in the HKF model, they are reported in caloric units, and some of the values have multipliers, which are kept when entering the data.
+The date we use for the entry is <span style="color:green">`today()`</span> (i.e. today's date using the date format inherited from SUPCRT92):
+```{r mod_obigt_CoCl4_ghs}
+mod.obigt("CoCl4-2", formula = "CoCl4-2", state = "aq", ref1 = "LBT+11",
+  date = today(), G = -134150, H = -171558, S = 19.55, Cp = 72.09, V = 27.74)
 ```
 
 The function prints a message saying that the species was added, and returns the species index of the new species.
-Now let's modify the same species by adding the HKF coefficients:
-```{r mod_obigt_S3_eos}
-mod.obigt("S3-", state = "aq", a1 = 2.5, a2 = 19.9, a3 = 9.2, a4 = -3.6,
-          c1 = 50.2, c2 = 9.6, omega = 0.8, z = -1)
+Now let's modify the new species by adding the HKF coefficients.
+The `z` at the end refers to the charge of the species, and is used only for calculating the "*g* function" in the revised HKF model, not for balancing reactions.
+```{r mod_obigt_CoCl4_eos}
+mod.obigt("CoCl4-2", a1 = 6.5467, a2 = 8.2069, a3 = 2.0130, a4 = -3.1183,
+  c1 = 76.3357, c2 = 11.6389, omega = 2.9159, z = -2)
 ```
 
-Let's define basis species including S<sub>3</sub><sup>-</sup> to automatically balance the reaction of SO<sub>4</sub><sup>-2</sup> and 2 H<sub>2</sub>S:
-```{r S3_reaction, message=FALSE}
-basis(c("S3-", "O2", "H2O", "H+"), c("aq", "gas", "liq", "aq"))
-subcrt(c("H2S", "SO4-2"), c(-2, -1), T = c(25, 500), P = c(1, 700))
+Let us now calculate the equilibrium constant for the formation of CoCl<sub>4</sub><sup>-2</sup> from Co<sup>+2</sup> and Cl<sup>-</sup>.
+```{r CoCl4_reaction, message = FALSE, echo = 1:3}
+T <- c(25, seq(50, 350, 50))
+sres <- subcrt(c("Co+2", "Cl-", "CoCl4-2"), c(-1, -4, 1), T = T)
+round(sres$out$logK, 2)
+stopifnot(identical(round(sres$out$logK, 2), c(-3.2, -2.96, -2.02, -0.74, 0.77, 2.5, 4.57, 7.29)))
 ```
 
-The reaction coefficients are identical to Reaction 4 of Pokrovski and Dubessy (2015), and the calculated values of log*K* match those shown in their Figure 5.
+The calculated values of log*K* are identical to those in Table 9 of Liu et al. (2011), which provides a good indication that the thermodynamic parameters were entered correctly.
 
 ### Solids
 
@@ -2103,34 +2106,35 @@ E.units("cal")
 ```{marginfigure}
 This only checks the parameters for individual species, not the internal consistency of the database itself.
 ```
-Let's do this for the new S<sub>3</sub><sup>-</sup> species:
-```{r info_S3}
-iS3 <- info("S3-")
-info(iS3)
+Given a numeric species index, it runs <span style="color:green">`checkEOS()`</span>, which is a function that calculates values of *C*<sub>*P*</sub>° and *V*° from the HKF or heat capacity parameters and indicates whether differences from the database are greater than 1 cal K<sup>-1</sup> mol<sup>-1</sup> or 1 cm<sup>3</sup> mol<sup>-1</sup>.
+<span style="color:green">`info()`</span> also runs <span style="color:green">`checkGHS()`</span>, which calculates the value of Δ*G*°<sub>*f*</sub> from those of Δ*H*°<sub>*f*</sub> and *S*° and from the entropy of the elements [@CWM89] in the chemical formula of the species.
+Let's do this for the new CoCl<sub>4</sub><sup>-2</sup> species:
+```{r info_CoCl4, results = "hide"}
+inew <- info("CoCl4-2")
+info(inew)
 ```
 
-There <span style="color:green">`checkGHS()`</span> calculated the value of Δ*G*°<sub>*f*</sub> from those of Δ*H*°<sub>*f*</sub> and *S*° and from the entropy of the elements [@CWM89] in the chemical formula of the species.
-If the difference between the entered and calculated values of Δ*G*°<sub>*f*</sub> is greater than 100 cal mol<sup>-1</sup>, <span style="color:green">`checkGHS()`</span> prints a message.
-The calculated value of Δ*G*°<sub>*f*</sub> was found to be 661 cal mol<sup>-1</sup> higher than the entered value.
+The messages indicate that the values of *C*<sub>*P*</sub>° and *V*° added to the database differ slightly from those calculated using the HKF parameters.
+
+Some species in the default and optional databases are known to have inconsistent parameters.
+For instance, we can check the data for the trisulfur radical ion (S<sub>3</sub><sup>-</sup>) from @PD15:
+```{r info_S3, results="hide"}
+info(info("S3-"))
+```
+
+The calculated value of Δ*G*°<sub>*f*</sub> is 661 cal mol<sup>-1</sup> higher than the entered value.
+Because the difference between the entered and calculated values of Δ*G*°<sub>*f*</sub> is greater than 100 cal mol<sup>-1</sup>, <span style="color:green">`checkGHS()`</span> produces a message.
 After checking for any typographical errors in the entries for Δ*G*°<sub>*f*</sub>, Δ*H*°<sub>*f*</sub>, *S*°, and the chemical formula, the source should be consulted for clarification.
 
-Some species in the main and secondary databases are known to have inconsistent entries.
-For example, the entry for cyclohexane has *C*<sub>*P*</sub>° and *V*° that differ from those calculated from the HKF parameters.
-<span style="color:green">`checkEOS()`</span> is a function that cross-checks these parameters and reports the differences (greater than 1 cm<sup>3</sup> mol<sup>-1</sup> or 1 cal K<sup>-1</sup> mol<sup>-1</sup>) when <span style="color:green">`info()`</span> is run:
-```{r info_cyclohexane, results="hide"}
-info(info("cyclohexane"))
-```
-
-The species with detected inconsistencies in OBIGT are listed in the file `obigt_check.csv`.
+All of the species with inconsistencies detected in this manner, in both OBIGT and the optional data files, are listed in the file `obigt_check.csv`.
 ```{r check_obigt}
 file <- system.file("extdata/adds/obigt_check.csv", package = "CHNOSZ")
 dat <- read.csv(file, as.is = TRUE)
 nrow(dat)
 ```
 
-Without additional information, there is often no clear strategy for "fixing" these entries, and they are provided as is.
-```{marginfigure}
-```
+Without additional information, there is often no clear strategy for "fixing" these inconsistent data, and they are provided as-is.
+However, users are encouraged to send any corrections they find to the package maintainer.
 
 ## Water: SUPCRT92 or IAPWS-95 or DEW
 
