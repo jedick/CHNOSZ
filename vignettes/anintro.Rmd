@@ -2097,10 +2097,8 @@ After checking for any typographical errors in the entries for Δ*G*°<sub>*f*</
 Some species in the main and secondary databases are known to have inconsistent entries.
 For example, the entry for cyclohexane has *C*<sub>*P*</sub>° and *V*° that differ from those calculated from the HKF parameters.
 <span style="color:green">`checkEOS()`</span> is a function that cross-checks these parameters and reports the differences (greater than 1 cm<sup>3</sup> mol<sup>-1</sup> or 1 cal K<sup>-1</sup> mol<sup>-1</sup>) when <span style="color:green">`info()`</span> is run:
-```{r info_cyclohexane, message=FALSE, results="hide"}
+```{r info_cyclohexane, results="hide"}
 info(info("cyclohexane"))
-## checkEOS: Cp of cyclohexane aq (1762) differs by 9.35 cal K-1 mol-1 from tabulated value
-## checkEOS: V of cyclohexane aq (1762) differs by 6.64 cm3 mol-1 from tabulated value
 ```
 
 The species with detected inconsistencies in OBIGT are listed in the file `obigt_check.csv`.
