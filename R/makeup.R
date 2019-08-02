@@ -1,5 +1,9 @@
 # CHNOSZ/makeup.R
 
+## if this file is interactively sourced, the following are also needed to provide unexported functions:
+#source("util.formula.R")
+#source("util.character.R")
+
 makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
   # return the elemental makeup (counts) of a chemical formula
   # that may contain suffixed and/or parenthetical subformulas and/or charge
@@ -34,13 +38,20 @@ makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
       # of the formulas are counted for each species
       # first construct elemental makeup showing zero of each element
       em0 <- unlist(out)
+      # exclude NA from the element names 20190802
+      em0 <- em0[!is.na(em0)]
       em0 <- tapply(em0, names(em0), sum)
       em0[] <- 0
+      # create NA matrix for NA formulas 20190802
+      emNA <- em0
+      emNA[] <- NA
       # then sum each formula and the zero vector,
       # using tapply to group the elements
       out <- lapply(out, function(x) {
-        xem <- c(x, em0)
-        tapply(xem, names(xem), sum)
+        if(anyNA(x)) emNA else {
+          xem <- c(x, em0)
+          tapply(xem, names(xem), sum)
+        }
       })
     }
     return(out)
@@ -91,6 +102,7 @@ count.elements <- function(formula) {
   # no charge or parenthetical or suffixed subformulas
   # regular expressions inspired by an answer on
   # http://stackoverflow.com/questions/4116786/parsing-a-chemical-formula-from-a-string-in-c
+  if(is.na(formula)) return(NA)
   #elementRegex <- "([A-Z][a-z]*)([0-9]*)"
   elementSymbol <- "([A-Z][a-z]*)"
   # here, element coefficients can be signed (+ or -) and have a decimal point

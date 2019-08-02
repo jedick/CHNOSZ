@@ -76,7 +76,19 @@ entropy <- function(formula) {
   ielem <- match(colnames(formula), thermo$element$element)
   if(any(is.na(ielem))) warning(paste("element(s)",
     paste(colnames(formula)[is.na(ielem)], collapse=" "), "not available in thermo$element"))
-  entropy <- as.numeric( formula %*% (thermo$element$s[ielem] / thermo$element$n[ielem]) )
+  # entropy per atom
+  Sn <- thermo$element$s[ielem] / thermo$element$n[ielem]
+  # if there are any NA values of entropy, put NA in the matrix, then set the value to zero
+  # this allows mixed finite and NA values to be calculated 20190802
+  ina <- is.na(Sn)
+  if(any(ina)) {
+    for(i in which(ina)) {
+      hasNA <- formula[, i] != 0
+      formula[hasNA, i] <- NA
+    }
+    Sn[ina] <- 0
+  }
+  entropy <- as.numeric( formula %*% Sn )
   return(entropy)
 }
 
