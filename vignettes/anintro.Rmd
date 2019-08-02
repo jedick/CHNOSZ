@@ -2033,7 +2033,7 @@ subcrt(c("H2S", "SO4-2"), c(-2, -1), T = c(25, 500), P = c(1, 700))
 
 The reaction coefficients are identical to Reaction 4 of Pokrovski and Dubessy (2015), and the calculated values of log*K* match those shown in their Figure 5.
 
-### Solid species
+### Solids
 
 Let's add data for magnesiochromite from @KOSG00.
 The parameters in this paper are reported in Joules, so we set the `E_units` to J.
@@ -2225,7 +2225,7 @@ cref <- citation("CHNOSZ")
 print(cref, style = "html")
 ```
 
-If you have found a bug or have questions that aren't answered in the documentation please contact the maintainer:
+If you found a bug or have questions that aren't answered in the documentation please contact the maintainer:
 
 ```{r maintainer_CHNOSZ}
 maintainer("CHNOSZ")

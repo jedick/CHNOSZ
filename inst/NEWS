@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-41 (2019-08-01)
+CHANGES IN CHNOSZ 1.3.2-42 (2019-08-02)
 ---------------------------------------
 
 NEW FEATURE: ENERGY UNITS
@@ -112,7 +112,7 @@ THERMODYNAMIC DATA
   dimethylammonium chloride from Shvedov and Tremaine, 1997.
 
 - Add data for zoisite, clinozoisite, and epidote from Gottschalk, 2004.
-  Thanks to Evgeniy Bastrakov for the data file.
+  Thanks to Evgeniy Bastrakov for contributing the data file.
 
 OTHER CHANGES
 
@@ -134,7 +134,6 @@ OTHER CHANGES
 - In anintro.Rmd, include an example of using mod.obigt() to add a
   solid (magnesiochromite, with data from Klemme et al., 2000). Thanks
   to Alan Boudreau for the suggestion.
-
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)
 ------------------------------------
