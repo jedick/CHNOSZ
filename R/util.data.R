@@ -184,7 +184,8 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
       refval <- eos$V
       calcval <- 41.84*eos$a1 + 41.84*eos$a2/2601 + 
         (41.84*eos$a3 + 41.84*eos$a4/2601) / (298.15-Theta) - Q * eos$omega
-      if(eos$E_units == "J") calcval <- convert(calcval, "cal")
+      iJoules <- eos$E_units == "J"
+      if(any(iJoules)) calcval[iJoules] <- convert(calcval[iJoules], "cal")
       tol <- thermo$opt$V.tol
       units <- "cm3 mol-1"
     }
@@ -230,7 +231,8 @@ checkGHS <- function(ghs, ret.diff=FALSE) {
     message("checkGHS: formula of ", ghs$name[ina], "(", ghs$state[ina], ") is NA")
     Se <- NA
   } else Se <- entropy(as.character(ghs$formula))
-  if(ghs$E_units == "J") Se <- convert(Se, "J")
+  iJoules <- ghs$E_units == "J"
+  if(any(iJoules)) Se[iJoules] <- convert(Se[iJoules], "J")
   refval <- ghs$G
   DH <- ghs$H
   S <- ghs$S

@@ -11,7 +11,10 @@ release checklist for CHNOSZ
   write.csv(co, "obigt_check.csv", row.names=FALSE, na="")
 
 - recreate extdata/thermo/stoich.csv.xz after all data updates
-  (see testthat/test-retrieve.R for instructions)
+  formula <- thermo()$obigt$formula
+  stoich <- i2A(formula)
+  write.csv(stoich, "stoich.csv")
+  system("xz -f stoich.csv")
 
 - check that uniprot.aa() works with current UniProt web pages
 
