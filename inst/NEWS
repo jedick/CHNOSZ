@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-47 (2019-08-02)
+CHANGES IN CHNOSZ 1.3.2-48 (2019-08-02)
 ---------------------------------------
 
 NEW FEATURE: ENERGY UNITS
@@ -133,6 +133,8 @@ DOCUMENTATION
 - In anintro.Rmd, include an example of using mod.obigt() to add a
   solid (magnesiochromite, with data from Klemme et al., 2000). Thanks
   to Alan Boudreau for the suggestion.
+
+- Add description of add.obigt("AkDi") to anintro.Rmd.
 
 OTHER CHANGES
 

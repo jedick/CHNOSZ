@@ -134,6 +134,7 @@ add.obigt <- function(file, species=NULL, force=TRUE) {
   to2 <- read.csv(file, as.is=TRUE)
   # add E_units column if it's missing 20190529
   if(!"E_units" %in% colnames(to2)) to2 <- data.frame(to2[, 1:7], E_units = "cal", to2[, 8:20], stringsAsFactors = FALSE)
+  Etxt <- paste(unique(to2$E_units), collapse = " and ")
   # load only selected species if requested
   if(!is.null(species)) {
     idat <- match(species, to2$name)
@@ -173,7 +174,6 @@ add.obigt <- function(file, species=NULL, force=TRUE) {
   rownames(thermo$obigt) <- 1:nrow(thermo$obigt)
   assign("thermo", thermo, CHNOSZ)
   # give the user a message
-  Etxt <- paste(unique(to2$E_units), collapse = " and ")
   message("add.obigt: read ", length(does.exist), " rows; made ", 
     nexist, " replacements, ", nrow(to2), " additions [energy units: ", Etxt, "]")
   message("add.obigt: use obigt() or reset() to restore default database")

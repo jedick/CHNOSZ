@@ -1973,6 +1973,8 @@ See [<span style="color:blue">`demo(gold)`</span>](../demo) for calculations tha
 The updates for these data have been taken from various publications ([LaRowe and Dick, 2012](https://doi.org/10.1016/j.gca.2011.11.041); [Kitadai, 2014](https://doi.org/10.1007/s00239-014-9616-1); [Azadi et al., 2019](https://doi.org/10.1016/j.fluid.2018.10.002))
 A comparison of log*K* of metal-glycinate complexes using the updated data is in [<span style="color:blue">`demo(glycinate)`</span>](../demo).
 
+The next three optional datasets are provided to support newer data or models:
+
 <span style="color:red">`add.obigt("AS04")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
 These data are included to help transition to the "higher solubility of quartz paradigm" [@WJ17], but are not included in the default database in order to maintain compatibility with existing data for minerals that are linked to the older aqueous `r sio2` data.
 See [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.
@@ -1981,27 +1983,45 @@ See [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.
 You should also run <span style="color:red">`water("DEW")`</span> to activate the equations in the model; then, they will be used by <span style="color:green">`subcrt()`</span> and <span style="color:green">`affinity()`</span>.
 Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
+<span style="color:red">`add.obigt("AkDi")`</span> -- These data are used in the Akinfiev-Diamond model for aqeuous nonelectrolytes [@AD03].
+
 Detailed references for these optional datasets are in the vignette [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](obigt.html) (look under **Optional Data**).
 
 ## Adding data
 
 You can also use <span style="color:red">`add.obigt()`</span> to add data from a user-specified file to the database in the current session.
 The file must be a CSV (comma separated value) file with column headers that match those in the main database.
-To show the required format, take a look at `BZA10.csv`, a supplemental data file provided in CHNOSZ.
+To show the required format, take a look at `BZA10.csv`, which has parameters taken from @BZA10.
 Missing values are indicated by `NA`:
 ```{marginfigure}
 R's `read.csv()` has a useful option: `as.is = TRUE`.
 This prevents columns with character data from being read as factors (i.e. categorical data).
 Passing factors to functions that are designed for character data can give unexpected results or errors.
 ```
-```{r BZA10, echo=1:2}
+```{r BZA10}
 file <- system.file("extdata/adds/BZA10.csv", package = "CHNOSZ")
 read.csv(file, as.is = TRUE)
 ```
 
 The column names with a dot (`.`) refer to different sets of equations for calculating standard thermodynamic properties.
-Aqueous species use the revised Helgeson-Kirkham-Flowers (HKF) equations (symbols before the dot), and crystalline, gas and liquid species other than `r h2o` use a general heat capacity equation.
+Aqueous species use the revised Helgeson-Kirkham-Flowers (HKF) equations (symbols before the dot), and crystalline, gas and liquid species other than `r h2o` use a polynomial equation for heat capacity (see [below](#solids)).
 See <span style="color:blue">`?thermo`</span> for details about what's in the data table, and <span style="color:blue">`?hkf`</span> and <span style="color:blue">`?cgl`</span> for information about the equations used for thermodynamic properties.
+
+Loading the data with <span style="color:red">`add.obigt()`</span> produces a message that the new data replace existing species.
+We can then use <span style="color:green">`subcrt()`</span> to calculate the equilibrium constant for a reaction involving the new species.
+This shows a decrease in the stepwise stability constant for the second cadmium chloride complex with increasing pressure (Bazarkina et al., 2010, Fig. 4).
+```{r BZA10_Cd}
+iCd <- add.obigt(file)
+subcrt(c("CdCl+", "Cl-", "CdCl2"), c(-1, -1, 1), T = 25, P = c(1, 2000))
+```
+
+After using <span style="color:red">`reset()`</span> we can find the source of data in the default database [@SSH97].
+Running the reaction now with these data, we see that the equilibrium constant is not as sensitive to pressure:
+```{r SSH97_subcrt}
+reset()
+thermo.refs(iCd)[, 1:3]
+subcrt(c("CdCl+", "Cl-", "CdCl2"), c(-1, -1, 1), T = 25, P = c(1, 2000))
+```
 
 ## Modifying data
 
