@@ -1770,7 +1770,7 @@ T <- c(50, 100)
 res <- 300
 a <- affinity(T = c(T, res), H2 = c(-8, -3, res), iprotein = ip)
 fill <- ZC.col(ZC(protein.formula(ip)))
-diagram(a, normalize = TRUE, fill = fill, names = 1:5)
+diagram(a, normalize = TRUE, fill = fill, names = as.character(1:5))
 T <- c(93.3, 79.4, 67.5, 65.3, 57.1)
 logaH2 <- c(-3.38, -4.14, -5.66, -7.47, -10.02)
 lines(T, logaH2, lty = 2, lwd = 2)
