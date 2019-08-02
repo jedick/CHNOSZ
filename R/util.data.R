@@ -275,11 +275,11 @@ check.obigt <- function() {
     # first get the aqueous species
     isaq <- tdata$state=="aq"
     if(any(isaq)) {
-      eos.aq <- obigt2eos(tdata[isaq,],"aq", tocal = TRUE)
-      DCp.aq <- checkEOS(eos.aq,"aq","Cp",ret.diff=TRUE)
-      DV.aq <- checkEOS(eos.aq,"aq","V",ret.diff=TRUE)
-      cat(paste("check.obigt: GHS for",sum(isaq),"aq species in",what,"\n"))
-      DG.aq <- checkGHS(eos.aq,ret.diff=TRUE)
+      eos.aq <- obigt2eos(tdata[isaq,], "aq")
+      DCp.aq <- checkEOS(eos.aq, "aq", "Cp", ret.diff = TRUE)
+      DV.aq <- checkEOS(eos.aq, "aq", "V", ret.diff = TRUE)
+      cat(paste("check.obigt: GHS for", sum(isaq), "aq species in", what, "\n"))
+      DG.aq <- checkGHS(eos.aq, ret.diff = TRUE)
       # store the results
       DCp[isaq] <- DCp.aq
       DV[isaq] <- DV.aq
@@ -287,15 +287,15 @@ check.obigt <- function() {
     }
     # then other species, if they are present
     if(sum(!isaq) > 0) {
-      eos.cgl <- obigt2eos(tdata[!isaq,],"cgl", tocal = TRUE)
-      DCp.cgl <- checkEOS(eos.cgl,"cgl","Cp",ret.diff=TRUE)
-      cat(paste("check.obigt: GHS for",sum(!isaq),"cr,gas,liq species in",what,"\n"))
-      DG.cgl <- checkGHS(eos.cgl,ret.diff=TRUE)
+      eos.cgl <- obigt2eos(tdata[!isaq,], "cgl")
+      DCp.cgl <- checkEOS(eos.cgl, "cgl", "Cp", ret.diff = TRUE)
+      cat(paste("check.obigt: GHS for", sum(!isaq), "cr,gas,liq species in", what, "\n"))
+      DG.cgl <- checkGHS(eos.cgl, ret.diff = TRUE)
       DCp[!isaq] <- DCp.cgl
       DG[!isaq] <- DG.cgl
     }
     # put it all together
-    out <- data.frame(table=what,ispecies=1:ntot,name=tdata$name,state=tdata$state,DCp=DCp,DV=DV,DG=DG)
+    out <- data.frame(table = what, ispecies = 1:ntot, name = tdata$name, state = tdata$state, E_units = tdata$E_units, DCp = DCp, DV = DV, DG = DG)
     return(out)
   }
   # check default database (OBIGT)

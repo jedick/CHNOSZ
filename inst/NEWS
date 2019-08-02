@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.2-44 (2019-08-02)
+CHANGES IN CHNOSZ 1.3.2-46 (2019-08-02)
 ---------------------------------------
 
 NEW FEATURE: ENERGY UNITS
@@ -139,6 +139,10 @@ OTHER CHANGES
 - In anintro.Rmd, include an example of using mod.obigt() to add a
   solid (magnesiochromite, with data from Klemme et al., 2000). Thanks
   to Alan Boudreau for the suggestion.
+
+- check.obigt(): add 'E_units' column and fix a bug, also involving
+  makeup() and entropy(), where many species with large differences
+  between database and computed values of Gibbs energy were not listed.
 
 CHANGES IN CHNOSZ 1.3.2 (2019-04-20)
 ------------------------------------
