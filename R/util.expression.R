@@ -279,7 +279,8 @@ describe.reaction <- function(reaction, iname=numeric(), states=NULL) {
   }
   # put an equals sign between reactants and products
   # change this to unicode for the reaction double-arrow 20190218 \u21cc
-  desc <- substitute(a ~ "\u21cc" ~ b, list(a=reactexpr, b=prodexpr))
+  # go back to equals - the arrow only works out-of-the-box on linux 20190817
+  desc <- substitute(a ~ "=" ~ b, list(a=reactexpr, b=prodexpr))
   return(desc)
 }
 
