@@ -420,7 +420,11 @@ obigt2eos <- function(obigt, state, fixGHS = FALSE, tocal = FALSE) {
   if(tocal) {
     # convert values from Joules to calories 20190530
     iJ <- obigt$E_units=="J"
-    if(any(iJ)) obigt[iJ, c(9:12, 14:20)] <- convert(obigt[iJ, c(9:12, 14:20)], "cal")
+    if(any(iJ)) {
+      # we only convert column 20 for aqueous species (omega), not for cgl species (lambda)  20190903
+      if(identical(state, "aq")) obigt[iJ, c(9:12, 14:20)] <- convert(obigt[iJ, c(9:12, 14:20)], "cal")
+      else obigt[iJ, c(9:12, 14:19)] <- convert(obigt[iJ, c(9:12, 14:19)], "cal")
+    }
   }
   if(fixGHS) {
     # fill in one of missing G, H, S

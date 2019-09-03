@@ -1,11 +1,14 @@
-CHANGES IN CHNOSZ 1.3.3-2 (2019-09-03)
+CHANGES IN CHNOSZ 1.3.3-3 (2019-09-03)
 --------------------------------------
 
 - describe.reaction(): revert the change of using a double arrow. The
   equals sign is much more portable.
 
-- OBIGT: Change data for dawsonite, scheelite, and ferberite to Joules
-  (original values).
+- OBIGT: Change data for dawsonite, scheelite, and ferberite from
+  calories to Joules (as originally reported).
+
+- Fix bug in unexported function obigt2eos(): lambda (exponent in heat
+  capacity equation) was incorrectly going through a units conversion.
 
 CHANGES IN CHNOSZ 1.3.3 (2019-08-02)
 ------------------------------------

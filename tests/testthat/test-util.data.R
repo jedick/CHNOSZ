@@ -115,6 +115,20 @@ test_that("subcrt() gives same results for data entered in cal and J", {
   E.units("cal")
 })
 
+test_that("obigt2eos() doesn't convert lambda for cr species", {
+  ## bug visible with change of ferberite data to J:
+  ## lambda (exponent on heat capacity term)
+  ## was incorrectly going through a units conversion  20190903
+  # this was working
+  mod.obigt("test_cal", formula = "C0", state = "cr", E_units = "cal", a = 10, b = 100, f = 1, lambda = 0)
+  mod.obigt("test_J", formula = "C0", state = "cr", E_units = "J", a = 41.84, b = 418.4, f = 4.184, lambda = 0)
+  expect_equal(subcrt("test_cal", T = 25)$out[[1]]$Cp, subcrt("test_J", T = 25)$out[[1]]$Cp)
+  # this wasn't working
+  mod.obigt("test_cal2", formula = "C0", state = "cr", E_units = "cal", a = 10, b = 100, f = 1, lambda = -1)
+  mod.obigt("test_J2", formula = "C0", state = "cr", E_units = "J", a = 41.84, b = 418.4, f = 4.184, lambda = -1)
+  expect_equal(subcrt("test_cal2", T = 25)$out[[1]]$Cp, subcrt("test_J2", T = 25)$out[[1]]$Cp)
+})
+
 # reference
 
 # Richard, L. and Helgeson, H. C. (1998) Calculation of the thermodynamic properties at elevated 
