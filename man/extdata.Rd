@@ -76,7 +76,7 @@
     \item \code{mkfaa.sh} Combine the contents of .faa.gz files into a single FASTA file (to use e.g. for making a BLAST database).
     \item \code{protein.refseq.R} Calculate average amino acid composition of all proteins for each organism identified by a taxonomic ID.
     \item \code{trim_refseq.R} Keep only selected organism names (reduces number of taxa from 6758 to 779, helps to control package size).
-    \item \code{protein_refseq.csv.xz} Output from above. See example in \code{\link{pinfo}}.
+    \item \code{protein_refseq.csv.xz} Output from above. NOTE: This file has been moved to \code{protein_refseq61.csv.xz} (\url{https://github.com/jedick/JMDplots}).
     \item \code{taxid.names.R} Generate a table of scientific names for the provided taxids. Requires the complete \code{names.dmp} and \code{nodes.dmp} from NCBI taxonomy files.
     \item \code{taxid_names.csv.xz} Output from above.
       NOTE: For backward compatibility with the example BLAST files for the Bison Pool metagenome, the packaged file merges records for taxids found in either RefSeq 57 or 61.

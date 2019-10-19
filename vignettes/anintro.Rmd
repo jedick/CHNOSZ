@@ -1511,9 +1511,9 @@ ip <- match(protein[!ina], thermo()$protein$protein)
 
 NOTE: It may be more convenient to do this with functions and data that have been moved to the [JMDplots](https://github.com/jedick/JMDplots) package:
 ```{r JMDplots, eval = FALSE}
-y <- yeastgfp("ER.to.Golgi")
+y <- JMDplots::yeastgfp("ER.to.Golgi")
 ina <- is.na(y$abundance)
-aa <- yeast.aa(y$protein[!ina])
+aa <- JMDplots::yeast.aa(y$protein[!ina])
 ip <- add.protein(aa)
 ```
 

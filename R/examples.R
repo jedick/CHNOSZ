@@ -28,7 +28,7 @@ examples <- function(save.png=FALSE) {
 }
 
 demos <- function(which=c("sources", "protein.equil", "affinity", "NaCl", "density", 
-  "ORP", "revisit", "findit", "ionize", "buffer", "protbuff", "glycinate",
+  "ORP", "findit", "ionize", "buffer", "protbuff", "glycinate",
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "wjd",
   "bugstab", "Shh", "saturation", "adenine", "DEW", "lambda", "TCA", "aluminum", "bison", "AkDi"), save.png=FALSE) {
   # run one or more demos from CHNOSZ with ask=FALSE, and return the value of the last one

@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.3-5 (2019-10-19)
+CHANGES IN CHNOSZ 1.3.3-6 (2019-10-19)
 --------------------------------------
 
 - describe.reaction(): revert the change of using a double arrow. The
@@ -16,6 +16,9 @@ CHANGES IN CHNOSZ 1.3.3-5 (2019-10-19)
 - Remove yeastgfp(), yeast.aa(), Sce.csv.xz, yeastgfp.csv.xz, and other
   associated files. The data files and functions have been moved to the
   JMDplots package (https://github.com/jedick/JMDplots).
+
+- Remove protein_refseq.csv.xz, which has been moved to
+  protein_refseq61.csv in JMDplots.
 
 CHANGES IN CHNOSZ 1.3.3 (2019-08-02)
 ------------------------------------

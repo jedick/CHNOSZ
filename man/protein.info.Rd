@@ -114,36 +114,6 @@ protein.formula("P53_PIG")
 protein.formula(pinfo("P53_PIG"))
 protein.formula(pinfo(pinfo("P53_PIG")))
 
-## using protein.formula: average oxidation state of 
-## carbon of proteins from different organisms (Dick, 2014)
-# get amino acid compositions of microbial proteins 
-# generated from the RefSeq database 
-file <- system.file("extdata/refseq/protein_refseq.csv.xz", package="CHNOSZ")
-ip <- add.protein(read.csv(file, as.is=TRUE))
-# only use those organisms with a certain
-# number of sequenced bases
-ip <- ip[as.numeric(thermo()$protein$abbrv[ip]) > 50000]
-pf <- protein.formula(thermo()$protein[ip, ])
-zc <- ZC(pf)
-# the organism names we search for
-# "" matches all organisms
-terms <- c("Natr", "Halo", "Rhodo", "Acido", "Methylo",
-  "Chloro", "Nitro", "Desulfo", "Geo", "Methano",
-  "Thermo", "Pyro", "Sulfo", "Buchner", "")
-tps <- thermo()$protein$ref[ip]
-plot(0, 0, xlim=c(1, 15), ylim=c(-0.3, -0.05), pch="",
-  ylab=expression(italic(Z)[C]),
-  xlab="", xaxt="n", mar=c(6, 3, 1, 1))
-for(i in 1:length(terms)) {
-  it <- grep(terms[i], tps)
-  zct <- zc[it]
-  points(jitter(rep(i, length(zct))), zct, pch=20)
-}
-terms[15] <- paste("all", length(ip))
-axis(1, 1:15, terms, las=2)
-title(main=paste("Average oxidation state of carbon in proteins",
-  "by taxID in NCBI RefSeq (after Dick, 2014)", sep="\n"))
-
 \dontshow{opar <- par(no.readonly=TRUE)}
 # using pinfo() with regexp=TRUE:
 # plot ZC and nH2O/residue of HOX proteins
