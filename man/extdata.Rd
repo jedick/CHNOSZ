@@ -24,8 +24,6 @@
 
   Files in \code{abundance} contain protein abundance and microbial occurrence data:
   \itemize{
-    \item \code{TBD+05.csv} lists genes with transcriptomic expression changes in carbon limitation stress response experiments in yeast (Tai et al., 2005). See \code{\link{yeast.aa}} for an example that uses this file.
-    \item \code{yeastgfp.csv.xz} Has 28 columns; the names of the first five are \code{yORF}, \code{gene name}, \code{GFP tagged?}, \code{GFP visualized?}, and \code{abundance}. The remaining columns correspond to the 23 subcellular localizations considered in the YeastGFP project (Huh et al., 2003 and Ghaemmaghami et al., 2003) and hold values of either \code{T} or \code{F} for each protein. \samp{yeastgfp.csv} was downloaded on 2007-02-01 from http://yeastgfp.ucsf.edu using the Advanced Search, setting options to download the entire dataset and to include localization table and abundance, sorted by orf number. See \code{\link{yeastgfp}} and \code{demo("yeastgfp")} for examples that use this file.
     \item \code{microbes.csv} has data for microbial occurrence (i.e. relative enrichement) in colorectal cancer and normal tissue. The file is from the Supporting Information of Dick (2016). This file is used by \code{demo("bugstab")}.
   }
 
@@ -60,12 +58,6 @@
 
   Files in \code{protein} contain amino acid compositions for proteins.
   \itemize{
-    \item \code{Sce.csv.xz}
-      Data frame of amino acid composition of proteins from the \emph{Saccharomyces} Genome Database (SGD).
-      To save space in the package, out of 6716 proteins in the SGD, this file has the 4296 that are referenced in \code{abundance/yeastgfp.csv} or \code{abundance/TBD+05.csv}.
-      Values in the first three columns are the \code{ORF} names of proteins, \code{SGDID}, and \code{GENE} names. The remaining twenty columns (\code{ALA}..\code{VAL}) contain the numbers of the respective amino acids in each protein.
-      The sources of data for \samp{Sce.csv} are the files \samp{protein_properties.tab} and \samp{SGD_features.tab} (for the gene names), downloaded from \url{http://www.yeastgenome.org} on 2013-08-24.
-      See \code{\link{yeast.aa}} for an example.
     \item \code{DS11.csv}, \code{DS13.csv}
       These two files contain amino acid compositions of metagenomically encoded proteins, averaged together according to functional annotation (DS11) or taxonomic affiliation (DS13).
       The data are from Dick and Shock, 2011 and 2013.
@@ -177,11 +169,8 @@ Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H.
 
 Shock, E. L. and Schulte, M. D. (1998) Organic synthesis during fluid mixing in hydrothermal systems. \emph{J. Geophys. Res.} \bold{103}, 28513--28527. \url{https://doi.org/10.1029/98JE02142}
 
-Tai, S. L., Boer, V. M., Daran-Lapujade, P., Walsh, M. C., de Winde, J. H., Daran, J.-M. and Pronk, J. T. (2005) Two-dimensional transcriptome analysis in chemostat cultures: Combinatorial effects of oxygen availability and macronutrient limitation in \emph{Saccharomyces cerevisiae}. \emph{J. Biol. Chem.} \bold{280}, 437--447. \url{https://doi.org/10.1074/jbc.M410573200}
-
 Tutolo, B. M., Kong, X.-Z., Seyfried, W. E., Jr. and Saar, M. O. (2014) Internal consistency in aqueous geochemical data revisited: Applications to the aluminum system. \emph{Geochim. Cosmochim. Acta} \bold{133}, 216--234. \url{https://doi.org/10.1016/j.gca.2014.02.036}
 
-YeastGFP project. Yeast GFP Fusion Localization Database, http://yeastgfp.ucsf.edu; Current location: \url{http://yeastgfp.yeastgenome.org}
 }
 
 \concept{Thermodynamic data}

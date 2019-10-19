@@ -11,8 +11,10 @@
 
 info <- function(species=NULL, state=NULL, check.it=TRUE) {
   ## return information for one or more species in thermo$obigt
-  ## if no species are requested, summarize the available data  20101129
   thermo <- get("thermo", CHNOSZ)
+  # that should give us the data, not the thermo() function 20190928
+  if(is.function(thermo)) stop("CHNOSZ package data is not available; use reset() or library(CHNOSZ) to load it")
+  ## if no species are requested, summarize the available data  20101129
   if(is.null(species)) {
     message("info: 'species' is NULL; summarizing information about thermodynamic data...")
     message(paste("thermo$obigt has", nrow(thermo$obigt[thermo$obigt$state=="aq", ]), "aqueous,",
@@ -21,10 +23,6 @@ info <- function(species=NULL, state=NULL, check.it=TRUE) {
       nrow(thermo$element), ", buffers: ", length(unique(thermo$buffers$name)), sep=""))
     message(paste("number of proteins in thermo$protein is", nrow(thermo$protein), "from",
       length(unique(thermo$protein$organism)), "organisms"))
-    # print information about Sce.csv
-    yeast.aa()
-    # print information about yeastgfp.csv
-    yeastgfp()
     return()
   }
   ## run info.numeric or info.character depending on the input type

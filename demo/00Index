@@ -4,12 +4,10 @@ affinity        Affinities of metabolic reactions and amino acid synthesis
 NaCl            Equilibrium constant for aqueous NaCl dissociation
 density         Density of H2O, inverted from IAPWS-95 equations
 ORP             Temperature dependence of oxidation-reduction potential for redox standards
-revisit         Coefficient of variation of metastable equilibrium activities of proteins
 findit          Minimize the standard deviation of logarithms of activities of sulfur species
 ionize          ionize.aa(): contour plots of net charge and ionization properties of LYSC_CHICK
 buffer          Minerals and aqueous species as buffers of hydrogen fugacity
 protbuff        Chemical activities buffered by thiol peroxidases or sigma factors
-yeastgfp        Subcellular locations: log fO2 - log aH2O and log a - log fO2 diagrams
 glycinate       Metal-glycinate complexes
 mosaic          Eh-pH diagram for iron oxides, sulfides and carbonate with two sets of changing basis species
 copper          Another example of mosaic(): complexation of copper with glycine species

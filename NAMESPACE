@@ -9,7 +9,7 @@ export(
   "describe.property", "describe.basis", "equilibrate",
   "aminoacids", "ZC.col",
   "pinfo", "protein.length", "protein.formula",
-  "read.fasta", "protein.basis", "yeastgfp", "yeast.aa", "add.protein",
+  "read.fasta", "protein.basis", "add.protein",
   "unitize", "revisit", "seq2aa", "findit",
   "thermo.refs", "mod.obigt", "today",
 # examples

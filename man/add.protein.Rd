@@ -59,7 +59,7 @@ as.chemical.formula(protein.formula(aa))
 }
 
 \seealso{
-\code{\link{read.fasta}}, \code{\link{uniprot.aa}}, \code{\link{yeast.aa}} for other ways of getting amino acid compositions.
+\code{\link{read.fasta}} and \code{\link{uniprot.aa}} for other ways of getting amino acid compositions.
 
 \code{\link{pinfo}} for protein-level functions (length, chemical formulas, reaction coefficients of basis species).
 

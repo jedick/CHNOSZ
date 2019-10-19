@@ -57,11 +57,9 @@ sed -i '120,$s/<code>protein.formula()<\/code>/<code><a href="..\/html\/protein.
 sed -i '120,$s/<code>ionize.aa()<\/code>/<code><a href="..\/html\/ionize.aa.html" style="background-image:none;">ionize.aa()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>read.fasta()<\/code>/<code><a href="..\/html\/util.fasta.html" style="background-image:none;">read.fasta()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>protein.basis()<\/code>/<code><a href="..\/html\/protein.info.html" style="background-image:none;">protein.basis()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>yeastgfp()<\/code>/<code><a href="..\/html\/yeast.html" style="background-image:none;">yeastgfp()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>unitize()<\/code>/<code><a href="..\/html\/util.misc.html" style="background-image:none;">unitize()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>revisit()<\/code>/<code><a href="..\/html\/revisit.html" style="background-image:none;">revisit()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>axis.label()<\/code>/<code><a href="..\/html\/util.expression.html" style="background-image:none;">axis.label()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>yeast.aa()<\/code>/<code><a href="..\/html\/yeast.html" style="background-image:none;">yeast.aa()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>seq2aa()<\/code>/<code><a href="..\/html\/add.protein.html" style="background-image:none;">seq2aa()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>uniprot.aa()<\/code>/<code><a href="..\/html\/util.fasta.html" style="background-image:none;">uniprot.aa()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>add.protein()<\/code>/<code><a href="..\/html\/add.protein.html" style="background-image:none;">add.protein()<\/a><\/code>/g' anintro.html

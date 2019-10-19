@@ -15,7 +15,7 @@
   examples(save.png = FALSE)
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "revisit", "findit", "ionize", "buffer",
-    "protbuff", "yeastgfp", "glycinate", "mosaic", "copper",
+    "protbuff", "glycinate", "mosaic", "copper",
     "arsenic", "solubility", "gold", "contour", "sphalerite", "wjd",
     "bugstab", "Shh", "saturation", "adenine", "DEW", "lambda", "TCA",
     "aluminum", "bison", "AkDi"),
@@ -42,7 +42,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{ionize} \tab ionize.aa(): contour plots of net charge and ionization properties of LYSC_CHICK \cr
     \code{buffer} \tab Minerals and aqueous species as buffers of hydrogen fugacity (Schulte and Shock, 1995) \cr
     \code{protbuff} \tab Chemical activities buffered by thiol peroxidases or sigma factors \cr
-    \code{yeastgfp} \tab Subcellular locations: \logfO2 - \logaH2O and \loga - \logfO2 diagrams (Dick, 2009) \cr
     \code{glycinate} \tab Metal-glycinate complexes (Shock and Koretsky, 1995; Azadi et al., 2019) \cr
     \code{mosaic} \tab Eh-pH diagram with two sets of changing basis species (Garrels and Christ, 1965) \cr
     \code{copper} \tab Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001) \cr
@@ -108,8 +107,6 @@ Bowers, T. S., Jackson, K. J. and Helgeson, H. C. (1984) \emph{Equilibrium Activ
 Canovas, P. A., III and Shock, E. L. (2016) Geobiochemistry of metabolism: Standard state thermodynamic properties of the citric acid cycle. \emph{Geochim. Cosmochim. Acta} \bold{195}, 293--322. \url{https://doi.org/10.1016/j.gca.2016.08.028}
 
 Dayhoff, M. O. and Lippincott, E. R. and Eck, R. V. (1964) Thermodynamic Equilibria In Prebiological Atmospheres. \emph{Science} \bold{146}, 1461--1464. \url{https://doi.org/10.1126/science.146.3650.1461}
-
-Dick, J. M. (2009) Calculation of the relative metastabilities of proteins in subcellular compartments of \emph{Saccharomyces cerevisiae}. \emph{BMC Syst. Biol.} \bold{3}:75. \url{https://doi.org/10.1186/1752-0509-3-75}
 
 Dick, J. M. and Shock, E. L. (2011) Calculation of the relative chemical stabilities of proteins as a function of temperature and redox chemistry in a hot spring. \emph{PLoS ONE} \bold{6}, e22782. \url{https://doi.org/10.1371/journal.pone.0022782}
 

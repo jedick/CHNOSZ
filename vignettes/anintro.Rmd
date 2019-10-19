@@ -1495,16 +1495,24 @@ See the vignette [<span style="color:blue">*Equilibrium in CHNOSZ*</span>](equil
 ```
 
 To take an example, let's look at the metastable equilibrium distribution of selected proteins in the ER-to-Golgi location of *S. cerevisiae* (yeast).
-This example brings in a few other functions we haven't seen yet: <span style="color:green">`yeastgfp()`</span>, <span style="color:green">`unitize()`</span>, and <span style="color:green">`revisit()`</span>.
-<span style="color:green">`yeastgfp()`</span> queries a data file in CHNOSZ for the names and relative abundances of proteins taken from the YeastGFP study of @GHB_03.
+This example brings some other functions we haven't seen yet: <span style="color:green">`unitize()`</span> and <span style="color:green">`revisit()`</span>.
+Here, we list the names and relative abundances of proteins taken from the YeastGFP study of @GHB_03.
 There are six proteins identified in the ER-to-Golgi location; one has NA abundance, so it is excluded from the comparisons:
 ```{r yeastgfp}
-y <- yeastgfp("ER.to.Golgi")
-ina <- is.na(y$abundance)
+protein <- c("YDL195W", "YHR098C", "YIL109C", "YLR208W", "YNL049C", "YPL085W")
+abundance <- c(1840, 12200, NA, 21400, 1720, 358)
+ina <- is.na(abundance)
 ```
 
-Next, we get the amino acid compositions of the proteins and add them to `thermo()$protein`:
+Next, we find the rownumbers of the proteins in `thermo()$protein`:
 ```{r add_protein_yeast, message=FALSE}
+ip <- match(protein[!ina], thermo()$protein$protein)
+```
+
+NOTE: It may be more convenient to do this with functions and data that have been moved to the [JMDplots](https://github.com/jedick/JMDplots) package:
+```{r JMDplots, eval = FALSE}
+y <- yeastgfp("ER.to.Golgi")
+ina <- is.na(y$abundance)
 aa <- yeast.aa(y$protein[!ina])
 ip <- add.protein(aa)
 ```
@@ -1517,7 +1525,7 @@ The second call to <span style="color:green">`unitize()`</span> scales the logar
 ```{r unitize}
 pl <- protein.length(ip)
 logact <- unitize(numeric(5), pl)
-logabundance <- unitize(log10(y$abundance[!ina]), pl)
+logabundance <- unitize(log10(abundance[!ina]), pl)
 ```
 
 Now we can load the proteins and calculate their activities in metastable equilibrium as a function of `r logfO2`.
@@ -1641,10 +1649,6 @@ The `nrows` argument can be added to read that number of rows:
 file <- system.file("extdata/protein/DS11.csv", package = "CHNOSZ")
 aa_bison <- read.csv(file, as.is = TRUE, nrows = 5)
 ```
-<span style="color:green">`yeast.aa()`</span> retrieves amino acid composition of proteins in *Saccharomyces cerevisiae* from a data file that is included with CHNOSZ:
-```{r yeast_aa}
-aa_YML020W <- yeast.aa("YML020W")
-```
 <span style="color:green">`read.fasta()`</span> reads a FASTA file and returns the amino acid compositions of the sequences.
 The `iseq` argument can be used to read those sequences from the file:
 ```{r read_fasta, message=FALSE}
@@ -1677,7 +1681,7 @@ aa_UniProt <- do.call(rbind, aa)
 ```
 
 ```{r uniprot_aa_offline, echo=FALSE}
-aa_ALAT1 <- seq2aa("sp|P24298_HUMAN", "
+aa_ALAT1 <- seq2aa("ALAT1_HUMAN", "
 MASSTGDRSQAVRHGLRAKVLTLDGMNPRVRRVEYAVRGPIVQRALELEQELRQGVKKPF
 TEVIRANIGDAQAMGQRPITFLRQVLALCVNPDLLSSPNFPDDAKKRAERILQACGGHSL
 GAYSVSSGIQLIREDVARYIERRDGGIPADPNNVFLSTGASDAIVTVLKLLVAGEGHTRT
@@ -1688,7 +1692,7 @@ VVSPPAPTDPSFAQFQAEKQAVLAELAAKAKLTEQVFNEAPGISCNPVQGAMYSFPRVQL
 PPRAVERAQELGLAPDMFFCLRLLEETGICVVPGSGFGQREGTYHFRMTILPPLEKLRLL
 LEKLSRFHAKFTLEYS
 ")
-aa_CO1A1 <- seq2aa("sp|P02452_HUMAN", "
+aa_CO1A1 <- seq2aa("CO1A1_HUMAN", "
 MFSFVDLRLLLLLAATALLTHGQEEGQVEGQDEDIPPITCVQNGLRYHDRDVWKPEPCRI
 CVCDNGKVLCDDVICDETKNCPGAEVPEGECCPVCPDGSESPTDQETTGVEGPKGDTGPR
 GPRGPAGPPGRDGIPGQPGLPGPPGPPGPPGPPGLGGNFAPQLSYGYDEKSTGGISVPGP
@@ -1724,7 +1728,7 @@ aa_UniProt
 
 These amino acid compositions can be processed using functions such as <span style="color:green">`protein.length()`</span> and <span style="color:green">`protein.formula()`</span>:
 ```{r protein_length}
-myaa <- rbind(aa_YML020W, aa_Ef, aa_PRIO)
+myaa <- rbind(aa_Ef, aa_PRIO, aa_ALAT1)
 protein.length(myaa)
 ```
 
@@ -1743,8 +1747,8 @@ subcrt("PRIO_HUMAN", T = 25)
 Or we can add any of these proteins to the species list with <span style="color:red">`species()`</span> and calculate the affinity:
 ```{r basis_CHNOS, results="hide"}
 ```
-```{r YML020W_affinity, message=FALSE}
-species("YML020W_Sce")
+```{r ALAT1_affinity, message=FALSE}
+species("ALAT1_HUMAN")
 a <- affinity()
 ```
 
