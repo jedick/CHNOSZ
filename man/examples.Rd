@@ -14,11 +14,10 @@
 \usage{
   examples(save.png = FALSE)
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
-    "density", "ORP", "revisit", "findit", "ionize", "buffer",
-    "protbuff", "glycinate", "mosaic", "copper",
-    "arsenic", "solubility", "gold", "contour", "sphalerite", "wjd",
-    "bugstab", "Shh", "saturation", "adenine", "DEW", "lambda", "TCA",
-    "aluminum", "bison", "AkDi"),
+    "density", "ORP", "findit", "ionize", "buffer", "protbuff",
+    "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
+    "contour", "sphalerite", "wjd", "bugstab", "Shh", "saturation",
+    "adenine", "DEW", "lambda", "TCA", "aluminum", "bison", "AkDi"),
     save.png=FALSE)
 }
 
@@ -37,7 +36,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{NaCl} \tab Equilibrium constant for aqueous NaCl dissociation (Shock et al., 1992) \cr
     \code{density} \tab Density of \H2O, inverted from IAPWS-95 equations (\code{\link{rho.IAPWS95}}) \cr
     \code{ORP} \tab Temperature dependence of oxidation-reduction potential for redox standards \cr
-    \code{revisit} \tab Coefficient of variation of metastable equilibrium activities of proteins \cr
     \code{findit} \tab Minimize the standard deviation of logarithms of activities of sulfur species \cr
     \code{ionize} \tab ionize.aa(): contour plots of net charge and ionization properties of LYSC_CHICK \cr
     \code{buffer} \tab Minerals and aqueous species as buffers of hydrogen fugacity (Schulte and Shock, 1995) \cr

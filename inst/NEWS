@@ -13,12 +13,12 @@ CHANGES IN CHNOSZ 1.3.3-6 (2019-10-19)
 - Fix bug in unexported function obigt2eos(): lambda (exponent in heat
   capacity equation) was incorrectly going through a units conversion.
 
-- Remove yeastgfp(), yeast.aa(), Sce.csv.xz, yeastgfp.csv.xz, and other
-  associated files. The data files and functions have been moved to the
-  JMDplots package (https://github.com/jedick/JMDplots).
+- Remove files Sce.csv.xz and yeastgfp.csv.xz and functions yeastgfp()
+  and yeast.aa(). These have been moved to the JMDplots package
+  (https://github.com/jedick/JMDplots).
 
-- Remove protein_refseq.csv.xz, which has been moved to
-  protein_refseq61.csv in JMDplots.
+- Remove protein_refseq.csv.xz (based on RefSeq release 61). An updated
+  version, based on RefSeq release 95, is available in JMDplots.
 
 CHANGES IN CHNOSZ 1.3.3 (2019-08-02)
 ------------------------------------

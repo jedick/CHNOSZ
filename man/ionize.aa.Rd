@@ -34,32 +34,6 @@
 \seealso{ \code{\link{pinfo}}, \code{\link{affinity}} }
 
 \examples{\dontshow{reset()}
-## Charge of LYSC_CHICK as a function of pH and T
-# After Fig. 10 of Dick et al., 2006
-# the rownumber of the protein in thermo()$protein
-ip <- pinfo("LYSC_CHICK")
-# its amino acid composition
-aa <- pinfo(ip)
-# additive charges of unfolded protein at 25, 100, 150 degrees C
-# as a function of pH
-pH <- seq(0, 14, 0.1)
-Z.25 <- ionize.aa(aa, T=25, pH=pH)
-plot(pH, Z.25[, 1], type="l", xlab="pH", ylab="net charge (Z)")
-lines(pH, ionize.aa(aa, T=100, pH=pH)[, 1], col="red")
-lines(pH, ionize.aa(aa, T=150, pH=pH)[, 1], col="orange")
-text(c(12, 10, 9), c(-15, -16, -18),
-  labels=paste("T=", c(25, 100, 150), sep=""))
-# suppress ionization of cysteine as if it was oxidized 
-# (to form non-ionizable cystine disulfide bonds)
-lines(pH, ionize.aa(aa, T=25, pH=pH, suppress.Cys=TRUE)[, 1], lty=2)
-text(12, -7, "T=25, oxidized")
-# add experimental points
-RT71 <- read.csv(system.file("extdata/cpetc/RT71.csv", package="CHNOSZ"))
-points(RT71$pH, RT71$Z)
-legend("topright", pch=1, legend="Roxby and Tanford, 1971")
-title(main=paste("Ionization of unfolded LYSC_CHICK\n",
-  "After Dick et al., 2006"))
-
 ## Heat capacity of LYSC_CHICK as a function of T
 pH <- c(5, 9, 3)
 T <- seq(0, 100)
