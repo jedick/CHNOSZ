@@ -37,7 +37,7 @@ equilibrate <- function(aout, balance=NULL, loga.balance=NULL,
   balance <- bout$balance
   ## if solids (cr) species are present, find them on a predominance diagram 20191111
   hascr <- any(grepl("cr", aout$species$state))
-  if(hascr) dout <- diagram(aout, balance = balance, normalize = normalize, as.residue = as.residue, plot.it = FALSE)
+  if(hascr) dout <- diagram(aout, balance = balance, normalize = normalize, as.residue = as.residue, plot.it = FALSE, limit.water = FALSE)
   ## take selected species in 'ispecies'
   if(length(ispecies)==0) stop("the length of ispecies is zero")
   if(is.logical(ispecies)) ispecies <- which(ispecies)

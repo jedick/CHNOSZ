@@ -93,7 +93,12 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
   message("mosaic: calculating affinities of species for all ", nrow(allbases), " combinations of the basis species")
   # run backwards so that we put the starting basis species back at the end
   for(i in nrow(allbases):1) {
-    put.basis(allbases[i, ], basis0$logact)
+    # use logact = 0 for solids 20191111
+    thislogact <- basis0$logact
+    states <- sout$species$state[match(allbases[i, ], sout$species$ispecies)]
+    icr <- grepl("cr", states)
+    thislogact[icr] <- 0
+    put.basis(allbases[i, ], thislogact)
     # we have to define the species using the current basis
     species(species0$ispecies, species0$logact)
     aff.species[[i]] <- suppressMessages(affinity(..., sout = sout))
