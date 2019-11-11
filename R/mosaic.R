@@ -76,12 +76,10 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
   for(i in 1:length(bases)) {
     message("mosaic: calculating affinities of basis species group ", i, ": ", paste(bases[[i]], collapse=" "))
     species(delete = TRUE)
-    # 20190504: when equilibrating the changing basis species, use a total activity equal to the activity from the basis definition
-    act.total <- 10^basis0$logact[ibasis0[i]]
-    # for now, assume that the changing basis species react with a 1:1 stoichiometry
-    # TODO: retrieve the actual balancing coefficients
-    logact.each <- log10(act.total / length(bases[[i]]))
-    species(bases[[i]], logact.each)
+    mysp <- species(bases[[i]])
+    # 20191111 include only aq species in total activity
+    iaq <- mysp$state == "aq"
+    species(which(iaq), basis0$logact[ibasis0[i]])
     A.bases[[i]] <- suppressMessages(affinity(..., sout = sout))
   }
 
@@ -108,7 +106,9 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
     for(i in 1:length(A.bases)) {
       # this isn't needed (and doesn't work) if all the affinities are NA 20180925
       if(any(!sapply(A.bases[[1]]$values, is.na))) {
-        e <- equilibrate(A.bases[[i]])
+        # 20190504: when equilibrating the changing basis species, use a total activity equal to the activity from the basis definition
+        # 20191111 use equilibrate(loga.balance = ) instead of setting activities in species definition
+        e <- equilibrate(A.bases[[i]], loga.balance = basis0$logact[ibasis0[i]])
         # exponentiate to get activities then divide by total activity
         a.equil <- lapply(e$loga.equil, function(x) 10^x)
         a.tot <- Reduce("+", a.equil)

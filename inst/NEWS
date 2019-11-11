@@ -1,5 +1,5 @@
-CHANGES IN CHNOSZ 1.3.3-9 (2019-11-11)
---------------------------------------
+CHANGES IN CHNOSZ 1.3.3-10 (2019-11-11)
+---------------------------------------
 
 - describe.reaction(): revert the change of using a double arrow. The
   equals sign is much more portable.
@@ -27,6 +27,11 @@ CHANGES IN CHNOSZ 1.3.3-9 (2019-11-11)
   upper T limit (or transition temperature, for e.g. cr1 -> cr2).
   Previously, properties were NA for temperature equal to the transition
   temperature.
+
+- mosaic(): set only the activities of aqueous basis species to the
+  total activity (specified in the incoming basis() definition). This
+  fixes a bug where activities of minerals (particularly, native sulfur)
+  were changed from one.
 
 CHANGES IN CHNOSZ 1.3.3 (2019-08-02)
 ------------------------------------
