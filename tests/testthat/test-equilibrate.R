@@ -190,6 +190,22 @@ test_that("normalizing formulas of only selected species works as expected", {
   expect_true(maxdiff(dloga_isoalkane_mix, dloga_isoalkane_norm) > maxdiff(dloga_isoalkane_mix, dloga_isoalkane_full))
 })
 
+test_that("solids are not equilibrated, but their stability fields are calculated", {
+  # added 20191111; based on an example sent by Feng Lai on 20191020
+  Cu_aq <- c("CuCl", "CuCl2-", "CuCl3-2", "CuHS", "Cu(HS)2-", "CuOH", "Cu(OH)2-")
+  Cu_cr <- c("copper", "chalcocite")
+  basis(c("Cu+", "HS-", "Cl-", "H2O", "H+", "oxygen"))
+  basis("O2", -35)
+  basis("H+", -5)
+  species(Cu_aq, -3)
+  species(Cu_cr)
+  a <- affinity("Cl-" = c(-3, 0, 200), "HS-" = c(-10, 0, 200), T = 325, P = 500)
+  apredom <- diagram(a, plot.it = FALSE)$predominant
+  e <- equilibrate(a)
+  epredom <- diagram(e, plot.it = FALSE)$predominant
+  expect_equal(apredom, epredom)
+})
+
 # references
 
 # Seewald, J. S. (2001) 

@@ -7,7 +7,7 @@
 #source("util.character.R")
 
 equilibrate <- function(aout, balance=NULL, loga.balance=NULL, 
-  ispecies=1:length(aout$values), normalize=FALSE, as.residue=FALSE,
+  ispecies = !grepl("cr", aout$species$state), normalize=FALSE, as.residue=FALSE,
   method=c("boltzmann", "reaction"), tol=.Machine$double.eps^0.25) {
   ### calculate equilibrium activities of species from the affinities 
   ### of their formation reactions from basis species at given activities
@@ -33,10 +33,14 @@ equilibrate <- function(aout, balance=NULL, loga.balance=NULL,
   nspecies <- length(aout$values)
   ## get the balancing coefficients
   bout <- balance(aout, balance)
-  n.balance <- bout$n.balance
+  n.balance.orig <- n.balance <- bout$n.balance
   balance <- bout$balance
+  ## if solids (cr) species are present, find them on a predominance diagram 20191111
+  hascr <- any(grepl("cr", aout$species$state))
+  if(hascr) dout <- diagram(aout, balance = balance, normalize = normalize, as.residue = as.residue, plot.it = FALSE)
   ## take selected species in 'ispecies'
   if(length(ispecies)==0) stop("the length of ispecies is zero")
+  if(is.logical(ispecies)) ispecies <- which(ispecies)
   # take out species that have NA affinities
   ina <- sapply(aout$values, function(x) all(is.na(x)))
   ispecies <- ispecies[!ina[ispecies]]
@@ -101,6 +105,39 @@ equilibrate <- function(aout, balance=NULL, loga.balance=NULL,
     loga.equil <- lapply(1:nspecies, function(i) {
       loga.equil[[i]] - log10(m.balance[i])
     })
+  }
+  ## process cr species 20191111
+  if(hascr) {
+    # cr species were excluded from equilibrium calculation, so get values back to original lengths
+    norig <- length(dout$values)
+    n.balance <- n.balance.orig
+    imatch <- match(1:norig, ispecies)
+    m.balance <- m.balance[imatch]
+    Astar <- Astar[imatch]
+    loga.equil1 <- loga.equil[[1]]
+    loga.equil <- loga.equil[imatch]
+    # replace NULL loga.equil with input values (cr only)
+    ina <- which(is.na(imatch))
+    for(i in ina) {
+      loga.equil[[i]] <- loga.equil1
+      loga.equil[[i]][] <- dout$species$logact[[i]]
+    }
+    aout$species <- dout$species
+    aout$values <- dout$values
+    # find the grid points where any cr species is predominant
+    icr <- which(grepl("cr", dout$species$state))
+    iscr <- lapply(icr, function(x) dout$predominant == x)
+    iscr <- Reduce("|", iscr)
+    # at those grid points, make the aqueous species' activities practically zero
+    for(i in 1:norig) {
+      if(i %in% icr) next
+      loga.equil[[i]][iscr] <- -999
+    }
+    # at the other grid points, make the cr species' activities practically zero
+    for(i in icr) {
+      ispredom <- dout$predominant == i
+      loga.equil[[i]][!ispredom] <- -999
+    }
   }
   ## put together the output
   out <- c(aout, list(balance=balance, m.balance=m.balance, n.balance=n.balance,

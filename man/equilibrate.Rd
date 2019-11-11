@@ -10,11 +10,11 @@ Calculate equilibrium chemical activities of species from the affinities of form
 }
 
 \usage{
-  equilibrate(aout, balance=NULL, loga.balance=NULL,
-    ispecies=1:length(aout$values), normalize=FALSE, as.residue=FALSE,
-    method=c("boltzmann", "reaction"), tol=.Machine$double.eps^0.25)
+  equilibrate(aout, balance = NULL, loga.balance = NULL,
+    ispecies = !grepl("cr", aout$species$state), normalize = FALSE, as.residue = FALSE,
+    method = c("boltzmann", "reaction"), tol = .Machine$double.eps^0.25)
   equil.boltzmann(Astar, n.balance, loga.balance)
-  equil.reaction(Astar, n.balance, loga.balance, tol=.Machine$double.eps^0.25)
+  equil.reaction(Astar, n.balance, loga.balance, tol = .Machine$double.eps^0.25)
   moles(eout)
 }
 
@@ -68,7 +68,11 @@ After normalization and equilibration, the equilibrium activities are then re-sc
 The default behavior can be overriden by specifying either \samp{boltzmann} or \samp{reaction} in \code{method}.
 Using \code{equil.reaction} may be needed for systems with huge (negative or positive) affinities, where \code{equil.boltzmann} produces a NaN result.
 
-\code{ispecies} can be supplied to identify a subset of the species to include in the calculation.
+\code{ispecies} can be supplied to identify a subset of the species to include in the equilibrium calculation.
+By default, this is all species except solids (species with \samp{cr} state).
+However, the stability regions of solids are still calculated (by a call to \code{\link{diagram}} without plotting).
+At all points outside of their stability region, the logarithms of activities of solids are set to -999.
+Likewise, where any solid species is calculated to be stable, the logarithms of activities of all aqueous species are set to -999.
 
 \code{moles} simply calculates the total number of moles of elements corresponding to the activities of formed species in the output from \code{equilibrate}.
 }
