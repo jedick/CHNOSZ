@@ -66,6 +66,8 @@ test_that("phase transitions of minerals give expected messages and results", {
   expect_equal(subcrt("acanthite")$out$acanthite$polymorph, c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3))
   # the reaction coefficients in the output should be unchanged 20171214
   expect_equal(subcrt(c("bunsenite", "nickel", "oxygen"), c(-1, 1, 0.5))$reaction$coeff, c(-1, 1, 0.5)) 
+  # properties are NA only above (not at) the transition temperature 20191111
+  expect_equal(is.na(subcrt("rhodochrosite", T = c(699:701), P = 1, convert = FALSE)$out[[1]]$G), c(FALSE, FALSE, TRUE))
 })
 
 test_that("calculations for K-feldspar are consistent with SUPCRT92", {
