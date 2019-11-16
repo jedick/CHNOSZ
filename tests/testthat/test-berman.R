@@ -99,3 +99,8 @@ test_that("NA values of P are handled", {
   # this also now works (producing the same NA values)
   #subcrt("quartz", T = seq(0, 500, 100))
 })
+
+test_that("NAs don't creep into calculations below 298.15 K for minerals with disorder parameters", {
+  # 20191116
+  expect_false(any(is.na(subcrt("K-feldspar", P = 1, T = seq(273.15, 303.15, 5), convert = FALSE)$out[[1]]$G)))
+})

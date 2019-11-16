@@ -143,7 +143,7 @@ berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.t
   ### disorder thermodynamic properties ###
   if(!is.na(Tmin) & !is.na(Tmax) & any(T > Tmin) & calc.disorder) {
     # starting disorder contributions are 0
-    Cpds <- Hds <- Sds <- Vds <- Gds <- 0
+    Cpds <- Hds <- Sds <- Vds <- Gds <- numeric(ncond)
     # the lower integration limit is Tmin
     iTds <- T > Tmin
     Tds <- T[iTds]
