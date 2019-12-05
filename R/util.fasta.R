@@ -16,7 +16,7 @@ read.fasta <- function(file, iseq=NULL, ret="count", lines=NULL, ihead=NULL,
   #   otherwise ID is parsed from FASTA header (can take a while)
   
   # check if the file is in an archive (https://github.com/jimhester/archive)
-  if("archive_read" %in% class(file)) {
+  if(inherits(file, "archive_read")) {
     is.archive <- TRUE
     filebase <- gsub("]", "", basename(summary(file)$description))
   } else {
@@ -115,7 +115,7 @@ uniprot.aa <- function(protein, start=NULL, stop=NULL) {
   oldopt <- options(warn=-1)
   URLstuff <- try(readLines(proteinURL),TRUE)
   options(oldopt)
-  if(class(URLstuff)=="try-error") {
+  if(inherits(URLstuff, "try-error")) {
     message(" ::: FAILED :::")
     return(NA)
   }

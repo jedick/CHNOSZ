@@ -6,7 +6,7 @@
 ## E-value and max hits per query
 read.blast <- function(file, similarity=30, evalue=1e-5, max.hits=1, min.length=NA, quiet=FALSE) {
   # display some information about the file
-  if("connection" %in% class(file)) fname <- summary(file)$description
+  if(inherits(file, "connection")) fname <- summary(file)$description
   else fname <- basename(file)
   cat(paste("read.blast: reading", fname, "\n"))
   # read the blast tabular file

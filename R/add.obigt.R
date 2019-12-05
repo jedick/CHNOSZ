@@ -145,7 +145,7 @@ add.obigt <- function(file, species=NULL, force=TRUE) {
   id2 <- paste(to2$name,to2$state)
   # check if the data is compatible with thermo$obigt
   tr <- try(rbind(to1,to2),silent=TRUE)
-  if(identical(class(tr),'try-error')) stop(paste(file,"is not compatible with thermo$obigt data table."))
+  if(inherits(tr, "try-error")) stop(paste(file, "is not compatible with thermo$obigt data table."))
   # match the new species to existing ones
   does.exist <- id2 %in% id1
   ispecies.exist <- na.omit(match(id2, id1))

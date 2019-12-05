@@ -37,7 +37,7 @@ test_that("0-D, 1-D, 2-D and 3-D calculations give identical results at the same
   r2.qqr <- revisit(e2, "qqr", plot.it=FALSE)
   r3.qqr <- revisit(e3, "qqr", plot.it=FALSE)
   # check that we get the same values
-  expect_equal(c(r0.qqr$H), tail(r1.qqr$H, 1))
+  expect_equivalent(c(r0.qqr$H), tail(r1.qqr$H, 1))
   expect_equal(c(r0.qqr$H), r3.qqr$H[4, 3, 2])
   # check that we get the same index and same optimum
   expect_equal(r1.qqr$ixopt, r2.qqr$ixopt, check.attributes=FALSE)
@@ -62,7 +62,7 @@ test_that("referenced objectives give expected results", {
   # the referenced objectives compare the logarithms of activities (loga1) to reference values (loga2)
   # the spearman correlation coefficient
   r1.spearman <- revisit(e1, "spearman", c(1, 2, 3), plot.it=FALSE)
-  expect_equal(head(r1.spearman$H, 1), -1) # perfect anti-rank correlation
+  expect_equivalent(head(r1.spearman$H, 1), -1) # perfect anti-rank correlation
   expect_equal(max(r1.spearman$H), 1)  # perfect rank correlation
   # where logarithm of activity of the 3rd species (glutamic acid) maximizes
   r1.logact <- revisit(e1, "logact", 3, plot.it=FALSE)

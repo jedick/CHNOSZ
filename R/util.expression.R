@@ -19,7 +19,7 @@ expr.species <- function(species, state = "aq", value = NULL, log = FALSE, molal
     elements <- suppressWarnings(try(makeup(species), TRUE))
   } else elements <- split.formula(species)
   # if species can't be parsed as a chemical formula, we don't do the formula formatting
-  if(identical(class(elements), "try-error") | !is.numeric(elements)) expr <- species
+  if(inherits(elements, "try-error") | !is.numeric(elements)) expr <- species
   else {
     # where we'll put the expression
     expr <- ""

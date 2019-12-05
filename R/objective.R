@@ -54,7 +54,7 @@ qqr <- structure(
     qqrfun <- function(x) {
       # this is to catch errors from qqnorm
       qqn <- try(qqnorm(x, plot.it=FALSE), silent=TRUE)
-      if(class(qqn)=="try-error") qqr <- NA
+      if(inherits(qqn, "try-error")) qqr <- NA
       else qqr <- cor(qqn[[1]], qqn[[2]])
     }
     # apply the function to the rows of loga1

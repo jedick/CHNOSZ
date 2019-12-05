@@ -46,7 +46,7 @@ caller.name <- function(n=2) {
     # also return character() if the value from sys.call is
     # the function itself (why does this sometimes happen,
     # e.g. when called from affinity()?)
-    if(class(name)=="try-error") name <- character()
+    if(inherits(name, "try-error")) name <- character()
   }
   return(name)
 }

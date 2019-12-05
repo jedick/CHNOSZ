@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.3-12 (2019-11-11)
+CHANGES IN CHNOSZ 1.3.3-14 (2019-12-05)
 ---------------------------------------
 
 - describe.reaction(): remove the Unicode double arrow. A simple equals
@@ -41,6 +41,13 @@ CHANGES IN CHNOSZ 1.3.3-12 (2019-11-11)
   solids are stable, logarithms of activities of aqueous species are set
   to -999, and vice versa. Thanks to Feng Lai for the request and test
   case.
+
+- Fix a bug where berman() returned NA values for K-feldspar below
+  298.15 K, due to improperly initialized values for the disorder
+  properties. Thanks to Kaustubh Hakim for the bug report.
+
+- Use inherits() instead of class() for checking try() errors (don't
+  use conditions of length > 1 in if() statements -- fix for R-devel).
 
 CHANGES IN CHNOSZ 1.3.3 (2019-08-02)
 ------------------------------------
