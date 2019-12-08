@@ -53,9 +53,8 @@ qqr <- structure(
     # first, a function to calculate qqr
     qqrfun <- function(x) {
       # this is to catch errors from qqnorm
-      qqn <- try(qqnorm(x, plot.it=FALSE), silent=TRUE)
-      if(inherits(qqn, "try-error")) qqr <- NA
-      else qqr <- cor(qqn[[1]], qqn[[2]])
+      qqn <- tryCatch(qqnorm(x, plot.it=FALSE), error=identity)
+      qqr <- if(inherits(qqn, "error")) NA else cor(qqn[[1]], qqn[[2]])
     }
     # apply the function to the rows of loga1
     qqr <- apply(loga1, 1, qqrfun)

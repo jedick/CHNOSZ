@@ -42,11 +42,10 @@ caller.name <- function(n=2) {
   if(sys.nframe() < n) name <- character()
   else {
     sc <- sys.call(-n)[[1]]
-    name <- try(as.character(sc),silent=TRUE)
+    name <- tryCatch(as.character(sc), error = function(e) character())
     # also return character() if the value from sys.call is
     # the function itself (why does this sometimes happen,
     # e.g. when called from affinity()?)
-    if(inherits(name, "try-error")) name <- character()
   }
   return(name)
 }
