@@ -439,7 +439,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     # deal with repeated species here
     if(TRUE %in% duplicated(iphases[arephases])) {
       # only take the first, not the duplicates
-      ndups <- length(which(ispecies==ispecies[i]))
+      ndups <- sum(ispecies==ispecies[i])
       nphases <- length(arephases) / ndups
       arephases <- arephases[1:nphases]
     }
@@ -448,7 +448,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       # assemble the Gibbs energies for each species
       for(j in 1:length(arephases)) {
         G.this <- outprops[[arephases[j]]]$G
-        if(length(which(is.na(G.this))) > 0 & exceed.Ttr) warning(paste('subcrt: NAs found for G of ',
+        if(sum(is.na(G.this)) > 0 & exceed.Ttr) warning(paste('subcrt: NAs found for G of ',
           reaction$name[arephases[j]],' ',reaction$state[arephases[j]],' at T-P point(s) ',
           c2s(which(is.na(G.this)),sep=' '),sep=''),call.=FALSE)
         if(j==1) G <- as.data.frame(G.this)

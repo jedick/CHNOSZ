@@ -162,7 +162,7 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
       # to return the activities of buffered basis species
       tb <- logact.basis.new[unique(ibasis.new)]
       if(!is.null(ncol(tb[[1]]))) {
-        nd <- length(which(dim(tb[[1]]) > 1))
+        nd <- sum(dim(tb[[1]]) > 1)
         # TODO: apply names for more than two dimensions
         if(nd < 3) {
           for(i in 1:length(tb)) {

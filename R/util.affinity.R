@@ -62,7 +62,7 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
   ibasisvar <- ibasisvar[!is.na(ibasisvar)]
   ## which vars are in P,T,IS
   varissubcrt <- vars %in% c("P","T","IS")
-  if(length(which(varissubcrt)) > 2) stop("only up to 2 of P,T,IS are supported")
+  if(sum(varissubcrt) > 2) stop("only up to 2 of P,T,IS are supported")
   ## categorize the basis species:
   # 0 - not in the vars; 1 - one of the vars
   ibasis <- 1:nbasis
@@ -71,7 +71,7 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
   if(identical(what,"logact.basis")) ispecies <- ibasis
   ## what subcrt variable is used to make a 2-D grid?
   workaround.IS <- FALSE
-  if(length(which(varissubcrt)) > 1 & !transect) {
+  if(sum(varissubcrt) > 1 & !transect) {
     grid <- vars[varissubcrt][1]
     if("IS" %in% vars) {
       if(grid != "IS") workaround.IS <- TRUE

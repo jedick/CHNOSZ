@@ -56,13 +56,19 @@ test_that("reset() and obigt() produce the same database", {
   expect_equal(d1, d2)
 })
 
-test_that("add.obigt() is backwards compatibile for a file that doesn't have an E_units column", {
+test_that("add.obigt() is backwards compatible for a file that doesn't have an E_units column", {
   # test added 20190529
   file <- system.file("extdata/adds/BZA10.csv", package="CHNOSZ")
   rc <- read.csv(file)
   expect_false("E_units" %in% colnames(rc))
   inew <- add.obigt(file)
   expect_true(unique(info(inew)$E_units) == "cal")
+})
+
+test_that("add.obigt() gives an error for an incompatible file", {
+  # test added 20191210
+  file <- system.file("extdata/Berman/Ber88_1988.csv", package="CHNOSZ")
+  expect_error(add.obigt(file))
 })
 
 test_that("info() gives consistent messages for cal and J", {

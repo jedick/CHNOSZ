@@ -134,7 +134,7 @@ water.SUPCRT92 <- function(property=NULL, T=298.15, P=1, P1=TRUE) {
   # tell the user about any problems
   if(any(err.out==1)) {
     if(length(T) > 1) plural <- "s" else plural <- ""
-    nerr <- length(which(err.out==1))
+    nerr <- sum(err.out==1)
     if(nerr > 1) plural2 <- "s" else plural2 <- ""
     if(identical(P, "Psat")) message(paste("water.SUPCRT92: error", plural2, " calculating ",
       nerr, " of ", length(T), " point", plural, "; for Psat we need 273.16 < T < 647.067 K", sep=""))
