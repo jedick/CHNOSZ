@@ -162,3 +162,18 @@ test_that("G, H, S, and Cp corrections are calculated consistently", {
   # all done, reset nonideal and E.units options
   reset()
 })
+
+test_that("affinity has IS-T and T-IS calculations", {
+  basis("CHNOS+")
+  species(c("H2S", "HS-", "HSO4-", "SO4-2", "SO2"))
+  # reference values: affinity as a function of IS at T = 250 degC
+  a250 <- affinity(IS = seq(0, 1, 0.2), T = 250)
+  # increasing ionic strength should raise the affinity of HS-
+  expect_true(all(diff(a250$values[[2]]) > 0))
+  # T-IS grid; use different resolutions to help identify indexing bugs
+  a_T.IS <- affinity(IS = c(0, 1, 6), T = c(190, 310, 5))
+  expect_equivalent(a_T.IS$values[[2]][, 3], a250$values[[2]])
+  # IS-T grid
+  a_IS.T <- affinity(T = c(190, 310, 5), IS = c(0, 1, 6))
+  expect_equivalent(a_IS.T$values[[2]][3, ], a250$values[[2]])
+})

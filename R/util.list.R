@@ -47,14 +47,6 @@ which.pmax <- function (elts, na.rm = FALSE, pmin=FALSE) {
 
 ### unexported functions ###
 
-lsub <- function(x,y) {
-  # subtract elements of list y from those of
-  # list x to give list z
-  z <- x
-  for(i in 1:length(x)) z[[i]] <- x[[i]] - y[[i]]
-  return(z)
-}
-
 lsum <- function(x,y) {
   # sum up the respective elements of lists
   # x and y to give list z of the same length

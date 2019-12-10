@@ -142,10 +142,10 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
       for(j in 1:ncol(myprops)) {
         pname <- colnames(myprops)[j]
         if(!pname %in% c("G", "H", "S", "Cp")) next
-        if(get("thermo", CHNOSZ)$opt$Setchenow == "bgamma") {
+        if(identical(get("thermo", CHNOSZ)$opt$Setchenow, "bgamma")) {
           myprops[, j] <- myprops[, j] + Setchenow(pname, IS, T, m_star, bgamma)
           didneutral <- TRUE
-        } else if(get("thermo", CHNOSZ)$opt$Setchenow == "bgamma0") {
+        } else if(identical(get("thermo", CHNOSZ)$opt$Setchenow, "bgamma0")) {
           myprops[, j] <- myprops[, j] + Setchenow(pname, IS, T, m_star, bgamma = 0)
           didneutral <- TRUE
         }

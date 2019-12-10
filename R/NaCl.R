@@ -38,6 +38,8 @@ NaCl <- function(T=seq(100, 500, 100), P=1000, m_tot=2, ...) {
     gam_Na <- 10^gammas[[1]]$loggam
     gam_Cl <- 10^gammas[[2]]$loggam
     gam_NaCl <- 10^gammas[[3]]$loggam
+    # in case Setchenow calculations are turned off 20191209
+    if(length(gam_NaCl) == 0) gam_NaCl <- rep(1, length(T))
     # solve for m_Cl
     for(i in which(doit)) m_Cl[i] <- uniroot(A, c(0, m_tot), gam_NaCl=gam_NaCl[i], gam_Na=gam_Na[i], gam_Cl=gam_Cl[i], logK=logK[i])$root
     # calculate new total molality

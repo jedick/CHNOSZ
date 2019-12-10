@@ -62,7 +62,7 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
   ibasisvar <- ibasisvar[!is.na(ibasisvar)]
   ## which vars are in P,T,IS
   varissubcrt <- vars %in% c("P","T","IS")
-  if(length(which(varissubcrt)) > 2) stop("sorry, currently only up to 2 of P,T,IS are supported")
+  if(length(which(varissubcrt)) > 2) stop("only up to 2 of P,T,IS are supported")
   ## categorize the basis species:
   # 0 - not in the vars; 1 - one of the vars
   ibasis <- 1:nbasis
@@ -70,9 +70,13 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
   ibasis1 <- ibasis[ibasis %in% ibasisvar]
   if(identical(what,"logact.basis")) ispecies <- ibasis
   ## what subcrt variable is used to make a 2-D grid?
+  workaround.IS <- FALSE
   if(length(which(varissubcrt)) > 1 & !transect) {
-    if("IS" %in% vars) grid <- "IS"
-    else grid <- vars[varissubcrt][1]
+    grid <- vars[varissubcrt][1]
+    if("IS" %in% vars) {
+      if(grid != "IS") workaround.IS <- TRUE
+      grid <- "IS"
+    }
   } else grid <- NULL
   ### done argument processing
 
@@ -148,6 +152,16 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
       if("IS" %in% vars) IS <- vals[[which(vars=="IS")]]
       s.args <- list(species=species,property=property,T=T,P=P,IS=IS,grid=grid,convert=FALSE,exceed.Ttr=exceed.Ttr,exceed.rhomin=exceed.rhomin)
       sout <- do.call("subcrt",s.args)
+      # 20191210 workaround a limitation in subcrt(): only IS (if present) can be the 'grid' variable
+      if(workaround.IS) {
+        lenIS <- length(IS)
+        # only T or P has length > 1
+        lenTP <- max(length(T), length(P))
+        # make an indexing matrix "byrow" then vectorize it (not byrow) to get permutation indices
+        indmat <- matrix(1:(lenIS * lenTP), nrow = lenIS, byrow = TRUE)
+        ind <- as.vector(indmat)
+        sout$out <- lapply(sout$out, function(x) x[indmat, ])
+      }
       # species indices are updated by subcrt() for minerals with phase transitions
       # e.g. i <- info("chalcocite"); subcrt(i, T=200)$species$ispecies == i + 1
       # so we should keep the original species index to be able to find the species in a provided 'sout'
@@ -177,7 +191,7 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
         # two of T,P,IS
         ivar1 <- which(varissubcrt)[1]
         ivar2 <- which(varissubcrt)[2]
-        idim <- ivars(ivar2,ivars(ivar1))
+        idim <- ivars(ivar2, ivars(ivar1))
       }
     }
     return(aperm(array(x,mydim[idim]),idim))
@@ -187,7 +201,7 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
   logK <- function() lapply(ispecies,X.reaction,"logK")
   # A/2.303RT
   A <- function() {
-    out <- lsub(X.fun("logK"),logQ())
+    out <- mapply(`-`, X.fun("logK"), logQ(), SIMPLIFY = FALSE)
     # deal with affinities of protein ionization here 20120527
     if("H+" %in% rownames(mybasis)) {
       # which species are proteins

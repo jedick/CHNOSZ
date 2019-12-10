@@ -1,39 +1,24 @@
-CHANGES IN CHNOSZ 1.3.3-14 (2019-12-05)
+CHANGES IN CHNOSZ 1.3.3-16 (2019-12-10)
 ---------------------------------------
 
-- describe.reaction(): remove the Unicode double arrow. A simple equals
-  sign is displayed correctly on all systems.
+THERMODYNAMIC DATA
 
-- OBIGT: Change data for dawsonite, scheelite, and ferberite from
-  calories to Joules (as originally reported).
+- Change data for dawsonite, scheelite, and ferberite from calories to
+  Joules (as originally reported).
 
-- OBIGT: Use correct Cp coefficients for ferberite (2nd term in equation
-  of Wood and Samson, 2000 is off by a factor of 10). Thanks to
-  Xiangchong Liu for the bug report and David Polya for data, and both
-  for helpful advice.
+- Use correct Cp coefficients for ferberite (2nd term in equation of
+  Wood and Samson, 2000 is off by a factor of 10). Thanks to Xiangchong
+  Liu and David Polya for the bug report and assistance.
 
-- Fix bug in unexported function obigt2eos(): lambda (exponent in heat
-  capacity equation) was incorrectly going through a units conversion.
-
-- Remove files Sce.csv.xz and yeastgfp.csv.xz and functions yeastgfp()
-  and yeast.aa(). These have been moved to the JMDplots package
-  (https://github.com/jedick/JMDplots).
-
-- Remove protein_refseq.csv.xz (based on RefSeq release 61). An updated
-  version, based on RefSeq release 95, is available in JMDplots.
-
-- Move some carbonates from SUPCRT92 back into default database:
+- Move more carbonates from SUPCRT92 back into the default database:
   artinite, azurite.
+
+FEATURE ENHANCEMENTS
 
 - subcrt(): properties of minerals are now output at the listed upper
   T limit (or transition temperature, for e.g. cr1 -> cr2). Previously,
-  properties were set to NA at (and not only above) the T limit.
-
-- mosaic(): set the activities of only aqueous basis species to the
-  total activity (taken from the incoming basis() definition). This
-  fixes a bug where activities of minerals (particularly, native sulfur)
-  were unexpectedly changed; their logarithms are now set to 0. Thanks
-  to Evgeniy Bastrakov for the bug report.
+  properties were set to NA at, and not only above, the T limit. Thanks
+  to Evgeniy Bastrakov for the request.
 
 - Improve the handling of solids in equilibrate(). They are now excluded
   from the equilibrium calculation, but their stability fields are
@@ -42,12 +27,39 @@ CHANGES IN CHNOSZ 1.3.3-14 (2019-12-05)
   to -999, and vice versa. Thanks to Feng Lai for the request and test
   case.
 
+CLEANUP
+
+- Remove files Sce.csv.xz and yeastgfp.csv.xz and functions yeastgfp()
+  and yeast.aa(). These have been moved to the JMDplots package
+  (https://github.com/jedick/JMDplots).
+
+- Remove protein_refseq.csv.xz (based on RefSeq release 61). An updated
+  version, based on RefSeq release 95, is available in JMDplots.
+
+BUG FIXES
+
+- describe.reaction(): remove the Unicode double arrow. Unlike that, a
+  simple equals sign is displayed correctly on all systems.
+
+- Fix bug in unexported function obigt2eos(): lambda (exponent in heat
+  capacity equation) was incorrectly going through a units conversion.
+
+- In mosaic(), set the activities of only aqueous basis species to the
+  total activity, which is taken from the incoming basis() definition.
+  This fixes a bug where activities of minerals (particularly, native
+  sulfur) were unexpectedly changed; their logarithms are now set to 0.
+  Thanks to Evgeniy Bastrakov for the bug report.
+
 - Fix a bug where berman() returned NA values for K-feldspar below
   298.15 K, due to improperly initialized values for the disorder
   properties. Thanks to Kaustubh Hakim for the bug report.
 
 - Use inherits() instead of class() for checking try() errors (don't
   use conditions of length > 1 in if() statements -- fix for R-devel).
+
+- Fix a bug in affinity() with calculations in IS-T (but not T-IS)
+  space. This involves a workaround for the limitation in subcrt() that
+  only IS (if present) can be the 'grid' variable.
 
 CHANGES IN CHNOSZ 1.3.3 (2019-08-02)
 ------------------------------------
