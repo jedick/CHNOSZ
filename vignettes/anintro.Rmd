@@ -1969,7 +1969,7 @@ Some optional datasets can be activated by using <span style="color:red">`add.ob
 <span style="color:red">`add.obigt("SUPCRT92")`</span> -- This file contains data for minerals from SUPCRT92 (mostly Helgeson et al., 1978) that have been replaced by the Berman data set.
 
 <span style="color:red">`add.obigt("SLOP98")`</span> -- This file contains data from `slop98.dat` or later slop files, from Everett Shock's GEOPIG group at Arizona State University, that were previously used in CHNOSZ but have been replaced by newer data.
-This includes updates for aqueous Al species [@TS01], Au species [@PAB_14], and arsenic-bearing aqueous species and minerals, as compiled in the [SUPCRTBL package](http://www.indiana.edu/~hydrogeo/supcrtbl.html) [@ZZL_16].
+This includes updates for aqueous Al species [@TS01], Au species [@PAB_14], and arsenic-bearing aqueous species and minerals, as compiled in the SUPCRTBL package [@ZZL_16].
 Some calculations using the older data are shown in [this vignette](#complete-equilibrium-solubility).
 See [<span style="color:blue">`demo(gold)`</span>](../demo) for calculations that depend on the data for Au species that are now loaded by default in CHNOSZ.
 

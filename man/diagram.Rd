@@ -241,7 +241,7 @@ title(main=paste("Degrees of formation of ATP species,\n",
 ### these use the maximum affinity method
 
 ## Fe-S-O at 200 deg C, after Helgeson, 1970
-basis(c("Fe", "O2", "S2"))
+basis(c("Fe", "oxygen", "S2"))
 species(c("iron", "ferrous-oxide", "magnetite",
   "hematite", "pyrite", "pyrrhotite"))
 # the calculations include the phase transitions of
