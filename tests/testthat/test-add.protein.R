@@ -6,12 +6,12 @@ suppressMessages(reset())
 test_that("add.protein works as expected", {
   # factors causing problems again ...
   f <- system.file("extdata/protein/DS11.csv", package="CHNOSZ")
-  aa <- read.csv(f)
+  aa <- read.csv(f, as.is = TRUE)
   # this adds the proteins
-  ip <- add.protein(aa)
+  ip1 <- add.protein(aa)
   # the replaces the proteins (with the same ones)
-  expect_error(ip <- add.protein(aa), "converting factors causes problems replacing protein data")
-  # ... should use read.csv(file, as.is=TRUE)
+  ip2 <- add.protein(aa)
+  expect_equal(ip1, ip2)
 })
 
 test_that("errors and messages occur in some circumstances", {

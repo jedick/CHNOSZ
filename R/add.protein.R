@@ -67,12 +67,7 @@ add.protein <- function(aa) {
   # now we're ready to go
   tp.new <- thermo$protein
   if(!all(ipdup)) tp.new <- rbind(tp.new, aa[!ipdup, ])
-  if(any(ipdup)) {
-    if(any(sapply(1:4, function(i){is.factor(aa[, i])})))
-      stop(paste("converting factors causes problems replacing protein data",
-        "  data file should be read using e.g. aa <- read.csv(file, stringsAsFactors=FALSE)", sep="\n"))
-    tp.new[ip[ipdup], ] <- aa[ipdup, ]
-  }
+  if(any(ipdup)) tp.new[ip[ipdup], ] <- aa[ipdup, ]
   rownames(tp.new) <- NULL
   thermo$protein <- tp.new
   assign("thermo", thermo, CHNOSZ)

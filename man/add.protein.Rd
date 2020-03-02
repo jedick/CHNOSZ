@@ -18,7 +18,6 @@
   \item{aa}{data frame, amino acid composition in the format of \code{thermo()$protein}}
   \item{protein}{character, name of protein; numeric, indices of proteins (rownumbers of \code{\link{thermo}$protein})}
   \item{sequence}{character, protein sequence}
-  \item{...}{additional arguments passed to \code{\link{read.csv}}}
   \item{abundance}{numeric, abundances of proteins}
   \item{average}{logical, return the weighted average of amino acid counts?}
   \item{organism}{character, name of organism}
