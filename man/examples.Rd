@@ -17,7 +17,8 @@
     "density", "ORP", "findit", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "wjd", "bugstab", "Shh", "saturation",
-    "adenine", "DEW", "lambda", "TCA", "aluminum", "bison", "AkDi"),
+    "adenine", "DEW", "lambda", "TCA", "aluminum", "bison", "AkDi",
+    "comproportionation"),
     save.png=FALSE)
 }
 
@@ -61,6 +62,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{carboxylase} \tab Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase \cr
     \code{bison} \tab Average oxidation state of carbon in proteins for phyla at Bison Pool (Dick and Shock, 2013) \cr
     \code{AkDi} \tab Henry's constant of dissolved gases (Akinfiev and Diamond, 2003) \cr
+    \code{comproportionation} \tab Gibbs energy of sulfur comproportionation (Amend et al., 2020) \cr
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
@@ -95,6 +97,8 @@ Aksu, S. and Doyle, F. M. (2001) Electrochemistry of copper in aqueous glycine s
 Amend, J. P. and Shock, E. L. (1998) Energetics of amino acid synthesis in hydrothermal ecosystems. \emph{Science} \bold{281}, 1659--1662. \url{https://doi.org/10.1126/science.281.5383.1659}
 
 Amend, J. P. and Shock, E. L. (2001) Energetics of overall metabolic reactions of thermophilic and hyperthermophilic Archaea and Bacteria. \emph{FEMS Microbiol. Rev.} \bold{25}, 175--243. \url{https://doi.org/10.1016/S0168-6445(00)00062-0}
+
+Amend, J. P., Aronson, H. S., Macalady, J. and LaRowe, D. E. (2020) Another chemolithotrophic metabolism missing in nature: sulfur comproportionation. \emph{Environ. Microbiol.} \url{https://doi.org/10.1111/1462-2920.14982}
 
 Azadi, M. R., Karrech, A., Attar, M. and Elchalakani, M. (2019) Data analysis and estimation of thermodynamic properties of aqueous monovalent metal-glycinate complexes. \emph{Fluid Phase Equilib.} \bold{480}, 25-40. \url{https://doi.org/10.1016/j.fluid.2018.10.002}
 

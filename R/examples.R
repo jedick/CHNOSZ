@@ -30,7 +30,8 @@ examples <- function(save.png=FALSE) {
 demos <- function(which=c("sources", "protein.equil", "affinity", "NaCl", "density", 
   "ORP", "findit", "ionize", "buffer", "protbuff", "glycinate",
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "wjd",
-  "bugstab", "Shh", "saturation", "adenine", "DEW", "lambda", "TCA", "aluminum", "bison", "AkDi"), save.png=FALSE) {
+  "bugstab", "Shh", "saturation", "adenine", "DEW", "lambda", "TCA", "aluminum", "bison",
+  "AkDi", "comproportionation"), save.png=FALSE) {
   # run one or more demos from CHNOSZ with ask=FALSE, and return the value of the last one
   for(i in 1:length(which)) {
     # say something so the user sees where we are
@@ -40,8 +41,11 @@ demos <- function(which=c("sources", "protein.equil", "affinity", "NaCl", "densi
       next 
     } else message(paste("demos: running '", which[i], "'", sep=""))
     if(save.png & !which[i]=="dehydration") {
-      if(which[i]=="bugstab") png(paste(which[i], "%d.png", sep=""), width=700, height=500, pointsize=12)
-      else png(paste(which[i], "%d.png", sep=""), width=500, height=500, pointsize=12)
+      width <- 500
+      height <- 500
+      if(which[i]=="comproportionation") width <- 600
+      if(which[i]=="bugstab") width <- 700
+      png(paste(which[i], "%d.png", sep=""), width = width, height = height, pointsize = 12)
     }
     out <- demo(which[i], package="CHNOSZ", character.only=TRUE, echo=FALSE, ask=FALSE)
     if(save.png & !which[i]=="dehydration") dev.off()

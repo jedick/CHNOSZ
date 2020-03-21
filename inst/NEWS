@@ -1,14 +1,20 @@
-CHANGES IN CHNOSZ 1.3.5-1 (2020-03-02)
+CHANGES IN CHNOSZ 1.3.6-1 (2020-03-21)
 --------------------------------------
 
-- Fix for R-devel: test-add.protein.R had a test that failed with new
-  stringsAsFactors = FALSE default for read.table().
+- Add demo/comproportionation.R: Gibbs energy of sulfur
+  comproportionation, after Amend et al., 2020.
+
+CHANGES IN CHNOSZ 1.3.6 (2020-03-16)
+------------------------------------
+
+- Fix for R-devel (4.0.0): test-add.protein.R had a test that failed
+  with new stringsAsFactors = FALSE default for read.table().
 
 CHANGES IN CHNOSZ 1.3.5 (2020-02-16)
 ------------------------------------
 
-- Fix for R-devel: remove documentation for unused argument '...' in
-  add.protein.Rd.
+- Fix for R-devel (4.0.0): remove documentation for unused argument
+  '...' in add.protein.Rd.
 
 CHANGES IN CHNOSZ 1.3.4 (2019-12-15)
 ------------------------------------
