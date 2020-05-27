@@ -46,12 +46,23 @@ MP90.cp <- function(protein, T) {
 
 group.formulas <- function() {
   # return a matrix with chemical formulas of residues
-  # names of the sidechain groups
-  groups <- paste("[", aminoacids(3), "]", sep="")
-  # the indices of H2O, sidechain groups, and [UPBB]
-  ig <- suppressMessages(info(c("H2O", groups, "[UPBB]")))
-  # their formulas
-  A <- i2A(ig)
+  # memoize this 20200509
+  ## names of the sidechain groups
+  #groups <- paste("[", aminoacids(3), "]", sep="")
+  ## the indices of H2O, sidechain groups, and [UPBB]
+  #ig <- suppressMessages(info(c("H2O", groups, "[UPBB]")))
+  ## their formulas
+  #A <- i2A(ig)
+  A <- structure(c(0, 1, 1, 2, 3, 7, 0, 4, 4, 4, 4, 3, 2, 3, 3, 4, 1, 
+                   2, 3, 9, 7, 2, 2, 3, 3, 3, 5, 7, 1, 5, 9, 10, 9, 7, 4, 5, 6, 
+                   10, 3, 5, 7, 8, 7, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 1, 
+                   0, 1, 3, 0, 0, 0, 1, 0, 1, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 
+                   1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 
+                   1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), .Dim = c(22L, 5L), .Dimnames = list(
+                       c("water", "[Ala]", "[Cys]", "[Asp]", "[Glu]", "[Phe]", "[Gly]", 
+                       "[His]", "[Ile]", "[Lys]", "[Leu]", "[Met]", "[Asn]", "[Pro]", 
+                       "[Gln]", "[Arg]", "[Ser]", "[Thr]", "[Val]", "[Trp]", "[Tyr]", 
+                       "[UPBB]"), c("C", "H", "N", "O", "S")))
   # add [UPBB] to the sidechain groups to get residues
   out <- A[1:21,]
   out[2:21,] <- t(t(A) + A[22,])[2:21,]
