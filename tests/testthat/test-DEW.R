@@ -80,7 +80,7 @@ test_that("Delta G, logK, and Delta V of reactions are calculated correctly", {
   # The properties are calculated using parameters from the DEW spreadsheet,
   # which are not necessarily identical those that were used for the paper.
   oldwat <- water("DEW")
-  add.obigt("DEW_aq", c("CO2", "HCO3-", "CO3-2", "acetic acid", "acetate", "methane"))
+  add.obigt("DEW_aq", c("CO2", "HCO3-", "CO3-2", "acetic acid", "acetate", "CH4"))
   T <- 600
   P <- c(5000, 50000)
   R1 <- subcrt(c("H2O", "CO2", "HCO3-", "H+"), c(-1, -1, 1, 1), T=T, P=P)$out

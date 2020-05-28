@@ -92,7 +92,7 @@ stopifnot(all.equal(DGmix(loga1), -0.1234)) # as expected for decimal logarithms
 stopifnot(all.equal(DDGmix(loga1, loga2), 0.0004))
 
 ## transforming an equilibrium assemblage of n-alkanes
-basis(c("CH4", "H2"), c("gas", "gas"))
+basis(c("methane", "hydrogen"))
 species(c("methane", "ethane", "propane", "butane"), "liq")
 # calculate equilibrium assemblages over a range of logaH2
 a <- affinity(H2=c(-10, -5, 101), exceed.Ttr=TRUE)

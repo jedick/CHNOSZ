@@ -1,5 +1,10 @@
-CHANGES IN CHNOSZ 1.3.6-1 (2020-03-21)
+CHANGES IN CHNOSZ 1.3.6-3 (2020-05-28)
 --------------------------------------
+
+- Remove "methane" as the name of CH4(aq). Consequently, info("methane")
+  refers to the gas rather than aqueous species. This is consistent
+  with the behavior for the names of inorganic species, e.g. carbon
+  dioxide and oxygen.
 
 - Add demo/comproportionation.R: Gibbs energy of sulfur
   comproportionation, after Amend et al., 2020.

@@ -73,17 +73,14 @@ basis("MgCHNOPS+")
 # load some Mg-ATP species
 species(c("MgATP-2", "MgHATP-", "MgH2ATP", "Mg2ATP"))
 # swap in CO2(g) for CO2(aq)
-iCO2g <- info("CO2", "gas")
-swap.basis("CO2", iCO2g)
+swap.basis("CO2", "carbon dioxide")
 a1 <- affinity()
 # swap in CH4(g) for CO2(g)
-iCH4g <- info("CH4", "gas")
-swap.basis(iCO2g, iCH4g)
+swap.basis("carbon dioxide", "methane")
 a2 <- affinity()
 # the equilibrium fugacity of CH4 is *very* low
 # swap in CO2(aq) for CH4(g)
-iCO2a <- info("CO2", "aq")
-swap.basis(iCH4g, iCO2a)
+swap.basis("methane", "CO2")
 a3 <- affinity()
 # swapping the basis species didn't affect the affinities
 # of the formation reactions of the species, since

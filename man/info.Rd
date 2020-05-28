@@ -21,10 +21,12 @@
 It is often called recursively; first with a character value (or values) for \code{species} indicating the name(s) or formula(s) of the species of interest.
 The result of this call is a numeric value, which can be provided as an argument in a second call to \code{info} in order to retrieve a data frame of the thermodynamic properties of the species.
 
-The searches of the indicated \code{species} are made among the names, chemical formulas, and abbreviations (in the \samp{abbrv} column) in the thermodynamic database.
-If the text of the \code{species} is matched the index of that species is returned.
+The text of \code{species} is searched in the names, chemical formulas, and abbreviations (in the \samp{abbrv} column) in the thermodynamic database.
+If the text of the \code{species} is matched, the index of that species is returned.
 If there are multiple matches for the \code{species}, and \code{state} is NULL, the index of first match is returned.
-The order of entries in \code{thermo()$obigt} is grouped by states in the order \samp{aq}, \samp{cr}, \samp{gas}, \samp{liq}, so for species in both aqueous and gaseous states the index of the aqueous species is returned, unless \code{state} is set to \samp{gas}.
+The order of entries in the database is grouped by states in the order \samp{aq}, \samp{cr}, \samp{gas}, \samp{liq}.
+Therefore, for substances represented by both aqueous and gaseous species, the index of the aqueous species is returned, unless \code{state} is set to \samp{gas}.
+Note that names (not formulas) of inorganic species, such as \samp{oxygen} and \samp{methane}, are used only for the gas.
 
 Names of species including an underscore character are indicative of proteins, e.g. \samp{LYSC_CHICK}.
 If the name of a protein is provided to \code{info} and the composition of the protein can be found using \code{\link{protein}}, the thermodyamic properties and parameters of the nonionized protein (calculated using amino acid group additivity) are added to the thermodynamic database.
@@ -50,23 +52,26 @@ info()
 ## species information
 # search for something named (or whose formula is) "Fe"
 si <- info("Fe")
-# use the number to get the full record
+# use the number to get the full entry
 info(si)
-# it is possible to get a range of records
+# show data for the higher-temperature phases
 info(si:(si+3))
 
 ## dealing with states
-# default order of preference for names: aq > gas > cr,liq
-info(c("methane","ethanol","glycinate"))  # aq, aq, aq
-info(c("adenosine","alanine","hydroxyapatite"))  # aq, aq, cr
+# standard order of precedence for names:
+# aq > cr > gas > liq
+info(c("ethanol", "adenosine"))  # aq, aq
 # state argument overrides the default
-info(c("ethanol","adenosine"),state=c("gas","cr"))
+info(c("ethanol", "adenosine"), state = c("gas", "cr"))
+# exceptions: gases have precedence for names of methane and inorganic gases
+info(c("methane", "oxygen")) # gas, gas
+
 # formulas default to aqueous species, if available
-info(c("CH4","CO2","CS2","MgO"))  # aq, aq, gas, cr
+i1 <- info(c("CH4", "CO2", "CS2", "MgO"))
+stopifnot(identical(info(i1)$state, c("aq", "aq", "gas", "cr")))
 # state argument overrides the default
-info(c("CH4","CO2","MgO"),"gas")  # gas, gas, NA
-# exceptions to the aqueous default is O2
-info("O2")  # gas
+i2 <- info(c("CH4", "CO2", "MgO"), "gas") 
+stopifnot(identical(info(i2)$state, c("gas", "gas", NA)))
 
 ## partial name or formula searches
 info("ATP")

@@ -10,7 +10,7 @@
 \title{Functions for Checking Thermodynamic Data}
 \description{
 Show table of references in a web browser or get individual references for species.
-Check internal consistency of individual entries in database.
+Check self consistency of individual entries in database.
 }
 
 \usage{
