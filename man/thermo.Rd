@@ -260,6 +260,19 @@ unique(thermo()$obigt$state)
 # formulas of ten random species
 n <- nrow(thermo()$obigt)
 thermo()$obigt$formula[runif(10)*n]
+
+## adding an element
+old <- thermo()$element
+# element symbol, state, source (can be anything),
+# mass, entropy, and number in compound
+Xprops <- data.frame(element = "X", state = "cr",
+  source = "user", mass = 100, s = 100, n = 1)
+new <- rbind(old, Xprops)
+thermo(element = new)
+# now "X" is recognized as an element in other functions
+mass("X10")
+# restore default settings to remove X
+reset()
 }
 
 \references{
