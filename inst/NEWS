@@ -1,10 +1,14 @@
-CHANGES IN CHNOSZ 1.3.6-3 (2020-05-28)
+CHANGES IN CHNOSZ 1.3.6-4 (2020-06-10)
 --------------------------------------
 
-- Remove "methane" as the name of CH4(aq). Consequently, info("methane")
-  refers to the gas rather than aqueous species. This is consistent
-  with the behavior for the names of inorganic species, e.g. carbon
-  dioxide and oxygen.
+- OBIGT/organic_aq.csv, AkDi.csv, DEW_aq.csv: Remove "methane" as the
+  name of CH4(aq). Consequently, info("methane") refers to the gas
+  rather than aqueous species. This is consistent with the behavior for
+  the names of inorganic species, e.g. carbon dioxide and oxygen.
+
+- OBIGT/SUPCRT92.csv: Change lowercase to uppercase "A" (Angstrom) in
+  names of minerals with suffixes indicating interlayer spacing
+  (amesite, clinochlore, cronstedtite, daphnite).
 
 - Add demo/comproportionation.R: Gibbs energy of sulfur
   comproportionation, after Amend et al., 2020.
