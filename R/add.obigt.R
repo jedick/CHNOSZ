@@ -176,6 +176,6 @@ add.obigt <- function(file, species=NULL, force=TRUE) {
   # give the user a message
   message("add.obigt: read ", length(does.exist), " rows; made ", 
     nexist, " replacements, ", nrow(to2), " additions [energy units: ", Etxt, "]")
-  message("add.obigt: use obigt() or reset() to restore default database")
+  #message("add.obigt: use obigt() or reset() to restore default database")
   return(invisible(inew))
 }

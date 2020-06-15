@@ -6,6 +6,9 @@ release checklist for CHNOSZ
 
 - check output of demo("sources") to make sure all data sources are cited
 
+- use test_package("CHNOSZ", reporter = "progress") to find warnings
+  from tests that aren't shown in R CMD check
+
 - recreate extdata/adds/obigt_check.csv after all data updates:
   co <- check.obigt()
   write.csv(co, "obigt_check.csv", row.names=FALSE, na="")

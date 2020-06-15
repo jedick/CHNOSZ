@@ -4,7 +4,7 @@ context("subcrt")
 basis(delete=TRUE)
 
 test_that("unbalanced reactions give a warning or are balanced given sufficient basis species", {
-  expect_warning(subcrt(c("glucose", "ethanol"), c(-1, 3)), "reaction was unbalanced, missing H-6O3")
+  expect_warning(subcrt(c("glucose", "ethanol"), c(-1, 3)), "reaction among glucose,ethanol was unbalanced, missing H-6O3")
   basis("CHNOS")
   s <- subcrt(c("malic acid", "citric acid"), c(-1, 1))
   expect_equal(s$reaction$coeff, c(-1, 1, -2, -1, 1.5))

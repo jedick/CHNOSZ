@@ -42,7 +42,7 @@ If \code{check.it} is TRUE, several checks of self consistency among the thermod
 }
 
 
-\seealso{ \code{\link{thermo}}, \code{\link{check.obigt}} }
+\seealso{ \code{\link{retrieve}} for searching species by element; \code{\link{check.obigt}} for checking self-consistency of each species. }
 
 \examples{
 \dontshow{reset()}

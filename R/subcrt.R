@@ -14,7 +14,7 @@
 
 subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "H", "S", "V", "Cp"),
   T = seq(273.15, 623.15, 25), P = "Psat", grid = NULL, convert = TRUE, exceed.Ttr = FALSE,
-  exceed.rhomin = FALSE, logact = NULL, action.unbalanced = "warn", IS = 0) {
+  exceed.rhomin = FALSE, logact = NULL, autobalance = TRUE, IS = 0) {
 
   # revise the call if the states have 
   # come as the second argument 
@@ -215,12 +215,12 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
 
   # inform about unbalanced reaction
   if(do.reaction) {
-    # the mass balance ... is zero for a balanced reaction
+    # the mass balance; should be zero for a balanced reaction
     mss <- makeup(ispecies, coeff, sum=TRUE)
     # take out very small numbers
     mss[abs(mss) < 1e-7] <- 0
     # report and try to fix any non-zero mass balance
-    if(any(mss!=0) & !is.null(action.unbalanced)) {
+    if(any(mss!=0)) {
       # the missing composition: the negative of the mass balance
       miss <- -mss
       # drop elements that are zero
@@ -230,7 +230,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       message(paste(capture.output(print(miss)), collapse="\n"))
       # look for basis species that have our compositoin
       tb <- thermo$basis
-      if(!is.null(tb)) {
+      if(!is.null(tb) & autobalance) {
         if(all(names(miss) %in% colnames(tb)[1:nrow(tb)])) {
           # the missing composition as formula
           ft <- as.chemical.formula(miss)
@@ -263,12 +263,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
           newstate <- c(state, b.state)
           return(subcrt(species=newspecies, coeff=newcoeff, state=newstate,
             property=property, T=outvert(T, "K"), P=P, grid=grid, convert=convert, logact=logact, exceed.Ttr=FALSE))
-        } else if(identical(action.unbalanced,'warn')) 
-            warnings <- c(warnings, paste('reaction was unbalanced, missing', as.chemical.formula(miss)))
-      } else {
-        if(identical(action.unbalanced,'warn')) 
-          warnings <- c(warnings, paste('reaction was unbalanced, missing', as.chemical.formula(miss)))
-      }
+        } else warnings <- c(warnings, paste('reaction among', paste(species, collapse = ","), 'was unbalanced, missing', as.chemical.formula(miss)))
+      } else warnings <- c(warnings, paste('reaction among', paste(species, collapse = ","), 'was unbalanced, missing', as.chemical.formula(miss)))
     }
   }
 

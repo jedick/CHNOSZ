@@ -11,7 +11,7 @@
     property = c("logK","G","H","S","V","Cp"),
     T = seq(273.15,623.15,25), P = "Psat", grid = NULL, 
     convert = TRUE, exceed.Ttr = FALSE, exceed.rhomin = FALSE,
-    logact = NULL, action.unbalanced = "warn", IS = 0)
+    logact = NULL, autobalance = TRUE, IS = 0)
 }
 
 \arguments{
@@ -26,7 +26,7 @@
   \item{exceed.rhomin}{logical, return properties of species in the HKF model below 0.35 g cm\S{-3}?}
   \item{logact}{numeric, logarithms of activities of species in reaction}
   \item{convert}{logical, are input and output units of T and P those of the user (\code{TRUE}) (see \code{\link{T.units}}), or are they Kelvin and bar (\code{FALSE})?}
-  \item{action.unbalanced}{character \samp{warn} or NULL, what action to take if unbalanced reaction is provided}
+  \item{autobalance}{logical, attempt to automatically balance reaction with basis species?}
   \item{IS}{numeric, ionic strength(s) at which to calculate adjusted molal properties, mol kg\eqn{^{-1}}{^-1}}
 }
 
@@ -61,8 +61,8 @@ Likewise, the input values of \code{T} and \code{P} are interpreted to have the 
 A chemical reaction is defined if \code{coeff} is given.
 In this mode the standard molal properties of species are summed according to the stoichiometric \code{coeff}icients, where negative values denote reactants.
 Reactions that do not conserve elements are permitted; \code{subcrt} prints the missing composition needed to balance the reaction and produces a warning but computes anyway.
-Alternatively, if the \code{\link{basis}} species of a system were previously defined, and if the species being considered are within the compositional range of the basis species, an unbalanced reaction given in the arguments to \code{subcrt} will be balanced automatically, without altering the coefficients on the species identified in the arguments (unless perhaps they correspond to basis species), and without a warning.
-However, if a reaction is unbalanced and \code{action.unbalanced} is set to NULL, no warnings are generated and no attempt is made to balance the reaction.
+Alternatively, if \code{autobalance} is \code{TRUE}, the \code{\link{basis}} species of a system were previously defined, and all elements in the reaction are represented by the basis species, an unbalanced reaction given in the arguments to \code{subcrt} will be balanced automatically.
+The auto balancing doesn't change the reaction coefficients of any species that are do not correspond to basis species.
 
 Minerals with polymorphic transitions (denoted by having states \samp{cr} (lowest T phase), \samp{cr2}, \samp{cr3} etc.) can be defined generically by \samp{cr} in the \code{state} argument with a character value for \code{species}.
 \code{subcrt} in this case simultaneously calculates the requested properties of all the phases of each such mineral (phase species) and, using the values of the transition temperatures calculated from those at P = 1 bar given in the thermodynamic database together with functions of the entropies and volumes of transitions (see \code{\link{dPdTtr}}), determines the stable phase of the mineral at any grid point and substitutes the properties of this phase at that point for further calculations.
