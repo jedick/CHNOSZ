@@ -36,6 +36,7 @@ zc <- "<i>Z</i><sub>C</sub>"
 o2 <- "O<sub>2</sub>"
 h2o <- "H<sub>2</sub>O"
 sio2 <- "SiO<sub>2</sub>"
+ch4 <- "CH<sub>4</sub>"
 ```
 
 ```{r setup, include=FALSE}
@@ -248,25 +249,39 @@ Use <span style="color:blue">`thermo.refs()`</span> to show a list of references
 
 <span style="color:green">`info()`</span> provides an interface to the thermodynamic database packaged with CHNOSZ.
 Suppose you are interested in the thermodynamic properties of aqueous methane.
-You can search for the species by name:
-```{r info_methane}
-info("methane")
+Because the database is assembled with aqueous species first, they take precedence over other states.
+Searching by chemical formula alone gives the first matching species, in this case aqueous methane:
+```{r info_CH4}
+info("CH4")
 ```
 
-The number that is returned can be used to identify the species for other functions in CHNOSZ.
-Multiple entries exist for methane; the index of the `aq` (aqueous) species is returned by default.
-```{marginfigure}
-This convention applies to organic species, but for inorganic species, the English name refers to the gas (<span style='color:green'>`info("oxygen")`</span>) while the chemical formula is used to identify the aqueous species (<span style='color:green'>`info("O2")`</span>).
+The number that is returned is the species index in the database.
+A second argument can be used to specify a physical state with lower precedence:
+```{r info_CH4_gas}
+info("CH4", "gas")
 ```
-A second argument can be used to specify a different physical state:
-```{r info_methane_gas}
-info("methane", "gas")
+
+While some species are identified only by chemical formula, others have distinct names (in English) listed in the database.
+For `r ch4` and inorganic substances that are represented by both gaseous and aqueous forms, the name is applied only to the gas.
+However, the names of organic substances other than methane are applied to aqueous species, which have precedence, and those in other states.
+The following commands get the species indices for some common gases:
+```{r info_names_gas}
+info("methane")
+info("oxygen")
+info("carbon dioxide")
+```
+
+A special case is sulfur; the name refers to both the native mineral, which has precedence, and the gas.
+These two phases can be identifed with the formulas S<sub>2</sub> and S, respectively.
+```{r info_sulfur_S2}
+info("sulfur")
+info("S2")
 ```
 
 Taking the species number of aqueous methane returned by <span style="color:green">`info()`</span>, use the function again to retrieve the set of standard molal thermodynamic properties and equations of state parameters:
-```{r info_imethane, message=FALSE}
-imethane <- info("methane")
-info(imethane)
+```{r iCH4, message=FALSE}
+iCH4 <- info("CH4")
+info(iCH4)
 ```
 
 Liquid water is species number 1; it has NA entries in the database because specialized functions are used to compute its properties:
@@ -297,22 +312,22 @@ The messages may be useful for browsing the database, but owing to their ambiguo
 
 ## Counting elements, chemical formulas, <span style="color:green">`ZC()`</span>
 
-Continuing with the example of methane, let's look at its chemical formula:
-```{r info_imethane_formula, message=FALSE}
-info(imethane)$formula
+Continuing with the example of aqueous methane, let's look at its chemical formula:
+```{r info_CH4_formula, message=FALSE}
+info(iCH4)$formula
 ```
 
 We can use <span style="color:green">`makeup()`</span> to count the elements in the formula, followed by <span style="color:green">`as.chemical.formula()`</span> to rewrite the formula on one line:
-```{r makeup_imethane}
-makeup(imethane)
-as.chemical.formula(makeup(imethane))
+```{r makeup_iCH4}
+makeup(iCH4)
+as.chemical.formula(makeup(iCH4))
 ```
 
 For organic species, a calculation of the average oxidation state of carbon (`r zc`) is possible given the species index, chemical formula, or elemental count:
-```{r ZC_imethane, message=FALSE}
-ZC(imethane)
-ZC(info(imethane)$formula)
-ZC(makeup(imethane))
+```{r ZC_iCH4, message=FALSE}
+ZC(iCH4)
+ZC(info(iCH4)$formula)
+ZC(makeup(iCH4))
 ```
 
 # Calculating thermodynamic properties
@@ -359,17 +374,17 @@ The additional operations (`$out$water`) are used to extract a specific part of 
 The default units of temperature, pressure, and energy are °C, bar, and calories.
 The functions <span style="color:red">`T.units()`</span>, <span style="color:red">`P.units()`</span>, and <span style="color:red">`E.units()`</span> can be used to change the units used by various functions in CHNOSZ.
 What is the Gibbs energy in J/mol of aqueous methane at 298.15 K and 0.1 MPa?
-```{r units_methane, message=FALSE}
+```{r units_CH4, message=FALSE}
 T.units("K")
 P.units("MPa")
 E.units("J")
-subcrt("methane", T = 298.15, P = 0.1)$out$methane$G
+subcrt("CH4", T = 298.15, P = 0.1)$out$CH4$G
 ```
 
 A related function, <span style="color:green">`convert()`</span>, can be used to convert given values between units.
 Let's convert the standard Gibbs energy of aqueous methane listed in the database from cal/mol to J/mol:
 ```{r convert_G, message=FALSE}
-convert(info(info("methane"))$G, "J")
+convert(info(info("CH4"))$G, "J")
 ```
 
 As expected, we get the same result from both operations.
@@ -459,14 +474,14 @@ basis(c("CO2", "H2", "H2O", "H+"))
 By identifying species *other than* the basis species, the reactions will be automatically balanced.
 This produces the balanced reaction for acetoclastic methanogenesis:
 ```{r subcrt_acetoclastic, message=FALSE}
-subcrt(c("acetate", "methane"), c(-1, 1))$reaction
+subcrt(c("acetate", "CH4"), c(-1, 1))$reaction
 ```
 
 We can similarly consider reactions for hydrogenotrophic methanogenesis as well as acetate oxidation (without production of methane):
 ```{r subcrt_methanogenesis, message=FALSE}
 acetate_oxidation <- subcrt("acetate", -1)
-hydrogenotrophic <- subcrt("methane", 1)
-acetoclastic <- subcrt(c("acetate", "methane"), c(-1, 1))
+hydrogenotrophic <- subcrt("CH4", 1)
+acetoclastic <- subcrt(c("acetate", "CH4"), c(-1, 1))
 ```
 
 Use <span style="color:green">`describe.reaction()`</span> to write the reactions on a plot:
@@ -505,14 +520,14 @@ basis(c("CO2", "H2"), "gas")
 basis(c("H2", "pH"), c(-3.92, 7.3))
 ```
 ```{r affinity_acetoclastic, message=FALSE}
-subcrt(c("acetate", "methane"), c(-1, 1),
+subcrt(c("acetate", "CH4"), c(-1, 1),
        c("aq", "gas"), logact = c(-3.4, -0.18), T = 55, P = 50)$out
 ```
 
 The new `A` column shows the affinity; the other columns are unaffected and still show the standard-state properties.
 Let's repeat the calculation for hydrogenotrophic methanogenesis.
 ```{r affinity_hydrogenotrophic, message=FALSE}
-subcrt("methane", 1, "gas", logact = -0.18, T = 55, P = 50)$out
+subcrt("CH4", 1, "gas", logact = -0.18, T = 55, P = 50)$out
 ```
 
 Under the specified conditions, the affinities of hydrogenotrophic and acetoclastic methanogenesis are somewhat greater than and less than 20 kJ, respectively.
@@ -525,7 +540,7 @@ The reproduction is not identical, owing to differences of thermodynamic data an
 To make the code neater, we write a function that can run any of the reactions:
 ```{r rxnfun, message=FALSE}
 rxnfun <- function(coeffs) {
-  subcrt(c("acetate", "methane"), coeffs,
+  subcrt(c("acetate", "CH4"), coeffs,
          c("aq", "gas"), logact = c(-3.4, -0.18), T = 55, P = 50)$out
 }
 ```
@@ -747,17 +762,17 @@ file <- system.file("extdata/cpetc/SC10_Rainbow.csv", package = "CHNOSZ")
 rb <- read.csv(file, check.names = FALSE)
 ```
 
-We take a selection of the species from Shock and Canovas (2010) with activities equal to 10<sup>-6</sup>; methane is assigned an activity of 10<sup>-3</sup>.
+We take a selection of the species from Shock and Canovas (2010) with activities equal to 10<sup>-6</sup>; aqueous `r ch4` is assigned an activity of 10<sup>-3</sup>.
 We will write the synthesis reactions of organic species in terms of these basis species:
 ```{marginfigure}
-The constant activity of methane is a simplification of the calculation reported by Shock and Canovas (2010).
-The code here could be expanded to vary the activity of methane.
+The constant activity of CH<sub>4</sub> is a simplification of the calculation reported by Shock and Canovas (2010).
+The code here could be expanded to vary the activity of CH<sub>4</sub>.
 ```
 ```{r rainbow_species, results="hide"}
 basis(c("CO2", "H2", "NH4+", "H2O", "H2S", "H+"))
 species("CH4", -3)
 species(c("adenine", "cytosine", "aspartic acid", "deoxyribose",
-          "methane", "leucine", "tryptophan", "n-nonanoic acid"), -6)
+          "CH4", "leucine", "tryptophan", "n-nonanoic acid"), -6)
 ```
 
 Now we can calculate affinities along the transect of changing temperature and activities of five basis species.
