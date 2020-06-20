@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.6-6 (2020-06-16)
+CHANGES IN CHNOSZ 1.3.6-9 (2020-06-20)
 --------------------------------------
 
 - OBIGT/organic_aq.csv, AkDi.csv, DEW_aq.csv: Remove "methane" as the
@@ -18,6 +18,12 @@ CHANGES IN CHNOSZ 1.3.6-6 (2020-06-16)
 
 - OBIGT/inorganic_aq.csv: Update arsenopyrite with data from Naumov et
   al., 1974 (via Unitherm).
+
+- Install bibtex file (docs/obigt.bib) for use in logKcalc package.
+
+- TODO: thermo.refs(): add date, write 'thermo()$obigt'.
+
+- TODO: use degree sign in messages from subcrt().
 
 CHANGES IN CHNOSZ 1.3.6 (2020-03-16)
 ------------------------------------
