@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.6-9 (2020-06-20)
+CHANGES IN CHNOSZ 1.3.6-9 (2020-06-21)
 --------------------------------------
 
 - OBIGT/organic_aq.csv, AkDi.csv, DEW_aq.csv: Remove "methane" as the
@@ -19,11 +19,22 @@ CHANGES IN CHNOSZ 1.3.6-9 (2020-06-20)
 - OBIGT/inorganic_aq.csv: Update arsenopyrite with data from Naumov et
   al., 1974 (via Unitherm).
 
+- OBIGT/inorganic_cr.csv: Correct formula for number of H2O in some
+  As-bearing minerals.
+
 - Install bibtex file (docs/obigt.bib) for use in logKcalc package.
 
-- TODO: thermo.refs(): add date, write 'thermo()$obigt'.
+- TODO: thermo.refs(): add current date, write 'thermo()$obigt'.
 
 - TODO: use degree sign in messages from subcrt().
+
+- TODO: rename obigt.Rmd to OBIGT.Rmd.
+
+- TODO: fix error in expr.species("AsO4---")
+
+- TODO: describe default logact in basis.Rd
+
+- TODO: change references for water for different models (IAPWS, DEW)
 
 CHANGES IN CHNOSZ 1.3.6 (2020-03-16)
 ------------------------------------
