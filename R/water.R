@@ -8,11 +8,20 @@ water <- function(property = NULL, T = 298.15, P = "Psat", P1 = TRUE) {
   if(is.null(property)) return(get("thermo", CHNOSZ)$opt$water)
   # set water option
   if(length(property)==1 & any(property %in% c("SUPCRT", "SUPCRT92", "IAPWS", "IAPWS95", "DEW"))) {
-    thermo <- get("thermo", CHNOSZ)
-    oldwat <- thermo$opt$water
-    thermo$opt$water <- property
-    assign("thermo", thermo, CHNOSZ)
-    message(paste("water: setting thermo$opt$water to", property))
+    # change references 20200629
+    if(property %in% c("SUPCRT", "SUPCRT92")) {
+      suppressMessages(mod.obigt("water", ref1 = "HGK84"))
+      suppressMessages(mod.obigt("water", ref2 = "JOH92"))
+    } else if(property %in% c("IAPWS", "IAPWS95")) {
+      suppressMessages(mod.obigt("water", ref1 = "WP02"))
+      suppressMessages(mod.obigt("water", ref2 = NA))
+    } else if(property == "DEW") {
+      suppressMessages(mod.obigt("water", ref1 = "SHA14"))
+      suppressMessages(mod.obigt("water", ref2 = NA))
+    }
+    oldwat <- thermo()$opt$water
+    thermo("opt$water" = property)
+    message(paste("water: setting water model to", property))
     return(invisible(oldwat))
   }
   # make T and P equal length

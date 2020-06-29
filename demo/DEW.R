@@ -114,8 +114,9 @@ obigt()
 #t1 <- quote("CHNOSZ default database"[])
 #t2 <- quote("(not recommended for high"~italic(P)*")")
 #mtitle(as.expression(c(t1, t2)))
-# make diagram using CO2, HCO3-, CO3-2, and methane data from DEW spreadsheet
-add.obigt("DEW_aq", c("CO2", "HCO3-", "CO3-2", "methane"))
+# make diagram using CO2, HCO3-, CO3-2, CH4, and acetic acid data from DEW spreadsheet
+# (the acetate field disappears if we also use the data for acetate from the spreadsheet 20200629)
+add.obigt("DEW_aq", c("CO2", "HCO3-", "CO3-2", "CH4", "acetic acid"))
 dfun()
 CO2quote <- quote(list(CO[2], HCO[3]^"-", CO[3]^"-2"))
 DEWexpr <- substitute("DEW data for"~x, list(x=CO2quote))
@@ -140,7 +141,7 @@ reset()
 water("DEW")
 # add species data for DEW
 inorganics <- c("methane", "CO2", "HCO3-", "CO3-2")
-organics <- c("formic acid", "formate", "acetic acid", "acetate", "propanoic acid", "propanoate")
+organics <- c("formic acid", "formate", "acetic acid", "acetate")
 # skip updating acetate because the new data from the DEW spreadsheet give different logK
 add.obigt("DEW", c(inorganics, organics[-4]))
 ## set basis species

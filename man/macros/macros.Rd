@@ -27,7 +27,7 @@
 \newcommand{\P}{\ifelse{latex}{\eqn{P}}{\ifelse{html}{\out{<I>P</I>}}{P}}}
 % italicize any letter
 \newcommand{\I}{\ifelse{latex}{\eqn{#1}}{\ifelse{html}{\out{<I>#1</I>}}{#1}}}
-\newcommand{\logK}{\ifelse{latex}{\eqn{\log K}}{\ifelse{html}{\out{log<i>K</i>}}{log K}}}
+\newcommand{\logK}{\ifelse{latex}{\out{log\,\emph{K}}}{\ifelse{html}{\out{log&thinsp;<i>K</i>}}{log K}}}
 \newcommand{\logfO2}{\ifelse{latex}{\eqn{\log f_{\mathrm{O_{2}}}}}{\ifelse{html}{\out{log<i>f</i><sub>O<sub>2</sub></sub>}}{logfO2}}}
 \newcommand{\logfH2}{\ifelse{latex}{\eqn{\log f_{\mathrm{H_{2}}}}}{\ifelse{html}{\out{log<i>f</i><sub>H<sub>2</sub></sub>}}{logfH2}}}
 \newcommand{\logaH2}{\ifelse{latex}{\eqn{\log a_{\mathrm{H_{2}}}}}{\ifelse{html}{\out{log<i>a</i><sub>H<sub>2</sub></sub>}}{logaH2}}}
