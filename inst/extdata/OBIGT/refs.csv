@@ -37,6 +37,7 @@ Ber90,"R. G. Berman",1990,"Am. Mineral. 75, 328-344",annite,http://ammin.geoscie
 Ber90.1,"R. G. Berman",1990,"Am. Mineral. 75, 328-344","almandine and ilmenite: modified H and/or S",http://ammin.geoscienceworld.org/content/75/3-4/328
 Eva90,"B. W. Evans",1990,"Lithos 25, 3-23","glaucophane and pumpellyite",https://doi.org/10.1016/0024-4937(90)90003-J
 Pol90,"D. A. Polya",1990,"Trans. Inst. Min. Metall. 99, B120-B124","ferberite G, S and Cp (Cp coefficients multiplied by 4.184 to convert to J, as listed in @WS00, but who give a 2nd term that is off by a factor of 10). Cp at 25 &deg;C is from @LW74.",
+OH90,"E. H. Oelkers and H. C. Helgeson",1990,"Geochim. Cosmochim. Acta 54, 727-738","Debye-Hückel extended term parameter (<i>b</i><sub>$\gamma$</sub>)",https://doi.org/10.1016/0016-7037(90)90368-U
 SH90,"E. L. Shock and H. C. Helgeson",1990,"Geochim. Cosmochim. Acta 54, 915-945","organic species",https://doi.org/10.1016/0016-7037(90)90429-O
 HRA91,"B. S. Hemingway et al.",1991,"Am. Mineral. 76, 445-457",boehmite,http://pubs.er.usgs.gov/publication/70016664
 SHD91,"D. A. Sverjensky, J. J. Hemley and W. M. D'Angelo",1991,"Geochim. Cosmochim. Acta 55, 989-1004","G and H revisions for K- and Al-bearing silicates",https://doi.org/10.1016/0016-7037(89)90341-4
@@ -137,7 +138,6 @@ AS04,"J. Apps and N. Spycher",2004,"Data qualification for thermodynamic data us
 Got04,"M. Gottschalk",2004,"Rev. Mineral. Geochem. 56, 83-124","zoisite, clinozoisite, and epidote",https://doi.org/10.2138/gsrmg.56.1.83
 MSB+04,"J. Majzlan, R. Stevens et al.",2004,"Phys. Chem. Mineral. 31, 518-531","hydronium jarosite",https://doi.org/10.1007/s00269-004-0405-z
 SR04,"M. D. Schulte and K. L. Rogers",2004,"Geochim. Cosmochim. Acta 68, 1087-1097","alkane thiols",https://doi.org/10.1016/j.gca.2003.06.001
-KUP+05,"R. Kessel et al.",2005,"Earth Planet. Sci. Lett. 237, 873-892",HSiO<sub>3</sub><sup>-</sup>,https://doi.org/10.1016/j.epsl.2005.06.018
 VPV05,"O. Vidal, T. Parra and P. Viellard",2005,"Am. Mineral. 90, 347-358",Fe-amesite,https://doi.org/10.2138/am.2005.1554
 ZZX+05,"Y. Zhu et al.",2005,"J. Hazard. Mater. A120, 37-44","barium arsenate and barium hydrogen arsenate: G",https://doi.org/10.1016/j.jhazmat.2004.12.025
 ARHB06,"C. Akilan et al.",2006,"ChemPhysChem 7, 2319-2330",MgSO<sub>4</sub>,https://doi.org/10.1002/cphc.200600342
@@ -181,11 +181,11 @@ LD12.1,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","
 LD12.2,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","methionine GHS",https://doi.org/10.1016/j.gca.2011.11.041
 LD12.3,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","methionine sidechain GHS",https://doi.org/10.1016/j.gca.2011.11.041
 DEH+13,"J. M. Dick, K. A. Evans et al.",2013,"Geochim. Cosmochim. Acta 122, 247-266","phenanthrene and methylphenanthrene isomers",https://doi.org/10.1016/j.gca.2013.08.020
-SBS13,"A. Stefánsson, P. Benézéth and J. Schott",2013,"Geochim. Cosmochim. Acta 120, 600-611","NaCO<sub>3</sub><sup>-</sup> and NaHCO<sub>3</sub>",https://doi.org/10.1016/j.gca.2013.04.023
+SBS13,"A. Stefánsson, P. Benézéth and J. Schott",2013,"Geochim. Cosmochim. Acta 120, 600-611","NaCO<sub>3</sub><sup>-</sup>",https://doi.org/10.1016/j.gca.2013.04.023
 TBZ+13,"B. R. Tagirov et al.",2013,"Geochim. Cosmochim. Acta 117, 348-373","Pd<sup>+2</sup> and complexes",https://doi.org/10.1016/j.gca.2013.03.047
 AP14,"N. N. Akinfiev and A. V. Plyasunov",2014,"Geochim. Cosmochim. Acta 126, 338-351","B(OH)<sub>3</sub>, Si(OH)<sub>4</sub>, and As(OH)<sub>3</sub>",https://doi.org/10.1016/j.gca.2013.11.013
 AT14,"N. N. Akinfiev and B. R. Tagirov",2014,"Geochem. Int. 52, 197-214","Zn<sup>+2</sup> and complexes",https://doi.org/10.1134/S0016702914030021
-FDM+14,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","CO<sub>2</sub>, HCO<sub>3</sub><sup>-</sup>, CO<sub>3</sub><sup>-2</sup>, Ca(HCO<sub>3</sub>)<sup>+</sup>, CaCO<sub>3</sub>",https://doi.org/10.1016/j.gca.2014.01.030
+FDM+14,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","CO<sub>2</sub>, HCO<sub>3</sub><sup>-</sup>, CO<sub>3</sub><sup>-2</sup>, CaCO<sub>3</sub>, Ca<sup>+2</sup>",https://doi.org/10.1016/j.gca.2014.01.030
 FDM+14.1,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","aragonite; source of data: `berman.dat`",https://doi.org/10.1016/j.gca.2014.01.030
 Kit14,"N. Kitadai",2014,"J. Mol. Evol. 78, 171-187","glycine, diglycine, and triglycine (zwitterions and ions); diketopiperazine, [Gly] and [UPBB] groups",https://doi.org/10.1007/s00239-014-9616-1
 PAB+14,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","corrected H of AuHS",https://doi.org/10.1144/SP402.4
@@ -219,11 +219,11 @@ CHNOSZ.6,"J. M. Dick",2019,"CHNOSZ package documentation","recalculated values o
 CHNOSZ.7,"J. M. Dick",2019,"CHNOSZ package documentation","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: change Ti to Tl",http://chnosz.net
 CHNOSZ.8,"J. M. Dick",2019,"CHNOSZ package documentation","GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",http://chnosz.net
 LCT17,"A. R. Lowe, J. S. Cox and P. R. Tremaine",2017,"J. Chem. Thermodynamics 112, 129-145","adenine HKF parameters",https://doi.org/10.1016/j.jct.2017.04.005
-DEW17.01,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(acetic acid, glycine, methanol, propanoic acid, propanol: parameters in DEW spreadsheet are the same as @PS01)",http://www.dewcommunity.org
+DEW17.01,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(acetic acid, glycine, methanol, propanoic acid, propanol: parameters in DEW spreadsheet are the same as in @PS01)",http://www.dewcommunity.org
 DEW17.02,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(ethanol: parameters in DEW spreadsheet are different from @PS01; no comment provided)",http://www.dewcommunity.org
-DEW17.03,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(parameters in DEW spreadsheet are the same as @FDM+14)",http://www.dewcommunity.org
-DEW17.04,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(Ar, Xe: parameters in DEW spreadsheet are the same as @SHS89)",http://www.dewcommunity.org
-DEW17.05,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(Al<sup>+3</sup>: parameters in DEW spreadsheet are the same as @SSWS97)",http://www.dewcommunity.org
+DEW17.03,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(parameters in DEW spreadsheet are the same as in @FDM+14)",http://www.dewcommunity.org
+DEW17.04,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(Ar, Xe: parameters in DEW spreadsheet are the same as in @SHS89)",http://www.dewcommunity.org
+DEW17.05,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(Al<sup>+3</sup>: parameters in DEW spreadsheet are the same as in @SSWS97)",http://www.dewcommunity.org
 DEW17.1,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","revised with new predicted a<sub>1</sub> for ions",http://www.dewcommunity.org
 DEW17.2,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","revised with new predicted a<sub>1</sub> for cations",http://www.dewcommunity.org
 DEW17.3,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","revised with new predicted a<sub>1</sub> for complex species",http://www.dewcommunity.org
@@ -241,17 +241,14 @@ DEW17.16,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","Fe
 DEW17.17,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","Revised 1/22/15 based on V at 25 C from @ZW07 and predicted a<sub>1</sub>, a<sub>2</sub>, and a<sub>4</sub>; c<sub>1</sub> and c<sub>2</sub> from fits to delCpr protonation of @ZW07; S from fitting temperature dependence of logK from @ZW07; omega predicted from S using ion correlation.",http://www.dewcommunity.org
 DEW17.18,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","Revised 1/22/15 based on fitting Cp and V vs T data from @HDM+94 + revised correlation for a<sub>1</sub> from @SHA14; omega from delCPr above 100 &deg;C [@ZW07]; G, H, and S from @AH97b",http://www.dewcommunity.org
 DEW17.19,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","Regression of @RS87 & @TZA97 with new full correlations",http://www.dewcommunity.org
-DEW17.20,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","Revised late Oct. (2014) to fit @BM77 along Psat. and high pressure logK's from fitting @KUP+05 eclogite solubility measurements.",http://www.dewcommunity.org
 DEW17.21,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","HSO<sub>3</sub><sup>-</sup>: revised using published estimated V and pred. a<sub>1</sub> from new correlation",http://www.dewcommunity.org
 DEW17.22,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","isobutane: G, H, S, Cp, V from @SH90; a<sub>1</sub> estimated with @SHA14; c2 estimated with a new hydrocarbon correlation.",http://www.dewcommunity.org
 DEW17.23,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","May, 2017 Fitted to logKs from @OH88 + retrieved logKs from Hemley experiments at 1.0 kb using the HCl referred to above",http://www.dewcommunity.org
 DEW17.25,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","Revised G, S and Cp to fit @Noy07 & @SGX+06 with a<sub>1</sub> of the complex equal to the sum of the a<sub>1</sub> values of the ions",http://www.dewcommunity.org
 DEW17.26,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","Fit to @SBS14 & @SH77; plus revised V increased so that a<sub>1</sub> of the complex is the sum of the a<sub>1</sub> values of the ions",http://www.dewcommunity.org
 DEW17.27,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","MgCO<sub>3</sub>: @SSH97 revised volume increased in order that a<sub>1</sub> of the complex is the sum of the a<sub>1</sub> values of the ions; and Cp revised using isocoulombic reln with CaCO3,aq; also omega is set to +0.3 as for all neutral metal complexes.",http://www.dewcommunity.org
-DEW17.28,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","MgOH<sup>+</sup>: Revised by Dimitri, March, 2015",http://www.dewcommunity.org
 DEW17.29,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","S, Cp, V, omega from fit to @ARHB06 and @FDM94",http://www.dewcommunity.org
 DEW17.30,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","NaCO<sub>3</sub><sup>-</sup>: Fit to @SBS13 (80 to 200 C) & @GTS61 (at 25 C) to get G, S and Cp;  with a<sub>1</sub> pred. from the sum of the ions and used to predict the volume",http://www.dewcommunity.org
-DEW17.31,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","NaHCO<sub>3</sub>: Fit to @SBS13 (80 to 200 C) & @Nak71 (25 C) to get G, S and Cp;  with V, a<sub>1</sub>, and omega from fitting high PT Raman data (Facq et al., 2015)",http://www.dewcommunity.org
 DEW17.32,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","NaOH: Fitted to @HP97 data with a<sub>1</sub> pred. from the sum of the ions and used to predict the volume",http://www.dewcommunity.org
 DEW17.33,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","August 16th, 2013 fit to @BL06",http://www.dewcommunity.org
 DEW17.34,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","propane: @SH90 with new a<sub>1</sub>-a<sub>4</sub> based on revised correlation to predict a<sub>1</sub> in Sverjensky et al. (2013)",http://www.dewcommunity.org
@@ -264,4 +261,11 @@ DEW17.40,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","ur
 DEW17.101,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","formate and lactate: revised with new predicted a<sub>1</sub> for ions",https://doi.org/10.1016/0016-7037(90)90429-O
 BDat17.1,"D. A. Sverjensky et al.",2017,"berman.dat file in SUPCRT92b.zip on the DEW website","antigorite: &quot;Oct. 21, 2016: Revised volume coefficients consistent with @HDR06 and @YIY+14 &quot;",http://www.dewcommunity.org/resources.html
 AKAE19,"M. R. Azadi et al.",2019,"Fluid Phase Equilib. 480, 25-40","metal-glycinate complexes",https://doi.org/10.1016/j.fluid.2018.10.002
+DEW19,"D. A. Sverjensky et al.",2019,"Deep Earth Water (DEW) spreadsheet","(values listed in DEW spreadsheet)",http://www.dewcommunity.org
+DEW19.1,"D. A. Sverjensky et al.",2019,"Deep Earth Water (DEW) spreadsheet","(values from @HS19 listed in DEW spreadsheet)",http://www.dewcommunity.org
+DEW19.2,"D. A. Sverjensky et al.",2019,"Deep Earth Water (DEW) spreadsheet","MgOH<sup>+</sup>: Revised by Dimitri, January, 2019; with minimum volume needed",http://www.dewcommunity.org
+DEW19.3,"D. A. Sverjensky et al.",2019,"Deep Earth Water (DEW) spreadsheet","CaO: Fitted by Dimitri to high PT retrieval's from Fang",http://www.dewcommunity.org
+DEW19.4,"D. A. Sverjensky et al.",2019,"Deep Earth Water (DEW) spreadsheet","glycinate: @AH97b for the G, H, S, Cp, V",http://www.dewcommunity.org
+DEW19.5,"D. A. Sverjensky et al.",2019,"Deep Earth Water (DEW) spreadsheet","(Ca<sup>+2</sup>: values listed in DEW spreadsheet)",http://www.dewcommunity.org
+HS19,"F. Huang and D. A. Sverjensky",2019,"Geochim. Cosmochim. Acta 254, 192-230","ions and metal complexes",https://doi.org/10.1016/j.gca.2019.03.027
 LA19,"D. E. LaRowe and J. P. Amend",2019,"Geomicrobiol. J. 36, 492-505","dimethylamine, trimethylamine, resorcinol, phloroglucinol, cyclohexane carboxylate, and cyclohexane carboxylic acid",https://doi.org/10.1080/01490451.2019.1573278
