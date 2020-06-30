@@ -3,6 +3,8 @@
 
 ## if this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("util.formula.R")
+#source("util.data.R")
+#source("util.character.R")
 
 thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
   ## return references for thermodynamic data.
