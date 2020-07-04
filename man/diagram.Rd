@@ -1,7 +1,6 @@
 \encoding{UTF-8}
 \name{diagram}
 \alias{diagram}
-\alias{strip}
 \alias{find.tp}
 \title{Chemical Activity Diagrams}
 \description{
@@ -34,8 +33,6 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
     main = NULL, legend.x = NA,
     # plotting controls
     add = FALSE, plot.it = TRUE, tplot = TRUE, ...)
-  strip(affinity, ispecies = NULL, col = NULL, ns = NULL, 
-    xticks = NULL, ymin = -0.2, xpad = 1, cex.names = 0.7)
   find.tp(x)
 }
 
@@ -67,7 +64,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{spline.method}{character, method used in \code{\link{splinefun}}}
   \item{contour.method}{character, labelling method used in \code{\link{contour}} (use NULL for no labels).}
   \item{levels}{numeric, levels at which to draw contour lines}
-  \item{col}{character, color of activity lines (1D diagram) or predominance field boundaries (2D diagram), or colors of bars in a strip diagram (\code{strip})}
+  \item{col}{character, color of activity lines (1D diagram) or predominance field boundaries (2D diagram)}
   \item{col.names}{character, colors for labels of species}
   \item{fill}{character, colors used to fill predominance fields}
   \item{fill.NA}{character, color for grid points with NA values}
@@ -87,11 +84,6 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{plot.it}{logical, make a plot?}
   \item{tplot}{logical, set up plot with \code{\link{thermo.plot.new}}?}
   \item{affinity}{list, object returned by \code{\link{affinity}}}
-  \item{ispecies}{numeric, which species to consider (default of \code{NULL} is to consider all species)}
-  \item{ns}{numeric, numbers of species, used to make inset plots for strip diagrams}
-  \item{xticks}{numeric, location of supplemental tick marks on x-axis}
-  \item{ymin}{numeric, lower limit of y-axis}
-  \item{xpad}{numeric, amount to extend x-axis on each side}
   \item{x}{matrix, value of the \code{predominant} list element from \code{diagram}}
   \item{...}{additional arguments passed to \code{\link{plot}} or \code{\link{barplot}}}
 }
@@ -171,17 +163,6 @@ The labeling as molality takes effect even if \code{IS} is set to 0; this way, b
 }
 
 \section{Other Functions}{
-A different incarnation of 1-D speciation diagrams is provided by \code{strip}.
-This function generates any number of strip diagrams in a single plot.
-The diagrams are made up of colors bars whose heights represent the relative abundances of species; the color bars are arranged in order of abundance and the total height of the stack of colors bars is constant.
-If \code{ispecies} is a list, the number of strip diagrams is equal to the number of elements of the list, and the elements of this list are numeric vectors that identify the species to consider for each diagram.
-The strips are labeled with the \code{\link{names}} of \code{ispecies}.
-If \code{col} is NULL, the colors of the bars are generated using \code{\link{rainbow}}.
-Supplemental ticks can be added to the x-axis at the locations specified in \code{xtick}; they are larger than the standard ticks and have colors corresponding to those of the color bars.
-\code{ymin} can be decreased in order to add more space at the bottom of the plot, and \code{xpad} can be changed in order to increase or decrease the size of the x-axis relative to the width of the strips.
-An inset dot-and-line plot is created below each strip if \code{ns} is given.
-This argument has the same format as \code{ispecies}, and can be used e.g. to display the relative numbers of species for comparison with the stability calculations.
-
 \code{find.tp} finds the locations in a matrix of integers that are surrounded by the greatest number of different values.
 The function counts the unique values in a 3x3 grid around each point and returns a matrix of indices (similar to \code{\link{which}(..., arr.ind = TRUE)}) for the maximum count (ties result in more than one pair of indices).
 It can be used with the output from \code{diagram} for calculations in 2 dimensions to approximately locate the triple points on the diagram.
@@ -198,7 +179,6 @@ It can be used with the output from \code{diagram} for calculations in 2 dimensi
 
 \seealso{ 
 Other examples are present in the help for \code{\link{protein}} and \code{\link{buffer}}, and even more can be found in \code{\link{demos}}.
-See the vignette \emph{Hot-spring proteins in CHNOSZ} for an example of the \code{strip} charts.
 }
 
 \examples{

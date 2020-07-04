@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.6-13 (2020-07-04)
+CHANGES IN CHNOSZ 1.3.6-14 (2020-07-04)
 --------------------------------------
 
 - Use updated data for the 2019 Deep Earth Water (DEW) model.
@@ -31,6 +31,8 @@ CHANGES IN CHNOSZ 1.3.6-13 (2020-07-04)
 
 - Revise obigt.Rmd to reduce the size of the HTML file and make
   deep linking to individual sections work.
+
+- Remove vignete hotspring.Rnw.
 
 - TODO: thermo.refs(): add current date, write 'thermo()$obigt'.
 

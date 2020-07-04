@@ -38,8 +38,6 @@ export(
   "label.figure", "syslab",
 # equilibrium vignette
   "usrfig",
-# hotspring vignette
-  "strip",
 # ecipex package
   "count.elements",
 # (no other functions are used in the tests)
