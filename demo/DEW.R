@@ -95,32 +95,34 @@ mtitle(as.expression(c(t1, t2)))
 ## (Nature Geoscience, https://doi.org/10.1038/NGEO2291)
 ###########
 
-# define system with loga.species = 0
+# define system
 basis("CHNOS+")
-species(c("CO2", "HCO3-", "CO3-2", "acetic acid", "acetate", "CH4"))
-species(1:6, 0)
+inorganic <- c("CO2", "HCO3-", "CO3-2", "CH4")
+organic <- c("formic acid", "formate", "acetic acid", "acetate", "propanoic acid", "propanoate")
+species(c(inorganic, organic), 0)
+fill <- c(rep("aliceblue", length(inorganic)), rep("aquamarine", length(organic)))
 
 # a function to make the diagrams
-dfun <- function(T = 600, P = 50000, res=300) {
+dfun <- function(T = 600, P = 50000, res = 300) {
   a <- affinity(pH = c(0, 10, res), O2 = c(-24, -12, res), T = T, P = P)
-  diagram(a, limit.water = FALSE, fill=tail(topo.colors(7), -1))
+  # set total C concentration to 0.03 molal
+  # (from EQ3NR model for eclogite [Supporting Information of SSH14])
+  e <- equilibrate(a, loga.balance = log10(0.03))
+  diagram(e, limit.water = FALSE, fill = fill)
   dp <- describe.property(c("     T", "     P"), c(T, P), digits=0)
   legend("bottomleft", legend=dp, bty="n")
 }
 
 obigt()
-## (not run) make diagram using CHNOSZ default database
+## (not run: make diagram using CHNOSZ default database;
+## not recommended for high P)
 #dfun()
-#t1 <- quote("CHNOSZ default database"[])
-#t2 <- quote("(not recommended for high"~italic(P)*")")
-#mtitle(as.expression(c(t1, t2)))
 # make diagram using CO2, HCO3-, CO3-2, CH4, and acetic acid data from DEW spreadsheet
 # (the acetate field disappears if we also use the data for acetate from the spreadsheet 20200629)
-add.obigt("DEW_aq", c("CO2", "HCO3-", "CO3-2", "CH4", "acetic acid"))
+#add.obigt("DEW_aq", c("CO2", "HCO3-", "CO3-2", "CH4", "acetic acid"))
+add.obigt("DEW")
 dfun()
-CO2quote <- quote(list(CO[2], HCO[3]^"-", CO[3]^"-2"))
-DEWexpr <- substitute("DEW data for"~x, list(x=CO2quote))
-mtitle(as.expression(c(DEWexpr, "and methane")))
+mtitle(c("Inorganic and organic species", "C[total] = 0.03 molal"))
 
 ###########
 #### plot 4: speciation of carbon as a function T, logfO2 and pH (added 20171008)
@@ -140,10 +142,9 @@ mtitle(as.expression(c(DEWexpr, "and methane")))
 reset()
 water("DEW")
 # add species data for DEW
-inorganics <- c("methane", "CO2", "HCO3-", "CO3-2")
-organics <- c("formic acid", "formate", "acetic acid", "acetate")
-# skip updating acetate because the new data from the DEW spreadsheet give different logK
-add.obigt("DEW", c(inorganics, organics[-4]))
+inorganics <- c("CH4", "CO2", "HCO3-", "CO3-2")
+organics <- c("formic acid", "formate", "acetic acid", "acetate", "propanoic acid", "propanoate")
+add.obigt("DEW")
 ## set basis species
 basis(c("Fe", "SiO2", "CO3-2", "H2O", "oxygen", "H+"))
 ## calculate logfO2 in QFM buffer
@@ -174,7 +175,6 @@ if(packageVersion("CHNOSZ") > "1.1.3") {
   diagram(e, alpha = "balance", names = names, col = col, ylim = c(0, 0.8), ylab="carbon fraction")
 }
 
-
 ## add legend and title
 ltxt1 <- "P = 50000 bar"
 ltxt2 <- substitute(logfO2=="QFM-2", list(logfO2 = axis.label("O2")))
@@ -196,8 +196,8 @@ organic.logK <- c(1.7878, 2.5648, 15.3182, 16.9743, 30.4088, 28.9185)
 # calculate equilibrium constants of the reactions in CHNOSZ; use a negative sign to change from formation to dissociation
 logK.calc <- -unlist(affinity(T = 600, P = 50000, property = "logK")$values)
 logK.calc - c(inorganic.logK, organic.logK)
-## check that we're within 0.021 of the logK values used by SSH14
-stopifnot(maxdiff(logK.calc, c(inorganic.logK, organic.logK)) < 0.021)
+## except for acetate, we're within 0.021 of the logK values used by SSH14
+stopifnot(maxdiff(logK.calc[-8], c(inorganic.logK, organic.logK)[-8]) < 0.021)
 
 ## check that we get similar activity coefficients
 # activity coefficients for monovalent species from EQ3NR output
@@ -207,12 +207,3 @@ sres <- subcrt("propanoate", T = seq(600, 1000, 100), P = 50000, IS = c(0.39, 0.
 stopifnot(maxdiff(sres$out[[1]]$loggam, loggamma) < 0.023)
 # if m_star in nonideal() was zero, we could decrease the tolerance here
 #stopifnot(maxdiff(sres$out[[1]]$loggam, loggamma) < 0.004)
-
-###########
-### all done!
-# reset the database and previous water computational option
-obigt()
-water(oldwat)
-###########
-
-par(opar)

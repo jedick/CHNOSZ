@@ -5,8 +5,8 @@ release checklist for CHNOSZ
 
 - run examples() and demos() and inspect their output (especially plots)
 
-- use test_package("CHNOSZ", reporter = "progress") to find warnings
-  from tests that aren't shown in R CMD check
+- use testthat::test_package("CHNOSZ", reporter = "progress") to find
+  warnings from tests that aren't shown in R CMD check
 
 - check that uniprot.aa() works with current UniProt web pages
 
@@ -44,9 +44,14 @@ updating data in OBIGT
 updating vignettes
 ******************
 
-- Customize rmarkdown to reduce the size of vignettes:
-  after installing/upgrading rmarkdown, replace files in
-  rmarkdown/rmd/h/bootstrap/fonts/ with empty files
+- Customize rmarkdown installation (in R library directory)
+
+  - to reduce size of vignettes: replace files in
+    rmd/h/bootstrap/fonts/ with empty files
+
+  - to enable offset anchor position in obigt.Rmd:
+    remove padding-top: 10px; from h2 in
+    rmarkdown/templates/html_vignette/resources/vignette.css
 
 - Build the package using both qpdf and ghostscript to compact vignettes:
   R CMD build --compact-vignettes=both chnosz/
