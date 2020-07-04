@@ -265,7 +265,7 @@ check.obigt <- function() {
   checkfun <- function(what) {
     # looking at thermo$obigt
     if(what=="OBIGT") tdata <- get("thermo", CHNOSZ)$obigt
-    else if(what=="DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW_aq.csv", package="CHNOSZ"), as.is=TRUE)
+    else if(what=="DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="OldAA") tdata <- read.csv(system.file("extdata/OBIGT/OldAA.csv", package="CHNOSZ"), as.is=TRUE)
@@ -372,13 +372,13 @@ RH2obigt <- function(compound=NULL, state="cr", file=system.file("extdata/adds/R
   return(out)
 }
 
-# dump all thermodynamic data in CHNOSZ 20171121
+# dump all thermodynamic data in default and optional OBIGT files 20171121
 dumpdata <- function(file=NULL) {
   # default database (OBIGT)
   dat <- get("thermo", CHNOSZ)$obigt
   OBIGT <- cbind(source="OBIGT", dat)
   # optional data
-  dat <- read.csv(system.file("extdata/OBIGT/DEW_aq.csv", package="CHNOSZ"), as.is=TRUE)
+  dat <- read.csv(system.file("extdata/OBIGT/DEW.csv", package="CHNOSZ"), as.is=TRUE)
   DEW <- cbind(source="DEW", dat)
   dat <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)
   SLOP98 <- cbind(source="SLOP98", dat)

@@ -7,7 +7,7 @@ tdata <- thermo()$obigt
 ps1 <- gsub("\ .*", "", tdata$ref1)
 ps2 <- gsub("\ .*", "", tdata$ref2)
 # sources in the optional datafiles
-tdata <- read.csv(system.file("extdata/OBIGT/DEW_aq.csv", package="CHNOSZ"), as.is=TRUE)
+tdata <- read.csv(system.file("extdata/OBIGT/DEW.csv", package="CHNOSZ"), as.is=TRUE)
 os1 <- gsub("\ .*", "", tdata$ref1)
 os2 <- gsub("\ .*", "", tdata$ref2)
 tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)

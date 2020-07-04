@@ -328,7 +328,7 @@ Thermodynamic properties for these minerals are listed as NA in `thermo()$obigt`
 <!-- Optional species divs --> 
 
 <div id="D-optional-DEW" style="display: none">
-## <a id="optional-DEW" class="anchor"></a> `r setfile("DEW_aq.csv")`
+## <a id="optional-DEW" class="anchor"></a> `r setfile("DEW.csv")`
 The [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model extends the applicability of the revised HKF equations of state to 60 kbar.
 Accuracy of the thermodynamic calculations at these conditions is improved by revised correlations for the <i>a</i><sub>1</sub> HKF parameter, as described by [Sverjensky et al., 2014](https://doi.org/10.1016/j.gca.2013.12.019).
 The data here were taken from the May 2017 and January 2019 versions of the [DEW spreadsheet](http://www.dewcommunity.org/resources.html).

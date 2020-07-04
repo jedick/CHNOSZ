@@ -13,7 +13,7 @@ oldwat <- water("DEW")
 ###########
 
 # load SiO2 and Si2O4 data taken from DEW spreadsheet
-iSi <- add.obigt("DEW_aq", c("SiO2", "Si2O4"))
+iSi <- add.obigt("DEW", c("SiO2", "Si2O4"))
 # print the data references to confirm we got the right ones
 thermo.refs(iSi)
 # set temperature ranges for different pressures
@@ -119,7 +119,7 @@ obigt()
 #dfun()
 # make diagram using CO2, HCO3-, CO3-2, CH4, and acetic acid data from DEW spreadsheet
 # (the acetate field disappears if we also use the data for acetate from the spreadsheet 20200629)
-#add.obigt("DEW_aq", c("CO2", "HCO3-", "CO3-2", "CH4", "acetic acid"))
+#add.obigt("DEW", c("CO2", "HCO3-", "CO3-2", "CH4", "acetic acid"))
 add.obigt("DEW")
 dfun()
 mtitle(c("Inorganic and organic species", "C[total] = 0.03 molal"))

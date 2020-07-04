@@ -118,18 +118,18 @@ add.obigt <- function(file, species=NULL, force=TRUE) {
   thermo <- get("thermo", CHNOSZ)
   to1 <- thermo$obigt
   id1 <- paste(to1$name,to1$state)
-  # we match system files with the file suffixes removed (e.g. "CHNOSZ_aq" or "DEW_aq")
+  # we match system files with the file suffixes (.csv) removed
   sysfiles <- dir(system.file("extdata/OBIGT/", package="CHNOSZ"))
   sysnosuffix <- sapply(strsplit(sysfiles, "\\."), "[", 1)
   isys <- match(file, sysnosuffix)
   if(!is.na(isys)) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package="CHNOSZ")
-  else {
-    # we also match single system files with the state suffix removed
-    # (e.g. "DEW" for "DEW_aq", but not "organic" because we have "organic_aq", "organic_cr", etc.)
-    sysnostate <- sapply(strsplit(sysnosuffix, "_"), "[", 1)
-    isys <- which(file==sysnostate)
-    if(length(isys)==1) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package="CHNOSZ")
-  }
+#  else {
+#    # we also match single system files with the state suffix removed
+#    # (e.g. "DEW" for "DEW_aq", but not "organic" because we have "organic_aq", "organic_cr", etc.)
+#    sysnostate <- sapply(strsplit(sysnosuffix, "_"), "[", 1)
+#    isys <- which(file==sysnostate)
+#    if(length(isys)==1) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package="CHNOSZ")
+#  }
   # read data from the file
   to2 <- read.csv(file, as.is=TRUE)
   # add E_units column if it's missing 20190529

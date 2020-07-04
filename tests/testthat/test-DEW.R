@@ -65,7 +65,7 @@ test_that("Gibbs energies of species are calculated correctly", {
   P <- c(5000, 5000, 10000, 10000, 20000, 20000, 50000, 50000)
   T <- c(100, 1000, 100, 1000, 100, 1000, 100, 1000)
   oldwat <- water("DEW")
-  add.obigt("DEW_aq")
+  add.obigt("DEW")
   RG_HCl <- subcrt("HCl", P=P, T=T)$out[[1]]$G
   DEWG_HCl <- c(-28784.99, -58496.85, -26520.94, -55276.92, -21928.89, -50337.19, -8014.34, -36746.87)
   expect_equal(RG_HCl, DEWG_HCl, tolerance = 1e-5)
@@ -80,7 +80,7 @@ test_that("Delta G, logK, and Delta V of reactions are calculated correctly", {
   # The properties are calculated using parameters from the DEW spreadsheet,
   # which are not necessarily identical those that were used for the paper.
   oldwat <- water("DEW")
-  add.obigt("DEW_aq", c("CO2", "HCO3-", "CO3-2", "acetic acid", "acetate", "CH4"))
+  add.obigt("DEW", c("CO2", "HCO3-", "CO3-2", "acetic acid", "acetate", "CH4"))
   T <- 600
   P <- c(5000, 50000)
   R1 <- subcrt(c("H2O", "CO2", "HCO3-", "H+"), c(-1, -1, 1, 1), T=T, P=P)$out

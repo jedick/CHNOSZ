@@ -83,7 +83,6 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{add}{logical, add to current plot?}
   \item{plot.it}{logical, make a plot?}
   \item{tplot}{logical, set up plot with \code{\link{thermo.plot.new}}?}
-  \item{affinity}{list, object returned by \code{\link{affinity}}}
   \item{x}{matrix, value of the \code{predominant} list element from \code{diagram}}
   \item{...}{additional arguments passed to \code{\link{plot}} or \code{\link{barplot}}}
 }

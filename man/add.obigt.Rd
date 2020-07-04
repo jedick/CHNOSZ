@@ -27,8 +27,7 @@ The format (column names) of the specified file must be the same as the \code{ex
 Howvever, for backwards compatibility, the \code{E_units} column of the input can be missing; then, it is assigned a value of \samp{cal}.
 
 \code{file} is first matched against the names of files in the \code{extdata/OBIGT} directory packaged with CHNOSZ.
-In this case, the filename suffixes are removed, so \samp{DEW_aq}, \samp{organic_aq}, and \samp{organic_cr} are valid names.
-The function also accepts single matches with the state suffix dropped (\samp{DEW} but not \samp{organic}).
+In this case, the file suffixes are removed, so \samp{DEW}, \samp{organic_aq}, and \samp{organic_cr} are valid names.
 If there are no matches to a system file, then \code{file} is interpreted as the path a user-supplied file.
 
 If \code{species} is NULL (default), all species listed in the file are used.
