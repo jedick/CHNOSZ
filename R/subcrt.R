@@ -199,8 +199,10 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     # include units here 20190530
     uT <- outvert(T, "K")
     if(identical(grid,'IS')) uT <- unique(uT)
-    if(length(uT)==1) T.text <- paste(uT, T.units()) else {
-      T.text <- paste0(length(uT), " values of T (", T.units(), ")")
+    Tunits <- T.units()
+    if(Tunits=="C") Tunits <- "\u00BAC"
+    if(length(uT)==1) T.text <- paste(uT, Tunits) else {
+      T.text <- paste0(length(uT), " values of T (", Tunits, ")")
     }
     uP <- outvert(P, "bar")
     if(length(P)==1) {

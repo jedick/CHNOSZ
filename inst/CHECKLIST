@@ -1,6 +1,6 @@
 ****************************
 release checklist for CHNOSZ
-    (updated 2020-06-30)
+    (updated 2020-07-04)
 ****************************
 
 - run examples() and demos() and inspect their output (especially plots)
@@ -44,7 +44,7 @@ updating data in OBIGT
 updating vignettes
 ******************
 
-- Customize rmarkdown installation (in R library directory)
+- Customize rmarkdown installation (in R local library)
 
   - to reduce size of vignettes: replace files in
     rmd/h/bootstrap/fonts/ with empty files

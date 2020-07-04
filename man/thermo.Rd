@@ -99,7 +99,7 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
 
   Each entry is referenced to one or two literature sources listed in \code{thermo()$refs}.
   Use \code{\link{thermo.refs}} to look up the citation information for the references.
-  See the vignette \emph{Thermodynamic data in CHNOSZ} for a complete description of the sources of data.
+  See the vignette \emph{OBIGT thermodynamic database in CHNOSZ} for a complete description of the sources of data.
   The original \acronym{OBIGT} database was influenced by the \acronym{SUPCRT92} (Johnson et al., 1992) and \acronym{slop98.dat} data files (Shock et al., 1998), and the references in those files are included here.
 
 In order to represent thermodynamic data for minerals with phase transitions, the higher-temperature phases of these minerals are represented as phase species that have states denoted by \samp{cr2}, \samp{cr3}, etc.

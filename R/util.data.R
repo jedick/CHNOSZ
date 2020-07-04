@@ -105,10 +105,11 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
     .cat("</head>")
     ### boilerplate text
     .cat("<body>")
-    .cat('<h1>References for thermodynamic data in <a href="http://chnosz.net"><font color="red">CHNOSZ</font></a></h1>')
+    .cat(paste0('<h1>References for thermodynamic data in <a href="http://chnosz.net"><font color="red">CHNOSZ</font></a> ',
+               packageDescription("CHNOSZ")$Version), " (", packageDescription("CHNOSZ")$Date, ')</h1>')
     .cat("<h3>Click on a column header to sort, or on a citation to open the URL in new window.</h3>")
-    .cat("<h4>Column 'number' gives the number of times each reference appears in thermo$OBIGT.</h4>")
-    .cat('<p>See also the vignette <a href="http://chnosz.net/vignettes/OBIGT.html">Thermodynamic data in CHNOSZ</a>.</p>')
+    .cat("<h4>Column 'number' gives the number of times each reference appears in thermo()$OBIGT.</h4>")
+    .cat('<p>See also the vignette <a href="http://chnosz.net/vignettes/OBIGT.html">OBIGT thermodynamic database in CHNOSZ</a>.</p>')
     ### start table and headers
     .cat("<table id='thermorefs' border='1'>")
     .cat("<tr>")

@@ -1,35 +1,25 @@
-CHANGES IN CHNOSZ 1.3.6-17 (2020-07-04)
+CHANGES IN CHNOSZ 1.3.6-18 (2020-07-04)
 --------------------------------------
 
 MAJOR CHANGES
 
-- File, function and object names consistently use the uppercase
-  abbreviation OBIGT. In particular, the active database now lives at
-  thermo()$OBIGT, and functions add.OBIGT() and mod.OBIGT() replace
-  the previous add.obigt() and mod.obigt().
+- File, function, and object names consistently use the uppercase
+  abbreviation OBIGT. In particular, the active database now resides at
+  thermo()$OBIGT, and functions add.OBIGT() and mod.OBIGT() replace the
+  previous add.obigt() and mod.obigt().
 
-OTHER CHANGES
+CHANGES TO OBIGT DATABASE
 
-- Use updated data for the 2019 Deep Earth Water (DEW) model.
+- Update species parameters for the 2019 Deep Earth Water (DEW) model.
 
-- Move OBIGT/DEW_aq.csv to OBIGT/DEW.csv.
-
-- Use uncompressed files in OBIGT (i.e. .csv, not .csv.xz).
-
-- OBIGT/organic_aq.csv, AkDi.csv, DEW.csv: Remove "methane" as the
-  name of CH4(aq). Consequently, info("methane") refers to the gas
-  rather than aqueous species. This is consistent with the behavior for
-  the names of inorganic species, e.g. carbon dioxide and oxygen.
+- organic_aq.csv, AkDi.csv, DEW.csv: Remove "methane" as the name of
+  CH4(aq). This means that info("methane") now refers to the gas rather
+  than the aqueous species. This is consistent with the behavior for the
+  names of inorganic species, e.g. carbon dioxide and oxygen.
 
 - OBIGT/SUPCRT92.csv: Change lowercase to uppercase "A" (Angstrom) in
   names of minerals with suffixes indicating interlayer spacing
   (amesite, clinochlore, cronstedtite, daphnite).
-
-- Add demo/comproportionation.R: Gibbs energy of sulfur
-  comproportionation, after Amend et al., 2020.
-
-- subcrt(): change 'action.unbalanced' argument to 'autobalance',
-  which provides the ability to prevent autobalancing.
 
 - OBIGT/inorganic_aq.csv: Update arsenopyrite with data from Naumov et
   al., 1974 (via Unitherm).
@@ -39,17 +29,32 @@ OTHER CHANGES
 
 - Install bibtex file (docs/OBIGT.bib) for use in logKcalc package.
 
-- Changing the water model with water() now updates the literature
-  references in thermo()$OBIGT.
+- Use uncompressed data files (i.e. .csv, not .csv.xz) and rename
+  DEW_aq.csv to DEW.csv.
+
+DEMOS AND VIGNETTES
+
+- Add demo/comproportionation.R: Gibbs energy of sulfur
+  comproportionation, after Amend et al., 2020.
+
+- Remove vignete hotspring.Rnw.
 
 - Revise OBIGT.Rmd to reduce the size of the HTML file and make
   deep linking to individual sections work.
 
-- Remove vignete hotspring.Rnw.
+CHANGES TO FUNCTIONS
 
-- TODO: thermo.refs(): add current date, write 'thermo()$OBIGT'.
+- subcrt(): change 'action.unbalanced' argument to 'autobalance',
+  which provides the ability to prevent autobalancing.
 
-- TODO: use degree sign in messages from subcrt().
+- Changing the water model with water() now updates the literature
+  references in thermo()$OBIGT.
+
+- thermo.refs() now shows CHNOSZ version and date.
+
+- subcrt() uses degree symbol in messages (°C).
+
+TODO
 
 - TODO: fix error in expr.species("AsO4---")
 
@@ -62,6 +67,10 @@ OTHER CHANGES
 - TODO: remove suffixed references (supcrt92, slop98) 
 
 - TODO: refresh extdata/supcrt/compare.R
+
+- TODO: get arsenopyrite from Perfetti et al., 2008
+
+- TODO: convert equilibrium.Rnw to equilibrium.Rmd
 
 CHANGES IN CHNOSZ 1.3.6 (2020-03-16)
 ------------------------------------
