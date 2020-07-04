@@ -3,7 +3,11 @@ CHANGES IN CHNOSZ 1.3.6-14 (2020-07-04)
 
 - Use updated data for the 2019 Deep Earth Water (DEW) model.
 
-- OBIGT/organic_aq.csv, AkDi.csv, DEW_aq.csv: Remove "methane" as the
+- Move OBIGT/DEW_aq.csv to OBIGT/DEW.csv.
+
+- Use uncompressed files in OBIGT (i.e. .csv, not .csv.xz).
+
+- OBIGT/organic_aq.csv, AkDi.csv, DEW.csv: Remove "methane" as the
   name of CH4(aq). Consequently, info("methane") refers to the gas
   rather than aqueous species. This is consistent with the behavior for
   the names of inorganic species, e.g. carbon dioxide and oxygen.
@@ -21,8 +25,8 @@ CHANGES IN CHNOSZ 1.3.6-14 (2020-07-04)
 - OBIGT/inorganic_aq.csv: Update arsenopyrite with data from Naumov et
   al., 1974 (via Unitherm).
 
-- OBIGT/inorganic_cr.csv: Correct formula for number of H2O in some
-  As-bearing minerals.
+- OBIGT/inorganic_cr.csv: Correct syntax for number of H2O in formulas
+  of some As-bearing minerals.
 
 - Install bibtex file (docs/obigt.bib) for use in logKcalc package.
 
@@ -49,8 +53,6 @@ CHANGES IN CHNOSZ 1.3.6-14 (2020-07-04)
 - TODO: use all caps OBIGT in function and variable names
 
 - TODO: incorporate community uploaded data
-
-- TODO: move DEW_aq.csv to DEW.csv
 
 - TODO: remove suffixed references (supcrt92, slop98) 
 

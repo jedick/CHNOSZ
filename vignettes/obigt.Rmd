@@ -115,9 +115,7 @@ reset()
 setfile <- function(csvfile, dat=NULL) {
   # assign csvfile outside this function
   assign("csvfile", csvfile, parent.frame())
-  # files might have .csv or .csv.xz suffix
   file <- system.file(paste0("extdata/OBIGT/", csvfile), package="CHNOSZ")
-  if(file=="") file <- system.file(paste0("extdata/OBIGT/", csvfile, ".xz"), package="CHNOSZ")
   dat <- read.csv(file, as.is=TRUE)
   ## exclude entries for phase transitions
   #dat <- dat[!dat$state %in% c("cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9"), ]
@@ -142,7 +140,6 @@ filerefs <- function(csvfile, dat=NULL, message=FALSE) {
   # without dat, look for ref1 in csvfile
   if(is.null(dat)) {
     file <- system.file(paste0("extdata/OBIGT/", csvfile), package="CHNOSZ")
-    if(file=="") file <- system.file(paste0("extdata/OBIGT/", csvfile, ".xz"), package="CHNOSZ")
     dat <- read.csv(file, as.is=TRUE)
     whichref <- "ref1"
   }

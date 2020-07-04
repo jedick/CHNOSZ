@@ -48,7 +48,6 @@ obigt <- function() {
   OBIGTdir <- system.file("extdata/OBIGT/", package="CHNOSZ")
   # need explicit "/" for Windows
   sourcefiles <- paste0(OBIGTdir, "/", c(sources_aq, sources_cr, sources_gas, sources_liq), ".csv")
-  sourcefiles[!sources=="Berman_cr"] <- paste0(sourcefiles[!sources=="Berman_cr"], ".xz")
   datalist <- lapply(sourcefiles, read.csv, as.is=TRUE)
   obigt <- do.call(rbind, datalist)
   # also read references file
