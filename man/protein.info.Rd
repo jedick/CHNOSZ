@@ -4,7 +4,7 @@
 \alias{pinfo}
 \alias{protein.length}
 \alias{protein.formula}
-\alias{protein.obigt}
+\alias{protein.OBIGT}
 \alias{protein.basis}
 \alias{protein.equil}
 \title{Summaries of Thermodynamic Properties of Proteins}
@@ -17,7 +17,7 @@
   pinfo(protein, organism=NULL, residue=FALSE, regexp=FALSE)
   protein.length(protein, organism = NULL)
   protein.formula(protein, organism = NULL, residue = FALSE)
-  protein.obigt(protein, organism = NULL, state=thermo()$opt$state)
+  protein.OBIGT(protein, organism = NULL, state=thermo()$opt$state)
   protein.basis(protein, T = 25, normalize = FALSE)
   protein.equil(protein, T=25, loga.protein = 0, digits = 4)
 }
@@ -54,8 +54,8 @@ The following functions accept any specification of protein(s) described above f
 \code{protein.formula} returns a stoichiometrix matrix representing the chemical formulas of the proteins that can be pased to e.g. \code{\link{mass}} or \code{\link{ZC}}.
 The amino acid compositions are multiplied by the output of \code{\link{group.formulas}} to generate the result. 
 
-\code{protein.obigt} calculates the thermodynamic properties and equations-of-state parameters for the completely nonionized proteins using group additivity with parameters taken from Dick et al., 2006 (aqueous proteins) and LaRowe and Dick, 2012 (crystalline proteins and revised aqueous methionine sidechain group).
-The return value is a data frame in the same format as \code{thermo()$obigt}.
+\code{protein.OBIGT} calculates the thermodynamic properties and equations-of-state parameters for the completely nonionized proteins using group additivity with parameters taken from Dick et al., 2006 (aqueous proteins) and LaRowe and Dick, 2012 (crystalline proteins and revised aqueous methionine sidechain group).
+The return value is a data frame in the same format as \code{thermo()$OBIGT}.
 \code{state} indicates the physical state for the parameters used in the calculation (\samp{aq} or \samp{cr}).
 
 The following functions also depend on an existing definition of the basis species:
@@ -79,7 +79,7 @@ ip3 <- pinfo("MYG", c("HORSE", "PHYCA"))
 # their amino acid compositions
 pinfo(ip3)
 # their thermodynamic properties by group additivity
-protein.obigt(ip3)
+protein.OBIGT(ip3)
 
 # an example of an unrecognized protein name
 ip4 <- pinfo("MYGPHYCA")
@@ -95,7 +95,7 @@ protein.length(ip)
 protein.formula(ip)
 # group additivity for thermodynamic properties and HKF equation-of-state
 # parameters of non-ionized protein
-protein.obigt(ip)
+protein.OBIGT(ip)
 # calculation of standard thermodynamic properties
 # (subcrt uses the species name, not ip)
 subcrt("LYSC_CHICK")

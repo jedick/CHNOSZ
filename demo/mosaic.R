@@ -4,10 +4,10 @@
 # Fe-minerals and aqueous species in Fe-S-O-H-C system
 # after Garrels and Christ, 1965 Figure 7.21
 # to reproduce their diagram as closely as posssible, use their thermodynamic data (from Appendix 2)
-mod.obigt(c("Fe+2", "Fe+3"), G = c(-20300, -2520))
-mod.obigt(c("hematite", "magnetite", "pyrrhotite", "pyrite", "siderite"), G = c(-177100, -242400, -23320, -36000, -161060))
-mod.obigt(c("SO4-2", "HS-", "H2S", "HSO4-"), G = c(-177340, 3010, -6540, -179940))
-mod.obigt(c("CO2", "HCO3-", "CO3-2"), G = c(-92310, -140310, -126220))
+mod.OBIGT(c("Fe+2", "Fe+3"), G = c(-20300, -2520))
+mod.OBIGT(c("hematite", "magnetite", "pyrrhotite", "pyrite", "siderite"), G = c(-177100, -242400, -23320, -36000, -161060))
+mod.OBIGT(c("SO4-2", "HS-", "H2S", "HSO4-"), G = c(-177340, 3010, -6540, -179940))
+mod.OBIGT(c("CO2", "HCO3-", "CO3-2"), G = c(-92310, -140310, -126220))
 # conditions and system definition
 pH <- c(0, 14, 500)
 Eh <- c(-1, 1, 500)

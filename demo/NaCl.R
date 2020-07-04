@@ -6,8 +6,8 @@
 ##  J. Chem. Soc. Faraday Trans. 88, 803-826. https://doi.org/10.1039/FT9928800803 )
 
 ## uncomment these lines to make the plot with the g-function disabled
-#mod.obigt("Cl-", z=0)
-#mod.obigt("Na+", z=0)
+#mod.OBIGT("Cl-", z=0)
+#mod.OBIGT("Na+", z=0)
 
 # start a new plot and show the experimental logK
 thermo.plot.new(xlim=c(0, 1000), ylim=c(-5.5, 1),

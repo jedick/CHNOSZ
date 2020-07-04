@@ -1,13 +1,13 @@
 ---
-title: "Thermodynamic data in [CHNOSZ](http://www.chnosz.net)"
+title: "OBIGT thermodynamic database in [CHNOSZ](http://www.chnosz.net)"
 output:
   html_vignette:
     mathjax: null
 vignette: >
-  %\VignetteIndexEntry{Thermodynamic data in CHNOSZ}
+  %\VignetteIndexEntry{OBIGT thermodynamic database in CHNOSZ}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: obigt.bib
+bibliography: OBIGT.bib
 # so that these appear in the bibliography
 nocite: | 
   @SPRONS92, @SLOP98, @SLOP07, @SLOP16, @CHNOSZ, @JOH92, @WP02, @CWM89, @PRPG97, @TH88, @Kul06, @Sho09, @HP11
@@ -200,10 +200,10 @@ optused <- character()
 ```
 
 This [vignette](index.html), produced on `r Sys.Date()`, documents the sources of thermodynamic data in the OBIGT database in CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
-Except for Optional Data, all data are present in the default database, which is loaded when the package is attached, or by running <span style='color:red'>`reset()`</span> or <span style='color:red'>`obigt()`</span>.
+Except for Optional Data, all data are present in the default database, which is loaded when the package is attached, or by running <span style='color:red'>`reset()`</span> or <span style='color:red'>`OBIGT()`</span>.
 
 Each of the buttons below corresponds to one of the CSV data files that are stored in the `extdata/OBIGT` package directory.
-Clicking on a button opens a list of the primary references (`ref1` in `thermo()$obigt`) in chronological order; any secondary references (`ref2`) are listed with bullet points.
+Clicking on a button opens a list of the primary references (`ref1` in `thermo()$OBIGT`) in chronological order; any secondary references (`ref2`) are listed with bullet points.
 Each reference is followed by the number of species, and a note (from `thermo()$refs`).
 
 Abbreviations used below are: Cp (heat capacity), GHS (standard Gibbs energy, enthalpy, entropy), HKF (Helgeson-Kirkham-Flowers equations), V (volume), T (temperature), P (pressure).
@@ -240,7 +240,7 @@ The standard entropy of the aqueous electron, which is a solely a pseudospecies 
 
 Likewise, [GEM-Selektor](http://gems.web.psi.ch/) defines "independent components" to be stoichiometric units usually consisting of elements and charge; the latter, [which is named Zz](http://gems.web.psi.ch/tests/TestNaCl-dep.html) and has a standard molal entropy of -65.34 J/mol/K and heat capacity of -14.418 J/mol/K (negative one-half those of gaseous hydrogen), is negated in the formula of the fictive "aqueous electron" ([Kulik, 2006](https://doi.org/10.1016/j.chemgeo.2005.08.014)).
 
-Despite these considerations, the final column of the thermodynamic database (`thermo()$obigt`) lists a charge of "0" for both the aqueous proton and electron.
+Despite these considerations, the final column of the thermodynamic database (`thermo()$OBIGT`) lists a charge of "0" for both the aqueous proton and electron.
 Data in this this column are used in CHNOSZ only to specify the charge that is input to the "*g*-function" ([Tanger and Helgeson, 1988](https://doi.org/10.2475/ajs.288.1.19); [Shock and Helgeson, 1988](https://doi.org/10.1016/0016-7037(88)90181-0)).
 Setting it to zero prevents activation of the *g*-function, which would result in non-zero contributions to thermodynamic properties, conflicting with the conventions mentioned above.
 All other calculations in CHNOSZ obtain the elemental makeup, including the correct charge for the species, by parsing the chemical formulas stored in the database.
@@ -284,7 +284,7 @@ The source of parameters used here for goethite is different from that in the sl
 <div id="D-solid-berman" style="display: none">
 ## <a id="solid-berman" class="anchor"></a> `r setfile("Berman_cr.csv")`
 This file gives the identifiying information for minerals whose properties are calculated using the formulation of [Berman (1988)](https://doi.org/10.1093/petrology/29.2.445).
-Thermodynamic properties for these minerals are listed as NA in `thermo()$obigt`; the actual data are stored separately, as CSV files in `extdata/Berman/*.csv`.
+Thermodynamic properties for these minerals are listed as NA in `thermo()$OBIGT`; the actual data are stored separately, as CSV files in `extdata/Berman/*.csv`.
 
 ```{r reflist, results="asis", echo=FALSE}
 ```
@@ -331,7 +331,7 @@ Accuracy of the thermodynamic calculations at these conditions is improved by re
 The data here were taken from the May 2017 and January 2019 versions of the [DEW spreadsheet](http://www.dewcommunity.org/resources.html).
 The following species are present in the spreadsheet, but are not used here because the parameters are unchanged from the default database in CHNOSZ: B(OH)<sub>3</sub>, Br<sup>-</sup>, Ca<sup>+2</sup>, Cl<sup>-</sup>, Cs<sup>+</sup>, F<sup>-</sup>, H<sup>+</sup>, H<sub>2</sub>, He, I<sup>-</sup>, K<sup>+</sup>, Kr, Li<sup>+</sup>, Mg<sup>+2</sup>, Na<sup>+</sup>, Ne, O<sub>2</sub>, Rb<sup>+</sup>, Rn, SO<sub>4</sub><sup>-2</sup>.
 
-Besides using <span style="color:red">`add.obigt("DEW")`</span> to load these data, you should also run <span style="color:red">`water("DEW")`</span> to activate the DEW equations in CHNOSZ.
+Besides using <span style="color:red">`add.OBIGT("DEW")`</span> to load these data, you should also run <span style="color:red">`water("DEW")`</span> to activate the DEW equations in CHNOSZ.
 See [<span style="color:blue">`demo(DEW)`</span>](../demo) for some examples.
 
 Most of the comments below were transcribed from the DEW spreadsheet.
@@ -346,7 +346,7 @@ optused <- c(optused, filerefs(csvfile))
 These minerals and aqueous species, taken from the SUPCRT92 database, were present in earlier versions of CHNOSZ but have since been superseded by @Ber88 (minerals) and @NA03 (H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>).
 The thermodynamic properties and parameters are kept here as optional data for reproducing published calculations and making comparisons with newer data.
 The minerals here include all of the silicates and Al-bearing minerals from @HDNB78, as well as calcite, dolomite, hematite, and magnetite.
-Use <span style="color:red">`add.obigt("SUPCRT92")`</span> to load the data.
+Use <span style="color:red">`add.OBIGT("SUPCRT92")`</span> to load the data.
 
 **NOTE:** Other minerals from SUPCRT92, including native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate those in the Berman dataset, are still present in the default database (**inorganic_cr.csv**).
 
@@ -358,7 +358,7 @@ Use <span style="color:red">`add.obigt("SUPCRT92")`</span> to load the data.
 ## <a id="optional-SLOP98" class="anchor"></a> `r setfile("SLOP98.csv")`
 These species, which were taken from or are linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default database, including aqueous Al species [@TS01], As species [@NA03], Au, Ag, and Cu species [@AZ01; @AZ10], Pd species [@TBZ+13], Zn species [@AT14], and Pt species [@TBB15].
 This file also contains aqueous transuranic actinide complexes, for which estimated thermodynamic properties have been reported, but no entropies of the corresponding elements at 298.15 K are available to check the self-consistency of the GHS values for the complexes.
-Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.
+Use <span style="color:red">`add.OBIGT("SLOP98")`</span> to load the data.
 
 **NOTE:** Many other species found in slop98.dat and later versions are still present in the default database.
 
@@ -369,7 +369,7 @@ Use <span style="color:red">`add.obigt("SLOP98")`</span> to load the data.
 <div id="D-optional-OldAA" style="display: none">
 ## <a id="optional-OldAA" class="anchor"></a> `r setfile("OldAA.csv")`
 Data for these amino acids and related species were present in earlier versions of CHNOSZ but have been replaced by or are incompatible with later updates [@LD12; @Kit14; @AKAE19].
-Use <span style="color:red">`add.obigt("OldAA")`</span> to load the data.
+Use <span style="color:red">`add.OBIGT("OldAA")`</span> to load the data.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```
@@ -378,8 +378,8 @@ Use <span style="color:red">`add.obigt("OldAA")`</span> to load the data.
 <div id="D-optional-AS04" style="display: none">
 ## <a id="optional-AS04" class="anchor"></a> `r setfile("AS04.csv")`
 This file has data for aqueous SiO<sub>2</sub> from @AS04 and a modified HSiO<sub>3</sub><sup>-</sup> to be consistent with the SiO<sub>2</sub> here.
-This file also has H<sub>4</sub>SiO<sub>4</sub> from an earlier publication [@Ste01] that is roughly consistent with SiO<sub>2</sub> here (see <span style="color:red">`?add.obigt`</span>).
-Use <span style="color:red">`add.obigt("AS04")`</span> to load the data; see the vignette [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html) for an example.
+This file also has H<sub>4</sub>SiO<sub>4</sub> from an earlier publication [@Ste01] that is roughly consistent with SiO<sub>2</sub> here (see <span style="color:red">`?add.OBIGT`</span>).
+Use <span style="color:red">`add.OBIGT("AS04")`</span> to load the data; see the vignette [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html) for an example.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```
@@ -388,7 +388,7 @@ Use <span style="color:red">`add.obigt("AS04")`</span> to load the data; see the
 <div id="D-optional-AkDi" style="display: none">
 ## <a id="optional-AkDi" class="anchor"></a> `r setfile("AkDi.csv")`
 This file has parameters for aqueous nonelectrolytes in the Akinfiev-Diamond model [@AD03].
-Use <span style="color:red">`add.obigt("AkDi")`</span> to load the data; see [<span style="color:blue">`demo(AkDi)`</span>](../demo) for an example.
+Use <span style="color:red">`add.OBIGT("AkDi")`</span> to load the data; see [<span style="color:blue">`demo(AkDi)`</span>](../demo) for an example.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```
@@ -401,7 +401,7 @@ Use <span style="color:red">`add.obigt("AkDi")`</span> to load the data; see [<s
 *Or, <a href = "#showall" onclick='OpenAllDivs()'>press here</a> to show all citations.*
 
 ### Total count of species
-References were found for `r length(used)` of `r nrow(thermo()$obigt)` species in the default OBIGT database and `r length(optused)` optional species.
+References were found for `r length(used)` of `r nrow(thermo()$OBIGT)` species in the default OBIGT database and `r length(optused)` optional species.
 </div>
 
 # References

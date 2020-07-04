@@ -95,7 +95,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     Z[i] <- thisZ
   }
   # get species formulas to assign acirc 20181105
-  formula <- get("thermo", CHNOSZ)$obigt$formula[species]
+  formula <- get("thermo", CHNOSZ)$OBIGT$formula[species]
   if(grepl("Bdot", method)) {
     # "ion size paramter" taken from UT_SIZES.REF of HCh package (Shvarov and Bastrakov, 1999),
     # based on Table 2.7 of Garrels and Christ, 1965

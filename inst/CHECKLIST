@@ -18,27 +18,27 @@ updating data in OBIGT
 
 - Add data to relevant csv file in extdata/OBIGT.
 
-- Add bibtex references to vignettes/obigt.bib
-  (used in the obigt.Rmd vignette).
+- Add bibtex references to vignettes/OBIGT.bib
+  (used in the OBIGT.Rmd vignette).
 
 - Add references *and notes* to extdata/OBIGT/refs.csv
-  (also used in the obigt.Rmd vignette and thermo.refs()).
+  (also used in the OBIGT.Rmd vignette and thermo.refs()).
 
 - Check output of demo/sources.R to make sure all references
   are cited (printed results should be character(0)).
 
 - Rebuild extdata/thermo/stoich.csv.xz after all data updates
   (used in retrieve() to search the databse by element):
-  formula <- thermo()$obigt$formula
+  formula <- thermo()$OBIGT$formula
   stoich <- i2A(formula)
   write.csv(stoich, "stoich.csv")
   system("xz -f stoich.csv")
 
-- Rebuild extdata/adds/obigt_check.csv after all data updates:
+- Rebuild extdata/adds/OBIGT_check.csv after all data updates:
   (not used elsewhere in CHNOSZ, but helpful to see which
   species data have self inconsistencies):
-  co <- check.obigt()
-  write.csv(co, "obigt_check.csv", row.names=FALSE, na="")
+  co <- check.OBIGT()
+  write.csv(co, "OBIGT_check.csv", row.names=FALSE, na="")
 
 ******************
 updating vignettes
@@ -49,17 +49,17 @@ updating vignettes
   - to reduce size of vignettes: replace files in
     rmd/h/bootstrap/fonts/ with empty files
 
-  - to enable offset anchor position in obigt.Rmd:
+  - to enable offset anchor position in OBIGT.Rmd:
     remove padding-top: 10px; from h2 in
     rmarkdown/templates/html_vignette/resources/vignette.css
 
 - Build the package using both qpdf and ghostscript to compact vignettes:
   R CMD build --compact-vignettes=both chnosz/
 
-- vignettes/obigt.bib: check correct year and version for CHNOSZ reference
+- vignettes/OBIGT.bib: check correct year and version for CHNOSZ reference
 
 - Documentation links: after installation, run doc/mklinks.sh
-  and put the modified anintro.html and obigt.html in the package
+  and put the modified anintro.html and OBIGT.html in the package
 
 ***************
 R compatibility

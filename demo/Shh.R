@@ -2,7 +2,7 @@
 # (Dick, 2015. Chemical integration of proteins in signaling and development. https://doi.org/10.1101/015826)
 
 # to reproduce the calculations in the paper, use superseded data for [Gly] and [UPBB] 20190206
-add.obigt("OldAA", c("[Gly]", "[UPBB]"))
+add.OBIGT("OldAA", c("[Gly]", "[UPBB]"))
 
 # UniProt names of the proteins
 pname <- c("SHH", "OLIG2", "NKX22", "FOXA2", "IRX3", "PAX6", "NKX62", "DBX1",

@@ -81,7 +81,7 @@ test_that("gfun() gives expected results", {
 test_that("AkDi produces expected results", {
   # 20190220
   # modify aqueous CO2 to use the AkDi model: it has NA for Z
-  iCO2 <- mod.obigt("CO2", a=-8.8321, b=11.2684, c=-0.0850, z=NA)
+  iCO2 <- mod.OBIGT("CO2", a=-8.8321, b=11.2684, c=-0.0850, z=NA)
   # do the properties we calculate match previously calculated values?
   P <- "Psat"
   T <- seq(50, 350, 100)
@@ -100,7 +100,7 @@ test_that("AkDi produces expected results", {
   expect_equal(round(G_calc, 1), G_ref)
 
   # compare Gibbs energies at 25 degrees calculated with AkDi model to database values
-  iAkDi <- add.obigt("AkDi")
+  iAkDi <- add.OBIGT("AkDi")
   # remove hydroxides because they aren't in the default database (except B(OH)3(aq))
   iAkDi <- iAkDi[-grep("OH", info(iAkDi)$name)]
   # this would produce an error if any calculations failed

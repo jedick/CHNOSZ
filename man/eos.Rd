@@ -18,7 +18,7 @@ Calculate thermodynamic properties using the revised Helgeson-Kirkham-Flowers (H
 
 \arguments{
   \item{property}{character, name(s) of properties to calculate}
-  \item{parameters}{dataframe, species parameters as one or more rows from \code{thermo()$obigt}}
+  \item{parameters}{dataframe, species parameters as one or more rows from \code{thermo()$OBIGT}}
   \item{T}{numeric, temperature(s) at which to calculate properties (K)}
   \item{P}{numeric, pressure(s) at which to calculate properties (bar)}
   \item{contrib}{character, which contributions to consider in the revised HKF equations equations of state: (\code{n})onsolvation, (\code{s})olvation (the \eqn{\omega}{omega} terms), or (o)rigination contributions (i.e., the property itself at 25 \degC and 1 bar). Default is \code{c("n","s","o")}, for all contributions}
@@ -33,8 +33,8 @@ The units of these properties are the first ones shown in the description for \c
 The names of the properties are matched without regard to case. 
 
 \code{hkf} implements the revised HKF equations of state (Helgeson et al., 1981; Tanger and Helgeson, 1988; Shock and Helgeson, 1988).
-The equations-of-state parameters are \code{a1}, \code{a2}, \code{a3}, \code{a4}, \code{c1}, \code{c2}, \code{omega} and \code{Z}; the units of these parameters are as indicated for \code{\link{thermo}$obigt}, without the order of magnitude multipliers.
-Note that the equation-of-state parameter \code{Z} (appearing in the \eqn{g}{g}-function for the temperature derivatives of the omega parameter; Shock et al., 1992) is taken from \code{thermo()$obigt} and \emph{not} from the \code{\link{makeup}} of the species.
+The equations-of-state parameters are \code{a1}, \code{a2}, \code{a3}, \code{a4}, \code{c1}, \code{c2}, \code{omega} and \code{Z}; the units of these parameters are as indicated for \code{\link{thermo}$OBIGT}, without the order of magnitude multipliers.
+Note that the equation-of-state parameter \code{Z} (appearing in the \eqn{g}{g}-function for the temperature derivatives of the omega parameter; Shock et al., 1992) is taken from \code{thermo()$OBIGT} and \emph{not} from the \code{\link{makeup}} of the species.
 \code{H2O.props} is an optional argument that lists the properties of water that should be returned; it is used by \code{\link{subcrt}} so that the time-consuming water calculations are only performed once.
 
 The temperature and pressure derivatives of the \code{omega} parameter for charged species (where \code{Z != 0}, but not for the aqueous proton, H+) are calculated using the \eqn{g}{g}- and \eqn{f}{f}-functions described by Shock et al., 1992 and Johnson et al., 1992.

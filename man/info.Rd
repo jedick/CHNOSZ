@@ -17,7 +17,7 @@
 }
 
 \details{
-\code{info} is the primary function used for querying the thermodynamic database (\code{\link{thermo}$obigt}).
+\code{info} is the primary function used for querying the thermodynamic database (\code{\link{thermo}$OBIGT}).
 It is often called recursively; first with a character value (or values) for \code{species} indicating the name(s) or formula(s) of the species of interest.
 The result of this call is a numeric value, which can be provided as an argument in a second call to \code{info} in order to retrieve a data frame of the thermodynamic properties of the species.
 
@@ -35,14 +35,14 @@ Included in the return value, as for other species, is the index of the protein 
 If no exact matches are found, \code{info} searches the database for similar names or formulas using \code{\link{agrep}}.
 If any of these are found, the results are summarized on the screen, but the function always returns NA in this case.
 
-With a numeric argument, the rows of \code{thermo()$obigt} indicated by \code{ispecies} are returned, after removing any order-of-magnitude scaling factors.
-If these species are all aqueous or are all not aqueous, the compounded column names used in \code{thermo()$obigt} are replaced with names appropriate for the corresponding equations of state.
+With a numeric argument, the rows of \code{thermo()$OBIGT} indicated by \code{ispecies} are returned, after removing any order-of-magnitude scaling factors.
+If these species are all aqueous or are all not aqueous, the compounded column names used in \code{thermo()$OBIGT} are replaced with names appropriate for the corresponding equations of state.
 A missing value of one of the standard molal Gibbs energy (\code{G}) or enthalpy (\code{H}) of formation from the elements or entropy (\code{S}) is calculated from the other two, if available.
 If \code{check.it} is TRUE, several checks of self consistency among the thermodynamic properties and parameters are performed using \code{\link{checkGHS}} and \code{\link{checkEOS}}.
 }
 
 
-\seealso{ \code{\link{retrieve}} for searching species by element; \code{\link{check.obigt}} for checking self-consistency of each species. }
+\seealso{ \code{\link{retrieve}} for searching species by element; \code{\link{check.OBIGT}} for checking self-consistency of each species. }
 
 \examples{
 \dontshow{reset()}

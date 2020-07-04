@@ -103,7 +103,7 @@ test_that("'iprotein' gives consistent results on a transect", {
   pH <- c(7.350, 7.678, 7.933, 7.995, 8.257)
   # Eq. 24 of the paper
   H2 <- -11+T*3/40
-  # remove "RESIDUE" entries in thermo$obigt (clutter from first test)
+  # remove "RESIDUE" entries in thermo$OBIGT (clutter from first test)
   reset()
   basis(c("HCO3-", "H2O", "NH3", "HS-", "H2", "H+"),
     "aq", c(-3, 0, -4, -7, 999, 999))
@@ -112,7 +112,7 @@ test_that("'iprotein' gives consistent results on a transect", {
   aa <- read.csv(file, as.is=TRUE)
   ip <- add.protein(aa[1:5, ])
   # to reproduce, use superseded properties of [Met], [Gly], and [UPBB] (Dick et al., 2006)
-  add.obigt("OldAA")
+  add.OBIGT("OldAA")
   a <- affinity(T=T, pH=pH, H2=H2, iprotein=ip)
   # divide A/2.303RT by protein length
   pl <- protein.length(ip)

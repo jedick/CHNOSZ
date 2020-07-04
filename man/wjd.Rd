@@ -63,7 +63,7 @@
   \item{minX}{numeric, minimum mole number for 'central' method}
   \item{iguess}{numeric, which guess to return}
   \item{ic}{numeric, which combination(s) of variable species to use (NULL for all)}
-  \item{ispecies}{numeric, species indices (rownumbers of \code{thermo}$obigt)}
+  \item{ispecies}{numeric, species indices (rownumbers of \code{thermo}$OBIGT)}
   \item{T}{numeric, temperature in \degC}
 }
 
@@ -107,7 +107,7 @@ The first accepted guess is returned if \code{iguess} is 1 (the default); other 
 If \code{iguess} is NULL, all results are returned in a list, with non-successful guesses indicated by NA.
 In the first example below, of the 76 combinations of species whose elemental compositions are linearly independent, 32 yield guesses following this method.
 
-\code{run.wjd} is a wrapper function to run \code{wjd}, provided the \code{ispecies} in the thermodynamic database (\code{\link{thermo}$obigt}), the chemical composition of the system in \code{B}, and the pressure \code{P} and temperature \code{T}; the latter are passed to \code{\link{subcrt}} (with \code{exceed.Ttr = TRUE}) to generate the values of \code{G0.RT} for \code{wjd}.
+\code{run.wjd} is a wrapper function to run \code{wjd}, provided the \code{ispecies} in the thermodynamic database (\code{\link{thermo}$OBIGT}), the chemical composition of the system in \code{B}, and the pressure \code{P} and temperature \code{T}; the latter are passed to \code{\link{subcrt}} (with \code{exceed.Ttr = TRUE}) to generate the values of \code{G0.RT} for \code{wjd}.
 Alternatively to \code{B}, the initial guess of numbers of moles of species can be provided in \code{Y}; otherwise as many combinations of \code{Y} as returned from \code{run.guess} are tested until one is found that \code{is.near.equil}.
 The function gives an error if none of the guesses in \code{Y} is near equilibrium, within the tolerance set by \code{tol}.
 

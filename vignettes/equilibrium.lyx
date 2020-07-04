@@ -2957,7 +2957,7 @@ unequal activities
  and glycinate in the basis at low, mid and high pH.
  This demo also modifies the thermodynamic database (with 
 \family typewriter
-mod.obigt()
+mod.OBIGT()
 \family default
 ) to use Gibbs energies taken from 
 \begin_inset CommandInset citation
@@ -3120,7 +3120,7 @@ reset()
 
 \begin_layout Plain Layout
 
-add.obigt(
+add.OBIGT(
 \begin_inset Quotes eld
 \end_inset
 

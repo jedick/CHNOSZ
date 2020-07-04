@@ -29,7 +29,7 @@ Calculate \eqn{dP/dT}{dP/dT} and temperature of phase transitions; scale logarit
 }
 
 \details{
-\code{dPdTtr} returns values of \eqn{(dP/dT)_{Ttr}}{(dP/dT)Ttr}, where \eqn{Ttr}{Ttr} represents the transition temperature, of the phase transition at the high-\eqn{T}{T} stability limit of the \code{ispecies} in \code{thermo()$obigt} (other than checking that the names match, the function does not check that the species in fact represent different phases of the same mineral).
+\code{dPdTtr} returns values of \eqn{(dP/dT)_{Ttr}}{(dP/dT)Ttr}, where \eqn{Ttr}{Ttr} represents the transition temperature, of the phase transition at the high-\eqn{T}{T} stability limit of the \code{ispecies} in \code{thermo()$OBIGT} (other than checking that the names match, the function does not check that the species in fact represent different phases of the same mineral).
 \code{dPdTtr} takes account of the Clapeyron equation, \eqn{(dP/dT)_{Ttr}}{(dP/dT)Ttr}=\eqn{{\Delta}S/{\Delta}V}{DS/DV}, where \eqn{{\Delta}S}{DS} and \eqn{{\Delta}V}{DV} represent the changes in entropy and volume of phase transition, and are calculated using \code{subcrt} at Ttr from the standard molal entropies and volumes of the two phases involved.
 Using values of \code{dPdT} calculated using \code{dPdTtr} or supplied in the arguments, \code{Ttr} returns as a function of \code{P} values of the upper transition temperature of the mineral phase represented by \code{ispecies}.
 
@@ -44,9 +44,9 @@ If any of those species are proteins, the function gets their lengths using \cod
 
 \examples{\dontshow{reset()}
 # we need the Helgeson et al., 1978 minerals for this example
-add.obigt("SUPCRT92")
+add.OBIGT("SUPCRT92")
 # that replaces the existing enstatite with the first phase;
-# the other phases are appended to the end of thermo()$obigt
+# the other phases are appended to the end of thermo()$OBIGT
 i1 <- info("enstatite")
 i2 <- info("enstatite", "cr2")
 i3 <- info("enstatite", "cr3")
@@ -57,7 +57,7 @@ dPdTtr(i2, i3)  # second transition
 Ttr(i1, i2, P=c(1,10,100,1000))
 Ttr(i2, i3, P=c(1,10,100,1000))
 # restore default database
-obigt()
+OBIGT()
 
 # calculate the GHS at Tr for the high-temperature phases of iron
 # using transition enthalpies from the SUPCRT92 database (sprons92.dat)

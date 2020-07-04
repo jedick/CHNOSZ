@@ -15,7 +15,7 @@ test_that("pinfo() returns NA if no organism is given", {
 
 test_that("protein.equil() reports values consistent with Dick and Shock (2011)", {
   protein <- pinfo(c("CSG_METVO", "CSG_METJA"))
-  suppressMessages(add.obigt("OldAA"))
+  suppressMessages(add.OBIGT("OldAA"))
   basis("CHNOS+")
   suppressMessages(swap.basis("O2", "H2"))
   pequil <- protein.equil(protein, loga.protein=-3)

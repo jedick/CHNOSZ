@@ -3,7 +3,7 @@
 
 # 20190213: move from data/thermo.R to R/thermo.R
 # --> invocation changes from data(thermo) to reset()
-# --> invocation changes from data(OBIGT) to obigt()
+# --> invocation changes from data(OBIGT) to OBIGT()
 
 reset <- function() {
   # create thermo list
@@ -12,7 +12,7 @@ reset <- function() {
     # as.is: keep character values as character and not factor
     opt = as.list(read.csv(file.path(thermodir, "opt.csv"), as.is=TRUE)),
     element = read.csv(file.path(thermodir, "element.csv"), as.is=1:3),
-    obigt = NULL,
+    OBIGT = NULL,
     refs = NULL,
     buffers = read.csv(file.path(thermodir, "buffer.csv"), as.is=1:3),
     protein = read.csv(file.path(thermodir, "protein.csv"), as.is=1:4),
@@ -31,15 +31,15 @@ reset <- function() {
   else message("reset: resetting \"thermo\" object")
   # place thermo in CHNOSZ environment
   assign("thermo", thermo, CHNOSZ)
-  # run obigt() to add the thermodynamic data
-  obigt()
+  # run OBIGT() to add the thermodynamic data
+  OBIGT()
 }
 
 # load default thermodynamic data (OBIGT) in thermo
-obigt <- function() {
+OBIGT <- function() {
   # we only work if thermo is already in the CHNOSZ environment
   if(!"thermo" %in% ls(CHNOSZ)) stop("The CHNOSZ environment doesn't have a \"thermo\" object. Try running reset()")
-  # create obigt data frame
+  # create OBIGT data frame
   sources_aq <- paste0(c("H2O", "inorganic", "organic", "biotic"), "_aq")
   sources_cr <- paste0(c("inorganic", "organic", "Berman"), "_cr")
   sources_liq <- paste0(c("organic"), "_liq")
@@ -49,24 +49,24 @@ obigt <- function() {
   # need explicit "/" for Windows
   sourcefiles <- paste0(OBIGTdir, "/", c(sources_aq, sources_cr, sources_gas, sources_liq), ".csv")
   datalist <- lapply(sourcefiles, read.csv, as.is=TRUE)
-  obigt <- do.call(rbind, datalist)
+  OBIGT <- do.call(rbind, datalist)
   # also read references file
   refs <- read.csv(file.path(OBIGTdir, "refs.csv"), as.is=TRUE)
   # get thermo from CHNOSZ environment
   thermo <- get("thermo", CHNOSZ)
-  # set obigt and refs
-  thermo$obigt <- obigt
+  # set OBIGT and refs
+  thermo$OBIGT <- OBIGT
   thermo$refs <- refs
   # place modified thermo in CHNOSZ environment
   assign("thermo", thermo, CHNOSZ)
   # give a summary of some of the data
-  message(paste("obigt: loading default database with",
-    nrow(thermo$obigt[thermo$obigt$state=="aq",]),
-    "aqueous,", nrow(thermo$obigt), "total species"))
+  message(paste("OBIGT: loading default database with",
+    nrow(thermo$OBIGT[thermo$OBIGT$state=="aq",]),
+    "aqueous,", nrow(thermo$OBIGT), "total species"))
   # warn if there are duplicated species
-  idup <- duplicated(paste(thermo$obigt$name, thermo$obigt$state))
-  if(any(idup)) warning("obigt: duplicated species: ", 
-    paste(thermo$obigt$name[idup], "(", thermo$obigt$state[idup], ")", sep="", collapse=" "))
+  idup <- duplicated(paste(thermo$OBIGT$name, thermo$OBIGT$state))
+  if(any(idup)) warning("OBIGT: duplicated species: ", 
+    paste(thermo$OBIGT$name[idup], "(", thermo$OBIGT$state[idup], ")", sep="", collapse=" "))
 }
 
 # a function to access or modify the thermo object 20190214

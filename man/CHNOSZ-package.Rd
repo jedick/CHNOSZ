@@ -21,7 +21,7 @@ Each help page (other than this one) has been given one of the following \dQuote
 \itemize{
   \item Main workflow: \code{\link{info}}, \code{\link{subcrt}}, \code{\link{basis}}, \code{\link{species}}, \code{\link{affinity}}, \code{\link{equilibrate}}, \code{\link{diagram}}
   \item Extended workflow: \code{\link{swap.basis}}, \code{\link{buffer}}, \code{\link{mosaic}}, \code{\link{objective}}, \code{\link{revisit}}, \code{\link{findit}}, \code{\link{EOSregress}}, \code{\link{wjd}}
-  \item Thermodynamic data: \code{\link{data}}, \code{\link{extdata}}, \code{\link{add.obigt}}, \code{\link{util.data}}
+  \item Thermodynamic data: \code{\link{data}}, \code{\link{extdata}}, \code{\link{add.OBIGT}}, \code{\link{util.data}}
   \item Thermodynamic calculations: \code{\link{util.formula}}, \code{\link{makeup}}, \code{\link{util.units}}, \code{\link{eos}}, \code{\link{berman}}, \code{\link{nonideal}}, \code{\link{util.misc}}
   \item Water properties: \code{\link{water}}, \code{\link{util.water}}, \code{\link{DEW}}, \code{\link{IAPWS95}}
   \item Protein properties: \code{\link{protein}}, \code{\link{protein.info}}, \code{\link{add.protein}}, \code{\link{util.fasta}}, \code{\link{util.protein}}, \code{\link{util.seq}}, \code{\link{ionize.aa}}

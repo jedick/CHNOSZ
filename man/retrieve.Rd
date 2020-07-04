@@ -30,7 +30,7 @@ Results can be filtered on physical state by setting the \code{state} argument.
 Groups used in group-additivity calculations, which have names with square brackets (e.g. [-CH2-]), are excluded unless \code{hide.groups} is FALSE.
 A special argument value \samp{all} can be used to retrieve all species in the thermodynamic database, including filtering on state and hiding of the groups.
 
-The return value is a named integer vector giving the species index (i.e. rownumber(s) of \code{thermo()$obigt}) with names corresponding to the chemical formulas of the species.
+The return value is a named integer vector giving the species index (i.e. rownumber(s) of \code{thermo()$OBIGT}) with names corresponding to the chemical formulas of the species.
 If the electron is in the result, its name (\samp{e-}) is used instead of its chemical formula (\samp{(Z-1)}).
 An empty (length 0) integer value is returned if no \code{elements} are specified or no species are retrieved.
 

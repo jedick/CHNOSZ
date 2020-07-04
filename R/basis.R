@@ -71,7 +71,7 @@ basis <- function(species=NULL, state=NULL, logact=NULL, delete=FALSE) {
   # if species argument is numeric, it's species indices
   if(is.numeric(species[1])) {
     ispecies <- species
-    ina <- ispecies > nrow(thermo$obigt)
+    ina <- ispecies > nrow(thermo$OBIGT)
   } else {
     # get species indices using states from the argument, or default states
     if(!is.null(state)) ispecies <- suppressMessages(info(species, state, check.it=FALSE))
@@ -89,10 +89,10 @@ basis <- function(species=NULL, state=NULL, logact=NULL, delete=FALSE) {
 
 ### unexported functions ###
 
-# to add the basis to thermo$obigt
+# to add the basis to thermo$OBIGT
 put.basis <- function(ispecies, logact = rep(NA, length(ispecies))) {
   thermo <- get("thermo", CHNOSZ)
-  state <- thermo$obigt$state[ispecies]
+  state <- thermo$OBIGT$state[ispecies]
   # make the basis matrix, revised 20120114
   # get the elemental makeup of each species,
   # counting zero for any element that only appears in other species in the set
@@ -103,7 +103,7 @@ put.basis <- function(ispecies, logact = rep(NA, length(ispecies))) {
   comp <- t(comp)
   # note, makeup(count.zero=TRUE) above gave elements (colnames) sorted alphabetically
   # rownames identify the species
-  rownames(comp) <- as.character(thermo$obigt$formula[ispecies])
+  rownames(comp) <- as.character(thermo$OBIGT$formula[ispecies])
   # FIXME: the electron doesn't look like a chemical formula
   # this is needed for affinity() to understand a 'pe' or 'Eh' variable
   if("(Z-1)" %in% rownames(comp)) rownames(comp)[rownames(comp)=="(Z-1)"] <- "e-"
@@ -168,11 +168,11 @@ mod.basis <- function(species, state=NULL, logact=NULL) {
         thermo$basis$logact[ib] <- state[i]
       } else {
         # first, look for a species with the same _name_ in the requested state
-        myname <- thermo$obigt$name[thermo$basis$ispecies[ib]]
+        myname <- thermo$OBIGT$name[thermo$basis$ispecies[ib]]
         ispecies <- suppressMessages(info(myname, state[i], check.it=FALSE))
         if(is.na(ispecies) | is.list(ispecies)) {
           # if that failed, look for a species with the same _formula_ in the requested state
-          myformula <- thermo$obigt$formula[thermo$basis$ispecies[ib]]
+          myformula <- thermo$OBIGT$formula[thermo$basis$ispecies[ib]]
           ispecies <- suppressMessages(info(myformula, state[i], check.it=FALSE))
           if(is.na(ispecies) | is.list(ispecies)) {
             # if that failed, we're out of luck

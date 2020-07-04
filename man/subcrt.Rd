@@ -15,7 +15,7 @@
 }
 
 \arguments{
-  \item{species}{character, name or formula of species, or numeric, rownumber of species in \code{thermo()$obigt}}
+  \item{species}{character, name or formula of species, or numeric, rownumber of species in \code{thermo()$OBIGT}}
   \item{coeff}{numeric, reaction coefficients on species}
   \item{state}{character, state(s) of species}
   \item{property}{character, property(s) to calculate}

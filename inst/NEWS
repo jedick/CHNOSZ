@@ -1,5 +1,14 @@
-CHANGES IN CHNOSZ 1.3.6-14 (2020-07-04)
+CHANGES IN CHNOSZ 1.3.6-17 (2020-07-04)
 --------------------------------------
+
+MAJOR CHANGES
+
+- File, function and object names consistently use the uppercase
+  abbreviation OBIGT. In particular, the active database now lives at
+  thermo()$OBIGT, and functions add.OBIGT() and mod.OBIGT() replace
+  the previous add.obigt() and mod.obigt().
+
+OTHER CHANGES
 
 - Use updated data for the 2019 Deep Earth Water (DEW) model.
 
@@ -28,21 +37,19 @@ CHANGES IN CHNOSZ 1.3.6-14 (2020-07-04)
 - OBIGT/inorganic_cr.csv: Correct syntax for number of H2O in formulas
   of some As-bearing minerals.
 
-- Install bibtex file (docs/obigt.bib) for use in logKcalc package.
+- Install bibtex file (docs/OBIGT.bib) for use in logKcalc package.
 
 - Changing the water model with water() now updates the literature
-  reference in thermo()$obigt.
+  references in thermo()$OBIGT.
 
-- Revise obigt.Rmd to reduce the size of the HTML file and make
+- Revise OBIGT.Rmd to reduce the size of the HTML file and make
   deep linking to individual sections work.
 
 - Remove vignete hotspring.Rnw.
 
-- TODO: thermo.refs(): add current date, write 'thermo()$obigt'.
+- TODO: thermo.refs(): add current date, write 'thermo()$OBIGT'.
 
 - TODO: use degree sign in messages from subcrt().
-
-- TODO: rename obigt.Rmd to OBIGT.Rmd.
 
 - TODO: fix error in expr.species("AsO4---")
 
@@ -50,11 +57,11 @@ CHANGES IN CHNOSZ 1.3.6-14 (2020-07-04)
 
 - TODO: change \url to \doi in Rd files
 
-- TODO: use all caps OBIGT in function and variable names
-
 - TODO: incorporate community uploaded data
 
 - TODO: remove suffixed references (supcrt92, slop98) 
+
+- TODO: refresh extdata/supcrt/compare.R
 
 CHANGES IN CHNOSZ 1.3.6 (2020-03-16)
 ------------------------------------

@@ -3,7 +3,7 @@
 
 # notable functions in this demo:
 # EOSregress() - to regress HKF coefficients from Cp data
-# mod.obigt() - to modify the thermodynamic database for comparisons with an older set of parameters for adenine
+# mod.OBIGT() - to modify the thermodynamic database for comparisons with an older set of parameters for adenine
 
 # LCT17 = Lowe et al., 2017 (J. Chem. Thermodyn., doi:10.1016/j.jct.2017.04.005)
 # LH06 = LaRowe and Helgeson, 2006 (Geochim. Cosmochim. Acta, doi:10.1016/j.gca.2006.04.010)
@@ -60,7 +60,7 @@ arrows(AdH$T, AdH$Cp - AdH$Cp_SD, AdH$T, AdH$Cp + AdH$Cp_SD, length = 0.05, angl
 # get LH06 predictions using HKF model;
 # this version of adenine parameters has been superseded by LCT17,
 # so we add them by hand
-mod.obigt("adenine-old", formula="C5H5N5", a1=21.5046, a2=8.501, a3=-2.6632, a4=-5.3561, c1=87.88, c2=-15.87, omega=0.065)
+mod.OBIGT("adenine-old", formula="C5H5N5", a1=21.5046, a2=8.501, a3=-2.6632, a4=-5.3561, c1=87.88, c2=-15.87, omega=0.065)
 LH06 <- subcrt("adenine-old", T = TK)$out$adenine
 lines(TK, LH06$Cp, lty = 3)
 # density model (parameters from LCT17 Table 11)

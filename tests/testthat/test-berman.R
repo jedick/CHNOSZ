@@ -8,7 +8,7 @@ prop_Berman <- NULL
 
 test_that("properties of all minerals are computed without warnings", {
   # running this without error means that:
-  # - formulas for the minerals are found in thermo$obigt
+  # - formulas for the minerals are found in thermo$OBIGT
   # - warning is produced for flourtremolite (GfPrTr(calc) >= 1000 J/cal different from GfPrTr(table))
   expect_warning(properties <- lapply(mineral, berman, check.G=TRUE),
                  "fluortremolite", all=TRUE)
@@ -22,9 +22,9 @@ prop_Berman <- do.call(rbind, prop_Berman)
 icr <- suppressMessages(info(mineral, "cr"))
 # all of these except rutile (Robie et al., 1979) reference Helgeson et al., 1978
 # NOTE: with check.it = TRUE (the default), this calculates Cp from the tabulated Maier-Kelley parameters
-add.obigt("SUPCRT92")
+add.OBIGT("SUPCRT92")
 prop_Helgeson <- suppressMessages(info(icr))
-obigt()
+OBIGT()
 
 # now we can compare Berman and Helgeson G, H, S, Cp, V
 # minerals with missing properties are not matched here

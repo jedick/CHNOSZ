@@ -1,11 +1,11 @@
 context("retrieve")
 
 test_that("packaged stoichiometric matrix matches the default database", {
-  expect_identical(rownames(thermo()$stoich), thermo()$obigt$formula)
+  expect_identical(rownames(thermo()$stoich), thermo()$OBIGT$formula)
   # test added 20190303
   # if this test fails, update extdata/thermo/stoich.csv.xz and rebuild the package:
   # reset()
-  # formula <- thermo()$obigt$formula
+  # formula <- thermo()$OBIGT$formula
   # stoich <- i2A(formula)
   # write.csv(stoich, "stoich.csv")
   # system("xz -f stoich.csv")
@@ -14,7 +14,7 @@ test_that("packaged stoichiometric matrix matches the default database", {
 test_that("errors and recalculations produce expected messages", {
   expect_error(retrieve(c("A", "B", "C")), '"A" is not an element')
   expect_error(retrieve(c("A", "B", "C", "D")), '"A", "D" are not elements')
-  add.obigt("SUPCRT92")
+  add.OBIGT("SUPCRT92")
   expect_message(retrieve("Ti"), "updating stoichiometric matrix")
   reset()
 })

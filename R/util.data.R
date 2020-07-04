@@ -28,12 +28,12 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
     # remove the last (URL) component
     #x$URL <- NULL
     x <- x[1:5]
-    # count the number of times each source is cited in thermo$obigt
+    # count the number of times each source is cited in thermo$OBIGT
     # e.g. if key is "Kel60" we match "Kel60 [S92]" but not "Kel60.1 [S92]"
     # http://stackoverflow.com/questions/6713310/how-to-specify-space-or-end-of-string-and-space-or-start-of-string
     # we also have to escape keys with "+" signs
-    ns1 <- sapply(x$key, function(x) sum(grepl(gsub("+", "\\+", paste0(x, "($|\\s)"), fixed=TRUE), thermo$obigt$ref1)) )
-    ns2 <- sapply(x$key, function(x) sum(grepl(gsub("+", "\\+", paste0(x, "($|\\s)"), fixed=TRUE), thermo$obigt$ref2)) )
+    ns1 <- sapply(x$key, function(x) sum(grepl(gsub("+", "\\+", paste0(x, "($|\\s)"), fixed=TRUE), thermo$OBIGT$ref1)) )
+    ns2 <- sapply(x$key, function(x) sum(grepl(gsub("+", "\\+", paste0(x, "($|\\s)"), fixed=TRUE), thermo$OBIGT$ref2)) )
     number <- ns1 + ns2
     number[number==0] <- ""
     # now that we're using the sortTable() from w3schools.com, numbers are sorted like text
@@ -107,8 +107,8 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
     .cat("<body>")
     .cat('<h1>References for thermodynamic data in <a href="http://chnosz.net"><font color="red">CHNOSZ</font></a></h1>')
     .cat("<h3>Click on a column header to sort, or on a citation to open the URL in new window.</h3>")
-    .cat("<h4>Column 'number' gives the number of times each reference appears in thermo$obigt.</h4>")
-    .cat('<p>See also the vignette <a href="http://chnosz.net/vignettes/obigt.html">Thermodynamic data in CHNOSZ</a>.</p>')
+    .cat("<h4>Column 'number' gives the number of times each reference appears in thermo$OBIGT.</h4>")
+    .cat('<p>See also the vignette <a href="http://chnosz.net/vignettes/OBIGT.html">Thermodynamic data in CHNOSZ</a>.</p>')
     ### start table and headers
     .cat("<table id='thermorefs' border='1'>")
     .cat("<tr>")
@@ -257,14 +257,14 @@ checkGHS <- function(ghs, ret.diff=FALSE) {
   return(NA)
 }
 
-check.obigt <- function() {
+check.OBIGT <- function() {
   # function to check self-consistency between
   # values of Cp and V vs. EOS parameters
   # and among G, H, S values
   # 20110808 jmd replaces 'check=TRUE' argument of info()
   checkfun <- function(what) {
-    # looking at thermo$obigt
-    if(what=="OBIGT") tdata <- get("thermo", CHNOSZ)$obigt
+    # looking at thermo$OBIGT
+    if(what=="OBIGT") tdata <- get("thermo", CHNOSZ)$OBIGT
     else if(what=="DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package="CHNOSZ"), as.is=TRUE)
@@ -277,10 +277,10 @@ check.obigt <- function() {
     # first get the aqueous species
     isaq <- tdata$state=="aq"
     if(any(isaq)) {
-      eos.aq <- obigt2eos(tdata[isaq,], "aq")
+      eos.aq <- OBIGT2eos(tdata[isaq,], "aq")
       DCp.aq <- checkEOS(eos.aq, "aq", "Cp", ret.diff = TRUE)
       DV.aq <- checkEOS(eos.aq, "aq", "V", ret.diff = TRUE)
-      cat(paste("check.obigt: GHS for", sum(isaq), "aq species in", what, "\n"))
+      cat(paste("check.OBIGT: GHS for", sum(isaq), "aq species in", what, "\n"))
       DG.aq <- checkGHS(eos.aq, ret.diff = TRUE)
       # store the results
       DCp[isaq] <- DCp.aq
@@ -289,9 +289,9 @@ check.obigt <- function() {
     }
     # then other species, if they are present
     if(sum(!isaq) > 0) {
-      eos.cgl <- obigt2eos(tdata[!isaq,], "cgl")
+      eos.cgl <- OBIGT2eos(tdata[!isaq,], "cgl")
       DCp.cgl <- checkEOS(eos.cgl, "cgl", "Cp", ret.diff = TRUE)
-      cat(paste("check.obigt: GHS for", sum(!isaq), "cr,gas,liq species in", what, "\n"))
+      cat(paste("check.OBIGT: GHS for", sum(!isaq), "cr,gas,liq species in", what, "\n"))
       DG.cgl <- checkGHS(eos.cgl, ret.diff = TRUE)
       DCp[!isaq] <- DCp.cgl
       DG[!isaq] <- DG.cgl
@@ -318,13 +318,13 @@ check.obigt <- function() {
   out$DCp <- round(out$DCp,2)
   out$DV <- round(out$DV,2)
   out$DG <- round(out$DG)
-  # how to make the file at extdata/thermo/obigt_check.csv
-  # write.csv(out,"obigt_check.csv",na="",row.names=FALSE)
+  # how to make the file at extdata/thermo/OBIGT_check.csv
+  # write.csv(out,"OBIGT_check.csv",na="",row.names=FALSE)
   # return the results
   return(out)
 }
 
-RH2obigt <- function(compound=NULL, state="cr", file=system.file("extdata/adds/RH98_Table15.csv", package="CHNOSZ")) {
+RH2OBIGT <- function(compound=NULL, state="cr", file=system.file("extdata/adds/RH98_Table15.csv", package="CHNOSZ")) {
   # get thermodynamic properties and equations of state parameters using 
   # group contributions from Richard and Helgeson, 1998   20120609 jmd
   # read the compound names, physical states, chemical formulas and group stoichiometry from the file
@@ -342,7 +342,7 @@ RH2obigt <- function(compound=NULL, state="cr", file=system.file("extdata/adds/R
   ina <- is.na(icomp)
   if(any(ina)) stop(paste("compound(s)", paste(comate.arg[ina], collapse=" "), "not found in", file))
   # initialize output data frame
-  out <- get("thermo", CHNOSZ)$obigt[0, ]
+  out <- get("thermo", CHNOSZ)$OBIGT[0, ]
   # loop over the compounds
   for(i in icomp) {
     # the group stoichiometry for this compound
@@ -357,13 +357,13 @@ RH2obigt <- function(compound=NULL, state="cr", file=system.file("extdata/adds/R
     ina <- is.na(ispecies)
     if(any(ina)) stop(paste("group(s)", paste(colnames(thisdat)[igroup][ina], collapse=" "), "not found in", thisdat$state, "state"))
     # group additivity of properties and parameters: add contributions from all groups
-    thiseos <- t(colSums(get("thermo", CHNOSZ)$obigt[ispecies, 9:21] * as.numeric(thisdat[, igroup])))
+    thiseos <- t(colSums(get("thermo", CHNOSZ)$OBIGT[ispecies, 9:21] * as.numeric(thisdat[, igroup])))
     # group additivity of chemical formula
     formula <- as.chemical.formula(colSums(i2A(ispecies) * as.numeric(thisdat[, igroup])))
     # check if the formula is the same as in the file
     if(!identical(formula, thisdat$formula)) 
       stop(paste("formula", formula, "of", comate.dat[i], "(from groups) is not identical to", thisdat$formula, "(listed in file)" ))
-    # build the front part of obigt data frame
+    # build the front part of OBIGT data frame
     thishead <- data.frame(name=thisdat$compound, abbrv=NA, formula=formula, state=thisdat$state, 
       ref1=NA, ref2=NA, date=today(), E_units = "cal", stringsAsFactors=FALSE)
     # insert the result into the output
@@ -375,7 +375,7 @@ RH2obigt <- function(compound=NULL, state="cr", file=system.file("extdata/adds/R
 # dump all thermodynamic data in default and optional OBIGT files 20171121
 dumpdata <- function(file=NULL) {
   # default database (OBIGT)
-  dat <- get("thermo", CHNOSZ)$obigt
+  dat <- get("thermo", CHNOSZ)$OBIGT
   OBIGT <- cbind(source="OBIGT", dat)
   # optional data
   dat <- read.csv(system.file("extdata/OBIGT/DEW.csv", package="CHNOSZ"), as.is=TRUE)
@@ -393,39 +393,39 @@ dumpdata <- function(file=NULL) {
 
 ### unexported functions ###
 
-# Take a data frame in the format of thermo$obigt of one or more rows,
+# Take a data frame in the format of thermo$OBIGT of one or more rows,
 #   remove scaling factors from equations-of-state parameters,
 #   and apply new column names depending on the state.
 # And convert energy units from J to cal (used by subcrt()) 20190530
 # If fixGHS is TRUE a missing one of G, H or S for any species is calculated
 #   from the other two and the chemical formula of the species.
 # This function is used by both info and subcrt when retrieving entries from the thermodynamic database.
-obigt2eos <- function(obigt, state, fixGHS = FALSE, tocal = FALSE) {
+OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, tocal = FALSE) {
   # remove scaling factors from EOS parameters
   # and apply column names depending on the EOS
   if(identical(state, "aq")) {
     # species in the Akinfiev-Diamond model (AkDi) have NA for Z 20190219
-    isAkDi <- is.na(obigt[, 21])
+    isAkDi <- is.na(OBIGT[, 21])
     # remove scaling factors for the HKF species, but not for the AkDi species
     # protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
     # (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302
-    if(any(!isAkDi)) obigt[!isAkDi, 14:21] <- t(t(obigt[!isAkDi, 14:21]) * 10^c(-1,2,0,4,0,4,5,0))
+    if(any(!isAkDi)) OBIGT[!isAkDi, 14:21] <- t(t(OBIGT[!isAkDi, 14:21]) * 10^c(-1,2,0,4,0,4,5,0))
     # for AkDi species, set NA values in remaining columns (for display only)
-    if(any(isAkDi)) obigt[isAkDi, 17:20] <- NA
+    if(any(isAkDi)) OBIGT[isAkDi, 17:20] <- NA
     # if all of the species are AkDi, change the variable names
-    if(all(isAkDi)) colnames(obigt)[14:21] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
-    else colnames(obigt)[14:21] <- c('a1','a2','a3','a4','c1','c2','omega','Z') 
+    if(all(isAkDi)) colnames(OBIGT)[14:21] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
+    else colnames(OBIGT)[14:21] <- c('a1','a2','a3','a4','c1','c2','omega','Z') 
   } else {
-    obigt[,14:21] <- t(t(obigt[,14:21]) * 10^c(0,-3,5,0,-5,0,0,0))
-    colnames(obigt)[14:21] <- c('a','b','c','d','e','f','lambda','T')
+    OBIGT[,14:21] <- t(t(OBIGT[,14:21]) * 10^c(0,-3,5,0,-5,0,0,0))
+    colnames(OBIGT)[14:21] <- c('a','b','c','d','e','f','lambda','T')
   }
   if(tocal) {
     # convert values from Joules to calories 20190530
-    iJ <- obigt$E_units=="J"
+    iJ <- OBIGT$E_units=="J"
     if(any(iJ)) {
       # we only convert column 20 for aqueous species (omega), not for cgl species (lambda)  20190903
-      if(identical(state, "aq")) obigt[iJ, c(9:12, 14:20)] <- convert(obigt[iJ, c(9:12, 14:20)], "cal")
-      else obigt[iJ, c(9:12, 14:19)] <- convert(obigt[iJ, c(9:12, 14:19)], "cal")
+      if(identical(state, "aq")) OBIGT[iJ, c(9:12, 14:20)] <- convert(OBIGT[iJ, c(9:12, 14:20)], "cal")
+      else OBIGT[iJ, c(9:12, 14:19)] <- convert(OBIGT[iJ, c(9:12, 14:19)], "cal")
     }
   }
   if(fixGHS) {
@@ -433,17 +433,17 @@ obigt2eos <- function(obigt, state, fixGHS = FALSE, tocal = FALSE) {
     # for use esp. by subcrt because NA for one of G, H or S 
     # will preclude calculations at high T
     # which entries are missing just one
-    imiss <- which(rowSums(is.na(obigt[,9:11]))==1)
+    imiss <- which(rowSums(is.na(OBIGT[,9:11]))==1)
     if(length(imiss) > 0) {
       for(i in 1:length(imiss)) {
         # calculate the missing value from the others
         ii <- imiss[i]
-        GHS <- as.numeric(GHS(as.character(obigt$formula[ii]), G=obigt[ii,9], H=obigt[ii,10], S=obigt[ii,11],
-                              E_units = ifelse(tocal, "cal", obigt$E_units[ii])))
-        icol <- which(is.na(obigt[ii,9:11]))
-        obigt[ii,icol+8] <- GHS[icol]
+        GHS <- as.numeric(GHS(as.character(OBIGT$formula[ii]), G=OBIGT[ii,9], H=OBIGT[ii,10], S=OBIGT[ii,11],
+                              E_units = ifelse(tocal, "cal", OBIGT$E_units[ii])))
+        icol <- which(is.na(OBIGT[ii,9:11]))
+        OBIGT[ii,icol+8] <- GHS[icol]
       }
     }
   }
-  return(obigt)
+  return(OBIGT)
 }

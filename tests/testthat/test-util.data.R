@@ -16,65 +16,65 @@ test_that("checkGHS() and checkEOS() respond to thermo$opt$*.tol", {
   expect_message(info(i2), "checkGHS")
 })
 
-test_that("RH2obigt() gives group additivity results consistent with database values (from Richard and Helgeson, 1998)", {
+test_that("RH2OBIGT() gives group additivity results consistent with database values (from Richard and Helgeson, 1998)", {
   file <- system.file("extdata/adds/RH98_Table15.csv", package = "CHNOSZ")
   dat <- read.csv(file, stringsAsFactors=FALSE)
   ispecies <- info(dat$compound, dat$state)
-  obigt.ref <- thermo()$obigt[ispecies, ]
-  obigt.calc <- RH2obigt(file=file)
+  OBIGT.ref <- thermo()$OBIGT[ispecies, ]
+  OBIGT.calc <- RH2OBIGT(file=file)
   # calculated values of H are spot on; to pass tests, tolerance on
   # G is set higher; is there an incorrect group value somewhere?
-  expect_true(max(abs(obigt.calc$G - obigt.ref$G)) < 31)
-  expect_true(max(abs(obigt.calc$H - obigt.ref$H)) == 0)
-  expect_true(max(abs(obigt.calc$S - obigt.ref$S)) < 0.02001)
-  expect_true(max(abs(obigt.calc$Cp - obigt.ref$Cp)) < 0.04001)
-  expect_true(max(abs(obigt.calc$V - obigt.ref$V)) < 0.1001)
-  expect_true(max(abs(obigt.calc$a1.a - obigt.ref$a1.a)) < 0.01001)
-  expect_true(max(abs(obigt.calc$a2.b - obigt.ref$a2.b)) < 1e-13)
-  expect_true(max(abs(obigt.calc$a3.c - obigt.ref$a3.c)) < 1e-14)
+  expect_true(max(abs(OBIGT.calc$G - OBIGT.ref$G)) < 31)
+  expect_true(max(abs(OBIGT.calc$H - OBIGT.ref$H)) == 0)
+  expect_true(max(abs(OBIGT.calc$S - OBIGT.ref$S)) < 0.02001)
+  expect_true(max(abs(OBIGT.calc$Cp - OBIGT.ref$Cp)) < 0.04001)
+  expect_true(max(abs(OBIGT.calc$V - OBIGT.ref$V)) < 0.1001)
+  expect_true(max(abs(OBIGT.calc$a1.a - OBIGT.ref$a1.a)) < 0.01001)
+  expect_true(max(abs(OBIGT.calc$a2.b - OBIGT.ref$a2.b)) < 1e-13)
+  expect_true(max(abs(OBIGT.calc$a3.c - OBIGT.ref$a3.c)) < 1e-14)
 })
 
-test_that("add.obigt() replaces existing entries without changing species index", {
+test_that("add.OBIGT() replaces existing entries without changing species index", {
   # store the original species index of CdCl2
   iCdCl2 <- info("CdCl2", "aq")
   # add supplemental database - includes CdCl2
   file <- system.file("extdata/adds/BZA10.csv", package="CHNOSZ")
-  isp <- add.obigt(file)
+  isp <- add.OBIGT(file)
   # species index of CdCl2 should not have changed
   expect_equal(info("CdCl2", "aq"), iCdCl2)
   # check that names of species modified are same as in file
   newdat <- read.csv(file, stringsAsFactors=FALSE)
   # the order isn't guaranteed ... just make sure they're all there
-  expect_true(all(newdat$name %in% thermo()$obigt$name[isp]))
+  expect_true(all(newdat$name %in% thermo()$OBIGT$name[isp]))
 })
 
-test_that("reset() and obigt() produce the same database", {
+test_that("reset() and OBIGT() produce the same database", {
   reset()
-  d1 <- thermo()$obigt
-  obigt()
-  d2 <- thermo()$obigt
+  d1 <- thermo()$OBIGT
+  OBIGT()
+  d2 <- thermo()$OBIGT
   expect_equal(d1, d2)
 })
 
-test_that("add.obigt() is backwards compatible for a file that doesn't have an E_units column", {
+test_that("add.OBIGT() is backwards compatible for a file that doesn't have an E_units column", {
   # test added 20190529
   file <- system.file("extdata/adds/BZA10.csv", package="CHNOSZ")
   rc <- read.csv(file)
   expect_false("E_units" %in% colnames(rc))
-  inew <- add.obigt(file)
+  inew <- add.OBIGT(file)
   expect_true(unique(info(inew)$E_units) == "cal")
 })
 
-test_that("add.obigt() gives an error for an incompatible file", {
+test_that("add.OBIGT() gives an error for an incompatible file", {
   # test added 20191210
   file <- system.file("extdata/Berman/Ber88_1988.csv", package="CHNOSZ")
-  expect_error(add.obigt(file))
+  expect_error(add.OBIGT(file))
 })
 
 test_that("info() gives consistent messages for cal and J", {
   # test added 20190529
   # add data for dimethylamine and trimethylamine in different units (cal or J)
-  expect_message(add.obigt(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ")), "energy units: J and cal")
+  expect_message(add.OBIGT(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ")), "energy units: J and cal")
   expect_message(info(info("DMA_cal")), "-1.92 cal")
   expect_message(info(info("DMA_J")), "-8.02 J")
   # for TMA, only a checkGHS message for the entry in J is produced,
@@ -86,7 +86,7 @@ test_that("info() gives consistent messages for cal and J", {
 test_that("missing values for G, Cp, and V are correct in cal and J", {
   # test added 20190530
   # add data for dimethylamine and trimethylamine in different units (cal or J)
-  add.obigt(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ"))
+  add.OBIGT(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ"))
   calccal <- info(info("DMA_cal_NA"))
   expect_equal(round(calccal$G), 13934)
   expect_equal(round(calccal$Cp, 1), 60.3)
@@ -100,7 +100,7 @@ test_that("missing values for G, Cp, and V are correct in cal and J", {
 test_that("subcrt() gives same results for data entered in cal and J", {
   # test added 20190530
   # add data for dimethylamine and trimethylamine in different units (cal or J)
-  add.obigt(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ"))
+  add.OBIGT(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ"))
   E.units("cal")
   scal <- subcrt("DMA_cal")
   sJ <- subcrt("DMA_J")
@@ -121,17 +121,17 @@ test_that("subcrt() gives same results for data entered in cal and J", {
   E.units("cal")
 })
 
-test_that("obigt2eos() doesn't convert lambda for cr species", {
+test_that("OBIGT2eos() doesn't convert lambda for cr species", {
   ## bug visible with change of ferberite data to J:
   ## lambda (exponent on heat capacity term)
   ## was incorrectly going through a units conversion  20190903
   # this was working
-  mod.obigt("test_cal", formula = "C0", state = "cr", E_units = "cal", a = 10, b = 100, f = 1, lambda = 0)
-  mod.obigt("test_J", formula = "C0", state = "cr", E_units = "J", a = 41.84, b = 418.4, f = 4.184, lambda = 0)
+  mod.OBIGT("test_cal", formula = "C0", state = "cr", E_units = "cal", a = 10, b = 100, f = 1, lambda = 0)
+  mod.OBIGT("test_J", formula = "C0", state = "cr", E_units = "J", a = 41.84, b = 418.4, f = 4.184, lambda = 0)
   expect_equal(subcrt("test_cal", T = 25)$out[[1]]$Cp, subcrt("test_J", T = 25)$out[[1]]$Cp)
   # this wasn't working
-  mod.obigt("test_cal2", formula = "C0", state = "cr", E_units = "cal", a = 10, b = 100, f = 1, lambda = -1)
-  mod.obigt("test_J2", formula = "C0", state = "cr", E_units = "J", a = 41.84, b = 418.4, f = 4.184, lambda = -1)
+  mod.OBIGT("test_cal2", formula = "C0", state = "cr", E_units = "cal", a = 10, b = 100, f = 1, lambda = -1)
+  mod.OBIGT("test_J2", formula = "C0", state = "cr", E_units = "J", a = 41.84, b = 418.4, f = 4.184, lambda = -1)
   expect_equal(subcrt("test_cal2", T = 25)$out[[1]]$Cp, subcrt("test_J2", T = 25)$out[[1]]$Cp)
 })
 

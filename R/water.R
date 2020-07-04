@@ -10,14 +10,14 @@ water <- function(property = NULL, T = 298.15, P = "Psat", P1 = TRUE) {
   if(length(property)==1 & any(property %in% c("SUPCRT", "SUPCRT92", "IAPWS", "IAPWS95", "DEW"))) {
     # change references 20200629
     if(property %in% c("SUPCRT", "SUPCRT92")) {
-      suppressMessages(mod.obigt("water", ref1 = "HGK84"))
-      suppressMessages(mod.obigt("water", ref2 = "JOH92"))
+      suppressMessages(mod.OBIGT("water", ref1 = "HGK84"))
+      suppressMessages(mod.OBIGT("water", ref2 = "JOH92"))
     } else if(property %in% c("IAPWS", "IAPWS95")) {
-      suppressMessages(mod.obigt("water", ref1 = "WP02"))
-      suppressMessages(mod.obigt("water", ref2 = NA))
+      suppressMessages(mod.OBIGT("water", ref1 = "WP02"))
+      suppressMessages(mod.OBIGT("water", ref2 = NA))
     } else if(property == "DEW") {
-      suppressMessages(mod.obigt("water", ref1 = "SHA14"))
-      suppressMessages(mod.obigt("water", ref2 = NA))
+      suppressMessages(mod.OBIGT("water", ref1 = "SHA14"))
+      suppressMessages(mod.OBIGT("water", ref2 = NA))
     }
     oldwat <- thermo()$opt$water
     thermo("opt$water" = property)

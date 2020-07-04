@@ -13,7 +13,7 @@ dPdTtr <- function(ispecies, ispecies2 = NULL) {
   # the special handling for quartz and coesite interfere with this function,
   # so we convert to uppercase names to prevent cgl() from calling quartz_coesite()
   pars$name <- toupper(pars$name)
-  props <- cgl(c("G", "S", "V"), pars, P=0, T=thermo$obigt$z.T[ispecies])
+  props <- cgl(c("G", "S", "V"), pars, P=0, T=thermo$OBIGT$z.T[ispecies])
   # we really hope the G's are the same ...
   #if(abs(props[[2]]$G - props[[1]]$G) > 0.1) warning('dP.dT: inconsistent values of G for different phases of ',ispecies,call.=FALSE)
   dP.dT <- convert( ( props[[2]]$S - props[[1]]$S ) / ( props[[2]]$V - props[[1]]$V ), 'cm3bar' )
@@ -22,7 +22,7 @@ dPdTtr <- function(ispecies, ispecies2 = NULL) {
 
 Ttr <- function(ispecies, ispecies2 = NULL, P = 1, dPdT = NULL) {
   # calculate a phase transition temperature for given P
-  TtrPr <- get("thermo", CHNOSZ)$obigt$z.T[ispecies]
+  TtrPr <- get("thermo", CHNOSZ)$OBIGT$z.T[ispecies]
   # the constant slope, dP/dT
   if(is.null(dPdT)) dPdT <- dPdTtr(ispecies, ispecies2)
   Pr <- 1

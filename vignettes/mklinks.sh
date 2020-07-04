@@ -65,15 +65,15 @@ sed -i '120,$s/<code>uniprot.aa()<\/code>/<code><a href="..\/html\/util.fasta.ht
 sed -i '120,$s/<code>add.protein()<\/code>/<code><a href="..\/html\/add.protein.html" style="background-image:none;">add.protein()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>aminoacids()<\/code>/<code><a href="..\/html\/util.seq.html" style="background-image:none;">aminoacids()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>findit()<\/code>/<code><a href="..\/html\/findit.html" style="background-image:none;">findit()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>add.obigt()<\/code>/<code><a href="..\/html\/add.obigt.html" style="background-image:none;">add.obigt()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>mod.obigt()<\/code>/<code><a href="..\/html\/add.obigt.html" style="background-image:none;">mod.obigt()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>today()<\/code>/<code><a href="..\/html\/add.obigt.html" style="background-image:none;">today()<\/a><\/code>/g' anintro.html
+sed -i '120,$s/<code>add.OBIGT()<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="background-image:none;">add.OBIGT()<\/a><\/code>/g' anintro.html
+sed -i '120,$s/<code>mod.OBIGT()<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="background-image:none;">mod.OBIGT()<\/a><\/code>/g' anintro.html
+sed -i '120,$s/<code>today()<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="background-image:none;">today()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>checkGHS()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">checkGHS()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>checkEOS()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">checkEOS()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>equil.reaction()<\/code>/<code><a href="..\/html\/equilibrate.html" style="background-image:none;">equil.reaction()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>EOSregress()<\/code>/<code><a href="..\/html\/EOSregress.html" style="background-image:none;">EOSregress()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>wjd()<\/code>/<code><a href="..\/html\/wjd.html" style="background-image:none;">wjd()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>RH2obigt()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">RH2obigt()<\/a><\/code>/g' anintro.html
+sed -i '120,$s/<code>RH2OBIGT()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">RH2OBIGT()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>eqdata()<\/code>/<code><a href="..\/html\/eqdata.html" style="background-image:none;">eqdata()<\/a><\/code>/g' anintro.html
 
 # functions from R base packages
@@ -95,7 +95,7 @@ sed -i '120,$s/substitute()/<a href="..\/..\/base\/html\/substitute.html" style=
 sed -i '120,$s/for()/<a href="..\/..\/base\/html\/Control.html" style="background-image:none;">for()<\/a>/g' anintro.html
 sed -i '120,$s/browseURL()/<a href="..\/..\/utils\/html\/browseURL.html" style="background-image:none;">browseURL()<\/a>/g' anintro.html
 
-# add links to obigt.Rmd
-sed -i '120,$s/<code>add.obigt()<\/code>/<code><a href="..\/html\/add.obigt.html" style="color:red;">add.obigt()<\/a><\/code>/g' obigt.html
-sed -i '120,$s/<code>reset()<\/code>/<code><a href="..\/html\/thermo.html" style="color:red;">reset()<\/a><\/code>/g' obigt.html
-sed -i 's/<code>?add.obigt<\/code>/<code><a href="..\/html\/add.obigt.html" style="color:red;">?add.obigt<\/a><\/code>/g' obigt.html
+# add links to OBIGT.Rmd
+sed -i '120,$s/<code>add.OBIGT()<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="color:red;">add.OBIGT()<\/a><\/code>/g' OBIGT.html
+sed -i '120,$s/<code>reset()<\/code>/<code><a href="..\/html\/thermo.html" style="color:red;">reset()<\/a><\/code>/g' OBIGT.html
+sed -i 's/<code>?add.OBIGT<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="color:red;">?add.OBIGT<\/a><\/code>/g' OBIGT.html

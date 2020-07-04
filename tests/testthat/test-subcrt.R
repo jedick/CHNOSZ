@@ -72,7 +72,7 @@ test_that("phase transitions of minerals give expected messages and results", {
 
 test_that("calculations for K-feldspar are consistent with SUPCRT92", {
   # use the superseded Helgeson et al., 1978 data
-  add.obigt("SUPCRT92", "K-feldspar")
+  add.OBIGT("SUPCRT92", "K-feldspar")
   T <- c(100, 100, 1000, 1000)
   P <- c(5000, 50000, 5000, 50000)
   SUPCRT_G <- c(-886628, -769531, -988590, -871493)
@@ -86,11 +86,11 @@ test_that("calculations for K-feldspar are consistent with SUPCRT92", {
   expect_equal(round(CHNOSZ$S, 1), SUPCRT_S)
   expect_equal(round(CHNOSZ$V, 1), SUPCRT_V)
   expect_equal(round(CHNOSZ$Cp, 1), SUPCRT_Cp)
-  obigt()
+  OBIGT()
 })
 
 test_that("calculations for quartz are nearly consistent with SUPCRT92", {
-  add.obigt("SUPCRT92")
+  add.OBIGT("SUPCRT92")
   # using SUPCRT's equations, the alpha-beta transition occurs at
   # 705 degC at 5000 bar and 1874 degC at 50000 bar,
   # so here beta-quartz is stable only at T=1000, P=5000
@@ -114,11 +114,11 @@ test_that("calculations for quartz are nearly consistent with SUPCRT92", {
   expect_equal(round(CHNOSZ$S, 1)[-4], SUPCRT_S[-4])
   expect_equal(round(CHNOSZ$Cp, 1)[-4], SUPCRT_Cp[-4])
   expect_equal(round(CHNOSZ$V, 1), SUPCRT_V)
-  obigt()
+  OBIGT()
 })
 
 test_that("more calculations for quartz are nearly consistent with SUPCRT92", {
-  add.obigt("SUPCRT92")
+  add.OBIGT("SUPCRT92")
   # output from SUPCRT92 for reaction specified as "1 QUARTZ" run at 1 bar
   # (SUPCRT shows phase transition at 574.850 deg C, and does not give Cp values around the transition)
   S92_1bar <- read.table(header = TRUE, text = "
@@ -148,7 +148,7 @@ test_that("more calculations for quartz are nearly consistent with SUPCRT92", {
   expect_maxdiff(CHNOSZ_5000bar$H, S92_5000bar$H, 300)
   expect_maxdiff(CHNOSZ_5000bar$S, S92_5000bar$S, 0.5)
   expect_maxdiff(CHNOSZ_5000bar$V, S92_5000bar$V, 0.05)
-  obigt()
+  OBIGT()
 })
 
 test_that("duplicated species yield correct phase transitions", {
@@ -193,7 +193,7 @@ test_that("properties of HKF species below 0.35 g/cm3 are NA and give a warning"
 
 test_that("combining minerals with phase transitions and aqueous species with IS > 0 does not mangle output", {
   # s2 was giving quartz an extraneous loggam column and incorrect G and logK 20181107
-  add.obigt("SUPCRT92")
+  add.OBIGT("SUPCRT92")
   s1 <- subcrt(c("quartz", "K+"), T=25, IS=1)
   s2 <- subcrt(c("K+", "quartz"), T=25, IS=1)
   expect_true(identical(colnames(s1$out[[1]]), c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "polymorph")))

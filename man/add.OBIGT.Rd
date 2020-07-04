@@ -1,7 +1,7 @@
 \encoding{UTF-8}
-\name{add.obigt}
-\alias{add.obigt}
-\alias{mod.obigt}
+\name{add.OBIGT}
+\alias{add.OBIGT}
+\alias{mod.OBIGT}
 \alias{today}
 \title{Functions to Work with the Thermodynamic Database}
 \description{
@@ -9,8 +9,8 @@ Add or modify species in the thermodynamic database.
 }
 
 \usage{
-  add.obigt(file, species = NULL, force = TRUE)
-  mod.obigt(...)
+  add.OBIGT(file, species = NULL, force = TRUE)
+  mod.OBIGT(...)
   today()
 }
 
@@ -22,7 +22,7 @@ Add or modify species in the thermodynamic database.
 }
 
 \details{
-\code{\link{add.obigt}} is used to update the thermodynamic database (\code{\link{thermo}$obigt}) in the running session.
+\code{\link{add.OBIGT}} is used to update the thermodynamic database (\code{\link{thermo}$OBIGT}) in the running session.
 The format (column names) of the specified file must be the same as the \code{extdata/OBIGT/*.csv} files provided with CHNOSZ.
 Howvever, for backwards compatibility, the \code{E_units} column of the input can be missing; then, it is assigned a value of \samp{cal}.
 
@@ -34,24 +34,24 @@ If \code{species} is NULL (default), all species listed in the file are used.
 If \code{species} is given and matches the name(s) of species in the file, only those species are added to the database.
 
 By default, species in the file replace any existing species having the same combination of name and state.
-Set \code{force} to FALSE to avoid replacing species that are present in (\code{thermo()$obigt}).
+Set \code{force} to FALSE to avoid replacing species that are present in (\code{thermo()$OBIGT}).
 
-When adding (not replacing) species, there is no attempt made to keep the order of physical states in the database (aq-cr-liq-gas); the function simply adds new rows to the end of \code{thermo}$obigt.
+When adding (not replacing) species, there is no attempt made to keep the order of physical states in the database (aq-cr-liq-gas); the function simply adds new rows to the end of \code{thermo}$OBIGT.
 As a result, retrieving the properties of an added aqueous species using \code{\link{info}} requires an explicit \code{state="aq"} argument to that function if a species with the same name is present in one of the cr, liq or gas states.
 
-\code{mod.obigt} changes one or more of the properties of species or adds species to the thermodynamic database.
+\code{mod.OBIGT} changes one or more of the properties of species or adds species to the thermodynamic database.
 These changes are lost if you reload the database by calling \code{\link{data}(thermo)} or if you quit the \R session without saving it.
 The name of the species to add or change must be supplied as the first argument of \code{...} or as a named argument (named \samp{name}).
 When adding new species, a chemical formula should be included along with the values of any of the thermodynamic properties.
 The formula is taken from the \samp{formula} argument, or if that is missing, is taken to be the same as the \samp{name} of the species.
 An error results if the formula is not valid (i.e. can not be parsed by\code{\link{makeup}}).
-Additional arguments refer to the name of the property(s) to be updated and are matched to any part of compound column names in \code{\link{thermo}$obigt}, such as \samp{z} or \samp{T} in \samp{z.T}.
+Additional arguments refer to the name of the property(s) to be updated and are matched to any part of compound column names in \code{\link{thermo}$OBIGT}, such as \samp{z} or \samp{T} in \samp{z.T}.
 Unless \samp{state} is specified as one of the properties, its value is taken from \code{thermo()$opt$state}.
 When adding species, properties that are not specified become NA, except for \samp{state}, which takes a default value from \code{thermo()$opt$state}, and \samp{z.T}, which for aqueous species is set to the charge calculated from the chemical formula (otherwise, NA charge for newly added species would trigger the \code{\link{AkDi}} model).
 The values provided should have energy units correponding to the current setting (\code{\link{E.units}}), but this can be overridden by giving a value for \samp{E_units} in the new data.
 The values provided should also include any order-of-magnitude scaling factors (see \code{\link{thermo}}).
 
-\code{today} returns the current date in the format adopted for \code{thermo()$obigt} (inherited from SUPCRT-format data files) e.g. \samp{13.May.12} for May 13, 2012.
+\code{today} returns the current date in the format adopted for \code{thermo()$OBIGT} (inherited from SUPCRT-format data files) e.g. \samp{13.May.12} for May 13, 2012.
 }
 
 \value{
@@ -62,22 +62,22 @@ The values returned (\code{\link{invisible}}-y) are the indices of the added and
 
 \examples{\dontshow{reset()}
 ## modify an existing species (example only)
-ialanine <- mod.obigt("alanine", state="cr", G=0, H=0, S=0)
+ialanine <- mod.OBIGT("alanine", state="cr", G=0, H=0, S=0)
 # we have made the values of G, H, and S inconsistent
 # with the elemental composition of alanine, so the following 
 # now produces a message about that
 info(ialanine)
 ## add a species
-iCl2O <- mod.obigt("Cl2O", G=20970)
+iCl2O <- mod.OBIGT("Cl2O", G=20970)
 info(iCl2O)
 # add a species with a name that is different from the formula
-mod.obigt("buckminsterfullerene", formula="C60", state="cr", date=today())
+mod.OBIGT("buckminsterfullerene", formula="C60", state="cr", date=today())
 # retrieve the species data (thermodynamic properties in this toy example are NA)
 info(info("C60"))
 # reset database
-obigt()
+OBIGT()
 
-# using add.obigt():
+# using add.OBIGT():
 # compare stepwise stability constants of cadmium chloride complexes
 # using data from Sverjensky et al., 1997 and Bazarkina et al., 2010
 Cdspecies <- c("Cd+2", "CdCl+", "CdCl2", "CdCl3-", "CdCl4-2")
@@ -87,13 +87,13 @@ SSH97 <- lapply(1:4, function(i) {
     c(-1, -1, 1), T=25, P=P)$out$logK
 })
 file <- system.file("extdata/adds/BZA10.csv", package="CHNOSZ")
-add.obigt(file)
+add.OBIGT(file)
 BZA10 <- lapply(1:4, function(i) {
   subcrt(c(Cdspecies[i], "Cl-", Cdspecies[i+1]),
     c(-1, -1, 1), T=25, P=P)$out$logK
 })
 # reset default database
-obigt()
+OBIGT()
 matplot(P, do.call(cbind, SSH97), type="l")
 matplot(P, do.call(cbind, BZA10), type="l", add=TRUE, lwd=2)
 legend("topleft", legend=c("", "", "Sverjensky et al., 1997",
@@ -105,14 +105,14 @@ invisible(lapply(1:4, function(i) {
     Cdspecies[i+1]), c(-1, -1, 1), T=25, P=1)$reaction))
 }))
 
-# another use of add.obigt()
+# another use of add.OBIGT()
 # compare Delta G of AABB = UPBB + H2O
 # (Figure 9 of Kitadai, 2014)
 E.units("J")
 # default database has values from Kitadai, 2014
 Kit14 <- subcrt(c("[AABB]", "[UPBB]", "H2O"), c(-1, 1, 1), T = seq(0, 300, 10))
 # optional file OldAA has superseded values of [UPBB] from Dick et al., 2006
-add.obigt("OldAA")
+add.OBIGT("OldAA")
 DLH06 <- subcrt(c("[AABB]", "[UPBB]", "H2O"), c(-1, 1, 1), T = seq(0, 300, 10))
 xlab <- axis.label("T"); ylab <- axis.label("DG", prefix="k")
 plot(Kit14$out$T, Kit14$out$G/1000, type = "l", ylim = c(10, 35),
@@ -123,14 +123,14 @@ title(main = "AABB = UPBB + H2O; after Figure 9 of Kitadai, 2014")
 # reset database *and* settings (units)
 reset()
 
-# Another use of add.obigt(): calculate Delta G of
+# Another use of add.OBIGT(): calculate Delta G of
 # H4SiO4 = SiO2 + 2H2O using different data for SiO2.
 # first, get H4SiO4 from Stefansson, 2001
-add.obigt("AS04", "H4SiO4")
+add.OBIGT("AS04", "H4SiO4")
 T <- seq(0, 350, 10)
 s1 <- subcrt(c("H4SiO4", "SiO2", "H2O"), c(-1, 1, 2), T = T)
 # now, get SiO2 from Apps and Spycher, 2004
-add.obigt("AS04", "SiO2")
+add.OBIGT("AS04", "SiO2")
 s2 <- subcrt(c("H4SiO4", "SiO2", "H2O"), c(-1, 1, 2), T = T)
 # plot logK from the first and second calculations
 plot(T, s1$out$G, type = "l", xlab = axis.label("T"),

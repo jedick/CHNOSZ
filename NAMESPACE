@@ -11,12 +11,12 @@ export(
   "pinfo", "protein.length", "protein.formula",
   "read.fasta", "protein.basis", "add.protein",
   "unitize", "revisit", "seq2aa", "findit",
-  "thermo.refs", "mod.obigt", "today",
+  "thermo.refs", "mod.OBIGT", "today",
 # examples
   "examples", "demos", "mtitle",
   "list2array", "slice", "dimSums", "slice.affinity",
   "def2gi", "read.blast", "id.blast",
-  "add.obigt", "RH2obigt",
+  "add.OBIGT", "RH2OBIGT",
   "expr.property", "expr.units",
   "mass", "entropy", "GHS", "water",
   "i2A", "invertible.combs",
@@ -24,7 +24,7 @@ export(
   "count.aa", "nucleic.complement", "nucleic.formula",
   "rho.IAPWS95", "IAPWS95", "water.AW90", "WP02.auxiliary", "water.IAPWS95",
   "getrank", "parent", "sciname", "allparents", "getnodes", "getnames",
-  "protein.obigt", "hkf", "cgl", "which.pmax",
+  "protein.OBIGT", "hkf", "cgl", "which.pmax",
   "equil.boltzmann", "equil.reaction", "find.tp",
   "ionize.aa", "MP90.cp", "aasum",
   "qqr", "RMSD", "CVRMSD", "spearman", "DGmix", "DDGmix", "DGtr",
@@ -42,7 +42,7 @@ export(
   "count.elements",
 # (no other functions are used in the tests)
 # other exported functions that are not used above
-  "write.blast", "checkEOS", "checkGHS", "check.obigt",
+  "write.blast", "checkEOS", "checkGHS", "check.OBIGT",
   "V_s_var", "Cp_s_var",
   "DGinf", "SD", "pearson", "shannon", "CV", "logact",
   "EOSlab", "EOScalc",
@@ -56,7 +56,7 @@ export(
 # added 20171121 or later
   "dumpdata", "thermo.axis", "solubility", "NaCl",
 # added 20190213 or later
-  "CHNOSZ", "thermo", "reset", "obigt", "retrieve", "AkDi", "moles",
+  "CHNOSZ", "thermo", "reset", "OBIGT", "retrieve", "AkDi", "moles",
   "lNaCl", "lS", "lT", "lP", "lTP", "lex"
 )
 

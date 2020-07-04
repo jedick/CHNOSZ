@@ -32,7 +32,7 @@ title(main="Sequences for transferase at Bison Pool")
 # to reproduce the calculations in the paper,
 # use superseded data for [Met], [Gly] and [UPBB]
 reset()
-add.obigt("OldAA")
+add.OBIGT("OldAA")
 # make our protein list
 organisms <- c("METSC", "METJA", "METFE", "HALJP", "METVO",
   "METBU", "ACEKI", "GEOSE", "BACLI", "AERSA")

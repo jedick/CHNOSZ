@@ -4,12 +4,12 @@
 ## solutions. J. Electrochem. Soc., 148, B51-B57. doi:10.1149/1.1344532)
 
 # we need superseded data for Cu-Gly complexes 20190206
-add.obigt("OldAA")
-# add some new species to thermo$obigt
+add.OBIGT("OldAA")
+# add some new species to thermo$OBIGT
 m1 <- makeup(info(c("Cu+", "glycinate", "glycinate")), sum=TRUE)
-mod.obigt(name="Cu(Gly)2-", formula=as.chemical.formula(m1))
+mod.OBIGT(name="Cu(Gly)2-", formula=as.chemical.formula(m1))
 m2 <- makeup(info(c("Cu+2", "glycinate", "H+")), sum=TRUE)
-mod.obigt(name="HCu(Gly)+2", formula=as.chemical.formula(m2))
+mod.OBIGT(name="HCu(Gly)+2", formula=as.chemical.formula(m2))
 # Gibbs energies from A&D's Table 1 and Table II
 Cu_s <- c("copper", "cuprite", "tenorite")
 Gly <- c("glycinium", "glycine", "glycinate")
@@ -28,7 +28,7 @@ for(i in 1:length(G)) {
   if(i==12) myG <- myG + getG("Cu+2") + 2*getG("glycinate")
   if(i==13) myG <- myG + getG("Cu+") + 2*getG("glycinate")
   if(i==14) myG <- myG + getG("Cu(Gly)+")
-  mod.obigt(names[i], G=myG)
+  mod.OBIGT(names[i], G=myG)
 }  
 
 # in Fig. 2b, total log activities of Cu (Cu_T) and glycine (L_T) are -4 and -1

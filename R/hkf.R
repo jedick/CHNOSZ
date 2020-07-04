@@ -52,7 +52,7 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
     # loop over each species
     PAR <- parameters[k, ]
     # substitute Cp and V for missing EoS parameters
-    # here we assume that the parameters are in the same position as in thermo$obigt
+    # here we assume that the parameters are in the same position as in thermo$OBIGT
     # we don't need this if we're just looking at solvation properties (Cp_s_var, V_s_var)
     if("n" %in% contrib) {
       # put the heat capacity in for c1 if both c1 and c2 are missing

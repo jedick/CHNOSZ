@@ -73,7 +73,7 @@ a <- affinity(T=T)
 G.100.cal <- convert(unlist(a$values), "G", T=TK)
 G.100.kJ <- convert(G.100.cal, "J")/1000
 # the average oxidation states of carbon
-Z.C <- ZC(thermo()$obigt$formula[thermo()$species$ispecies])
+Z.C <- ZC(thermo()$OBIGT$formula[thermo()$species$ispecies])
 # put everything together a la Table 3 in the paper
 print(out <- data.frame(G.18=G.18.kJ, G.100=G.100.kJ, Z.C=Z.C))
 # make a plot; set units to get correct label

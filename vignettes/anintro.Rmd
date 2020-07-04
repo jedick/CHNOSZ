@@ -243,7 +243,7 @@ An attempt has been made to provide a primary database (OBIGT) that has no major
 As the database includes datasets from many sources, it can not be guaranteed to be fully internally consistent.
 For crucial problems, check not only the accuracy of entries in the database, but also the *suitability of the data* for your problem.
 If there are any doubts, consult the primary sources.
-Use <span style="color:blue">`thermo.refs()`</span> to show a list of references for the data; see also the vignette, [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](obigt.html), for more information.
+Use <span style="color:blue">`thermo.refs()`</span> to show a list of references for the data; see also the vignette, [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](OBIGT.html), for more information.
 
 ## The <span style="color:green">`info()`</span> function
 
@@ -690,7 +690,7 @@ species(c("chalcocite", "tenorite", "cuprite", "copper"))
 ```
 
 Note that chalcocite (Cu<sub>2</sub>S) undergoes phase transitions.
-To get the temperatures of the phase transitions from `thermo()$obigt` (in Kelvin, regardless of the <span style="color:red">`T.units()`</span>), we can use <span style="color:green">`info()`</span>.
+To get the temperatures of the phase transitions from `thermo()$OBIGT` (in Kelvin, regardless of the <span style="color:red">`T.units()`</span>), we can use <span style="color:green">`info()`</span>.
 We see that at 200 °C (473.15 K) the second phase is stable; this one is automatially used by CHNOSZ for this diagram.
 ```{r info_chalcocite, message=FALSE}
 info(info("chalcocite", c("cr", "cr2", "cr3")))$T
@@ -958,7 +958,7 @@ Note that setting `IS` to 0 in <span style="color:green">`affinity()`</span> has
 At the end of the calculation, we use <span style="color:red">`reset()`</span> to restore the default thermodynamic database.
 
 ```{r corundum, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", results="hide", message=FALSE, cache=TRUE, fig.cap="Solubility of corundum (green line) and equilibrium concentrations of aqueous species (black lines).", pngquant=pngquant, timeit=timeit}
-add.obigt("SLOP98")
+add.OBIGT("SLOP98")
 basis(c("corundum", "H2O", "H+", "O2"))
 species(c("Al+3", "AlO2-", "AlOH+2", "AlO+", "HAlO2"))
 a <- affinity(pH = c(0, 10), IS = 0)
@@ -1544,13 +1544,13 @@ logabundance <- unitize(log10(abundance[!ina]), pl)
 ```
 
 Now we can load the proteins and calculate their activities in metastable equilibrium as a function of `r logfO2`.
-The commented line uses <span style="color:red">`add.obigt()`</span> to load group additivity parameters that were present in older versions of CHNOSZ (Dick et al., 2006).
+The commented line uses <span style="color:red">`add.OBIGT()`</span> to load group additivity parameters that were present in older versions of CHNOSZ (Dick et al., 2006).
 The default database contains newer group additivity parameters for the sidechain groups of methionine (LaRowe and Dick, 2012) and glycine and the protein backbone [@Kit14].
 
 ```{r yeastplot, eval=FALSE, echo=1:6}
 par(mfrow = c(1, 3))
 basis("CHNOS+")
-#add.obigt("OldAA")
+#add.OBIGT("OldAA")
 a <- affinity(O2 = c(-80, -73), iprotein = ip, loga.protein = logact)
 e <- equilibrate(a)
 diagram(e, ylim = c(-5, -2), col = 1:5, lwd = 2)
@@ -1826,7 +1826,7 @@ vars <- list(O2 = c(-50, -25), NH3 = c(-15, 10), H2O = c(-15, 10))
 
 Consider the amino acid abundances reported by @FMM_14.
 Here, we identify the amino acids using their one-letter abbreviations.
-Then, <span style="color:green">`aminoacids()`</span> is used to produce the full names, which in turn are used to search `thermo()$obigt` for their formulas.
+Then, <span style="color:green">`aminoacids()`</span> is used to produce the full names, which in turn are used to search `thermo()$OBIGT` for their formulas.
 <span style="color:green">`makeup()`</span> is used to count the elements in the formulas:
 ```{r smoker_aa, message=FALSE}
 aa <- c("D", "T", "S", "E", "G", "A", "K", "H")
@@ -1934,7 +1934,7 @@ The database in CHNOSZ lists one or two sources for each entry, and citation inf
 You can locate and view the references with <span style="color:green">`thermo.refs()`</span>.
 Running the function without any arguments opens a browser window with the complete table of references.
 ```{marginfigure}
-See the vignette, [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](obigt.html), for a more nicely formatted presentation of the sources of thermodynamic data, along with notes and additional comments.
+See the vignette, [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](OBIGT.html), for a more nicely formatted presentation of the sources of thermodynamic data, along with notes and additional comments.
 ```
 Where available, links to the web page for the articles and books are displayed:
 ```{r thermo_refs_table, eval=FALSE}
@@ -1979,36 +1979,36 @@ browseURL(ref$URL)  ## opens a link to worldcat.org
 Thermodynamic properties of minerals in the default database are mostly taken from @Ber88 (including silicates, aluminosilicates, calcite, dolomite, hematite, and magnetite) and @HDNB78 (native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate any in the Berman dataset).
 Minerals are identified by the state `cr`, and (for the Helgeson dataset) `cr2`, `cr3`, etc. for higher-temperature polymorphs.
 
-Some optional datasets can be activated by using <span style="color:red">`add.obigt()`</span>. The first three of these contain data that have been replaced by or are incompatible with later updates; the superseded data are kept here to reproduce published calculations and for comparison with the newer data:
+Some optional datasets can be activated by using <span style="color:red">`add.OBIGT()`</span>. The first three of these contain data that have been replaced by or are incompatible with later updates; the superseded data are kept here to reproduce published calculations and for comparison with the newer data:
 
-<span style="color:red">`add.obigt("SUPCRT92")`</span> -- This file contains data for minerals from SUPCRT92 (mostly Helgeson et al., 1978) that have been replaced by the Berman data set.
+<span style="color:red">`add.OBIGT("SUPCRT92")`</span> -- This file contains data for minerals from SUPCRT92 (mostly Helgeson et al., 1978) that have been replaced by the Berman data set.
 
-<span style="color:red">`add.obigt("SLOP98")`</span> -- This file contains data from `slop98.dat` or later slop files, from Everett Shock's GEOPIG group at Arizona State University, that were previously used in CHNOSZ but have been replaced by newer data.
+<span style="color:red">`add.OBIGT("SLOP98")`</span> -- This file contains data from `slop98.dat` or later slop files, from Everett Shock's GEOPIG group at Arizona State University, that were previously used in CHNOSZ but have been replaced by newer data.
 This includes updates for aqueous Al species [@TS01], Au species [@PAB_14], and arsenic-bearing aqueous species and minerals, as compiled in the SUPCRTBL package [@ZZL_16].
 Some calculations using the older data are shown in [this vignette](#complete-equilibrium-solubility).
 See [<span style="color:blue">`demo(gold)`</span>](../demo) for calculations that depend on the data for Au species that are now loaded by default in CHNOSZ.
 
-<span style="color:red">`add.obigt("OldAA")`</span> -- This file contains superseded data for amino acids (methionine and glycine) and related species, particularly the [Met], [Gly], and protein backbone groups, as well as metal-glycinate complexes.
+<span style="color:red">`add.OBIGT("OldAA")`</span> -- This file contains superseded data for amino acids (methionine and glycine) and related species, particularly the [Met], [Gly], and protein backbone groups, as well as metal-glycinate complexes.
 The updates for these data have been taken from various publications ([LaRowe and Dick, 2012](https://doi.org/10.1016/j.gca.2011.11.041); [Kitadai, 2014](https://doi.org/10.1007/s00239-014-9616-1); [Azadi et al., 2019](https://doi.org/10.1016/j.fluid.2018.10.002))
 A comparison of log*K* of metal-glycinate complexes using the updated data is in [<span style="color:blue">`demo(glycinate)`</span>](../demo).
 
 The next three optional datasets are provided to support newer data or models:
 
-<span style="color:red">`add.obigt("AS04")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
+<span style="color:red">`add.OBIGT("AS04")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
 These data are included to help transition to the "higher solubility of quartz paradigm" [@WJ17], but are not included in the default database in order to maintain compatibility with existing data for minerals that are linked to the older aqueous `r sio2` data.
 See [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.
 
-<span style="color:red">`add.obigt("DEW")`</span> -- These are aqueous species, with modified parameters, that are intended for use with the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model [@SHA14].
+<span style="color:red">`add.OBIGT("DEW")`</span> -- These are aqueous species, with modified parameters, that are intended for use with the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model [@SHA14].
 You should also run <span style="color:red">`water("DEW")`</span> to activate the equations in the model; then, they will be used by <span style="color:green">`subcrt()`</span> and <span style="color:green">`affinity()`</span>.
 Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
-<span style="color:red">`add.obigt("AkDi")`</span> -- These data are used in the Akinfiev-Diamond model for aqeuous nonelectrolytes [@AD03].
+<span style="color:red">`add.OBIGT("AkDi")`</span> -- These data are used in the Akinfiev-Diamond model for aqeuous nonelectrolytes [@AD03].
 
-Detailed references for these optional datasets are in the vignette [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](obigt.html) (look under **Optional Data**).
+Detailed references for these optional datasets are in the vignette [<span style="color:blue">*Thermodynamic data in CHNOSZ*</span>](OBIGT.html) (look under **Optional Data**).
 
 ## Adding data
 
-You can also use <span style="color:red">`add.obigt()`</span> to add data from a user-specified file to the database in the current session.
+You can also use <span style="color:red">`add.OBIGT()`</span> to add data from a user-specified file to the database in the current session.
 The file must be a CSV (comma separated value) file with column headers that match those in the main database.
 To show the required format, take a look at `BZA10.csv`, which has parameters taken from @BZA10.
 Missing values are indicated by `NA`:
@@ -2026,11 +2026,11 @@ The column names with a dot (`.`) refer to different sets of equations for calcu
 Aqueous species use the revised Helgeson-Kirkham-Flowers (HKF) equations (symbols before the dot), and crystalline, gas and liquid species other than `r h2o` use a polynomial equation for heat capacity (see [below](#solids)).
 See <span style="color:blue">`?thermo`</span> for details about what's in the data table, and <span style="color:blue">`?hkf`</span> and <span style="color:blue">`?cgl`</span> for information about the equations used for thermodynamic properties.
 
-Loading the data with <span style="color:red">`add.obigt()`</span> produces a message that the new data replace existing species.
+Loading the data with <span style="color:red">`add.OBIGT()`</span> produces a message that the new data replace existing species.
 We can then use <span style="color:green">`subcrt()`</span> to calculate the equilibrium constant for a reaction involving the new species.
 This shows a decrease in the stepwise stability constant for the second cadmium chloride complex with increasing pressure (Bazarkina et al., 2010, Fig. 4).
 ```{r BZA10_Cd}
-iCd <- add.obigt(file)
+iCd <- add.OBIGT(file)
 subcrt(c("CdCl+", "Cl-", "CdCl2"), c(-1, -1, 1), T = 25, P = c(1, 2000))
 ```
 
@@ -2044,7 +2044,7 @@ subcrt(c("CdCl+", "Cl-", "CdCl2"), c(-1, -1, 1), T = 25, P = c(1, 2000))
 
 ## Modifying data
 
-Use <span style="color:red">`mod.obigt()`</span> to add or modify the database in the current session.
+Use <span style="color:red">`mod.OBIGT()`</span> to add or modify the database in the current session.
 The function requires the name of a species and one or more properties to change.
 
 ### Aqueous species
@@ -2052,16 +2052,16 @@ The function requires the name of a species and one or more properties to change
 Let's add data for CoCl<sub>4</sub><sup>-2</sup> from @LBT_11.
 The values are taken from Table 5 of that paper; as is common for parameters in the HKF model, they are reported in caloric units, and some of the values have multipliers, which are kept when entering the data.
 The date we use for the entry is <span style="color:green">`today()`</span> (i.e. today's date using the date format inherited from SUPCRT92):
-```{r mod_obigt_CoCl4_ghs}
-mod.obigt("CoCl4-2", formula = "CoCl4-2", state = "aq", ref1 = "LBT+11",
+```{r mod_OBIGT_CoCl4_ghs}
+mod.OBIGT("CoCl4-2", formula = "CoCl4-2", state = "aq", ref1 = "LBT+11",
   date = today(), G = -134150, H = -171558, S = 19.55, Cp = 72.09, V = 27.74)
 ```
 
 The function prints a message saying that the species was added, and returns the species index of the new species.
 Now let's modify the new species by adding the HKF coefficients.
 The `z` at the end refers to the charge of the species, and is used only for calculating the "*g* function" in the revised HKF model, not for balancing reactions.
-```{r mod_obigt_CoCl4_eos}
-mod.obigt("CoCl4-2", a1 = 6.5467, a2 = 8.2069, a3 = 2.0130, a4 = -3.1183,
+```{r mod_OBIGT_CoCl4_eos}
+mod.OBIGT("CoCl4-2", a1 = 6.5467, a2 = 8.2069, a3 = 2.0130, a4 = -3.1183,
   c1 = 76.3357, c2 = 11.6389, omega = 2.9159, z = -2)
 ```
 
@@ -2080,24 +2080,24 @@ The calculated values of log*K* are identical to those in Table 9 of Liu et al. 
 Let's add data for magnesiochromite from @KOSG00.
 The parameters in this paper are reported in Joules, so we set the `E_units` to J.
 The value for volume, in cm<sup>3</sup> mol<sup>-1</sup>, is from @RH95.
-```{r mod_obigt_magnesiochromite_ghs}
+```{r mod_OBIGT_magnesiochromite_ghs}
 H <- -1762000
 S <- 119.6
 V <- 43.56
-mod.obigt("magnesiochromite", formula = "MgCr2O4", state = "cr", ref1 = "KOSG00",
+mod.OBIGT("magnesiochromite", formula = "MgCr2O4", state = "cr", ref1 = "KOSG00",
           date = today(), E_units = "J", H = H, S = S, V = V)
 ```
 
 Here are the heat capacity parameters for the "Haas-Fisher" polynomial equation ($Cp = a + bT + cT^{-2} + dT^{-0.5} + eT^2$).
-Order-of-magnitude multipliers are required for the values of `b` and `c` (and also `e` if it is present; see the description for columns 14-21 of the `obigt` data frame in <span style="color:blue">`?thermo`</span>).
+Order-of-magnitude multipliers are required for the values of `b` and `c` (and also `e` if it is present; see the description for columns 14-21 of the `OBIGT` data frame in <span style="color:blue">`?thermo`</span>).
 Note that an additional `f` term is available, which can have any exponent given by `lambda`, but it is not needed here.
 1500 K is a generic value for the high-temperature limit; experimental heat capacities were only reported up to 340 K (Klemme et al., 2000).
-```{r mod_obigt_magnesiochromite_eos}
+```{r mod_OBIGT_magnesiochromite_eos}
 a <- 221.4
 b <- -0.00102030 * 1e3
 c <- -1757210 * 1e-5
 d <- -1247.9
-mod.obigt("magnesiochromite", E_units = "J", a = a, b = b, c = c, d = d,
+mod.OBIGT("magnesiochromite", E_units = "J", a = a, b = b, c = c, d = d,
           e = 0, f = 0, lambda = 0, T = 1500)
 ```
 
@@ -2145,9 +2145,9 @@ The calculated value of Δ*G*°<sub>*f*</sub> is 661 cal mol<sup>-1</sup> higher
 Because the difference between the entered and calculated values of Δ*G*°<sub>*f*</sub> is greater than 100 cal mol<sup>-1</sup>, <span style="color:green">`checkGHS()`</span> produces a message.
 After checking for any typographical errors in the entries for Δ*G*°<sub>*f*</sub>, Δ*H*°<sub>*f*</sub>, *S*°, and the chemical formula, the source should be consulted for clarification.
 
-All of the species with inconsistencies detected in this manner, in both OBIGT and the optional data files, are listed in the file `obigt_check.csv`.
-```{r check_obigt}
-file <- system.file("extdata/adds/obigt_check.csv", package = "CHNOSZ")
+All of the species with inconsistencies detected in this manner, in both OBIGT and the optional data files, are listed in the file `OBIGT_check.csv`.
+```{r check_OBIGT}
+file <- system.file("extdata/adds/OBIGT_check.csv", package = "CHNOSZ")
 dat <- read.csv(file, as.is = TRUE)
 nrow(dat)
 ```
@@ -2249,7 +2249,7 @@ See <span style="color:blue">`?wjd`</span> and [<span style="color:blue">`demo(w
 
 ## Group additivity and EQ3/6 output
 
-<span style="color:green">`RH2obigt()`</span> implements a group additivity calculation of standard molal thermodynamic properties and equations of state parameters of crystalline and liquid organic molecules from @RH98.
+<span style="color:green">`RH2OBIGT()`</span> implements a group additivity calculation of standard molal thermodynamic properties and equations of state parameters of crystalline and liquid organic molecules from @RH98.
 
 <span style="color:green">`eqdata()`</span> reads data, including concentrations of aqueous species, numbers of moles of solid phases, and mineral saturation states (affinities), from an EQ6 output file [@Wol92].
 

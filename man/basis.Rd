@@ -22,11 +22,11 @@ The basis species represent the possible range of chemical compositions for all 
 Any valid set of basis species used here must meet two conditions: 1) the number of basis species is the same as the number of chemical elements (including charge) in those species and 2) the square matrix representing the elemental stoichiometries of the basis species has a real inverse.
 
 To create a basis definition, call \code{basis} with the names or formulas of the basis species in the first argument.
-Alternatively, the first argument may consist of numeric values indicating the species indices (rownumbers in \code{\link{thermo}$obigt}), but a mixture of character and numeric values will generate an error.
+Alternatively, the first argument may consist of numeric values indicating the species indices (rownumbers in \code{\link{thermo}$OBIGT}), but a mixture of character and numeric values will generate an error.
 The special names \samp{pH}, \samp{pe} and \samp{Eh} can be included in the \code{species} argument; they get translated into the names of the proton (\samp{H+}) and electron (\samp{e-}) as appropriate.
 
 The physical states or logarithms of activities of species in the basis definition can be changed by calling \code{basis} with the formulas of species that are in the basis set, or their species indices.
-If either of the second or third arguments to \code{basis} is of type character, it refers to the name of a state (if present in \code{thermo()$obigt$state}) or to the name of a chemical activity \code{\link{buffer}} (if present in \code{thermo()$buffers$name}).
+If either of the second or third arguments to \code{basis} is of type character, it refers to the name of a state (if present in \code{thermo()$OBIGT$state}) or to the name of a chemical activity \code{\link{buffer}} (if present in \code{thermo()$buffers$name}).
 If either of these arguments is numeric it specifies the logarithms of activities (or fugacities for gases) of the basis species.
 In case \samp{pH}, \samp{pe} or \samp{Eh} is named, the logarithm of activity of the basis species is converted from these values.
 For example, a value of 7 for pH is stored as a logarithm of activity of -7.

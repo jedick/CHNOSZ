@@ -58,10 +58,10 @@ makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
   }
   # if the formula argument is numeric,
   # and if the thermo object is available,
-  # get the formula of that numbered species from thermo$obigt
+  # get the formula of that numbered species from thermo$OBIGT
   if(exists("CHNOSZ")) {
     thermo <- get("thermo", CHNOSZ)
-    if(is.numeric(formula)) formula <- thermo$obigt$formula[formula]
+    if(is.numeric(formula)) formula <- thermo$OBIGT$formula[formula]
   }
   # first deal with charge
   cc <- count.charge(formula)

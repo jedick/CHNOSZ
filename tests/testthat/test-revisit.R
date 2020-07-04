@@ -3,7 +3,7 @@ context("revisit")
 # initial setup
 suppressMessages({
   # for numerical reproducibility, use the now-superseded properties of glycine 20190208
-  add.obigt("OldAA")
+  add.OBIGT("OldAA")
   basis("CHNOS")
   basis("O2", -65)
   species(c("leucine", "glycine", "glutamic acid"))

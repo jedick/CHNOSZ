@@ -8,7 +8,7 @@ examples <- function(save.png=FALSE) {
   topics <- c("thermo", "examples",
     "util.array", "util.blast", "util.data", "util.expression", "util.legend", "util.plot",
     "util.fasta", "util.formula", "util.matrix", "util.misc", "util.seq", "util.units",
-    "util.water", "taxonomy", "info", "retrieve", "add.obigt", "protein.info",
+    "util.water", "taxonomy", "info", "retrieve", "add.OBIGT", "protein.info",
     "hkf", "water", "IAPWS95", "subcrt", "berman",
     "makeup", "basis", "swap.basis", "species", "affinity", "solubility", "equilibrate", 
     "diagram", "buffer", "nonideal", "NaCl", "add.protein", "protein", "ionize.aa",

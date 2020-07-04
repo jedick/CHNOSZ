@@ -1,4 +1,4 @@
-# CHNOSZ/add.obigt.R
+# CHNOSZ/add.OBIGT.R
 # add or change entries in the thermodynamic database
 
 ## if this file is interactively sourced, the following are also needed to provide unexported functions:
@@ -17,8 +17,8 @@ today <- function() {
   return(paste(tday, tmonth, tyear, sep="."))
 }
 
-mod.obigt <- function(...) {
-  # add or modify species in thermo$obigt
+mod.OBIGT <- function(...) {
+  # add or modify species in thermo$OBIGT
   thermo <- get("thermo", CHNOSZ)
   # the names and values are in the arguments
   # this works for providing arguments via do.call
@@ -41,11 +41,11 @@ mod.obigt <- function(...) {
     else ispecies <- suppressMessages(mapply(info.character, 
       species=args$name, check.protein=FALSE, SIMPLIFY=TRUE, USE.NAMES=FALSE))
   }
-  # the column names of thermo$obigt, split at the "."
-  cnames <- c(do.call(rbind, strsplit(colnames(thermo$obigt), ".", fixed=TRUE)), colnames(thermo$obigt))
+  # the column names of thermo$OBIGT, split at the "."
+  cnames <- c(do.call(rbind, strsplit(colnames(thermo$OBIGT), ".", fixed=TRUE)), colnames(thermo$OBIGT))
   # the columns we are updating
   icol <- match(names(args), cnames)
-  if(any(is.na(icol))) stop(paste("properties not in thermo$obigt:", paste(names(args)[is.na(icol)], collapse=" ")) )
+  if(any(is.na(icol))) stop(paste("properties not in thermo$OBIGT:", paste(names(args)[is.na(icol)], collapse=" ")) )
   # the column numbers for properties that matched after the split
   icol[icol > 42] <- icol[icol > 42] - 42
   icol[icol > 21] <- icol[icol > 21] - 21
@@ -55,8 +55,8 @@ mod.obigt <- function(...) {
   # the arguments as data frame
   args <- data.frame(args, stringsAsFactors=FALSE)
   if(length(inew) > 0) {
-    # the right number of blank rows of thermo$obigt
-    newrows <- thermo$obigt[1:length(inew), ]
+    # the right number of blank rows of thermo$OBIGT
+    newrows <- thermo$OBIGT[1:length(inew), ]
     # if we don't know something it's NA
     newrows[] <- NA
     # put in a default state
@@ -83,40 +83,40 @@ mod.obigt <- function(...) {
       Z[is.na(Z)] <- 0
       newrows$z.T[isaq] <- Z[isaq]
     }
-    # assign to thermo$obigt
-    thermo$obigt <- rbind(thermo$obigt, newrows)
-    rownames(thermo$obigt) <- NULL
+    # assign to thermo$OBIGT
+    thermo$OBIGT <- rbind(thermo$OBIGT, newrows)
+    rownames(thermo$OBIGT) <- NULL
     assign("thermo", thermo, CHNOSZ)
     # update ispecies
-    ntotal <- nrow(thermo$obigt)
+    ntotal <- nrow(thermo$OBIGT)
     ispecies[inew] <- (ntotal-length(inew)+1):ntotal
     # inform user
-    message(paste("mod.obigt: added ", newrows$name, "(", newrows$state, ")", " with energy units of ", newrows$E_units, sep="", collapse="\n"))
+    message(paste("mod.OBIGT: added ", newrows$name, "(", newrows$state, ")", " with energy units of ", newrows$E_units, sep="", collapse="\n"))
   }
   if(length(iold) > 0) {
     # loop over species
     for(i in 1:length(iold)) {
       # the old values and the state
-      oldprop <- thermo$obigt[ispecies[iold[i]], icol]
-      state <- thermo$obigt$state[ispecies[iold[i]]]
+      oldprop <- thermo$OBIGT[ispecies[iold[i]], icol]
+      state <- thermo$OBIGT$state[ispecies[iold[i]]]
       # tell user if they're the same, otherwise update the data entry
       if(isTRUE(all.equal(oldprop, args[iold[i], ], check.attributes=FALSE))) 
-        message("mod.obigt: no change for ", args$name[iold[i]], "(", state, ")")
+        message("mod.OBIGT: no change for ", args$name[iold[i]], "(", state, ")")
       else {
-        thermo$obigt[ispecies[iold[i]], icol] <- args[iold[i], ]
+        thermo$OBIGT[ispecies[iold[i]], icol] <- args[iold[i], ]
         assign("thermo", thermo, CHNOSZ)
-        message("mod.obigt: updated ", args$name[iold[i]], "(", state, ")")
+        message("mod.OBIGT: updated ", args$name[iold[i]], "(", state, ")")
       }
     }
   }
   return(ispecies)
 }
 
-add.obigt <- function(file, species=NULL, force=TRUE) {
-  # add/replace entries in thermo$obigt from values saved in a file
+add.OBIGT <- function(file, species=NULL, force=TRUE) {
+  # add/replace entries in thermo$OBIGT from values saved in a file
   # only replace if force==TRUE
   thermo <- get("thermo", CHNOSZ)
-  to1 <- thermo$obigt
+  to1 <- thermo$OBIGT
   id1 <- paste(to1$name,to1$state)
   # we match system files with the file suffixes (.csv) removed
   sysfiles <- dir(system.file("extdata/OBIGT/", package="CHNOSZ"))
@@ -143,9 +143,9 @@ add.obigt <- function(file, species=NULL, force=TRUE) {
     else stop(paste("file", file, "doesn't have", paste(species[ina], collapse=", ")))
   }
   id2 <- paste(to2$name,to2$state)
-  # check if the data is compatible with thermo$obigt
+  # check if the data is compatible with thermo$OBIGT
   tr <- tryCatch(rbind(to1, to2), error = identity)
-  if(inherits(tr, "error")) stop(paste(file, "is not compatible with thermo$obigt data table."))
+  if(inherits(tr, "error")) stop(paste(file, "is not compatible with thermo$OBIGT data table."))
   # match the new species to existing ones
   does.exist <- id2 %in% id1
   ispecies.exist <- na.omit(match(id2, id1))
@@ -170,12 +170,12 @@ add.obigt <- function(file, species=NULL, force=TRUE) {
     inew <- c(inew, (length(id1)+1):nrow(to1))
   }
   # commit the change
-  thermo$obigt <- to1
-  rownames(thermo$obigt) <- 1:nrow(thermo$obigt)
+  thermo$OBIGT <- to1
+  rownames(thermo$OBIGT) <- 1:nrow(thermo$OBIGT)
   assign("thermo", thermo, CHNOSZ)
   # give the user a message
-  message("add.obigt: read ", length(does.exist), " rows; made ", 
+  message("add.OBIGT: read ", length(does.exist), " rows; made ", 
     nexist, " replacements, ", nrow(to2), " additions [energy units: ", Etxt, "]")
-  #message("add.obigt: use obigt() or reset() to restore default database")
+  #message("add.OBIGT: use OBIGT() or reset() to restore default database")
   return(invisible(inew))
 }

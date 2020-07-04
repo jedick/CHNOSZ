@@ -13,7 +13,7 @@ oldwat <- water("DEW")
 ###########
 
 # load SiO2 and Si2O4 data taken from DEW spreadsheet
-iSi <- add.obigt("DEW", c("SiO2", "Si2O4"))
+iSi <- add.OBIGT("DEW", c("SiO2", "Si2O4"))
 # print the data references to confirm we got the right ones
 thermo.refs(iSi)
 # set temperature ranges for different pressures
@@ -55,7 +55,7 @@ mtitle(as.expression(c(t1, t2)))
 # load the fitted parameters for species as used by SHA14
 # TODO: also use their Ca+2??
 # NOTE: don't load NaCl, NH4+, or HS- here because the DEW spreadsheet lists a1 from the correlation
-add.obigt("DEW", c("CO3-2", "BO2-", "MgCl+", "SiO2", "HCO3-", "Si2O4"))
+add.OBIGT("DEW", c("CO3-2", "BO2-", "MgCl+", "SiO2", "HCO3-", "Si2O4"))
 # set up the plot
 V0nlab <- expression(Delta * italic(V) * degree[n]~~(cm^3~mol^-1))
 a1lab <- expression(italic(a)[1]%*%10~~(cal~mol~bar^-1))
@@ -113,14 +113,14 @@ dfun <- function(T = 600, P = 50000, res = 300) {
   legend("bottomleft", legend=dp, bty="n")
 }
 
-obigt()
+OBIGT()
 ## (not run: make diagram using CHNOSZ default database;
 ## not recommended for high P)
 #dfun()
 # make diagram using CO2, HCO3-, CO3-2, CH4, and acetic acid data from DEW spreadsheet
 # (the acetate field disappears if we also use the data for acetate from the spreadsheet 20200629)
-#add.obigt("DEW", c("CO2", "HCO3-", "CO3-2", "CH4", "acetic acid"))
-add.obigt("DEW")
+#add.OBIGT("DEW", c("CO2", "HCO3-", "CO3-2", "CH4", "acetic acid"))
+add.OBIGT("DEW")
 dfun()
 mtitle(c("Inorganic and organic species", "C[total] = 0.03 molal"))
 
@@ -144,7 +144,7 @@ water("DEW")
 # add species data for DEW
 inorganics <- c("CH4", "CO2", "HCO3-", "CO3-2")
 organics <- c("formic acid", "formate", "acetic acid", "acetate", "propanoic acid", "propanoate")
-add.obigt("DEW")
+add.OBIGT("DEW")
 ## set basis species
 basis(c("Fe", "SiO2", "CO3-2", "H2O", "oxygen", "H+"))
 ## calculate logfO2 in QFM buffer

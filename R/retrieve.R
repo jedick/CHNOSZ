@@ -12,7 +12,7 @@ retrieve <- function(elements = NULL, ligands = NULL, state = NULL, add.charge =
 
   ## stoichiometric matrix
   # what are the formulas of species in the current database?
-  formula <- thermo()$obigt$formula
+  formula <- thermo()$OBIGT$formula
   # get a previously calculated stoichiometric matrix
   stoich <- thermo()$stoich
   # if it doesn't match the current database, update it
@@ -77,7 +77,7 @@ retrieve <- function(elements = NULL, ligands = NULL, state = NULL, add.charge =
     for(i in seq_along(elements)) {
       element <- unlist(elements[i])
       if(identical(element, "all")) {
-        ispecies[[i]] <- 1:nrow(thermo()$obigt)
+        ispecies[[i]] <- 1:nrow(thermo()$OBIGT)
       } else {
         # identify the species that have the element
         has.element <- rowSums(stoich[, element, drop = FALSE] != 0) == 1
@@ -106,17 +106,17 @@ retrieve <- function(elements = NULL, ligands = NULL, state = NULL, add.charge =
 
   # exclude groups
   if(hide.groups) {
-    igroup <- grepl("^\\[.*\\]$", thermo()$obigt$name[ispecies])
+    igroup <- grepl("^\\[.*\\]$", thermo()$OBIGT$name[ispecies])
     ispecies <- ispecies[!igroup]
   }
   # filter on state
   if(!is.null(state)) {
-    istate <- thermo()$obigt$state[ispecies] %in% state
+    istate <- thermo()$OBIGT$state[ispecies] %in% state
     ispecies <- ispecies[istate]
   }
 
   # assign names; use e- instead of (Z-1)
-  names(ispecies) <- thermo()$obigt$formula[ispecies]
+  names(ispecies) <- thermo()$OBIGT$formula[ispecies]
   names(ispecies)[names(ispecies)=="(Z-1)"] <- "e-"
   # if there's nothing, don't give it a name
   if(length(ispecies)==0) ispecies <- integer()

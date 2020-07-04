@@ -669,7 +669,7 @@ The stability fields are shown for \emph{unequal activities} of the
 minerals (unit activity) and aqueous species ($10^{-4}$). This is
 essentially a composite of three diagrams, with glycinium, glycine
 and glycinate in the basis at low, mid and high pH. This demo also
-modifies the thermodynamic database (with \texttt{mod.obigt()}) to
+modifies the thermodynamic database (with \texttt{mod.OBIGT()}) to
 use Gibbs energies taken from \citet{AD01}, and bypasses the default
 plotting of labels by \texttt{diagram()} in order to customize their
 format and placement.
@@ -717,7 +717,7 @@ values \citep{DLH06} before proceeding.
 
 <<AddObigt>>=
 reset()
-add.obigt("OldAA")
+add.OBIGT("OldAA")
 @
 
 \section{Reaction-matrix approach}

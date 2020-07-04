@@ -32,7 +32,7 @@ Specify the names or formulas of the old and replacement basis species in the fi
 When the basis definition is changed, any species of interest that were present are deleted, unless the new basis definition has exactly the same elements as before.
 In that case, the species are kept; also, the activities of the new basis species are set in order to maintain the chemical potentials of the elements at \code{T} \degC and 1 bar.
 
-The other functions are supporting functions: \code{basis.elements} returns the stoichiometric matrix for the current basis definition, \code{element.mu} calculates the chemical potentials of elements corresponding to the activities of the basis species, \code{basis.logact} does the inverse operation, and \code{ibasis} returns the index in the basis set for a given species index (in \code{\link{thermo}$obigt}), name or formula.
+The other functions are supporting functions: \code{basis.elements} returns the stoichiometric matrix for the current basis definition, \code{element.mu} calculates the chemical potentials of elements corresponding to the activities of the basis species, \code{basis.logact} does the inverse operation, and \code{ibasis} returns the index in the basis set for a given species index (in \code{\link{thermo}$OBIGT}), name or formula.
 }
 
 \seealso{ \code{\link{basis}}, and \code{\link{mosaic}} }

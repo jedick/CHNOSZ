@@ -4,7 +4,7 @@
 # pinfo: find rownumber in thermo$protein
 # protein.length: lengths of the indicated proteins
 # protein.formula: chemical makeup of the indicated proteins
-# protein.obigt: perform group additivity calculations
+# protein.OBIGT: perform group additivity calculations
 # protein.basis: coefficients of basis species in formation reactions of [ionized] proteins [residues]
 # protein.equil: step-by-step example of protein equilibrium calculation
 
@@ -66,7 +66,7 @@ protein.length <- function(protein, organism=NULL) {
   return(pl)
 }
 
-protein.obigt <- function(protein, organism=NULL, state=thermo()$opt$state) {
+protein.OBIGT <- function(protein, organism=NULL, state=thermo()$opt$state) {
   # display and return the properties of
   # proteins calculated from amino acid composition
   aa <- pinfo(pinfo(protein, organism))
@@ -77,13 +77,13 @@ protein.obigt <- function(protein, organism=NULL, state=thermo()$opt$state) {
   groups <- c("AABB", colnames(aa)[6:25], bbgroup)
   # put brackets around the group names
   groups <- paste("[", groups, "]", sep="")
-  # the rownumbers of the groups in thermo$obigt
+  # the rownumbers of the groups in thermo$OBIGT
   groups_state <- paste(groups, state)
-  obigt <- get("thermo", CHNOSZ)$obigt
-  obigt_state <- paste(obigt$name, obigt$state)
-  igroup <- match(groups_state, obigt_state)
-  # the properties are in columns 9-21 of thermo$obigt
-  groupprops <- obigt[igroup, 9:21]
+  OBIGT <- get("thermo", CHNOSZ)$OBIGT
+  OBIGT_state <- paste(OBIGT$name, OBIGT$state)
+  igroup <- match(groups_state, OBIGT_state)
+  # the properties are in columns 9-21 of thermo$OBIGT
+  groupprops <- OBIGT[igroup, 9:21]
   # the elements in each of the groups
   groupelements <- i2A(igroup)
   # a function to work on a single row of aa
@@ -106,7 +106,7 @@ protein.obigt <- function(protein, organism=NULL, state=thermo()$opt$state) {
     # now the species name
     name <- paste(aa$protein, aa$organism, sep="_")
     # make some noise for the user
-    message("protein.obigt: found ", appendLF=FALSE)
+    message("protein.OBIGT: found ", appendLF=FALSE)
     message(name, " (", f, ", ", appendLF=FALSE)
     message(round(length, 3), " residues)")
     ref <- aa$ref
@@ -174,7 +174,7 @@ protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
     pH <- -thermo$basis$logact[match("H+", rownames(bmat))]
     mymessage("protein.equil: pH from thermo$basis is ", pH)
   }
-  # tell the user whose [Met] is in thermo$obigt
+  # tell the user whose [Met] is in thermo$OBIGT
   info.Met <- info(info('[Met]', "aq"))
   mymessage("protein.equil: [Met] is from reference ", info.Met$ref1)
   ## first set of output: show results of calculations for a single protein

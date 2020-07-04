@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{thermo}
 \alias{reset}
-\alias{obigt}
+\alias{OBIGT}
 \alias{thermo}
 \alias{CHNOSZ}
 \title{Thermodynamic Database and System Settings}
@@ -12,8 +12,8 @@ This includes the computational settings, thermodynamic database, and system set
 The system settings are changed using \code{\link{basis}} and \code{\link{species}}.
 To clear the system settings (the default, i.e. no species loaded), run \code{basis("")}; to clear only the formed species, run \code{species(delete = TRUE)}
 
-The thermodynamic database is changed using \code{\link{add.obigt}} and \code{\link{mod.obigt}}.
-To restore the default database without altering the species settings, run \code{obigt()}.
+The thermodynamic database is changed using \code{\link{add.OBIGT}} and \code{\link{mod.OBIGT}}.
+To restore the default database without altering the species settings, run \code{OBIGT()}.
 
 The computational settings are changed using \code{\link{water}}, \code{\link{P.units}}, \code{\link{T.units}}, \code{\link{E.units}}, and some other commands (e.g. \code{\link{mod.buffer}}).
 
@@ -25,7 +25,7 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
 
 \usage{
   reset()
-  obigt()
+  OBIGT()
   thermo(...)
 }
 
@@ -40,7 +40,7 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
     \item \code{thermo()$opt} 
     List of computational settings.
     Square brackets indicate default values.
-    Note that the units of \code{G.tol} and \code{Cp.tol} depend on the \code{E_units} for each species in \code{thermo()$obigt}.
+    Note that the units of \code{G.tol} and \code{Cp.tol} depend on the \code{E_units} for each species in \code{thermo()$OBIGT}.
     Therefore, species with \code{E_units} of \samp{J} have a lower absolute tolerance for producing messages (because Joules are smaller than calories).
     \tabular{lll}{
       \code{cutoff} \tab numeric \tab Cutoff below which values are taken to be zero [1e-10] (see \code{\link{makeup}})\cr
@@ -80,15 +80,15 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
       \tab \tab compound at 25 \degC and 1 bar
     }
 
-    \item \code{thermo()$obigt}
+    \item \code{thermo()$OBIGT}
 
   This dataframe is a thermodynamic database of standard molal thermodynamic properties and equations of state parameters of species.
   Note the following database conventions:
   \itemize{
-     \item The combination of \code{name} and \code{state} defines a species in \code{thermo()$obigt}. A species can not be duplicated (this is checked when running \code{reset()}).
+     \item The combination of \code{name} and \code{state} defines a species in \code{thermo()$OBIGT}. A species can not be duplicated (this is checked when running \code{reset()}).
      \item English names of inorganic gases are used only for the gas state. The dissolved species is named with the chemical formula. Therefore, \code{info("oxygen")} refers to the gas, and \code{info("O2")} refers to the aqueous species.
      \item Properties of most aqueous species (\code{state} = \samp{aq}) are calculated using the revised Helgeson-Kirkham-Flowers (HKF) model (see \code{\link{hkf}}).
-     \item Properties of aqueous species with an NA value of \code{Z} (the final column of thermo()$obigt) are calculated using the Akinfiev-Diamond model (see \code{\link{AkDi}}).
+     \item Properties of aqueous species with an NA value of \code{Z} (the final column of thermo()$OBIGT) are calculated using the Akinfiev-Diamond model (see \code{\link{AkDi}}).
      \item Properties of most non-aqueous species (liquids, gases, and minerals) are calculated using a heat capacity polynomial expression with up to six terms (see \code{\link{cgl}}).
      \item Properties of minerals with NA values of all heat capacity parameters are calculated using the Berman model (see \code{\link{berman}}).
   } 
@@ -109,7 +109,7 @@ This process was repeated as necessary to generate the standard molar properties
 A consequence of tabulating the standard molar thermodynamic properties of the phase species is that the values of \eqn{(dP/dT)} and \eqn{{\Delta}H^{\circ}}{DeltaH0} of phase transitions can be calculated using the equations of state and therefore do not need to be stored in the thermodynamic database.
 However, the transition temperatures (\eqn{T_{tr}}{Ttr}) generally can not be assessed by comparing the Gibbs energies of phase species and are tabulated in the database.
 
-The identification of species and their standard molal thermodynamic properties at 25 \degC and 1 bar are located in the first 13 columns of \code{thermo()$obigt}:
+The identification of species and their standard molal thermodynamic properties at 25 \degC and 1 bar are located in the first 13 columns of \code{thermo()$OBIGT}:
 
     \tabular{lll}{
       \code{name}     \tab character \tab Species name\cr
@@ -214,7 +214,7 @@ Columns 14-21 for aqueous species using the Akinfiev-Diamond model. Note that th
      \tabular{lll}{
         \code{...} \tab numeric \tab One or more columns of stoichiometric\cr
         \tab \tab coefficients of elements in the basis species\cr
-        \code{ispecies} \tab numeric \tab Rownumber of basis species in \code{thermo()$obigt}\cr
+        \code{ispecies} \tab numeric \tab Rownumber of basis species in \code{thermo()$OBIGT}\cr
         \code{logact} \tab numeric \tab Logarithm of activity or fugacity of basis species\cr
         \code{state} \tab character \tab Physical state of basis species\cr
      }
@@ -224,7 +224,7 @@ Columns 14-21 for aqueous species using the Akinfiev-Diamond model. Note that th
     \tabular{lll}{
        \code{...} \tab numeric \tab One or more columns of stoichiometric\cr
        \tab \tab coefficients of basis species in the species of interest\cr
-       \code{ispecies} \tab numeric \tab Rownumber of species in \code{thermo()$obigt}\cr
+       \code{ispecies} \tab numeric \tab Rownumber of species in \code{thermo()$OBIGT}\cr
        \code{logact} \tab numeric \tab Logarithm of activity or fugacity of species\cr
        \code{state} \tab character \tab Physical state of species\cr
        \code{name} \tab character \tab Name of species\cr
@@ -233,7 +233,7 @@ Columns 14-21 for aqueous species using the Akinfiev-Diamond model. Note that th
     \item \code{thermo()$stoich}
     A precalculated stoichiometric matrix for the default database. This is a matrix, not a data frame, and as such can accept duplicated row names, corresponding to chemical formulas of the species. See \code{\link{retrieve}}, and the first test in \code{testthat/test-retrieve.R} for how to update this.
     \tabular{lll}{
-       \code{rownames} \tab character \tab Chemical formulas from \code{thermo()$obigt}\cr
+       \code{rownames} \tab character \tab Chemical formulas from \code{thermo()$OBIGT}\cr
        \code{...} \tab numeric \tab Stoichiometry, one column for each element present in any species
     }
 
@@ -254,12 +254,12 @@ system.file("extdata", package="CHNOSZ")
 # are used in the default database
 dir(system.file("extdata/OBIGT", package = "CHNOSZ"))
 
-## exploring thermo()$obigt
+## exploring thermo()$OBIGT
 # what physical states there are
-unique(thermo()$obigt$state)
+unique(thermo()$OBIGT$state)
 # formulas of ten random species
-n <- nrow(thermo()$obigt)
-thermo()$obigt$formula[runif(10)*n]
+n <- nrow(thermo()$OBIGT)
+thermo()$OBIGT$formula[runif(10)*n]
 
 ## adding an element
 old <- thermo()$element

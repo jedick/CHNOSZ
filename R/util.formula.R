@@ -17,8 +17,8 @@ i2A <- function(formula) {
     # convert formulas into a stoichiometric matrix with elements on the columns
     A <- t(sapply(msz, c))
     # add names from character argument
-    # or from thermo$obigt for numeric argument
-    if(is.numeric(formula[1])) rownames(A) <- get("thermo", CHNOSZ)$obigt$name[formula]
+    # or from thermo$OBIGT for numeric argument
+    if(is.numeric(formula[1])) rownames(A) <- get("thermo", CHNOSZ)$OBIGT$name[formula]
     else rownames(A) <- formula
   }
   return(A)
@@ -157,7 +157,7 @@ ZC <- function(formula) {
 
 # Accept a numeric or character argument; the character argument can be mixed
 #   (i.e. include quoted numbers). as.numeric is tested on every value; numeric values
-#   are then interpreted as species indices in the thermodynamic database (rownumbers of thermo$obigt),
+#   are then interpreted as species indices in the thermodynamic database (rownumbers of thermo$OBIGT),
 #   and the chemical formulas for those species are returned.
 # Values that can not be converted to numeric are returned as-is.
 get.formula <- function(formula) {
@@ -168,17 +168,17 @@ get.formula <- function(formula) {
   if(is.data.frame(formula)) return(as.matrix(formula))
   # return the values in the argument, or chemical formula(s) 
   # for values that are species indices
-  # for numeric values, get the formulas from those rownumbers of thermo$obigt
+  # for numeric values, get the formulas from those rownumbers of thermo$OBIGT
   i <- as.integer.nowarn(formula)
-  # we can't have more than the number of rows in thermo$obigt
+  # we can't have more than the number of rows in thermo$OBIGT
   thermo <- get("thermo", CHNOSZ)
-  iover <- i > nrow(thermo$obigt)
+  iover <- i > nrow(thermo$OBIGT)
   iover[is.na(iover)] <- FALSE
   if(any(iover)) stop(paste("species number(s)",paste(i[iover],collapse=" "),
-    "not available in thermo$obigt"))
+    "not available in thermo$OBIGT"))
   # we let negative numbers pass as formulas
   i[i < 0] <- NA
-  # replace any species indices with formulas from thermo$obigt
-  formula[!is.na(i)] <- thermo$obigt$formula[i[!is.na(i)]]
+  # replace any species indices with formulas from thermo$OBIGT
+  formula[!is.na(i)] <- thermo$OBIGT$formula[i[!is.na(i)]]
   return(formula)
 }

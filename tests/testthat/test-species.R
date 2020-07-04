@@ -44,7 +44,7 @@ test_that("non-available species cause error, and species can be added or modifi
   expect_equal(species(1, -5)$logact, -5)
   # add CO2, aq
   expect_equal(nrow(species("CO2")), 2)
-  # add alanine by index in thermo$obigt
+  # add alanine by index in thermo$OBIGT
   expect_equal(nrow(species(info("alanine"))), 3)
   # if we just use an index, get only that species
   expect_equal(species(3)$name, "alanine")

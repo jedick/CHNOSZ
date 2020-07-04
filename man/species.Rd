@@ -19,7 +19,7 @@
 
 \details{
 After defining the \code{\link{basis}} species of your system you can use \code{species} to identify the species of interest.
-A species is operationally a combination of a \code{name} and \code{state}, which are columns of the thermodynamic database in \code{\link{thermo}$obigt}.
+A species is operationally a combination of a \code{name} and \code{state}, which are columns of the thermodynamic database in \code{\link{thermo}$OBIGT}.
 The function operates on one or more character values of \code{species}.
 For each first match of \code{species} (optionally restricted to a \code{state} among \samp{aq}, \samp{cr}, \samp{gas}, \samp{liq}) to the name of a species or a formula or abbreviation in the thermodynamic database, a row is added to \code{thermo()$species}.  
 

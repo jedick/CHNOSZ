@@ -2,10 +2,10 @@
 # 20170228 jmd
 
 # writes the following files:
-# onot.csv - entries in thermo$obigt not in SUPCRT datafile
-# snot.csv - entries in SUPCRT datafile not in thermo$obigt
-# same.csv - entries that have "same" data in SUPCRT datafile and thermo$obigt (NA's not included in comparison)
-# different.csv - entries that have different data in SUPCRT datafile and thermo$obigt; the numerical differences are given here
+# onot.csv - entries in thermo$OBIGT not in SUPCRT datafile
+# snot.csv - entries in SUPCRT datafile not in thermo$OBIGT
+# same.csv - entries that have "same" data in SUPCRT datafile and thermo$OBIGT (NA's not included in comparison)
+# different.csv - entries that have different data in SUPCRT datafile and thermo$OBIGT; the numerical differences are given here
 
 # read the SUPCRT/slop file
 #sfile <- "SPRONS92.edit" # SPRONS92.DAT edited to add separator line after aq block
@@ -17,9 +17,9 @@ sfile <- "slop15.edit"
 source("read.supcrt.R")
 sdat <- read.supcrt(sfile)
 
-# put the data for cr species in the format of thermo$obigt
+# put the data for cr species in the format of thermo$OBIGT
 icr <- sdat$ghs$state=="cr"
-scr <- thermo$obigt[1:sum(icr), ]
+scr <- thermo$OBIGT[1:sum(icr), ]
 scr[] <- NA
 scr$name <- sdat$ghs$name[icr]
 scr$abbrv <- sdat$ghs$abbrv[icr]
@@ -36,9 +36,9 @@ scr$a3.c <- sdat$eos.cr$c
 scr$V <- sdat$eos.cr$V
 scr$z.T <- sdat$eos.cr$T
 
-# put the data for gas species in the format of thermo$obigt
+# put the data for gas species in the format of thermo$OBIGT
 igas <- sdat$ghs$state=="gas"
-sgas <- thermo$obigt[1:sum(igas), ]
+sgas <- thermo$OBIGT[1:sum(igas), ]
 sgas[] <- NA
 sgas$name <- sdat$ghs$name[igas]
 sgas$abbrv <- sdat$ghs$abbrv[igas]
@@ -55,9 +55,9 @@ sgas$a3.c <- sdat$eos.gas$c
 sgas$V <- sdat$eos.gas$V
 sgas$z.T <- sdat$eos.gas$T
 
-# put the data for aq species in the format of thermo$obigt
+# put the data for aq species in the format of thermo$OBIGT
 iaq <- sdat$ghs$state=="aq"
-saq <- thermo$obigt[1:sum(iaq), ]
+saq <- thermo$OBIGT[1:sum(iaq), ]
 saq[] <- NA
 saq$name <- sdat$ghs$name[iaq]
 saq$abbrv <- sdat$ghs$abbrv[iaq]
@@ -83,15 +83,15 @@ sall <- rbind(scr, sgas, saq)
 newnames <- read.csv("newnames.csv", as.is=TRUE)
 inew <- match(sall$name, newnames$old)
 sall$name[!is.na(inew)] <- newnames$new[na.omit(inew)]
-# names of the species in thermo$obigt and sall
-oname <- paste0(thermo$obigt$name, "_", thermo$obigt$state)
+# names of the species in thermo$OBIGT and sall
+oname <- paste0(thermo$OBIGT$name, "_", thermo$OBIGT$state)
 sname <- paste0(sall$name, "_", sall$state)
-# index of matching and non-matching species in thermo$obigt and sall
+# index of matching and non-matching species in thermo$OBIGT and sall
 omatch <- onot <- numeric()
 smatch <- snot <- numeric()
 # loop over species in sall
 for(i in 1:nrow(sall)) {
-  # try to find a match in thermo$obigt
+  # try to find a match in thermo$OBIGT
   imatch <- match(sname[i], oname)
   # if it's NA, try cr1
   if(is.na(imatch)) imatch <- match(paste0(sname[i], "1"), oname)
@@ -103,14 +103,14 @@ for(i in 1:nrow(sall)) {
   }
 }
 # that leaves onot
-onot <- (1:nrow(thermo$obigt))[-omatch]
+onot <- (1:nrow(thermo$OBIGT))[-omatch]
 
 # write the non-matching entries first
-write.csv(thermo$obigt[onot, ], "onot.csv", quote=c(1, 2))
+write.csv(thermo$OBIGT[onot, ], "onot.csv", quote=c(1, 2))
 write.csv(sall[snot, ], "snot.csv", quote=c(1, 2, 5))
 
 # calculate the difference between matching entries
-oout <- thermo$obigt[omatch, ]
+oout <- thermo$OBIGT[omatch, ]
 sout <- sall[smatch, ]
 # combine ref1 and ref2
 oout$ref2[is.na(oout$ref2)] <- ""

@@ -2,7 +2,7 @@
 ## in metastable equilibrium, after Dick and Shock, 2011
 protein <- pinfo(c("CSG_METVO", "CSG_METJA"))
 # use superseded properties of [Met], [Gly], and [UPBB] (Dick et al., 2006)
-add.obigt("OldAA")
+add.OBIGT("OldAA")
 # set up the basis species to those used in DS11
 basis("CHNOS+")
 # note this yields logaH2 = -4.657486
