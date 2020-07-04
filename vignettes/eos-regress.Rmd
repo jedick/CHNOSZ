@@ -1,7 +1,7 @@
 ---
 title: "Regressing thermodynamic data"
-subtitle: "EOSregress in [CHNOSZ](http://www.chnosz.net)"
-author: "[Jeffrey M. Dick](http://chnosz.net/jeff)"
+subtitle: "EOSregress in CHNOSZ"
+author: "Jeffrey M. Dick"
 date: "`r Sys.Date()`"
 output:
   tufte::tufte_html:
@@ -397,7 +397,7 @@ mod.OBIGT("calc-H4SiO4", a1 = Vcoeffs[1]*10, a2 = Vcoeffs[2]/100,
 ```
 
 We just calculated the properties of the `r h4sio4` pseudospecies.
-For comparison, the database in CHNOSZ contains `H4SiO4` with parameters from @Ste01:
+For comparison, the OBIGT database in CHNOSZ contains `H4SiO4` with parameters from @Ste01:
 ```{r width180, include=FALSE}
 options(width = 180)
 ```

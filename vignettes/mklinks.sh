@@ -1,5 +1,5 @@
 # CHNOSZ/vignettes/mklinks.sh
-# add documentation links to anintro.html
+# add documentation links to anintro.html and OBIGT.html
 # 20190125 jmd
 
 # add links to help topics
@@ -95,7 +95,10 @@ sed -i '120,$s/substitute()/<a href="..\/..\/base\/html\/substitute.html" style=
 sed -i '120,$s/for()/<a href="..\/..\/base\/html\/Control.html" style="background-image:none;">for()<\/a>/g' anintro.html
 sed -i '120,$s/browseURL()/<a href="..\/..\/utils\/html\/browseURL.html" style="background-image:none;">browseURL()<\/a>/g' anintro.html
 
-# add links to OBIGT.Rmd
-sed -i '120,$s/<code>add.OBIGT()<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="color:red;">add.OBIGT()<\/a><\/code>/g' OBIGT.html
-sed -i '120,$s/<code>reset()<\/code>/<code><a href="..\/html\/thermo.html" style="color:red;">reset()<\/a><\/code>/g' OBIGT.html
-sed -i 's/<code>?add.OBIGT<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="color:red;">?add.OBIGT<\/a><\/code>/g' OBIGT.html
+# add links to OBIGT.html
+sed -i 's/reset()/<a href="..\/html\/thermo.html" style="color:red;">reset()<\/a>/g' OBIGT.html
+sed -i 's/OBIGT()/<a href="..\/html\/thermo.html" style="color:red;">OBIGT()<\/a>/g' OBIGT.html
+sed -i 's/thermo()/<a href="..\/html\/thermo.html" style="color:green;">thermo()<\/a>/g' OBIGT.html
+sed -i 's/add.OBIGT(/<a href="..\/html\/add.OBIGT.html" style="color:red;">add.OBIGT<\/a>(/g' OBIGT.html
+sed -i 's/water(/<a href="..\/html\/water.html" style="color:red;">water<\/a>(/g' OBIGT.html
+sed -i 's/demo(/<a href="..\/demo" style="color:blue;">demo<\/a>(/g' OBIGT.html

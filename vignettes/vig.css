@@ -15,12 +15,3 @@ pre {
   margin-top: 0;
   margin-bottom: 0;
 }
-
-/* for CHNOSZ links */
-h1 a:link {
-  color: red;
-}
-
-h3 a:link {
-    color: red;
-}

@@ -1,6 +1,6 @@
 ---
-title: "An Introduction to [CHNOSZ](http://www.chnosz.net)"
-author: "[Jeffrey M. Dick](http://chnosz.net/jeff)"
+title: "An Introduction to CHNOSZ"
+author: "Jeffrey M. Dick"
 date: "`r Sys.Date()`"
 output:
   tufte::tufte_html:
@@ -243,7 +243,7 @@ An attempt has been made to provide a primary database (OBIGT) that has no major
 As the database includes datasets from many sources, it can not be guaranteed to be fully internally consistent.
 For crucial problems, check not only the accuracy of entries in the database, but also the *suitability of the data* for your problem.
 If there are any doubts, consult the primary sources.
-Use <span style="color:blue">`thermo.refs()`</span> to show a list of references for the data; see also the vignette, [<span style="color:blue">*OBIGT thermodynamic database in CHNOSZ*</span>](OBIGT.html), for more information.
+Use <span style="color:blue">`thermo.refs()`</span> to show a list of references for the data; see also the vignette, [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html), for more information.
 
 ## The <span style="color:green">`info()`</span> function
 
@@ -1930,11 +1930,11 @@ There is a danger of using too many, or unrepresentative variables, but in some 
 
 ## Viewing data sources: <span style="color:green">`thermo.refs()`</span>
 
-The database in CHNOSZ lists one or two sources for each entry, and citation information for the sources is listed in `thermo()$refs`.
+The OBIGT database lists one or two sources for each entry, and citation information for the sources is listed in `thermo()$refs`.
 You can locate and view the references with <span style="color:green">`thermo.refs()`</span>.
 Running the function without any arguments opens a browser window with the complete table of references.
 ```{marginfigure}
-See the vignette, [<span style="color:blue">*OBIGT thermodynamic database in CHNOSZ*</span>](OBIGT.html), for a more nicely formatted presentation of the sources of thermodynamic data, along with notes and additional comments.
+See the vignette, [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html), for a more nicely formatted presentation of the sources of thermodynamic data, along with notes and additional comments.
 ```
 Where available, links to the web page for the articles and books are displayed:
 ```{r thermo_refs_table, eval=FALSE}
@@ -2004,7 +2004,7 @@ Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
 <span style="color:red">`add.OBIGT("AkDi")`</span> -- These data are used in the Akinfiev-Diamond model for aqeuous nonelectrolytes [@AD03].
 
-Detailed references for these optional datasets are in the vignette [<span style="color:blue">*OBIGT thermodynamic database in CHNOSZ*</span>](OBIGT.html) (look under **Optional Data**).
+Detailed references for these optional datasets are in the vignette [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) (look under **Optional Data**).
 
 ## Adding data
 

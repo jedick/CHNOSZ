@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.6-18 (2020-07-04)
+CHANGES IN CHNOSZ 1.3.6-19 (2020-07-04)
 --------------------------------------
 
 MAJOR CHANGES
@@ -32,6 +32,9 @@ CHANGES TO OBIGT DATABASE
 - Use uncompressed data files (i.e. .csv, not .csv.xz) and rename
   DEW_aq.csv to DEW.csv.
 
+- Remove old data file suffixes in references (e.g. [S92] was used to
+  indicate that the data first appeared in SUPCRT92).
+
 DEMOS AND VIGNETTES
 
 - Add demo/comproportionation.R: Gibbs energy of sulfur
@@ -58,19 +61,15 @@ TODO
 
 - TODO: fix error in expr.species("AsO4---")
 
-- TODO: describe default logact in basis.Rd
-
-- TODO: change \url to \doi in Rd files
-
-- TODO: incorporate community uploaded data
-
-- TODO: remove suffixed references (supcrt92, slop98) 
+- TODO: make a site for community uploaded data
 
 - TODO: refresh extdata/supcrt/compare.R
 
 - TODO: get arsenopyrite from Perfetti et al., 2008
 
 - TODO: convert equilibrium.Rnw to equilibrium.Rmd
+
+- TODO: change thermo$OBIGT to thermo()$OBIGT in Rd files
 
 CHANGES IN CHNOSZ 1.3.6 (2020-03-16)
 ------------------------------------
