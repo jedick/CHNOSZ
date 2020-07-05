@@ -18,7 +18,7 @@ today <- function() {
 }
 
 mod.OBIGT <- function(...) {
-  # add or modify species in thermo$OBIGT
+  # add or modify species in thermo()$OBIGT
   thermo <- get("thermo", CHNOSZ)
   # the names and values are in the arguments
   # this works for providing arguments via do.call
@@ -41,7 +41,7 @@ mod.OBIGT <- function(...) {
     else ispecies <- suppressMessages(mapply(info.character, 
       species=args$name, check.protein=FALSE, SIMPLIFY=TRUE, USE.NAMES=FALSE))
   }
-  # the column names of thermo$OBIGT, split at the "."
+  # the column names of thermo()$OBIGT, split at the "."
   cnames <- c(do.call(rbind, strsplit(colnames(thermo$OBIGT), ".", fixed=TRUE)), colnames(thermo$OBIGT))
   # the columns we are updating
   icol <- match(names(args), cnames)
@@ -55,7 +55,7 @@ mod.OBIGT <- function(...) {
   # the arguments as data frame
   args <- data.frame(args, stringsAsFactors=FALSE)
   if(length(inew) > 0) {
-    # the right number of blank rows of thermo$OBIGT
+    # the right number of blank rows of thermo()$OBIGT
     newrows <- thermo$OBIGT[1:length(inew), ]
     # if we don't know something it's NA
     newrows[] <- NA
@@ -83,7 +83,7 @@ mod.OBIGT <- function(...) {
       Z[is.na(Z)] <- 0
       newrows$z.T[isaq] <- Z[isaq]
     }
-    # assign to thermo$OBIGT
+    # assign to thermo()$OBIGT
     thermo$OBIGT <- rbind(thermo$OBIGT, newrows)
     rownames(thermo$OBIGT) <- NULL
     assign("thermo", thermo, CHNOSZ)

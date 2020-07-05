@@ -101,7 +101,7 @@ knit_hooks$set(warning = color_block('magenta'), error = color_block('red'), mes
 
 # Overview
 
-This document introduces the usage of CHNOSZ, a package for the [R software environment](http://r-project.org).
+This vignette was made for version `r sessionInfo()$otherPkgs$CHNOSZ$Version` of CHNOSZ, a package for the [R software environment](http://r-project.org).
 For more information on R, see "[An Introduction to R](https://cran.r-project.org/manuals.html)" and the [contributed documentation](https://cran.r-project.org/other-docs.html) for R.
 
 CHNOSZ has been developed since 2006 as a tool for thermodynamic calculations in geochemistry and compositional biology.
@@ -704,7 +704,7 @@ We turn off the gray coloring beyond the water stability limits (`limit.water`) 
 
 ```{r copper_mosaic, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", message=FALSE, cache=TRUE, fig.cap="Copper minerals and aqueous complexes with chloride, 200 °C.", pngquant=pngquant, timeit=timeit}
 T <- 200
-res <- 300
+res <- 200
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 m1 <- mosaic(bases, pH = c(0, 12, res), Eh=c(-1.2, 0.75, res), T=T)
 diagram(m1$A.species, lwd = 2, fill = NA, limit.water = FALSE)
@@ -1343,7 +1343,7 @@ The loop calculates the properties of each protein using group additivity with a
 
 Although <span style="color:green">`subcrt()`</span> has no provision for protein ionization, the properties of ionization can be calculated via <span style="color:green">`affinity()`</span>, which calls <span style="color:green">`ionize.aa()`</span> if a charged species is in the basis.
 ```{marginfigure}
-Whether to calculate properties using aqueous or crystalline groups is determined by the value of `thermo\$opt\$state`; if it is changed from its default of `aq` to `cr`, no ionization is possible.
+Whether to calculate properties using aqueous or crystalline groups is determined by the value of `thermo()\$opt\$state`; if it is changed from its default of `aq` to `cr`, no ionization is possible.
 ```
 The following plot shows the calculated affinity of reaction between nonionized proteins and their ionized forms as a function of pH.
 Charged and uncharged sets of basis species are used to to activate and suppress the ionization calculations.
@@ -1385,7 +1385,7 @@ a_nonion_species <- affinity()
 unlist(a_nonion_species$values)
 ```
 ```{marginfigure}
-The `ispecies` index (top) refers to the rownumber of `thermo\$species`; that is distinct from the `iprotein` index (bottom, printed as negative integers), which refers to the rownumber of `thermo\$protein`.
+The `ispecies` index (top) refers to the rownumber of `thermo()\$species`; that is distinct from the `iprotein` index (bottom, printed as negative integers), which refers to the rownumber of `thermo()\$protein`.
 ```
 ```{r nonion_values}
 unlist(a_nonion$values)

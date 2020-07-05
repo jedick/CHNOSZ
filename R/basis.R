@@ -89,7 +89,7 @@ basis <- function(species=NULL, state=NULL, logact=NULL, delete=FALSE) {
 
 ### unexported functions ###
 
-# to add the basis to thermo$OBIGT
+# to add the basis to thermo()$OBIGT
 put.basis <- function(ispecies, logact = rep(NA, length(ispecies))) {
   thermo <- get("thermo", CHNOSZ)
   state <- thermo$OBIGT$state[ispecies]
@@ -120,7 +120,7 @@ put.basis <- function(ispecies, logact = rep(NA, length(ispecies))) {
   # the second test: matrix is invertible
   if(inherits(tryCatch(solve(comp), error = identity), "error")) 
     stop("singular stoichiometric matrix")
-  # store the basis definition in thermo$basis, including
+  # store the basis definition in thermo()$basis, including
   # both numeric and character data, so we need to use a data frame
   comp <- cbind(as.data.frame(comp), ispecies, logact, state, stringsAsFactors=FALSE)
   # ready to assign to the global thermo object

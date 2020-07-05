@@ -349,7 +349,7 @@ balance <- function(aout, balance=NULL) {
   #                             (default if balance is missing and all species are proteins)
   #   1                       - balanced on one mole of species
   #   numeric vector          - user-defined n.balance
-  #   "volume"                - standard-state volume listed in thermo$OBIGT
+  #   "volume"                - standard-state volume listed in thermo()$OBIGT
   # the index of the basis species that might be balanced
   ibalance <- numeric()
   # deal with proteins

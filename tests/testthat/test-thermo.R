@@ -3,8 +3,8 @@ context("thermo")
 # clear out any previous basis definition or database alterations
 suppressMessages(reset())
 
-test_that("NAs in thermo$OBIGT propagate to subcrt()", {
-  # first of all, water is in thermo$OBIGT but its properties
+test_that("NAs in thermo()$OBIGT propagate to subcrt()", {
+  # first of all, water is in thermo()$OBIGT but its properties
   # are actually calculated using water() so it has NAs for some parameters
   expect_equal(info(1)$a, as.numeric(NA))
   # get the existing value of c for [Ala](cr) (it's 0)

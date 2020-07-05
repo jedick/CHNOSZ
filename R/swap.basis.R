@@ -16,7 +16,7 @@ element.mu <- function(basis = thermo()$basis, T = 25) {
   # matrix part of the basis definition
   basis.mat <- basis.elements(basis)
   # the standard Gibbs energies of the basis species
-  # don't take it from thermo$OBIGT, even at 25 degC, because G for H2O is NA there
+  # don't take it from thermo()$OBIGT, even at 25 degC, because G for H2O is NA there
   # the sapply(..., "[", 1) is needed to get the first value, in case subcrt appends a polymorph column (i.e. for S(cr))  20171105
   G <- unlist(sapply(subcrt(basis$ispecies, T=T, property="G")$out, "[", 1))
   # chemical potentials of the basis species
@@ -39,7 +39,7 @@ basis.logact <- function(emu, basis = thermo()$basis, T = 25) {
   # check that elements of basis.mat and emu are identical
   if(any(is.na(ielem))) stop(paste("element(s)", paste(names(emu)[is.na(ielem)], collapse=" "), "not found in basis"))
   # the standard Gibbs energies of the basis species
-  # don't take it from thermo$OBIGT, even at 25 degC, because G for H2O is NA there
+  # don't take it from thermo()$OBIGT, even at 25 degC, because G for H2O is NA there
   # the sapply(..., "[", 1) is needed to get the first value, in case subcrt appends a polymorph column (i.e. for S(cr))  20171105
   G <- unlist(sapply(subcrt(basis$ispecies, T=T, property="G")$out, "[", 1))
   # the chemical potentials of the basis species in equilibrium
@@ -89,7 +89,7 @@ swap.basis <- function(species, species2, T = 25) {
   if(is.numeric(species2)) ispecies2 <- species2
   else ispecies2 <- suppressMessages(info(species2))
   if(is.na(ispecies2) | is.list(ispecies2))
-    stop(paste("a species matching '",species2,"' is not available in thermo$OBIGT",sep=""))
+    stop(paste("a species matching '",species2,"' is not available in thermo()$OBIGT",sep=""))
   # try to load the new basis species
   ispecies <- oldbasis$ispecies
   ispecies[ib] <- ispecies2

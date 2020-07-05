@@ -1,7 +1,7 @@
 context("makeup")
 
 test_that("chemical formulas with unknown elements cause a warning", {
-  expect_warning(makeup("X"), "element\\(s\\) not in thermo\\$element")
+  expect_warning(makeup("X"), "element\\(s\\) not in thermo\\(\\)\\$element")
 })
 
 test_that("unparseable chemical formulas cause an error", {
@@ -16,7 +16,7 @@ test_that("numeric species indices, and coefficients indicating charge can be pa
   expect_equal(makeup("-1"), makeup("Z0-1"))
   expect_equal(makeup("-1"), makeup("(Z-1)"))
   expect_equal(makeup("-1"), makeup("Z-1+0"))
-  # the species index of the electron in thermo$OBIGT
+  # the species index of the electron in thermo()$OBIGT
   ie <- info("e-")
   expect_equal(makeup("-1"), makeup(ie))
 })

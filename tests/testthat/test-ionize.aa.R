@@ -72,7 +72,7 @@ test_that("heat capacity and Gibbs energy of ionization are consistent with lite
   G.ionization.100 <- ionize.aa(aa, "G", T=100, pH=seq(0, 14, 2))[,1]
   expect_equal(G.nonionized[1] + G.ionization.25, G.AMY_BACSU.25 * 1e6, tolerance=1e-3, check.attributes=FALSE)
   expect_equal(G.nonionized[2] + G.ionization.100, G.AMY_BACSU.100 * 1e6, tolerance=1e-3, check.attributes=FALSE)
-  # restore thermo$OBIGT to original state
+  # restore thermo()$OBIGT to original state
   reset()
 })
 

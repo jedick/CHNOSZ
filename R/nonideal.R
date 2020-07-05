@@ -30,7 +30,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
 
   # check if we have a valid method setting
   if(!method %in% c("Alberty", "Bdot", "Bdot0", "bgamma", "bgamma0")) {
-    if(missing(method)) stop("invalid setting (", thermo$opt$nonideal, ") in thermo$opt$nonideal")
+    if(missing(method)) stop("invalid setting (", thermo$opt$nonideal, ") in thermo()$opt$nonideal")
     else stop("invalid method (", thermo$opt$nonideal, ")")
   }
 

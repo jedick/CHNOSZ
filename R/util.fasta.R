@@ -8,7 +8,7 @@ read.fasta <- function(file, iseq=NULL, ret="count", lines=NULL, ihead=NULL,
   # read.fasta in package seqinR
   # value of 'iseq' is what sequences to read (default is all)
   # value of 'ret' determines format of return value:
-  #   count: amino acid composition (same columns as thermo$protein, can be used by add.protein)
+  #   count: amino acid composition (same columns as thermo()$protein, can be used by add.protein)
   #        or nucleic acid base composition (A-C-G-T)
   #   seq: amino acid sequence
   #   fas: fasta entry
@@ -155,7 +155,7 @@ count.aa <- function(seq, start=NULL, stop=NULL, type="protein") {
   else if(type=="DNA") letts <- c("A", "C", "G", "T")
   else if(type=="RNA") letts <- c("A", "C", "G", "U")
   else stop(paste("unknown sequence type", type))
-  # the numerical positions of the letters in alphabetical order (i.e. for amino acids, same order as in thermo$protein)
+  # the numerical positions of the letters in alphabetical order (i.e. for amino acids, same order as in thermo()$protein)
   ilett <- match(letts, LETTERS)
   # the letters A-Z represented by raw values
   rawAZ <- charToRaw("ABCDEFGHIJKLMNOPQRSTUVWXYZ")

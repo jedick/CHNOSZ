@@ -27,7 +27,7 @@ if(TPrange=="low") {
 TP <- expand.grid(T=T, P=P)
 if(method=="IAPWS95") {
   # the following should trigger parallel calculations
-  # if nrow(TP) (5751 for TPrange="low") is >= thermo$opt$paramin (default 1000)
+  # if nrow(TP) (5751 for TPrange="low") is >= thermo()$opt$paramin (default 1000)
   rho <- palply("TP", 1:nrow(TP), function(i){CHNOSZ::rho.IAPWS95(TP$T[i], TP$P[i])})
 } else if(method=="SUPCRT92") {
   rho <- water.SUPCRT92("rho", TP$T, TP$P)

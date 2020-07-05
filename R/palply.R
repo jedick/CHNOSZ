@@ -1,7 +1,7 @@
 # CHNOSZ/palply.R
 
 palply <- function(varlist, X, FUN, ...) {
-  # a wrapper function to run parLapply if length(X) >= thermo$opt$paramin
+  # a wrapper function to run parLapply if length(X) >= thermo()$opt$paramin
   # and package 'parallel' is available, otherwise run lapply
   if(length(X) >= get("thermo", CHNOSZ)$opt$paramin) {
     # Use option mc.cores to choose an appropriate cluster size.

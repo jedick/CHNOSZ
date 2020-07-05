@@ -6,7 +6,7 @@ thermo.plot.new <- function(xlim,ylim,xlab,ylab,cex=par('cex'),mar=NULL,lwd=par(
   las=1,xline=NULL, grid = "", col.grid = "gray", ...) {
   # start a new plot with some customized settings
   thermo <- get("thermo", CHNOSZ)
-  # 20120523 store the old par in thermo$opar
+  # 20120523 store the old par in thermo()$opar
   if(is.null(thermo$opar)) {
     thermo$opar <- par(no.readonly=TRUE)
     assign("thermo", thermo, CHNOSZ)

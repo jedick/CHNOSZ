@@ -207,7 +207,7 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
       # which species are proteins
       isprotein <- grepl("_", myspecies$name)
       if(any(isprotein)) {
-        # the rownumbers in thermo$protein
+        # the rownumbers in thermo()$protein
         ip <- pinfo(myspecies$name[isprotein])
         # get the affinity of ionization
         iHplus <- match("H+", rownames(mybasis))

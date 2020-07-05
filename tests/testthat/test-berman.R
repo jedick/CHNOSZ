@@ -8,7 +8,7 @@ prop_Berman <- NULL
 
 test_that("properties of all minerals are computed without warnings", {
   # running this without error means that:
-  # - formulas for the minerals are found in thermo$OBIGT
+  # - formulas for the minerals are found in thermo()$OBIGT
   # - warning is produced for flourtremolite (GfPrTr(calc) >= 1000 J/cal different from GfPrTr(table))
   expect_warning(properties <- lapply(mineral, berman, check.G=TRUE),
                  "fluortremolite", all=TRUE)
@@ -82,7 +82,7 @@ test_that("high-T,P calculated properties are similar to precalculated ones", {
 
 test_that("nonexistent or incomplete user data file is handled properly", {
   thermo("opt$Berman" = "XxXxXx.csv")
-  expect_error(berman("calcite"), "the file named in thermo\\$opt\\$Berman \\(XxXxXx.csv\\) does not exist")
+  expect_error(berman("calcite"), "the file named in thermo\\(\\)\\$opt\\$Berman \\(XxXxXx.csv\\) does not exist")
   thermo("opt$Berman" = system.file("extdata/Berman/testing/BA96_berman.csv", package="CHNOSZ"))
   expect_error(berman("xxx"), "Data for xxx not available. Please add it to")
   thermo("opt$Berman" = NA)

@@ -135,9 +135,9 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       # get the species index for a named species
       if(!can.be.numeric(species[i])) si <- info.character(species[i], state[i])
       else {
-        # check that a numeric argument is a rownumber of thermo$OBIGT
+        # check that a numeric argument is a rownumber of thermo()$OBIGT
         si <- as.numeric(species[i])
-        if(!si %in% 1:nrow(thermo$OBIGT)) stop(paste(species[i], "is not a row number of thermo$OBIGT"))
+        if(!si %in% 1:nrow(thermo$OBIGT)) stop(paste(species[i], "is not a row number of thermo()$OBIGT"))
       }
       # that could have the side-effect of adding a protein; re-read thermo
       thermo <- get("thermo", CHNOSZ)
@@ -351,7 +351,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         # if we are considering multiple phases, and if this phase is cr2 or higher, check if we're below the transition temperature
         if(length(iphases) > length(ispecies) & i > 1) {
           if(!(reaction$state[i] %in% c('liq','cr','gas')) & reaction$name[i-1] == reaction$name[i]) {
-            # after add.OBIGT("SUPCRT92"), quartz cr and cr2 are not next to each other in thermo$OBIGT,
+            # after add.OBIGT("SUPCRT92"), quartz cr and cr2 are not next to each other in thermo()$OBIGT,
             # so use iphases[i-1] here, not iphases[i]-1  20181107
             Ttr <- Ttr(iphases[i-1], iphases[i], P=P, dPdT = dPdTtr(iphases[i-1], iphases[i]))
             if(all(is.na(Ttr))) next

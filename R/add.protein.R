@@ -2,7 +2,7 @@
 # calculate properties of proteins 20061109 jmd
 # reorganize protein functions 20120513
 
-# add.protein - add amino acid counts to thermo$protein (returns iprotein)
+# add.protein - add amino acid counts to thermo()$protein (returns iprotein)
 # seq2aa - calculate amino acid counts from a sequence
 # aasum - combine amino acid counts (sum, average, or weighted sum by abundance)
 
@@ -56,10 +56,10 @@ aasum <- function(aa, abundance=1, average=FALSE, protein=NULL, organism=NULL) {
 
 add.protein <- function(aa) {
   # add a properly constructed data frame of 
-  # amino acid counts to thermo$protein
+  # amino acid counts to thermo()$protein
   thermo <- get("thermo", CHNOSZ)
   if(!identical(colnames(aa), colnames(thermo$protein)))
-    stop("'aa' does not have the same columns as thermo$protein")
+    stop("'aa' does not have the same columns as thermo()$protein")
   # find any protein IDs that are duplicated
   po <- paste(aa$protein, aa$organism, sep="_")
   ip <- pinfo(po)
@@ -74,7 +74,7 @@ add.protein <- function(aa) {
   # return the new rownumbers
   ip <- pinfo(po)
   # make some noise
-  if(!all(ipdup)) message("add.protein: added ", nrow(aa)-sum(ipdup), " new protein(s) to thermo$protein")
-  if(any(ipdup)) message("add.protein: replaced ", sum(ipdup), " existing protein(s) in thermo$protein")
+  if(!all(ipdup)) message("add.protein: added ", nrow(aa)-sum(ipdup), " new protein(s) to thermo()$protein")
+  if(any(ipdup)) message("add.protein: replaced ", sum(ipdup), " existing protein(s) in thermo()$protein")
   return(ip)
 }

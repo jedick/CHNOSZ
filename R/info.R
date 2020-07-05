@@ -10,18 +10,18 @@
 #source("util.data.R")
 
 info <- function(species=NULL, state=NULL, check.it=TRUE) {
-  ## return information for one or more species in thermo$OBIGT
+  ## return information for one or more species in thermo()$OBIGT
   thermo <- get("thermo", CHNOSZ)
   # that should give us the data, not the thermo() function 20190928
   if(is.function(thermo)) stop("CHNOSZ package data is not available; use reset() or library(CHNOSZ) to load it")
   ## if no species are requested, summarize the available data  20101129
   if(is.null(species)) {
     message("info: 'species' is NULL; summarizing information about thermodynamic data...")
-    message(paste("thermo$OBIGT has", nrow(thermo$OBIGT[thermo$OBIGT$state=="aq", ]), "aqueous,",
+    message(paste("thermo()$OBIGT has", nrow(thermo$OBIGT[thermo$OBIGT$state=="aq", ]), "aqueous,",
       nrow(thermo$OBIGT), "total species"))
     message(paste("number of literature sources: ", nrow(thermo$refs), ", elements: ",
       nrow(thermo$element), ", buffers: ", length(unique(thermo$buffers$name)), sep=""))
-    message(paste("number of proteins in thermo$protein is", nrow(thermo$protein), "from",
+    message(paste("number of proteins in thermo()$protein is", nrow(thermo$protein), "from",
       length(unique(thermo$protein$organism)), "organisms"))
     return()
   }
@@ -77,14 +77,14 @@ info.text <- function(ispecies) {
 }
 
 info.character <- function(species, state=NULL, check.protein=TRUE) {
-  # returns the rownumbers of thermo$OBIGT having an exact match of 'species' to
-  # thermo$OBIGT$[species|abbrv|formula] or NA otherwise
-  # a match to thermo$OBIGT$state is also required if 'state' is not NULL
+  # returns the rownumbers of thermo()$OBIGT having an exact match of 'species' to
+  # thermo()$OBIGT$[species|abbrv|formula] or NA otherwise
+  # a match to thermo()$OBIGT$state is also required if 'state' is not NULL
   # (first occurence of a match to species is returned otherwise)
   thermo <- get("thermo", CHNOSZ)
   # find matches for species name, abbreviation or formula
   matches.species <- thermo$OBIGT$name==species | thermo$OBIGT$abbrv==species | thermo$OBIGT$formula==species
-  # since thermo$OBIGT$abbrv contains NAs, convert NA results to FALSE
+  # since thermo()$OBIGT$abbrv contains NAs, convert NA results to FALSE
   matches.species[is.na(matches.species)] <- FALSE
   # turn it in to no match if it's a protein in the wrong state
   ip <- pinfo(species)
@@ -98,7 +98,7 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
     if(check.protein) {
       # did we find a protein? add its properties to OBIGT
       if(!is.na(ip)) {
-        # here we use a default state from thermo$opt$state
+        # here we use a default state from thermo()$opt$state
         if(is.null(state)) state <- thermo$opt$state
         # add up protein properties
         eos <- protein.OBIGT(ip, state=state)
@@ -182,7 +182,7 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   # species indices must be in range
   ispeciesmax <- nrow(thermo$OBIGT)
   if(ispecies > ispeciesmax | ispecies < 1) 
-    stop(paste("species index", ispecies, "not found in thermo$OBIGT\n"))
+    stop(paste("species index", ispecies, "not found in thermo()$OBIGT\n"))
   # remove scaling factors on EOS parameters depending on state
   # use new OBIGT2eos function here
   this <- OBIGT2eos(this, this$state)

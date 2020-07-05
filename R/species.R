@@ -5,7 +5,7 @@
 species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) {
   # 20080925 default quiet=TRUE 20101003 default quiet=FALSE
   # 20120128 remove 'quiet' argument (messages can be hidden with suppressMessages())
-  # 20120523 return thermo$species instead of rownumbers therein, and remove message showing thermo$species
+  # 20120523 return thermo()$species instead of rownumbers therein, and remove message showing thermo()$species
   thermo <- get("thermo", CHNOSZ)
   ## argument processing
   # we can't deal with NA species
@@ -72,15 +72,15 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
     ispecies <- match(species, thermo$species$name)
     # if all species names match, and logact is given, re-call the function with the species indices
     if(!any(is.na(ispecies)) & !is.null(logact)) return(species(ispecies, state=logact, index.return=index.return))
-    # look for species in thermo$OBIGT
+    # look for species in thermo()$OBIGT
     iOBIGT <- suppressMessages(info(species, state))
-    # since that could have updated thermo$OBIGT (with proteins), re-read thermo
+    # since that could have updated thermo()$OBIGT (with proteins), re-read thermo
     thermo <- get("thermo", CHNOSZ)
     # check if we got all the species
     ina <- is.na(iOBIGT)
     if(any(ina)) stop(paste("species not available:", paste(species[ina], collapse=" ")))
   } else {
-    # if species is numeric and low number it refers to the index of existing species, else to thermo$OBIGT
+    # if species is numeric and low number it refers to the index of existing species, else to thermo()$OBIGT
     nspecies <- nrow(thermo$species)
     if(is.null(thermo$species)) nspecies <- 0
     if(max(species) > nspecies) iOBIGT <- species
@@ -117,7 +117,7 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
     rownames(thermo$species) <- seq(nrow(thermo$species))
   } else {
     # update activities or states of existing species
-    # first get the rownumbers in thermo$species
+    # first get the rownumbers in thermo()$species
     if(is.numeric(species[1])) {
       ispecies <- species
       # if state and logact are both NULL we don't do anything but return the selected species

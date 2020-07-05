@@ -17,7 +17,7 @@ ionize.aa <- function(aa, property="Z", T=25, P="Psat", pH=7, ret.val=NULL, supp
   # turn charges into a matrix with as many rows as T,P,pH conditions
   charges <- c(-1, -1, -1, 1, 1, 1, -1, 1, -1)
   charges <- matrix(rep(charges, lmax), nrow=lmax, byrow=TRUE)
-  # the rownumbers of the ionizable groups in thermo$OBIGT
+  # the rownumbers of the ionizable groups in thermo()$OBIGT
   neutral <- c("[Cys]", "[Asp]", "[Glu]", "[His]", "[Lys]", "[Arg]", "[Tyr]", "[AABB]", "[AABB]")
   charged <- c("[Cys-]","[Asp-]","[Glu-]","[His+]","[Lys+]","[Arg+]","[Tyr-]","[AABB+]","[AABB-]")
   ineutral <- info(neutral, "aq")

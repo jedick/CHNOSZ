@@ -11,7 +11,7 @@ test_that("species not contained by basis cause errors", {
   expect_error(species("fayalite"), "element\\(s\\) not in the basis\\: Fe Si")
 })
 
-test_that("for one or more species, species.basis() keeps track of zeroes and puts elements in order of thermo$basis", {
+test_that("for one or more species, species.basis() keeps track of zeroes and puts elements in order of thermo()$basis", {
   basis("CHNOS")
   test0 <- count.elements("OHN0")
   test1 <- count.elements("HN0O")
@@ -44,7 +44,7 @@ test_that("non-available species cause error, and species can be added or modifi
   expect_equal(species(1, -5)$logact, -5)
   # add CO2, aq
   expect_equal(nrow(species("CO2")), 2)
-  # add alanine by index in thermo$OBIGT
+  # add alanine by index in thermo()$OBIGT
   expect_equal(nrow(species(info("alanine"))), 3)
   # if we just use an index, get only that species
   expect_equal(species(3)$name, "alanine")

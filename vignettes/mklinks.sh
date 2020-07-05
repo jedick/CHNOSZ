@@ -96,9 +96,9 @@ sed -i '120,$s/for()/<a href="..\/..\/base\/html\/Control.html" style="backgroun
 sed -i '120,$s/browseURL()/<a href="..\/..\/utils\/html\/browseURL.html" style="background-image:none;">browseURL()<\/a>/g' anintro.html
 
 # add links to OBIGT.html
-sed -i 's/reset()/<a href="..\/html\/thermo.html" style="color:red;">reset()<\/a>/g' OBIGT.html
-sed -i 's/OBIGT()/<a href="..\/html\/thermo.html" style="color:red;">OBIGT()<\/a>/g' OBIGT.html
-sed -i 's/thermo()/<a href="..\/html\/thermo.html" style="color:green;">thermo()<\/a>/g' OBIGT.html
-sed -i 's/add.OBIGT(/<a href="..\/html\/add.OBIGT.html" style="color:red;">add.OBIGT<\/a>(/g' OBIGT.html
-sed -i 's/water(/<a href="..\/html\/water.html" style="color:red;">water<\/a>(/g' OBIGT.html
-sed -i 's/demo(/<a href="..\/demo" style="color:blue;">demo<\/a>(/g' OBIGT.html
+sed -i 's/reset()/<a href="..\/html\/thermo.html"">reset()<\/a>/g' OBIGT.html
+sed -i 's/OBIGT()/<a href="..\/html\/thermo.html">OBIGT()<\/a>/g' OBIGT.html
+sed -i 's/thermo()/<a href="..\/html\/thermo.html">thermo()<\/a>/g' OBIGT.html
+sed -i 's/add.OBIGT(/<a href="..\/html\/add.OBIGT.html">add.OBIGT<\/a>(/g' OBIGT.html
+sed -i 's/water(/<a href="..\/html\/water.html">water<\/a>(/g' OBIGT.html
+sed -i 's/demo(/<a href="..\/demo">demo<\/a>(/g' OBIGT.html

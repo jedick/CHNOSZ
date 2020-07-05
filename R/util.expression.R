@@ -15,7 +15,7 @@ expr.species <- function(species, state = "aq", value = NULL, log = FALSE, molal
   if(use.makeup) {
     # the counts of elements in the species:
     # here we don't care too much if an "element" is a real element
-    # (listed in thermo$element), so we suppress warnings
+    # (listed in thermo()$element), so we suppress warnings
     elements <- suppressWarnings(try(makeup(species), TRUE))
   } else elements <- split.formula(species)
   # if species can't be parsed as a chemical formula, we don't do the formula formatting

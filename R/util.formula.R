@@ -17,7 +17,7 @@ i2A <- function(formula) {
     # convert formulas into a stoichiometric matrix with elements on the columns
     A <- t(sapply(msz, c))
     # add names from character argument
-    # or from thermo$OBIGT for numeric argument
+    # or from thermo()$OBIGT for numeric argument
     if(is.numeric(formula[1])) rownames(A) <- get("thermo", CHNOSZ)$OBIGT$name[formula]
     else rownames(A) <- formula
   }
@@ -64,7 +64,7 @@ mass <- function(formula) {
   formula <- i2A(get.formula(formula))
   ielem <- match(colnames(formula), thermo$element$element)
   if(any(is.na(ielem))) stop(paste("element(s)",
-    colnames(formula)[is.na(ielem)], "not available in thermo$element"))
+    colnames(formula)[is.na(ielem)], "not available in thermo()$element"))
   mass <- as.numeric(formula %*% thermo$element$mass[ielem])
   return(mass)
 }
@@ -75,7 +75,7 @@ entropy <- function(formula) {
   formula <- i2A(get.formula(formula))
   ielem <- match(colnames(formula), thermo$element$element)
   if(any(is.na(ielem))) warning(paste("element(s)",
-    paste(colnames(formula)[is.na(ielem)], collapse=" "), "not available in thermo$element"))
+    paste(colnames(formula)[is.na(ielem)], collapse=" "), "not available in thermo()$element"))
   # entropy per atom
   Sn <- thermo$element$s[ielem] / thermo$element$n[ielem]
   # if there are any NA values of entropy, put NA in the matrix, then set the value to zero
@@ -157,7 +157,7 @@ ZC <- function(formula) {
 
 # Accept a numeric or character argument; the character argument can be mixed
 #   (i.e. include quoted numbers). as.numeric is tested on every value; numeric values
-#   are then interpreted as species indices in the thermodynamic database (rownumbers of thermo$OBIGT),
+#   are then interpreted as species indices in the thermodynamic database (rownumbers of thermo()$OBIGT),
 #   and the chemical formulas for those species are returned.
 # Values that can not be converted to numeric are returned as-is.
 get.formula <- function(formula) {
@@ -168,17 +168,17 @@ get.formula <- function(formula) {
   if(is.data.frame(formula)) return(as.matrix(formula))
   # return the values in the argument, or chemical formula(s) 
   # for values that are species indices
-  # for numeric values, get the formulas from those rownumbers of thermo$OBIGT
+  # for numeric values, get the formulas from those rownumbers of thermo()$OBIGT
   i <- as.integer.nowarn(formula)
-  # we can't have more than the number of rows in thermo$OBIGT
+  # we can't have more than the number of rows in thermo()$OBIGT
   thermo <- get("thermo", CHNOSZ)
   iover <- i > nrow(thermo$OBIGT)
   iover[is.na(iover)] <- FALSE
   if(any(iover)) stop(paste("species number(s)",paste(i[iover],collapse=" "),
-    "not available in thermo$OBIGT"))
+    "not available in thermo()$OBIGT"))
   # we let negative numbers pass as formulas
   i[i < 0] <- NA
-  # replace any species indices with formulas from thermo$OBIGT
+  # replace any species indices with formulas from thermo()$OBIGT
   formula[!is.na(i)] <- thermo$OBIGT$formula[i[!is.na(i)]]
   return(formula)
 }

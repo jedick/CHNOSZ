@@ -28,7 +28,7 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
     # remove the last (URL) component
     #x$URL <- NULL
     x <- x[1:5]
-    # count the number of times each source is cited in thermo$OBIGT
+    # count the number of times each source is cited in thermo()$OBIGT
     # e.g. if key is "Kel60" we match "Kel60 [S92]" but not "Kel60.1 [S92]"
     # http://stackoverflow.com/questions/6713310/how-to-specify-space-or-end-of-string-and-space-or-start-of-string
     # we also have to escape keys with "+" signs
@@ -394,7 +394,7 @@ dumpdata <- function(file=NULL) {
 
 ### unexported functions ###
 
-# Take a data frame in the format of thermo$OBIGT of one or more rows,
+# Take a data frame in the format of thermo()$OBIGT of one or more rows,
 #   remove scaling factors from equations-of-state parameters,
 #   and apply new column names depending on the state.
 # And convert energy units from J to cal (used by subcrt()) 20190530

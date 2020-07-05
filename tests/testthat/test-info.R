@@ -12,7 +12,7 @@ test_that("info.character() produces expected results and messages", {
 })
 
 test_that("info.numeric() produces expected errors and messages", {
-  expect_error(info.numeric(9999), "species index 9999 not found in thermo\\$OBIGT")
+  expect_error(info.numeric(9999), "species index 9999 not found in thermo\\(\\)\\$OBIGT")
   iargon <- info("argon", "gas")
   expect_message(info.numeric(iargon), "Cp of argon\\(gas\\) is NA; set by EOS parameters to 4.97")
   iMgSO4 <- info("MgSO4")

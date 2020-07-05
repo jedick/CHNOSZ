@@ -133,7 +133,7 @@ convert <- function(value, units, T=298.15,
 
 outvert <- function(value,units) {
   # converts the given value from the given units to
-  # those specified in thermo$opt
+  # those specified in thermo()$opt
   units <- tolower(units)
   opt <- get("thermo", CHNOSZ)$opt
   if(units %in% c('c','k')) {
@@ -153,7 +153,7 @@ outvert <- function(value,units) {
 
 envert <- function(value,units) {
   # convert values to the specified units
-  # from those given in thermo$opt
+  # from those given in thermo()$opt
   if(!is.numeric(value[1])) return(value)
   units <- tolower(units)
   opt <- get("thermo", CHNOSZ)$opt

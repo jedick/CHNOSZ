@@ -58,7 +58,7 @@ makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
   }
   # if the formula argument is numeric,
   # and if the thermo object is available,
-  # get the formula of that numbered species from thermo$OBIGT
+  # get the formula of that numbered species from thermo()$OBIGT
   if(exists("CHNOSZ")) {
     thermo <- get("thermo", CHNOSZ)
     if(is.numeric(formula)) formula <- thermo$OBIGT$formula[formula]
@@ -89,7 +89,7 @@ makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
   # complain if there are any elements that look strange
   if(exists("CHNOSZ")) {
     are.elements <- names(out) %in% thermo$element$element
-    if(!all(are.elements)) warning(paste("element(s) not in thermo$element:", 
+    if(!all(are.elements)) warning(paste("element(s) not in thermo()$element:", 
       paste(names(out)[!are.elements], collapse=" ") ))
   }
   # done!

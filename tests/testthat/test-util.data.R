@@ -7,7 +7,7 @@ test_that("checkGHS() and checkEOS() (via info()) produce messages", {
   expect_message(info(i2), "Cp of Cu\\+2 aq \\(60\\) differs by 3.62 cal K-1 mol-1 from tabulated value")
 })
 
-test_that("checkGHS() and checkEOS() respond to thermo$opt$*.tol", {
+test_that("checkGHS() and checkEOS() respond to thermo()$opt$*.tol", {
   i1 <- info("SO4-2")
   thermo("opt$Cp.tol" = 0.5)
   expect_message(info(i1), "checkEOS")

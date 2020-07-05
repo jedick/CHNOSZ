@@ -15,7 +15,7 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
     # the parameters for *this* species
     PAR <- parameters[k, ]
     if(all(is.na(PAR[9:21]))) {
-      # use Berman equations (parameters not in thermo$OBIGT)
+      # use Berman equations (parameters not in thermo()$OBIGT)
       properties <- berman(PAR$name, T=T, P=P, thisinfo=PAR)
       iprop <- match(property, colnames(properties))
       values <- properties[, iprop, drop=FALSE]
@@ -28,7 +28,7 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
       values <- data.frame(matrix(NA, ncol = length(property), nrow=ncond))
       colnames(values) <- property
       # a test for availability of heat capacity coefficients (a, b, c, d, e, f)
-      # based on the column assignments in thermo$OBIGT
+      # based on the column assignments in thermo()$OBIGT
       if(any(!is.na(PAR[, 14:19]))) {
         # we have at least one of the heat capacity coefficients;
         # zero out any NA's in the rest (leave lambda and T of transition (columns 19-20) alone)
@@ -85,7 +85,7 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
         if(property[i] == "H") values[, i] <- PAR$H + intCpdT + intVdP - T*intdVdTdP
         if(property[i] == "S") values[, i] <- PAR$S + intCpdlnT - intdVdTdP
       }
-    } # end calculations using parameters from thermo$OBIGT
+    } # end calculations using parameters from thermo()$OBIGT
     out[[k]] <- values
   } # end loop over species
   return(out)

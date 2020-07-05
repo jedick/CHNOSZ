@@ -103,7 +103,7 @@ test_that("'iprotein' gives consistent results on a transect", {
   pH <- c(7.350, 7.678, 7.933, 7.995, 8.257)
   # Eq. 24 of the paper
   H2 <- -11+T*3/40
-  # remove "RESIDUE" entries in thermo$OBIGT (clutter from first test)
+  # remove "RESIDUE" entries in thermo()$OBIGT (clutter from first test)
   reset()
   basis(c("HCO3-", "H2O", "NH3", "HS-", "H2", "H+"),
     "aq", c(-3, 0, -4, -7, 999, 999))

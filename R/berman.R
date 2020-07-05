@@ -31,7 +31,7 @@ berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.t
         userfileexists <- TRUE
         BDat_user <- read.csv(userfile, as.is=TRUE)
         dat <- rbind(BDat_user, dat)
-      } else stop("the file named in thermo$opt$Berman (", userfile, ") does not exist")
+      } else stop("the file named in thermo()$opt$Berman (", userfile, ") does not exist")
     } 
   }
   # remove duplicates (only the first, i.e. most recent entry is kept)
@@ -46,7 +46,7 @@ berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.t
   irow <- which(dat$name == name)
   if(length(irow)==0) {
     if(userfileexists) stop("Data for ", name, " not available. Please add it to ", userfile)
-    if(!userfileexists) stop("Data for ", name, " not available. Please add it to your_data_file.csv and run thermo$OBIGT$Berman <<- 'path/to/your_data_file.csv'")
+    if(!userfileexists) stop("Data for ", name, " not available. Please add it to your_data_file.csv and run thermo('opt$Berman' = 'path/to/your_data_file.csv')")
   }
   # the function works fine with just the following assign() call,
   # but an explicit dummy assignment here is used to avoid "Undefined global functions or variables" in R CMD check
@@ -55,7 +55,7 @@ berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.t
     k4 <- k5 <- k6 <- l1 <- l2 <- v1 <- v2 <- v3 <- v4 <- NA
   # assign values to the variables used below
   for(i in 1:ncol(dat)) assign(colnames(dat)[i], dat[irow, i])
-  # get the entropy of the elements using the chemical formula in thermo$OBIGT
+  # get the entropy of the elements using the chemical formula in thermo()$OBIGT
   if(is.null(thisinfo)) thisinfo <- info(info(name, "cr", check.it=FALSE))
   SPrTr_elements <- convert(entropy(thisinfo$formula), "J")
   # check that G in data file is the G of formation from the elements --> Benson-Helgeson convention (DG = DH - T*DS)

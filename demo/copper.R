@@ -5,7 +5,7 @@
 
 # we need superseded data for Cu-Gly complexes 20190206
 add.OBIGT("OldAA")
-# add some new species to thermo$OBIGT
+# add some new species to thermo()$OBIGT
 m1 <- makeup(info(c("Cu+", "glycinate", "glycinate")), sum=TRUE)
 mod.OBIGT(name="Cu(Gly)2-", formula=as.chemical.formula(m1))
 m2 <- makeup(info(c("Cu+2", "glycinate", "H+")), sum=TRUE)

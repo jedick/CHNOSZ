@@ -1,5 +1,5 @@
-CHANGES IN CHNOSZ 1.3.6-19 (2020-07-04)
---------------------------------------
+CHANGES IN CHNOSZ 1.3.6-20 (2020-07-05)
+---------------------------------------
 
 MAJOR CHANGES
 
@@ -40,7 +40,7 @@ DEMOS AND VIGNETTES
 - Add demo/comproportionation.R: Gibbs energy of sulfur
   comproportionation, after Amend et al., 2020.
 
-- Remove vignete hotspring.Rnw.
+- Remove vignette hotspring.Rnw.
 
 - Revise OBIGT.Rmd to reduce the size of the HTML file and make
   deep linking to individual sections work.
@@ -57,6 +57,8 @@ CHANGES TO FUNCTIONS
 
 - subcrt() uses degree symbol in messages (°C).
 
+- Change thermo$... to thermo()$... in messages and comments.
+
 TODO
 
 - TODO: fix error in expr.species("AsO4---")
@@ -69,7 +71,7 @@ TODO
 
 - TODO: convert equilibrium.Rnw to equilibrium.Rmd
 
-- TODO: change thermo$OBIGT to thermo()$OBIGT in Rd files
+- TODO: make separate directories for default and optional data files
 
 CHANGES IN CHNOSZ 1.3.6 (2020-03-16)
 ------------------------------------

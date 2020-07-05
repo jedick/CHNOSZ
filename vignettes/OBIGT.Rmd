@@ -14,11 +14,6 @@ nocite: |
 csl: elementa.csl
 ---
 <style>
-/* for CHNOSZ link */
-h1 a:link {
-  color: red;
-  text-decoration: none;
-}
 /* https://css-tricks.com/hash-tag-links-padding/ */
 a.anchor::before {
   display: block;
@@ -194,7 +189,7 @@ used <- character()
 optused <- character()
 ```
 
-This [vignette](index.html), produced on `r Sys.Date()`, lists the citations for thermodynamic data in the OBIGT database in CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
+This vignette, produced on `r Sys.Date()`, lists the references for thermodynamic data in the OBIGT database in CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
 Except for Optional Data, all data are present in the default database, which is loaded when the package is attached, or by running `reset()` or `OBIGT()`.
 
 Each button below corresponds to one of the CSV data files in the `extdata/OBIGT` package directory.

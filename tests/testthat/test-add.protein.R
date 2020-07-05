@@ -16,7 +16,7 @@ test_that("add.protein works as expected", {
 
 test_that("errors and messages occur in some circumstances", {
   expect_error(seq2aa("LYS_CHICK", "XXX"), "no characters match an amino acid")
-  expect_error(add.protein(count.aa("AAA")), "does not have the same columns as thermo\\$protein")
+  expect_error(add.protein(count.aa("AAA")), "does not have the same columns as thermo\\(\\)\\$protein")
   expect_message(add.protein(pinfo(pinfo("CYC_BOVIN"))), "replaced 1 existing protein\\(s\\)")
 })
 
