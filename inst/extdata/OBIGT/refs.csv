@@ -1,6 +1,5 @@
 key,author,year,citation,note,URL
 Kel60,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gases Cp",http://www.worldcat.org/oclc/693388901
-Kel60.1,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","larnite Cp",http://www.worldcat.org/oclc/693388901
 Kel60.2,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","iron Cp",http://www.worldcat.org/oclc/693388901
 Kel60.3,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gypsum Cp",http://www.worldcat.org/oclc/693388901
 Pan70,"L. B. Pankratz",1970,"U. S. Bureau of Mines Report of Investigations 7430",chlorargyrite,http://www.worldcat.org/oclc/14154245
@@ -11,7 +10,7 @@ HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","dat
 HDNB78.1,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","litharge S, V, and Cp parameters",http://www.worldcat.org/oclc/13594862
 HDNB78.2,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","celestite V and Cp parameters",http://www.worldcat.org/oclc/13594862
 RHF78,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",chlorargyrite,http://pubs.er.usgs.gov/publication/b1452
-RHF78.1,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","dickite, fluorphlogopite, halloysite, and pyrope",http://pubs.er.usgs.gov/publication/b1452
+RHF78.1,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","halloysite",http://pubs.er.usgs.gov/publication/b1452
 RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",iron,http://pubs.er.usgs.gov/publication/b1452
 RHF78.3,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","gibbsite GHS",http://pubs.er.usgs.gov/publication/b1452
 RHF78.4,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","rutile and titanite",http://pubs.er.usgs.gov/publication/b1452
@@ -64,6 +63,10 @@ PK95,"V. B. Parker and I. L. Khodakovskii",1995,"J. Phys. Chem. Ref. Data 24, 16
 RH95,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","gypsum GHS",http://pubs.er.usgs.gov/publication/b2131
 RH95.1,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","hydrogen fluoride and hydrogen chloride",http://pubs.er.usgs.gov/publication/b2131
 RH95.2,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","dawsonite: Cp coefficients corrected in @TKSS14; Cp value at 25 &deg;C from @BPAH07, citing @FSR76",http://pubs.er.usgs.gov/publication/b2131
+RH95.3,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","almandine, dickite, glaucophane, grunerite, pyrope (G and H not in SUPCRT92)",http://pubs.er.usgs.gov/publication/b2131
+RH95.4,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","fluorphlogopite (Al/Si disordered) (G and H not in SUPCRT92)",http://pubs.er.usgs.gov/publication/b2131
+RH95.5,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","larnite (G and H not in SUPCRT92); Cp from @Kel60",http://pubs.er.usgs.gov/publication/b2131
+RH95.6,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","bromellite (G and H not in SUPCRT92)",http://pubs.er.usgs.gov/publication/b2131
 SK95,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","metal-organic acid complexes",https://doi.org/10.1016/0016-7037(95)00058-8
 SK95.1,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","alanate, glycinate and their complexes with metals. Values are taken from slop98.dat, which notes corrected values for some species.",https://doi.org/10.1016/0016-7037(95)00058-8
 Sho95,"E. L. Shock",1995,"Am. J. Sci. 295, 496-580","carboxylic acids",https://doi.org/10.2475/ajs.295.5.496

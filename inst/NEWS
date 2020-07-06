@@ -35,6 +35,10 @@ CHANGES TO OBIGT DATABASE
 - Remove old data file suffixes in references (e.g. [S92] was used to
   indicate that the data first appeared in SUPCRT92).
 
+- Add GHS for almandine, dickite, fluorphlogopite, glaucophane,
+  grunerite, larnite, pyrope (SUPCRT92.csv) and bromellite
+  (inorganic_cr.csv) from Robie and Hemingway, 1995.
+
 DEMOS AND VIGNETTES
 
 - Add demo/comproportionation.R: Gibbs energy of sulfur
