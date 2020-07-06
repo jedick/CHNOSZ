@@ -1,5 +1,5 @@
 ****************************
-release checklist for CHNOSZ
+Release checklist for CHNOSZ
     (updated 2020-07-06)
 ****************************
 
@@ -15,7 +15,7 @@ release checklist for CHNOSZ
 - Check reverse dependencies on CRAN: canprot, ecipex, iemisc as of 2019-08-02
 
 **********************
-updating data in OBIGT
+Updating data in OBIGT
 **********************
 
 - Add data to relevant csv file in extdata/OBIGT.
@@ -43,7 +43,7 @@ updating data in OBIGT
   write.csv(co, "OBIGT_check.csv", row.names=FALSE, na="")
 
 ******************
-updating vignettes
+Updating vignettes
 ******************
 
 - Customize rmarkdown installation (in R local library)
@@ -77,7 +77,7 @@ R compatibility
   *minimum* R version (from the DESCRIPTION file)
 
 *************
-documentation 
+Documentation 
 *************
 
 - Update list of documentation topics in examples() with any new ones
