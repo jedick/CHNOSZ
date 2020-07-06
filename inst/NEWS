@@ -1,4 +1,4 @@
-CHANGES IN CHNOSZ 1.3.6-20 (2020-07-05)
+CHANGES IN CHNOSZ 1.3.6-21 (2020-07-06)
 ---------------------------------------
 
 MAJOR CHANGES
@@ -45,6 +45,8 @@ DEMOS AND VIGNETTES
 - Revise OBIGT.Rmd to reduce the size of the HTML file and make
   deep linking to individual sections work.
 
+- Work in progress: convert equilibrium.Rnw to equilibrium.Rmd.
+
 CHANGES TO FUNCTIONS
 
 - subcrt(): change 'action.unbalanced' argument to 'autobalance',
@@ -59,6 +61,11 @@ CHANGES TO FUNCTIONS
 
 - Change thermo$... to thermo()$... in messages and comments.
 
+BUG FIXES
+
+- Fix palply.Rd for new warning "Non-file package-anchored link(s) in
+  documentation object" in R CMD check.
+
 TODO
 
 - TODO: fix error in expr.species("AsO4---")
@@ -69,9 +76,9 @@ TODO
 
 - TODO: get arsenopyrite from Perfetti et al., 2008
 
-- TODO: convert equilibrium.Rnw to equilibrium.Rmd
-
 - TODO: make separate directories for default and optional data files
+
+- TODO: add missing G and H for dickite and other minerals in SUPCRT92.csv
 
 CHANGES IN CHNOSZ 1.3.6 (2020-03-16)
 ------------------------------------

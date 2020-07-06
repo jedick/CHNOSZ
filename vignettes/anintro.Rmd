@@ -5,7 +5,6 @@ date: "`r Sys.Date()`"
 output:
   tufte::tufte_html:
     tufte_features: ["background"]
-    css: "vig.css"
     toc: true
     mathjax: null
   tufte::tufte_handout:
@@ -22,6 +21,23 @@ bibliography: vig.bib
 link-citations: yes
 csl: elementa.csl
 ---
+
+<style>
+html { 
+  font-size: 14px;
+}
+body {
+  font-family: ‘Times New Roman’, Times, serif;
+}
+li {
+  padding: 0.25rem 0;
+}
+/* zero margin around pre blocks (looks more like R console output) */
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+</style>
 
 ```{r options, include=FALSE}
 options(width = 80)
@@ -897,9 +913,6 @@ In contrast, models for systems of organic and biomolecules often involve metast
 ## Getting from affinity to equilibrium
 
 The <span style="color:green">`equilibrate()`</span> function in CHNOSZ automatically chooses between two methods for calculating equilibrium.
-```{marginfigure}
-For more information, see the vignette [<span style="color:blue">*Equilibrium in CHNOSZ*</span>](equilibrium.pdf).
-```
 The method based on the Boltzmann equation is fast, but is applicable only to systems where the coefficient on the balanced basis species in each of the formation reactions is one.
 The reaction-matrix method is slower, but can be applied to systems were the balanced basis species has reaction coefficients other than one.
 
@@ -1505,9 +1518,6 @@ Balancing on one of the basis species remains a possibility, using the `balance`
 However, there is an additional consideration: owing to the large size of proteins compared to the basis species, the distribution of *proteins* in metastable equilibrium has many orders of magnitude separation between the activities of the dominant and less-dominant proteins.
 The metastable coexistence of the *residues* (i.e. per-residue formulas, or residue equivalents) of the same proteins spans a much smaller range of chemical activities.
 In CHNOSZ, the calculation of metastable equilibrium activities of the residue equivalents is referred to as *normalization*.
-```{marginfigure}
-See the vignette [<span style="color:blue">*Equilibrium in CHNOSZ*</span>](equilibrium.pdf) for other examples using normalization.
-```
 
 To take an example, let's look at the metastable equilibrium distribution of selected proteins in the ER-to-Golgi location of *S. cerevisiae* (yeast).
 This example brings some other functions we haven't seen yet: <span style="color:green">`unitize()`</span> and <span style="color:green">`revisit()`</span>.

@@ -1,0 +1,111 @@
+---
+title: "Equilibrium in CHNOSZ"
+author: "Jeffrey M. Dick"
+output:
+  html_vignette:
+    mathjax: null
+vignette: >
+  %\VignetteIndexEntry{Equilibrium in CHNOSZ}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: vig.bib
+csl: elementa.csl
+---
+<style>
+/* https://css-tricks.com/hash-tag-links-padding/ */
+a.anchor::before {
+  display: block;
+  content: " ";
+  margin-top: -190px;
+  height: 190px;
+  visibility: hidden;
+  pointer-events: none;
+}
+</style>
+<script>
+function ToggleDiv(ID) {
+  var D = document.getElementById("D-" + ID);
+  var B = document.getElementById("B-" + ID);
+  if (D.style.display === "none") {
+    // open the div and change button text
+    D.style.display = "block";
+    B.innerText = "Hide code";
+  } else {
+    // close the div and change button text
+    D.style.display = "none";
+    B.innerText = "Show code";
+  }
+}
+</script>
+
+```{r CHNOSZ_reset, include=FALSE}
+library(CHNOSZ)
+reset()
+```
+
+This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
+This document defines the concepts, explains the organization of functions, and provides examples of equilibrium calculations in CHNOSZ.
+
+First, some limitations.
+CHNOSZ is not a general-purpose speciation code.
+The types of equilibrium calculations it can handle are restricted to those systems that can be described as *balanced on an element*.
+For example, we can predict the speciation of Au in complexes with chloride, hydroxide, and sulfide all with specified activities.
+But we can not at the same time predict the formation of species such as NaCl(aq), which is required for a complete equilibrium model.
+
+## Concepts
+
+System
+:   Chemical system defined by formed species (referred to simply as species) and basis species, which are analogous to thermodynamic components.
+The possible species are any that are available in the [OBIGT thermodynamic database](OBIGT.html).
+
+    Species
+    :   Selection of possible chemical species for which you want to calculate relative stabilities.
+
+    Basis species
+    :   Any minimal set of possible species that can be used to balance the formation reactions of the species.
+    Additionally, in CHNOSZ the number of basis species must be equal to the number of elements.
+
+Formation reaction
+:   Chemical reaction giving the stoichiometry of basis species combined to make 1 mole of a species.
+
+Transformation reaction
+:   Any combination of two formation reactions in opposite directions (1 mole of a species reacts to form 1 mole of another species).
+
+Balancing coefficients
+:   (*n*~balance~) For a system that is balanced on one of the basis species,
+the number of moles of that basis species in the formation reaction of each of the species.
+The number can be positive or negative but not zero.
+Can also represent a virtual quantity, such as 1 (balance on moles of species) or number of amino acids in a protein sequence (balance on protein length).
+
+Speciation diagram
+:   Diagram showing the equilibrium activities of species as a function of one variable.
+
+Predominance diagram
+:   Diagram variables showing fields for species with highest equilibrium activity as a function of two variables.
+Also known as an equal activity diagram for aqueous species or stability diagram for minerals.
+
+Chemical affinity
+:   Negative of the differential of Gibbs energy of a system with respect to reaction progress.
+For a given reaction, chemical affinity is the negative of Gibbs energy of reaction: *A* = 2.303*RT*log(*K*/*Q*),
+where *K* is the equilibrium constant and *Q* is the activity quotient of species in the reaction
+(log here denotes base-10 logarithms, i.e. `log10` in R).
+
+Maximum affinity method
+:   Approach used to construct predominance diagrams not by finding the highest activity at equilibrium but by finding the highest affinity at a reference activity.
+
+    Reference activity
+    :   User-defined equal activities of species (e.g. unit activity for minerals and 10^-3^ for aqueous species).
+
+    Reference affinity
+    :   Chemical affinities of the formation reactions of the species with the reference activity.
+
+Equilibration method
+:   Calculations of the activities of species in equilibrium.
+
+    Metastable equilibrium
+    :   The condition that the affinities of all *transformation* reactions are zero.
+    Implemented with the `equilibrate()` function in CHNOSZ, which is used below.
+
+    Total equilibrium
+    :   The condition that the affinities of all *formation* reactions are zero.
+    Implemented with the `solubility()` function in CHNOSZ, which is not described here.

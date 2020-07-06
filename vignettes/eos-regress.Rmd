@@ -6,7 +6,6 @@ date: "`r Sys.Date()`"
 output:
   tufte::tufte_html:
     tufte_features: ["background"]
-    css: "vig.css"
     toc: true
     mathjax: null
     highlight: null
@@ -24,6 +23,23 @@ bibliography: vig.bib
 link-citations: yes
 csl: elementa.csl
 ---
+
+<style>
+html { 
+  font-size: 14px;
+}
+body {
+  font-family: ‘Times New Roman’, Times, serif;
+}
+li {
+  padding: 0.25rem 0;
+}
+/* zero margin around pre blocks (looks more like R console output) */
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+</style>
 
 ```{r width80, include=FALSE}
 options(width = 80)
