@@ -1,6 +1,9 @@
 # test-berman.R 20171001
 context("berman")
 
+# this is a long test ... skip it if we're on R CMD check --as-cran
+if(!any(grepl("R_CHECK_TIMINGS", names(Sys.getenv())))) {
+
 # get parameters for all available minerals
 dat <- berman()
 mineral <- unique(dat$name)
@@ -104,3 +107,5 @@ test_that("NAs don't creep into calculations below 298.15 K for minerals with di
   # 20191116
   expect_false(any(is.na(subcrt("K-feldspar", P = 1, T = seq(273.15, 303.15, 5), convert = FALSE)$out[[1]]$G)))
 })
+
+}

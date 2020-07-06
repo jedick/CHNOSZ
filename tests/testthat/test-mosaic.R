@@ -1,5 +1,8 @@
 context("mosaic")
 
+# this is a long test ... skip it if we're on R CMD check --as-cran
+if(!any(grepl("R_CHECK_TIMINGS", names(Sys.getenv())))) {
+
 test_that("results are consistent with affinity()", {
   basis(c("CO2", "H2O", "NH3", "O2"), c(0, 0, 0, 0))
   species(c("alanine", "glycine"))
@@ -155,3 +158,5 @@ test_that("mosaic() - equilibrate() produces equilibrium activities that are con
 })
 
 # TODO: test that basis specifications can be exchanged between bases and bases2 without altering output
+
+}

@@ -1,16 +1,18 @@
 ****************************
 release checklist for CHNOSZ
-    (updated 2020-07-04)
+    (updated 2020-07-06)
 ****************************
 
-- run examples() and demos() and inspect their output (especially plots)
+- Run examples() and demos() and inspect their output (especially plots)
 
-- use testthat::test_package("CHNOSZ", reporter = "progress") to find
-  warnings from tests that aren't shown in R CMD check
+- Install the package with --install-tests and run
+  testthat::test_package("CHNOSZ", reporter = "progress") to:
+  - run *all* tests (long ones are skipped under R CMD check --as-cran)
+  - find warnings from tests that aren't shown in R CMD check
 
-- check that uniprot.aa() works with current UniProt web pages
+- Check that uniprot.aa() works with current UniProt web pages
 
-- check reverse dependencies on CRAN: canprot, ecipex, iemisc as of 2019-08-02
+- Check reverse dependencies on CRAN: canprot, ecipex, iemisc as of 2019-08-02
 
 **********************
 updating data in OBIGT
@@ -65,25 +67,25 @@ updating vignettes
 R compatibility
 ***************
 
-- run R CMD check using R compiled without long doubles (emulating Solaris checks on CRAN)
+- $un R CMD check using R compiled without long doubles (emulating Solaris checks on CRAN)
   (CFLAGS=-ffloat-store ./configure --disable-long-double)
 
-- run R CMD check with Latin-1 locale (catches errors on CRAN's debian-clang)
+- $un R CMD check with Latin-1 locale (catches errors on CRAN's debian-clang)
   LC_CTYPE=en_US R CMD check CHNOSZ_x.x.x.tar.gz
 
-- backwards compatibility: build and check the package with the
+- Backwards compatibility: build and check the package with the
   *minimum* R version (from the DESCRIPTION file)
 
 *************
 documentation 
 *************
 
-- Udate list of documentation topics in examples() with any new ones
+- Update list of documentation topics in examples() with any new ones
 
 - Ensure all Rd files have \concept{...} as listed in CHNOSZ-package.Rd
 
 - Instead of \doi{...}, use \url{https://doi.org/...}. The \doi macro
   generates a large (ca. 265K) build/partial.rdb file (see WRE 1.3.2).
 
-- run R_PAPERSIZE=letter R CMD Rd2pdf chnosz/
+- Run R_PAPERSIZE=letter R CMD Rd2pdf chnosz/
   and fix any lines truncated by page margins

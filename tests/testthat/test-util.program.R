@@ -1,8 +1,11 @@
 context("util.program")
 
-# these tests are inefficient uses of parallelization
-# (overhead is greater than the savings from multiple cores)
-# just here to test that the functions are working
+# this is a long test ... skip it if we're on R CMD check --as-cran
+if(!any(grepl("R_CHECK_TIMINGS", names(Sys.getenv())))) {
+
+# These tests show inefficient uses of parallelization
+# (overhead is greater than the savings from multiple cores).
+# They are here just to test that the functions are working.
 
 test_that("palply() launches calculations on multiple cores", {
   if(min(getOption("mc.cores"), 2) > 1 & parallel::detectCores() > 1) {
@@ -27,3 +30,5 @@ test_that("other functions are calling palply() properly", {
     expect_message(e <- equilibrate(a), "equil.reaction running 1000 calculations")
   }
 })
+
+}

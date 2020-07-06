@@ -1,6 +1,9 @@
 # testing revised water.lines 2017-06-04
 context("water.lines")
 
+# this is a long test ... skip it if we're on R CMD check --as-cran
+if(!any(grepl("R_CHECK_TIMINGS", names(Sys.getenv())))) {
+
 # change to TRUE to show plots (for additional testing)
 plot.it <- FALSE
 # change to FALSE to make base plots (for additional testing)
@@ -71,3 +74,5 @@ test_that("water.lines() masks H2 and O2 fields on diagrams with T as y-axis", {
   swap.basis("hydrogen", "H2"); n6 <- nspecies(affinity(H2=c(-50, 10, res), T=c(0, 200, res)))  # T-logaH2
   expect_equal(c(n1, n2, n3, n4, n5, n6), c(1, 1, 1, 1, 1, 1))
 })
+
+}

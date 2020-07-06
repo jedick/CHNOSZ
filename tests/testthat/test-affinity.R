@@ -1,5 +1,8 @@
 context("affinity")
 
+# this is a long test ... skip it if we're on R CMD check --as-cran
+if(!any(grepl("R_CHECK_TIMINGS", names(Sys.getenv())))) {
+
 # clear out any previous basis definition or database alterations
 suppressMessages(reset())
 
@@ -200,3 +203,5 @@ test_that("sout is processed correctly", {
   a2 <- affinity(T = c(0, 100), sout = a0$sout)
   expect_equal(a1$values, a2$values)
 })
+
+}
