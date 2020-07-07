@@ -165,7 +165,7 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
   if(is.null(newbasis)) context <- '' else context <- paste(', ',basisnames[newbasis],' (conserved)',sep='')
   reqtext <- paste(c2s(basisnames[ibasisrequested]),' (active)',sep='')
   if(length(ibasisadded)==0) addtext <- '' else addtext <- paste(', ',c2s(basisnames[ibasisadded]),sep='')
-  message(paste('buffer: ( ',bufname,' ) for activity of ',reqtext,addtext,context,sep=''))
+  message(paste("buffer: '", bufname, "' for activity of ", reqtext, addtext, context, sep = ""))
   #print(bufbasis)
   # there could still be stuff here (over-defined system?)
   xx <- bufbasis[,-ibasis,drop=FALSE]
@@ -184,18 +184,14 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
         # do nothing
       } else {
         for(j in 1:ncol(xx)) {
-          #if(i %in% are.proteins & colnames(xx)[j]=='H+' & thermo$opt$ionize) {
-          #  bs <- as.data.frame(charge[[match(ispecies[i],names(charge))]])[i,j] * 
-          # logact.basis[[match(colnames(xx)[j],rownames(thermo$basis))]]
-          #} else bs <- xx[i,j] * logact.basis[[match(colnames(xx)[j],rownames(thermo$basis))]]
           bs <- xx[i,j] * logact.basis[[match(colnames(xx)[j],basisnames)]]
           if(!is.matrix(bs)) bs <- matrix(bs,byrow=TRUE,nrow=nrow(as.data.frame(logact.basis[[1]])))
-          bs <- as.data.frame(bs)
+          if(ncol(bs)==1) b <- matrix(b)
           b <- b - bs
         }
       }
     }
-    B[[i]] <- as.data.frame(b)
+    B[[i]] <- b
   }
   # a place to put the results
   X <- rep(B[1],length(ibasis))
@@ -204,21 +200,7 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
       b <- numeric()
       for(k in 1:length(B)) b <- c(b,B[[k]][i,j])
       AAA <- A
-      # here we calculate the coefficient on H+ if ionized proteins are present
-      #if('H+' %in% colnames(A) & thermo$opt$ionize) {
-      #  H.coeff <- numeric()
-      #  for(l in 1:length(ispecies)) {
-      #    coeff <- as.data.frame(charge[[match(ispecies[l],names(charge))]])[i,j]
-      #    if(l %in% are.proteins) H.coeff <- c(H.coeff,coeff) else H.coeff <- c(H.coeff,0)
-      #  }
-      #  # apply the same type of balance and row-eliminating as above
-      #  if(length(ispecies)>1) {
-      #    H.coeff <- H.coeff/nb
-      #    for(l in 2:length(H.coeff)) H.coeff[l] <- H.coeff[l] - H.coeff[1]
-      #    H.coeff <- H.coeff[2:length(H.coeff)]
-      #  }
-      #  AAA[,match('H+',colnames(AAA))] <- H.coeff
-      #}
+      # solve for the activities in the buffer
       t <- solve(AAA,b)
       for(k in 1:length(ibasis))
         X[[k]][i,j] <- t[k]
@@ -226,7 +208,7 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
   }
   # store results
   for(i in 1:length(ibasis)) {
-    if(ncol(X[[i]])==1) X[[i]] <- as.numeric(X[[i]][[1]])
+    if(ncol(X[[i]])==1) X[[i]] <- as.numeric(X[[i]])
     else if(nrow(X[[i]])==1) X[[i]] <- as.matrix(X[[i]],nrow=1)
     logact.basis[[ibasis[i]]] <- X[[i]]
   }

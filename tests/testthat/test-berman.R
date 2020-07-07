@@ -31,18 +31,18 @@ OBIGT()
 
 # now we can compare Berman and Helgeson G, H, S, Cp, V
 # minerals with missing properties are not matched here
-# (i.e. fluorphlogopite, fluortremolite, glaucophane, and pyrope: no G and H in prop_Helgeson data)
+# (i.e. fluortremolite: no G and H in prop_Helgeson data)
 
 test_that("Berman and Helgeson tabulated properties have large differences for few minerals", {
   # which minerals differ in DGf by more than 4 kcal/mol?
   idiffG <- which(abs(prop_Berman$G - prop_Helgeson$G) > 4000)
   expect_match(mineral[idiffG],
-               "paragonite|anthophyllite|antigorite|Ca-Al-pyroxene|lawsonite|margarite|merwinite")
+               "paragonite|anthophyllite|antigorite|Ca-Al-pyroxene|lawsonite|margarite|merwinite|fluorphlogopite")
 
   # which minerals differ in DHf by more than 4 kcal/mol?
   idiffH <- which(abs(prop_Berman$H - prop_Helgeson$H) > 4000)
   expect_match(mineral[idiffH],
-               "paragonite|anthophyllite|antigorite|Ca-Al-pyroxene|lawsonite|margarite|merwinite|clinozoisite")
+               "paragonite|anthophyllite|antigorite|Ca-Al-pyroxene|lawsonite|margarite|merwinite|clinozoisite|fluorphlogopite")
 
   # which minerals differ in S by more than 4 cal/K/mol?
   idiffS <- which(abs(prop_Berman$S - prop_Helgeson$S) > 4)
@@ -93,7 +93,7 @@ test_that("nonexistent or incomplete user data file is handled properly", {
 })
 
 test_that("NA values of P are handled", {
-  sresult <- subcrt("H2O", T = seq(0, 500, 100))
+  sresult <- suppressWarnings(subcrt("H2O", T = seq(0, 500, 100)))
   T <- sresult$out$water$T
   P <- sresult$out$water$P
   # this stopped with a error prior to version 1.1.3-37

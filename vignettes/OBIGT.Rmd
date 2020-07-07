@@ -389,7 +389,7 @@ Use `add.OBIGT("AkDi")` to load the data; see `demo(AkDi)` for an example.
 
 <div id="nothing-open" style="display: block">
 *Press a button above to show the citations in that data file.*
-*Or, <a href = "#showall" onclick='OpenAllDivs()'>press here</a> to show all citations.*
+*Or, <a href = "#showall" onclick='OpenAllDivs()'>click here</a> to show all citations.*
 
 <b>Total count of species</b>: References were found for `r length(used)` of `r nrow(thermo()$OBIGT)` species in the default OBIGT database and `r length(optused)` optional species.
 </div>

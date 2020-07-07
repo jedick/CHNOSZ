@@ -127,12 +127,6 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
           logK[[i]] <- logK[[i]] + thermo$species$logact[i]
           for(j in 1:length(logact.basis.new)) {
             logK[[i]] <- logK[[i]] - logact.basis.new[[j]] * thermo$species[i,j]
-            # add ionization correction to proteins
-            #if(i %in% is.buffer & length(grep('_',as.character(thermo$species$name[i])))>0 & 
-            #  thermo$opt$ionize & rownames(mybasis)[j]=='H+') {
-            #  logK[[i]] <- logK[[i]] - logact.basis[[j]] * 
-            #    as.data.frame(charge[[match(thermo$species$ispecies[i],names(charge))]]) 
-            #}
           }
         }
         lbn <- buffer(logK=logK,ibasis=ibasis,logact.basis=logact.basis.new,
@@ -167,9 +161,9 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
         if(nd < 3) {
           for(i in 1:length(tb)) {
             #tb[[i]] <- as.data.frame(tb[[i]])
-            if(nd > 0) colnames(tb[[i]]) <- 
+            if(nd > 0) rownames(tb[[i]]) <- 
               seq(args$lims[[1]][1],args$lims[[1]][2],length.out=args$lims[[1]][3])
-            if(nd > 1) rownames(tb[[i]]) <- 
+            if(nd > 1) colnames(tb[[i]]) <- 
               seq(args$lims[[2]][1],args$lims[[2]][2],length.out=args$lims[[2]][3])
           }
         }

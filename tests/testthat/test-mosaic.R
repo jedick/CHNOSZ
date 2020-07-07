@@ -16,11 +16,11 @@ test_that("results are consistent with affinity()", {
   m2_25 <- mosaic("NH3", "CO2", blend = FALSE)
   expect_equal(a25$values, m2_25$A.species$values)
   # make sure the function works when all affinities are NA
-  a500 <- affinity(T=500)
+  a500 <- suppressWarnings(affinity(T=500))
   # using blend=TRUE was failing prior to version 1.1.3-37
-  m1_500 <- mosaic("NH3", "CO2", T=500)
+  m1_500 <- suppressWarnings(mosaic("NH3", "CO2", T=500))
   expect_equal(a500$values, m1_500$A.species$values)
-  m2_500 <- mosaic("NH3", "CO2", blend = FALSE, T=500)
+  m2_500 <- suppressWarnings(mosaic("NH3", "CO2", blend = FALSE, T=500))
   expect_equal(a500$values, m2_500$A.species$values)
 })
 

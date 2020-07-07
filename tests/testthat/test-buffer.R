@@ -1,0 +1,38 @@
+context("buffer")
+
+# clear out any previous basis definition or database alterations
+suppressMessages(reset())
+
+test_that("simple buffer works in 0, 1, and 2 dimensions", {
+
+  add.OBIGT("SUPCRT92")
+  # define 4 temperatures
+  T <- c(200, 300, 400, 500)
+  # calculate SiO2 activity buffered by quartz at 1000 bar
+  logaSiO2 <- subcrt(c("quartz", "SiO2"), c(-1, 1), T = T, P = 1000)$out$logK
+
+  # set up system
+  basis(c("Al+3", "SiO2", "Na+", "K+", "H2O", "O2", "H+"))
+  species(c("K-feldspar", "albite", "paragonite", "dickite", "muscovite"))
+  # calculate logact(SiO2) with quartz buffer
+  basis("SiO2", "quartz")
+
+  # 0 dimensions: constant T
+  a0 <- affinity(T = 200, P = 1000)
+  expect_equal(a0$buffer[[1]], logaSiO2[1])
+
+  # 1 dimension: variable T
+  a1 <- affinity(T = T, P = 1000)
+  expect_equal(a1$buffer[[1]], logaSiO2)
+
+  # 2 dimensions: variable T and Na+ activity (affinity errored in version <= 1.3.6)
+  a2 <- affinity(T = c(200, 500, 4), "Na+" = c(1, 5, 5), P = 1000)
+  expect_equivalent(a2$buffer[[1]][, 1], logaSiO2)
+
+  # 2 dimensions: variable K+ and Na+ activity (diagram errored in version <= 1.3.6)
+  A2 <- affinity("K+" = c(1, 5, 5), "Na+" = c(1, 5, 5), T = 200, P = 1000)
+  #D2 <- diagram(A2)
+  expect_equivalent(unique(as.vector(A2$buffer[[1]])), logaSiO2[1])
+
+})
+
