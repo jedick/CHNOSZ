@@ -31,6 +31,7 @@ mod.OBIGT <- function(...) {
   # if the first argument is numeric, it's the species index
   if(is.numeric(args[[1]][1])) {
     ispecies <- args[[1]]
+    args <- args[-1]
   } else {
     # if the name of the first argument is missing, assume it's the species name
     if(names(args)[1]=="") names(args)[1] <- "name"

@@ -1,21 +1,26 @@
-CHANGES IN CHNOSZ 1.3.6-23 (2020-07-06)
+CHANGES IN CHNOSZ 1.3.6-24 (2020-07-07)
 ---------------------------------------
 
 MAJOR CHANGES
 
-- File, function, and object names consistently use the uppercase
-  abbreviation OBIGT. In particular, the active database now resides at
-  thermo()$OBIGT, and functions add.OBIGT() and mod.OBIGT() replace the
-  previous add.obigt() and mod.obigt().
+- The naming convention for methane has changed. The name "methane"
+  now applies exclusively to the gas; "CH4", as before, represents the
+  aqueous species. This behavior is consistent with inorganic gases
+  but differs from most organic substances, where the English names
+  refer to the aqueous species. This change was made because in the past
+  there was no way to use info() or subcrt() with a single character
+  argument to identify gaseous methane, which is common in geochemistry.
+  (Note that info("CH4", "gas") can still be used.) A hack to revert to
+  the old behavior is mod.OBIGT(info("CH4"), name = "methane").
+
+- The all-uppercase abbreviation OBIGT is now used for all file,
+  function, and object names. In particular, the active database now
+  sits at thermo()$OBIGT, and functions add.OBIGT() and mod.OBIGT()
+  replace the previous add.obigt() and mod.obigt().
 
 CHANGES TO OBIGT DATABASE
 
 - Update species parameters for the 2019 Deep Earth Water (DEW) model.
-
-- organic_aq.csv, AkDi.csv, DEW.csv: Remove "methane" as the name of
-  CH4(aq). This means that info("methane") now refers to the gas rather
-  than the aqueous species. This is consistent with the behavior for the
-  names of inorganic species, e.g. carbon dioxide and oxygen.
 
 - OBIGT/SUPCRT92.csv: Change lowercase to uppercase "A" (Angstrom) in
   names of minerals with suffixes indicating interlayer spacing
@@ -86,6 +91,10 @@ TODO
 
 - TODO: demo/saturation.R: put Al+3 first in basis definition (it's
   confusing to have H2O first when the reacitons are balanced on Al)
+
+- TODO: diagram(): make error or warning for NA values of affinity
+
+- TODO: use markup in NEWS
 
 CHANGES IN CHNOSZ 1.3.6 (2020-03-16)
 ------------------------------------

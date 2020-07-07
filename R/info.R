@@ -80,6 +80,7 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
   # returns the rownumbers of thermo()$OBIGT having an exact match of 'species' to
   # thermo()$OBIGT$[species|abbrv|formula] or NA otherwise
   # a match to thermo()$OBIGT$state is also required if 'state' is not NULL
+
   # (first occurence of a match to species is returned otherwise)
   thermo <- get("thermo", CHNOSZ)
   # find matches for species name, abbreviation or formula
@@ -123,6 +124,10 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
       a.s.text <- paste("'", available.states, "'", sep="", collapse=" ")
       message("info.character: requested state '", state, "' for ", species, 
         " but only ", a.s.text, " ", a.s.verb, " available")
+      # warn about looking for aqueous methane (changed to CH4) 20200707
+      if(identical(species, "methane") & identical(state, "aq")) {
+        warning("'methane' is not an aqueous species; use 'CH4' instead\nTo revert to the old behavior, run mod.OBIGT(info('CH4'), name = 'methane')")
+      }
       return(NA)
     }
     matches.species <- matches.state
