@@ -1,5 +1,5 @@
 # CHNOSZ/vignettes/mklinks.sh
-# add documentation links to anintro.html and OBIGT.html
+# add documentation links to anintro, OBIGT, and equilibrium vignettes
 # 20190125 jmd
 
 # add links to help topics
@@ -102,3 +102,8 @@ sed -i 's/thermo()/<a href="..\/html\/thermo.html">thermo()<\/a>/g' OBIGT.html
 sed -i 's/add.OBIGT(/<a href="..\/html\/add.OBIGT.html">add.OBIGT<\/a>(/g' OBIGT.html
 sed -i 's/water(/<a href="..\/html\/water.html">water<\/a>(/g' OBIGT.html
 sed -i 's/demo(/<a href="..\/demo">demo<\/a>(/g' OBIGT.html
+
+# add links to equilibrium.html 20200710
+sed -i 's/equilibrate()/<a href="..\/html\/equilibrate.html">equilibrate()<\/a>/g' equilibrium.html
+sed -i 's/solubility()/<a href="..\/html\/solubility.html">solubility()<\/a>/g' equilibrium.html
+sed -i 's/add.OBIGT()/<a href="..\/html\/add.OBIGT.html">add.OBIGT()<\/a>/g' equilibrium.html

@@ -12,14 +12,32 @@ bibliography: vig.bib
 csl: elementa.csl
 ---
 <style>
-/* https://css-tricks.com/hash-tag-links-padding/ */
-a.anchor::before {
-  display: block;
-  content: " ";
-  margin-top: -190px;
-  height: 190px;
-  visibility: hidden;
-  pointer-events: none;
+/* https://gomakethings.com/how-to-break-an-image-out-of-its-parent-container-with-css/ */
+@media (min-width: 700px) {
+  .full-width {
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    max-width: 100vw;
+    position: relative;
+    right: 50%;
+    width: 100vw;
+  }
+}
+@media (min-width: 1020px) {
+  .full-width {
+    left: 50vw; /* fallback if needed */
+    left: calc(50vw - 160px);
+    width: 1000px;
+    position: relative;
+    background-color: #9ecff7;
+    padding:10px;
+  }
+}
+/* zero margin around pre blocks (looks more like R console output) */
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 </style>
 <script>
@@ -37,6 +55,14 @@ function ToggleDiv(ID) {
   }
 }
 </script>
+
+```{r setup, include=FALSE}
+## use pngquant to optimize PNG images
+library(knitr)
+knit_hooks$set(pngquant = hook_pngquant)
+pngquant <- "--speed=1 --quality=0-25"
+if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
+```
 
 ```{r CHNOSZ_reset, include=FALSE}
 library(CHNOSZ)
@@ -91,13 +117,8 @@ where *K* is the equilibrium constant and *Q* is the activity quotient of specie
 (log here denotes base-10 logarithms, i.e. `log10` in R).
 
 Maximum affinity method
-:   Approach used to construct predominance diagrams not by finding the highest activity at equilibrium but by finding the highest affinity at a reference activity.
-
-    Reference activity
-    :   User-defined equal activities of species (e.g. unit activity for minerals and 10^-3^ for aqueous species).
-
-    Reference affinity
-    :   Chemical affinities of the formation reactions of the species with the reference activity.
+:   Approach used to construct predominance diagrams not by finding the highest activity at equilibrium but by finding the highest affinity at a **reference activity**.
+The reference activities are user-defined equal activities of species (e.g. unit activity for minerals and 10^-3^ for aqueous species).
 
 Equilibration method
 :   Calculations of the activities of species in equilibrium.
@@ -109,3 +130,376 @@ Equilibration method
     Total equilibrium
     :   The condition that the affinities of all *formation* reactions are zero.
     Implemented with the `solubility()` function in CHNOSZ, which is not described here.
+
+## Example 1: Amino acids
+
+In this sytem the basis species are CO2, H~2~O, NH~3~, H~2~S, and O~2~ and the formed species are 20 amino acids.
+
+```{r AAsetup, results = "hide", message = FALSE}
+library(CHNOSZ)
+reset()
+basis("CHNOS")
+species(aminoacids(""))
+```
+
+These functions are used for the different diagrams in the figure.
+
+```{r AAfunctions}
+aaA <- function() {
+  a <- affinity(O2 = c(-90, -70), H2O = c(-20, 10))
+  diagram(a, balance = 1, names = aa)
+}
+
+aaB <- function() {
+  a <- affinity(O2 = c(-90, -70), H2O = c(-20, 10))
+  e <- equilibrate(a, balance = 1)
+  diagram(e, names = aa)
+}
+
+aaC <- function() {
+  a <- affinity(O2 = c(-71, -66), H2O = c(-8, 4))
+  diagram(a, balance = "CO2", names = aa)
+}
+
+aaD <- function() {
+  a <- affinity(O2 = c(-71, -66), H2O = c(-8, 4))
+  e <- equilibrate(a, balance = "CO2")
+  diagram(e, names = aa)
+}
+
+aaE <- function() {
+  basis("O2", -66)
+  a <- affinity(H2O = c(-8, 4))
+  e <- equilibrate(a, balance = "CO2")
+  diagram(e, ylim = c(-5, -1), names = aa)
+}
+
+aaF <- function() {
+  species(1:20, -7)
+  a <- affinity(H2O = c(-8, 4))
+  e <- equilibrate(a, balance = "CO2")
+  diagram(e, ylim = c(-8, -4), names = aa)
+}
+```
+
+The labels used for the diagrams are the one-letter abbreviations for the amino acids.
+
+```{r AAabbrv}
+aa <- aminoacids()
+aa
+```
+
+Press the button to show all of the code for making the figure.
+
+<button id="B-AAplot" onclick="ToggleDiv('AAplot')">Show code</button>
+<div id="D-AAplot" style="display: none">
+```{r AAplot, eval = FALSE}
+showtime <- function(st) {
+  # plot time in lower-right of figure region
+  f <- usrfig()
+  par(xpd=TRUE)
+  if(st[3] > 2) col <- "red" else col <- "black"
+  text(f$x[2], f$y[1], paste(round(st[3], 1), "s\n"), adj=1, col=col)
+  par(xpd=FALSE)
+}
+
+layout(t(matrix(c(1:7, 11, 8:10, 12), nrow=4)), widths=c(1, 4, 4, 4), heights=c(0.7, 4, 4))
+
+## row 0 (column titles)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+plot.new()
+text(0.58, 0.5, "maximum affinity", cex=1.4)
+plot.new()
+text(0.58, 0.5, "equilibration", cex=1.4)
+plot.new()
+text(0.58, 0.5, "equilibration", cex=1.4)
+par(opar)
+
+## row 1 (balance = 1)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+text(0.5, 0.5, "balance = 1", srt=90, cex=1.4)
+par(opar)
+# figure A
+st <- system.time(dA <- aaA())
+showtime(st)
+title(main="loga(species) = -3", cex.main=1)
+label.figure("A", yfrac=0.92, xfrac=0.1, font = 2)
+# figure B
+st <- system.time(dB <- aaB())
+showtime(st)
+title(main=paste("loga(total species) =", round(dB$loga.balance[1], 2)), cex.main=1)
+label.figure("C", yfrac=0.92, xfrac=0.1, font = 2)
+
+## row 2 (balance = nCO2)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+text(0.5, 0.5, 'balance = "CO2"', srt=90, cex=1.4)
+par(opar)
+# figure C
+st <- system.time(dC <- aaC())
+showtime(st)
+title(main="loga(species) = -3", cex.main=1)
+label.figure("B", yfrac=0.92, xfrac=0.1, font = 2)
+# figure D
+st <- system.time(dD <- aaD())
+showtime(st)
+title(main=paste("loga(total CO2) =", round(dD$loga.balance[1], 2)), cex.main=1)
+label.figure("D", yfrac=0.92, xfrac=0.1, font = 2)
+
+## right (speciation at different total activity of CO2)
+par(xpd=NA)
+lines(c(-66, -64.5), c(4, 9), lty=2)
+lines(c(-66, -64.5), c(-8, -8.5), lty=2)
+par(xpd=FALSE)
+# figure E
+st <- system.time(dE <- aaE())
+showtime(st)
+title(main=paste("loga(total CO2) =", round(dE$loga.balance[1], 2)), cex.main=1)
+label.figure("E", yfrac=0.92, xfrac=0.1, font = 2)
+# figure F
+st <- system.time(dF <- aaF())
+showtime(st)
+title(main=paste("loga(total CO2) =", round(dF$loga.balance[1], 2)), cex.main=1)
+label.figure("F", yfrac=0.92, xfrac=0.1, font = 2)
+```
+</div>
+
+```{r AAplot, echo = FALSE, results = "hide", message = FALSE, fig.width = 13/2, fig.height = 8.7/2, out.width = "100%", pngquant = pngquant}
+```
+
+Diagrams **A** and **B** use the *maximum affinity method*, where the reference
+activities of species are set to a single value.  Diagrams **C** and **D** use
+the *equilibration method*, where the activities of species change across the
+diagram and the lines are drawn at equal activity.  Other comments on the
+figure:
+
+* The equal-activity lines in Diagrams **A** and **C** are the same. That is,
+  with the setting `balance = 1`, the conditions for equal activity of two
+  species do not depend on the actual value of that activity.
+
+* Diagrams **B** and **D** are different. Because balance ≠ 1 (in this case,
+  the reactions are balanced on CO~2~), the conditions for equal activity of
+  species depend on the actual value of that activity. In particular, with the
+  equilibration method, the lines are curved due to the distribution of more
+  than two species.
+
+* Diagrams **E** and **F** both use the equilibration method to calculate
+  activities of species as a function of log*a*~H2O~ at log*f*~O2~ = -66.
+  Diagram **F** shows the default setting, where *a*~CO2~ is taken from the sum
+  of initial activities of species (each 10^-3^). The positions of equal
+  activities (where the lines cross) are the same as in Diagram **D** at
+  log*f*~O2~ = -66.
+
+* Diagram **F** is drawn for a lower total activity of *a*~CO2~. Not only are
+  the activities of all amino acids decreased, but glycine starts to become
+  predominant at some conditions. This is because, compared to other amino
+  acids, it is smaller and has a lower coefficient on CO~2~ in its formation
+  reaction.
+
+## Example 2: Proteins
+
+In this sytem the basis species are CO~2~, H~2~O, NH~3~, H~2~S, O~2~, and H^+^ and the
+formed species are 6 proteins from the set of archaeal and bacterial surface
+layer proteins considered by @Dic08.
+
+The inclusion of charge in the basis species (with H^+^) allows ionization of
+proteins to be calculated [@DLH06].
+
+```{r PRsetup, results = "hide", message = FALSE}
+basis("CHNOS+")
+organisms <- c("METJA", "HALJP", "METVO", "ACEKI", "GEOSE", "BACLI")
+proteins <- c(rep("CSG", 3), rep("SLAP", 3))
+species(proteins, organisms)
+```
+
+Here are the lengths of the proteins.
+
+```{r PRlength}
+protein.length(species()$name)
+```
+
+These functions are used for the different diagrams in the figure.
+
+```{r PRfunctions}
+prA <- function() {
+  a <- affinity(O2 = c(-90, -70), H2O = c(-20, 0))
+  diagram(a, balance = "length", names = organisms)
+}
+
+prB <- function() {
+  a <- affinity(O2 = c(-90, -70))
+  e <- equilibrate(a, balance = "length")
+  diagram(e, names = organisms, ylim = c(-5, -1))
+}
+
+prC <- function() {
+  a <- affinity(O2 = c(-90, -70), H2O = c(-20, 0))
+  diagram(a, normalize = TRUE, names = organisms)
+}
+
+prD <- function() {
+  a <- affinity(O2 = c(-90, -70))
+  e <- equilibrate(a, normalize = TRUE)
+  diagram(e, names = organisms, ylim = c(-5, -1))
+}
+
+prE <- function() {
+  a <- affinity(O2 = c(-90, -70), H2O = c(-20, 0))
+  diagram(a, as.residue = TRUE, names = organisms)
+}
+
+prF <- function() {
+  a <- affinity(O2 = c(-90, -70))
+  e <- equilibrate(a, as.residue = TRUE, loga.balance = 0)
+  diagram(e, names = organisms, ylim = c(-3, 1))
+}
+```
+
+<button id="B-PRplot" onclick="ToggleDiv('PRplot')">Show code</button>
+<div id="D-PRplot" style="display: none">
+```{r PRplot, eval = FALSE}
+```
+</div>
+
+```{r PRplot, echo = FALSE, results = "hide", message = FALSE, fig.width = 13/2, fig.height = 8.7/2, out.width = "100%", pngquant = pngquant}
+layout(t(matrix(1:12, nrow=4)), widths=c(1, 4, 4, 4), heights=c(0.7, 4, 4))
+
+## row 0 (column titles)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+plot.new()
+text(0.58, 0.5, 'balance = "length"', cex=1.4)
+plot.new()
+text(0.58, 0.5, "normalize = TRUE\n(balance = 1)", cex=1.4)
+plot.new()
+text(0.58, 0.5, "as.residue = TRUE\n(balance = 1)", cex=1.4)
+par(opar)
+
+## row 1 (maximum affinity 2D)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+text(0.5, 0.5, "maximum affinity", srt=90, cex=1.4)
+par(opar)
+# figure A (balance = "length")
+st <- system.time(dA <- prA())
+showtime(st)
+label.figure("A", yfrac=0.9, xfrac=0.1, font = 2)
+# figure C (normalize = TRUE)
+st <- system.time(dC <- prC())
+showtime(st)
+label.figure("C", yfrac=0.9, xfrac=0.1, font = 2)
+# figure E (as.residue = TRUE)
+st <- system.time(dE <- prE())
+showtime(st)
+label.figure("E", yfrac=0.9, xfrac=0.1, font = 2)
+
+## row 2 (equilibrate 1D)
+opar <- par(mar=c(0, 0, 0, 0))
+plot.new()
+text(0.5, 0.5, "equilibration", srt=90, cex=1.4)
+par(opar)
+# figure B (balance = "length")
+st <- system.time(prB())
+showtime(st)
+label.figure("B", yfrac=0.9, xfrac=0.1, font = 2)
+# figure D (normalize = TRUE)
+st <- system.time(prD())
+showtime(st)
+label.figure("D", yfrac=0.9, xfrac=0.1, font = 2)
+# figure F (as.residue = TRUE)
+st <- system.time(prF())
+showtime(st)
+label.figure("F", yfrac=0.9, xfrac=0.1, font = 2)
+```
+
+Diagrams **A**, **C**, and **E** are predominance (equal-activity) diagrams
+made with different balancing constraints.  Diagrams **B**, **D**, and **F**
+show a cross-section of the same system at log*a*~H2O~ = 0.
+
+* In Diagrams **A** and **B**, the reactions are balanced on protein length.
+  The drastic transitions between proteins in **B** result from the large
+  balancing coefficients, which become exponents on activities in the
+  expression for the activity quotient (*Q*).
+
+* In Diagrams **C** and **D**, the chemical formulas of all the proteins are
+  *normalized*, or divided by the protein length.  Writing the reactions in
+  terms of these "residue equivalents" shows the possibility of similar
+  abundances of proteins in metastable equilibrium.
+
+* Diagrams **E** and **F** are like the normalization calculation, except that
+  the final diagram is drawn for the residue equivalents and not the whole
+  proteins.  The activities of residues are higher than those of the proteins.
+
+## Example 3: Normalization
+
+Here are two more figures showing the effects of normalization.
+The first one is like Figure 5 of @Dic08, extended to more extreme conditions.
+If you wish to reproduce the diagram from the 2008 paper more closely, uncomment the `add.OBIGT()` command.
+
+```{r ProteinSpeciation, results = "hide", message = FALSE, fig.width = 8, fig.height = 5.5, out.width = "100%", pngquant = pngquant}
+#add.OBIGT("OldAA")
+organisms <- c("METSC", "METJA", "METFE",  "METVO", "METBU",
+               "HALJP", "ACEKI", "GEOSE", "BACLI", "AERSA")
+proteins <- c(rep("CSG", 6), rep("SLAP", 4))
+# use red for Methano* genera
+col <- c(rep(2, 5), rep(1, 5))
+basis("CHNOS+")
+species(proteins, organisms)
+a <- affinity(O2 = c(-100, -65))
+layout(matrix(1:2), heights = c(1, 2))
+e <- equilibrate(a)
+diagram(e, ylim = c(-2.8, -1.6), names = organisms, col = col)
+water.lines(e, col = 4)
+title(main="Equilibrium activities of proteins, normalize = FALSE")
+e <- equilibrate(a, normalize = TRUE)
+diagram(e, ylim = c(-4, -2), names = organisms, col = col)
+water.lines(e, col = 4)
+title(main = "Equilibrium activities of proteins, normalize = TRUE")
+```
+
+Although it is below the stability limit of H~2~O (vertical dashed line), there
+is an interesting convergence of the metastable equilibrium activities of some
+proteins at low log *f*~O2~.
+
+Normalization may also be useful for calculations with inorganic molecules that
+are in various stages of polymerization. The first diagram below is similar to
+the one shown by @See96, with the addition of color and the water stability
+line. Normalization of the chemical formulas (scaling them to each contain one
+S atom) brings up the activities of the larger molecules, yielding a much
+smaller range of activities.
+
+```{r SulfurSpeciation, results = "hide", message = FALSE, fig.width = 7, fig.height = 3.5, out.width = "100%", pngquant = pngquant}
+basis("CHNOS+")
+basis("pH", 5)
+species(c("H2S", "S2-2", "S3-2", "S2O3-2", "S2O4-2",
+          "S3O6-2", "S5O6-2", "S2O6-2", "HSO3-", "SO2", "HSO4-"))
+T <- 325
+P <- 350
+loga_S <- -2
+a <- affinity(O2 = c(-50, -15), T = T, P = P)
+layout(matrix(1:3, nrow = 1), widths = c(4, 4, 1))
+col <- rep(c("blue", "black", "red"), each = 4)
+lty <- 1:4
+for(normalize in c(FALSE, TRUE)) {
+  e <- equilibrate(a, loga.balance = loga_S, normalize = normalize)
+  diagram(e, ylim = c(-30, 0), legend.x = NULL, col = col, lty = lty)
+  water.lines(e, col = 4)
+  par(xpd = NA)
+  title(main = paste0("Total sulfur activity = ",
+                      10^loga_S, "; normalize = ", normalize))
+  par(xpd = FALSE)
+  dp <- describe.property(c("T", "P"), c(T, P))
+  db <- describe.basis(ibasis = 6)
+  dpb <- c(dp, db)
+  if(!normalize) legend("topleft", dpb, bg = "white")
+}
+par(mar = c(0, 0, 0, 0))
+plot.new()
+leg <- lapply(species()$name, expr.species)
+legend("center", lty = lty, col = col, lwd = 1.5, bty = "n",
+       legend = as.expression(leg), y.intersp = 1.3)
+```
+
+## References

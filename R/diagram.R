@@ -184,7 +184,7 @@ diagram <- function(
     }
     predominant <- which.pmax(pv)
     # clip plot to water stability region
-    if(limit.water) {
+    if(limit.water & nd==2) {
       wl <- water.lines(eout, plot.it=FALSE)
       # proceed if water.lines produced calculations for this plot
       if(!identical(wl, NA)) {

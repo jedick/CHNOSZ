@@ -74,9 +74,10 @@ label.figure <- function(x, xfrac=0.05, yfrac=0.95, paren=FALSE, italic=FALSE, .
 
 water.lines <- function(eout, which=c('oxidation','reduction'),
   lty=2, lwd=1, col=par('fg'), plot.it=TRUE) {
-  # draw water stability limits
-  # for Eh-pH, logfO2-pH, logfO2-T or Eh-T diagrams
+
+  # draw water stability limits for Eh-pH, logfO2-pH, logfO2-T or Eh-T diagrams
   # (i.e. redox variable is on the y axis)
+
   # get axes, T, P, and xpoints from output of affinity() or equilibrate()
   if(missing(eout)) stop("'eout' (the output of affinity(), equilibrate(), or diagram()) is missing")
   # number of variables used in affinity()
@@ -85,11 +86,14 @@ water.lines <- function(eout, which=c('oxidation','reduction'),
   dim <- dim(eout$loga.equil[[1]]) # for output from equilibrate()
   if(is.null(dim)) dim <- dim(eout$values[[1]]) # for output from affinity()
   nvar2 <- length(dim)
-  # we only work on diagrams with 2 variables
-  if(nvar1 != 2 | nvar2 != 2) return(NA)
-  # if needed, swap axes so T or P is on x-axis
+  # we only work on diagrams with 1 or 2 variables
+  if(!nvar1 %in% c(1,2) | !nvar2 %in% c(1,2)) return(NA)
+
+  # if needed, swap axes so redox variable is on y-axis
+  # also do this for 1-D diagrams 20200710
+  if(is.na(eout$vars[2])) eout$vars[2] <- "nothing"
   swapped <- FALSE
-  if(eout$vars[2] %in% c("T", "P")) {
+  if(eout$vars[2] %in% c("T", "P", "nothing")) {
     eout$vars <- rev(eout$vars)
     eout$vals <- rev(eout$vals)
     swapped <- TRUE
@@ -97,6 +101,7 @@ water.lines <- function(eout, which=c('oxidation','reduction'),
   xaxis <- eout$vars[1]
   yaxis <- eout$vars[2]
   xpoints <- eout$vals[[1]]
+
   # T and P are constants unless they are plotted on one of the axes
   T <- eout$T
   if(eout$vars[1]=="T") T <- envert(xpoints, "K")
@@ -114,15 +119,17 @@ water.lines <- function(eout, which=c('oxidation','reduction'),
     if(can.be.numeric(minuspH)) pH <- -as.numeric(minuspH) else pH <- NA
   }
   else pH <- 7
+
   # O2state is gas unless given in eout$basis
   iO2 <- match("O2", rownames(eout$basis))
   if(is.na(iO2)) O2state <- "gas" else O2state <- eout$basis$state[iO2]
   # H2state is gas unles given in eout$basis
   iH2 <- match("H2", rownames(eout$basis))
   if(is.na(iH2)) H2state <- "gas" else H2state <- eout$basis$state[iH2]
+
   # where the calculated values will go
   y.oxidation <- y.reduction <- NULL
-  if(xaxis %in% c("pH", "T", "P") & yaxis %in% c("Eh", "pe", "O2", "H2")) {
+  if(xaxis %in% c("pH", "T", "P", "nothing") & yaxis %in% c("Eh", "pe", "O2", "H2")) {
     # Eh/pe/logfO2/logaO2/logfH2/logaH2 vs pH/T/P
     if('reduction' %in% which) {
       logfH2 <- logaH2O # usually 0
@@ -157,12 +164,19 @@ water.lines <- function(eout, which=c('oxidation','reduction'),
       }
     }
   } else return(NA)
+
   # now plot the lines
   if(plot.it) {
     if(swapped) {
-      # xpoints above is really the ypoints
-      lines(y.oxidation, xpoints, lty=lty, lwd=lwd, col=col)
-      lines(y.reduction, xpoints, lty=lty, lwd=lwd, col=col)
+      if(nvar1 == 1 | nvar2 == 2) {
+        # add vertical lines on 1-D diagram 20200710
+        abline(v = y.oxidation[1], lty=lty, lwd=lwd, col=col)
+        abline(v = y.reduction[1], lty=lty, lwd=lwd, col=col)
+      } else {
+        # xpoints above is really the ypoints
+        lines(y.oxidation, xpoints, lty=lty, lwd=lwd, col=col)
+        lines(y.reduction, xpoints, lty=lty, lwd=lwd, col=col)
+      }
     } else {
       lines(xpoints, y.oxidation, lty=lty, lwd=lwd, col=col)
       lines(xpoints, y.reduction, lty=lty, lwd=lwd, col=col)

@@ -1,8 +1,11 @@
 \name{NEWS}
-\title{CHNOSZ News}
+\title{News for Package 'CHNOSZ'}
 \encoding{UTF-8}
 
-\section{Changes in CHNOSZ version 1.3.6-27 (2020-07-08)}{
+% macros
+\newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
+
+\section{Changes in CHNOSZ version 1.3.6-28 (2020-07-10)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -11,7 +14,7 @@
       \strong{methane} now applies exclusively to the gas; the formula
       \strong{CH4} without a state continues to represent the aqueous species.
       This behavior is consistent with inorganic gases but differs from most
-      organic substances, where the English names refer to the aqueous species.
+      organic substances, where the English name refers to the aqueous species.
       This change was made because in the past there was no way to use
       \code{info()} or \code{subcrt()} with a single character argument to
       identify gaseous methane, which is common in geochemistry.  (Note that
@@ -19,7 +22,7 @@
       behavior, where \strong{methane} refers primarily to the aqueous species,
       is \code{mod.OBIGT(info("CH4"), name = "methane")}.
 
-      \item The all-uppercase abbreviation \strong{OBIGT} is used everywhere it
+      \item The all-uppercase acronym \strong{OBIGT} is used everywhere it
       appears in file, function, and object names. In particular, the
       thermodynamic database now sits at \code{thermo()$OBIGT}, and functions
       \code{add.OBIGT()} and \code{mod.OBIGT()} replace the previous
@@ -41,7 +44,7 @@
       \item \samp{OBIGT/inorganic_aq.csv}: Update arsenopyrite with data from
       Naumov et al., 1974 (via Unitherm).
 
-      \item \samp{OBIGT/inorganic_cr.csv}: Correct syntax for number of H2O in
+      \item \samp{OBIGT/inorganic_cr.csv}: Correct syntax for number of \H2O in
       formulas of some As-bearing minerals.
 
       \item Install bibtex file (\samp{docs/OBIGT.bib}) for use in the
@@ -51,7 +54,7 @@
       and rename \samp{DEW_aq.csv} to \samp{DEW.csv}.
 
       \item Remove old data file suffixes in references (e.g. [S92] was used to
-      indicate that the data first appeared in \strong{SUPCRT92}).
+      indicate that the data first appeared in \acronym{SUPCRT92}).
 
       \item Add GHS for almandine, dickite, fluorphlogopite, glaucophane,
       grunerite, larnite, pyrope (\samp{SUPCRT92.csv}) and bromellite
@@ -68,13 +71,13 @@
       comproportionation, after
       \href{https://doi.org/10.1111/1462-2920.14982}{Amend et al., 2020}.
 
-      \item Remove vignette \samp{hotspring.Rnw}.
+      \item Convert \samp{equilibrium.Rnw} to \samp{equilibrium.Rmd} and revise
+      and simplify content.
 
       \item Revise \samp{OBIGT.Rmd} to reduce the size of the HTML file and
       make deep linking to individual sections work.
 
-      \item WORK IN PROGRESS: convert \samp{equilibrium.Rnw} to
-      \samp{equilibrium.Rmd}.
+      \item Remove vignette \samp{hotspring.Rnw}.
 
     }
   }
@@ -83,7 +86,7 @@
     \itemize{
 
       \item \code{subcrt()}: change \strong{action.unbalanced} argument to
-      \strong{autobalance}, which provides the ability to prevent
+      \strong{autobalance}, which now provides the ability to prevent
       autobalancing.
 
       \item Changing the water model with \code{water()} now updates the
@@ -124,12 +127,14 @@
 
       \item TODO: make separate directories for default and optional data files
 
-      \item TODO: add missing G and H for dickite and other minerals in SUPCRT92.csv
-
       \item TODO: demo/saturation.R: put Al+3 first in basis definition (it's
         confusing to have H2O first when the reactions are balanced on Al)
 
       \item TODO: diagram(): make error or warning for NA values of affinity
+
+      \item TODO: use https in refs.csv
+
+      \item TODO: add hotspring.Rmd to JMDplots package.
 
     }
   }
