@@ -136,6 +136,10 @@
 
       \item TODO: add hotspring.Rmd to JMDplots package.
 
+      \item TODO: move protein.equil() example (previously in equilibrium.Rnw) to JMDplots.
+
+      \item TODO: change add.obigt --> add.OBIGT on website (Fe-O-H-S example) when package is submitted to CRAN.
+
     }
   }
 

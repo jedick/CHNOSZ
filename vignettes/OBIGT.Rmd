@@ -18,8 +18,8 @@ csl: elementa.csl
 a.anchor::before {
   display: block;
   content: " ";
-  margin-top: -190px;
-  height: 190px;
+  margin-top: -220px;
+  height: 220px;
   visibility: hidden;
   pointer-events: none;
 }
@@ -31,13 +31,9 @@ function ToggleDiv(ID) {
     // close all divs then open this one
     CloseAllDivs();
     OpenDiv(ID);
-    // hide the message about nothing open
-    document.getElementById("nothing-open").style.display = "none";
   } else {
     // close all divs
     CloseAllDivs();
-    // hide the message about nothing open
-    document.getElementById("nothing-open").style.display = "block";
   }
 }
 function OpenDiv(ID) {
@@ -77,6 +73,8 @@ function OpenAllDivs() {
   OpenDiv("optional-OldAA");
   OpenDiv("optional-AS04");
   OpenDiv("optional-AkDi");
+  // change the footer message
+  document.getElementById("footer").style.display = "none";
   document.getElementById("all-open").style.display = "block";
 }
 function CloseAllDivs() {
@@ -96,6 +94,8 @@ function CloseAllDivs() {
   CloseDiv("optional-OldAA");
   CloseDiv("optional-AS04");
   CloseDiv("optional-AkDi");
+  // change the footer message
+  document.getElementById("footer").style.display = "block";
   document.getElementById("all-open").style.display = "none";
 }
 </script>
@@ -206,6 +206,13 @@ Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthal
 ### Solids <button id="B-solid-inorganic" onclick='ToggleDiv("solid-inorganic")'>Inorganic</button> <button id="B-solid-berman" onclick='ToggleDiv("solid-berman")'>Berman</button> <button id="B-solid-organic" onclick='ToggleDiv("solid-organic")'>Organic</button>
 ### Gases <button id="B-gas-inorganic" onclick='ToggleDiv("gas-inorganic")'>Inorganic</button> <button id="B-gas-organic" onclick='ToggleDiv("gas-organic")'>Organic</button> &nbsp;&nbsp;&nbsp;Liquids <button id="B-liquid-organic" onclick='ToggleDiv("liquid-organic")'>Organic</button>
 ### Optional Data <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-OldAA" onclick='ToggleDiv("optional-OldAA")'>OldAA</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-AkDi" onclick='ToggleDiv("optional-AkDi")'>AkDi</button>
+
+<!-- normal or "all open" footer message --> 
+
+<div id="footer" style="display: block">
+*Press a button above to show the citations in that data file.*
+*Or, <a href = "#showall" onclick='OpenAllDivs()'>click here</a> to show all citations.*
+</div>
 
 <div id="all-open" style="display: none">
 *Showing citations in all data files.*
@@ -325,7 +332,7 @@ The following species are present in the spreadsheet, but are not used here beca
 Besides using `add.OBIGT("DEW")` to load these data, you should also run `water("DEW")` to activate the DEW equations in CHNOSZ.
 See `demo(DEW)` for some examples.
 
-Most of the comments below were transcribed from the DEW spreadsheet.
+Most of the comments below were transcribed from the DEW spreadsheet. (Comments in parentheses were added by JMD.)
 
 ```{r optreflist, results="asis", echo=FALSE}
 optused <- c(optused, filerefs(csvfile))
@@ -385,14 +392,9 @@ Use `add.OBIGT("AkDi")` to load the data; see `demo(AkDi)` for an example.
 ```
 </div>
 
-<!-- "all" or "nothing" divs --> 
-
-<div id="nothing-open" style="display: block">
-*Press a button above to show the citations in that data file.*
-*Or, <a href = "#showall" onclick='OpenAllDivs()'>click here</a> to show all citations.*
+<hr>
 
 <b>Total count of species</b>: References were found for `r length(used)` of `r nrow(thermo()$OBIGT)` species in the default OBIGT database and `r length(optused)` optional species.
-</div>
 
 # References
 
@@ -405,6 +407,8 @@ Use `add.OBIGT("AkDi")` to load the data; see `demo(AkDi)` for an example.
     var activeButton = url.substring(url.indexOf("#") + 1);
     if(activeButton == "showall") {
       OpenAllDivs();
+      // hide the footer message
+      document.getElementById("footer").style.display = "none";
     } else {
       OpenDiv(activeButton);
     }

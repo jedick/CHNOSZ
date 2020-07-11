@@ -96,7 +96,7 @@ sed -i '120,$s/for()/<a href="..\/..\/base\/html\/Control.html" style="backgroun
 sed -i '120,$s/browseURL()/<a href="..\/..\/utils\/html\/browseURL.html" style="background-image:none;">browseURL()<\/a>/g' anintro.html
 
 # add links to OBIGT.html
-sed -i 's/reset()/<a href="..\/html\/thermo.html"">reset()<\/a>/g' OBIGT.html
+sed -i 's/reset()/<a href="..\/html\/thermo.html">reset()<\/a>/g' OBIGT.html
 sed -i 's/OBIGT()/<a href="..\/html\/thermo.html">OBIGT()<\/a>/g' OBIGT.html
 sed -i 's/thermo()/<a href="..\/html\/thermo.html">thermo()<\/a>/g' OBIGT.html
 sed -i 's/add.OBIGT(/<a href="..\/html\/add.OBIGT.html">add.OBIGT<\/a>(/g' OBIGT.html

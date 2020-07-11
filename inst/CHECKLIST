@@ -1,6 +1,6 @@
 ****************************
 Release checklist for CHNOSZ
-    (updated 2020-07-06)
+    (updated 2020-07-11)
 ****************************
 
 - Run examples() and demos() and inspect their output (especially plots)
@@ -48,10 +48,7 @@ Updating vignettes
 
 - Customize rmarkdown installation (in R local library)
 
-  - to reduce size of vignettes: replace files in
-    rmd/h/bootstrap/fonts/ with empty files
-
-  - to enable offset anchor position in OBIGT.Rmd:
+  - to enable page offset from anchor position in OBIGT.Rmd:
     remove padding-top: 10px; from h2 in
     rmarkdown/templates/html_vignette/resources/vignette.css
 

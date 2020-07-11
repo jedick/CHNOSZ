@@ -3,6 +3,10 @@ context("DEW")
 # since this is alphabetically the first test,
 # we need to load the 'thermo' object (for running tests in R CMD check)
 suppressMessages(reset())
+# get properties of water from DEW implementation in CHNOSZ
+water("DEW")
+# use DEW species parameters in OBIGT database
+add.OBIGT("DEW")
 
 test_that("density of water is calculated correctly", {
   pressure <- c(5000, 5000, 10000, 10000, 20000, 20000, 50000, 50000)
@@ -49,8 +53,6 @@ test_that("Born coefficient Q is calculated correctly", {
 test_that("g function is calculated correctly", {
   pressure <- c(1000, 1000, 5000, 5000, 10000)
   temperature <- c(100, 1000, 100, 1000, 100)
-  # properties of water from DEW implementation in CHNOSZ
-  oldwat <- water("DEW")
   # note that values returned for alpha, daldT, beta are NA
   w <- water(c("rho", "alpha", "daldT", "beta", "Psat"), T=convert(temperature, "K"), P=pressure)
   # g from CHNOSZ functions
@@ -58,29 +60,23 @@ test_that("g function is calculated correctly", {
   # g from R translation of DEW macro functions (not used in CHNOSZ)
   DEWg <- calculateG(pressure, temperature, w$rho/1000)
   expect_equal(Rg, DEWg)
-  water(oldwat)
 })
 
 test_that("Gibbs energies of species are calculated correctly", {
   P <- c(5000, 5000, 10000, 10000, 20000, 20000, 50000, 50000)
   T <- c(100, 1000, 100, 1000, 100, 1000, 100, 1000)
-  oldwat <- water("DEW")
-  add.OBIGT("DEW")
   RG_HCl <- subcrt("HCl", P=P, T=T)$out[[1]]$G
   DEWG_HCl <- c(-28784.99, -58496.85, -26520.94, -55276.92, -21928.89, -50337.19, -8014.34, -36746.87)
   expect_equal(RG_HCl, DEWG_HCl, tolerance = 1e-5)
   RG_Cl <- subcrt("Cl-", P=P, T=T)$out[[1]]$G
   DEWG_Cl <- c(-30054.59, -22839.35, -27910.68, -28094.07, -23568.45, -27959.67, -10443.07, -18744.93)
   expect_equal(RG_Cl, DEWG_Cl, tolerance = 1e-7)
-  water(oldwat)
 })
 
 test_that("Delta G, logK, and Delta V of reactions are calculated correctly", {
   # These are reactions corresponding to Fig. 1b of Sverjensky et al., 2014 (Nat. Geosci.).
   # The properties are calculated using parameters from the DEW spreadsheet,
   # which are not necessarily identical those that were used for the paper.
-  oldwat <- water("DEW")
-  add.OBIGT("DEW", c("CO2", "HCO3-", "CO3-2", "acetic acid", "acetate", "CH4"))
   T <- 600
   P <- c(5000, 50000)
   R1 <- subcrt(c("H2O", "CO2", "HCO3-", "H+"), c(-1, -1, 1, 1), T=T, P=P)$out
@@ -120,7 +116,46 @@ test_that("Delta G, logK, and Delta V of reactions are calculated correctly", {
   expect_equal(c(R1$V, R2$V, R3$V), DEW_DV[1:6], tolerance=1e-15)
   # TODO: why does DEW spreadsheet use V (O2,g) == 24.465?
   #expect_equal(c(R4$V, R5$V), DEW_DV[7:10])
-
-  # reset computational option for water
-  water(oldwat)
 })
+
+test_that("calculated logK values are consistent with Extended Deep Earth Water paper", {
+  # Reference logK values are from Appendix D of Huang and Sverjensky, 2019 (doi:10.1016/j.gca.2019.03.027)
+  # Select T and P for comparisons
+  T <- c(300, 1100)
+  P <- c(10000, 60000)
+  # Adjust calculated logKs for different values of the
+  # gas constant used in the DEW spreadsheet and CHNOSZ
+  RoverR <- 1.9858775 / 1.9872
+  # Calculate logK for each reaction
+  logK1 <- subcrt(c("H2O", "CO2", "H2CO3"), c(-1, -1, 1), T = T, P = P)$out$logK / RoverR
+  logK2 <- subcrt(c("AlO2(SiO2)-", "H+", "Al+3", "H2O", "SiO2"), c(-1, -4, 1, 2, 1), T = T, P = P)$out$logK / RoverR
+  logK3 <- subcrt(c("Ca(HCO3)+", "Ca+2", "HCO3-"), c(-1, 1, 1), T = T, P = P)$out$logK / RoverR
+  logK4 <- subcrt(c("Ca(HCOO)+", "Ca+2", "HCOO-"), c(-1, 1, 1), T = T, P = P)$out$logK / RoverR
+  logK5 <- subcrt(c("Ca(HSiO3)+", "H+", "Ca+2", "H2O", "SiO2"), c(-1, -1, 1, 1, 1), T = T, P = P)$out$logK / RoverR
+  logK6 <- subcrt(c("Fe(HCOO)+", "Fe+2", "HCOO-"), c(-1, 1, 1), T = T, P = P)$out$logK / RoverR
+  logK7 <- subcrt(c("Fe(HSiO3)+", "H+", "Fe+2", "H2O", "SiO2"), c(-1, -1, 1, 1, 1), T = T, P = P)$out$logK / RoverR
+  logK8 <- subcrt(c("H2O", "SiO2", "HSiO3-", "H+"), c(-1, -1, 1, 1), T = T, P = P)$out$logK / RoverR
+  logK9 <- subcrt(c("MgO", "H+", "Mg+2", "H2O"), c(-1, -2, 1, 1), T = T, P = P)$out$logK / RoverR
+  logK10 <- subcrt(c("Mg(SiO2)(HCO3)+", "Mg+2", "SiO2", "HCO3-"), c(-1, 1, 1, 1), T = T, P = P)$out$logK / RoverR
+  logK11 <- subcrt(c("NaHCO3", "Na+", "HCO3-"), c(-1, 1, 1), T = T, P = P)$out$logK / RoverR
+  logK12 <- subcrt(c("Si3O6", "SiO2"), c(-1, 3), T = T, P = P)$out$logK / RoverR
+  # Make the comparisons:
+  # - Reference logK values are from Appendix D of Huang and Sverjensky, 2019 (doi:10.1016/j.gca.2019.03.027)
+  # - Tolerance (tol) is added if there are differences between the reference and calculated values after rounding
+  #   (scale = 1 is used to compare absolute differences)
+  expect_equal(round(logK1,  2), c(-0.76, 1.34))
+  expect_equal(round(logK2,  4), c( 6.7755,  0.9413), tol = 0.003,  scale = 1)
+  expect_equal(round(logK3,  4), c(-2.3759, -5.6840))
+  expect_equal(round(logK4,  4), c(-2.2837, -5.5822), tol = 0.0001, scale = 1)
+  expect_equal(round(logK5,  4), c( 4.0349,  0.1797), tol = 0.002,  scale = 1)
+  expect_equal(round(logK6,  4), c(-7.5354, -8.0238))
+  expect_equal(round(logK7,  4), c(-0.6883, -1.6363), tol = 0.002,  scale = 1)
+  expect_equal(round(logK8,  4), c(-7.0651, -5.5067), tol = 0.002,  scale = 1)
+  expect_equal(round(logK9,  4), c( 8.2759,  4.3493), tol = 0.002,  scale = 1)
+  expect_equal(round(logK10, 4), c(-6.8106, -8.5888), tol = 0.0001, scale = 1)
+  expect_equal(round(logK11, 4), c(-0.2447, -2.9235))
+  expect_equal(round(logK12, 4), c( 3.3283,  0.4527))
+})
+
+# Restore the default water model and OBIGT database
+suppressMessages(reset())
