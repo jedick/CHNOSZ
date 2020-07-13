@@ -17,7 +17,7 @@
     "density", "ORP", "findit", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "wjd", "bugstab", "Shh", "saturation",
-    "adenine", "DEW", "lambda", "TCA", "aluminum", "bison", "AkDi",
+    "adenine", "DEW", "lambda", "TCA", "aluminum", "AkDi",
     "comproportionation"),
     save.png=FALSE)
 }
@@ -60,7 +60,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{TCA} \tab Standard Gibbs energies of the tricarboxylic (citric) acid cycle (Canovas and Shock, 2016) \cr
     \code{aluminum} \tab Reactions involving Al-bearing minerals (Zimmer et al., 2016; Tutolo et al., 2014) \cr
     \code{carboxylase} \tab Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase \cr
-    \code{bison} \tab Average oxidation state of carbon in proteins for phyla at Bison Pool (Dick and Shock, 2013) \cr
     \code{AkDi} \tab Henry's constant of dissolved gases (Akinfiev and Diamond, 2003) \cr
     \code{comproportionation} \tab Gibbs energy of sulfur comproportionation (Amend et al., 2020) \cr
   }
@@ -111,8 +110,6 @@ Canovas, P. A., III and Shock, E. L. (2016) Geobiochemistry of metabolism: Stand
 Dayhoff, M. O. and Lippincott, E. R. and Eck, R. V. (1964) Thermodynamic Equilibria In Prebiological Atmospheres. \emph{Science} \bold{146}, 1461--1464. \url{https://doi.org/10.1126/science.146.3650.1461}
 
 Dick, J. M. and Shock, E. L. (2011) Calculation of the relative chemical stabilities of proteins as a function of temperature and redox chemistry in a hot spring. \emph{PLoS ONE} \bold{6}, e22782. \url{https://doi.org/10.1371/journal.pone.0022782}
-
-Dick, J. M. and Shock, E. L. (2013) A metastable equilibrium model for the relative abundance of microbial phyla in a hot spring. \emph{PLoS ONE} \bold{8}, e72395. \url{https://doi.org/10.1371/journal.pone.0072395}
 
 Dick, J. M. (2015) Chemical integration of proteins in signaling and development. \emph{bioRxiv}. \url{https://doi.org/10.1101/015826}
 

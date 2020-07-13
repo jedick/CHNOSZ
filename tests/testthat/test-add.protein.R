@@ -5,7 +5,7 @@ suppressMessages(reset())
 
 test_that("add.protein works as expected", {
   # factors causing problems again ...
-  f <- system.file("extdata/protein/DS11.csv", package="CHNOSZ")
+  f <- system.file("extdata/protein/POLG.csv", package="CHNOSZ")
   aa <- read.csv(f, as.is = TRUE)
   # this adds the proteins
   ip1 <- add.protein(aa)
@@ -37,7 +37,7 @@ test_that("group additivity for proteins gives expected values", {
 })
 
 test_that("read.fasta() identifies sequences correctly and gives amino acid compositions in the correct format",{
-  ffile <- system.file("extdata/fasta/EF-Tu.aln", package="CHNOSZ")
+  ffile <- system.file("extdata/protein/EF-Tu.aln", package="CHNOSZ")
   aa <- read.fasta(ffile)
   expect_equal(aa[1, ], read.fasta(ffile, 1))
   # use unlist here so that different row names are not compared

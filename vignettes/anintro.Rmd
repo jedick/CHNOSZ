@@ -1422,7 +1422,7 @@ file.copy("rubisco.svg", fig_path(".svg"))
 ## the code for making the SVG image -- not "live" in the vignette because RSVGTipsDevice isn't available on Windows
 #if(require(RSVGTipsDevice)) {
 #  datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")
-#  fastafile <- system.file("extdata/fasta/rubisco.fasta", package = "CHNOSZ")
+#  fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 #  dat <- read.csv(datfile)
 #  aa <- read.fasta(fastafile)
 #  Topt <- (dat$T1 + dat$T2) / 2
@@ -1457,7 +1457,7 @@ file.copy("rubisco.svg", fig_path(".svg"))
 
 ```{r rubisco_ZC, fig.keep="none", message=FALSE}
 datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")
-fastafile <- system.file("extdata/fasta/rubisco.fasta", package = "CHNOSZ")
+fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 dat <- read.csv(datfile)
 aa <- read.fasta(fastafile)
 Topt <- (dat$T1 + dat$T2) / 2
@@ -1671,13 +1671,13 @@ R's `read.csv()` can be used to read amino acid compositions from a CSV file wit
 Note the use of `as.is = TRUE` to prevent reading character data as factors.
 The `nrows` argument can be added to read that number of rows:
 ```{r read_csv}
-file <- system.file("extdata/protein/DS11.csv", package = "CHNOSZ")
-aa_bison <- read.csv(file, as.is = TRUE, nrows = 5)
+file <- system.file("extdata/protein/POLG.csv", package = "CHNOSZ")
+aa_POLG <- read.csv(file, as.is = TRUE, nrows = 5)
 ```
 <span style="color:green">`read.fasta()`</span> reads a FASTA file and returns the amino acid compositions of the sequences.
 The `iseq` argument can be used to read those sequences from the file:
 ```{r read_fasta, message=FALSE}
-file <- system.file("extdata/fasta/EF-Tu.aln", package = "CHNOSZ")
+file <- system.file("extdata/protein/EF-Tu.aln", package = "CHNOSZ")
 aa_Ef <- read.fasta(file, iseq = 1:2)
 ```
 <span style="color:green">`seq2aa()`</span> counts the amino acids in a user-supplied sequence and generates a data frame of the amino acid composition:
@@ -1785,19 +1785,16 @@ a <- affinity(iprotein = ip)
 
 As shown there, the `iprotein` argument of <span style="color:green">`affinity()`</span> can be used to calculate the affinities of reactions to form the indicated proteins, bypassing the <span style="color:red">`species()`</span> step.
 Let's see this in action using amino acid compositions deduced from metagenomic sequences in the Bison Pool hot spring in Yellowstone [@DS11].
-We read a data file of amino acid compositions produced in that study, taking those labeled "transferase".
-Then we add the proteins and get their indices using <span style="color:red">`add.protein()`</span>, set the basis, calculate the affinities, and make a potential diagram with temperature and activity of dissolved hydrogen as variables:
+We use the overall average amino acid composition of all protein sequences at each site.
+Then we set the basis species, calculate the affinities, and make a potential diagram with temperature and activity of dissolved hydrogen as variables:
 
-```{r bison_transferase, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap='Potential diagram for metagenomically identified sequences of transferases in Bison Pool hot spring. See also the vignette [<span style="color:blue">*Hot-spring proteins in CHNOSZ*</span>](hotspring.pdf).', cache=TRUE, pngquant=pngquant, timeit=timeit}
-file <- system.file("extdata/protein/DS11.csv", package = "CHNOSZ")
-aa <- read.csv(file, as.is = TRUE)
-aa <- aa[grep("transferase", aa$protein), ]
-ip <- add.protein(aa)
+```{r bison_overall, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap='Potential diagram for metagenomically inferred protein sequences in Bison Pool hot spring.', cache=TRUE, pngquant=pngquant, timeit=timeit}
+ip <- pinfo("overall", paste0("bison", c("N", "S", "R", "Q", "P")))
 basis(c("HCO3-", "H2O", "NH3", "HS-", "H2", "H+"))
 basis(c("HCO3-", "NH3", "HS-", "H+"), c(-3, -4, -7, -7.9))
 T <- c(50, 100)
 res <- 300
-a <- affinity(T = c(T, res), H2 = c(-8, -3, res), iprotein = ip)
+a <- affinity(T = c(T, res), H2 = c(-9, -3, res), iprotein = ip)
 fill <- ZC.col(ZC(protein.formula(ip)))
 diagram(a, normalize = TRUE, fill = fill, names = as.character(1:5))
 T <- c(93.3, 79.4, 67.5, 65.3, 57.1)
@@ -1805,12 +1802,12 @@ logaH2 <- c(-3.38, -4.14, -5.66, -7.47, -10.02)
 lines(T, logaH2, lty = 2, lwd = 2)
 points(T, logaH2, pch = 21, bg = "white", cex = 1.5)
 ```
-```{r bison_transferase, eval=FALSE, echo=1:11}
+```{r bison_overall, eval=FALSE, echo=1:11}
 ```
 Site numbers 1--5 correspond to a cooling gradient along the outflow channel of the hot spring.
 The colors represent the relative `r zc` of the proteins (red is more reduced).
 The points indicate the *T* and log*a*<sub>H<sub>2</sub></sub> that optimize a thermodynamic model for relative abundances of phyla that were estimated by taxonomic classification of metagenomic sequences [@DS13]:
-```{r bison_transferase, eval=FALSE, echo=12:15}
+```{r bison_overall, eval=FALSE, echo=12:15}
 ```
 
 # Optimization of chemical activities

@@ -29,7 +29,7 @@
 
   Files in \code{bison} contain BLAST results and taxonomic information for an environmental metagenome from the Bison Pool hot spring in Yellowstone National Park:
   \itemize{
-    \item \code{bisonN_vs_refseq57.blast.xz}, \code{bisonS...}, \code{bisonR...}, \code{bisonQ...}, \code{bisonP...} are partial tabular BLAST results for proteins in the Bison Pool Environmental Genome. Protein sequences predicted in the metagenome were downloaded from the Joint Genome Institute's IMG/M system on 2009-05-13. The target database for the searches was constructed from microbial protein sequences in National Center for Biotechnology Information (NCBI) RefSeq database version 57, representing 7415 microbial genomes. The \sQuote{blastall} command was used with the default setting for E value cuttoff (10.0) and options to make a tabular output file consisting of the top 20 hits for each query sequence. The function \code{\link{read.blast}} was used to extract only those hits with E values less than or equal to 1e-5 and with sequence similarity (percent identity) at least 30 percent, and to keep only the first hit for each query sequence. The function \code{\link{write.blast}} was used to save partial BLAST files (only selected columns). The files provided with CHNOSZ contain the first 5,000 hits for each sampling site at Bison Pool, representing between about 7 to 15 percent of the first BLAST hits after similarity and E value filtering.
+    \item \code{bisonN_vs_refseq57.blast.xz}, \code{bisonS...}, \code{bisonR...}, \code{bisonQ...}, \code{bisonP...} are partial tabular BLAST results for proteins in the Bison Pool Environmental Genome. Protein sequences predicted in the metagenome were downloaded from the Joint Genome Institute's IMG/M system on 2009-05-13. The target database for the searches was constructed from microbial protein sequences in National Center for Biotechnology Information (NCBI) RefSeq database version 57, representing 7415 microbial genomes. The \sQuote{blastall} command was used with the default setting for E value cuttoff (10.0) and options to make a tabular output file consisting of the top 20 hits for each query sequence. The function \code{\link{read.blast}} was used to extract only those hits with E values less than or equal to 1e-5 and with sequence similarity (percent identity) at least 30 percent, and to keep only the first hit for each query sequence. The function \code{\link{write.blast}} was used to save partial BLAST files (only selected columns). The files provided with CHNOSZ contain the first 1000 hits for each sampling site at Bison Pool, representing between about 1.5 to 3 percent of the first BLAST hits after similarity and E value filtering.
     \item \code{gi.taxid.txt.xz} is a table that lists the sequence identifiers (gi numbers) that appear in the example BLAST files (see above), together with the corresponding taxon ids used in the NCBI databases. This file is \emph{not} a subset of the complete \sQuote{gi_taxid_prot.dmp.gz} available at \url{ftp://ftp.ncbi.nih.gov/pub/taxonomy/} but instead is a subset of \sQuote{gi.taxid.txt} generated from the RefSeq release catalog using \sQuote{gencat.sh} in the \code{refseq} directory. See \code{\link{id.blast}} for an example that uses this file and the BLAST files described above.
   }
 
@@ -49,18 +49,13 @@
     \item \code{Mer75_Table4.csv} Values of log(aK+/aH+) and log(aNa+/aH+) from Table 4 of Merino, 1975, used in \code{\link{demos}("aluminum")}.
   }
 
-  Files in \code{fasta} contain protein sequences:
+  Files in \code{protein} contain protein sequences and amino acid compositions for proteins.
   \itemize{
     \item \code{EF-Tu.aln} consists of aligned sequences (394 amino acids) of elongation factor Tu (EF-Tu). The sequences correspond to those taken from UniProtKB for ECOLI (\emph{Escherichia coli}), THETH (\emph{Thermus thermophilus}) and THEMA (\emph{Thermotoga maritima}), and reconstructed ancestral sequences taken from Gaucher et al., 2003 (maximum likelihood bacterial stem and mesophilic bacterial stem, and alternative bacterial stem). See \code{\link{read.fasta}} for an example that uses this file.
     \item \code{rubisco.fasta} Sequences of Rubisco obtained from UniProt (see Dick, 2014). See the vignette \code{anintro.Rmd} for an example that uses this file.
-  }
-
-  Files in \code{protein} contain amino acid compositions for proteins.
-  \itemize{
-    \item \code{DS11.csv}, \code{DS13.csv}
-      These two files contain amino acid compositions of metagenomically encoded proteins, averaged together according to functional annotation (DS11) or taxonomic affiliation (DS13).
-      The data are from Dick and Shock, 2011 and 2013.
-      They are used in the vignette \emph{Hot-spring proteins in CHNOSZ}.
+    \item \code{POLG.csv}
+      Amino acid compositions of a few proteins used for some tests and examples.
+      These are various subunits of the Poliovirus type 1 polyprotein (POLG_POL1M in UniProt).
     \item \code{microbial.aa.csv}
       Overall protein compositions of microbial species reported to be positively or negatively enriched in colorectal cancer.
       This file is taken from Dick, 2016.
@@ -127,10 +122,6 @@ Dayhoff, M. O. and Lippincott, E. R., Eck, R. V. and Nagarajan (1967) Thermodyna
 Dick, J. M. (2014) Average oxidation state of carbon in proteins. \emph{J. R. Soc. Interface} \bold{11}, 20131095. \url{https://doi.org/10.1098/rsif.2013.1095}
 
 Dick, J. M. (2016) Proteomic indicators of oxidation and hydration state in colorectal cancer. \emph{PeerJ} \bold{4}:e2238. \url{https://doi.org/10.7717/peerj.2238}
-
-Dick, J. M. and Shock, E. L. (2011) Calculation of the relative chemical stabilities of proteins as a function of temperature and redox chemistry in a hot spring. \emph{PLoS ONE} \bold{6}, e22782. \url{https://doi.org/10.1371/journal.pone.0022782}
-
-Dick, J. M. and Shock, E. L. (2013) A metastable equilibrium model for the relative abundance of microbial phyla in a hot spring. \emph{PLoS ONE} \bold{8}, e72395. \url{https://doi.org/10.1371/journal.pone.0072395}
 
 Gattiker, A., Michoud, K., Rivoire, C., Auchincloss, A. H., Coudert, E., Lima, T., Kersey, P., Pagni, M., Sigrist, C. J. A., Lachaize, C., Veuthey, A.-L., Gasteiger, E. and Bairoch, A. (2003) Automatic annotation of microbial proteomes in Swiss-Prot. \emph{Comput. Biol. Chem.} \bold{27}, 49--58. \url{https://doi.org/10.1016/S1476-9271(02)00094-4}
 

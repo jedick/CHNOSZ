@@ -111,9 +111,7 @@ test_that("'iprotein' gives consistent results on a transect", {
   basis(c("HCO3-", "H2O", "NH3", "HS-", "H2", "H+"),
     "aq", c(-3, 0, -4, -7, 999, 999))
   sites <- c("N", "S", "R", "Q", "P")
-  file <- system.file("extdata/protein/DS11.csv", package="CHNOSZ")
-  aa <- read.csv(file, as.is=TRUE)
-  ip <- add.protein(aa[1:5, ])
+  ip <- pinfo("overall", c("bisonN", "bisonS", "bisonR", "bisonQ", "bisonP"))
   # to reproduce, use superseded properties of [Met], [Gly], and [UPBB] (Dick et al., 2006)
   add.OBIGT("OldAA")
   a <- affinity(T=T, pH=pH, H2=H2, iprotein=ip)

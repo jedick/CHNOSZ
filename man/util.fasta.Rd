@@ -65,7 +65,7 @@ The \code{protein} argument corresponds to the \samp{Entry name} on the UniProt 
 \examples{\dontshow{reset()}
 ## reading a protein FASTA file
 # the path to the file
-file <- system.file("extdata/fasta/EF-Tu.aln", package="CHNOSZ")
+file <- system.file("extdata/protein/EF-Tu.aln", package="CHNOSZ")
 # read the sequences, and print the first one
 read.fasta(file, ret="seq")[[1]]
 # count the amino acids in the sequences

@@ -5,7 +5,7 @@
 % macros
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 
-\section{Changes in CHNOSZ version 1.3.6-28 (2020-07-10)}{
+\section{Changes in CHNOSZ version 1.3.6-31 (2020-07-13)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -77,7 +77,10 @@
       \item Revise \samp{OBIGT.Rmd} to reduce the size of the HTML file and
       make deep linking to individual sections work.
 
-      \item Remove vignette \samp{hotspring.Rnw}.
+      \item Remove vignette \samp{hotspring.Rnw}, demo \samp{bison.R}, and
+      associated data files \samp{DS11.csv} and \samp{DS13.csv}. The plots are
+      now in the \samp{bison.Rmd} vignette in the \pkg{JMDplots} package
+      (\url{https://github.com/jedick/JMDplots}).
 
     }
   }
@@ -134,11 +137,13 @@
 
       \item TODO: use https in refs.csv
 
-      \item TODO: add hotspring.Rmd to JMDplots package.
-
       \item TODO: move protein.equil() example (previously in equilibrium.Rnw) to JMDplots.
 
       \item TODO: change add.obigt --> add.OBIGT on website (Fe-O-H-S example) when package is submitted to CRAN.
+
+      \item TODO: move extdata/bison to JMDplots package.
+
+      \item TODO: remove extdata/refseq (now in JMDplots).
 
     }
   }

@@ -19,13 +19,12 @@ s <- subcrt(c("CSG_METTL", "CSG_METJA"), c(-1/530, 1/530),
 ## logfO2-pH potential diagram
 # with a charged basis, we calculate properties of ionized proteins
 basis("CHNOS+")
-file <- system.file("extdata/protein/DS11.csv", package = "CHNOSZ")
-aa <- read.csv(file, as.is=TRUE)
-aa <- aa[grep("transferase", aa$protein), ]
+file <- system.file("extdata/protein/POLG.csv", package = "CHNOSZ")
+aa <- read.csv(file, as.is = TRUE)
 ip <- add.protein(aa)
-a <- affinity(pH=c(0, 14), O2=c(-64, -61), T=75, iprotein=ip)
+a <- affinity(pH = c(6, 12), O2 = c(-64, -61), T = 75, iprotein = ip)
 diagram(a)
-title(main="Sequences for transferase at Bison Pool")
+title(main = "Poliovirus proteins")
 
 ## surface-layer proteins from Methanococcus and others
 ## as a function of oxygen fugacity, after Dick, 2008, Fig. 5b
