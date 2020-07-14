@@ -43,13 +43,13 @@ test_that("non-available species cause error, and species can be added or modifi
   # change its log fugacity to -5
   expect_equal(species(1, -5)$logact, -5)
   # add CO2, aq
-  expect_equal(nrow(species("CO2")), 2)
+  expect_equal(nrow(species("CO2", add = TRUE)), 2)
   # add alanine by index in thermo()$OBIGT
-  expect_equal(nrow(species(info("alanine"))), 3)
+  expect_equal(nrow(species(info("alanine"), add = TRUE)), 3)
   # if we just use an index, get only that species
   expect_equal(species(3)$name, "alanine")
   # we can add a species with the same name but different state
-  expect_equal(nrow(species("alanine", "cr")), 4)
+  expect_equal(nrow(species("alanine", "cr", add = TRUE)), 4)
   # we can modify the logact of a named species (only first match)
   expect_equal(species("alanine", -7)$logact[3], -7)
 })
@@ -59,6 +59,6 @@ test_that("index_return provides indices for touched species", {
   expect_equal(species("CO2", index.return=TRUE), 1)
   # here it's "touched" (but not added or modified)
   expect_equal(species("CO2", index.return=TRUE), 1)
-  expect_equal(species(c("H2O", "NH3"), index.return=TRUE), c(2, 3))
+  expect_equal(species(c("H2O", "NH3"), index.return=TRUE, add = TRUE), c(2, 3))
   expect_equal(species(1, "gas", index.return=TRUE), 1)
 })

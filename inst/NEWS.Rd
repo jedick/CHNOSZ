@@ -5,7 +5,7 @@
 % macros
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 
-\section{Changes in CHNOSZ version 1.3.6-31 (2020-07-13)}{
+\section{Changes in CHNOSZ version 1.3.6-32 (2020-07-14)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -27,6 +27,13 @@
       thermodynamic database now sits at \code{thermo()$OBIGT}, and functions
       \code{add.OBIGT()} and \code{mod.OBIGT()} replace the previous
       \code{add.obigt()} and \code{mod.obigt()}.
+
+      \item An \strong{add} argument has been added to \code{species()}. By
+      default, loading new species now causes any previous species definition
+      to be removed first. Therefore, \code{species(delete = TRUE)} is no
+      longer needed to clear the species definition in a series of calculations
+      for different species. To restore the previous behavior, where new
+      species are added to an existing definiton, set \samp{add = TRUE}.
 
     }
   }
@@ -144,6 +151,8 @@
       \item TODO: move extdata/bison to JMDplots package.
 
       \item TODO: remove extdata/refseq (now in JMDplots).
+
+      \item TODO: OBIGT.Rmd: change "CHNOSZ" references to "OBIGT".
 
     }
   }

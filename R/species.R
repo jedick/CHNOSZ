@@ -1,11 +1,12 @@
 # CHNOSZ/species.R
 # define species of interest 
 
-# to add to or alter the species definition
-species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) {
+# Function to create or add to the species data frame
+species <- function(species=NULL, state=NULL, delete=FALSE, add=FALSE, index.return=FALSE) {
   # 20080925 default quiet=TRUE 20101003 default quiet=FALSE
   # 20120128 remove 'quiet' argument (messages can be hidden with suppressMessages())
   # 20120523 return thermo()$species instead of rownumbers therein, and remove message showing thermo()$species
+  # 20200714 add 'add' argument (by default, previous species are deleted)
   thermo <- get("thermo", CHNOSZ)
   ## argument processing
   # we can't deal with NA species
@@ -46,6 +47,11 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
   }
   # if no species or states are given, just return the species list
   if(is.null(species) & is.null(state)) return(thermo$species)
+#  # delete the previous species definition unless add = TRUE 20200714
+#  if(!add) {
+#    thermo$species <- NULL
+#    assign("thermo", thermo, CHNOSZ)
+#  }
   # if no species are given use all of them if available
   if(is.null(species) & !is.null(thermo$species)) species <- 1:nrow(thermo$species)
   # parse state argument
@@ -105,7 +111,7 @@ species <- function(species=NULL, state=NULL, delete=FALSE, index.return=FALSE) 
     # "H2PO4-" looks better than "H2PO4."
     colnames(newspecies)[1:nrow(thermo$basis)] <- rownames(thermo$basis)
     # initialize or add to species data frame
-    if(is.null(thermo$species)) {
+    if(is.null(thermo$species) | !add) {
       thermo$species <- newspecies
       ispecies <- 1:nrow(thermo$species)
     } else {

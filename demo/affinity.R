@@ -87,6 +87,5 @@ title(main="Amino acid synthesis, after Amend and Shock, 1998")
 # 9 amino acids have negative delta Gr under hydrothermal conditions
 # (cf. AS98 with 11; we are using more recent thermodynamic data)
 stopifnot(sum(out$G.100 < 0)==9)
-# reset units and species to run next examples
+# reset units to run next examples
 E.units("cal")
-species(delete=TRUE)

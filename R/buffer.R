@@ -74,8 +74,7 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
         species <- as.character(thermo$buffers$species)[ib]
         state <- as.character(thermo$buffers$state)[ib]
         #ibuff <- info(species,state,quiet=TRUE)
-        #ispecies <- c(ispecies,species(ibuff))
-        ispecies <- c(ispecies, species(species, state, index.return=TRUE))
+        ispecies <- c(ispecies, species(species, state, index.return=TRUE, add = TRUE))
       }
       ispecies.new <- c(ispecies.new,list(ispecies))
       # make sure to set the activities

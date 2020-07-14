@@ -35,7 +35,7 @@ for(i in 1:length(G)) {
 basis(c("Cu+2", "H2O", "H+", "e-", "glycinium", "CO2"), c(999, 0, 999, 999, -1, 999))
 # add solids and aqueous species
 species(Cu_s)
-species(c(Cu_aq, CuGly), -4)
+species(c(Cu_aq, CuGly), -4, add = TRUE)
 names <- c(Cu_s, Cu_aq, CuGly)
 # mosaic diagram with speciate glycine as a function of pH
 m <- mosaic(bases=Gly, pH=c(0, 16, 500), Eh=c(-0.6, 1.0, 500))

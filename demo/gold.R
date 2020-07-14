@@ -21,7 +21,6 @@ col <- c("#ED4037", "#F58645", "#0F9DE2", "#22CC88")
 
 # sulfur logfO2-pH diagrams showing redox and pH buffers at four temperatures 20181031
 sulfur <- function() {
-  species(delete = TRUE)
   species(c("H2S", "HS-", "HSO4-", "SO4-2"))
   T <- c(200, 300, 400, 500)
   P <- 1000

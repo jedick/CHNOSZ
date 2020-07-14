@@ -366,7 +366,7 @@ balance <- function(aout, balance=NULL) {
   if(is.numeric(balance[1])) {
     # a numeric vector
     n.balance <- rep(balance, length.out=length(aout$values))
-    message("balance: from numeric argument value")
+    message(paste0("balance: from supplied numeric argument (", balance, ")"))
   } else {
     # "length" for balancing on protein length
     if(identical(balance, "length")) {

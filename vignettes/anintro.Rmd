@@ -696,13 +696,14 @@ info(" CuCl")
 
 Next we define the basis, and set the activities of the H<sub>2</sub>S and Cl<sup>-</sup> basis species.
 These represent the total activity of S and Cl in the system, which are distributed among the minerals and aqueous species.
-Four minerals and the aqueous copper chloride species are included:
+Aqueous copper chloride complexes and four minerals are added.
+Be sure to include `add = TRUE` in the second call to <span style="color:red">`species()`</span>; otherwise, the minerals would simply replace the previously added aqueous species.
 ```{r copper_setup, echo=TRUE, results="hide"}
 basis(c("Cu", "H2S", "Cl-", "H2O", "H+", "e-"))
 basis("H2S", -6)
 basis("Cl-", -0.7)
 species(c("CuCl", "CuCl2-", "CuCl3-2", "CuCl+", "CuCl2", "CuCl3-", "CuCl4-2"))
-species(c("chalcocite", "tenorite", "cuprite", "copper"))
+species(c("chalcocite", "tenorite", "cuprite", "copper"), add = TRUE)
 ```
 
 Note that chalcocite (Cu<sub>2</sub>S) undergoes phase transitions.
@@ -1006,11 +1007,11 @@ To do this, we provide <span style="color:green">`info()`</span> with a set of `
 In the database, the species in each group are ordered by carbon number, so we construct a sequence from the starting to ending `ispecies` for each group using R's `seq()` function, wrapped by the `seq2()` function we write here to make the code shorter:
 ```{r groups_species, message=FALSE}
 seq2 <- function(x) seq(x[1], x[2])
-ia <- species(seq2(info(c("methanol", "octanol"))), index.return = TRUE)
-ik <- species(seq2(info(c("acetone", "2-octanone"))), index.return = TRUE)
-ic <- species(seq2(info(c("acetic acid","n-dodecanoic acid"))),index.return=TRUE)
-ica <- species(seq2(info(c("acetate", "n-dodecanoate"))), index.return = TRUE)
-ie <- species(seq2(info(c("ethylene", "octene"))), index.return = TRUE)
+ia <- species(seq2(info(c("methanol", "octanol"))), index.return = TRUE, add = TRUE)
+ik <- species(seq2(info(c("acetone", "2-octanone"))), index.return = TRUE, add = TRUE)
+ic <- species(seq2(info(c("acetic acid","n-dodecanoic acid"))),index.return=TRUE, add = TRUE)
+ica <- species(seq2(info(c("acetate", "n-dodecanoate"))), index.return = TRUE, add = TRUE)
+ie <- species(seq2(info(c("ethylene", "octene"))), index.return = TRUE, add = TRUE)
 ```
 
 Now we read two data files that contain values of `r logfO2` and pH as a function of temperature, digitized from Figure 5 of Shock and Schulte (1998).
@@ -1204,7 +1205,7 @@ lines(a$vals[[1]], colSums(nH))
 legend("topright", legend = c("I = 0 M", "I = 0.25 M"), lty = 2:1, col = 2:1, cex = 0.8)
 ATP.H <- substitute("ATP and H"^`+`)
 title(main = ATP.H)
-species(c("MgATP-2", "MgHATP-", "MgH2ATP", "Mg2ATP"))
+species(c("MgATP-2", "MgHATP-", "MgH2ATP", "Mg2ATP"), add = TRUE)
 Hplot <- function(pMg, IS = 0.25) {
   basis("Mg+2", -pMg)
   a <- affinity(pH = c(3, 9), IS = IS, T = T)

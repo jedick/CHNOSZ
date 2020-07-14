@@ -55,8 +55,14 @@ diagram <- function(
     if(!"loga.equil" %in% names(eout)) {
       eout.is.aout <- TRUE
       # get the balancing coefficients
-      if(type=="auto") n.balance <- balance(eout, balance)$n.balance
-      else n.balance <- rep(1, length(eout$values))
+      if(type=="auto") {
+        bal <- balance(eout, balance)
+        n.balance <- bal$n.balance
+        balance <- bal$balance
+      } else n.balance <- rep(1, length(eout$values))
+      # in case all coefficients are negative (for bimetal() examples) 20200713
+      # e.g. H+ for minerals with basis(c("Fe+2", "Cu+", "hydrogen sulfide", "oxygen", "H2O", "H+"))
+      if(all(n.balance < 0)) n.balance <- -n.balance
     }
   } else if(type %in% rownames(eout$basis)) {
     # to calculate the loga of basis species at equilibrium
@@ -94,6 +100,7 @@ diagram <- function(
       # normalizing the formulas is done below
       eout$values[[i]] / n.balance[i]
     })
+    names(plotvals) <- names(eout$values)
     plotvar <- eout$property
     # we change 'A' to 'A/(2.303RT)' so the axis label is made correctly
     # 20171027 use parentheses to avoid ambiguity about order of operations
@@ -659,7 +666,10 @@ diagram <- function(
       out2D <- list(namesx=pn$namesx, namesy=pn$namesy)
     } # end if(nd==2)
   } # end if(plot.it)
-  out <- c(eout, list(plotvar=plotvar, plotvals=plotvals, names=names, predominant=predominant))
+  outstuff <- list(plotvar=plotvar, plotvals=plotvals, names=names, predominant=predominant)
+  # include the balance name and coefficients if we diagrammed affinities 20200714
+  if(eout.is.aout) outstuff <- c(list(balance = balance, n.balance = n.balance), outstuff)
+  out <- c(eout, outstuff)
   if(!identical(predominant, NA) & is.null(dotted)) out <- c(out, list(lines=linesout))
   out <- c(out, out2D)
   return(invisible(out))

@@ -16,7 +16,7 @@ basis(c("FeO", "SO4-2", "H2O", "H+", "e-", "CO3-2"))
 basis("SO4-2", -6)
 basis("CO3-2", 0)
 species(c("Fe+2", "Fe+3"), -6)
-species(c("pyrrhotite", "pyrite", "hematite", "magnetite", "siderite"))
+species(c("pyrrhotite", "pyrite", "hematite", "magnetite", "siderite"), add = TRUE)
 # two sets of changing basis species:
 # speciate SO4-2, HSO4-, HS-, H2S as a function of Eh and pH
 # speciate CO3-2, HCO3-, CO2 as a function of pH

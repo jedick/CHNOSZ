@@ -25,7 +25,6 @@ diagram(a, xlab = ratlab("Mg+2"), ylab = ratlab("Ca+2"), fill = "terrain", yline
 
 # add saturation limits for specified CO2 fugacity
 basis("CO2", -1)
-species(delete = TRUE)
 species(c("calcite", "dolomite", "magnesite", "brucite"))
 # use argument recall feature to rerun affinity over the same range of conditions
 a <- affinity(a)

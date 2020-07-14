@@ -68,14 +68,13 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
   # run subcrt() calculations for all basis species and formed species 20190131
   # this avoids repeating the calculations in different calls to affinity()
   # add all the basis species here - the formed species are already present
-  lapply(bases, species)
+  lapply(bases, species, add = TRUE)
   sout <- affinity(..., return.sout = TRUE)
 
   # calculate affinities of the basis species themselves
   A.bases <- list()
   for(i in 1:length(bases)) {
     message("mosaic: calculating affinities of basis species group ", i, ": ", paste(bases[[i]], collapse=" "))
-    species(delete = TRUE)
     mysp <- species(bases[[i]])
     # 20191111 include only aq species in total activity
     iaq <- mysp$state == "aq"

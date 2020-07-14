@@ -6,13 +6,12 @@ basis("CHNOS+")
 species("acetic acid")
 aone <- suppressMessages(affinity())
 # acids
-species(c("formic acid", "formate", "acetate"))
+species(c("formic acid", "formate", "acetate"), add = TRUE)
 aacid <- suppressMessages(affinity())
 # acids plus a sulfur species
-species("H2S")
+species("H2S", add = TRUE)
 aacidS <- suppressMessages(affinity())
 # proteins
-species(delete=TRUE)
 species(c("LYSC_CHICK", "MYG_PHYCA", "RNAS1_BOVIN", "CYC_BOVIN"))
 aprot <- suppressMessages(affinity())
 
@@ -25,7 +24,7 @@ test_that("equilibrate() gives expected messages and errors for balance calculat
   expect_message(equilibrate(aacid, loga.balance=-3), "loga.balance is -3")
   expect_error(equilibrate(aacid, balance="length"), "some species are not proteins")
   expect_error(equilibrate(aacidS), "no basis species is present in all formation reactions")
-  expect_message(equilibrate(aacidS, balance=1), "balance: from numeric argument value")
+  expect_message(equilibrate(aacidS, balance=1), "balance: from supplied numeric argument")
   expect_message(equilibrate(aacidS, balance=1), "n.balance is 1 1 1 1 1")
   expect_message(equilibrate(aacidS, balance=1), "loga.balance is -2.301029")
   expect_error(equilibrate(aacidS, balance="CO2"), "some species have no CO2 in the formation reaction")
@@ -166,7 +165,7 @@ test_that("normalizing formulas of only selected species works as expected", {
   basis("CHNOS")
   basis("O2", -49.5)
   species(`n-alkane`)
-  species(`2-isoalkane`)
+  species(`2-isoalkane`, add = TRUE)
   # approximate conditions of Computer Experiment 27 (Helgeson et al., 2009, GCA)
   a <- affinity(T=150, P=830, exceed.Ttr=TRUE)
   # using full chemical formulas
@@ -198,7 +197,7 @@ test_that("solids are not equilibrated, but their stability fields are calculate
   basis("O2", -35)
   basis("H+", -5)
   species(Cu_aq, -3)
-  species(Cu_cr)
+  species(Cu_cr, add = TRUE)
   a <- affinity("Cl-" = c(-3, 0, 200), "HS-" = c(-10, 0, 200), T = 325, P = 500)
   apredom <- diagram(a, plot.it = FALSE)$predominant
   e <- equilibrate(a)
