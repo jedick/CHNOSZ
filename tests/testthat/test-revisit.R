@@ -52,10 +52,10 @@ test_that("non-referenced objectives give expected results", {
   r1.qqr <- revisit(e1, "qqr", plot.it=FALSE)
   # the tests will alert us to significant numerical changes
   # but so far haven't been independently verified
-  expect_equal(r1.cv$optimum, 0.30576, tolerance=1e-5) 
-  expect_equal(r1.sd$optimum, 0.000284694, tolerance=1e-5) 
-  expect_equal(r1.shannon$optimum, 1.066651, tolerance=1e-5)
-  expect_equal(r1.qqr$optimum, 0.999783, tolerance=1e-5)
+  expect_equal(r1.cv$optimum, 0.29927, tolerance=1e-5) 
+  expect_equal(r1.sd$optimum, 0.00027671, tolerance=1e-5) 
+  expect_equal(r1.shannon$optimum, 1.067228, tolerance=1e-5)
+  expect_equal(r1.qqr$optimum, 0.9999584, tolerance=1e-5)
 })
 
 test_that("referenced objectives give expected results", {
@@ -66,7 +66,7 @@ test_that("referenced objectives give expected results", {
   expect_equal(max(r1.spearman$H), 1)  # perfect rank correlation
   # where logarithm of activity of the 3rd species (glutamic acid) maximizes
   r1.logact <- revisit(e1, "logact", 3, plot.it=FALSE)
-  expect_equal(r1.logact$ixopt, 71)
+  expect_equal(r1.logact$ixopt, 141)
 })
 
 test_that("DGtr objective gives zero at equilibrium and >0 not at equilibrium", {

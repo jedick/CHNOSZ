@@ -54,7 +54,7 @@ title(main="Surface-layer proteins, after Dick, 2008")
 stopifnot(organisms[unique(which.pmax(e$loga.equil))] ==
   c("METFE", "METJA", "METVO", "HALJP"))
 # stability order close to logfO2=-83.1
-stopifnot(order(as.data.frame(e$loga.equil)[62,],
+stopifnot(order(as.data.frame(e$loga.equil)[124,],
   decreasing=TRUE)==c(2, 6, 7, 5, 3, 1, 9, 8, 10, 4))
 # reset thermodynamic database
 reset()

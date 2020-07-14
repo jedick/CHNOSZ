@@ -715,7 +715,7 @@ info(info("chalcocite", c("cr", "cr2", "cr3")))$T
 
 We use <span style="color:green">`mosaic()`</span> to generate and combine diagrams for each candidate basis species (H<sub>2</sub>S, HS<sup>-</sup>, HSO<sub>4</sub><sup>-</sup>, or SO<sub>4</sub><sup>-2</sup>) as a function of Eh and pH.
 The key argument is `bases`, which identifies the candidate basis species, starting with the one in the current basis.
-The other arguments, like those of <span style="color:green">`affinity()`</span>, specify the ranges of the variables; `res` indicates the grid resolution to use for each variable (the default is 128).
+The other arguments, like those of <span style="color:green">`affinity()`</span>, specify the ranges of the variables; `res` indicates the grid resolution to use for each variable (the default is 256).
 The first call to <span style="color:green">`diagram()`</span> plots the species of interest; the second adds the predominance fields of the basis species.
 We turn off the gray coloring beyond the water stability limits (`limit.water`) but plot dashed blue lines using <span style="color:green">`water.lines()`</span>:
 

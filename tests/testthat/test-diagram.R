@@ -37,7 +37,7 @@ test_that("expected messages, errors and results arise using output from affinit
   d <- diagram(a, "CO2", plot.it=FALSE)
   # test that the result does in fact correspond to zero affinity of formation, how about for acetate?
   a <- affinity(O2=d$vals[[1]], CO2=d$plotvals[[4]])
-  expect_equal(a$values[[4]], array(numeric(128)))
+  expect_equal(a$values[[4]], array(numeric(256)))
 })
 
 test_that("'groups' and 'alpha' work as expected", {
@@ -55,7 +55,7 @@ test_that("'groups' and 'alpha' work as expected", {
   # ask for degrees of formation instead of logarithms of activities
   d <- diagram(e, alpha=TRUE, plot.it=FALSE)
   # we should find that the sum of alphas is one
-  expect_equal(Reduce("+", d$plotvals), array(rep(1, 128)), check.attributes=FALSE)
+  expect_equal(Reduce("+", d$plotvals), array(rep(1, 256)), check.attributes=FALSE)
 })
 
 test_that("'normalize' and 'as.residue' work as expected", {
@@ -94,8 +94,8 @@ test_that("NaN values from equilibrate() are preserved (as NA in predominance ca
   d <- diagram(e, plot.it = FALSE)
   # equilibrate() here with default "boltzmann" method produces
   # NaN at very high O2 + low H2 or very low O2 + high H2 
-  expect_equal(d$predominant[1, 128], as.numeric(NA))
-  expect_equal(d$predominant[128, 1], as.numeric(NA))
+  expect_equal(d$predominant[1, 256], as.numeric(NA))
+  expect_equal(d$predominant[256, 1], as.numeric(NA))
 })
 
 ## add the test but exclude it for now because plot.it=FALSE doesn't produce values for namesx 20190223

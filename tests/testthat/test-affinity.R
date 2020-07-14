@@ -53,7 +53,7 @@ test_that("pe, pH and Eh are correctly handled", {
   expect_equal(a$vars, c("pH", "Eh"))
   expect_equal(range(a$vals[[1]]), pH)
   expect_equal(range(a$vals[[2]]), Eh)
-  expect_equal(length(a$vals[[2]]), 128)
+  expect_equal(length(a$vals[[2]]), 256)
   # since Eh has to be reconstructed, check it's done correctly
   a129 <- affinity(pH=pH, Eh=c(Eh, 129))
   expect_equal(length(a129$vals[[2]]), 129)

@@ -237,7 +237,7 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
     Eharg <- args.orig[[iEh]]
     if(length(Eharg) > 3) Ehvals <- Eharg
     else if(length(Eharg) == 3) Ehvals <- seq(Eharg[1], Eharg[2], length.out=Eharg[3])
-    else if(length(Eharg) == 2) Ehvals <- seq(Eharg[1], Eharg[2], length.out=128)
+    else if(length(Eharg) == 2) Ehvals <- seq(Eharg[1], Eharg[2], length.out=256)
     vals[[iEh]] <- Ehvals
   }
   # get pe and pH

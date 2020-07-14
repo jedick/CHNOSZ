@@ -300,8 +300,8 @@ energy.args <- function(args, transect = FALSE) {
     else message('affinity: pressure is ',outvert(P,'bar'),' ',P.units())
   }
   if(!IS.is.var & !identical(IS,0)) message('affinity: ionic strength is ',IS)
-  # default values for resolution
-  res <- 128
+  # default value for resolution
+  res <- 256
   # where we store the output
   what <- "A"
   vars <- character()

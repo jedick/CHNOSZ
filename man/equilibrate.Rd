@@ -137,7 +137,7 @@ logK <- subcrt(c("CO2","H2O","HCO3-","H+"), c(-1, -1, 1, 1), T=25)$out$logK
 stopifnot(all.equal(pKa.equil, -logK, tolerance=1e-2))
 
 # equilibrate with mosaic: balancing on two elements (N and C)
-# thanks to Kirt Robinson for the feature request and test system
+# thanks to Kirt Robinson for the feature request and test case
 loga_N <- -4
 loga_C <- -3
 basis(c("CO2", "NH3", "O2", "H2O", "H+"))

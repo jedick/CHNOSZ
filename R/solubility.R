@@ -142,7 +142,7 @@ if(codeanal) print(paste0("loga.balance [", balance, "]: ", round(loga.balance, 
     # stop iterating if we reached the tolerance (or find.IS=FALSE)
     if(!find.IS | all(IS - IS.old < 1e-4)) break
     # on the first iteration, expand argument values for affinity() or mosaic()
-    # (e.g. convert pH = c(0, 14) to pH = seq(0, 14, 128) so that it has the same length as the IS values)
+    # (e.g. convert pH = c(0, 14) to pH = seq(0, 14, 256) so that it has the same length as the IS values)
     # we don't do this if aout$vals is NA 20190731
     if(niter==1 & !all(is.na(aout$vals))) {
       if(thisfun=="affinity") for(i in 1:length(aout$vals)) {

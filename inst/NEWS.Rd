@@ -154,6 +154,8 @@
 
       \item TODO: OBIGT.Rmd: change "CHNOSZ" references to "OBIGT".
 
+      \item TODO: change default plot resolution from 128 to 256.
+
     }
   }
 
