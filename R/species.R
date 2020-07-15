@@ -86,7 +86,8 @@ species <- function(species=NULL, state=NULL, delete=FALSE, add=FALSE, index.ret
     ina <- is.na(iOBIGT)
     if(any(ina)) stop(paste("species not available:", paste(species[ina], collapse=" ")))
   } else {
-    # if species is numeric and low number it refers to the index of existing species, else to thermo()$OBIGT
+    # if species is numeric and a small number it refers to the species definition,
+    # else to species index in thermo()$OBIGT
     nspecies <- nrow(thermo$species)
     if(is.null(thermo$species)) nspecies <- 0
     if(max(species) > nspecies) iOBIGT <- species

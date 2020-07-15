@@ -36,78 +36,88 @@ equilibrate <- function(aout, balance=NULL, loga.balance=NULL,
   n.balance.orig <- n.balance <- bout$n.balance
   balance <- bout$balance
   ## if solids (cr) species are present, find them on a predominance diagram 20191111
-  hascr <- any(grepl("cr", aout$species$state))
-  if(hascr) dout <- diagram(aout, balance = balance, normalize = normalize, as.residue = as.residue, plot.it = FALSE, limit.water = FALSE)
-  ## take selected species in 'ispecies'
-  if(length(ispecies)==0) stop("the length of ispecies is zero")
-  if(is.logical(ispecies)) ispecies <- which(ispecies)
-  # take out species that have NA affinities
-  ina <- sapply(aout$values, function(x) all(is.na(x)))
-  ispecies <- ispecies[!ina[ispecies]]
-  if(length(ispecies)==0) stop("all species have NA affinities")
-  if(!identical(ispecies, 1:nspecies)) {
-    message(paste("equilibrate: using", length(ispecies), "of", nspecies, "species"))
-    aout$species <- aout$species[ispecies, ]
-    aout$values <- aout$values[ispecies]
-    n.balance <- n.balance[ispecies]
-  }
-  ## number of species that are left
-  nspecies <- length(aout$values)
-  ## say what the balancing coefficients are
-  if(length(n.balance) < 100) message(paste("equilibrate: n.balance is", c2s(n.balance)))
-  ## logarithm of total activity of the balancing basis species
-  if(is.null(loga.balance)) {
-    # sum up the activities, then take absolute value
-    # in case n.balance is negative
-    sumact <- abs(sum(10^aout$species$logact * n.balance))
-    loga.balance <- log10(sumact)
-  }
-  # make loga.balance the same length as the values of affinity
-  loga.balance <- unlist(loga.balance)
-  nvalues <- length(unlist(aout$values[[1]]))
-  if(length(loga.balance) == 1) {
-    # we have a constant loga.balance
-    message(paste0("equilibrate: loga.balance is ", loga.balance))
-    loga.balance <- rep(loga.balance, nvalues)
+  iscr <- grepl("cr", aout$species$state)
+  ncr <- sum(iscr)
+  if(ncr > 0) dout <- diagram(aout, balance = balance, normalize = normalize, as.residue = as.residue, plot.it = FALSE, limit.water = FALSE)
+  if(ncr == nspecies) {
+    ## we get here if there are only solids 20200714
+    m.balance <- NULL
+    Astar <- NULL
+    loga.equil <- aout$values
+    for(i in 1:length(loga.equil)) loga.equil[[i]][] <- NA
   } else {
-    # we are using a variable loga.balance (supplied by the user)
-    if(!identical(length(loga.balance), nvalues)) stop("length of loga.balance (", length(loga.balance), ") doesn't match the affinity values (", nvalues, ")")
-    message(paste0("equilibrate: loga.balance has same length as affinity values (", length(loga.balance), ")"))
-  }
-  ## normalize -- normalize the molar formula by the balance coefficients
-  m.balance <- n.balance
-  isprotein <- grepl("_", as.character(aout$species$name))
-  if(any(normalize) | as.residue) {
-    if(any(n.balance < 0)) stop("one or more negative balancing coefficients prohibit using normalized molar formulas")
-    n.balance[normalize|as.residue] <- 1
-    if(as.residue) message(paste("equilibrate: using 'as.residue' for molar formulas"))
-    else message(paste("equilibrate: using 'normalize' for molar formulas"))
-    # set the formula divisor (m.balance) to 1 for species whose formulas are *not* normalized
-    m.balance[!(normalize|as.residue)] <- 1
-  } else m.balance[] <- 1
-  ## Astar: the affinities/2.303RT of formation reactions with
-  ## formed species in their standard-state activities
-  Astar <- lapply(1:nspecies, function(i) { 
-    # 'starve' the affinity of the activity of the species,
-    # and normalize the value by the nor-molar ratio
-    (aout$values[[i]] + aout$species$logact[i]) / m.balance[i] 
-  })
-  ## chose a method and compute the equilibrium activities of species
-  if(missing(method)) {
-    if(all(n.balance==1)) method <- method[1]
-    else method <- method[2]
-  }
-  message(paste("equilibrate: using", method[1], "method"))
-  if(method[1]=="boltzmann") loga.equil <- equil.boltzmann(Astar, n.balance, loga.balance)
-  else if(method[1]=="reaction") loga.equil <- equil.reaction(Astar, n.balance, loga.balance, tol)
-  ## if we normalized the formulas, get back to activities to species
-  if(any(normalize) & !as.residue) {
-    loga.equil <- lapply(1:nspecies, function(i) {
-      loga.equil[[i]] - log10(m.balance[i])
+    ## we get here if there are any aqueous species 20200714
+    ## take selected species in 'ispecies'
+    if(length(ispecies)==0) stop("the length of ispecies is zero")
+    if(is.logical(ispecies)) ispecies <- which(ispecies)
+    # take out species that have NA affinities
+    ina <- sapply(aout$values, function(x) all(is.na(x)))
+    ispecies <- ispecies[!ina[ispecies]]
+    if(length(ispecies)==0) stop("all species have NA affinities")
+    if(!identical(ispecies, 1:nspecies)) {
+      message(paste("equilibrate: using", length(ispecies), "of", nspecies, "species"))
+      aout$species <- aout$species[ispecies, ]
+      aout$values <- aout$values[ispecies]
+      n.balance <- n.balance[ispecies]
+    }
+    ## number of species that are left
+    nspecies <- length(aout$values)
+    ## say what the balancing coefficients are
+    if(length(n.balance) < 100) message(paste("equilibrate: n.balance is", c2s(n.balance)))
+    ## logarithm of total activity of the balancing basis species
+    if(is.null(loga.balance)) {
+      # sum up the activities, then take absolute value
+      # in case n.balance is negative
+      sumact <- abs(sum(10^aout$species$logact * n.balance))
+      loga.balance <- log10(sumact)
+    }
+    # make loga.balance the same length as the values of affinity
+    loga.balance <- unlist(loga.balance)
+    nvalues <- length(unlist(aout$values[[1]]))
+    if(length(loga.balance) == 1) {
+      # we have a constant loga.balance
+      message(paste0("equilibrate: loga.balance is ", loga.balance))
+      loga.balance <- rep(loga.balance, nvalues)
+    } else {
+      # we are using a variable loga.balance (supplied by the user)
+      if(!identical(length(loga.balance), nvalues)) stop("length of loga.balance (", length(loga.balance), ") doesn't match the affinity values (", nvalues, ")")
+      message(paste0("equilibrate: loga.balance has same length as affinity values (", length(loga.balance), ")"))
+    }
+    ## normalize -- normalize the molar formula by the balance coefficients
+    m.balance <- n.balance
+    isprotein <- grepl("_", as.character(aout$species$name))
+    if(any(normalize) | as.residue) {
+      if(any(n.balance < 0)) stop("one or more negative balancing coefficients prohibit using normalized molar formulas")
+      n.balance[normalize|as.residue] <- 1
+      if(as.residue) message(paste("equilibrate: using 'as.residue' for molar formulas"))
+      else message(paste("equilibrate: using 'normalize' for molar formulas"))
+      # set the formula divisor (m.balance) to 1 for species whose formulas are *not* normalized
+      m.balance[!(normalize|as.residue)] <- 1
+    } else m.balance[] <- 1
+    ## Astar: the affinities/2.303RT of formation reactions with
+    ## formed species in their standard-state activities
+    Astar <- lapply(1:nspecies, function(i) { 
+      # 'starve' the affinity of the activity of the species,
+      # and normalize the value by the nor-molar ratio
+      (aout$values[[i]] + aout$species$logact[i]) / m.balance[i] 
     })
+    ## chose a method and compute the equilibrium activities of species
+    if(missing(method)) {
+      if(all(n.balance==1)) method <- method[1]
+      else method <- method[2]
+    }
+    message(paste("equilibrate: using", method[1], "method"))
+    if(method[1]=="boltzmann") loga.equil <- equil.boltzmann(Astar, n.balance, loga.balance)
+    else if(method[1]=="reaction") loga.equil <- equil.reaction(Astar, n.balance, loga.balance, tol)
+    ## if we normalized the formulas, get back to activities to species
+    if(any(normalize) & !as.residue) {
+      loga.equil <- lapply(1:nspecies, function(i) {
+        loga.equil[[i]] - log10(m.balance[i])
+      })
+    }
   }
   ## process cr species 20191111
-  if(hascr) {
+  if(ncr > 0) {
     # cr species were excluded from equilibrium calculation, so get values back to original lengths
     norig <- length(dout$values)
     n.balance <- n.balance.orig

@@ -5,7 +5,7 @@
 % macros
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 
-\section{Changes in CHNOSZ version 1.3.6-32 (2020-07-14)}{
+\section{Changes in CHNOSZ version 1.3.6-34 (2020-07-15)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -95,11 +95,13 @@
   \subsection{CHANGES TO FUNCTIONS}{
     \itemize{
 
+      \item Change default resolution in \code{affinity()} from 128 to 256.
+
       \item \code{subcrt()}: change \strong{action.unbalanced} argument to
       \strong{autobalance}, which now provides the ability to prevent
       autobalancing.
 
-      \item Changing the water model with \code{water()} now updates the
+      \item Setting the water model with \code{water()} now updates the
       literature references in \code{thermo()$OBIGT}.
 
       \item \code{thermo.refs()} now shows CHNOSZ version and date.
@@ -153,8 +155,6 @@
       \item TODO: remove extdata/refseq (now in JMDplots).
 
       \item TODO: OBIGT.Rmd: change "CHNOSZ" references to "OBIGT".
-
-      \item TODO: change default plot resolution from 128 to 256.
 
     }
   }

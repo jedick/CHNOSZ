@@ -78,7 +78,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
     mysp <- species(bases[[i]])
     # 20191111 include only aq species in total activity
     iaq <- mysp$state == "aq"
-    species(which(iaq), basis0$logact[ibasis0[i]])
+    if(any(iaq)) species(which(iaq), basis0$logact[ibasis0[i]])
     A.bases[[i]] <- suppressMessages(affinity(..., sout = sout))
   }
 

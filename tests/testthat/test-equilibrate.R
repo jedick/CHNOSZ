@@ -203,6 +203,11 @@ test_that("solids are not equilibrated, but their stability fields are calculate
   e <- equilibrate(a)
   epredom <- diagram(e, plot.it = FALSE)$predominant
   expect_equal(apredom, epredom)
+  # also test that equilibrate() works with *only* solids 20200715
+  species(Cu_cr)
+  acr <- affinity(a)
+  ecr <- equilibrate(acr)
+  expect_identical(e$values[8:9], ecr$values)
 })
 
 # references
