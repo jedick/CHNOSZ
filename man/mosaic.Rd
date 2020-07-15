@@ -7,13 +7,14 @@ Calculate chemical affinities of formation reactions of species using basis spec
 }
 
 \usage{
-  mosaic(bases, bases2 = NULL, blend = TRUE, ...)
+  mosaic(bases, bases2 = NULL, blend = TRUE, predominant = list(), ...)
 }
 
 \arguments{
   \item{bases}{character, basis species to be changed in the calculation, or list, containing vectors for each group of changing basis species}
   \item{bases2}{character, second set of changing basis species}
   \item{blend}{logical, use relative abundances of basis species?}
+  \item{predominant}{list, predominant species to use with blend = FALSE}
   \item{...}{additional arguments to be passed to \code{\link{affinity}}}
 }
 
@@ -29,9 +30,17 @@ The first species listed in each group should be in the current basis definition
 A second, independent set of basis species can be provided in \code{bases2} (for example \samp{CO3-2}, \samp{HCO3-}, \samp{CO2}, if the first set of basis species are the sulfur-bearing ones listed above).
 The arguments in \code{...} are passed to \code{affinity} to specify the variable conditions, such as temperature, pressure, and activities of other basis species.
 
+\code{blend} can be a single logical value or multiple values, in order to control the calculations for individual groups of basis species.
+
 If \code{blend} is TRUE (the default), the relative abundances of the basis species in each group are calculated using \code{\link{equilibrate}}, with the total activity taken from the corresponding basis species in the incoming \code{\link{basis}} definition.
 Then, the function calculates overall affinities of the formation reactions of each species by combining reactions written using individual basis species in proportion to the relative abundances of the basis species.
+
 If \code{blend} is FALSE, the function returns the affinities calculated using the single predominant basis species in \code{bases} at each condition.
+This is appropriate when minerals, rather than aqueous species, are used as the changing basis species.
+Note, however, that \code{mosaic} is not internally recursive: the predominances of one group of basis species (e.g. minerals) do not take account of changes in another group (e.g. aqueous species).
+This limitation can be overcome by supplying the calculated predominances (from the \code{predominant} element of the output of \code{\link{diagram}}) in the appropriate position (for that group of basis species) in the \code{predominant} argument.
+By using the predominances of minerals in one calculation to identify the basis species in a subsequent calculation, a series of linked \code{mosaic} diagrams with increasing complexity can be made.
+This is useful for diagrams for minerals with multiple metallic elements.
 
 A more flexible method of specifying multiple sets of basis species is now available.
 Instead of using \code{bases} and \code{bases2}, supply a list for just the \code{bases} argument.

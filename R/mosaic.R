@@ -11,7 +11,7 @@
 #source("util.args.R")
 
 # function to calculate affinities with mosaic of basis species
-mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
+mosaic <- function(bases, bases2 = NULL, blend = TRUE, predominant = list(), ...) {
 
   # argument recall 20190120
   # if the first argument is the result from a previous mosaic() calculation,
@@ -63,7 +63,10 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
   ibasis0 <- match(ispecies0, basis0$ispecies)
   # quit if starting basis species are not present
   ina <- is.na(ibasis0)
-  if(any(ina)) stop("the starting basis does not have ", paste(bases[ina], collapse = ", "))
+  if(any(ina)) {
+    names0 <- unlist(lapply(bases, "[", 1))
+    stop("the starting basis does not have ", paste(names0[ina], collapse = " and "))
+  }
 
   # run subcrt() calculations for all basis species and formed species 20190131
   # this avoids repeating the calculations in different calls to affinity()
@@ -105,9 +108,10 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
 
   # calculate equilibrium mole fractions for each group of basis species
   group.fraction <- list()
-  if(blend) {
-    E.bases <- list()
-    for(i in 1:length(A.bases)) {
+  blend <- rep(blend, length(A.bases))
+  for(i in 1:length(A.bases)) {
+    if(blend[i]) {
+      E.bases <- list()
       # this isn't needed (and doesn't work) if all the affinities are NA 20180925
       if(any(!sapply(A.bases[[1]]$values, is.na))) {
         # 20190504: when equilibrating the changing basis species, use a total activity equal to the activity from the basis definition
@@ -122,16 +126,20 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
       } else {
         group.fraction[[i]] <- A.bases[[i]]$values
       }
-    }
-  } else {
-    # for blend = FALSE, we just look at whether
-    # a basis species predominates within its group
-    for(i in 1:length(A.bases)) {
-      d <- diagram(A.bases[[i]], plot.it = FALSE, limit.water = FALSE)
+    } else {
+      # for blend = FALSE, we just look at whether
+      # a basis species predominates within its group
+      if(is.null(predominant[i][[1]])) {
+        d <- diagram(A.bases[[i]], plot.it = FALSE, limit.water = FALSE)
+        predom <- d$predominant
+      } else {
+        # get the predominances from the argument 20200715
+        predom <- predominant[i][[1]]
+      }
       group.fraction[[i]] <- list()
       for(j in 1:length(bases[[i]])) {
         # if a basis species predominates, it has a mole fraction of 1, or 0 otherwise
-        yesno <- d$predominant
+        yesno <- predom
         yesno[yesno != j] <- 0
         yesno[yesno == j] <- 1
         group.fraction[[i]][[j]] <- yesno
@@ -180,6 +188,6 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, ...) {
   # for argument recall, include all arguments in output 20190120
   allargs <- c(list(bases = bases, blend = blend), list(...))
   # return the affinities for the species and basis species
-  if(blend) return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases, E.bases = E.bases))
+  if(any(blend)) return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases, E.bases = E.bases))
   else return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases))
 }

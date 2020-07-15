@@ -5,7 +5,7 @@
 % macros
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 
-\section{Changes in CHNOSZ version 1.3.6-34 (2020-07-15)}{
+\section{Changes in CHNOSZ version 1.3.6-35 (2020-07-15)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -110,6 +110,15 @@
 
       \item Change \code{thermo$...} to \code{thermo()$...} in messages and
       comments.
+
+      \item \code{mosaic()} now allows a \samp{blend} argument of length > 1 to
+      apply a specific setting to each group of basis species.
+
+      \item Add a \samp{predominant} argument to \code{mosaic()} to use
+      previously calculated predominances of species (e.g. minerals) for the
+      changing basis species. This allows \code{mosaic()} calculations to be
+      linked in series, for instance to sequentially add metals (Fe, then Cu)
+      to a diagram.
 
     }
   }
