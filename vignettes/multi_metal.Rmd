@@ -1,0 +1,158 @@
+---
+title: "Diagrams with multiple metals"
+author: "Jeffrey M. Dick"
+output:
+  html_vignette:
+    mathjax: null
+vignette: >
+  %\VignetteIndexEntry{Diagrams with multiple metals}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: vig.bib
+csl: elementa.csl
+---
+<style>
+/* https://gomakethings.com/how-to-break-an-image-out-of-its-parent-container-with-css/ */
+@media (min-width: 700px) {
+  .full-width {
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    max-width: 100vw;
+    position: relative;
+    right: 50%;
+    width: 100vw;
+  }
+}
+@media (min-width: 1020px) {
+  .full-width {
+    left: 50vw; /* fallback if needed */
+    left: calc(50vw - 160px);
+    width: 1000px;
+    position: relative;
+    background-color: #9ecff7;
+    padding:10px;
+  }
+}
+/* zero margin around pre blocks (looks more like R console output) */
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+</style>
+<script>
+function ToggleDiv(ID) {
+  var D = document.getElementById("D-" + ID);
+  var B = document.getElementById("B-" + ID);
+  if (D.style.display === "none") {
+    // open the div and change button text
+    D.style.display = "block";
+    B.innerText = "Hide code";
+  } else {
+    // close the div and change button text
+    D.style.display = "none";
+    B.innerText = "Show code";
+  }
+}
+</script>
+
+```{r setup, include=FALSE}
+## use pngquant to optimize PNG images
+library(knitr)
+knit_hooks$set(pngquant = hook_pngquant)
+pngquant <- "--speed=1 --quality=0-25"
+if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
+```
+
+```{r CHNOSZ_reset, include=FALSE}
+library(CHNOSZ)
+reset()
+```
+
+This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
+
+Basic diagrams in CHNOSZ are made for reactions that are *balanced on an element* (see [Equilibrium in CHNOSZ](equilibrium.html)) and therefore represent minerals or aqueous species that all have one element, often a metal, in common.
+This vignette describes some methods for constructing diagrams for elements with multiple metals.
+The methods are **simple overlay**, **mosaic series**, and **secondary balancing**.
+
+## Simple Overlay
+
+Simple overlay refers to independent calculations for two different systems that are displayed on the same diagram.
+It is easy to make such a diagram, but there is no interaction between the systems.
+
+## Mosaic Series
+
+A mosaic diagram shows the effects of changing basis species on the stabilities of minerals.
+The Fe-S-O-H system is a common example: the speciation of aqueous sulfur species affects the stabilities of iron oxides and sulfides.
+A mosaic series is when predominance fields for minerals calculated in one mosaic diagram are used as input to a second mosaic diagram, where the minerals are now themselves basis species.
+The example here shows the construction of a Cu-Fe-S-O-H diagram.
+
+First we define the conditions and basis species.
+It is important to put Cu^+^ first so that it will be used as the balance for the reactions with Cu-bearing minerals (which also have Fe).
+Pyrite is chosen as the starting Fe-bearing basis species, which will be changed as indicated in `bases2`.
+
+```{r mosaic1, results = "hide", message = FALSE}
+logaH2S <- -2
+T <- 200
+pH <- c(0, 12, 500)
+O2 <- c(-50, -30, 500)
+basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+"))
+basis("H2S", logaH2S)
+bases1 <- c("H2S", "HS-", "HSO4-", "SO4-2")
+bases2 <- c("pyrite", "pyrrhotite", "magnetite", "hematite")
+```
+
+Now we calculate affinities for minerals in the Fe-S-O-H system using changing aqueous sulfur species in `bases1`.
+The result is used to make different layers of the diagram:
+
+1. Water stability region (bounded by the grey area)
+2. Predominance fields for the aqueous S species (italic blue text and dashed lines)
+3. Stability areas for the Fe-bearing minerals (black text and solid lines)
+
+```{r mosaic2, eval = FALSE, echo = 1:6}
+species(bases2)
+mFe <- mosaic(bases1, pH = pH, O2 = O2, T = T)
+diagram(mFe$A.bases, lty = 0, names = NA)
+diagram(mFe$A.bases, lty = 2, col = 4, col.names = 4,
+        italic = TRUE, add = TRUE, limit.water = FALSE)
+dFe <- diagram(mFe$A.species, add = TRUE, limit.water = FALSE)
+species(c("chalcopyrite", "bornite"))
+mCu <- mosaic(list(bases1, bases2), pH = pH, O2 = O2,
+              T = T, predominant = list(NULL, dFe$predominant))
+diagram(mCu$A.species, add = TRUE, col = 2, col.names = 2,
+        lwd = 2, bold = TRUE, limit.water = FALSE)
+TP <- describe.property(c("T", "P"), c(T, "Psat"))
+legend("topright", TP, bty = "n")
+title(paste("Cu-Fe-S-O-H; Total S =", 10^logaH2S, "m"))
+```
+
+Next we load the Cu-bearing minerals and calculate their affinities while changing *both* the aqueous sulfur species and the Fe-bearing minerals whose stability fields were just calculated.
+The result is used to plot the final layer of the diagram:
+
+4. Stability areas for Cu-bearing minerals (bold red text and solid lines)
+
+After that we add the legend and title.
+
+```{r mosaic2, echo=7:14, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+```
+
+This diagram has a distinctive chalcopyrite "hook" that is controlled on the low-pH side by the reaction with pyrite.
+Usually only that reaction is shown in published diagrams [e.g. @And75;@Gio02], but diagrams with a similar chalcopyrite wedge or hook can be seen in @BBR77.
+
+## Secondary Balancing
+
+Predominance diagrams in CHNOSZ are made using the maximum affinity method, where the affinities of formation reactions of species are divided by the *balancing coefficients* [@Dic19].
+Usually, these balancing coefficients are taken from the formation reactions themselves; for example, if they are the coefficients on the Fe-bearing basis species, then the reactions are said to be "balanced on Fe".
+
+Some diagrams in the literature are made with secondary balancing constraints in addition to the primary ones.
+For example, reactions of Fe-bearing minerals are balanced on Fe, and reactions of Cu-bearing minerals are balanced on Cu; these are both primary balancing coefficients.
+Then, reactions between all minerals are balanced on H^+^ as the secondary balancing coefficients.
+The challenge is to implement the secondary balance while also maintining the primary balance; such a method has been implemented in `bimetal()` function.
+
+TODO: add example.
+
+## Document history
+
+* 2020-07-15 First version.
+
+## References

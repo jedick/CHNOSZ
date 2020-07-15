@@ -42,7 +42,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, predominant = list(), ...
       hasbases2 <- TRUE
     }
     otherargs <- list(...)
-    allargs <- c(list(bases = bases, blend = blend), otherargs)
+    allargs <- c(list(bases = bases, blend = blend, predominant = predominant), otherargs)
     out <- do.call(mosaic, allargs)
     # replace A.bases (affinity calculations for all groups of basis species) with backwards-compatbile A.bases and A.bases2
     if(hasbases2) A.bases2 <- out$A.bases[[2]]
@@ -109,9 +109,9 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, predominant = list(), ...
   # calculate equilibrium mole fractions for each group of basis species
   group.fraction <- list()
   blend <- rep(blend, length(A.bases))
+  E.bases <- list()
   for(i in 1:length(A.bases)) {
-    if(blend[i]) {
-      E.bases <- list()
+    if(blend[i] & is.null(predominant[i][[1]])) {
       # this isn't needed (and doesn't work) if all the affinities are NA 20180925
       if(any(!sapply(A.bases[[1]]$values, is.na))) {
         # 20190504: when equilibrating the changing basis species, use a total activity equal to the activity from the basis definition
@@ -188,6 +188,5 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, predominant = list(), ...
   # for argument recall, include all arguments in output 20190120
   allargs <- c(list(bases = bases, blend = blend), list(...))
   # return the affinities for the species and basis species
-  if(any(blend)) return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases, E.bases = E.bases))
-  else return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases))
+  return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases, E.bases = E.bases))
 }

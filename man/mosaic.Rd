@@ -37,10 +37,12 @@ Then, the function calculates overall affinities of the formation reactions of e
 
 If \code{blend} is FALSE, the function returns the affinities calculated using the single predominant basis species in \code{bases} at each condition.
 This is appropriate when minerals, rather than aqueous species, are used as the changing basis species.
-Note, however, that \code{mosaic} is not internally recursive: the predominances of one group of basis species (e.g. minerals) do not take account of changes in another group (e.g. aqueous species).
-This limitation can be overcome by supplying the calculated predominances (from the \code{predominant} element of the output of \code{\link{diagram}}) in the appropriate position (for that group of basis species) in the \code{predominant} argument.
+Note, however, that \code{mosaic} is not internally recursive: the predominances of one group of basis species (e.g. minerals) are not affected by changes in another group (e.g. aqueous species).
+
+This limitation can be overcome by supplying the calculated predominances (from the \code{predominant} element of the output of \code{\link{diagram}}) as an element of the list in the \code{predominant} argument whose position corresponds to the appropriate group of basis species.
 By using the predominances of minerals in one calculation to identify the basis species in a subsequent calculation, a series of linked \code{mosaic} diagrams with increasing complexity can be made.
 This is useful for diagrams for minerals with multiple metallic elements.
+Note that a value in any position of the \code{predominant} list forces \code{blend = FALSE} for the corresponding group of basis species, so there is no need to explicity change the \code{blend} argument.
 
 A more flexible method of specifying multiple sets of basis species is now available.
 Instead of using \code{bases} and \code{bases2}, supply a list for just the \code{bases} argument.
