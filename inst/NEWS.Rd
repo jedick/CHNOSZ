@@ -5,7 +5,7 @@
 % macros
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 
-\section{Changes in CHNOSZ version 1.3.6-36 (2020-07-15)}{
+\section{Changes in CHNOSZ version 1.3.6-37 (2020-07-17)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -74,7 +74,7 @@
   \subsection{DEMOS AND VIGNETTES}{
     \itemize{
 
-      \item Add \samp{multi_metal.Rmd} for examples of diagrams with multiple
+      \item Add \samp{multi-metal.Rmd} for examples of diagrams with multiple
       metals.
 
       \item Add \samp{demo/comproportionation.R}: Gibbs energy of sulfur

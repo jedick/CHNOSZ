@@ -84,6 +84,8 @@ It is easy to make such a diagram, but there is no interaction between the syste
 
 A mosaic diagram shows the effects of changing basis species on the stabilities of minerals.
 The Fe-S-O-H system is a common example: the speciation of aqueous sulfur species affects the stabilities of iron oxides and sulfides.
+Examples of mosaic diagrams with Fe or other single metals are given elsewhere.
+
 A mosaic series is when predominance fields for minerals calculated in one mosaic diagram are used as input to a second mosaic diagram, where the minerals are now themselves basis species.
 The example here shows the construction of a Cu-Fe-S-O-H diagram.
 
@@ -137,7 +139,7 @@ After that we add the legend and title.
 ```
 
 This diagram has a distinctive chalcopyrite "hook" that is controlled on the low-pH side by the reaction with pyrite.
-Usually only that reaction is shown in published diagrams [e.g. @And75;@Gio02], but diagrams with a similar chalcopyrite wedge or hook can be seen in @BBR77.
+Only that reaction is shown in many published diagrams [e.g. @And75;@Gio02], but diagrams with a similar chalcopyrite wedge or hook can be seen in @BBR77.
 
 ## Secondary Balancing
 
@@ -147,11 +149,74 @@ Usually, these balancing coefficients are taken from the formation reactions the
 Some diagrams in the literature are made with secondary balancing constraints in addition to the primary ones.
 For example, reactions of Fe-bearing minerals are balanced on Fe, and reactions of Cu-bearing minerals are balanced on Cu; these are both primary balancing coefficients.
 Then, reactions between all minerals are balanced on H^+^ as the secondary balancing coefficients.
-The challenge is to implement the secondary balance while also maintining the primary balance; such a method has been implemented in `bimetal()` function.
+The challenge is to implement the secondary balance while also maintaining the primary balance; such a method has been implemented in `bimetal()` function.
 
 TODO: add example.
+Although the diagram from @MH85 is drawn only for H~2~S, we can go further and make a mosaic diagram.
 
-## Document history
+## Other Possibilities
+
+Conceptually, the methods described above treat different metal-bearing elements as parts of distinct chemical systems that are then joined together.
+Other methods may be more suitable for considering multiple metals (or other elements) in one system.
+
+### Balancing on a Non-Metal
+
+As shown in the **secondary balancing** example, there is no requirement that the balancing coefficients come from a metal-bearing species.
+It is possible to make diagrams for minerals with different metallic elements simply by using a non-metallic element as the primary balance.
+Here is an example for the Cu-Fe-S-O-H system based on Figure 3 of @MH85.
+The reactions are balanced on O~2~, which means that no O~2~ appears in the reaction between any two minerals, but Fe^+2^ and/or Cu^+^ can be present, depending on the chemical composition.
+Saturation limits are shown for species that have no O~2~ in their formation reactions.
+
+```{r non-metal, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+basis(c("Fe+2", "Cu+", "hydrogen sulfide", "oxygen", "H2O", "H+"))
+basis("H2S", 2)
+species(c("pyrite", "magnetite", "hematite", "covellite", "tenorite", "chalcopyrite", "bornite"))
+a <- affinity("Cu+" = c(-8, 2, 500), "Fe+2" = c(-4, 12, 500), T = 400, P = 2000)
+d <- diagram(a, xlab = ratlab("Cu+"), ylab = ratlab("Fe+2"), balance = "O2")
+title(paste("Cu-Fe-S-O-H; 1° balance:", d$balance))
+# Add saturation lines
+species(c("pyrrhotite", "ferrous-oxide", "chalcocite", "cuprite"))
+asat <- affinity(a)  # argument recall
+diagram(asat, type = "saturation", add = TRUE, lty = 2, col = 4)
+legend("topleft", legend = lTP(400, 2000), bty = "n")
+```
+
+In some ways this is like the inverse of the **mosaic series** example.
+There, reactions were balanced on Fe or Cu, and *f*~O<sub>2</sub>~ and pH were used as plotting variables.
+Here, the reactions are balanced on O~2~ and implicitly on H^+^ through the activity ratios with *a*~Fe^+2^~ and *a*~Cu^+^~, which are the plotting variables.
+
+More common diagrams of this type are balanced on Si or Al.
+See `demo(saturation)` for an example in the H~2~O-CO~2~-CaO-MgO-SiO~2~ system.
+
+### Mosaic Combo
+
+Instead of adding minerals with different metals by stacking mosaic diagrams (**mosaic series**), it may be possible to include two different metals in the basis species and formed species.
+The `mosaic()` and `equilibrate()` functions can be combined to balance on two different elements.
+The example here is for N and C rather than metals.
+Thanks to Kirt Robinson for the feature request and test case.
+
+First, the `mosaic()` command calculates equilibrium activities of NH~3~ and NH~4~^+^ for a given total activity of N in the basis species, and calculates the corresponding affinities of the formed species.
+Then, the `equilibrate()` command calculates equilibrium activities of the formed species for given total activity of C, and combines them with the activities of the changing basis species (NH~3~ and NH~4~^+^).
+
+```{r mosaic-combo, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+loga_N <- -4
+loga_C <- -3
+basis(c("CO2", "NH3", "O2", "H2O", "H+"))
+basis("NH3", loga_N)
+species(c("acetamide", "acetic acid", "acetate"))
+m <- mosaic(c("NH3", "NH4+"), pH = c(0, 14))
+e <- equilibrate(m, loga.balance = loga_C)
+diagram(e, ylim = c(-10, -2))
+tN <- paste("log(total N in basis species) =", loga_N)
+tC <- paste("log(total C in formed species) =", loga_C)
+title(main = paste(tN, tC, sep = "\n"), font.main = 1)
+```
+
+The diagram shows the expected ionization of acetic acid and NH~3~ at different pHs.
+The appearance of acetamide (CH~3~CONH~2~) is a consequence of the interaction between the N-bearing and C-bearing species, and is analogous to the formation of a multi-metal complex.
+
+
+## Document History
 
 * 2020-07-15 First version.
 

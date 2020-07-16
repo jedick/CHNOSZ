@@ -94,7 +94,7 @@ This is useful for constructing e.g. boiling curves for organic compounds.
 \section{Warning}{
 Although \acronym{SUPCRT92} prohibits calculations above 350 \degC at \Psat (\dQuote{beyond range of applicability of aqueous species equations}), CHNOSZ does not impose this limitation, and allows calculations up to the critical temperature (373.917 \degC) at \Psat.
 Interpret calculations between 350 \degC and the critical temperature at \Psat at your own risk.
-The discontinuity in the value of \logK at \Psat that is apparent in \code{\link{demos}("NaCl")} demonstrates one unexpected result.
+The discontinuity in the value of \logK at \Psat that is apparent in \code{demo("NaCl")} demonstrates one unexpected result.
 
 \code{NA}s are produced for calculations at \samp{Psat} when the temperature exceeds the critical temperature of \H2O.
 In addition, properties of species using the revised HKF equations are set to \code{NA} wherever the density of \H2O < 0.35 g/cm\S{3} (threshold just above the critical isochore; Johnson et al., 1992).

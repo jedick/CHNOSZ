@@ -26,7 +26,7 @@ If lots of package startup messages are created when running \code{parallel::mak
 
 \seealso{
 \code{\link{read.fasta}}, \code{\link{count.aa}}, \code{\link{affinity}}, \code{\link{equil.boltzmann}} and \code{\link{equil.reaction}} for functions that use \code{palply}.
-Tests are in \file{tests/test-util.program.R}, and a \dQuote{real world} example is in \file{demos/density.R}.
+Tests are in \file{tests/test-util.program.R}, and a \dQuote{real world} example is in \file{demo/density.R}.
 }
 
 \concept{Utility functions}

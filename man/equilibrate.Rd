@@ -103,6 +103,8 @@ Use \code{solubility} to find complete equilibrium, where the affinities of the 
 \seealso{
 \code{\link{diagram}} has examples of using \code{equilibrate} to make equilibrium activity diagrams. \code{\link{revisit}} can be used to perform further analysis of the equilibrium activities.
 \code{\link{palply}} is used by both \code{equil.reaction} and \code{equil.boltzmann} to parallelize intensive parts of the calculations.
+
+See the vignette \code{multi-metal.Rmd} for an example of balancing on two elements (N in the basis species, C in the formed species).
 }
 
 \value{
@@ -135,23 +137,6 @@ pKa.equil <- seq(0, 14, length.out=res)[ipKa]
 logK <- subcrt(c("CO2","H2O","HCO3-","H+"), c(-1, -1, 1, 1), T=25)$out$logK
 # we could decrease tolerance here by increasing res
 stopifnot(all.equal(pKa.equil, -logK, tolerance=1e-2))
-
-# equilibrate with mosaic: balancing on two elements (N and C)
-# thanks to Kirt Robinson for the feature request and test case
-loga_N <- -4
-loga_C <- -3
-basis(c("CO2", "NH3", "O2", "H2O", "H+"))
-basis("NH3", loga_N)
-species(c("acetamide", "acetic acid", "acetate"))
-# this calculates equilibrium activities of NH3 and NH4+ for given loga_N
-# and calculates the corresponding affinities of the formed species
-m <- mosaic(c("NH3", "NH4+"), pH = c(0, 14))
-# this calculates equilibrium activities of the formed species for given loga_C
-# and combines them with the activities of the changing basis species (NH3 and NH4+)
-eqc <- equilibrate(m, loga.balance = loga_C)
-diagram(eqc, ylim = c(-10, -2))
-title(main = paste("log(total N in basis species) =", loga_N,
-                   "\nlog(total C in formed species) =", loga_C), font.main = 1)
 }
 
 \references{
