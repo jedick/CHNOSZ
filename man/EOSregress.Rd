@@ -107,7 +107,7 @@ For \code{EOSregress}, an object of class \dQuote{lm}.
 }
 
 \seealso{
-The vignette \emph{Regressing thermodynamic data} has more references and examples, including an iterative method to retrieve \code{omega.PrTr}.
+The vignette \viglink{eos-regress} has more references and examples, including an iterative method to retrieve \code{omega.PrTr}.
 }
 
 \references{

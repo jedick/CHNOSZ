@@ -1,8 +1,8 @@
 # CHNOSZ/vignettes/mklinks.sh
-# add documentation links to anintro, OBIGT, and equilibrium vignettes
+# add documentation links to vignettes
 # 20190125 jmd
 
-# add links to help topics
+# anintro.html: add links to help topics
 # set background-image:none to remove underlines (from bootstrap theme)
 sed -i 's/<code>?`CHNOSZ-package`<\/code>/<code><a href="..\/html\/CHNOSZ-package.html" style="background-image:none;">?`CHNOSZ-package`<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?basis<\/code>/<code><a href="..\/html\/basis.html" style="background-image:none;">?basis<\/a><\/code>/g' anintro.html
@@ -21,7 +21,7 @@ sed -i 's/<code>?EOSregress<\/code>/<code><a href="..\/html\/EOSregress.html" st
 sed -i 's/<code>?wjd<\/code>/<code><a href="..\/html\/wjd.html" style="background-image:none;">?wjd<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?taxonomy<\/code>/<code><a href="..\/html\/taxonomy.html" style="background-image:none;">?taxonomy<\/a><\/code>/g' anintro.html
 
-# add links to function names
+# anintro.html: add links to function names
 # start at line 120 (below the TOC)
 sed -i '120,$s/<code>info()<\/code>/<code><a href="..\/html\/info.html" style="background-image:none;">info()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>ZC()<\/code>/<code><a href="..\/html\/util.formula.html" style="background-image:none;">ZC()<\/a><\/code>/g' anintro.html
@@ -76,7 +76,7 @@ sed -i '120,$s/<code>wjd()<\/code>/<code><a href="..\/html\/wjd.html" style="bac
 sed -i '120,$s/<code>RH2OBIGT()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">RH2OBIGT()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>eqdata()<\/code>/<code><a href="..\/html\/eqdata.html" style="background-image:none;">eqdata()<\/a><\/code>/g' anintro.html
 
-# functions from R base packages
+# anintro.html: functions from R base packages
 sed -i '120,$s/<code>install.packages/<code><a href="..\/..\/utils\/html\/install.packages.html" style="background-image:none;">install.packages<\/a>/g' anintro.html
 sed -i '120,$s/<code>library/<code><a href="..\/..\/base\/html\/library.html" style="background-image:none;">library<\/a>/g' anintro.html
 sed -i '120,$s/help()/<a href="..\/..\/utils\/html\/help.html" style="background-image:none;">help()<\/a>/g' anintro.html
@@ -107,3 +107,10 @@ sed -i 's/demo(/<a href="..\/demo">demo<\/a>(/g' OBIGT.html
 sed -i 's/equilibrate()/<a href="..\/html\/equilibrate.html">equilibrate()<\/a>/g' equilibrium.html
 sed -i 's/solubility()/<a href="..\/html\/solubility.html">solubility()<\/a>/g' equilibrium.html
 sed -i 's/add.OBIGT()/<a href="..\/html\/add.OBIGT.html">add.OBIGT()<\/a>/g' equilibrium.html
+
+# add links to multi-metal.html 20200716
+sed -i 's/duplex()/<a href="..\/html\/duplex.html">duplex()<\/a>/g' multi-metal.html
+sed -i 's/ratlab()/<a href="..\/html\/util.expression.html">ratlab()<\/a>/g' multi-metal.html
+sed -i 's/diagram()/<a href="..\/html\/diagram.html">diagram()<\/a>/g' multi-metal.html
+sed -i 's/mosaic()/<a href="..\/html\/mosaic.html">mosaic()<\/a>/g' multi-metal.html
+sed -i 's/equilibrate()/<a href="..\/html\/equilibrate.html">equilibrate()<\/a>/g' multi-metal.html

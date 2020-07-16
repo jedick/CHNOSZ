@@ -49,3 +49,6 @@
 \newcommand{\eacute}{\ifelse{latex}{\out{\'{e}}}{\ifelse{html}{\out{&eacute;}}{é}}}
 \newcommand{\gamma}{\ifelse{latex}{\eqn{\gamma}}{\ifelse{html}{\out{&gamma;}}{γ}}}
 \newcommand{\alpha}{\ifelse{latex}{\eqn{\alpha}}{\ifelse{html}{\out{&alpha;}}{α}}}
+
+% links to vignettes 20200716
+\newcommand{\viglink}{\ifelse{html}{\out{<a href="../doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}

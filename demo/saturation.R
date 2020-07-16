@@ -16,7 +16,7 @@
 ## Helgeson et al., 1969, p. 136 (http://www.worldcat.org/oclc/902423149)
 ## Bowers et al., 1984, p. 246 (http://www.worldcat.org/oclc/224591948)
 par(cex = 1.4)
-basis(c("H2O", "carbon dioxide", "Ca+2", "Mg+2", "SiO2", "O2", "H+"))
+basis(c("SiO2", "Ca+2", "Mg+2", "carbon dioxide", "H2O", "O2", "H+"))
 species(c("quartz", "talc", "chrysotile", "forsterite", "tremolite",
           "diopside", "wollastonite", "monticellite", "merwinite"))
 # calculate the chemical affinities of formation reactions
@@ -33,5 +33,5 @@ diagram(a, type = "saturation", add = TRUE, contour.method = c("edge", "edge", "
 # add title and legend
 title(main = syslab(c("H2O", "CO2", "CaO", "MgO", "SiO2")))
 dprop <- describe.property(c("T", "P"), c(300, 1000))
-dbasis <- describe.basis(ibasis = 2)
+dbasis <- describe.basis(ibasis = 4)
 legend("bottomright", c(dprop, dbasis), bty = "n", cex = 0.9)

@@ -67,8 +67,8 @@ The help page of \code{\link{solubility}} has an example combining \code{mosaic}
 \dontshow{reset()}# Fe-minerals and aqueous species in Fe-S-O-H system
 # speciate SO4-2, HSO4-, HS-, H2S as a function of Eh and pH
 # after Garrels and Christ, 1965 Figure 7.20
-pH <- c(0, 14, 250)
-Eh <- c(-1, 1, 250)
+pH <- c(0, 14)
+Eh <- c(-1, 1)
 T <- 25
 basis(c("FeO", "SO4-2", "H2O", "H+", "e-"))
 basis("SO4-2", -6)

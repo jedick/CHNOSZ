@@ -11,7 +11,7 @@ It can be used to calculate the standard molal thermodynamic properties and chem
 \section{Warm Tips}{
   \itemize{
     \item To view the manual, run \code{help.start()} then select \sQuote{Packages} and \sQuote{CHNOSZ}. Examples in the function help pages can be run by pasting the code block into the \R console.
-    \item Be sure to check out the vignette titled \emph{An Introduction to CHNOSZ}, which is available by following the link in \code{help.start} to \sQuote{User guides, package vignettes and other documentation}.
+    \item Also check out the vignette \viglink{anintro} (\emph{An Introduction to CHNOSZ}).
     \item Run the command \code{\link{examples}()} to run all of the examples provided in CHNOSZ. This should take about a minute.
   }
 }

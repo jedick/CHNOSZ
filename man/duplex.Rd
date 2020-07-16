@@ -31,10 +31,11 @@ A list object with the same structure as the output from \code{\link{affinity}},
 }
 
 \seealso{
-A longer example is in the vignette \samp{multi-metal.Rmd}.
+A longer example is in the vignette \viglink{multi-metal}.
 }
 
 \examples{
+def.par <- par(no.readonly = TRUE)
 layout(matrix(c(1, 1, 2, 2, 0, 3, 3, 0), nrow = 4))
 # Define basis species with Fe and Cu
 basis(c("Fe+2", "Cu+", "hydrogen sulfide", "oxygen", "H2O", "H+"))
@@ -53,6 +54,7 @@ diagram(ad, xlab = xlab, balance = 1, main = "Cu-Fe-S-O-H")
 db <- describe.basis(ibasis = 3)
 leg <- lex(lTP(400, 2000), db)
 legend("bottomleft", legend = leg, bty = "n")
+par(def.par)
 }
 
 \concept{Extended workflow}

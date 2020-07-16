@@ -93,6 +93,9 @@
       now in the \samp{bison.Rmd} vignette in the \pkg{JMDplots} package
       (\url{https://github.com/jedick/JMDplots}).
 
+      \item Add \samp{viglink} Rd macro so HTML versions of Rd files can link
+      to vignettes.
+
     }
   }
 
@@ -155,12 +158,7 @@
 
       \item TODO: make separate directories for default and optional data files
 
-      \item TODO: demo/saturation.R: put Al+3 first in basis definition (it's
-        confusing to have H2O first when the reactions are balanced on Al)
-
       \item TODO: diagram(): make error or warning for NA values of affinity
-
-      \item TODO: use https in refs.csv
 
       \item TODO: move protein.equil() example (previously in equilibrium.Rnw) to JMDplots.
 

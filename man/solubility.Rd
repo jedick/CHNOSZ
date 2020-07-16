@@ -56,7 +56,7 @@ See the second example for this method.
 The output of \code{solubility} has the same format as that of \code{equilibrate}, and can be used by \code{\link{diagram}} with \code{type = "loga.balance"} to plot the solubilities, or with \code{type = NULL} to plot the activities of species. 
 The value of \code{loga.balance} reflects the activity (or molality) of the conserved basis species, i.e. the thing being dissolved.
 Use \code{in.terms.of} to express this value in terms of another species.
-For example, the solubility of corundum (Al\s{2}O\s{3}) can be expressed in terms of the moles of Al\S{+3} in solution (see the vignette \code{anintro.Rmd}).
+For example, the solubility of corundum (Al\s{2}O\s{3}) can be expressed in terms of the moles of Al\S{+3} in solution (see the vignette \viglink{anintro}).
 }
 
 \section{Warning}{
