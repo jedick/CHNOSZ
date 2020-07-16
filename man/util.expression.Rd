@@ -26,7 +26,7 @@
     ret.val = FALSE)
   describe.reaction(reaction, iname = numeric(), states = NULL)
   syslab(system = c("K2O", "Al2O3", "SiO2", "H2O"), dash="-")
-  ratlab(ion = "K+", molality = FALSE)
+  ratlab(top = "K+", bottom = "H+", molality = FALSE)
 }
 
 \arguments{
@@ -53,7 +53,8 @@
   \item{states}{character, if \samp{all}, show states for all species; numeric, which species to show states for}
   \item{system}{character, thermodynamic components}
   \item{dash}{character to use for dash between components}
-  \item{ion}{character, an ion}
+  \item{top}{character, the ion in the numerator of the ratio}
+  \item{bottom}{character, the ion in the denominator of the ratio}
 }
 
 \details{
@@ -121,7 +122,8 @@ Names of species (as provided in \code{reaction}) are shown instead of chemical 
 
 \code{syslab} formats the given thermodynamic components (using \code{expr.species}) and adds intervening en dashes.
 
-\code{ratlab} produces a expression for the activity ratio, viz. (activity of the ion) / [(activity of H+) ^ (charge of the ion)].
+\code{ratlab} produces a expression for the activity ratio between the ions in the \code{top} and \code{bottom} arguments.
+The default is a ratio with \Hplus, i.e. (activity of the ion) / [(activity of H+) ^ (charge of the ion)].
 
 }
 

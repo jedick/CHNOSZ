@@ -93,7 +93,7 @@ First we define the conditions and basis species.
 It is important to put Cu^+^ first so that it will be used as the balance for the reactions with Cu-bearing minerals (which also have Fe).
 Pyrite is chosen as the starting Fe-bearing basis species, which will be changed as indicated in `bases2`.
 
-```{r mosaic1, results = "hide", message = FALSE}
+```{r series1, results = "hide", message = FALSE}
 logaH2S <- -2
 T <- 200
 pH <- c(0, 12, 500)
@@ -111,7 +111,7 @@ The result is used to make different layers of the diagram:
 2. Predominance fields for the aqueous S species (italic blue text and dashed lines)
 3. Stability areas for the Fe-bearing minerals (black text and solid lines)
 
-```{r mosaic2, eval = FALSE, echo = 1:6}
+```{r series2, eval = FALSE, echo = 1:6}
 species(bases2)
 mFe <- mosaic(bases1, pH = pH, O2 = O2, T = T)
 diagram(mFe$A.bases, lty = 0, names = NA)
@@ -135,11 +135,11 @@ The result is used to plot the final layer of the diagram:
 
 After that we add the legend and title.
 
-```{r mosaic2, echo=7:14, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+```{r series2, echo=7:14, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
 ```
 
 This diagram has a distinctive chalcopyrite "hook" that is controlled on the low-pH side by the reaction with pyrite.
-Only that reaction is shown in many published diagrams [e.g. @And75;@Gio02], but diagrams with a similar chalcopyrite wedge or hook can be seen in @BBR77.
+Only that reaction is shown in many published diagrams [e.g. @And75;@Gio02], but diagrams with a similar chalcopyrite wedge or hook can be seen in @BBR77 and @Bri80.
 
 ## Secondary Balancing
 
@@ -149,10 +149,91 @@ Usually, these balancing coefficients are taken from the formation reactions the
 Some diagrams in the literature are made with secondary balancing constraints in addition to the primary ones.
 For example, reactions of Fe-bearing minerals are balanced on Fe, and reactions of Cu-bearing minerals are balanced on Cu; these are both primary balancing coefficients.
 Then, reactions between all minerals are balanced on H^+^ as the secondary balancing coefficients.
-The challenge is to implement the secondary balance while also maintaining the primary balance; such a method has been implemented in `bimetal()` function.
+The core concept is to apply the secondary balance while also maintaining the primary balance; a method to do this has been implemented in `duplex()` function.
 
-TODO: add example.
-Although the diagram from @MH85 is drawn only for H~2~S, we can go further and make a mosaic diagram.
+The example here makes a diagram like one shown in Figure 5 of @Bri80 and Figure 5 of @MH85.
+Different parts of the script to make the diagrams are described below; press the button to show the entire script.
+
+<button id="B-duplex" onclick="ToggleDiv('duplex')">Show code</button>
+<div id="D-duplex" style="display: none">
+```{r duplex, eval = FALSE}
+mat <- matrix(c(1, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5), byrow = TRUE, nrow = 2)
+layout(mat)
+par(font.main = 1)
+
+basis(c("Fe+2", "Cu+", "hydrogen sulfide", "oxygen", "H2O", "H+"))
+xlab <- ratlab("Fe+2", "Cu+")
+
+### PRIMARY balancing
+
+# Only Fe-bearing minerals
+species(c("pyrite", "pyrrhotite", "magnetite", "hematite"))
+aFe <- affinity("Fe+2" = c(0, 12), O2 = c(-40, -16), T = 400, P = 2000)
+dFe <- diagram(aFe, xlab = xlab)
+title(paste("Only Fe; 1° balance:", dFe$balance))
+label.plot("A")
+
+# Only Cu-bearing minerals
+species(c("covellite", "chalcocite", "tenorite", "cuprite"))
+aCu <- affinity(aFe)  # argument recall
+dCu <- diagram(aCu, xlab = xlab)
+title(paste("Only Cu; 1° balance", dCu$balance))
+label.plot("B")
+
+# Only Fe- AND Cu-bearing minerals
+species(c("chalcopyrite", "bornite"))
+aFeCu <- affinity(aFe)
+dFeCu <- diagram(aFeCu, xlab = xlab, balance = "H+")
+title(paste("Only Fe+Cu; 1° balance:", dFeCu$balance))
+label.plot("C")
+
+### SECONDARY balancing
+
+# Fe- or Cu-bearing minerals
+ad1 <- duplex(dFe, dCu, balance = "H+")
+d1 <- diagram(ad1, xlab = xlab, balance = 1)
+title("Only Fe or Cu; 2° balance: H+")
+label.plot("D")
+
+# All minerals
+d1$values <- c(dFe$values, dCu$values)
+ad2 <- duplex(d1, dFeCu, balance = "H+")
+abbrv <- info(ad2$species$ispecies)$abbrv
+diagram(ad2, xlab = xlab, balance = 1, names = abbrv)
+title("All Fe or Cu; 2° balance: H+")
+label.plot("E")
+
+db <- describe.basis(ibasis = 3)
+leg <- lex(lTP(400, 2000), db)
+legend("bottomleft", legend = leg, bty = "n")
+```
+</div>
+
+We first define basis species to contain both Cu- and Fe-bearing species.
+The x-axis is the ratio of activities of Fe^+2^ and Cu^+^; the label is made with `ratlab()`.
+```{r duplex, eval = FALSE, echo = 5:6}
+```
+
+We then calculate the diagrams for the primary balancing coefficients, for the groups of only Fe-, only Cu-, and only Fe+Cu-bearing minerals.
+It is obvious that the first two systems are balanced on Fe and Cu, respectively, but the third has a somewhat unusual balance: H^+^.
+See Reaction 4 of @MH85 for an example.
+```{r duplex, eval = FALSE, echo = 10:30}
+```
+
+Now comes the secondary balancing, where all reactions, not only that between bornite and chalcopyrite, are balanced on H^+^.
+We first combine the affinities for the Fe- or Cu-bearing minerals to make diagram D.
+Note that after secondary balancing with `duplex()`, the argument `balance = 1` should be used in `diagram()` to prevent further balancing.
+This is because `duplex()` preserves the primary balancing for Fe- and Cu-bearing minerals (internally the "plotvals" components of `dFe` and `dCu`).
+
+Then we combine diagrams D and C to make the final diagram in E.
+The fields in this diagram are labeled with mineral abbreviations from the OBIGT database.
+```{r duplex, eval = FALSE, echo = 33:43}
+```
+
+```{r duplex, echo = FALSE, results = "hide", message = FALSE, fig.width = 6.5, fig.height = 5, out.width = "100%", fig.align = "center", pngquant = pngquant}
+```
+
+*Challenge*: Although the diagram here is drawn only for H~2~S in the basis species, take it a step further and make a mosaic diagram to account for the stability of HSO~4~^-^ at high oxygen fugacity.
 
 ## Other Possibilities
 
@@ -170,7 +251,8 @@ Saturation limits are shown for species that have no O~2~ in their formation rea
 ```{r non-metal, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
 basis(c("Fe+2", "Cu+", "hydrogen sulfide", "oxygen", "H2O", "H+"))
 basis("H2S", 2)
-species(c("pyrite", "magnetite", "hematite", "covellite", "tenorite", "chalcopyrite", "bornite"))
+species(c("pyrite", "magnetite", "hematite", "covellite", "tenorite",
+          "chalcopyrite", "bornite"))
 a <- affinity("Cu+" = c(-8, 2, 500), "Fe+2" = c(-4, 12, 500), T = 400, P = 2000)
 d <- diagram(a, xlab = ratlab("Cu+"), ylab = ratlab("Fe+2"), balance = "O2")
 title(paste("Cu-Fe-S-O-H; 1° balance:", d$balance))

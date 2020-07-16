@@ -57,7 +57,9 @@ export(
   "dumpdata", "thermo.axis", "solubility", "NaCl",
 # added 20190213 or later
   "CHNOSZ", "thermo", "reset", "OBIGT", "retrieve", "AkDi", "moles",
-  "lNaCl", "lS", "lT", "lP", "lTP", "lex"
+  "lNaCl", "lS", "lT", "lP", "lTP", "lex",
+# added 20200716 or later
+  "duplex"
 )
 
 # Load shared objects

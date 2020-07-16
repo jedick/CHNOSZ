@@ -285,19 +285,24 @@ describe.reaction <- function(reaction, iname=numeric(), states=NULL) {
 }
 
 # make formatted text for activity ratio 20170217
-ratlab <- function(ion="K+", molality=FALSE) {
-  # the charge
-  Z <- makeup(ion)["Z"]
-  # the text for the exponent on aH+
-  exp.H <- as.character(Z)
-  # the expression for the ion and H+
-  expr.ion <- expr.species(ion)
-  expr.H <- expr.species("H+")
+# allow changing the bottom ion 20200716
+ratlab <- function(top = "K+", bottom = "H+", molality = FALSE) {
+  # the charges
+  Ztop <- makeup(top)["Z"]
+  Zbottom <- makeup(bottom)["Z"]
+  # the text for the exponents
+  exp.bottom <- as.character(Ztop)
+  exp.top <- as.character(Zbottom)
+  if(exp.top=="1") exp.top <- ""
+  if(exp.bottom=="1") exp.bottom <- ""
+  # the expression for the top and bottom
+  expr.top <- expr.species(top)
+  expr.bottom <- expr.species(bottom)
   # with molality, change a to m
   a <- ifelse(molality, "m", "a")
   # the final expression
-  if(exp.H=="1") substitute(log~(italic(a)[expr.ion] / italic(a)[expr.H]), list(a=a, expr.ion=expr.ion, expr.H=expr.H))
-  else substitute(log~(italic(a)[expr.ion] / italic(a)[expr.H]^exp.H), list(a=a, expr.ion=expr.ion, expr.H=expr.H, exp.H=exp.H))
+  substitute(log~(italic(a)[expr.top]^exp.top / italic(a)[expr.bottom]^exp.bottom),
+             list(a = a, expr.top = expr.top, exp.top = exp.top, expr.bottom = expr.bottom, exp.bottom = exp.bottom))
 }
 
 # make formatted text for thermodynamic system 20170217

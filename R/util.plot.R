@@ -37,7 +37,7 @@ thermo.plot.new <- function(xlim,ylim,xlab,ylab,cex=par('cex'),mar=NULL,lwd=par(
   if(4 %in% side) thermo.axis(NULL,side=4,lwd=lwd, plot.line = !plot.box)
 }
 
-label.plot <- function(x, xfrac=0.05, yfrac=0.95, paren=FALSE, italic=FALSE, ...) {
+label.plot <- function(x, xfrac=0.07, yfrac=0.93, paren=FALSE, italic=FALSE, ...) {
   # make a text label e.g., "(a)" in the corner of a plot
   # xfrac, yfrac: fraction of axis where to put label (default top right)
   # paren: put a parenthesis around the text, and italicize it?

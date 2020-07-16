@@ -24,7 +24,7 @@
   thermo.axis(lab = NULL, side = 1:4, line = 1.5, cex = par("cex"),
     lwd = par("lwd"), col = par("col"), grid = "", col.grid = "gray",
     plot.line = FALSE)
-  label.plot(x, xfrac = 0.05, yfrac = 0.95, paren = FALSE,
+  label.plot(x, xfrac = 0.07, yfrac = 0.93, paren = FALSE,
     italic = FALSE, ...)
   usrfig()
   label.figure(x, xfrac = 0.05, yfrac = 0.95, paren = FALSE,
