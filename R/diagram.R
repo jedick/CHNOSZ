@@ -40,8 +40,10 @@ diagram <- function(
 
   ### argument handling ###
 
-  ## check that eout is valid input
-  if(!"sout" %in% names(eout)) stop("'eout' does not look like output from equil() or affinity()")
+  ## check that eout is a valid object
+  efun <- eout$fun
+  if(length(efun)==0) efun <- ""
+  if(!efun %in% c("affinity", "equilibrate", "solubility")) stop("'eout' is not the output from affinity(), equilibrate(), or solubility()")
 
   ## 'type' can be:
   #    'auto'                - property from affinity() (1D) or maximum affinity (affinity 2D) (aout) or loga.equil (eout)
@@ -273,13 +275,26 @@ diagram <- function(
     ## apply formatting to chemical formulas 20170204
     if(all(grepl("_", names))) is.pname <- TRUE
     if(format.names & !is.pname) {
-      exprnames <- as.expression(names)
-      for(i in seq_along(exprnames)) {
-        exprnames[[i]] <- expr.species(exprnames[[i]])
-        if(bold) exprnames[[i]] <- substitute(bold(a), list(a=exprnames[[i]]))
-        if(italic) exprnames[[i]] <- substitute(italic(a), list(a=exprnames[[i]]))
+      # check if names are a deparsed expression (used in combine()) 20200718
+      parsed <- FALSE
+      if(any(grepl("paste\\(", names))) {
+        exprnames <- parse(text = names)
+        if(length(exprnames) != length(names)) stop("parse()-ing names gives length not equal to number of names")
+        parsed <- TRUE
+      } else {
+        exprnames <- as.expression(names)
+        # get formatted chemical formulas
+        for(i in seq_along(exprnames)) exprnames[[i]] <- expr.species(exprnames[[i]])
       }
-      names <- exprnames
+      # apply bold or italic
+      bold <- rep(bold, length.out = length(exprnames))
+      italic <- rep(italic, length.out = length(exprnames))
+      for(i in seq_along(exprnames)) {
+        if(bold[i]) exprnames[[i]] <- substitute(bold(a), list(a=exprnames[[i]]))
+        if(italic[i]) exprnames[[i]] <- substitute(italic(a), list(a=exprnames[[i]]))
+      }
+      # only use the expression if it's different from the unformatted names
+      if(parsed | !identical(as.character(exprnames), names)) names <- exprnames
     }
 
     if(nd==0) {
@@ -544,7 +559,7 @@ diagram <- function(
         lapply(linesout, `length<-`, max(sapply(linesout, length)))
       }
       ## label plot function
-      plot.names <- function(out, xs, ys, xlim, ylim, names) {
+      plot.names <- function(out, xs, ys, xlim, ylim, names, srt) {
         # calculate coordinates for field labels
         # revisions: 20091116 for speed, 20190223 work with user-specified xlim and ylim
         namesx <- namesy <- rep(NA, length(names))
@@ -564,7 +579,14 @@ diagram <- function(
           namesy[i] <- mean(ysth)
         }
         # fields that really exist on the plot
-        if(!is.null(names)) text(namesx, namesy, labels=names, cex=cex.names, col=col.names, font=font, family=family)
+        if(!is.null(names)) {
+          cex <- rep(cex.names, length.out = length(names))
+          col <- rep(col.names, length.out = length(names))
+          font <- rep(font, length.out = length(names))
+          family <- rep(family, length.out = length(names))
+          srt <- rep(srt, length.out = length(names))
+          for(i in seq_along(names)) text(namesx[i], namesy[i], labels=names[i], cex=cex[i], col=col[i], font=font[i], family=family[i], srt = srt[i])
+        }
         return(list(namesx=namesx, namesy=namesy))
       }
 
@@ -646,7 +668,7 @@ diagram <- function(
         # put predominance matrix in the right order for image() etc
         zs <- t(predominant[, ncol(predominant):1])
         if(!is.null(fill)) fill.color(xs, ys, zs, fill, ngroups)
-        pn <- plot.names(zs, xs, ys, xlim, ylim, names)
+        pn <- plot.names(zs, xs, ys, xlim, ylim, names, srt)
         # only draw the lines if there is more than one field  20180923
         # (to avoid warnings from contour, which seem to be associated with weird
         # font metric state and subsequent errors adding e.g. subscripted text to plot)

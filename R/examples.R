@@ -12,7 +12,7 @@ examples <- function(save.png=FALSE) {
     "hkf", "water", "IAPWS95", "subcrt", "berman",
     "makeup", "basis", "swap.basis", "species", "affinity",
     "solubility", "equilibrate", 
-    "diagram", "mosaic", "duplex",
+    "diagram", "mosaic", "combine",
     "buffer", "nonideal", "NaCl",
     "add.protein", "protein", "ionize.aa",
     "objective", "revisit", "EOSregress", "wjd")

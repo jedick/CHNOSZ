@@ -72,15 +72,45 @@ reset()
 This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
 
 Basic diagrams in CHNOSZ are made for reactions that are *balanced on an element* (see [Equilibrium in CHNOSZ](equilibrium.html)) and therefore represent minerals or aqueous species that all have one element, often a metal, in common.
-This vignette describes some methods for constructing diagrams for elements with multiple metals.
+The package documentation has many examples of diagrams for a single metal appearing in different minerals or complexed with different ligands, but a common request is to make diagrams for multiple metals.
+This vignette describes some methods for constructing diagrams for multi-metal minerals and other multi-element systems.
 The methods are **simple overlay**, **mosaic series**, and **secondary balancing**.
 
 ## Simple Overlay
 
 Simple overlay refers to independent calculations for two different systems that are displayed on the same diagram.
-It is easy to make such a diagram, but there is no interaction between the systems.
+Although is easy to make such a diagram, there is no interaction between the systems.
 
-## Mosaic Series
+This example starts with a log*f*~O<sub>2</sub>~--pH base diagram for the C-O-H system then overlays a diagram for S-O-H.
+The second call to `affinity()` uses the argument recall feature, where the arguments are taken from the previous command.
+This allows calculations to be run at the same conditions for a different system.
+This feature is also used in other examples in this vignette.
+
+```{r overlay, echo = 1:8, eval = FALSE}
+par(mfrow = c(1, 2))
+basis("CHNOS+")
+species(c("CH4", "CO2", "HCO3-", "CO3-2"))
+aC <- affinity(pH = c(0, 14), O2 = c(-75, -60))
+dC <- diagram(aC)
+species(c("H2S", "HS-", "HSO4-", "SO4-2"))
+aS <- affinity(aC)  # argument recall
+dS <- diagram(aS, add = TRUE, col = 4, col.names = 4)
+aCS <- combine(dC, dS)
+diagram(aCS)
+legend("topright", legend = lTP(25, 1))
+```
+
+The second diagram is just like the first, except the function `combine()` is used to label the fields with names of species from both systems and we add a legend to indicate the temperature and pressure.
+
+```{r overlay, echo = 9:11,  results = "hide", message = FALSE, fig.width = 10, fig.height = 5, out.width = "100%"}
+```
+
+Note that these are predominance diagrams, so they show only the species with highest activity; there is in fact a distribution of activities of aqueous species that is not visible here.
+
+Tip: the names of the fields in the second diagram come from `aCS$species$name`, which are expressions made by combining `aC$names` and `aS$names`.
+If you prefer plain text names without formatting, add `format.names = FALSE` to all of the `diagram()` calls.
+
+## Mosaic Series 1
 
 A mosaic diagram shows the effects of changing basis species on the stabilities of minerals.
 The Fe-S-O-H system is a common example: the speciation of aqueous sulfur species affects the stabilities of iron oxides and sulfides.
@@ -93,7 +123,7 @@ First we define the conditions and basis species.
 It is important to put Cu^+^ first so that it will be used as the balance for the reactions with Cu-bearing minerals (which also have Fe).
 Pyrite is chosen as the starting Fe-bearing basis species, which will be changed as indicated in `bases2`.
 
-```{r series1, results = "hide", message = FALSE}
+```{r series1_1, results = "hide", message = FALSE}
 logaH2S <- -2
 T <- 200
 pH <- c(0, 12, 500)
@@ -104,14 +134,14 @@ bases1 <- c("H2S", "HS-", "HSO4-", "SO4-2")
 bases2 <- c("pyrite", "pyrrhotite", "magnetite", "hematite")
 ```
 
-Now we calculate affinities for minerals in the Fe-S-O-H system using changing aqueous sulfur species in `bases1`.
+Now we calculate affinities for minerals in the Fe-S-O-H system that take account of the changing aqueous sulfur species in `bases1`.
 The result is used to make different layers of the diagram:
 
 1. Water stability region (bounded by the grey area)
 2. Predominance fields for the aqueous S species (italic blue text and dashed lines)
 3. Stability areas for the Fe-bearing minerals (black text and solid lines)
 
-```{r series2, eval = FALSE, echo = 1:6}
+```{r series1_2, eval = FALSE, echo = 1:6}
 species(bases2)
 mFe <- mosaic(bases1, pH = pH, O2 = O2, T = T)
 diagram(mFe$A.bases, lty = 0, names = NA)
@@ -129,17 +159,57 @@ title(paste("Cu-Fe-S-O-H; Total S =", 10^logaH2S, "m"))
 ```
 
 Next we load the Cu-bearing minerals and calculate their affinities while changing *both* the aqueous sulfur species and the Fe-bearing minerals whose stability fields were just calculated.
-The result is used to plot the final layer of the diagram:
+The latter step is the key to the mosaic series and is activated by supplying the calculated stabilities of the Fe-bearing minerals in the `predominant` argument.
+This is a list whose elements correspond to each group of changing basis species given in the first argument.
+The NULL means that the abundances of S-bearing aqueous species are calculated according to the default in `mosaic()` (actually using `equilibrate()` to blend their transitions).
+Because the Fe-bearing minerals are the second group of changing basis species (`bases2`), their stabilities are given in the second position of the `predominant` list.
+The result is used to plot the last layer of the diagram:
 
 4. Stability areas for Cu-bearing minerals (bold red text and solid lines)
 
 After that we add the legend and title.
 
-```{r series2, echo=7:14, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+```{r series1_2, echo=7:14, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
 ```
 
 This diagram has a distinctive chalcopyrite "hook" that is controlled on the low-pH side by the reaction with pyrite.
 Only that reaction is shown in many published diagrams [e.g. @And75;@Gio02], but diagrams with a similar chalcopyrite wedge or hook can be seen in @BBR77 and @Bri80.
+
+## Mosaic Series 2
+
+The results of a mosaic series can also processed with `combine()` to label each region with the minerals from both systems.
+For this example, the speciation of aqueous sulfur is not considered.
+
+```{r series2, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant}
+layout(matrix(c(1, 2, 3, 3), nrow = 2), widths = c(1, 1.5))
+# Fe-S-O-H diagram
+basis(c("copper", "hematite", "S2", "oxygen", "H2O"))
+bases <- species(c("hematite", "magnetite", "pyrite"))$name
+aFe <- affinity(S2 = c(-34, -10), O2 = c(-55, -40), T = 125)
+abbrv <- info(species()$ispecies)$abbrv
+dFe <- diagram(aFe, names = abbrv)
+# Cu-S-O-H diagram based on reactions with the
+# stable Fe-bearing minerals (mosaic series)
+species(c("copper", "chalcocite", "covellite", "chalcopyrite", "bornite"))
+mCu <- mosaic(bases, S2 = c(-34, -10), O2 = c(-55, -40),
+              T = 125, predominant = list(dFe$predominant))
+abbrv <- info(species()$ispecies)$abbrv
+dCu <- diagram(mCu$A.species, names = abbrv)
+# Combine the diagrams and adjust labels
+aFeCu <- combine(dFe, dCu)
+names <- aFeCu$species$name
+srt <- rep(0, length(names))
+srt[names %in% c("Mt+Cu", "Hm+Cu")] <- 90
+srt[names %in% c("Mt+Bn", "Mt+Ccp")] <- 62
+srt[names %in% c("Hm+Bn", "Hm+Ccp")] <- 62
+srt[names %in% c("Py+Bn", "Py+Cv")] <- 90
+cex <- rep(1, length(names))
+cex[names %in% c("Hm+Ccp", "Hm+Cv")] <- 0.8
+diagram(aFeCu, cex.names = cex, srt = srt)
+legend("topleft", legend = lTP(125, "Psat"))
+```
+
+The resulting diagram is similar to Figure 2 of @Sve87.
 
 ## Secondary Balancing
 
@@ -151,7 +221,6 @@ For example, reactions of Fe-bearing minerals are balanced on Fe, and reactions 
 Then, reactions between all minerals are balanced on H^+^ as the secondary balancing coefficients.
 The core concept is to apply the secondary balance while also maintaining the primary balance; a method to do this has been implemented in `duplex()` function.
 
-The example here makes a diagram like one shown in Figure 5 of @Bri80 and Figure 5 of @MH85.
 Different parts of the script to make the diagrams are described below; press the button to show the entire script.
 
 <button id="B-duplex" onclick="ToggleDiv('duplex')">Show code</button>
@@ -233,6 +302,8 @@ The fields in this diagram are labeled with mineral abbreviations from the OBIGT
 ```{r duplex, echo = FALSE, results = "hide", message = FALSE, fig.width = 6.5, fig.height = 5, out.width = "100%", fig.align = "center", pngquant = pngquant}
 ```
 
+The final diagram is like one shown in Figure 5 of @Bri80 and Figure 5 of @MH85.
+
 *Challenge*: Although the diagram here is drawn only for H~2~S in the basis species, take it a step further and make a mosaic diagram to account for the stability of HSO~4~^-^ at high oxygen fugacity.
 
 ## Other Possibilities
@@ -244,7 +315,7 @@ Other methods may be more suitable for considering multiple metals (or other ele
 
 As shown in the **secondary balancing** example, there is no requirement that the balancing coefficients come from a metal-bearing species.
 It is possible to make diagrams for minerals with different metallic elements simply by using a non-metallic element as the primary balance.
-Here is an example for the Cu-Fe-S-O-H system based on Figure 3 of @MH85.
+Here is an example for the Cu-Fe-S-O-H system.
 The reactions are balanced on O~2~, which means that no O~2~ appears in the reaction between any two minerals, but Fe^+2^ and/or Cu^+^ can be present, depending on the chemical composition.
 Saturation limits are shown for species that have no O~2~ in their formation reactions.
 
@@ -263,6 +334,8 @@ diagram(asat, type = "saturation", add = TRUE, lty = 2, col = 4)
 legend("topleft", legend = lTP(400, 2000), bty = "n")
 ```
 
+This example was prompted by Figure 3 of @MH85; earlier versions of the diagram are in @HBL69 and @Hel70a.
+
 In some ways this is like the inverse of the **mosaic series** example.
 There, reactions were balanced on Fe or Cu, and *f*~O<sub>2</sub>~ and pH were used as plotting variables.
 Here, the reactions are balanced on O~2~ and implicitly on H^+^ through the activity ratios with *a*~Fe^+2^~ and *a*~Cu^+^~, which are the plotting variables.
@@ -275,7 +348,6 @@ See `demo(saturation)` for an example in the H~2~O-CO~2~-CaO-MgO-SiO~2~ system.
 Instead of adding minerals with different metals by stacking mosaic diagrams (**mosaic series**), it may be possible to include two different metals in the basis species and formed species.
 The `mosaic()` and `equilibrate()` functions can be combined to balance on two different elements.
 The example here is for N and C rather than metals.
-Thanks to Kirt Robinson for the feature request and test case.
 
 First, the `mosaic()` command calculates equilibrium activities of NH~3~ and NH~4~^+^ for a given total activity of N in the basis species, and calculates the corresponding affinities of the formed species.
 Then, the `equilibrate()` command calculates equilibrium activities of the formed species for given total activity of C, and combines them with the activities of the changing basis species (NH~3~ and NH~4~^+^).
@@ -297,6 +369,7 @@ title(main = paste(tN, tC, sep = "\n"), font.main = 1)
 The diagram shows the expected ionization of acetic acid and NH~3~ at different pHs.
 The appearance of acetamide (CH~3~CONH~2~) is a consequence of the interaction between the N-bearing and C-bearing species, and is analogous to the formation of a multi-metal complex.
 
+*Thanks to Kirt Robinson for the feature request and test case that led to this example.*
 
 ## Document History
 

@@ -6,7 +6,7 @@
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 \newcommand{\Hplus}{\ifelse{latex}{\eqn{\mathrm{H^{+}}}}{\ifelse{html}{\out{H<sup>+</sup>}}{H+}}}
 
-\section{Changes in CHNOSZ version 1.3.6-38 (2020-07-16)}{
+\section{Changes in CHNOSZ version 1.3.6-40 (2020-07-18)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -29,12 +29,34 @@
       \code{add.OBIGT()} and \code{mod.OBIGT()} replace the previous
       \code{add.obigt()} and \code{mod.obigt()}.
 
-      \item An \strong{add} argument has been added to \code{species()}. By
-      default, loading new species now causes any previous species definition
-      to be removed first. Therefore, \code{species(delete = TRUE)} is no
-      longer needed to clear the species definition in a series of calculations
-      for different species. To restore the previous behavior, where new
-      species are added to an existing definiton, set \samp{add = TRUE}.
+      \item An \strong{add} argument has been added to \code{species()}. With
+      the default of \code{FALSE}, loading new species now causes any previous species
+      definition to be removed first. Therefore, \code{species(delete = TRUE)}
+      is no longer needed to clear the species definition in a series of
+      calculations for different species. To add new species to an existing
+      system, use \samp{add = TRUE}.
+
+    }
+  }
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+
+      \item Add function \strong{combine()} for combining diagrams for different
+      systems (i.e., simple overlay with labels for species from both systems).
+
+      \item Add function \strong{duplex()} for making a new diagram by secondary
+      balancing between two systems.
+
+      \item Add a \strong{predominant} argument to \code{mosaic()} to use
+      previously calculated predominances of species (e.g. minerals) for the
+      changing basis species. This allows \code{mosaic()} calculations to be
+      linked in series, for instance to sequentially add metals (Fe, then Cu)
+      to a diagram.
+
+      \item Add vignette \strong{multi-metal.Rmd} for examples that use these
+      new features to make diagrams for minerals with multiple metals
+      (specifically Fe and Cu).
 
     }
   }
@@ -74,9 +96,6 @@
 
   \subsection{DEMOS AND VIGNETTES}{
     \itemize{
-
-      \item Add \samp{multi-metal.Rmd} for examples of diagrams with multiple
-      metals.
 
       \item Add \samp{demo/comproportionation.R}: Gibbs energy of sulfur
       comproportionation, after
@@ -121,14 +140,14 @@
       \item \code{mosaic()} now allows a \strong{blend} argument of length > 1 to
       apply a specific setting to each group of basis species.
 
-      \item Add a \strong{predominant} argument to \code{mosaic()} to use
-      previously calculated predominances of species (e.g. minerals) for the
-      changing basis species. This allows \code{mosaic()} calculations to be
-      linked in series, for instance to sequentially add metals (Fe, then Cu)
-      to a diagram.
-
       \item Add a \strong{bottom} argument to \code{ratlab()} to allow changing
       the ion in the denominator to something other than \Hplus.
+
+      \item The \strong{srt} argument in \code{diagram()} now can be used to
+      rotate field labels, not only line labels. This and other arguments
+      (\strong{cex}, \strong{col}, \strong{font}, \strong{family},
+      \strong{bold}, \strong{italic}) now can have length > 1 to apply
+      different settings to each species.
 
     }
   }
@@ -169,6 +188,18 @@
       \item TODO: remove extdata/refseq (now in JMDplots).
 
       \item TODO: OBIGT.Rmd: change "CHNOSZ" references to "OBIGT".
+
+      \item TODO: fix logic for negating balancing coefficients in diagram().
+
+      \item TODO: add elements from RH95.
+
+      \item TODO: check that Rd <-> vignette links work in Rstudio help viewer.
+
+      \item TODO: add check to mosaic() that 'predominant' values have the right dimensions.
+
+      \item TODO: remove stopifnot() from examples.
+
+      \item TODO: get axis labels at intervals of 5 (0, 5, 10, 15) in thermo.plot.new(c(0, 15), c(0, 15), "x", "y").
 
     }
   }

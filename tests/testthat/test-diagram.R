@@ -1,7 +1,7 @@
 context("diagram")
 
 test_that("expected errors are produced for inconsistent arguments", {
-  expect_error(diagram(list()), "'eout' does not look like output from equil\\(\\) or affinity\\(\\)")
+  expect_error(diagram(list()), "'eout' is not the output from")
   basis("CHNOS")
   species(c("glycine", "alanine"))
   a <- affinity()
