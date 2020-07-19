@@ -29,15 +29,18 @@ expr.species <- function(species, state = "aq", value = NULL, log = FALSE, molal
         # append the elemental symbol
         expr <- substitute(paste(a, b), list(a=expr, b=names(elements)[i]))
         # recover the coefficient
-        if(elements[i]==1) coeff <- "" else coeff <- elements[i]
-        # append the coefficient
-        expr <- substitute(a[b], list(a=expr, b=coeff))
+        coeff <- elements[i]
+        if(coeff!=1) {
+          # append the coefficient
+          expr <- substitute(a[b], list(a=expr, b=as.character(coeff)))
+        }
       } else {
         # for charged species, don't show "Z" but do show e.g. "+2"
         coeff <- elements[i]
         if(coeff==-1) coeff <- "-"
         else if(coeff==1) coeff <- "+"
         else if(coeff > 0) coeff <- paste("+", as.character(coeff), sep="")
+        else coeff <- as.character(coeff)
         # append the coefficient as a superscript
         expr <- substitute(a^b, list(a=expr, b=coeff))
       }

@@ -6,7 +6,7 @@
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 \newcommand{\Hplus}{\ifelse{latex}{\eqn{\mathrm{H^{+}}}}{\ifelse{html}{\out{H<sup>+</sup>}}{H+}}}
 
-\section{Changes in CHNOSZ version 1.3.6-40 (2020-07-18)}{
+\section{Changes in CHNOSZ version 1.3.6-41 (2020-07-19)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -199,7 +199,7 @@
 
       \item TODO: remove stopifnot() from examples.
 
-      \item TODO: get axis labels at intervals of 5 (0, 5, 10, 15) in thermo.plot.new(c(0, 15), c(0, 15), "x", "y").
+      \item TODO: change default to diagram(., water.lines= FALSE)
 
     }
   }

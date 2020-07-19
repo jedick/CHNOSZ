@@ -79,7 +79,7 @@ The methods are **simple overlay**, **mosaic series**, and **secondary balancing
 ## Simple Overlay
 
 Simple overlay refers to independent calculations for two different systems that are displayed on the same diagram.
-Although is easy to make such a diagram, there is no interaction between the systems.
+Although it is easy to make such a diagram, there is no interaction between the systems.
 
 This example starts with a log*f*~O<sub>2</sub>~--pH base diagram for the C-O-H system then overlays a diagram for S-O-H.
 The second call to `affinity()` uses the argument recall feature, where the arguments are taken from the previous command.
@@ -246,7 +246,7 @@ label.plot("A")
 species(c("covellite", "chalcocite", "tenorite", "cuprite"))
 aCu <- affinity(aFe)  # argument recall
 dCu <- diagram(aCu, xlab = xlab)
-title(paste("Only Cu; 1° balance", dCu$balance))
+title(paste("Only Cu; 1° balance:", dCu$balance))
 label.plot("B")
 
 # Only Fe- AND Cu-bearing minerals
@@ -269,7 +269,7 @@ d1$values <- c(dFe$values, dCu$values)
 ad2 <- duplex(d1, dFeCu, balance = "H+")
 abbrv <- info(ad2$species$ispecies)$abbrv
 diagram(ad2, xlab = xlab, balance = 1, names = abbrv)
-title("All Fe or Cu; 2° balance: H+")
+title("Fe and/or Cu; 2° balance: H+")
 label.plot("E")
 
 db <- describe.basis(ibasis = 3)
@@ -364,6 +364,7 @@ diagram(e, ylim = c(-10, -2))
 tN <- paste("log(total N in basis species) =", loga_N)
 tC <- paste("log(total C in formed species) =", loga_C)
 title(main = paste(tN, tC, sep = "\n"), font.main = 1)
+legend("topright", legend = lTP(25, 1), bty = "n")
 ```
 
 The diagram shows the expected ionization of acetic acid and NH~3~ at different pHs.

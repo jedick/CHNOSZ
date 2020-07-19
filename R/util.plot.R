@@ -216,8 +216,13 @@ thermo.axis <- function(lab=NULL,side=1:4,line=1.5,cex=par('cex'),lwd=par('lwd')
   if(!is.null(lwd)) {
     for(thisside in side) {
 
-      ## get the positions of major tick marks and make grid lines
+      ## get the positions of major tick marks
       at <- axis(thisside,labels=FALSE,tick=FALSE) 
+      # get nicer divisions for axes that span exactly 15 units 20200719
+      if(thisside %in% c(1,3)) lim <- par("usr")[1:2]
+      if(thisside %in% c(2,4)) lim <- par("usr")[3:4]
+      if(diff(lim)==15) at <- seq(lim[1], lim[2], length.out = 6)
+      # make grid lines
       if(grid %in% c("major", "both") & thisside==1) abline(v = at, col=col.grid)
       if(grid %in% c("major", "both") & thisside==2) abline(h = at, col=col.grid)
       ## plot major tick marks and numeric labels
@@ -238,7 +243,8 @@ thermo.axis <- function(lab=NULL,side=1:4,line=1.5,cex=par('cex'),lwd=par('lwd')
       da <- abs(diff(at[1:2]))
       # distance between minor tick marks
       di <- da / 4
-      if(da %% 2 | !(da %% 10)) di <- da / 5
+      if(!da %% 3) di <- da / 3
+      else if(da %% 2 | !(da %% 10)) di <- da / 5
       # number of minor tick marks
       if(thisside %in% c(1,3)) {
         ii <- c(1,2) 
