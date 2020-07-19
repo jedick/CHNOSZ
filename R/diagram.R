@@ -28,7 +28,7 @@ diagram <- function(
   spline.method=NULL, contour.method="edge", levels=NULL,
   # colors
   col=par("col"), col.names=par("col"), fill=NULL,
-  fill.NA="gray80", limit.water=TRUE,
+  fill.NA="gray80", limit.water=NULL,
   # field and line labels
   names=NULL, format.names=TRUE, bold=FALSE, italic=FALSE,
   font=par("font"), family=par("family"), adj=0.5, dy=0, srt=0,
@@ -43,7 +43,7 @@ diagram <- function(
   ## check that eout is a valid object
   efun <- eout$fun
   if(length(efun)==0) efun <- ""
-  if(!efun %in% c("affinity", "equilibrate", "solubility")) stop("'eout' is not the output from affinity(), equilibrate(), or solubility()")
+  if(!(efun %in% c("affinity", "equilibrate") | grepl("solubility", efun))) stop("'eout' is not the output from affinity(), equilibrate(), or solubility()")
 
   ## 'type' can be:
   #    'auto'                - property from affinity() (1D) or maximum affinity (affinity 2D) (aout) or loga.equil (eout)
@@ -180,6 +180,7 @@ diagram <- function(
   ## identify predominant species
   predominant <- NA
   linesout <- NA
+  H2O.predominant <- NULL
   if(plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)") & type!="saturation") {
     pv <- plotvals
     # some additional steps for affinity values, but not for equilibrated activities
@@ -192,11 +193,12 @@ diagram <- function(
       }
     }
     predominant <- which.pmax(pv)
-    # clip plot to water stability region
-    if(limit.water & nd==2) {
+    # show water stability region
+    if((is.null(limit.water) | isTRUE(limit.water)) & nd==2) {
       wl <- water.lines(eout, plot.it=FALSE)
       # proceed if water.lines produced calculations for this plot
       if(!identical(wl, NA)) {
+        H2O.predominant <- predominant
         # for each x-point, find the y-values that are outside the water stability limits
         for(i in seq_along(wl$xpoints)) {
           ymin <- min(c(wl$y.oxidation[i], wl$y.reduction[i]))
@@ -205,11 +207,11 @@ diagram <- function(
             # the actual calculation
             iNA <- eout$vals[[2]] < ymin | eout$vals[[2]] > ymax
             # assign NA to the predominance matrix
-            predominant[i, iNA] <- NA
+            H2O.predominant[i, iNA] <- NA
           } else {
             # as above, but x- and y-axes are swapped
             iNA <- eout$vals[[1]] < ymin | eout$vals[[1]] > ymax
-            predominant[iNA, i] <- NA
+            H2O.predominant[iNA, i] <- NA
           }
         }
       }
@@ -636,8 +638,8 @@ diagram <- function(
         # add a title
         if(!is.null(main)) title(main=main)
       }
-      # colors and curves (predominance), or contours (properties)
       if(identical(predominant, NA)) {
+        # no predominance matrix, so we're contouring properties
         contour.method <- rep(contour.method, length.out=length(plotvals))
         if(type=="saturation") {
           # for saturation plot, contour affinity=0 for all species
@@ -665,6 +667,16 @@ diagram <- function(
         }
         pn <- list(namesx=NULL, namesy=NULL)
       } else {
+        # with a predominance matrix, color fields and make field boundaries
+        if(!is.null(H2O.predominant)) {
+          # isTRUE(limit.water): clip diagram to H2O stability region
+          if(isTRUE(limit.water)) predominant <- H2O.predominant
+          else {
+            # is.null(limit.water): overlay diagram on H2O stability region
+            zs <- t(H2O.predominant[, ncol(H2O.predominant):1])
+            if(!is.null(fill)) fill.color(xs, ys, zs, fill, ngroups)
+          }
+        }
         # put predominance matrix in the right order for image() etc
         zs <- t(predominant[, ncol(predominant):1])
         if(!is.null(fill)) fill.color(xs, ys, zs, fill, ngroups)
@@ -679,6 +691,7 @@ diagram <- function(
         # re-draw the tick marks and axis lines in case the fill obscured them
         has.color <- FALSE
         if(!identical(unique(fill), "transparent")) has.color <- TRUE
+        if(!is.null(H2O.predominant) & !identical(fill.NA, "transparent")) has.color <- TRUE
         if(any(is.na(zs)) & !identical(fill.NA, "transparent")) has.color <- TRUE
         if(tplot & !add & has.color) {
           thermo.axis()
@@ -688,6 +701,8 @@ diagram <- function(
       out2D <- list(namesx=pn$namesx, namesy=pn$namesy)
     } # end if(nd==2)
   } # end if(plot.it)
+  # even if plot=FALSE, return the diagram clipped to the water stability region (for testing) 20200719
+  if(isTRUE(limit.water) & !is.null(H2O.predominant)) predominant <- H2O.predominant
   outstuff <- list(plotvar=plotvar, plotvals=plotvals, names=names, predominant=predominant)
   # include the balance name and coefficients if we diagrammed affinities 20200714
   if(eout.is.aout) outstuff <- c(list(balance = balance, n.balance = n.balance), outstuff)

@@ -6,7 +6,7 @@
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 \newcommand{\Hplus}{\ifelse{latex}{\eqn{\mathrm{H^{+}}}}{\ifelse{html}{\out{H<sup>+</sup>}}{H+}}}
 
-\section{Changes in CHNOSZ version 1.3.6-41 (2020-07-19)}{
+\section{Changes in CHNOSZ version 1.3.6-42 (2020-07-19)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -35,6 +35,12 @@
       is no longer needed to clear the species definition in a series of
       calculations for different species. To add new species to an existing
       system, use \samp{add = TRUE}.
+
+      \item The new default of \code{NULL} for \strong{limit.water} in
+      \code{diagram()} causes the main diagram to be overlaid on the fields of
+      water stability (white) and instability (gray). Change this to
+      \code{TRUE} to obtain the previous default of masking all parts of the
+      diagram oustide of the water stability field.
 
     }
   }
@@ -199,7 +205,7 @@
 
       \item TODO: remove stopifnot() from examples.
 
-      \item TODO: change default to diagram(., water.lines= FALSE)
+      \item TODO: get water limits on logfO2-logfS2 diagram (multi-metal.Rmd)
 
     }
   }

@@ -108,7 +108,7 @@ dfun <- function(T = 600, P = 50000, res = 300) {
   # set total C concentration to 0.03 molal
   # (from EQ3NR model for eclogite [Supporting Information of SSH14])
   e <- equilibrate(a, loga.balance = log10(0.03))
-  diagram(e, limit.water = FALSE, fill = fill)
+  diagram(e, fill = fill)
   dp <- describe.property(c("     T", "     P"), c(T, P), digits=0)
   legend("bottomleft", legend=dp, bty="n")
 }

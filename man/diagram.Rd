@@ -25,7 +25,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
     spline.method = NULL, contour.method = "edge", levels = NULL,
     # colors
     col = par("col"), col.names = par("col"), fill = NULL,
-    fill.NA = "gray80", limit.water = TRUE,
+    fill.NA = "gray80", limit.water = NULL,
     # field and line labels
     names = NULL, format.names = TRUE, bold = FALSE, italic = FALSE, 
     font = par("font"), family = par("family"), adj = 0.5, dy = 0, srt = 0,
@@ -68,7 +68,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{col.names}{character, colors for labels of species}
   \item{fill}{character, colors used to fill predominance fields}
   \item{fill.NA}{character, color for grid points with NA values}
-  \item{limit.water}{logical, set NA values beyond water stability limits?}
+  \item{limit.water}{NULL or logical, set NA values beyond water stability limits?}
   \item{names}{character, names of species for activity lines or predominance fields}
   \item{format.names}{logical, apply formatting to chemical formulas?}
   \item{bold}{logical, use bold formatting for names?}
@@ -140,9 +140,12 @@ The default of NULL for \code{fill} produces transparent predominance fields.
 \code{fill} can be any \code{\link{colors}}, or the word \samp{rainbow}, \samp{heat}, \samp{terrain}, \samp{topo}, or \samp{cm}, indicating a palette from \pkg{grDevices}.
 Starting with \R version 3.6.0, \code{fill} can be the name of any available HCL color palette, matched in the same way as the \code{palette} argument of \code{hcl.colors}.
 
-\code{fill.NA} gives the color for empty fields, i.e. points for which NA values are present, possibly by using \code{\link{equilibrate}} at extreme conditions (see \code{test-diagram.Rd}).
-\code{fill.NA} is also used to specify the color outside the water stability limits on Eh-pH or pe-pH diagrams, when \code{limit.water} is TRUE.
-Note that the default for \code{fill.NA} is automatically changed to \samp{transparent} when \code{add} is TRUE.
+\code{fill.NA} gives the color for empty fields, i.e. points at which NA values are present for any species.
+This may occur when there are missing thermodynamic data or the temperature or pressure are not in the range of the equations of state.
+The default for \code{fill.NA} is automatically changed to \samp{transparent} when \code{add} is TRUE.
+
+\code{fill.NA} is also used for all areas outside the water stability region on Eh-pH and other diagrams when \code{limit.water} is TRUE.
+The default of NULL for \code{limit.water} causes the main diagram to be overlaid on the water stability regions; change this to FALSE to not show the water limits at all.
 
 The default line-drawing algorithm uses \code{\link{contourLines}} to obtain smooth-looking diagonal and curved lines, at the expense of not coinciding exactly with the rectangular grid that is used for drawing colors.
 \code{lty}, \code{col}, and \code{lwd} can be specified, but limiting the lines via \code{xrange} is not currently supported.

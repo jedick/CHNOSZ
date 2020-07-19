@@ -135,7 +135,7 @@ bases2 <- c("pyrite", "pyrrhotite", "magnetite", "hematite")
 ```
 
 Now we calculate affinities for minerals in the Fe-S-O-H system that take account of the changing aqueous sulfur species in `bases1`.
-The result is used to make different layers of the diagram:
+The result is used to make different layers of the diagram (1 and 2 are both made by the first call to `diagram()`):
 
 1. Water stability region (bounded by the grey area)
 2. Predominance fields for the aqueous S species (italic blue text and dashed lines)
@@ -144,15 +144,14 @@ The result is used to make different layers of the diagram:
 ```{r series1_2, eval = FALSE, echo = 1:6}
 species(bases2)
 mFe <- mosaic(bases1, pH = pH, O2 = O2, T = T)
-diagram(mFe$A.bases, lty = 0, names = NA)
 diagram(mFe$A.bases, lty = 2, col = 4, col.names = 4,
-        italic = TRUE, add = TRUE, limit.water = FALSE)
-dFe <- diagram(mFe$A.species, add = TRUE, limit.water = FALSE)
+        italic = TRUE)
+dFe <- diagram(mFe$A.species, add = TRUE)
 species(c("chalcopyrite", "bornite"))
 mCu <- mosaic(list(bases1, bases2), pH = pH, O2 = O2,
               T = T, predominant = list(NULL, dFe$predominant))
 diagram(mCu$A.species, add = TRUE, col = 2, col.names = 2,
-        lwd = 2, bold = TRUE, limit.water = FALSE)
+        lwd = 2, bold = TRUE)
 TP <- describe.property(c("T", "P"), c(T, "Psat"))
 legend("topright", TP, bty = "n")
 title(paste("Cu-Fe-S-O-H; Total S =", 10^logaH2S, "m"))

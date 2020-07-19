@@ -664,11 +664,12 @@ In systems where equilibrium is attainable, it makes sense to call this a *predo
 ```{r EhpH_plot_color, fig.margin=TRUE, fig.width=4, fig.height=4, smallish.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="The same plot, with different colors and labels.", pngquant=pngquant, timeit=timeit}
 diagram(a, fill = "terrain", lwd = 2, lty = 3,
         names = c("hydrogen sulfide", "bisulfide", "bisulfate", "sulfate"),
+        limit.water = TRUE,
         tplot = FALSE, main = "sulfur species, 25 °C", bty = "n")
 ```
 The names of species that can be parsed as chemical formulas are formatted with subscripts and superscripts; if this is not desired, set `format.names = FALSE`.
-The default colors for diagrams shown on the screen use R's `heat.colors()` palette.
-Some arguments in <span style="color:green">`diagram()`</span> can be used to control the color, labels, and lines, and title.
+Other arguments in <span style="color:green">`diagram()`</span> can be used to control the line type, color, and width, and field labels and plot title.
+The `limit.water` argument allows clipping the diagram to the water stability region; other areas are colored gray.
 The `tplot` argument turns off plot customizations used in CHNOSZ.
 Additional arguments are passed to R's plotting functions; here, we use `bty` to remove the box around the plot.
 ```{r EhpH_plot_color, echo=TRUE, eval=FALSE}
@@ -717,16 +718,16 @@ We use <span style="color:green">`mosaic()`</span> to generate and combine diagr
 The key argument is `bases`, which identifies the candidate basis species, starting with the one in the current basis.
 The other arguments, like those of <span style="color:green">`affinity()`</span>, specify the ranges of the variables; `res` indicates the grid resolution to use for each variable (the default is 256).
 The first call to <span style="color:green">`diagram()`</span> plots the species of interest; the second adds the predominance fields of the basis species.
-We turn off the gray coloring beyond the water stability limits (`limit.water`) but plot dashed blue lines using <span style="color:green">`water.lines()`</span>:
+We also use <span style="color:green">`water.lines()`</span> to draw dashed blue lines at the water stability limits:
 
 ```{r copper_mosaic, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", message=FALSE, cache=TRUE, fig.cap="Copper minerals and aqueous complexes with chloride, 200 °C.", pngquant=pngquant, timeit=timeit}
 T <- 200
 res <- 200
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 m1 <- mosaic(bases, pH = c(0, 12, res), Eh=c(-1.2, 0.75, res), T=T)
-diagram(m1$A.species, lwd = 2, fill = NA, limit.water = FALSE)
+diagram(m1$A.species, lwd = 2, fill = NA)
 diagram(m1$A.bases, add = TRUE, col = "red1", col.names = "red1", lty = 3,
-        limit.water = FALSE, italic = TRUE)
+        italic = TRUE)
 water.lines(m1$A.species, col = "blue1")
 ```
 
@@ -752,10 +753,9 @@ mosaicfun <- function(newvar, T = 200) {
   if (names(newvar) == "O2") basis("O2", "gas")
   mosaicargs <- c(list(bases), pH = list(c(-2, 12, res)), newvar, T = T)
   m1 <- do.call(mosaic, mosaicargs)
-  diagram(m1$A.species, lwd = 2, fill = "terrain",
-          limit.water = FALSE)
+  diagram(m1$A.species, lwd = 2, fill = "terrain", limit.water = FALSE)
   diagram(m1$A.bases, add = TRUE, col = "red1", col.names = "red1", lty = 3,
-          limit.water = FALSE, italic = TRUE)
+          italic = TRUE)
   water.lines(m1$A.species, col = "blue1")
   swap.basis(names(newvar), "e-")
 }
@@ -1797,7 +1797,8 @@ T <- c(50, 100)
 res <- 300
 a <- affinity(T = c(T, res), H2 = c(-9, -3, res), iprotein = ip)
 fill <- ZC.col(ZC(protein.formula(ip)))
-diagram(a, normalize = TRUE, fill = fill, names = as.character(1:5))
+diagram(a, normalize = TRUE, fill = fill, names = as.character(1:5),
+        limit.water = TRUE)
 T <- c(93.3, 79.4, 67.5, 65.3, 57.1)
 logaH2 <- c(-3.38, -4.14, -5.66, -7.47, -10.02)
 lines(T, logaH2, lty = 2, lwd = 2)
