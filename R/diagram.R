@@ -32,6 +32,7 @@ diagram <- function(
   # field and line labels
   names=NULL, format.names=TRUE, bold=FALSE, italic=FALSE,
   font=par("font"), family=par("family"), adj=0.5, dy=0, srt=0,
+  min.area=0,
   # title and legend
   main=NULL, legend.x=NA,
   # plotting controls
@@ -561,11 +562,12 @@ diagram <- function(
         lapply(linesout, `length<-`, max(sapply(linesout, length)))
       }
       ## label plot function
-      plot.names <- function(out, xs, ys, xlim, ylim, names, srt) {
+      plot.names <- function(out, xs, ys, xlim, ylim, names, srt, min.area) {
         # calculate coordinates for field labels
         # revisions: 20091116 for speed, 20190223 work with user-specified xlim and ylim
         namesx <- namesy <- rep(NA, length(names))
         # even if 'names' is NULL, we run the loop in order to generate namesx and namesy for the output 20190225
+        area.plot <- length(xs) * length(ys)
         for(i in seq_along(groups)) {
           this <- which(out==i, arr.ind=TRUE)
           if(length(this)==0) next
@@ -577,6 +579,10 @@ diagram <- function(
           xsth <- xsth[xsth >= rx[1] & xsth <= rx[2]]
           ysth <- ysth[ysth >= ry[1] & ysth <= ry[2]]
           if(length(xsth)==0 | length(ysth)==0) next
+          # skip plotting names if the fields are too small 20200720
+          area <- max(length(xsth), length(ysth))
+          frac.area <- area / area.plot
+          if(!frac.area >= min.area) next
           namesx[i] <- mean(xsth)
           namesy[i] <- mean(ysth)
         }
@@ -680,7 +686,7 @@ diagram <- function(
         # put predominance matrix in the right order for image() etc
         zs <- t(predominant[, ncol(predominant):1])
         if(!is.null(fill)) fill.color(xs, ys, zs, fill, ngroups)
-        pn <- plot.names(zs, xs, ys, xlim, ylim, names, srt)
+        pn <- plot.names(zs, xs, ys, xlim, ylim, names, srt, min.area)
         # only draw the lines if there is more than one field  20180923
         # (to avoid warnings from contour, which seem to be associated with weird
         # font metric state and subsequent errors adding e.g. subscripted text to plot)

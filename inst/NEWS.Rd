@@ -6,7 +6,7 @@
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 \newcommand{\Hplus}{\ifelse{latex}{\eqn{\mathrm{H^{+}}}}{\ifelse{html}{\out{H<sup>+</sup>}}{H+}}}
 
-\section{Changes in CHNOSZ version 1.3.6-42 (2020-07-19)}{
+\section{Changes in CHNOSZ version 1.3.6-43 (2020-07-21)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -155,6 +155,10 @@
       \strong{bold}, \strong{italic}) now can have length > 1 to apply
       different settings to each species.
 
+      \item Add a \strong{min.area} argument to \code{diagram()} to specify the
+      minimum area of fields that should be labeled. This is useful for
+      removing labels from small fields on very crowded diagrams.
+
     }
   }
 
@@ -206,6 +210,12 @@
       \item TODO: remove stopifnot() from examples.
 
       \item TODO: get water limits on logfO2-logfS2 diagram (multi-metal.Rmd)
+
+      \item TODO: anintro.Rmd, help files: make it clear that species with
+      different units (cal, J) in OBIGT can be used in subcrt, diagrams, etc.
+      in CHNOSZ.
+
+      \item TODO: for balance = 1, add or change message text to "formula units".
 
     }
   }

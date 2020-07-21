@@ -29,6 +29,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
     # field and line labels
     names = NULL, format.names = TRUE, bold = FALSE, italic = FALSE, 
     font = par("font"), family = par("family"), adj = 0.5, dy = 0, srt = 0,
+    min.area = 0,
     # title and legend
     main = NULL, legend.x = NA,
     # plotting controls
@@ -78,6 +79,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{adj}{numeric, adjustment for line labels}
   \item{dy}{numeric, y offset for line labels}
   \item{srt}{numeric, rotation for line labels}
+  \item{min.area}{numeric, minimum area of fields that should be labeled, expressed as a fraction of the total plot area}
   \item{main}{character, a main \code{\link{title}} for the plot; \code{NULL} means to plot no title}
   \item{legend.x}{character, description of legend placement passed to \code{\link{legend}}}
   \item{add}{logical, add to current plot?}
