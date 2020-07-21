@@ -1,14 +1,14 @@
 \encoding{UTF-8}
-\name{combine}
-\alias{combine}
+\name{flatten}
+\alias{flatten}
 \alias{duplex}
 \title{Combine Diagrams}
 \description{
-  Combine two diagrams for different systems by simple overlay or using a secondary balancing constraint.
+  Combine two diagrams for different systems by flattening them or using a secondary balancing constraint.
 }
 
 \usage{
-  combine(d1, d2)
+  flatten(d1, d2)
   duplex(d1, d2, balance = NULL)
 }
 
@@ -21,11 +21,11 @@
 \details{
 
 These functions both make a new \code{\link{affinity}} object from two diagrams.
-In essence, \code{combine} identifies the intersection of predominance fields for all possible combinations of species (without interaction between the systems), while \code{duplex} creates a new diagram by comparing the affinities of reactions between species in both systems.
+\code{flatten} identifies the intersection of predominance fields for all possible combinations of species (without interaction between the systems), while \code{duplex} creates a new diagram by comparing the affinities of reactions between species in both systems.
 Both functions mask the non-predominant species by assigning them -Inf values of affinity, so the result can be used to make a new diagram that shows the combined system.
 
-\code{combine} makes a simple overlay of two diagrams using new "species" generated from all combinations of those in \code{d1} and \code{d2}.
-The new names are formed from the \code{names} used in the source diagrams; for example if "Cp" and "Py" are predominant minerals at the same position in diagrams 1 and 2, the field for the combined diagram will be labeled "Cp+Py".
+\code{flatten} makes a simple overlay of two diagrams using new "species" generated from all combinations of those in \code{d1} and \code{d2}.
+The new names are formed from the \code{names} used in the source diagrams; for example if "Cp" and "Py" are predominant minerals at the same position in diagrams 1 and 2, the field for the flattened diagram will be labeled "Cp+Py".
 The resulting affinities are simply the sum of affinities of the two species; they are assigned values of -Inf wherever one of the species is not predominant in either of the diagrams.
 
 Diagrams for different systems likely use different \emph{primary} balancing coefficients, such as balancing on different metals.
@@ -34,7 +34,7 @@ The affinities of these reactions are then used \emph{only} to identify the pred
 The \emph{returned} value of affinity are carried forward from those used to make the source diagrams (\samp{plotvals} in \code{d1} and \code{d2}), and therefore reflect the primary balancing coefficients.
 The returned values are assigned -Inf wherever that species is determined to not predominate according to the secondary balancing.
 
-\code{combine} yields finite values of affinity for only a single species at any grid point, the final diagram can be made with any setting of \code{balance}.
+Because \code{flatten} yields finite values of affinity for only a single species at any grid point, the final diagram can be made with any setting of \code{balance}.
 However, for \code{duplex}, \code{balance} in the final diagram should be set to \samp{1} in order to preserve the primary balancing coefficients.
 
 }
@@ -60,9 +60,9 @@ dFe <- diagram(aFe, xlab = xlab, main = "Fe-S-O-H")
 species(c("covellite", "chalcocite", "tenorite", "cuprite"))
 aCu <- affinity(aFe)  # argument recall
 dCu <- diagram(aCu, xlab = xlab, main = "Cu-S-O-H")
-### combine() diagram
-ac <- combine(dFe, dCu)
-diagram(ac, xlab = xlab, main = "Cu-Fe-S-O-H with combine()")
+### flatten() diagram
+ac <- flatten(dFe, dCu)
+diagram(ac, xlab = xlab, main = "Cu-Fe-S-O-H with flatten()")
 ### duplex() diagram
 ad <- duplex(dFe, dCu)
 diagram(ad, xlab = xlab, balance = 1, main = "Cu-Fe-S-O-H with duplex()")

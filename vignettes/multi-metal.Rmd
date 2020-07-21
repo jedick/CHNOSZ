@@ -74,11 +74,11 @@ This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo(
 Basic diagrams in CHNOSZ are made for reactions that are *balanced on an element* (see [Equilibrium in CHNOSZ](equilibrium.html)) and therefore represent minerals or aqueous species that all have one element, often a metal, in common.
 The package documentation has many examples of diagrams for a single metal appearing in different minerals or complexed with different ligands, but a common request is to make diagrams for multiple metals.
 This vignette describes some methods for constructing diagrams for multi-metal minerals and other multi-element systems.
-The methods are **simple overlay**, **mosaic series**, and **secondary balancing**.
+The methods are **flattening**, **mosaic series**, and **secondary balancing**.
 
-## Simple Overlay
+## Flattening
 
-Simple overlay refers to independent calculations for two different systems that are displayed on the same diagram.
+Flattening or simple overlay refers to independent calculations for two different systems that are displayed on the same diagram.
 Although it is easy to make such a diagram, there is no interaction between the systems.
 
 This example starts with a log*f*~O<sub>2</sub>~--pH base diagram for the C-O-H system then overlays a diagram for S-O-H.
@@ -86,7 +86,7 @@ The second call to `affinity()` uses the argument recall feature, where the argu
 This allows calculations to be run at the same conditions for a different system.
 This feature is also used in other examples in this vignette.
 
-```{r overlay, echo = 1:8, eval = FALSE}
+```{r flatten, echo = 1:8, eval = FALSE}
 par(mfrow = c(1, 2))
 basis("CHNOS+")
 species(c("CH4", "CO2", "HCO3-", "CO3-2"))
@@ -95,14 +95,14 @@ dC <- diagram(aC)
 species(c("H2S", "HS-", "HSO4-", "SO4-2"))
 aS <- affinity(aC)  # argument recall
 dS <- diagram(aS, add = TRUE, col = 4, col.names = 4)
-aCS <- combine(dC, dS)
+aCS <- flatten(dC, dS)
 diagram(aCS)
 legend("topright", legend = lTP(25, 1))
 ```
 
-The second diagram is just like the first, except the function `combine()` is used to label the fields with names of species from both systems and we add a legend to indicate the temperature and pressure.
+The second diagram is just like the first, except the function `flatten()` is used to label the fields with names of species from both systems, and a legend is added to indicate the temperature and pressure.
 
-```{r overlay, echo = 9:11,  results = "hide", message = FALSE, fig.width = 10, fig.height = 5, out.width = "100%"}
+```{r flatten, echo = 9:11,  results = "hide", message = FALSE, fig.width = 10, fig.height = 5, out.width = "100%"}
 ```
 
 Note that these are predominance diagrams, so they show only the species with highest activity; there is in fact a distribution of activities of aqueous species that is not visible here.
@@ -176,7 +176,7 @@ Only that reaction is shown in many published diagrams [e.g. @And75;@Gio02], but
 
 ## Mosaic Series 2
 
-The results of a mosaic series can also processed with `combine()` to label each region with the minerals from both systems.
+The results of a mosaic series can also processed with `flatten()` to label each region with the minerals from both systems.
 For this example, the speciation of aqueous sulfur is not considered.
 
 ```{r series2, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant}
@@ -194,8 +194,8 @@ mCu <- mosaic(bases, S2 = c(-34, -10), O2 = c(-55, -40),
               T = 125, predominant = list(dFe$predominant))
 abbrv <- info(species()$ispecies)$abbrv
 dCu <- diagram(mCu$A.species, names = abbrv)
-# Combine the diagrams and adjust labels
-aFeCu <- combine(dFe, dCu)
+# Flatten the diagrams and adjust labels
+aFeCu <- flatten(dFe, dCu)
 names <- aFeCu$species$name
 srt <- rep(0, length(names))
 srt[names %in% c("Mt+Cu", "Hm+Cu")] <- 90
@@ -289,11 +289,11 @@ See Reaction 4 of @MH85 for an example.
 ```
 
 Now comes the secondary balancing, where all reactions, not only that between bornite and chalcopyrite, are balanced on H^+^.
-We first combine the affinities for the Fe- or Cu-bearing minerals to make diagram D.
+We first duplex the diagrams for the Fe- or Cu-bearing minerals to make diagram D.
 Note that after secondary balancing with `duplex()`, the argument `balance = 1` should be used in `diagram()` to prevent further balancing.
 This is because `duplex()` preserves the primary balancing for Fe- and Cu-bearing minerals (internally the "plotvals" components of `dFe` and `dCu`).
 
-Then we combine diagrams D and C to make the final diagram in E.
+Then we duplex diagrams D and C to make the final diagram in E.
 The fields in this diagram are labeled with mineral abbreviations from the OBIGT database.
 ```{r duplex, eval = FALSE, echo = 33:43}
 ```

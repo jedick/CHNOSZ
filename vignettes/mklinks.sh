@@ -110,9 +110,9 @@ sed -i 's/add.OBIGT()/<a href="..\/html\/add.OBIGT.html">add.OBIGT()<\/a>/g' equ
 
 # add links to multi-metal.html 20200716
 sed -i 's/affinity()/<a href="..\/html\/affinity.html">affinity()<\/a>/g' multi-metal.html
-sed -i 's/combine()/<a href="..\/html\/combine.html">combine()<\/a>/g' multi-metal.html
+sed -i 's/flatten()/<a href="..\/html\/flatten.html">flatten()<\/a>/g' multi-metal.html
 sed -i 's/diagram()/<a href="..\/html\/diagram.html">diagram()<\/a>/g' multi-metal.html
 sed -i 's/mosaic()/<a href="..\/html\/mosaic.html">mosaic()<\/a>/g' multi-metal.html
 sed -i 's/equilibrate()/<a href="..\/html\/equilibrate.html">equilibrate()<\/a>/g' multi-metal.html
-sed -i 's/duplex()/<a href="..\/html\/combine.html">duplex()<\/a>/g' multi-metal.html
+sed -i 's/duplex()/<a href="..\/html\/flatten.html">duplex()<\/a>/g' multi-metal.html
 sed -i 's/ratlab()/<a href="..\/html\/util.expression.html">ratlab()<\/a>/g' multi-metal.html

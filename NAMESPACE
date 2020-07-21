@@ -59,7 +59,7 @@ export(
   "CHNOSZ", "thermo", "reset", "OBIGT", "retrieve", "AkDi", "moles",
   "lNaCl", "lS", "lT", "lP", "lTP", "lex",
 # added 20200716 or later
-  "duplex", "combine"
+  "duplex", "flatten"
 )
 
 # Load shared objects

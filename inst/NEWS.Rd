@@ -48,8 +48,9 @@
   \subsection{NEW FEATURES}{
     \itemize{
 
-      \item Add function \strong{combine()} for combining diagrams for different
-      systems (i.e., simple overlay with labels for species from both systems).
+      \item Add function \strong{flatten()} for combining two diagrams for
+      different systems (i.e., simple overlay with labels for species from both
+      systems).
 
       \item Add function \strong{duplex()} for making a new diagram by secondary
       balancing between two systems.

@@ -1,10 +1,10 @@
-# CHNOSZ/duplex.R
+# CHNOSZ/flatten.R
 # Combine diagrams for two metals
 # 20200713 first version jmd
 
 # Function to combine two diagrams (simple overlay, no interaction) 20200717
 # -- makes new "species" from all combinations of those in d1 and d2
-combine <- function(d1, d2) {
+flatten <- function(d1, d2) {
   check_d1_d2(d1, d2)
 
   # Index all combinations of species in d1 and d2
