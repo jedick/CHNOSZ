@@ -259,7 +259,7 @@ diagram <- function(
   ## apply formatting to chemical formulas 20170204
   if(all(grepl("_", names))) is.pname <- TRUE
   if(format.names & !is.pname) {
-    # check if names are a deparsed expression (used in combine()) 20200718
+    # check if names are a deparsed expression (used in mix()) 20200718
     parsed <- FALSE
     if(any(grepl("paste\\(", names))) {
       exprnames <- parse(text = names)
@@ -268,7 +268,12 @@ diagram <- function(
     } else {
       exprnames <- as.expression(names)
       # get formatted chemical formulas
-      for(i in seq_along(exprnames)) exprnames[[i]] <- expr.species(exprnames[[i]])
+      for(i in seq_along(exprnames)) {
+        # don't try to format the names if they have "+" followed by a character
+        # (created by mix()ing diagrams with format.names = FALSE);
+        # expr.species() can't handle it 20200722
+        if(!grepl("\\+[a-zA-Z]", names[i])) exprnames[[i]] <- expr.species(exprnames[[i]])
+      }
     }
     # apply bold or italic
     bold <- rep(bold, length.out = length(exprnames))

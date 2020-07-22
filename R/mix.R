@@ -2,6 +2,9 @@
 # Combine diagrams for two metals
 # 20200713 first version jmd
 
+## if this file is interactively sourced, the following are also needed to provide unexported functions:
+#source("equilibrate.R")
+
 # Function to combine two diagrams (simple overlay, no interaction) 20200717
 # -- makes new "species" from all combinations of those in d1 and d2
 flatten <- function(d1, d2) {
@@ -12,21 +15,23 @@ flatten <- function(d1, d2) {
 # mix the systems to include bimetal species 20200721
 # 'parts' gives number of moles of each metal in 1 mole of the mixture
 mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
-  check_d1_d2(d1, d2, .balance)
+  if(is.null(.balance)) check_d1_d2(d1, d2)
+  else check_d1_d3(d1, d3)
 
   # Handle mixing here
-  if(!is.null(d3)) {
+  if(!is.null(d3) & is.null(.balance)) {
     # Mix d1 (e.g. Fe only) and d2 (e.g. V only)
     m12 <- mix(d1, d2, parts = parts)
     # Mix d1 (Fe) and d3 (FeV bimetallic species)
     # - '.balance' is defined to add d3 to get required amount of V
-    m13 <- mix(d1, d3, parts = parts, .balance = d2$balance)
+    # - second 'd3' in argument list is used only for check_d1_d3()
+    m13 <- mix(d1, d3, d3, parts = parts, .balance = d2$balance)
     # Mix d2 (V) and d3 (FeV)
     # - '.balance' is defined to add d3 to get required amount of Fe
     # - d2 (V) is first, so we need to reverse the 'parts' values
-    m23 <- mix(d2, d3, parts = rev(parts), .balance = d1$balance)
+    m23 <- mix(d2, d3, d3, parts = rev(parts), .balance = d1$balance)
     # Mix d3 with itself (combinations of bimetallic species)
-    m33 <- mix(d3, d3, parts = parts, .balance = c(d1$balance, d2$balance))
+    m33 <- mix(d3, d3, d3, parts = parts, .balance = c(d1$balance, d2$balance))
     # Merge all the species and affinity values
     species <- rbind(m12$species, m13$species, m23$species, m33$species)
     values <- c(m12$values, m13$values, m23$values, m33$values)
@@ -68,11 +73,11 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
   if(!is.null(.balance)) {
     if(length(.balance)==2) {
       # For combinations of bimetallic species (m33)
-      b1 <- balance(d1, .balance[1])$n.balance[combs[, 1]]
-      b2 <- balance(d2, .balance[2])$n.balance[combs[, 2]]
-      ibal <- match(balance, colnames(s1))
+      b1 <- suppressMessages(balance(d1, .balance[1])$n.balance[combs[, 1]])
+      b2 <- suppressMessages(balance(d2, .balance[2])$n.balance[combs[, 2]])
+      ibal <- match(.balance, colnames(s1))
     } else {
-      b2 <- balance(d2, .balance)$n.balance[combs[, 2]]
+      b2 <- suppressMessages(balance(d2, .balance)$n.balance[combs[, 2]])
       ibal <- match(c(d1$balance, .balance), colnames(s1))
     }
   }
@@ -85,24 +90,37 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
     frac1 <- c(frac1, x[1])
     frac2 <- c(frac2, x[2])
   }
-  # Note that some of frac1 might be < 0 ... we remove these combinations below
+  # Note that some of frac1 or frac2 might be < 0 ... we remove these combinations below
 
   # Make a new species data frame starting with sum of scaled formation reactions
   nbasis <- nrow(d1$basis)
   species <- s1[, 1:nbasis] * frac1 + s2[, 1:nbasis] * frac2
+  # Concatenate ispecies, logact, state
   ispecies <- paste(s1$ispecies, s2$ispecies, sep = ",")
   logact <- paste(s1$logact, s2$logact, sep = ",")
   state <- paste(s1$state, s2$state, sep = ",")
+  # Omit species with zero mole fraction from concatenated values 20200722
+  ispecies[frac1 == 0] <- s2$ispecies[frac1 == 0]
+  logact[frac1 == 0] <- s2$logact[frac1 == 0]
+  state[frac1 == 0] <- s2$state[frac1 == 0]
+  ispecies[frac2 == 0] <- s1$ispecies[frac2 == 0]
+  logact[frac2 == 0] <- s1$logact[frac2 == 0]
+  state[frac2 == 0] <- s1$state[frac2 == 0]
   # Use names from diagram()
   if(is.expression(d1$names) | is.expression(d2$names)) {
     # Convert non-expressions to lists so we can use [[ indexing below
     if(!is.expression(d1$names)) d1$names <- as.list(d1$names)
     if(!is.expression(d2$names)) d2$names <- as.list(d2$names)
     name <- lapply(1:nrow(combs), function(i) {
-      # Don't include names of species that are not present (zero or negative mole fractions)
-      if(frac1[i] <= 0) bquote(.(d2$names[[combs[i, 2]]]))
-      else if(frac2[i] <= 0) bquote(.(d1$names[[combs[i, 1]]]))
-      else bquote(.(d1$names[[combs[i, 1]]])+.(d2$names[[combs[i, 2]]]))
+      # Don't include names of species that are not present (zero mole fractions)
+      if(frac1[i] == 0 & frac2[i] == 0) bquote("")
+      else if(frac1[i] == 0) bquote(.(d2$names[[combs[i, 2]]]))
+      else if(frac2[i] == 0) bquote(.(d1$names[[combs[i, 1]]]))
+      else {
+        # Put the names together, with the species from d2 first if it is has a higher mole fraction 20200722
+        if(frac2[i] > frac1[i]) bquote(.(d2$names[[combs[i, 2]]])+.(d1$names[[combs[i, 1]]]))
+        else bquote(.(d1$names[[combs[i, 1]]])+.(d2$names[[combs[i, 2]]]))
+      }
     })
     name <- unlist(lapply(name, deparse, width.cutoff = 500, control = NULL))
     if(length(name) != nrow(combs)) stop("deparse()-ing expressions gives unequal length; try diagram(., format.names = FALSE)")
@@ -127,7 +145,7 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
   ipredominant <- logical(length(values))
   if(length(.balance)==2) {
     # For combinations of bimetallic species (m33), don't do predominance masking
-    # (there are not mono-metallic species to look at)
+    # (there are no mono-metallic species to look at)
     ipredominant[] <- TRUE
   } else {
     # Loop over combinations to find predominant species in the single-metal diagram(s)
@@ -136,14 +154,15 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
       i1 <- combs[i, 1]
       ip1 <- d1$predominant == i1
       # If the mole fraction is zero, it is predominant by definition
-      # (this allows a single bimetallic species to be formed)
+      # (this allows a single bimetallic species (that is paired with
+      #  the zero-mole-fraction mono-metallic species) to be formed)
       if(frac1[i] == 0) ip1[] <- TRUE
       if(is.null(.balance)) {
         # Get predominant species in second diagram
         i2 <- combs[i, 2]
         ip2 <- d2$predominant == i2
         # If the mole fraction is zero, it is predominant by definition
-        # (this allows us to recover the single-element diagram with frac = c(0, 1) or c(1, 0))
+        # (this allows us to recover the first single-element diagram with frac = c(1, 0))
         if(frac2[i] == 0) ip2[] <- TRUE
         # Assign -Inf affinity where any species isn't predominant in the corresponding single-metal diagram
         ip12 <- ip1 & ip2
@@ -157,9 +176,9 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
     }
   }
   # Remove combinations that:
-  # 1) involve a species with no predominance field in the single-metal diagram or
-  # 2) have a negative mole fraction of a single-metal species
-  inotnegative <- frac1 >= 0
+  # 1) involve a mono-metallic species with no predominance field in the corresponding single-metal diagram or
+  # 2) have a negative mole fraction of any species
+  inotnegative <- frac1 >= 0 & frac2 >= 0
   values <- values[ipredominant & inotnegative]
   species <- species[ipredominant & inotnegative, ]
 
@@ -234,21 +253,35 @@ rebalance <- function(d1, d2, balance = NULL) {
 }
 
 
-### unexported function ###
+### unexported functions ###
 
 # Check that d1 and d2 can be combined
 # Extracted from duplex() (now rebalance()) 20200717
-check_d1_d2 <- function(d1, d2, .balance = NULL) {
-  if(is.null(.balance)) d2txt <- "d2" else d2txt <- "d3"
+check_d1_d2 <- function(d1, d2) {
   # Check that the basis species are the same
-  if(!identical(d1$basis, d2$basis)) stop(paste0("basis species in objects 'd1' and '", d2txt, "' are not identical"))
+  if(!identical(d1$basis, d2$basis)) stop(paste0("basis species in objects 'd1' and 'd2' are not identical"))
   # Check that the variables and their values are the same
-  if(!identical(d1$vars, d2$vars)) stop(paste0("variable names in objects 'd1' and '", d2txt, "' are not identical"))
-  if(!identical(d1$vals, d2$vals)) stop(paste0("variable values in objects 'd1' and '", d2txt, "' are not identical"))
+  if(!identical(d1$vars, d2$vars)) stop(paste0("plot variables in objects 'd1' and 'd2' are not identical"))
+  if(!identical(d1$vals, d2$vals)) stop(paste0("plot ranges in objects 'd1' and 'd2' are not identical"))
   # Check that T and P are the same
-  if(!identical(d1$T, d2$T)) stop(paste0("temperatures in objects 'd1' and '", d2txt, "' are not identical"))
-  if(!identical(d1$P, d2$P)) stop(paste0("pressures in objects 'd1' and '", d2txt, "' are not identical"))
+  if(!identical(d1$T, d2$T)) stop(paste0("temperatures in objects 'd1' and 'd2' are not identical"))
+  if(!identical(d1$P, d2$P)) stop(paste0("pressures in objects 'd1' and 'd2' are not identical"))
   # Check that we have plotvals and predominant (from diagram())
   if(is.null(d1$plotvals) | is.null(d1$predominant)) stop("object 'd1' is missing 'plotvals' or 'predominant' components (not made by diagram()?)")
-  if(is.null(d2$plotvals) | is.null(d2$predominant)) stop(paste0("object '", d2txt, "' is missing 'plotvals' or 'predominant' components (not made by diagram()?)"))
+  if(is.null(d2$plotvals) | is.null(d2$predominant)) stop(paste0("object 'd2' is missing 'plotvals' or 'predominant' components (not made by diagram()?)"))
+}
+
+# Check that d1 and d3 can be combined
+check_d1_d3 <- function(d1, d3) {
+  # Check that the basis species are the same
+  if(!identical(d1$basis, d3$basis)) stop(paste0("basis species in objects 'd1' and 'd3' are not identical"))
+  # Check that the variables and their values are the same
+  if(!identical(d1$vars, d3$vars)) stop(paste0("plot variables in objects 'd1' and 'd3' are not identical"))
+  if(!identical(d1$vals, d3$vals)) stop(paste0("plot ranges in objects 'd1' and 'd3' are not identical"))
+  # Check that T and P are the same
+  if(!identical(d1$T, d3$T)) stop(paste0("temperatures in objects 'd1' and 'd3' are not identical"))
+  if(!identical(d1$P, d3$P)) stop(paste0("pressures in objects 'd1' and 'd3' are not identical"))
+  # Check that we have plotvals and predominant (from diagram())
+  if(is.null(d1$plotvals) | is.null(d1$predominant)) stop("object 'd1' is missing 'plotvals' or 'predominant' components (not made by diagram()?)")
+  if(is.null(d3$plotvals) | is.null(d3$predominant)) stop(paste0("object 'd3' is missing 'plotvals' or 'predominant' components (not made by diagram()?)"))
 }

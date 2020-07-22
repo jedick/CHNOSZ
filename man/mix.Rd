@@ -36,14 +36,14 @@ Note that the actual values of the affinities (and therefore the ratio between t
 \code{mix} is an expanded form of \code{flatten} that allows combinations not only between two single-metal diagrams (\code{d1} and \code{d2}) but also between each of those diagrams and third diagram for bimetallic species (\code{d3}).
 All combinations of species in all crosses between the diagrams (\code{d1-d2}, \code{d1-d3}, \code{d2-d3}, \code{d3-d3}) are identified.
 The mole fractions of species in each combination are computed to satisfy the ratio of metals defined in \code{parts}.
-For example, if \code{d1} and \code{d2} are balanced on Fe\s{+2} and VO\S{4}\s{-3}, the species are combined by default to give equal parts of Fe and V.
-Note that the \code{d3-d3} combinations include pairs of distinct bimetallic species as well as single bimetallic species that satisfy the ratios (e.g. FeV for \code{c(1, 1)} or Fe3V for \code{c(3, 1)}).
+For example, if \code{d1} and \code{d2} are balanced on Fe\S{+2} and VO\s{4}\S{-3}, the species are combined by default to give equal parts of Fe and V.
+Note that pairs of distinct bimetallic species in \code{d3} are included as well as single bimetallic species that satisfy the composition in \code{parts} (e.g. FeV for \code{c(1, 1)} or Fe\s{3}V for \code{c(3, 1)}).
 (\code{parts} can be expressed as integers or fractions, so \code{c(0.75, 0.25)} is equivalent to \code{c(3, 1)}.)
 
-From the possible combinations of species, combinations are removed that involve any species that has no predominance field in the respective single-metal diagram or that appears in the combination with a negative mole fraction.
+From the possible combinations of species, combinations are removed that have a negative mole fraction of any species or that involve any mono-metallic species that has no predominance field in the corresponding single-metal diagram.
 The output consists of each unique combination of species, including the combined formation reactions and affinities (in the \code{species} and \code{values} elements of the output list), 
 The affinities are assigned values of -Inf wherever one of the species is not predominant in the respective single-metal diagram.
-Therefore, either the single-metal diagrams can be recovered by setting \code{parts} to \code{c(1, 0)} (for \code{d1}) or \code{c(0, 1)} (for \code{d2}).
+Therefore, either the single-metal diagrams (\code{d1} or \code{d2}) can be recovered by setting \code{parts} to \code{c(1, 0)} or \code{c(0, 1)}, respectively.
 
 NOTE: Unlike the \code{diagram} calls used to make \code{d1} and \code{d2}, which by themselves should produce reasonable diagrams for a single-metal system, the \code{d3} diagram by itself probably has no useful interpretation.
 It is only used in \code{mix} as a way to transmit the results of \code{\link{affinity}} for the bimetmal system and the formatted names that are made by \code{diagram}.

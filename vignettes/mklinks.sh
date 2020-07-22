@@ -116,3 +116,5 @@ sed -i 's/mosaic()/<a href="..\/html\/mosaic.html">mosaic()<\/a>/g' multi-metal.
 sed -i 's/equilibrate()/<a href="..\/html\/equilibrate.html">equilibrate()<\/a>/g' multi-metal.html
 sed -i 's/rebalance()/<a href="..\/html\/mix.html">rebalance()<\/a>/g' multi-metal.html
 sed -i 's/ratlab()/<a href="..\/html\/util.expression.html">ratlab()<\/a>/g' multi-metal.html
+sed -i 's/mix()/<a href="..\/html\/mix.html">mix()<\/a>/g' multi-metal.html
+sed -i 's/mod.OBIGT()/<a href="..\/html\/add.OBIGT.html">mod.OBIGT()<\/a>/g' multi-metal.html

@@ -74,12 +74,11 @@ This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo(
 Basic diagrams in CHNOSZ are made for reactions that are *balanced on an element* (see [Equilibrium in CHNOSZ](equilibrium.html)) and therefore represent minerals or aqueous species that all have one element, often a metal, in common.
 The package documentation has many examples of diagrams for a single metal appearing in different minerals or complexed with different ligands, but a common request is to make diagrams for multiple metals.
 This vignette describes some methods for constructing diagrams for multi-metal minerals and other multi-element systems.
-The methods are **flattening**, **mosaic series**, and **secondary balancing**.
+The methods are **flattening**, **mixing**, **mosaic stacking**, and **secondary balancing**.
 
 ## Flattening
 
 Flattening or simple overlay refers to independent calculations for two different systems that are displayed on the same diagram.
-Although it is easy to make such a diagram, there is no interaction between the systems.
 
 This example starts with a log*f*~O<sub>2</sub>~--pH base diagram for the C-O-H system then overlays a diagram for S-O-H.
 The second call to `affinity()` uses the argument recall feature, where the arguments are taken from the previous command.
@@ -110,20 +109,190 @@ Note that these are predominance diagrams, so they show only the species with hi
 Tip: the names of the fields in the second diagram come from `aCS$species$name`, which are expressions made by combining `aC$names` and `aS$names`.
 If you prefer plain text names without formatting, add `format.names = FALSE` to all of the `diagram()` calls.
 
-## Mosaic Series 1
+## Mixing
+
+In simple terms, flattening diagrams portrays the result of mixing two single-metal systems.
+Although it is easy to make such a diagram, there is no interaction between the systems.
+If there is a possibility of forming bimetallic species, then additional considerations are needed to account for the stoichiometry of the mixture.
+The stoichiometry can be given as a fixed composition of both metals; then, all combinations of (mono- and/or bimetallic) species that satisfy this compositional constraint are used as the candidate "species" in the system.
+This is the same type of calculation as that described for [binary Pourbaix diagrams in the Materials Project](https://matgenb.materialsvirtuallab.org/2017/12/15/Plotting-a-Pourbaix-Diagram.html#Plotting-k-nary-systems).
+
+This example makes a Pourbaix diagram for the Fe-V-O-H system that is similar to Figure 1 of @SZS_17.
+First we need to assemble the energies of the solids and aqueous species.
+For solids, values of formation energy (in eV / atom) computed using density functional theory (DFT) are taken from the Materials Project website and are converted to units of J / mol.
+For aqueous species, values of standard Gibbs energy of formation at 25 °C (in J / mol) are taken mostly from @WEP_82 augmented with data for FeO~2~^-^ from @SSWS97 and FeO~4~^-2^ from @Mis73.
+Adapting the method described by @PWLC12, a reference-state correction for each metal is calculated from the difference between the DFT-based formation energy and the standard Gibbs energy of a representative material; here we use values for Fe~3~O~4~ (magnetite) and V~3~O~5~ from @WEP_82.
+This correction is then applied to all of the aqueous species that have that metal.
+Finally, `mod.OBIGT()` is used to add the obtained energies to the OBIGT database.
+
+<button id="B-materials" onclick="ToggleDiv('materials')">Show code</button>
+<div id="D-materials" style="display: none">
+```{r materials, message = FALSE, results = "hide"}
+## Formation energies (eV / atom) for solids from MP website
+# mp-13, mp-1279742, mp-19306, mp-19770
+Fe.cr <- c(Fe = 0, FeO = -1.728, Fe3O4 = -1.859, Fe2O3 = -1.907)
+# mp-146, mp-18937, mp-1275946, mp-19094, mp-756395, mp-25279
+V.cr <- c(V = 0, V2O3 = -2.528, V3O5 = -2.526, VO2 = -2.485, V3O7 = -2.328, V2O5 = -2.295)
+
+# Convert formation energies from eV / atom to eV / molecule
+natom.Fe <- sapply(makeup(names(Fe.cr)), sum)
+Fe.cr <- Fe.cr * natom.Fe
+natom.V <- sapply(makeup(names(V.cr)), sum)
+V.cr <- V.cr * natom.V
+
+# Convert formation energies from eV / molecule to J / mol
+eVtoJ <- function(eV) eV * 1.602176634e-19 * 6.02214076e23
+Fe.cr <- eVtoJ(Fe.cr)
+V.cr <- eVtoJ(V.cr)
+
+# Gibbs energies of formation (J / mol) for aqueous species from Wagman et al.
+Fe.aq <- 1000 * c("Fe+2" = -78.90, "Fe+3" = -4.7, "FeO2-2" = -295.3,
+  "FeOH+" = -277.4, "FeOH+2" = -229.41, "HFeO2-" = -377.7,
+  "Fe(OH)2+" = -438.0, "Fe(OH)3" = -659.3,
+  "FeO2-" = -368.2, # SSWS97
+  "FeO4-2" = -322.2 # Mis73
+)
+Fe.aq <- 1000 * c("Fe+2" = -78.90, "FeOH+" = -277.4)
+
+V.aq <- 1000 * c("VO+2" = -446.4, "VO2+" = -587.0, "VO3-" = -783.6, "VO4-3" = -899.0,
+  "V2O7-4" = -1719, "HVO4" = -745.1, "HVO4-2" = -974.8,
+  "VOH2O2+3" = -523.4, "VO2H2O2+" = -746.3, "V2HO7-3" = 1792.2, "V2H3O7-" = -1863.8,
+  "HV10O28-5" = -7702, "H2V10O28-4" = -7723
+)
+V.aq <- 1000 * c("VO+2" = -446.4, "HVO4-2" = -974.8)
+
+# Gibbs energies of formation (J / mol) for solids from Wagman et al., 1982
+Fe3O4 <- 1000 * -1015.4 # magnetite
+V3O5 <- 1000 * -1803
+
+# Calculate correction for difference between reference and DFT energies (Persson et al., 2012)
+Fe.corr <- (Fe.cr["Fe3O4"] - Fe3O4) / 3
+V.corr <- (V.cr["V3O5"] - V3O5) / 2
+
+# Apply correction to Gibbs energies of aqueous species (Persson et al., 2012)
+nFe <- sapply(makeup(names(Fe.aq)), "[", "Fe")
+Fe.aq <- Fe.aq + nFe * Fe.corr
+nV <- sapply(makeup(names(V.aq)), "[", "V")
+V.aq <- V.aq + nV * V.corr
+
+# Add energies to OBIGT
+# Be sure to set E_units to Joules; the default in OBIGT is calories!
+# This function modifies OBIGT and returns the species indices of the affected species
+modfun <- function(x, state) sapply(seq_along(x), function(i) {
+  mod.OBIGT(names(x)[i], formula = names(x)[i], state = state, E_units = "J", G = x[i])
+})
+iFe.cr <- modfun(Fe.cr, "cr")
+iFe.aq <- modfun(Fe.aq, "aq")
+iV.cr <- modfun(V.cr, "cr")
+iV.aq <- modfun(V.aq, "aq")
+
+# Formation energies (eV / atom) for bimetallic solids from MP website
+# mp-1335, mp-1079399, mp-866134
+FeV.cr <- c(VFe = -0.129, V3Fe = -0.171, VFe3 = -0.129)
+# Convert energies and add to OBIGT
+natom.FeV <- sapply(makeup(names(FeV.cr)), sum)
+FeV.cr <- FeV.cr * natom.FeV
+FeV.cr <- eVtoJ(FeV.cr)
+iFeV.cr <- modfun(FeV.cr, "cr")
+```
+</div>
+
+This code produce species indices in the OBIGT database for Fe- and V-bearing aqueous species (`iFe.aq`, `iV.aq`), solids (`iFe.cr`, `iV.cr`), and bimetallic solids (`iFeV.cr`), which are used in the following diagrams.
+
+Now we set up the plot area and write a function to assign the colors for regions with two solids, one solid, and no solids; these are the web colors "burlywood", "antiquewhite" and "aliceblue" with some transparency added to show the underlying water stability region.
+The activities of aqueous species are set to the default values for the diagrams produced by the link "Generate Phase Diagram" -- "Aqueous Stability (Pourbaix)" on a material information page in the Materials Project (MP).
+The pH and Eh ranges are made relatively small in order to show just a part of the diagram.
+
+```{r mix, eval = FALSE, echo = 1:12}
+mat <- matrix(c(1, 2, 2, 3, 3, 0, 4, 4, 5, 5, 6, 6), byrow = TRUE, nrow = 2)
+layout(mat)
+plot.new()
+text(0.5, 0.5, lTP(25, 1), cex = 1.4)
+fill <- function(a) {
+  ifelse(grepl("cr,cr", a$species$state), "#DEB88788",
+    ifelse(grepl("cr", a$species$state), "#FAEBD788", "#F0F8FF88")
+)}
+loga.Fe <- -5
+loga.V <- -5
+pH <- c(4, 10)
+Eh <- c(-1.5, 0.5)
+
+# Fe-O-H diagram
+basis(c("VO+2", "Fe+2", "H2O", "e-", "H+"))
+species(c(iFe.aq, iFe.cr))
+species(1:length(iFe.aq), loga.Fe)
+aFe <- affinity(pH = pH, Eh = Eh)
+dFe <- diagram(aFe, fill = fill(aFe))
+water.lines(dFe, col = 4)
+title("Fe-O-H")
+# V-O-H diagram
+species(c(iV.aq, iV.cr))
+species(1:length(iV.aq), loga.V)
+aV <- affinity(aFe)  # argument recall
+dV <- diagram(aV, fill = fill(aV))
+water.lines(dFe, col = 4)
+title("V-O-H")
+
+# Calculate affinities for bimetallic species
+species(iFeV.cr)
+aFeV <- affinity(aFe)  # argument recall
+dFeV <- diagram(aFeV, plot.it = FALSE, bold = TRUE)
+# 1:1 mixture (Fe:V)
+aFeV11 <- mix(dFe, dV, dFeV, c(1, 1))
+diagram(aFeV11, fill = fill(aFeV11), min.area = 0.01)
+water.lines(dFe, col = 4)
+title("Fe:V = 1:1")
+# 1:3 mixture
+aFeV13 <- mix(dFe, dV, dFeV, c(1, 3))
+diagram(aFeV13, fill = fill(aFeV13), min.area = 0.01)
+water.lines(dFe, col = 4)
+title("Fe:V = 1:3")
+# 1:5 mixture
+aFeV15 <- mix(dFe, dV, dFeV, c(1, 5))
+diagram(aFeV15, fill = fill(aFeV15), min.area = 0.01)
+water.lines(dFe, col = 4)
+title("Fe:V = 1:5")
+```
+
+The next group of commands makes Eh-pH diagrams for the single-metal systems Fe-O-H and V-O-H.
+The output of `diagram()` is saved in `dFe` and `dV` for later use.
+
+```{r mix, eval = FALSE, echo = 14:28}
+```
+
+Then we calculate the affinities for the bimetallic species and save the output of `diagram()` in `dFeV` without making a plot, but formatting the names in bold.
+Finally, `mix()` is used to generate diagrams for three different compositions.
+The `min.area` argument in `diagram()` is used to remove labels for very small fields.
+
+```{r mix, echo = 27:47, message = FALSE, results = "hide", fig.width = 10, fig.height = 6.5, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
+```
+
+In these diagrams, changing the Fe:V ratio affects the fully reduced metallic species.
+In the 1:1 mixture, the V~3~Fe + VFe~3~ assemblage is stable instead of VFe.
+This result is unlike Figure 1 of @SZS_17 but is consistent with the [MP page for VFe](https://doi.org/10.17188/1189535) where it shown to decompose to this assemblage.
+On the other hand, [V~3~Fe is stable](https://materialsproject.org/materials/mp-1079399/) in the 1:3 mixture.
+For an even higher proportion of V, the V + V~3~Fe assemblage is stable, which can also be seen in the Pourbaix diagram linked from the [MP page for V~5~FeO~12~](https://doi.org/10.17188/1305091).
+
+Because this example modified the thermodynamic data for some minerals that are used below, we should restore the default OBIGT database before proceeding to the next section.
+
+```{r reset, message = FALSE}
+reset()
+```
+
+## Mosaic Stacking 1
 
 A mosaic diagram shows the effects of changing basis species on the stabilities of minerals.
 The Fe-S-O-H system is a common example: the speciation of aqueous sulfur species affects the stabilities of iron oxides and sulfides.
 Examples of mosaic diagrams with Fe or other single metals are given elsewhere.
 
-A mosaic series is when predominance fields for minerals calculated in one mosaic diagram are used as input to a second mosaic diagram, where the minerals are now themselves basis species.
+A mosaic stack is when predominance fields for minerals calculated in one mosaic diagram are used as input to a second mosaic diagram, where the minerals are now themselves basis species.
 The example here shows the construction of a Cu-Fe-S-O-H diagram.
 
 First we define the conditions and basis species.
 It is important to put Cu^+^ first so that it will be used as the balance for the reactions with Cu-bearing minerals (which also have Fe).
 Pyrite is chosen as the starting Fe-bearing basis species, which will be changed as indicated in `bases2`.
 
-```{r series1_1, results = "hide", message = FALSE}
+```{r stack1_1, results = "hide", message = FALSE}
 logaH2S <- -2
 T <- 200
 pH <- c(0, 12, 500)
@@ -141,7 +310,7 @@ The result is used to make different layers of the diagram (1 and 2 are both mad
 2. Predominance fields for the aqueous S species (italic blue text and dashed lines)
 3. Stability areas for the Fe-bearing minerals (black text and solid lines)
 
-```{r series1_2, eval = FALSE, echo = 1:6}
+```{r stack1_2, eval = FALSE, echo = 1:6}
 species(bases2)
 mFe <- mosaic(bases1, pH = pH, O2 = O2, T = T)
 diagram(mFe$A.bases, lty = 2, col = 4, col.names = 4,
@@ -158,7 +327,7 @@ title(paste("Cu-Fe-S-O-H; Total S =", 10^logaH2S, "m"))
 ```
 
 Next we load the Cu-bearing minerals and calculate their affinities while changing *both* the aqueous sulfur species and the Fe-bearing minerals whose stability fields were just calculated.
-The latter step is the key to the mosaic series and is activated by supplying the calculated stabilities of the Fe-bearing minerals in the `predominant` argument.
+The latter step is the key to the mosaic stack and is activated by supplying the calculated stabilities of the Fe-bearing minerals in the `predominant` argument.
 This is a list whose elements correspond to each group of changing basis species given in the first argument.
 The NULL means that the abundances of S-bearing aqueous species are calculated according to the default in `mosaic()` (actually using `equilibrate()` to blend their transitions).
 Because the Fe-bearing minerals are the second group of changing basis species (`bases2`), their stabilities are given in the second position of the `predominant` list.
@@ -168,18 +337,18 @@ The result is used to plot the last layer of the diagram:
 
 After that we add the legend and title.
 
-```{r series1_2, echo=7:14, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+```{r stack1_2, echo=7:14, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
 ```
 
 This diagram has a distinctive chalcopyrite "hook" that is controlled on the low-pH side by the reaction with pyrite.
 Only that reaction is shown in many published diagrams [e.g. @And75;@Gio02], but diagrams with a similar chalcopyrite wedge or hook can be seen in @BBR77 and @Bri80.
 
-## Mosaic Series 2
+## Mosaic Stacking 2
 
-The results of a mosaic series can also processed with `flatten()` to label each region with the minerals from both systems.
+The results of a mosaic stack can also processed with `flatten()` to label each region with the minerals from both systems.
 For this example, the speciation of aqueous sulfur is not considered.
 
-```{r series2, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant}
+```{r stack2, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant}
 layout(matrix(c(1, 2, 3, 3), nrow = 2), widths = c(1, 1.5))
 # Fe-S-O-H diagram
 basis(c("copper", "hematite", "S2", "oxygen", "H2O"))
@@ -188,7 +357,7 @@ aFe <- affinity(S2 = c(-34, -10), O2 = c(-55, -40), T = 125)
 abbrv <- info(species()$ispecies)$abbrv
 dFe <- diagram(aFe, names = abbrv)
 # Cu-S-O-H diagram based on reactions with the
-# stable Fe-bearing minerals (mosaic series)
+# stable Fe-bearing minerals (mosaic stack)
 species(c("copper", "chalcocite", "covellite", "chalcopyrite", "bornite"))
 mCu <- mosaic(bases, S2 = c(-34, -10), O2 = c(-55, -40),
               T = 125, predominant = list(dFe$predominant))
@@ -335,7 +504,7 @@ legend("topleft", legend = lTP(400, 2000), bty = "n")
 
 This example was prompted by Figure 3 of @MH85; earlier versions of the diagram are in @HBL69 and @Hel70a.
 
-In some ways this is like the inverse of the **mosaic series** example.
+In some ways this is like the inverse of the **mosaic stacking** example.
 There, reactions were balanced on Fe or Cu, and *f*~O<sub>2</sub>~ and pH were used as plotting variables.
 Here, the reactions are balanced on O~2~ and implicitly on H^+^ through the activity ratios with *a*~Fe^+2^~ and *a*~Cu^+^~, which are the plotting variables.
 
@@ -344,7 +513,7 @@ See `demo(saturation)` for an example in the H~2~O-CO~2~-CaO-MgO-SiO~2~ system.
 
 ### Mosaic Combo
 
-Instead of adding minerals with different metals by stacking mosaic diagrams (**mosaic series**), it may be possible to include two different metals in the basis species and formed species.
+Instead of adding minerals with different metals by stacking mosaic diagrams, it may be possible to include two different metals in the basis species and formed species.
 The `mosaic()` and `equilibrate()` functions can be combined to balance on two different elements.
 The example here is for N and C rather than metals.
 
