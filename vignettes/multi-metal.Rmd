@@ -218,13 +218,13 @@ Usually, these balancing coefficients are taken from the formation reactions the
 Some diagrams in the literature are made with secondary balancing constraints in addition to the primary ones.
 For example, reactions of Fe-bearing minerals are balanced on Fe, and reactions of Cu-bearing minerals are balanced on Cu; these are both primary balancing coefficients.
 Then, reactions between all minerals are balanced on H^+^ as the secondary balancing coefficients.
-The core concept is to apply the secondary balance while also maintaining the primary balance; a method to do this has been implemented in `duplex()` function.
+The core concept is to apply the secondary balance while also maintaining the primary balance; a method to do this has been implemented in the `rebalance()` function.
 
 Different parts of the script to make the diagrams are described below; press the button to show the entire script.
 
-<button id="B-duplex" onclick="ToggleDiv('duplex')">Show code</button>
-<div id="D-duplex" style="display: none">
-```{r duplex, eval = FALSE}
+<button id="B-rebalance" onclick="ToggleDiv('rebalance')">Show code</button>
+<div id="D-rebalance" style="display: none">
+```{r rebalance, eval = FALSE}
 mat <- matrix(c(1, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5), byrow = TRUE, nrow = 2)
 layout(mat)
 par(font.main = 1)
@@ -258,14 +258,14 @@ label.plot("C")
 ### SECONDARY balancing
 
 # Fe- or Cu-bearing minerals
-ad1 <- duplex(dFe, dCu, balance = "H+")
+ad1 <- rebalance(dFe, dCu, balance = "H+")
 d1 <- diagram(ad1, xlab = xlab, balance = 1)
 title("Only Fe or Cu; 2° balance: H+")
 label.plot("D")
 
 # All minerals
 d1$values <- c(dFe$values, dCu$values)
-ad2 <- duplex(d1, dFeCu, balance = "H+")
+ad2 <- rebalance(d1, dFeCu, balance = "H+")
 abbrv <- info(ad2$species$ispecies)$abbrv
 diagram(ad2, xlab = xlab, balance = 1, names = abbrv)
 title("Fe and/or Cu; 2° balance: H+")
@@ -279,26 +279,26 @@ legend("bottomleft", legend = leg, bty = "n")
 
 We first define basis species to contain both Cu- and Fe-bearing species.
 The x-axis is the ratio of activities of Fe^+2^ and Cu^+^; the label is made with `ratlab()`.
-```{r duplex, eval = FALSE, echo = 5:6}
+```{r rebalance, eval = FALSE, echo = 5:6}
 ```
 
 We then calculate the diagrams for the primary balancing coefficients, for the groups of only Fe-, only Cu-, and only Fe+Cu-bearing minerals.
 It is obvious that the first two systems are balanced on Fe and Cu, respectively, but the third has a somewhat unusual balance: H^+^.
 See Reaction 4 of @MH85 for an example.
-```{r duplex, eval = FALSE, echo = 10:30}
+```{r rebalance, eval = FALSE, echo = 10:30}
 ```
 
 Now comes the secondary balancing, where all reactions, not only that between bornite and chalcopyrite, are balanced on H^+^.
-We first duplex the diagrams for the Fe- or Cu-bearing minerals to make diagram D.
-Note that after secondary balancing with `duplex()`, the argument `balance = 1` should be used in `diagram()` to prevent further balancing.
-This is because `duplex()` preserves the primary balancing for Fe- and Cu-bearing minerals (internally the "plotvals" components of `dFe` and `dCu`).
+We first rebalance the diagrams for the Fe- or Cu-bearing minerals to make diagram D.
+Note that after secondary balancing with `rebalance()`, the argument `balance = 1` should be used in `diagram()` to prevent further balancing.
+This is because `rebalance()` preserves the primary balancing for Fe- and Cu-bearing minerals (internally the "plotvals" components of `dFe` and `dCu`).
 
-Then we duplex diagrams D and C to make the final diagram in E.
+Then we rebalance diagrams D and C to make the final diagram in E.
 The fields in this diagram are labeled with mineral abbreviations from the OBIGT database.
-```{r duplex, eval = FALSE, echo = 33:43}
+```{r rebalance, eval = FALSE, echo = 33:43}
 ```
 
-```{r duplex, echo = FALSE, results = "hide", message = FALSE, fig.width = 6.5, fig.height = 5, out.width = "100%", fig.align = "center", pngquant = pngquant}
+```{r rebalance, echo = FALSE, results = "hide", message = FALSE, fig.width = 6.5, fig.height = 5, out.width = "100%", fig.align = "center", pngquant = pngquant}
 ```
 
 The final diagram is like one shown in Figure 5 of @Bri80 and Figure 5 of @MH85.

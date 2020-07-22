@@ -6,7 +6,7 @@
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 \newcommand{\Hplus}{\ifelse{latex}{\eqn{\mathrm{H^{+}}}}{\ifelse{html}{\out{H<sup>+</sup>}}{H+}}}
 
-\section{Changes in CHNOSZ version 1.3.6-43 (2020-07-21)}{
+\section{Changes in CHNOSZ version 1.3.6-45 (2020-07-22)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -49,11 +49,15 @@
     \itemize{
 
       \item Add function \strong{flatten()} for combining two diagrams for
-      different systems (i.e., simple overlay with labels for species from both
+      different systems (i.e., simple overlay of diagrams for two single-metal
       systems).
 
-      \item Add function \strong{duplex()} for making a new diagram by secondary
-      balancing between two systems.
+      \item Add function \strong{mix()} for combining two single-metal diagrams
+      with a third diagram for bimetallic species. This can be used to produce
+      diagrams for a binary system with fixed composition of the metals.
+
+      \item Add function \strong{rebalance()} for making a new diagram by
+      secondary balancing between two systems.
 
       \item Add a \strong{predominant} argument to \code{mosaic()} to use
       previously calculated predominances of species (e.g. minerals) for the
@@ -217,6 +221,8 @@
       in CHNOSZ.
 
       \item TODO: for balance = 1, add or change message text to "formula units".
+
+      \item TODO: remove species combinations with no stability field in flatten().
 
     }
   }

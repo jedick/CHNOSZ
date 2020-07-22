@@ -219,6 +219,68 @@ diagram <- function(
     }
   }
 
+  ## create some names for lines/fields if they are missing
+  is.pname <- FALSE
+  onames <- names
+  if(identical(names, FALSE) | identical(names, NA)) names <- ""
+  else if(!is.character(names)) {
+    # properties of basis species or reactions?
+    if(eout$property %in% c("G.basis", "logact.basis")) names <- rownames(eout$basis)
+    else {
+      if(!missing(groups)) {
+        if(is.null(names(groups))) names <- paste("group", 1:length(groups), sep="")
+        else names <- names(groups)
+      }
+      else names <- as.character(eout$species$name)
+      # remove non-unique organism or protein names
+      if(all(grepl("_", names))) {
+        is.pname <- TRUE
+        # everything before the underscore (the protein)
+        pname <- gsub("_.*$", "", names)
+        # everything after the underscore (the organism)
+        oname <- gsub("^.*_", "", names)
+        # if the pname or oname are all the same, use the other one as identifying name
+        if(length(unique(pname))==1) names <- oname
+        if(length(unique(oname))==1) names <- pname
+      }
+      # append state to distinguish ambiguous species names
+      isdup <- names %in% names[duplicated(names)]
+      if(any(isdup)) names[isdup] <- paste(names[isdup],
+        " (", eout$species$state[isdup], ")", sep="")
+    }
+  }
+  # numeric values indicate a subset 20181007
+  if(all(is.numeric(onames))) {
+    if(isTRUE(all(onames > 0))) names[-onames] <- ""
+    else if(isTRUE(all(onames < 0))) names[-onames] <- ""
+    else stop("numeric 'names' should be all positive or all negative")
+  }
+
+  ## apply formatting to chemical formulas 20170204
+  if(all(grepl("_", names))) is.pname <- TRUE
+  if(format.names & !is.pname) {
+    # check if names are a deparsed expression (used in combine()) 20200718
+    parsed <- FALSE
+    if(any(grepl("paste\\(", names))) {
+      exprnames <- parse(text = names)
+      if(length(exprnames) != length(names)) stop("parse()-ing names gives length not equal to number of names")
+      parsed <- TRUE
+    } else {
+      exprnames <- as.expression(names)
+      # get formatted chemical formulas
+      for(i in seq_along(exprnames)) exprnames[[i]] <- expr.species(exprnames[[i]])
+    }
+    # apply bold or italic
+    bold <- rep(bold, length.out = length(exprnames))
+    italic <- rep(italic, length.out = length(exprnames))
+    for(i in seq_along(exprnames)) {
+      if(bold[i]) exprnames[[i]] <- substitute(bold(a), list(a=exprnames[[i]]))
+      if(italic[i]) exprnames[[i]] <- substitute(italic(a), list(a=exprnames[[i]]))
+    }
+    # only use the expression if it's different from the unformatted names
+    if(parsed | !identical(as.character(exprnames), names)) names <- exprnames
+  }
+
   ## where we'll put extra output for predominance diagrams (namesx, namesy)
   out2D <- list()
 
@@ -237,68 +299,6 @@ diagram <- function(
     lwd <- rep(lwd, length.out=ngroups)
     col <- rep(col, length.out=ngroups)
     col.names <- rep(col.names, length.out=ngroups)
-
-    ## make up some names for lines/fields if they are missing
-    is.pname <- FALSE
-    onames <- names
-    if(identical(names, FALSE) | identical(names, NA)) names <- ""
-    else if(!is.character(names)) {
-      # properties of basis species or reactions?
-      if(eout$property %in% c("G.basis", "logact.basis")) names <- rownames(eout$basis)
-      else {
-        if(!missing(groups)) {
-          if(is.null(names(groups))) names <- paste("group", 1:length(groups), sep="")
-          else names <- names(groups)
-        }
-        else names <- as.character(eout$species$name)
-        # remove non-unique organism or protein names
-        if(all(grepl("_", names))) {
-          is.pname <- TRUE
-          # everything before the underscore (the protein)
-          pname <- gsub("_.*$", "", names)
-          # everything after the underscore (the organism)
-          oname <- gsub("^.*_", "", names)
-          # if the pname or oname are all the same, use the other one as identifying name
-          if(length(unique(pname))==1) names <- oname
-          if(length(unique(oname))==1) names <- pname
-        }
-        # append state to distinguish ambiguous species names
-        isdup <- names %in% names[duplicated(names)]
-        if(any(isdup)) names[isdup] <- paste(names[isdup],
-          " (", eout$species$state[isdup], ")", sep="")
-      }
-    }
-    # numeric values indicate a subset 20181007
-    if(all(is.numeric(onames))) {
-      if(isTRUE(all(onames > 0))) names[-onames] <- ""
-      else if(isTRUE(all(onames < 0))) names[-onames] <- ""
-      else stop("numeric 'names' should be all positive or all negative")
-    }
-
-    ## apply formatting to chemical formulas 20170204
-    if(all(grepl("_", names))) is.pname <- TRUE
-    if(format.names & !is.pname) {
-      # check if names are a deparsed expression (used in combine()) 20200718
-      parsed <- FALSE
-      if(any(grepl("paste\\(", names))) {
-        exprnames <- parse(text = names)
-        if(length(exprnames) != length(names)) stop("parse()-ing names gives length not equal to number of names")
-        parsed <- TRUE
-      } else {
-        exprnames <- as.expression(names)
-        # get formatted chemical formulas
-        for(i in seq_along(exprnames)) exprnames[[i]] <- expr.species(exprnames[[i]])
-      }
-      # apply bold or italic
-      bold <- rep(bold, length.out = length(exprnames))
-      italic <- rep(italic, length.out = length(exprnames))
-      for(i in seq_along(exprnames)) {
-        if(bold[i]) exprnames[[i]] <- substitute(bold(a), list(a=exprnames[[i]]))
-        if(italic[i]) exprnames[[i]] <- substitute(italic(a), list(a=exprnames[[i]]))
-      }
-      # only use the expression if it's different from the unformatted names
-      if(parsed | !identical(as.character(exprnames), names)) names <- exprnames
-    }
 
     if(nd==0) {
 
