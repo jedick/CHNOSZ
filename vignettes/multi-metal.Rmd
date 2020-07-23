@@ -57,11 +57,14 @@ function ToggleDiv(ID) {
 </script>
 
 ```{r setup, include=FALSE}
+options(width = 80)
 ## use pngquant to optimize PNG images
 library(knitr)
 knit_hooks$set(pngquant = hook_pngquant)
 pngquant <- "--speed=1 --quality=0-25"
 if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
+## logK with a thin space 20200627
+logK <- "log&thinsp;<i>K</i>"
 ```
 
 ```{r CHNOSZ_reset, include=FALSE}
@@ -264,14 +267,14 @@ Then we calculate the affinities for the bimetallic species and save the output 
 Finally, `mix()` is used to generate diagrams for three different compositions.
 The `min.area` argument in `diagram()` is used to remove labels for very small fields.
 
-```{r mix, echo = 27:47, message = FALSE, results = "hide", fig.width = 10, fig.height = 6.5, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
+```{r mix, echo = 27:45, message = FALSE, results = "hide", fig.width = 10, fig.height = 6.5, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
 ```
 
 In these diagrams, changing the Fe:V ratio affects the fully reduced metallic species.
 In the 1:1 mixture, the V~3~Fe + VFe~3~ assemblage is stable instead of VFe.
 This result is unlike Figure 1 of @SZS_17 but is consistent with the [MP page for VFe](https://doi.org/10.17188/1189535) where it shown to decompose to this assemblage.
 On the other hand, [V~3~Fe is stable](https://materialsproject.org/materials/mp-1079399/) in the 1:3 mixture.
-For an even higher proportion of V, the V + V~3~Fe assemblage is stable, which can also be seen in the Pourbaix diagram linked from the [MP page for V~5~FeO~12~](https://doi.org/10.17188/1305091).
+For an even higher proportion of V, the V + V~3~Fe assemblage is stable, which can be seen for instance in the Pourbaix diagram linked from the [MP page for V~5~FeO~12~](https://doi.org/10.17188/1305091).
 
 Because this example modified the thermodynamic data for some minerals that are used below, we should restore the default OBIGT database before proceeding to the next section.
 
@@ -310,11 +313,10 @@ The result is used to make different layers of the diagram (1 and 2 are both mad
 2. Predominance fields for the aqueous S species (italic blue text and dashed lines)
 3. Stability areas for the Fe-bearing minerals (black text and solid lines)
 
-```{r stack1_2, eval = FALSE, echo = 1:6}
+```{r stack1_2, eval = FALSE, echo = 1:4}
 species(bases2)
 mFe <- mosaic(bases1, pH = pH, O2 = O2, T = T)
-diagram(mFe$A.bases, lty = 2, col = 4, col.names = 4,
-        italic = TRUE)
+diagram(mFe$A.bases, lty = 2, col = 4, col.names = 4, italic = TRUE)
 dFe <- diagram(mFe$A.species, add = TRUE)
 species(c("chalcopyrite", "bornite"))
 mCu <- mosaic(list(bases1, bases2), pH = pH, O2 = O2,
@@ -337,7 +339,7 @@ The result is used to plot the last layer of the diagram:
 
 After that we add the legend and title.
 
-```{r stack1_2, echo=7:14, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+```{r stack1_2, echo=5:12, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
 ```
 
 This diagram has a distinctive chalcopyrite "hook" that is controlled on the low-pH side by the reaction with pyrite.
@@ -345,39 +347,171 @@ Only that reaction is shown in many published diagrams [e.g. @And75;@Gio02], but
 
 ## Mosaic Stacking 2
 
-The results of a mosaic stack can also processed with `flatten()` to label each region with the minerals from both systems.
-For this example, the speciation of aqueous sulfur is not considered.
+The results of a mosaic stack can also be processed with `flatten()` to label each region with the minerals from both systems.
+For this example, the speciation of aqueous sulfur is not considered; instead, the fugacity of S~2~ is a plotting variable.
+The stable Fe-bearing minerals (Fe-S-O-H) are used as the changing basis species to make the diagram for Cu-bearing minerals (Cu-Fe-S-O-H).
+Then, the two diagrams are flattened to show all minerals in a single diagram.
+Greener colors are used to indicate minerals with lower S~2~ and higher O~2~ in their formation reactions.
 
 ```{r stack2, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant}
+T <- 125
 layout(matrix(c(1, 2, 3, 3), nrow = 2), widths = c(1, 1.5))
+
 # Fe-S-O-H diagram
-basis(c("copper", "hematite", "S2", "oxygen", "H2O"))
-bases <- species(c("hematite", "magnetite", "pyrite"))$name
-aFe <- affinity(S2 = c(-34, -10), O2 = c(-55, -40), T = 125)
-abbrv <- info(species()$ispecies)$abbrv
-dFe <- diagram(aFe, names = abbrv)
-# Cu-S-O-H diagram based on reactions with the
+basis(c("copper", "hematite", "S2", "oxygen", "H2O", "H+", "Cl-"))
+bFe <- species(c("hematite", "magnetite", "pyrite"))$name
+aFe <- affinity(S2 = c(-34, -10), O2 = c(-55, -40), T = T)
+# Order species by a function of composition to make colors
+oFe <- order(aFe$species$S2 - aFe$species$O2)
+fill <- terrain.colors(length(oFe), alpha = 0.3)[oFe]
+abbrv <- info(aFe$species$ispecies)$abbrv
+dFe <- diagram(aFe, names = abbrv, fill = fill)
+title("Fe-S-O-H")
+
+# Cu-Fe-S-O-H diagram based on reactions with the
 # stable Fe-bearing minerals (mosaic stack)
-species(c("copper", "chalcocite", "covellite", "chalcopyrite", "bornite"))
-mCu <- mosaic(bases, S2 = c(-34, -10), O2 = c(-55, -40),
-              T = 125, predominant = list(dFe$predominant))
-abbrv <- info(species()$ispecies)$abbrv
-dCu <- diagram(mCu$A.species, names = abbrv)
+bCu <- species(c("copper", "chalcocite", "covellite", "chalcopyrite", "bornite"))$name
+mCu <- mosaic(bFe, S2 = c(-34, -10), O2 = c(-55, -40),
+              T = T, predominant = list(dFe$predominant))
+oCu <- order(mCu$A.species$species$S2 - mCu$A.species$species$O2)
+fill <- terrain.colors(length(oCu), alpha = 0.3)[oCu]
+abbrv <- info(mCu$A.species$species$ispecies)$abbrv
+dCu <- diagram(mCu$A.species, names = abbrv, fill = fill)
+title("Cu-Fe-S-O-H")
+
 # Flatten the diagrams and adjust labels
 aFeCu <- flatten(dFe, dCu)
 names <- aFeCu$species$name
 srt <- rep(0, length(names))
 srt[names %in% c("Mt+Cu", "Hm+Cu")] <- 90
-srt[names %in% c("Mt+Bn", "Mt+Ccp")] <- 62
-srt[names %in% c("Hm+Bn", "Hm+Ccp")] <- 62
+srt[names %in% c("Mt+Bn", "Hm+Bn")] <- 63
+srt[names %in% c("Mt+Ccp", "Hm+Ccp")] <- 66
 srt[names %in% c("Py+Bn", "Py+Cv")] <- 90
 cex <- rep(1, length(names))
 cex[names %in% c("Hm+Ccp", "Hm+Cv")] <- 0.8
-diagram(aFeCu, cex.names = cex, srt = srt)
-legend("topleft", legend = lTP(125, "Psat"))
+oFeCu <- order(aFeCu$species$S2 - aFeCu$species$O2)
+fill <- terrain.colors(length(oFeCu), alpha = 0.3)[oFeCu]
+diagram(aFeCu, cex.names = cex, srt = srt, fill = fill)
+legend("topleft", legend = lTP(T, "Psat"))
+title("Cu-Fe-S-O-H")
 ```
 
-The resulting diagram is similar to Figure 2 of @Sve87.
+The resulting diagram is similar to Figure 2 of @Sve87; that diagram also shows calculations of the solubility of Cu and concentration of SO~4~^-2^ in model Cu ore-forming fluids.
+The `solubility()` function can be used to make these calculations.
+By combining it with the output of `mosaic()`, we use the solubilities of the stable minerals across the diagram to calculate the total concentration of Cu in solution, including its complexes.
+The pH for these calculations is set to 6, and the molality of free Cl^-^, which affects the formation of the Cu chloride complexes, is estimated based on the composition of fluids from Table 2 of @Sve87 (ca. 80000 mg Cl / kg H~2~O) and the `NaCl()` function in CHNOSZ.
+This also gives an estimated ionic strength, which is used in the following `mosaic()` and `affinity()` calls to calculate activity coefficients.
+
+See the detailed comments in the code below.
+
+<button id="B-solubility" onclick="ToggleDiv('solubility')">Show code</button>
+<div id="D-solubility" style="display: none">
+```{r solubility, eval = FALSE}
+# Set up plot and system with aqueous Cu species
+par(mfrow = c(1, 3))
+basis("pH", 6)
+iCu.aq <- retrieve("Cu", c("O", "H", "Cl", "S"), "aq")
+species(iCu.aq)
+# Estimate the molality of Cl for ca. 80,000 mg/kg solution (Table 2 of Sverjensky, 1987)
+m_tot <- 80000 / mass("Cl") / 1000
+calc <- NaCl(T = T, m_tot = m_tot)
+# Use log molality here, not log activity, because
+# activity coefficients are calculated by setting IS below
+basis("Cl-", log10(calc$m_Cl))
+
+# Calculate affinities for aqueous Cu species while changing both Fe and Cu minerals
+mFeCu <- mosaic(list(bFe, bCu), S2 = c(-34, -10), O2 = c(-55, -40),
+  T = T, IS = calc$IS, predominant = list(dFe$predominant, dCu$predominant))
+# Calculate concentration of Cu
+s <- solubility(mFeCu$A.species)
+s <- convert(s, "ppm")
+diagram(aFeCu, names = NA, col = "gray", fill = fill)
+diagram(s, type = "loga.balance", levels = 10^(-3:3), add = TRUE)
+diagram(s, type = "loga.balance", levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
+title("Cu (ppm)")
+
+# Calculate logK for CuCl2- dissociation at 125 °C
+logK <- subcrt(c("CuCl2-", "Cu+", "Cl-"), c(-1, 1, 2), T = T)$out$logK
+# Sverjensky (1987) used Helgeson (1969) value, which is ca. -5.2
+dlogK <- logK - -5.2
+# Calculate the difference in ΔG° corresponding to this logK difference
+dG <- convert(dlogK, "G", T = convert(T, "K"))
+# Apply this difference to the CuCl2- entry in OBIGT
+newG <- info(info("CuCl2-"))$G + dG
+mod.OBIGT("CuCl2-", G = newG)
+
+# Do the same thing for CuCl3-2
+logK <- subcrt(c("CuCl3-2", "Cu+", "Cl-"), c(-1, 1, 3), T = T)$out$logK
+dlogK <- logK - -5.6
+dG <- convert(dlogK, "G", T = convert(T, "K"))
+newG <- info(info("CuCl3-2"))$G + dG
+mod.OBIGT("CuCl3-2", G = newG)
+
+# Calculate affinities for aqueous Cu species while changing both Fe and Cu minerals
+mFeCu <- mosaic(list(bFe, bCu), S2 = c(-34, -10), O2 = c(-55, -40),
+  T = T, IS = calc$IS, predominant = list(dFe$predominant, dCu$predominant))
+# Calculate concentration of Cu
+s <- solubility(mFeCu$A.species)
+s <- convert(s, "ppm")
+diagram(aFeCu, names = NA, col = "gray", fill = fill)
+diagram(s, type = "loga.balance", levels = 10^(-3:3), add = TRUE)
+diagram(s, type = "loga.balance", levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
+title("Cu (ppm)", line = 1.7)
+CuCl2 <- expr.species("CuCl2-")
+CuCl3 <- expr.species("CuCl3-2")
+title(bquote("Helgeson (1969)"~.(CuCl2)~and~.(CuCl3)), line = 0.9)
+
+# Set up system with SO4-2 (to dissolve S2(gas))
+species("SO4-2")
+aSO4 <- affinity(S2 = c(-34, -10), O2 = c(-55, -40), T = T, IS = calc$IS)
+# Calculate concentration of SO4-2
+s <- solubility(aSO4, in.terms.of = "SO4-2")
+s <- convert(s, "ppm")
+diagram(aFeCu, names = NA, col = "gray", fill = fill)
+diagram(s, type = "loga.balance", levels = 10^(-3:3), add = TRUE)
+diagram(s, type = "loga.balance", levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
+title(bquote(bold(.(expr.species("SO4-2"))~"(ppm)")))
+```
+</div>
+
+```{r solubility, echo = FALSE, results = "hide", message = FALSE, fig.width = 7, fig.height = 3, out.width = "100%", fig.align = "center", pngquant = pngquant}
+```
+
+After running the above code, we can inspect the value of `calc` to show the estimated ionic strength and activity of Cl^-^; the latter is very close to unity.
+```{r NaCl}
+# Ionic strength
+calc$IS
+# Logarithm of activity of Cl-
+log10(calc$m_Cl * calc$gam_Cl)
+```
+
+The thick magenta lines indicate the 35 ppm contour for Cu and SO~4~^-2^.
+The first plot shows a lower Cu solubility in this region compared to Figure 2 of @Sve87.
+The difference is likely due to lower stabilities of Cu(I) chloride complexes in the default OBIGT database, compared to those available at the time [@Hel69].
+For the second plot, the standard Gibbs energies of CuCl~2~^-^ and CuCl~3~^-2^ are adjusted so that the `logK` for their dissociation reactions at 125 °C matches values interpolated from Table 5 of @Hel69.
+Here are the `logK` values after the adjustment, followed a `reset()` call to compare the values with the default database, which is also used for later examples in this vignette.
+(`T` was set to 125 above.)
+```{r logK, message = FALSE}
+# logK values interpolated from Table 5 of Helgeson (1969)
+subcrt(c("CuCl2-", "Cu+", "Cl-"), c(-1, 1, 2), T = T)$out$logK
+subcrt(c("CuCl3-2", "Cu+", "Cl-"), c(-1, 1, 3), T = T)$out$logK
+# Default OBIGT database
+reset()
+subcrt(c("CuCl2-", "Cu+", "Cl-"), c(-1, 1, 2), T = T)$out$logK
+subcrt(c("CuCl3-2", "Cu+", "Cl-"), c(-1, 1, 3), T = T)$out$logK
+```
+
+The higher stability of these complexes from @Hel69 causes the 35 ppm contour to move closer to the position shown by @Sve87.
+
+Interestingly, the calculation here also predict substantial increases of Cu concentration of Cu at high *f*~S<sub>2</sub>~ and low *f*~O<sub>2</sub>~, due to the formation of bisulfide complexes with Cu.
+The aqueous species considered in the calculation can be seen like this:
+```{r iCu.aq}
+names(iCu.aq)
+```
+
+CuHS and Cu(HS)~2~^-^ can be excluded by removing S from the `retrieve()` call above (i.e. only `c("O", "H", "Cl")` as ligands); doing so precludes a high concentration of aqueous Cu in the highly reduced, sulfidic region.
+
+The third plot for the concentation of SO~4~^-2^ is simply made by using `affinity()` to calculate the affinity of its formation reaction as a function of *f*~S<sub>2</sub>~ and *f*~O<sub>2</sub>~ at pH 6 and 125 °C, then using `solubility()` to calculate the solubility of S~2~(gas), expressed in terms of moles of SO~4~^-2^ in order to calculate parts per million (ppm) by weight.
 
 ## Secondary Balancing
 

@@ -118,3 +118,6 @@ sed -i 's/rebalance()/<a href="..\/html\/mix.html">rebalance()<\/a>/g' multi-met
 sed -i 's/ratlab()/<a href="..\/html\/util.expression.html">ratlab()<\/a>/g' multi-metal.html
 sed -i 's/mix()/<a href="..\/html\/mix.html">mix()<\/a>/g' multi-metal.html
 sed -i 's/mod.OBIGT()/<a href="..\/html\/add.OBIGT.html">mod.OBIGT()<\/a>/g' multi-metal.html
+sed -i 's/retrieve()/<a href="..\/html\/retrieve.html">retrieve()<\/a>/g' multi-metal.html
+sed -i 's/NaCl()/<a href="..\/html\/NaCl.html">NaCl()<\/a>/g' multi-metal.html
+sed -i 's/solubility()/<a href="..\/html\/solubility.html">solubility()<\/a>/g' multi-metal.html
