@@ -114,19 +114,26 @@ If you prefer plain text names without formatting, add `format.names = FALSE` to
 
 ## Mixing
 
-In simple terms, flattening diagrams portrays the result of mixing two single-metal systems.
+In a simple case, flattening diagrams could be used to portray the mixing two single-metal systems.
 Although it is easy to make such a diagram, there is no interaction between the systems.
 If there is a possibility of forming bimetallic species, then additional considerations are needed to account for the stoichiometry of the mixture.
 The stoichiometry can be given as a fixed composition of both metals; then, all combinations of (mono- and/or bimetallic) species that satisfy this compositional constraint are used as the candidate "species" in the system.
 This is the same type of calculation as that described for [binary Pourbaix diagrams in the Materials Project](https://matgenb.materialsvirtuallab.org/2017/12/15/Plotting-a-Pourbaix-Diagram.html#Plotting-k-nary-systems).
 
 This example makes a Pourbaix diagram for the Fe-V-O-H system that is similar to Figure 1 of @SZS_17.
+Before getting started, it may be helpful to clarify some terminology.
+In the materials science community, materials are characterized by two energies (among others): 1) the formation energy from the elements in their reference state, and 2) the energy above the convex hull defined by the stable materials.
+The energy above the hull is zero for stable materials, and greater than zero for metastable materials.
+Furthermore, the Pourbaix energy (Δ*G*~pbx~) refers to the energy above the hull in addition to potential terms associated with pH and Eh, and is used to predict the stable decomposition products.
+The parallel terminology used in CHNOSZ is that aqueous species or minerals have a 1) Gibbs energy of formation from the elements [Δ*G*° = f(*T*, *P*)], and 2) affinity of formation from the basis species [*A* = -Δ*G* = f(*T*, *P*, and activities of all species)].
+The basis species **are not** in general the stable species, so we begin by identifying the stable species in the system; the difference between *their* affinities and the affinity of any other species corresponds to Δ*G*~pbx~.
+
 First we need to assemble the energies of the solids and aqueous species.
-For solids, values of formation energy (in eV / atom) computed using density functional theory (DFT) are taken from the Materials Project website and are converted to units of J / mol.
-For aqueous species, values of standard Gibbs energy of formation at 25 °C (in J / mol) are taken mostly from @WEP_82 augmented with data for FeO~2~^-^ from @SSWS97 and FeO~4~^-2^ from @Mis73.
-Adapting the method described by @PWLC12, a reference-state correction for each metal is calculated from the difference between the DFT-based formation energy and the standard Gibbs energy of a representative material; here we use values for Fe~3~O~4~ (magnetite) and V~3~O~5~ from @WEP_82.
+For solids, values of formation energy (in eV/atom) computed using density functional theory (DFT) are taken from the Materials Project website and are converted to units of J/mol.
+For aqueous species, values of standard Gibbs energy of formation at 25 °C (in J/mol) are taken mostly from @WEP_82 augmented with data for FeO~2~^-^ from @SSWS97 and FeO~4~^-2^ from @Mis73.
+Adapting the method described by @PWLC12, a correction for each metal is calculated from the difference between the DFT-based formation energy and the standard Gibbs energy of a representative material; here we use values for Fe~3~O~4~ (magnetite) and V~3~O~5~ from @WEP_82.
 This correction is then applied to all of the aqueous species that have that metal.
-Finally, `mod.OBIGT()` is used to add the obtained energies to the OBIGT database.
+Finally, `mod.OBIGT()` is used to add the obtained energies to the OBIGT database in CHNOSZ.
 
 <button id="B-materials" onclick="ToggleDiv('materials')">Show code</button>
 <div id="D-materials" style="display: none">
@@ -188,8 +195,8 @@ iV.cr <- modfun(V.cr, "cr")
 iV.aq <- modfun(V.aq, "aq")
 
 # Formation energies (eV / atom) for bimetallic solids from MP website
-# mp-1335, mp-1079399, mp-866134
-FeV.cr <- c(VFe = -0.129, V3Fe = -0.171, VFe3 = -0.129)
+# mp-1335, mp-1079399, mp-866134, mp-1200054, mp-504509 (triclinic FeVO4)
+FeV.cr <- c(FeV = -0.129, FeV3 = -0.171, Fe3V = -0.129, Fe2V4O13 = -2.236, FeVO4 = -1.756)
 # Convert energies and add to OBIGT
 natom.FeV <- sapply(makeup(names(FeV.cr)), sum)
 FeV.cr <- FeV.cr * natom.FeV
@@ -200,80 +207,145 @@ iFeV.cr <- modfun(FeV.cr, "cr")
 
 This code produce species indices in the OBIGT database for Fe- and V-bearing aqueous species (`iFe.aq`, `iV.aq`), solids (`iFe.cr`, `iV.cr`), and bimetallic solids (`iFeV.cr`), which are used in the following diagrams.
 
-Now we set up the plot area and write a function to assign the colors for regions with two solids, one solid, and no solids; these are the web colors "burlywood", "antiquewhite" and "aliceblue" with some transparency added to show the underlying water stability region.
-The activities of aqueous species are set to the default values for the diagrams produced by the link "Generate Phase Diagram" -- "Aqueous Stability (Pourbaix)" on a material information page in the Materials Project (MP).
+Now we set up the plot area and assign activities of aqueous species to match the default values for the diagrams produced by the link "Generate Phase Diagram" -- "Aqueous Stability (Pourbaix)" on a material information page in the Materials Project (MP).
+The following commands compute Eh-pH diagrams for the single-metal systems Fe-O-H and V-O-H.
 The pH and Eh ranges are made relatively small in order to show just a part of the diagram.
+The diagrams are not plotted, but the output of `diagram()` is saved in `dFe` and `dV` for later use.
 
-```{r mix, eval = FALSE, echo = 1:12}
-mat <- matrix(c(1, 2, 2, 3, 3, 0, 4, 4, 5, 5, 6, 6), byrow = TRUE, nrow = 2)
-layout(mat)
-plot.new()
-text(0.5, 0.5, lTP(25, 1), cex = 1.4)
-fill <- function(a) {
-  ifelse(grepl("cr,cr", a$species$state), "#DEB88788",
-    ifelse(grepl("cr", a$species$state), "#FAEBD788", "#F0F8FF88")
-)}
+```{r mix, eval = FALSE, echo = 1:14}
+par(mfrow = c(1, 3))
 loga.Fe <- -5
 loga.V <- -5
-pH <- c(4, 10)
-Eh <- c(-1.5, 0.5)
-
 # Fe-O-H diagram
 basis(c("VO+2", "Fe+2", "H2O", "e-", "H+"))
 species(c(iFe.aq, iFe.cr))
 species(1:length(iFe.aq), loga.Fe)
-aFe <- affinity(pH = pH, Eh = Eh)
-dFe <- diagram(aFe, fill = fill(aFe))
-water.lines(dFe, col = 4)
-title("Fe-O-H")
+aFe <- affinity(pH = c(4, 10), Eh = c(-1.5, 0))
+dFe <- diagram(aFe, plot.it = FALSE)
 # V-O-H diagram
 species(c(iV.aq, iV.cr))
 species(1:length(iV.aq), loga.V)
 aV <- affinity(aFe)  # argument recall
-dV <- diagram(aV, fill = fill(aV))
-water.lines(dFe, col = 4)
-title("V-O-H")
+dV <- diagram(aV, plot.it = FALSE)
 
 # Calculate affinities for bimetallic species
 species(iFeV.cr)
 aFeV <- affinity(aFe)  # argument recall
 dFeV <- diagram(aFeV, plot.it = FALSE, bold = TRUE)
+# Function to assign field colors
+fill <- function(a) {
+  ifelse(grepl("cr,cr", a$species$state), "#DEB88788",
+    ifelse(grepl("cr", a$species$state), "#FAEBD788", "#F0F8FF88")
+)}
 # 1:1 mixture (Fe:V)
 aFeV11 <- mix(dFe, dV, dFeV, c(1, 1))
 diagram(aFeV11, fill = fill(aFeV11), min.area = 0.01)
-water.lines(dFe, col = 4)
+water.lines(dFe, col = 2)
 title("Fe:V = 1:1")
+label.figure(lTP(25, 1), xfrac = 0.12)
 # 1:3 mixture
 aFeV13 <- mix(dFe, dV, dFeV, c(1, 3))
 diagram(aFeV13, fill = fill(aFeV13), min.area = 0.01)
-water.lines(dFe, col = 4)
+water.lines(dFe, col = 2)
 title("Fe:V = 1:3")
 # 1:5 mixture
 aFeV15 <- mix(dFe, dV, dFeV, c(1, 5))
 diagram(aFeV15, fill = fill(aFeV15), min.area = 0.01)
-water.lines(dFe, col = 4)
+water.lines(dFe, col = 2)
 title("Fe:V = 1:5")
 ```
 
-The next group of commands makes Eh-pH diagrams for the single-metal systems Fe-O-H and V-O-H.
-The output of `diagram()` is saved in `dFe` and `dV` for later use.
+Then we calculate the affinities for the bimetallic species and save the output of `diagram()` in `dFeV`, again without making a plot, but formatting the names in bold.
+We also write a function to assign the colors for regions with two solids, one solid, and no solids; these are the web colors "burlywood", "antiquewhite" and "aliceblue" with some transparency added to show the underlying water stability region.
 
-```{r mix, eval = FALSE, echo = 14:28}
-```
+We now have all the ingredients needed to combine the Fe-bearing, V-bearing, and bimetallic species to generate a given composition.
+The `mix()` function  is used to calculate the affinities of formation from basis species for all combinations of aqueous species and minerals that satisfy each of three different compositions.
+Finally, the `diagram()`s are plotted; the `min.area` argument is used to remove labels for very small fields.
+Regarding the legend, it should be noted that although the DFT calculations for solids are made for zero temperature and zero pressure [@SZS_17], the standard Gibbs energies of aqueous species [e.g. @WEP_82] are modified by a correction term so that they can be combined with DFT energies to reproduce the experimental energy for dissolution of a representative material for each metal at 25 °C and 1 bar [@PWLC12].
 
-Then we calculate the affinities for the bimetallic species and save the output of `diagram()` in `dFeV` without making a plot, but formatting the names in bold.
-Finally, `mix()` is used to generate diagrams for three different compositions.
-The `min.area` argument in `diagram()` is used to remove labels for very small fields.
-
-```{r mix, echo = 27:45, message = FALSE, results = "hide", fig.width = 10, fig.height = 6.5, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
+```{r mix, echo = 16:40, message = FALSE, results = "hide", fig.width = 9, fig.height = 3, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
 ```
 
 In these diagrams, changing the Fe:V ratio affects the fully reduced metallic species.
-In the 1:1 mixture, the V~3~Fe + VFe~3~ assemblage is stable instead of VFe.
-This result is unlike Figure 1 of @SZS_17 but is consistent with the [MP page for VFe](https://doi.org/10.17188/1189535) where it shown to decompose to this assemblage.
-On the other hand, [V~3~Fe is stable](https://materialsproject.org/materials/mp-1079399/) in the 1:3 mixture.
-For an even higher proportion of V, the V + V~3~Fe assemblage is stable, which can be seen for instance in the Pourbaix diagram linked from the [MP page for V~5~FeO~12~](https://doi.org/10.17188/1305091).
+In the 1:1 mixture, the FeV~3~ + Fe~3~V assemblage is stable instead of FeV.
+This result is unlike Figure 1 of @SZS_17 but is consistent with the [MP page for FeV](https://doi.org/10.17188/1189535) where it shown to decompose to this assemblage.
+On the other hand, [FeV~3~ is stable](https://materialsproject.org/materials/mp-1079399/) in the 1:3 mixture.
+For an even higher proportion of V, the V + FeV~3~ assemblage is stable, which can be seen for instance in the Pourbaix diagram linked from the [MP page for FeV~5~O~12~](https://doi.org/10.17188/1305091).
 
+Let's make another diagram for the 1:1 Fe:V composition over a broader range of Eh and pH.
+The diagram shows a stable assemblage of Fe~2~O~3~ with an oxidized bimetallic material, [Fe~2~V~4~O~13~](https://materialsproject.org/materials/mp-1200054/).
+```{r hull, eval = FALSE, echo = 1:20}
+par(mfrow = c(1, 2))
+# Fe-bearing species
+basis(c("VO+2", "Fe+2", "H2O", "e-", "H+"))
+Fe <- species(c(iFe.aq, iFe.cr))$name
+species(1:length(iFe.aq), loga.Fe)
+aFe <- affinity(pH = c(0, 14), Eh = c(-1.5, 2))
+dFe <- diagram(aFe, fill = fill(aFe), plot.it = FALSE)
+# V-bearing species
+V <- species(c(iV.aq, iV.cr))$name
+species(1:length(iV.aq), loga.V)
+aV <- affinity(aFe)  # argument recall
+dV <- diagram(aV, fill = fill(aV), plot.it = FALSE)
+# Bimetallic species
+species(iFeV.cr)
+aFeV <- affinity(aFe)  # argument recall
+dFeV <- diagram(aFeV, plot.it = FALSE, bold = TRUE)
+# 1:1 mixture (Fe:V)
+aFeV11 <- mix(dFe, dV, dFeV, c(1, 1))
+dFeV11 <- diagram(aFeV11, fill = fill(aFeV11), min.area = 0.01)
+water.lines(dFeV11, col = 2)
+
+# Calculate affinity of FeVO4
+species("FeVO4")
+aFeVO4 <- affinity(aFe)  # argument recall
+# Calculate difference from stable species
+aFeVO4_vs_stable <- aFeVO4$values[[1]] - dFeV11$predominant.values
+# Overlay lines from diagram on color map
+diagram(aFeV11, names = FALSE, limit.water = FALSE)
+opar <- par(usr = c(0, 1, 0, 1))
+image(aFeVO4_vs_stable, col = topo.colors(100, 0.7, TRUE), add = TRUE)
+par(opar)
+diagram(aFeV11, add = TRUE, names = FALSE)
+water.lines(dFeV11, col = 2)
+thermo.axis()
+
+imax <- arrayInd(which.max(aFeVO4_vs_stable), dim(aFeVO4_vs_stable))
+pH <- dFeV11$vals$pH[imax[1]]
+Eh <- dFeV11$vals$Eh[imax[2]]
+points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = 7)
+```
+
+We then compute the affinity for formation of a metastable material, in this case triclinic FeVO~4~, from the same basis species used to make the previous diagrams.
+Given the previous diagrams for the stable Fe-, V- and bimetallic materials *mixed with the same stoichiometry* as FeVO~4~ (1:1 Fe:V), the difference between their affinities of formation and that of FeVO~4~ corresponds to the Pourbaix energy (Δ*G*~pbx~).
+This is plotted as a color map in the second diagram.
+
+```{r hull, echo = 22:34, message = FALSE, results = "hide", fig.width = 10, fig.height = 5, out.width = "100%", pngquant = pngquant}
+```
+
+Now we locate the pH and Eh that maximize the affinity (that is, minimize Δ*G*~pbx~) of FeVO~4~ compared to the stable species.
+In agreement with @SZS_17, this is in the stability field of Fe~2~O~3~ + Fe~2~V~4~O~13~.
+We can make these the basis species and use `subcrt()` to automatically balance the reaction to form FeVO~4~ from them and calculate the standard Gibbs energy of the reaction.
+The value of Δ*G*° in cal/mol (the default for `subcrt()`) is then converted to J/mol, then to eV/mol, and finally eV/atom.
+
+```{r max, echo = 2:11, message = FALSE, fig.keep = "none"}
+plot(1:10) # so we can run "points" in this chunk
+imax <- arrayInd(which.max(aFeVO4_vs_stable), dim(aFeVO4_vs_stable))
+pH <- dFeV11$vals$pH[imax[1]]
+Eh <- dFeV11$vals$Eh[imax[2]]
+points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = 7)
+basis(c("Fe2O3", "Fe2V4O13", "O2"))
+(cal_mol <- subcrt("FeVO4", 1, T = 25)$out$G)
+J_mol <- convert(cal_mol, "J")
+eV_mol <- J_mol / 1.602176634e-19
+eV_atom <- eV_mol / 6.02214076e23 / 6
+round(eV_atom, 3)
+stopifnot(round(eV_atom, 3) == 0.411)
+```
+
+This is very close to the value of 0.412 eV/atom for the energy above the hull for [triclinic FeVO~4~ on the MP website](https://materialsproject.org/materials/mp-504509/), showing that we successfully made a round-trip starting with the input formation energies (eV/atom) from the MP website, to Gibbs energy (J/mol) in the OBIGT database, and back out to energy above the hull (eV/atom).
+
+The concept of using the stable minerals and aqueous species to calculate reaction energetics is generalized in the `mosaic()` function, which is described next.
 Because this example modified the thermodynamic data for some minerals that are used below, we should restore the default OBIGT database before proceeding to the next section.
 
 ```{r reset, message = FALSE}

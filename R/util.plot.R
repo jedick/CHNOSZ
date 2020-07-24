@@ -221,7 +221,8 @@ thermo.axis <- function(lab=NULL,side=1:4,line=1.5,cex=par('cex'),lwd=par('lwd')
       # get nicer divisions for axes that span exactly 15 units 20200719
       if(thisside %in% c(1,3)) lim <- par("usr")[1:2]
       if(thisside %in% c(2,4)) lim <- par("usr")[3:4]
-      if(diff(lim)==15) at <- seq(lim[1], lim[2], length.out = 6)
+      if(abs(diff(lim)) == 15) at <- seq(lim[1], lim[2], length.out = 6)
+      if(abs(diff(lim)) == 1.5) at <- seq(lim[1], lim[2], length.out = 4)
       # make grid lines
       if(grid %in% c("major", "both") & thisside==1) abline(v = at, col=col.grid)
       if(grid %in% c("major", "both") & thisside==2) abline(h = at, col=col.grid)

@@ -5,8 +5,11 @@
 % macros
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 \newcommand{\Hplus}{\ifelse{latex}{\eqn{\mathrm{H^{+}}}}{\ifelse{html}{\out{H<sup>+</sup>}}{H+}}}
+% subscript and superscript
+\newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
+\newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-45 (2020-07-22)}{
+\section{Changes in CHNOSZ version 1.3.6-50 (2020-07-24)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -163,6 +166,12 @@
       \item Add a \strong{min.area} argument to \code{diagram()} to specify the
       minimum area of fields that should be labeled. This is useful for
       removing labels from small fields on very crowded diagrams.
+      
+      \item The list returned by diagram \code{diagram()} now includes a
+      \code{predominant.values} component, which has the affinities of the
+      predominant species at each grid point. This can be used as shown in the
+      \code{multi-metal.Rmd} vignette to compute the Pourbaix energy
+      (Δ\emph{G}\s{pbx}) for a metastable material.
 
     }
   }
