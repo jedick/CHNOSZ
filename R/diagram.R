@@ -719,9 +719,23 @@ diagram <- function(
       out2D <- list(namesx=pn$namesx, namesy=pn$namesy)
     } # end if(nd==2)
   } # end if(plot.it)
+
   # even if plot=FALSE, return the diagram clipped to the water stability region (for testing) 20200719
   if(isTRUE(limit.water) & !is.null(H2O.predominant)) predominant <- H2O.predominant
-  outstuff <- list(plotvar=plotvar, plotvals=plotvals, names=names, predominant=predominant)
+  # make a matrix with the affinities of predominant species 20200724
+  # (for calculating affinities of metastable species - multi-metal.Rmd example)
+  predominant.values <- NA
+  if(!identical(predominant, NA)) {
+    predominant.values <- eout$values[[1]]
+    predominant.values[] <- NA
+    for(ip in na.omit(unique(as.vector(predominant)))) {
+      ipp <- predominant == ip
+      ipp[is.na(ipp)] <- FALSE
+      predominant.values[ipp] <- eout$values[[ip]][ipp]
+    }
+  }
+
+  outstuff <- list(plotvar = plotvar, plotvals = plotvals, names = names, predominant = predominant, predominant.values = predominant.values)
   # include the balance name and coefficients if we diagrammed affinities 20200714
   if(eout.is.aout) outstuff <- c(list(balance = balance, n.balance = n.balance), outstuff)
   out <- c(eout, outstuff)

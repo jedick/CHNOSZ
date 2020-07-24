@@ -82,13 +82,25 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
     }
   }
   # Solve for the mole fractions of each species that give the required mixture
-  frac1 <- frac2 <- numeric()
+  isingular <- frac1 <- frac2 <- numeric()
   for(i in 1:nrow(combs)) {
     # The stoichiometric matrix
     A <- matrix(as.numeric(c(s1[i, ibal], s2[i, ibal])), nrow = 2, byrow = TRUE)
-    x <- solve(t(A), parts)
-    frac1 <- c(frac1, x[1])
-    frac2 <- c(frac2, x[2])
+    x <- tryCatch(solve(t(A), parts), error = function(e) e)
+    # Check if we have a singular combination (e.g. FeV and FeVO4)
+    if(inherits(x, "error")) {
+      isingular <- c(isingular, i)
+    } else {
+      frac1 <- c(frac1, x[1])
+      frac2 <- c(frac2, x[2])
+    }
+  }
+  if(length(isingular) > 0) {
+    if(length(isingular) > 1) stxt <- "s" else stxt <- ""
+    message(paste0("mix: removing ", length(isingular), " combination", stxt, " with a singular stoichiometric matrix"))
+    combs <- combs[-isingular, ]
+    s1 <- s1[-isingular, ]
+    s2 <- s2[-isingular, ]
   }
   # Note that some of frac1 or frac2 might be < 0 ... we remove these combinations below
 

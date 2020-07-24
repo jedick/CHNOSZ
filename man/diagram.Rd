@@ -111,7 +111,7 @@ In the case of 2-D diagrams, both of these options use \code{\link{contour}} to 
 A new plot is started unless \code{add} is TRUE.
 If \code{plot.it} is FALSE, no plot will be generated but all the intermediate computations will be performed and the results returned.
 
-Line or field labels use the names of the species as provided in \code{eout}; formatting is applied to chemical formulas unless \code{format.names} is FALSE.
+Line or field labels use the names of the species as provided in \code{eout}; formatting is applied to chemical formulas (see \code{\link{expr.species}}) unless \code{format.names} is FALSE.
 Set \code{names} to TRUE or NULL to plot the names, or FALSE, NA, or \code{""} to prevent plotting the names, or a character argument to replace the default species names.
 Alternatively, supply a numeric value to \code{names} to indicate a subset of default names that should or shouldn't be plotted (positive and negative indices, respectively).
 Use \code{col.names} and \code{cex.names} to change the colors and size of the labels.
@@ -173,12 +173,13 @@ It can be used with the output from \code{diagram} for calculations in 2 dimensi
 }
 
 \section{Value}{
-  \code{diagram} returns an \code{\link{invisible}} list containing, first, the contents of \code{eout}, i.e. the provided output of \code{\link{affinity}} or \code{\link{equilibrate}}.
-  To this are added the name of the plotted variable in \code{plotvar}, the plotted values in \code{plotvals}, and the names used for labeling the plot in \code{names}.
+  \code{diagram} returns an \code{\link{invisible}} list containing, first, the contents of \code{eout}, i.e. the output of \code{\link{affinity}} or \code{\link{equilibrate}} supplied in the function call.
+  To this are added the names of the plotted variable in \code{plotvar}, the labels used for species (which may be \code{\link{plotmath}} expressions if \code{format.names} is TRUE) in \code{names}, and the values used for plotting in a list named \code{plotvals}.
   For 1-D diagrams, \code{plotvals} usually corresponds to the chemical activities of the species (i.e. \code{eout$loga.equil}), or, if \code{alpha} is \code{TRUE}, their mole fractions (degrees of formation).
-  For 2-D diagrams, the output also contains \code{predominant}, giving the numbers (from the \code{\link{species}} definition) of the predominant (aka maximum-affinity) species at each grid point.
-  The rows and columns of \code{predominant} correspond to the x- and y-variables, respectively.
-  Finally, the output for 2-D diagrams contains a \code{lines} component, giving the x- and y-coordinates of the field boundaries computed using \code{\link{contourLines}}; the values are padded to equal length with NAs to faciliate exporting the results using \code{\link{write.csv}}.
+  For 2-D diagrams, \code{plotvals} corresponds to the values of affinity (from \code{eout$values}) divided by the respective balancing coefficients for each species.
+  For 2-D diagrams, the output also contains the matrices \code{predominant}, which identifies the predominant species in \code{eout$species} at each grid point, and \code{predominant.values}, which has the affinities of the predominant species.
+  The rows and columns of these matrices correspond to the \emph{x} and \emph{y} variables, respectively.
+  Finally, the output for 2-D diagrams contains a \code{lines} component, giving the \emph{x} and \emph{y} coordinates of the field boundaries computed using \code{\link{contourLines}}; the values are padded to equal length with NAs to faciliate exporting the results using \code{\link{write.csv}}.
 }
 
 \seealso{ 
