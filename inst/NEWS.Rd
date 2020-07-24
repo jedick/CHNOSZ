@@ -204,11 +204,7 @@
 
       \item TODO: OBIGT.Rmd: change "CHNOSZ" references to "OBIGT".
 
-      \item TODO: fix logic for negating balancing coefficients in diagram().
-
       \item TODO: add elements from RH95.
-
-      \item TODO: check that Rd <-> vignette links work in Rstudio help viewer.
 
       \item TODO: add check to mosaic() that 'predominant' values have the right dimensions.
 
@@ -220,9 +216,7 @@
       different units (cal, J) in OBIGT can be used in subcrt, diagrams, etc.
       in CHNOSZ.
 
-      \item TODO: for balance = 1, add or change message text to "formula units".
-
-      \item TODO: remove species combinations with no stability field in flatten().
+      \item TODO: add library(CHNOSZ) to all scripts in demo/.
 
     }
   }

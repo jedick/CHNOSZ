@@ -357,7 +357,7 @@ balance <- function(aout, balance=NULL) {
   #   name of basis species   - balanced on this basis species
   #   "length"                   - balanced on sequence length of proteins 
   #                             (default if balance is missing and all species are proteins)
-  #   1                       - balanced on one mole of species
+  #   1                       - balanced on one mole of species (formula units)
   #   numeric vector          - user-defined n.balance
   #   "volume"                - standard-state volume listed in thermo()$OBIGT
   # the index of the basis species that might be balanced
@@ -376,16 +376,18 @@ balance <- function(aout, balance=NULL) {
   if(is.numeric(balance[1])) {
     # a numeric vector
     n.balance <- rep(balance, length.out=length(aout$values))
-    message(paste0("balance: from supplied numeric argument (", paste(balance, collapse = ","), ")"))
+    msgtxt <- paste0("balance: on supplied numeric argument (", paste(balance, collapse = ","), ")")
+    if(identical(balance, 1)) msgtxt <- paste(msgtxt, "[1 means balance on formula units]")
+    message(msgtxt)
   } else {
     # "length" for balancing on protein length
     if(identical(balance, "length")) {
-      if(!all(isprotein)) stop("length was the requested balance, but some species are not proteins")
+      if(!all(isprotein)) stop("'length' was the requested balance, but some species are not proteins")
       n.balance <- protein.length(aout$species$name)
-      message("balance: from protein length")
+      message("balance: on protein length")
     } else if(identical(balance, "volume")) {
       n.balance <- info(aout$species$ispecies, check.it=FALSE)$V
-      message("balance: from volume")
+      message("balance: on volume")
     } else {
       # is the balance the name of a basis species?
       if(length(ibalance)==0) {
@@ -394,8 +396,8 @@ balance <- function(aout, balance=NULL) {
       }
       # the name of the basis species (need this if we got ibalance which which.balance, above)
       balance <- colnames(aout$species)[ibalance[1]]
-      message(paste("balance: moles of", balance, "in formation reactions"))
-      # the balance vector
+      message(paste("balance: on moles of", balance, "in formation reactions"))
+      # the balancing coefficients
       n.balance <- aout$species[, ibalance[1]]
       # we check if that all formation reactions contain this basis species
       if(any(n.balance==0)) stop("some species have no ", balance, " in the formation reaction")

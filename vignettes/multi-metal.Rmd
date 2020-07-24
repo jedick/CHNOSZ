@@ -353,7 +353,9 @@ The stable Fe-bearing minerals (Fe-S-O-H) are used as the changing basis species
 Then, the two diagrams are flattened to show all minerals in a single diagram.
 Greener colors are used to indicate minerals with lower S~2~ and higher O~2~ in their formation reactions.
 
-```{r stack2, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant}
+<button id="B-stack2" onclick="ToggleDiv('stack2')">Show code</button>
+<div id="D-stack2" style="display: none">
+```{r stack2, eval = FALSE}
 T <- 125
 layout(matrix(c(1, 2, 3, 3), nrow = 2), widths = c(1, 1.5))
 
@@ -395,14 +397,16 @@ diagram(aFeCu, cex.names = cex, srt = srt, fill = fill)
 legend("topleft", legend = lTP(T, "Psat"))
 title("Cu-Fe-S-O-H")
 ```
+</div>
+
+```{r stack2, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant}
+```
 
 The resulting diagram is similar to Figure 2 of @Sve87; that diagram also shows calculations of the solubility of Cu and concentration of SO~4~^-2^ in model Cu ore-forming fluids.
 The `solubility()` function can be used to make these calculations.
 By combining it with the output of `mosaic()`, we use the solubilities of the stable minerals across the diagram to calculate the total concentration of Cu in solution, including its complexes.
 The pH for these calculations is set to 6, and the molality of free Cl^-^, which affects the formation of the Cu chloride complexes, is estimated based on the composition of fluids from Table 2 of @Sve87 (ca. 80000 mg Cl / kg H~2~O) and the `NaCl()` function in CHNOSZ.
 This also gives an estimated ionic strength, which is used in the following `mosaic()` and `affinity()` calls to calculate activity coefficients.
-
-See the detailed comments in the code below.
 
 <button id="B-solubility" onclick="ToggleDiv('solubility')">Show code</button>
 <div id="D-solubility" style="display: none">
@@ -420,14 +424,18 @@ calc <- NaCl(T = T, m_tot = m_tot)
 basis("Cl-", log10(calc$m_Cl))
 
 # Calculate affinities for aqueous Cu species while changing both Fe and Cu minerals
-mFeCu <- mosaic(list(bFe, bCu), S2 = c(-34, -10), O2 = c(-55, -40),
-  T = T, IS = calc$IS, predominant = list(dFe$predominant, dCu$predominant))
-# Calculate concentration of Cu
-s <- solubility(mFeCu$A.species)
-s <- convert(s, "ppm")
-diagram(aFeCu, names = NA, col = "gray", fill = fill)
-diagram(s, type = "loga.balance", levels = 10^(-3:3), add = TRUE)
-diagram(s, type = "loga.balance", levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
+mfun <- function() {
+  mFeCu <- mosaic(list(bFe, bCu), S2 = c(-34, -10), O2 = c(-55, -40),
+    T = T, IS = calc$IS, predominant = list(dFe$predominant, dCu$predominant))
+  # Calculate concentration of Cu
+  s <- solubility(mFeCu$A.species)
+  s <- convert(s, "ppm")
+  diagram(aFeCu, names = NA, col = "gray", fill = fill)
+  diagram(s, type = "loga.balance", levels = 10^(-3:3), add = TRUE)
+  diagram(s, type = "loga.balance", levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
+}
+# DIAGRAM 1
+mfun()
 title("Cu (ppm)")
 
 # Calculate logK for CuCl2- dissociation at 125 °C
@@ -447,15 +455,8 @@ dG <- convert(dlogK, "G", T = convert(T, "K"))
 newG <- info(info("CuCl3-2"))$G + dG
 mod.OBIGT("CuCl3-2", G = newG)
 
-# Calculate affinities for aqueous Cu species while changing both Fe and Cu minerals
-mFeCu <- mosaic(list(bFe, bCu), S2 = c(-34, -10), O2 = c(-55, -40),
-  T = T, IS = calc$IS, predominant = list(dFe$predominant, dCu$predominant))
-# Calculate concentration of Cu
-s <- solubility(mFeCu$A.species)
-s <- convert(s, "ppm")
-diagram(aFeCu, names = NA, col = "gray", fill = fill)
-diagram(s, type = "loga.balance", levels = 10^(-3:3), add = TRUE)
-diagram(s, type = "loga.balance", levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
+# DIAGRAM 2
+mfun()
 title("Cu (ppm)", line = 1.7)
 CuCl2 <- expr.species("CuCl2-")
 CuCl3 <- expr.species("CuCl3-2")
@@ -467,6 +468,7 @@ aSO4 <- affinity(S2 = c(-34, -10), O2 = c(-55, -40), T = T, IS = calc$IS)
 # Calculate concentration of SO4-2
 s <- solubility(aSO4, in.terms.of = "SO4-2")
 s <- convert(s, "ppm")
+# DIAGRAM 3
 diagram(aFeCu, names = NA, col = "gray", fill = fill)
 diagram(s, type = "loga.balance", levels = 10^(-3:3), add = TRUE)
 diagram(s, type = "loga.balance", levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
@@ -477,7 +479,7 @@ title(bquote(bold(.(expr.species("SO4-2"))~"(ppm)")))
 ```{r solubility, echo = FALSE, results = "hide", message = FALSE, fig.width = 7, fig.height = 3, out.width = "100%", fig.align = "center", pngquant = pngquant}
 ```
 
-After running the above code, we can inspect the value of `calc` to show the estimated ionic strength and activity of Cl^-^; the latter is very close to unity.
+After running the code above, we can inspect the value of `calc` to show the estimated ionic strength and activity of Cl^-^; the latter is very close to unity.
 ```{r NaCl}
 # Ionic strength
 calc$IS
@@ -672,7 +674,7 @@ legend("topright", legend = lTP(25, 1), bty = "n")
 The diagram shows the expected ionization of acetic acid and NH~3~ at different pHs.
 The appearance of acetamide (CH~3~CONH~2~) is a consequence of the interaction between the N-bearing and C-bearing species, and is analogous to the formation of a multi-metal complex.
 
-*Thanks to Kirt Robinson for the feature request and test case that led to this example.*
+*Thanks to Kirt Robinson for the feature request and test case used in this example.*
 
 ## Document History
 

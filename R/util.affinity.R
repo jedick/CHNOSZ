@@ -293,8 +293,11 @@ energy.args <- function(args, transect = FALSE) {
     if(length(IS) > 1) IS.is.var <- TRUE
   }
   # report non-variables to user
-  if(!T.is.var)
-    message('affinity: temperature is ',outvert(T,'K'),' ',T.units())
+  if(!T.is.var) {
+    Tunits <- T.units()
+    if(Tunits=="C") Tunits <- "\u00BAC"
+    message('affinity: temperature is ', outvert(T, 'K'), ' ', Tunits)
+  }
   if(!P.is.var) {
     if(identical(P,"Psat")) message("affinity: pressure is Psat")
     else message('affinity: pressure is ',outvert(P,'bar'),' ',P.units())
