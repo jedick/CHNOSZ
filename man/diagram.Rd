@@ -21,7 +21,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
     # character sizes
     cex = par("cex"), cex.names = 1, cex.axis = par("cex"),
     # line styles
-    lty = NULL, lty.cr = NULL, lty.aq = NULL, lwd = par("lwd"), dotted = NULL,
+    lty = NULL, lwd = par("lwd"), dotted = NULL,
     spline.method = NULL, contour.method = "edge", levels = NULL,
     # colors
     col = par("col"), col.names = par("col"), fill = NULL,
@@ -58,8 +58,6 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{cex.names}{numeric, character expansion factor to be used for names of species on plots}
   \item{cex.axis}{numeric, character expansion factor for names of axes}
   \item{lty}{numeric, line types to be used in plots}
-  \item{lty.cr}{numeric, line types for cr-cr boundaries (between two minerals)}
-  \item{lty.aq}{numeric, line types for aq-aq boundaries (between two aqueous species)}
   \item{lwd}{numeric, line width}
   \item{dotted}{numeric, how often to skip plotting points on predominance field boundaries (to gain the effect of dotted or dashed boundary lines)}
   \item{spline.method}{character, method used in \code{\link{splinefun}}}
@@ -131,7 +129,6 @@ Otherwise, a \code{\link{legend}} is placed at the location identified by \code{
 If \code{alpha} is TRUE, the fractional degrees of formation (ratios of activities to total activity) are plotted.
 Or, setting \code{alpha} to \samp{balance} allows the activities to be multiplied by the number of the balancing component; this is useful for making \dQuote{percent carbon} diagrams where the species differ in carbon number.
 The line type and line width can be controlled with \code{lty} and \code{lwd}, respectively.
-Set \code{lty.cr} to 0 to disable drawing lines between minerals (to show equal-activity lines for only aqueous species), or set \code{lty.aq} to 0 to disable drawing lines between aqueous species.
 To connect the points with splines instead of lines, set \code{spline.method} to one of the methods in \code{\link{splinefun}}.
 }
 

@@ -343,7 +343,7 @@ round(eV_atom, 3)
 stopifnot(round(eV_atom, 3) == 0.411)
 ```
 
-This is very close to the value of 0.412 eV/atom for the energy above the hull for [triclinic FeVO~4~ on the MP website](https://materialsproject.org/materials/mp-504509/), showing that we successfully made a round-trip starting with the input formation energies (eV/atom) from the MP website, to Gibbs energy (J/mol) in the OBIGT database, and back out to energy above the hull (eV/atom).
+This is nearly equal to the value of 0.412 eV/atom for the energy above the hull for [triclinic FeVO~4~ on the MP website](https://materialsproject.org/materials/mp-504509/), showing that we successfully made a round-trip starting with the input formation energies (eV/atom) from the MP website, to Gibbs energy (J/mol) in the OBIGT database, and back out to energy above the hull (eV/atom).
 
 The concept of using the stable minerals and aqueous species to calculate reaction energetics is formalized in the `mosaic()` function, which is described next.
 Because this example modified the thermodynamic data for some minerals that are used below, we should restore the default OBIGT database before proceeding to the next section.

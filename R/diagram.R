@@ -24,7 +24,7 @@ diagram <- function(
   # sizes
   cex=par("cex"), cex.names=1, cex.axis=par("cex"),
   # line styles
-  lty=NULL, lty.cr=NULL, lty.aq=NULL, lwd=par("lwd"), dotted=NULL,
+  lty=NULL, lwd=par("lwd"), dotted=NULL,
   spline.method=NULL, contour.method="edge", levels=NULL,
   # colors
   col=par("col"), col.names=par("col"), fill=NULL,
@@ -180,7 +180,6 @@ diagram <- function(
 
   ## identify predominant species
   predominant <- NA
-  linesout <- NA
   H2O.predominant <- NULL
   if(plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)") & type!="saturation") {
     pv <- plotvals
@@ -524,47 +523,28 @@ diagram <- function(
         }
 	# the categories (species/groups/etc) on the plot
 	zvals <- na.omit(unique(as.vector(predominant)))
-        # initialize list to output line coordinates
-        linesout <- list()
-        iout <- 1
-	# take each possible pair of species
+	# loop over species
 	for(i in 1:(length(zvals)-1)) {
-	  for(j in (i+1):length(zvals)) {
-	    z <- predominant
-	    # draw contours only for this pair
-	    z[!z %in% c(zvals[i], zvals[j])] <- NA
-	    # give them neighboring values (so we get one contour line)
-	    z[z==zvals[i]] <- 0
-	    z[z==zvals[j]] <- 1
-            # use contourLines() instead of contour() in order to get line coordinates 20181029
-	    cLines <- contourLines(xs, ys, z, levels=0.5)
-            if(length(cLines) > 0) {
-              # loop in case contourLines returns multiple lines
-              for(k in 1:length(cLines)) {
-                # draw the lines
-                mylty <- lty
-                if(!is.null(lty.cr)) {
-                  # use lty.cr for cr-cr boundaries 20190530
-                  if(all(grepl("cr", eout$species$state[c(zvals[i], zvals[j])]))) mylty <- lty.cr
-                }
-                if(!is.null(lty.aq)) {
-                  # use lty.aq for aq-aq boundaries 20190531
-                  if(all(grepl("aq", eout$species$state[c(zvals[i], zvals[j])]))) mylty <- lty.aq
-                }
-                lines(cLines[[k]][2:3], lty=mylty, col=col, lwd=lwd)
-                # keep the x and y values (list components 2 and 3)
-                linesout[[iout]] <- cLines[[k]][[2]]
-                names(linesout)[iout] <- paste0("x", k, "_", zvals[i], ".", zvals[j])
-                linesout[[iout+1]] <- cLines[[k]][[3]]
-                names(linesout)[iout+1] <- paste0("y", k, "_", zvals[i], ".", zvals[j])
-                iout <- iout + 2
-              }
+          # get the "z" values
+          z <- predominant
+          # assign values to get one contour line between this species and all others
+          i0 <- z==zvals[i]
+          i1 <- z!=zvals[i]
+          z[i0] <- 0
+          z[i1] <- 1
+          # use contourLines() instead of contour() in order to get line coordinates 20181029
+          cLines <- contourLines(xs, ys, z, levels=0.5)
+          if(length(cLines) > 0) {
+            # loop in case contourLines returns multiple lines
+            for(k in 1:length(cLines)) {
+              # draw the lines
+              mylty <- lty
+              lines(cLines[[k]][2:3], lty=mylty, col=col, lwd=lwd)
             }
-	  }
+          }
+          # mask species to prevent double-plotting contour lines
+          predominant[i0] <- NA
 	}
-        # https://stackoverflow.com/questions/34570860/adding-na-to-make-all-list-elements-equal-length 20181029
-        # for compatibility with R 3.1.0, don't use lengths() here 20190302
-        lapply(linesout, `length<-`, max(sapply(linesout, length)))
       }
       ## label plot function
       plot.names <- function(out, xs, ys, xlim, ylim, names, srt, min.area) {
@@ -704,7 +684,7 @@ diagram <- function(
         # font metric state and subsequent errors adding e.g. subscripted text to plot)
         if(length(na.omit(unique(as.vector(zs)))) > 1) {
           if(!is.null(dotted)) plot.line(zs, xlim.calc, ylim.calc, dotted, col, lwd, xrange=xrange)
-          else linesout <- contour.lines(predominant, xlim.calc, ylim.calc, lty=lty, col=col, lwd=lwd)
+          else contour.lines(predominant, xlim.calc, ylim.calc, lty=lty, col=col, lwd=lwd)
         }
         # re-draw the tick marks and axis lines in case the fill obscured them
         has.color <- FALSE
@@ -738,10 +718,8 @@ diagram <- function(
   outstuff <- list(plotvar = plotvar, plotvals = plotvals, names = names, predominant = predominant, predominant.values = predominant.values)
   # include the balance name and coefficients if we diagrammed affinities 20200714
   if(eout.is.aout) outstuff <- c(list(balance = balance, n.balance = n.balance), outstuff)
-  out <- c(eout, outstuff)
-  if(!identical(predominant, NA) & is.null(dotted)) out <- c(out, list(lines=linesout))
-  out <- c(out, out2D)
-  return(invisible(out))
+  out <- c(eout, outstuff, out2D)
+  invisible(out)
 }
 
 find.tp <- function(x) {
