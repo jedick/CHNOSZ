@@ -29,7 +29,7 @@ Therefore, for substances represented by both aqueous and gaseous species, the i
 Note that names (not formulas) of inorganic species, such as \samp{oxygen} and \samp{methane}, are used only for the gas.
 
 Names of species including an underscore character are indicative of proteins, e.g. \samp{LYSC_CHICK}.
-If the name of a protein is provided to \code{info} and the composition of the protein can be found using \code{\link{protein}}, the thermodyamic properties and parameters of the nonionized protein (calculated using amino acid group additivity) are added to the thermodynamic database.
+If the name of a protein is provided to \code{info} and the composition of the protein can be found using \code{\link{pinfo}}, the thermodyamic properties and parameters of the nonionized protein (calculated using amino acid group additivity) are added to the thermodynamic database.
 Included in the return value, as for other species, is the index of the protein in the thermodynamic database or \code{NA} if the protein is not found. Names of proteins and other species can be mixed.
 
 If no exact matches are found, \code{info} searches the database for similar names or formulas using \code{\link{agrep}}.

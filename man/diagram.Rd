@@ -180,7 +180,7 @@ It can be used with the output from \code{diagram} for calculations in 2 dimensi
 }
 
 \seealso{ 
-Other examples are present in the help for \code{\link{protein}} and \code{\link{buffer}}, and even more can be found in \code{\link{demos}}.
+Other examples are present in the help for \code{\link{buffer}}, and even more can be found in \code{\link{demos}}.
 }
 
 \examples{

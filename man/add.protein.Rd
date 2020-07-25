@@ -61,8 +61,6 @@ as.chemical.formula(protein.formula(aa))
 \code{\link{read.fasta}} and \code{\link{uniprot.aa}} for other ways of getting amino acid compositions.
 
 \code{\link{pinfo}} for protein-level functions (length, chemical formulas, reaction coefficients of basis species).
-
-\code{\link{protein}} for examples of affinity calculations and diagrams.
 }
 
 \concept{Protein properties}

@@ -24,7 +24,7 @@ Each help page (other than this one) has been given one of the following \dQuote
   \item Thermodynamic data: \code{\link{data}}, \code{\link{extdata}}, \code{\link{add.OBIGT}}, \code{\link{util.data}}
   \item Thermodynamic calculations: \code{\link{util.formula}}, \code{\link{makeup}}, \code{\link{util.units}}, \code{\link{eos}}, \code{\link{berman}}, \code{\link{nonideal}}, \code{\link{util.misc}}
   \item Water properties: \code{\link{water}}, \code{\link{util.water}}, \code{\link{DEW}}, \code{\link{IAPWS95}}
-  \item Protein properties: \code{\link{protein}}, \code{\link{protein.info}}, \code{\link{add.protein}}, \code{\link{util.fasta}}, \code{\link{util.protein}}, \code{\link{util.seq}}, \code{\link{ionize.aa}}
+  \item Protein properties: \code{\link{protein.info}}, \code{\link{add.protein}}, \code{\link{util.fasta}}, \code{\link{util.protein}}, \code{\link{util.seq}}, \code{\link{ionize.aa}}
   \item Other tools: \code{\link{examples}}, \code{\link{eqdata}}, \code{\link{taxonomy}}, \code{\link{util.blast}}
   \item Utility functions: \code{\link{util.expression}}, \code{\link{util.plot}}, \code{\link{util.array}}, \code{\link{util.matrix}}, \code{\link{util.list}}, \code{\link{util.test}}, \code{\link{palply}}
 }

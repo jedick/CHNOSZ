@@ -42,10 +42,6 @@ It is possible to assign different buffers to different basis species, in which 
 This function is compatible with systems of proteins, but note that for buffers \emph{made} of proteins the buffer calculations presently use whole protein formulas (instead of residue equivalents) and consider nonionized proteins only.
 }
 
-\seealso{
-\code{\link{protein}} for an example using a buffer made of proteins.
-}
-
 \examples{
 \dontshow{reset()}
 ## list the buffers
