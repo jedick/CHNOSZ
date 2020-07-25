@@ -1,15 +1,12 @@
 Date: 2020-07-25
 Package: CHNOSZ
-Version: 1.3.6-52
+Version: 1.3.6-53
 Title: Thermodynamic Calculations and Diagrams for Geochemistry
 Authors@R: c(
     person("Jeffrey", "Dick", , "j3ffdick@gmail.com", role = c("aut", "cre"),
-      comment = c(ORCID = "0000-0002-0687-5890")),
-    person("R Core Team", role = "ctb",
-      comment = "code derived from R's pmax()")
+      comment = c(ORCID = "0000-0002-0687-5890"))
     )
-Author: Jeffrey Dick [aut, cre] (0000-0002-0687-5890),
-  R Core Team [ctb] (code derived from R's pmax())
+Author: Jeffrey Dick [aut, cre] (0000-0002-0687-5890)
 Maintainer: Jeffrey Dick <j3ffdick@gmail.com>
 Depends: R (>= 3.1.0)
 Suggests: limSolve, testthat, knitr, rmarkdown, tufte

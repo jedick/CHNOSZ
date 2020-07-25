@@ -5,22 +5,21 @@
 \title{Functions to Work with Lists}
 
 \description{
-  Combine lists or perform arithmetic operations on elements of lists.
+  Identify list elements that have the maximum (or minimum) values.
 }
 
 \usage{
-  which.pmax(elts, na.rm = FALSE, pmin = FALSE)
+  which.pmax(x, maximum = TRUE)
 }
 
 \arguments{
-  \item{elts}{list, numeric vectors for which to find maximum values (in parallel) (\code{which.pmax}).}
-  \item{na.rm}{logical, remove missing values?}
-  \item{pmin}{logical, find minimum values instead of maximum ones?}
+  \item{x}{list of numeric vectors}
+  \item{maximum}{logical, find maximum values or minimum values?}
 }
 
 \details{
-\code{which.pmax} takes a list of equal-length numeric vectors (or objects that can be coerced to numeric) in \code{elts} and returns the index of the vector holding the maximum value at each position.
-If \code{na.rm} is \code{TRUE}, values of \code{NA} are removed; if \code{pmin} is \code{TRUE} the function finds locations of the minimum values instead.
+\code{which.pmax} takes a list of equal-length numeric vectors or equal-dimension arrays in \code{x} and returns the index of the list element that has the maximum value at each point.
+Change \code{maximum} to \code{FALSE} to find the minimum values instead.
 }
 
 \concept{Utility functions}

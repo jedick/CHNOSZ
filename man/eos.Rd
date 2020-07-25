@@ -88,7 +88,7 @@ cgl(property = "Cp", parameters = CH4gas)
 C8H18par <- info(info(rep("octane", 3), c("cr", "liq", "gas")))
 myT <- seq(200, 420, 10)
 DG0f <- cgl(property = "G", parameters = C8H18par, T = myT, P = 1)
-cbind(T = myT, which.pmax(DG0f, pmin = TRUE))  # 1 = cr, 2 = liq, 3 = gas
+cbind(T = myT, which.pmax(DG0f, FALSE))  # 1 = cr, 2 = liq, 3 = gas
 # compare that result with the tabulated transition temperatures
 print(C8H18par)
 }

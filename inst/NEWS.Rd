@@ -175,8 +175,10 @@
       \code{multi-metal.Rmd} vignette to compute the Pourbaix energy
       (Δ\emph{G}\s{pbx}) for a metastable material.
 
-      \item Remove the \samp{lty.aq} and \samp{lty.cr} arguments from
-      \code{diagram()}.
+      \item \code{which.pmax()} was rewritten to speed up identification of
+      stable species, and \code{diagram()} was made more efficient in drawing
+      field boundaries. The latter change has prompted the removal of the
+      \samp{lty.aq} and \samp{lty.cr} arguments from \code{diagram()}.
 
     }
   }

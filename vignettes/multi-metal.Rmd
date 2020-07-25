@@ -581,7 +581,7 @@ The aqueous species considered in the calculation can be seen like this:
 names(iCu.aq)
 ```
 
-CuHS and Cu(HS)~2~^-^ can be excluded by removing S from the `retrieve()` call above (i.e. only `c("O", "H", "Cl")` as ligands); doing so precludes a high concentration of aqueous Cu in the highly reduced, sulfidic region.
+CuHS and Cu(HS)~2~^-^ can be excluded by removing S from the `retrieve()` call above (i.e. only `c("O", "H", "Cl")` as the elements in possible ligands); doing so precludes a high concentration of aqueous Cu in the highly reduced, sulfidic region.
 
 The third plot for the concentation of SO~4~^-2^ is simply made by using `affinity()` to calculate the affinity of its formation reaction as a function of *f*~S<sub>2</sub>~ and *f*~O<sub>2</sub>~ at pH 6 and 125 °C, then using `solubility()` to calculate the solubility of S~2~(gas), expressed in terms of moles of SO~4~^-2^ in order to calculate parts per million (ppm) by weight.
 
