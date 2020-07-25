@@ -124,7 +124,8 @@
       \item Remove vignette \samp{hotspring.Rnw}, demo \samp{bison.R}, and
       associated data files \samp{DS11.csv} and \samp{DS13.csv}. The plots are
       now in the \samp{bison.Rmd} vignette in the \pkg{JMDplots} package
-      (\url{https://github.com/jedick/JMDplots}).
+      (\url{https://github.com/jedick/JMDplots}). Also move the demo
+      \samp{bugstab.R} and supporting data files to \pkg{JMDplots}.
 
       \item Add \samp{viglink} Rd macro so HTML versions of Rd files can link
       to vignettes.

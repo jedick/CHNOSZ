@@ -17,7 +17,6 @@ gold            Solubility of gold
 contour         Gold solubility contours on a log fO2 - pH diagram
 sphalerite      Solubility of sphalerite
 dehydration     log K of dehydration reactions; SVG file contains tooltips and links
-bugstab         Formation potential of microbial proteins in colorectal cancer
 Shh             Affinities of transcription factors relative to Sonic hedgehog
 saturation      Equilibrium activity diagram showing activity ratios and mineral saturation limits
 adenine         HKF parameters regressed from heat capacity and volume of aqueous adenine

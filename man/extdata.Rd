@@ -22,15 +22,12 @@
     \item The \code{testing} directory contains data files based on Berman and Aranovich (1996). These are used to demonstrate the addition of data from a user-supplied file (see \code{\link{berman}}).
   }
 
-  Files in \code{abundance} contain protein abundance and microbial occurrence data:
-  \itemize{
-    \item \code{microbes.csv} has data for microbial occurrence (i.e. relative enrichement) in colorectal cancer and normal tissue. The file is from the Supporting Information of Dick (2016). This file is used by \code{demo("bugstab")}.
-  }
-
   Files in \code{bison} contain BLAST results and taxonomic information for an environmental metagenome from the Bison Pool hot spring in Yellowstone National Park:
   \itemize{
     \item \code{bisonN_vs_refseq57.blast.xz}, \code{bisonS...}, \code{bisonR...}, \code{bisonQ...}, \code{bisonP...} are partial tabular BLAST results for proteins in the Bison Pool Environmental Genome. Protein sequences predicted in the metagenome were downloaded from the Joint Genome Institute's IMG/M system on 2009-05-13. The target database for the searches was constructed from microbial protein sequences in National Center for Biotechnology Information (NCBI) RefSeq database version 57, representing 7415 microbial genomes. The \sQuote{blastall} command was used with the default setting for E value cuttoff (10.0) and options to make a tabular output file consisting of the top 20 hits for each query sequence. The function \code{\link{read.blast}} was used to extract only those hits with E values less than or equal to 1e-5 and with sequence similarity (percent identity) at least 30 percent, and to keep only the first hit for each query sequence. The function \code{\link{write.blast}} was used to save partial BLAST files (only selected columns). The files provided with CHNOSZ contain the first 1000 hits for each sampling site at Bison Pool, representing between about 1.5 to 3 percent of the first BLAST hits after similarity and E value filtering.
-    \item \code{gi.taxid.txt.xz} is a table that lists the sequence identifiers (gi numbers) that appear in the example BLAST files (see above), together with the corresponding taxon ids used in the NCBI databases. This file is \emph{not} a subset of the complete \sQuote{gi_taxid_prot.dmp.gz} available at \url{ftp://ftp.ncbi.nih.gov/pub/taxonomy/} but instead is a subset of \sQuote{gi.taxid.txt} generated from the RefSeq release catalog using \sQuote{gencat.sh} in the \code{refseq} directory. See \code{\link{id.blast}} for an example that uses this file and the BLAST files described above.
+    \item \code{gi.taxid.txt.xz} is a table that lists the sequence identifiers (gi numbers) that appear in the example BLAST files (see above), together with the corresponding taxon ids used in the NCBI databases.
+    \item \code{taxid_names.csv.xz} A table of scientific names for the taxids in \code{gi.taxid.txt.xz}.
+    See \code{\link{id.blast}} for examples that use these files.
   }
 
 
@@ -56,28 +53,8 @@
     \item \code{POLG.csv}
       Amino acid compositions of a few proteins used for some tests and examples.
       These are various subunits of the Poliovirus type 1 polyprotein (POLG_POL1M in UniProt).
-    \item \code{microbial.aa.csv}
-      Overall protein compositions of microbial species reported to be positively or negatively enriched in colorectal cancer.
-      This file is taken from Dick, 2016.
-      It is used by \code{demo("bugstab")}.
   }
 
-  Files in \code{refseq} contain code and results of processing NCBI Reference Sequences (RefSeq) for microbial proteins, using RefSeq release 61 of 2013-09-09:
-  \itemize{
-    \item \code{README.txt} Instructions for producing the data files.
-    \item \code{gencat.sh} Bash script to extract microbial protein records from the RefSeq catalog.
-    \item \code{gi.taxid.txt} Output from above. The complete file is too large to distribute with CHNOSZ, but a portion is included in \code{extdata/bison} to support processing example BLAST files for the Bison Pool metagenome (based on RefSeq 57, 2013-01-08).
-    \item \code{mkfaa.sh} Combine the contents of .faa.gz files into a single FASTA file (to use e.g. for making a BLAST database).
-    \item \code{protein.refseq.R} Calculate average amino acid composition of all proteins for each organism identified by a taxonomic ID.
-    \item \code{trim_refseq.R} Keep only selected organism names (reduces number of taxa from 6758 to 779, helps to control package size).
-    \item \code{protein_refseq.csv.xz} Output from above. NOTE: This file has been moved to \code{protein_refseq61.csv.xz} (\url{https://github.com/jedick/JMDplots}).
-    \item \code{taxid.names.R} Generate a table of scientific names for the provided taxids. Requires the complete \code{names.dmp} and \code{nodes.dmp} from NCBI taxonomy files.
-    \item \code{taxid_names.csv.xz} Output from above.
-      NOTE: For backward compatibility with the example BLAST files for the Bison Pool metagenome, the packaged file merges records for taxids found in either RefSeq 57 or 61.
-      NOTE 2: To save space for the package, the file has been trimmed to hold only those taxids listed in extdata/bison/gi.taxid.txt.
-      Certain taxids in release 57 were not located in the current RefSeq catalog, probably related to the transition to the \dQuote{WP} multispecies accessions (\url{ftp://ftp.ncbi.nlm.nih.gov/refseq/release/announcements/WP-proteins-06.10.2013.pdf}).
-      See example for \code{\link{id.blast}}.
-  }
 
   Files in \code{supcrt} contain scripts for reading and comparing SUPCRT files (including slop98.dat and newer slop files from GEOPIG (http://geopig.asu.edu)) with the database in CHNOSZ:
   \itemize{
