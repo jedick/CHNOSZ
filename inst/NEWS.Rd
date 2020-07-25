@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-52 (2020-07-25)}{
+\section{Changes in CHNOSZ version 1.3.6-55 (2020-07-25)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -134,27 +134,10 @@
     }
   }
 
-  \subsection{CHANGES TO FUNCTIONS}{
+  \subsection{DIAGRAM IMPROVEMENTS}{
     \itemize{
 
       \item Change default resolution in \code{affinity()} from 128 to 256.
-
-      \item \code{subcrt()}: change \strong{action.unbalanced} argument to
-      \strong{autobalance}, which now provides the ability to prevent
-      autobalancing.
-
-      \item Setting the water model with \code{water()} now updates the
-      literature references in \code{thermo()$OBIGT}.
-
-      \item \code{thermo.refs()} now shows CHNOSZ version and date.
-
-      \item \code{subcrt()} uses degree symbol in messages (\strong{°C}).
-
-      \item Change \code{thermo$...} to \code{thermo()$...} in messages and
-      comments.
-
-      \item \code{mosaic()} now allows a \strong{blend} argument of length > 1 to
-      apply a specific setting to each group of basis species.
 
       \item Add a \strong{bottom} argument to \code{ratlab()} to allow changing
       the ion in the denominator to something other than \Hplus.
@@ -186,9 +169,30 @@
   \subsection{OTHER CHANGES}{
     \itemize{
 
+      \item \code{subcrt()}: change \strong{action.unbalanced} argument to
+      \strong{autobalance}, which now provides the ability to prevent
+      autobalancing.
+
+      \item Setting the water model with \code{water()} now updates the
+      literature references in \code{thermo()$OBIGT}.
+
+      \item \code{thermo.refs()} now shows CHNOSZ version and date.
+
+      \item \code{subcrt()} and \code{affinity()} use degree symbol in messages
+      (\strong{°C}).
+
+      \item Change \code{thermo$...} to \code{thermo()$...} in messages and
+      comments.
+
+      \item \code{mosaic()} now allows a \strong{blend} argument of length > 1 to
+      apply a specific setting to each group of basis species.
+
       \item Fix \samp{palply.Rd} for new warning about \dQuote{Non-file
         package-anchored link(s) in documentation object} in \command{R CMD
         check}.
+
+      \item Remove \code{wjd()} and demo and supporting data file
+      \samp{DLEN67.csv}.
 
       \item Convert this NEWS file to Rd format.
 

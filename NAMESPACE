@@ -30,11 +30,10 @@ export(
   "qqr", "RMSD", "CVRMSD", "spearman", "DGmix", "DDGmix", "DGtr",
   "ratlab",
   "EOSregress", "EOScoeffs", "EOSplot", "EOSvar",
-  "wjd", "element.potentials", "is.near.equil", "guess", "run.wjd",
 # demos
   "protein.equil", "palply",
   "label.plot",
-  "equil.potentials", "basis.logact",
+  "basis.logact",
   "label.figure", "syslab",
 # equilibrium vignette
   "usrfig",
@@ -48,7 +47,7 @@ export(
   "EOSlab", "EOScalc",
   "basis.elements", "element.mu", "ibasis",
   "water.SUPCRT92", "eqdata", "plot_findit",
-  "nonideal", "uniprot.aa", "run.guess",
+  "nonideal", "uniprot.aa",
 # added 20170301 or later
   "GHS_Tr", "calculateDensity", "calculateGibbsOfWater",
   "calculateEpsilon", "calculateQ", "water.DEW", "berman",

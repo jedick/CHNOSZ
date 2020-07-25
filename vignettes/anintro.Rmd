@@ -1714,24 +1714,13 @@ More recently (late 2017), an implementation of the [Deep Earth Water](http://ww
 
 Some functions in CHNOSZ lie outside the main workflow described above.
 
-## Regressing thermodynamic data
+* <span style="color:green">`RH2OBIGT()`</span> implements a group additivity calculation of standard molal thermodynamic properties and equations of state parameters of crystalline and liquid organic molecules from @RH98.
 
-<span style="color:green">`EOSregress()`</span> and related functions can be used to regress "equation of state" parameters (e.g. coefficients in the HKF equations) from heat capacity and volumetric data. See <span style="color:blue">`?EOSregress`</span> and the vignette, [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html).
+* <span style="color:green">`EOSregress()`</span> and related functions can be used to regress "equation of state" parameters (e.g. coefficients in the HKF equations) from heat capacity and volumetric data. See <span style="color:blue">`?EOSregress`</span> and the vignette, [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html).
 
-## Gibbs energy minimization
+* <span style="color:green">`eqdata()`</span> reads data, including concentrations of aqueous species, numbers of moles of solid phases, and mineral saturation states (affinities), from an EQ6 output file [@Wol92].
 
-<span style="color:green">`wjd()`</span> implements a Gibbs energy minimization using the method of steepest descent described by @WJD58.
-See <span style="color:blue">`?wjd`</span> and [<span style="color:blue">`demo(wjd)`</span>](../demo).
-
-## Group additivity and EQ3/6 output
-
-<span style="color:green">`RH2OBIGT()`</span> implements a group additivity calculation of standard molal thermodynamic properties and equations of state parameters of crystalline and liquid organic molecules from @RH98.
-
-<span style="color:green">`eqdata()`</span> reads data, including concentrations of aqueous species, numbers of moles of solid phases, and mineral saturation states (affinities), from an EQ6 output file [@Wol92].
-
-## NCBI taxonomy files
-
-Some functions are available (see <span style="color:blue">`?taxonomy`</span>) to read data from [NCBI taxonomy files](ftp://ftp.ncbi.nih.gov/pub/taxonomy/), traverse taxonomic ranks, and get scientific names of taxonomic nodes.
+* Some functions are available (see <span style="color:blue">`?taxonomy`</span>) to read data from [NCBI taxonomy files](ftp://ftp.ncbi.nih.gov/pub/taxonomy/), traverse taxonomic ranks, and get scientific names of taxonomic nodes.
 
 # Citation and contact information
 

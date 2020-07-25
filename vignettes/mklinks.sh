@@ -18,7 +18,6 @@ sed -i 's/<code>?cgl<\/code>/<code><a href="..\/html\/eos.html" style="backgroun
 sed -i 's/<code>?water<\/code>/<code><a href="..\/html\/water.html" style="background-image:none;">?water<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?subcrt<\/code>/<code><a href="..\/html\/subcrt.html" style="background-image:none;">?subcrt<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?EOSregress<\/code>/<code><a href="..\/html\/EOSregress.html" style="background-image:none;">?EOSregress<\/a><\/code>/g' anintro.html
-sed -i 's/<code>?wjd<\/code>/<code><a href="..\/html\/wjd.html" style="background-image:none;">?wjd<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?taxonomy<\/code>/<code><a href="..\/html\/taxonomy.html" style="background-image:none;">?taxonomy<\/a><\/code>/g' anintro.html
 
 # anintro.html: add links to function names
@@ -72,7 +71,6 @@ sed -i '120,$s/<code>checkGHS()<\/code>/<code><a href="..\/html\/util.data.html"
 sed -i '120,$s/<code>checkEOS()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">checkEOS()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>equil.reaction()<\/code>/<code><a href="..\/html\/equilibrate.html" style="background-image:none;">equil.reaction()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>EOSregress()<\/code>/<code><a href="..\/html\/EOSregress.html" style="background-image:none;">EOSregress()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>wjd()<\/code>/<code><a href="..\/html\/wjd.html" style="background-image:none;">wjd()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>RH2OBIGT()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">RH2OBIGT()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>eqdata()<\/code>/<code><a href="..\/html\/eqdata.html" style="background-image:none;">eqdata()<\/a><\/code>/g' anintro.html
 

@@ -16,7 +16,7 @@
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "findit", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
-    "contour", "sphalerite", "wjd", "bugstab", "Shh", "saturation",
+    "contour", "sphalerite", "bugstab", "Shh", "saturation",
     "adenine", "DEW", "lambda", "TCA", "aluminum", "AkDi",
     "comproportionation"),
     save.png=FALSE)
@@ -49,7 +49,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{gold} \tab Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009) \cr
     \code{contour} \tab Gold solubility contours on a log fO2 - pH diagram (Williams-Jones et al., 2009) \cr
     \code{sphalerite} \tab Solubility of sphalerite (Akinfiev and Tagirov, 2014) \cr
-    \code{wjd} \tab \eqn{G}{G} minimization: prebiological atmospheres (Dayhoff et al., 1964) and cell periphery of yeast \cr
     \code{dehydration} \tab \logK of dehydration reactions; SVG file contains tooltips and links \cr
     \code{bugstab} \tab Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
     \code{Shh} \tab Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015) \cr
@@ -106,8 +105,6 @@ Berman, R. G. (1988) Internally-consistent thermodynamic data for minerals in th
 Bowers, T. S., Jackson, K. J. and Helgeson, H. C. (1984) \emph{Equilibrium Activity Diagrams for Coexisting Minerals and Aqueous Solutions at Pressures and Temperatures to 5 kb and 600\degC}, Springer-Verlag, Berlin, 397 p. \url{http://www.worldcat.org/oclc/11133620}
 
 Canovas, P. A., III and Shock, E. L. (2016) Geobiochemistry of metabolism: Standard state thermodynamic properties of the citric acid cycle. \emph{Geochim. Cosmochim. Acta} \bold{195}, 293--322. \url{https://doi.org/10.1016/j.gca.2016.08.028}
-
-Dayhoff, M. O. and Lippincott, E. R. and Eck, R. V. (1964) Thermodynamic Equilibria In Prebiological Atmospheres. \emph{Science} \bold{146}, 1461--1464. \url{https://doi.org/10.1126/science.146.3650.1461}
 
 Dick, J. M. and Shock, E. L. (2011) Calculation of the relative chemical stabilities of proteins as a function of temperature and redox chemistry in a hot spring. \emph{PLoS ONE} \bold{6}, e22782. \url{https://doi.org/10.1371/journal.pone.0022782}
 
