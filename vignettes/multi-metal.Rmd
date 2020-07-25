@@ -114,7 +114,7 @@ If you prefer plain text names without formatting, add `format.names = FALSE` to
 
 ## Mixing
 
-In a simple case, flattening diagrams could be used to portray the mixing two single-metal systems.
+In simple terms, flattening two diagrams portrays the mixing together of the two systems.
 Although it is easy to make such a diagram, there is no interaction between the systems.
 If there is a possibility of forming bimetallic species, then additional considerations are needed to account for the stoichiometry of the mixture.
 The stoichiometry can be given as a fixed composition of both metals; then, all combinations of (mono- and/or bimetallic) species that satisfy this compositional constraint are used as the candidate "species" in the system.
@@ -345,7 +345,7 @@ stopifnot(round(eV_atom, 3) == 0.411)
 
 This is very close to the value of 0.412 eV/atom for the energy above the hull for [triclinic FeVO~4~ on the MP website](https://materialsproject.org/materials/mp-504509/), showing that we successfully made a round-trip starting with the input formation energies (eV/atom) from the MP website, to Gibbs energy (J/mol) in the OBIGT database, and back out to energy above the hull (eV/atom).
 
-The concept of using the stable minerals and aqueous species to calculate reaction energetics is generalized in the `mosaic()` function, which is described next.
+The concept of using the stable minerals and aqueous species to calculate reaction energetics is formalized in the `mosaic()` function, which is described next.
 Because this example modified the thermodynamic data for some minerals that are used below, we should restore the default OBIGT database before proceeding to the next section.
 
 ```{r reset, message = FALSE}
