@@ -126,7 +126,7 @@ In the materials science community, materials are characterized by two energies 
 The energy above the hull is zero for stable materials, and greater than zero for metastable materials.
 Furthermore, the Pourbaix energy (Δ*G*~pbx~) refers to the energy above the hull in addition to potential terms associated with pH and Eh, and is used to predict the stable decomposition products.
 The parallel terminology used in CHNOSZ is that aqueous species or minerals have a 1) Gibbs energy of formation from the elements [Δ*G*° = f(*T*, *P*)], and 2) affinity of formation from the basis species [*A* = -Δ*G* = f(*T*, *P*, and activities of all species)].
-The basis species **are not** in general the stable species, so we begin by identifying the stable species in the system; the difference between *their* affinities and the affinity of any other species corresponds to Δ*G*~pbx~.
+The basis species **are not** in general the stable species, so we begin by identifying the stable species in the system; the difference between *their* affinities and the affinity of any other species corresponds to -Δ*G*~pbx~.
 
 First we need to assemble the energies of the solids and aqueous species.
 For solids, values of formation energy (in eV/atom) computed using density functional theory (DFT) are taken from the Materials Project website and are converted to units of J/mol.
@@ -212,7 +212,7 @@ The following commands compute Eh-pH diagrams for the single-metal systems Fe-O-
 The pH and Eh ranges are made relatively small in order to show just a part of the diagram.
 The diagrams are not plotted, but the output of `diagram()` is saved in `dFe` and `dV` for later use.
 
-```{r mixing1, eval = FALSE, echo = 1:11}
+```{r mixing1, eval = FALSE, echo = 1:14}
 par(mfrow = c(1, 3))
 loga.Fe <- -5
 loga.V <- -5
@@ -260,7 +260,7 @@ The `mix()` function  is used to calculate the affinities of formation from basi
 Finally, the `diagram()`s are plotted; the `min.area` argument is used to remove labels for very small fields.
 Regarding the legend, it should be noted that although the DFT calculations for solids are made for zero temperature and zero pressure [@SZS_17], the standard Gibbs energies of aqueous species [e.g. @WEP_82] are modified by a correction term so that they can be combined with DFT energies to reproduce the experimental energy for dissolution of a representative material for each metal at 25 °C and 1 bar [@PWLC12].
 
-```{r mixing1, echo = 13:37, message = FALSE, results = "hide", fig.width = 9, fig.height = 3, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
+```{r mixing1, echo = 16:37, message = FALSE, results = "hide", fig.width = 9, fig.height = 3, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
 ```
 
 In these diagrams, changing the Fe:V ratio affects the fully reduced metallic species.
@@ -271,16 +271,16 @@ For an even higher proportion of V, the V + FeV~3~ assemblage is stable, which c
 
 Let's make another diagram for the 1:1 Fe:V composition over a broader range of Eh and pH.
 The diagram shows a stable assemblage of Fe~2~O~3~ with an oxidized bimetallic material, [Fe~2~V~4~O~13~](https://materialsproject.org/materials/mp-1200054/).
-```{r hull, eval = FALSE, echo = 1:20}
+```{r FeVO4, eval = FALSE, echo = 1:20}
 par(mfrow = c(1, 2))
 # Fe-bearing species
 basis(c("VO+2", "Fe+2", "H2O", "e-", "H+"))
-Fe <- species(c(iFe.aq, iFe.cr))$name
+species(c(iFe.aq, iFe.cr))$name
 species(1:length(iFe.aq), loga.Fe)
 aFe <- affinity(pH = c(0, 14), Eh = c(-1.5, 2))
 dFe <- diagram(aFe, fill = fill(aFe), plot.it = FALSE)
 # V-bearing species
-V <- species(c(iV.aq, iV.cr))$name
+species(c(iV.aq, iV.cr))$name
 species(1:length(iV.aq), loga.V)
 aV <- affinity(aFe)  # argument recall
 dV <- diagram(aV, fill = fill(aV), plot.it = FALSE)
@@ -311,28 +311,38 @@ imax <- arrayInd(which.max(aFeVO4_vs_stable), dim(aFeVO4_vs_stable))
 pH <- d11$vals$pH[imax[1]]
 Eh <- d11$vals$Eh[imax[2]]
 points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = 7)
+stable <- d11$names[d11$predominant[imax]]
+text(pH, Eh, stable, adj = c(0.3, 2), cex = 1.2, col = 7)
 ```
 
 We then compute the affinity for formation of a metastable material, in this case triclinic FeVO~4~, from the same basis species used to make the previous diagrams.
 Given the previous diagrams for the stable Fe-, V- and bimetallic materials *mixed with the same stoichiometry* as FeVO~4~ (1:1 Fe:V), the difference between their affinities of formation and that of FeVO~4~ corresponds to the Pourbaix energy (Δ*G*~pbx~).
 This is plotted as a color map in the second diagram.
 
-```{r hull, echo = 22:34, message = FALSE, results = "hide", fig.width = 10, fig.height = 5, out.width = "100%", pngquant = pngquant}
+```{r FeVO4, echo = 22:34, message = FALSE, results = "hide", fig.width = 10, fig.height = 5, out.width = "100%", pngquant = pngquant}
 ```
 
 Now we locate the pH and Eh that maximize the affinity (that is, minimize Δ*G*~pbx~) of FeVO~4~ compared to the stable species.
 In agreement with @SZS_17, this is in the stability field of Fe~2~O~3~ + Fe~2~V~4~O~13~.
-We can make these the basis species and use `subcrt()` to automatically balance the reaction to form FeVO~4~ from them and calculate the standard Gibbs energy of the reaction.
-The value of Δ*G*° in cal/mol (the default for `subcrt()`) is then converted to J/mol, then to eV/mol, and finally eV/atom.
 
-```{r max, echo = 2:11, message = FALSE, fig.keep = "none"}
+```{r Gpbx_min, echo = 2:7, message = FALSE, fig.keep = "none"}
 plot(1:10) # so we can run "points" in this chunk
 imax <- arrayInd(which.max(aFeVO4_vs_stable), dim(aFeVO4_vs_stable))
 pH <- d11$vals$pH[imax[1]]
 Eh <- d11$vals$Eh[imax[2]]
 points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = 7)
-basis(c("Fe2O3", "Fe2V4O13", "O2"))
-(cal_mol <- subcrt("FeVO4", 1, T = 25)$out$G)
+stable <- d11$names[d11$predominant[imax]]
+text(pH, Eh, stable, adj = c(0.3, 2), cex = 1.2, col = 7)
+```
+
+To calculate the energy above the hull, let's define the stable species as the basis species.
+O~2~ is also needed to make a compositionally complete set, but it does not appear in the reaction to form or decompose FeVO~4~.
+`subcrt()` is used to automatically balance the reaction to form FeVO~4~ from the basis species and calculate the standard Gibbs energy of the reaction.
+The value of Δ*G*° in cal/mol (the default for `subcrt()`) is then converted to J/mol, then to eV/mol, and finally eV/atom.
+
+```{r hull, echo = 1:6, message = FALSE}
+b <- basis(c("Fe2O3", "Fe2V4O13", "O2"))
+cal_mol <- subcrt("FeVO4", 1, T = 25)$out$G
 J_mol <- convert(cal_mol, "J")
 eV_mol <- J_mol / 1.602176634e-19
 eV_atom <- eV_mol / 6.02214076e23 / 6
@@ -725,7 +735,7 @@ legend("bottomleft", legend = leg, bty = "n")
 </div>
 
 We first define basis species to contain both Cu- and Fe-bearing species.
-The x-axis is the ratio of activities of Fe^+2^ and Cu^+^; the label is made with `ratlab()`.
+The \emph{x} axis is the ratio of activities of Fe^+2^ and Cu^+^; the label is made with `ratlab()`.
 ```{r rebalance, eval = FALSE, echo = 5:6}
 ```
 

@@ -37,8 +37,7 @@ Note that the actual values of the affinities (and therefore the ratio between t
 All combinations of species in all crosses between the diagrams (\code{d1-d2}, \code{d1-d3}, \code{d2-d3}, \code{d3-d3}) are identified.
 The mole fractions of species in each combination are computed to satisfy the ratio of metals defined in \code{parts}.
 For example, if \code{d1} and \code{d2} are balanced on Fe\S{+2} and VO\s{4}\S{-3}, the species are combined by default to give equal parts of Fe and V.
-Note that pairs of distinct bimetallic species in \code{d3} are included as well as single bimetallic species that satisfy the composition in \code{parts} (e.g. FeV for \code{c(1, 1)} or Fe\s{3}V for \code{c(3, 1)}).
-(\code{parts} can be expressed as integers or fractions, so \code{c(0.75, 0.25)} is equivalent to \code{c(3, 1)}.)
+Note that pairs of bimetallic species in \code{d3} are included as well as single bimetallic species that satisfy the composition in \code{parts} (e.g. FeV for \code{c(1, 1)} or Fe\s{3}V for \code{c(3, 1)}).
 
 From the possible combinations of species, combinations are removed that have a negative mole fraction of any species or that involve any mono-metallic species that has no predominance field in the corresponding single-metal diagram.
 The output consists of each unique combination of species, including the combined formation reactions and affinities (in the \code{species} and \code{values} elements of the output list), 
