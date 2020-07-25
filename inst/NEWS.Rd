@@ -221,8 +221,6 @@
 
       \item TODO: move extdata/bison to JMDplots package.
 
-      \item TODO: remove extdata/refseq (now in JMDplots).
-
       \item TODO: OBIGT.Rmd: change "CHNOSZ" references to "OBIGT".
 
       \item TODO: add elements from RH95.

@@ -112,7 +112,7 @@ Note that these are predominance diagrams, so they show only the species with hi
 Tip: the names of the fields in the second diagram come from `aCS$species$name`, which are expressions made by combining `aC$names` and `aS$names`.
 If you prefer plain text names without formatting, add `format.names = FALSE` to all of the `diagram()` calls.
 
-## Mixing
+## Mixing 1
 
 In simple terms, flattening two diagrams portrays the mixing together of the two systems.
 Although it is easy to make such a diagram, there is no interaction between the systems.
@@ -212,7 +212,7 @@ The following commands compute Eh-pH diagrams for the single-metal systems Fe-O-
 The pH and Eh ranges are made relatively small in order to show just a part of the diagram.
 The diagrams are not plotted, but the output of `diagram()` is saved in `dFe` and `dV` for later use.
 
-```{r mix, eval = FALSE, echo = 1:14}
+```{r mixing1, eval = FALSE, echo = 1:11}
 par(mfrow = c(1, 3))
 loga.Fe <- -5
 loga.V <- -5
@@ -238,20 +238,17 @@ fill <- function(a) {
     ifelse(grepl("cr", a$species$state), "#FAEBD788", "#F0F8FF88")
 )}
 # 1:1 mixture (Fe:V)
-aFeV11 <- mix(dFe, dV, dFeV, c(1, 1))
-diagram(aFeV11, fill = fill(aFeV11), min.area = 0.01)
-water.lines(dFe, col = 2)
+a11 <- mix(dFe, dV, dFeV, c(1, 1))
+diagram(a11, fill = fill(a11), min.area = 0.01)
 title("Fe:V = 1:1")
 label.figure(lTP(25, 1), xfrac = 0.12)
 # 1:3 mixture
-aFeV13 <- mix(dFe, dV, dFeV, c(1, 3))
-diagram(aFeV13, fill = fill(aFeV13), min.area = 0.01)
-water.lines(dFe, col = 2)
+a13 <- mix(dFe, dV, dFeV, c(1, 3))
+diagram(a13, fill = fill(a13), min.area = 0.01)
 title("Fe:V = 1:3")
 # 1:5 mixture
-aFeV15 <- mix(dFe, dV, dFeV, c(1, 5))
-diagram(aFeV15, fill = fill(aFeV15), min.area = 0.01)
-water.lines(dFe, col = 2)
+a15 <- mix(dFe, dV, dFeV, c(1, 5))
+diagram(a15, fill = fill(a15), min.area = 0.01)
 title("Fe:V = 1:5")
 ```
 
@@ -263,7 +260,7 @@ The `mix()` function  is used to calculate the affinities of formation from basi
 Finally, the `diagram()`s are plotted; the `min.area` argument is used to remove labels for very small fields.
 Regarding the legend, it should be noted that although the DFT calculations for solids are made for zero temperature and zero pressure [@SZS_17], the standard Gibbs energies of aqueous species [e.g. @WEP_82] are modified by a correction term so that they can be combined with DFT energies to reproduce the experimental energy for dissolution of a representative material for each metal at 25 °C and 1 bar [@PWLC12].
 
-```{r mix, echo = 16:40, message = FALSE, results = "hide", fig.width = 9, fig.height = 3, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
+```{r mixing1, echo = 13:37, message = FALSE, results = "hide", fig.width = 9, fig.height = 3, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
 ```
 
 In these diagrams, changing the Fe:V ratio affects the fully reduced metallic species.
@@ -292,27 +289,27 @@ species(iFeV.cr)
 aFeV <- affinity(aFe)  # argument recall
 dFeV <- diagram(aFeV, plot.it = FALSE, bold = TRUE)
 # 1:1 mixture (Fe:V)
-aFeV11 <- mix(dFe, dV, dFeV, c(1, 1))
-dFeV11 <- diagram(aFeV11, fill = fill(aFeV11), min.area = 0.01)
-water.lines(dFeV11, col = 2)
+a11 <- mix(dFe, dV, dFeV, c(1, 1))
+d11 <- diagram(a11, fill = fill(a11), min.area = 0.01)
+water.lines(d11, col = 2)
 
 # Calculate affinity of FeVO4
 species("FeVO4")
 aFeVO4 <- affinity(aFe)  # argument recall
 # Calculate difference from stable species
-aFeVO4_vs_stable <- aFeVO4$values[[1]] - dFeV11$predominant.values
+aFeVO4_vs_stable <- aFeVO4$values[[1]] - d11$predominant.values
 # Overlay lines from diagram on color map
-diagram(aFeV11, names = FALSE, limit.water = FALSE)
+diagram(a11, names = FALSE, limit.water = FALSE)
 opar <- par(usr = c(0, 1, 0, 1))
 image(aFeVO4_vs_stable, col = topo.colors(100, 0.7, TRUE), add = TRUE)
 par(opar)
-diagram(aFeV11, add = TRUE, names = FALSE)
-water.lines(dFeV11, col = 2)
+diagram(a11, add = TRUE, names = FALSE)
+water.lines(d11, col = 2)
 thermo.axis()
 
 imax <- arrayInd(which.max(aFeVO4_vs_stable), dim(aFeVO4_vs_stable))
-pH <- dFeV11$vals$pH[imax[1]]
-Eh <- dFeV11$vals$Eh[imax[2]]
+pH <- d11$vals$pH[imax[1]]
+Eh <- d11$vals$Eh[imax[2]]
 points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = 7)
 ```
 
@@ -331,8 +328,8 @@ The value of Δ*G*° in cal/mol (the default for `subcrt()`) is then converted t
 ```{r max, echo = 2:11, message = FALSE, fig.keep = "none"}
 plot(1:10) # so we can run "points" in this chunk
 imax <- arrayInd(which.max(aFeVO4_vs_stable), dim(aFeVO4_vs_stable))
-pH <- dFeV11$vals$pH[imax[1]]
-Eh <- dFeV11$vals$Eh[imax[2]]
+pH <- d11$vals$pH[imax[1]]
+Eh <- d11$vals$Eh[imax[2]]
 points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = 7)
 basis(c("Fe2O3", "Fe2V4O13", "O2"))
 (cal_mol <- subcrt("FeVO4", 1, T = 25)$out$G)
@@ -391,7 +388,7 @@ dFe <- diagram(mFe$A.species, add = TRUE)
 species(c("chalcopyrite", "bornite"))
 mCu <- mosaic(list(bases1, bases2), pH = pH, O2 = O2,
               T = T, predominant = list(NULL, dFe$predominant))
-diagram(mCu$A.species, add = TRUE, col = 2, col.names = 2,
+diagram(mCu$A.species, add = TRUE, col = "#FF4500", col.names = "#FF4500",
         lwd = 2, bold = TRUE)
 TP <- describe.property(c("T", "P"), c(T, "Psat"))
 legend("topright", TP, bty = "n")
@@ -401,7 +398,7 @@ title(paste("Cu-Fe-S-O-H; Total S =", 10^logaH2S, "m"))
 Next we load the Cu-bearing minerals and calculate their affinities while changing *both* the aqueous sulfur species and the Fe-bearing minerals whose stability fields were just calculated.
 The latter step is the key to the mosaic stack and is activated by supplying the calculated stabilities of the Fe-bearing minerals in the `predominant` argument.
 This is a list whose elements correspond to each group of changing basis species given in the first argument.
-The NULL means that the abundances of S-bearing aqueous species are calculated according to the default in `mosaic()` (actually using `equilibrate()` to blend their transitions).
+The NULL means that the abundances of S-bearing aqueous species are calculated according to the default in `mosaic()`, which uses `equilibrate()` to compute the continuous transition between them ("blending").
 Because the Fe-bearing minerals are the second group of changing basis species (`bases2`), their stabilities are given in the second position of the `predominant` list.
 The result is used to plot the last layer of the diagram:
 
@@ -409,11 +406,86 @@ The result is used to plot the last layer of the diagram:
 
 After that we add the legend and title.
 
-```{r stack1_2, echo=5:12, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+```{r stack1_2, echo=5:12, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
 ```
 
 This diagram has a distinctive chalcopyrite "hook" that is controlled on the low-pH side by the reaction with pyrite.
 Only that reaction is shown in many published diagrams [e.g. @And75;@Gio02], but diagrams with a similar chalcopyrite wedge or hook can be seen in @BBR77 and @Bri80.
+
+## Mixing 2
+
+The previous diagram shows a stability boundary between chalcopyrite and bornite but does not identify the stable *assemblages* that contain these minerals.
+This is where `mix()` can help.
+Following the pattern described in **Mixing 1**, we first calculate individual diagrams for Fe-S-O-H and Cu-S-O-H, which are overlaid on the first plot and saved in `dFe` and `dCu`.
+We then calculate the affinities for the bimetallic Cu and Fe minerals and run them through `diagram()` without actually making a plot, but save the result in `dFeCu`.
+Then, we combine the results using `mix()` to define different proportions of Fe and Cu.
+
+<button id="B-mixing2" onclick="ToggleDiv('mixing2')">Show code</button>
+<div id="D-mixing2" style="display: none">
+```{r mixing2, eval = FALSE}
+par(mfrow = c(2, 2))
+
+logaH2S <- -2
+T <- 200
+pH <- c(0, 14)
+O2 <- c(-60, -25)
+basis(c("Cu+", "Fe+2", "H2S", "oxygen", "H2O", "H+"))
+basis("H2S", logaH2S)
+
+S.aq <- c("H2S", "HS-", "HSO4-", "SO4-2")
+Fe.cr <- c("pyrite", "pyrrhotite", "magnetite", "hematite")
+Cu.cr <- c("copper", "cuprite", "tenorite", "chalcocite", "covellite")
+FeCu.cr <- c("chalcopyrite", "bornite")
+
+species(Fe.cr)
+mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T)
+diagram(mFe$A.bases, lty = 2, col = 4, col.names = 4, italic = TRUE)
+names <- info(info(Fe.cr))$abbrv
+dFe <- diagram(mFe$A.species, add = TRUE, names = names)
+
+species(Cu.cr)
+mCu <- mosaic(S.aq, pH = pH, O2 = O2, T = T)
+names <- info(info(Cu.cr))$abbrv
+col.names <- rep(2, length(names))
+col.names[1] <- 0
+dCu <- diagram(mCu$A.species, add = TRUE, col = 2, col.names = col.names, names = names)
+text(12, -55, "Cu", col = 2)
+legend("topright", legend = lTP(T, "Psat"), bty = "n")
+title(paste("Fe-S-O-H and Cu-S-O-H; Total S =", 10^logaH2S, "m"))
+
+species(FeCu.cr)
+mFeCu <- mosaic(S.aq, pH = pH, O2 = O2, T = T)
+names <- info(info(FeCu.cr))$abbrv
+dFeCu <- diagram(mFeCu$A.species, plot.it = FALSE, names = names)
+
+fill <- function(x) {
+  ifelse(grepl("Ccp", x$species$name), "#FF8C0088",
+    ifelse(grepl("Bn", x$species$name), "#DC143C88", NA)
+)}
+srt <- function(x) ifelse(x$species$name %in% c("Mt+Bn", "Mt+Cct", "Mt+Ccp"), 80, 0)
+
+a11 <- mix(dFe, dCu, dFeCu)
+diagram(a11, fill = fill(a11), srt = srt(a11), min.area = 0.01)
+title("Fe:Cu = 1:1")
+
+a21 <- mix(dFe, dCu, dFeCu, c(2, 1))
+diagram(a21, fill = fill(a21), srt = srt(a21), min.area = 0.01)
+title("Fe:Cu = 2:1")
+
+a12 <- mix(dFe, dCu, dFeCu, c(1, 2))
+diagram(a12, fill = fill(a12), srt = srt(a12), min.area = 0.01)
+title("Fe:Cu = 1:2")
+```
+</div>
+
+```{r mixing2, echo = FALSE, results = "hide", message = FALSE, fig.width = 8, fig.height = 6.5, out.width = "100%", pngquant = pngquant}
+```
+
+Now we can see that the "hook" has a chalcopyrite core and bornite rim.
+Notably, bornite is not stable outside of this region; this feature is not visible on the previous diagram.
+At an exact 1:1 ratio of Fe:Cu, chalcopyrite is the only stable mineral in the core.
+At a 2:1 ratio, pyrite, pyrrhotite, or magnetite can coexist with chalcopyrite.
+At a 1:2 ratio, an assemblage of the two bimetallic minerals (chalcopyrite and bornite) is stable.
 
 ## Mosaic Stacking 2
 

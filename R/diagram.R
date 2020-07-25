@@ -302,7 +302,6 @@ diagram <- function(
     lty <- rep(lty, length.out=ngroups)
     lwd <- rep(lwd, length.out=ngroups)
     col <- rep(col, length.out=ngroups)
-    col.names <- rep(col.names, length.out=ngroups)
 
     if(nd==0) {
 
@@ -578,7 +577,10 @@ diagram <- function(
           font <- rep(font, length.out = length(names))
           family <- rep(family, length.out = length(names))
           srt <- rep(srt, length.out = length(names))
-          for(i in seq_along(names)) text(namesx[i], namesy[i], labels=names[i], cex=cex[i], col=col[i], font=font[i], family=family[i], srt = srt[i])
+          for(i in seq_along(names)) {
+            if(!(identical(col[i], 0)) & !is.na(col[i]))
+              text(namesx[i], namesy[i], labels=names[i], cex=cex[i], col=col[i], font=font[i], family=family[i], srt = srt[i])
+          }
         }
         return(list(namesx=namesx, namesy=namesy))
       }
