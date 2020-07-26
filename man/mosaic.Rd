@@ -14,7 +14,7 @@ Calculate chemical affinities of formation reactions of species using basis spec
   \item{bases}{character, basis species to be changed in the calculation, or list, containing vectors for each group of changing basis species}
   \item{bases2}{character, second set of changing basis species}
   \item{blend}{logical, use relative abundances of basis species?}
-  \item{stable}{list, stable species to use with blend = FALSE}
+  \item{stable}{list, previously determined stable species}
   \item{...}{additional arguments to be passed to \code{\link{affinity}}}
 }
 

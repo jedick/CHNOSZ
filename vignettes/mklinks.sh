@@ -120,3 +120,4 @@ sed -i 's/retrieve()/<a href="..\/html\/retrieve.html">retrieve()<\/a>/g' multi-
 sed -i 's/NaCl()/<a href="..\/html\/NaCl.html">NaCl()<\/a>/g' multi-metal.html
 sed -i 's/solubility()/<a href="..\/html\/solubility.html">solubility()<\/a>/g' multi-metal.html
 sed -i 's/subcrt()/<a href="..\/html\/subcrt.html">subcrt()<\/a>/g' multi-metal.html
+sed -i 's/convert()/<a href="..\/html\/util.units.html">convert()<\/a>/g' multi-metal.html
