@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-55 (2020-07-25)}{
+\section{Changes in CHNOSZ version 1.3.6-59 (2020-07-26)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -62,11 +62,10 @@
       \item Add function \strong{rebalance()} for making a new diagram by
       secondary balancing between two systems.
 
-      \item Add a \strong{predominant} argument to \code{mosaic()} to use
-      previously calculated predominances of species (e.g. minerals) for the
-      changing basis species. This allows \code{mosaic()} calculations to be
-      linked in series, for instance to sequentially add metals (Fe, then Cu)
-      to a diagram.
+      \item Add a \strong{stable} argument to \code{mosaic()} to use previously
+      calculated stabilities of species (e.g. minerals) for the changing basis
+      species. This allows \code{mosaic()} calculations to be linked in series,
+      for instance to sequentially add metals (Fe, then Cu) to a diagram.
 
       \item Add vignette \strong{multi-metal.Rmd} for examples that use these
       new features to make diagrams for minerals with multiple metals
@@ -225,7 +224,7 @@
 
       \item TODO: add elements from RH95.
 
-      \item TODO: add check to mosaic() that 'predominant' values have the right dimensions.
+      \item TODO: add check to mosaic() that 'stable' values have the right dimensions.
 
       \item TODO: remove stopifnot() from examples.
 

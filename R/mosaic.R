@@ -11,7 +11,7 @@
 #source("util.args.R")
 
 # function to calculate affinities with mosaic of basis species
-mosaic <- function(bases, bases2 = NULL, blend = TRUE, predominant = list(), ...) {
+mosaic <- function(bases, bases2 = NULL, blend = TRUE, stable = list(), ...) {
 
   # argument recall 20190120
   # if the first argument is the result from a previous mosaic() calculation,
@@ -42,7 +42,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, predominant = list(), ...
       hasbases2 <- TRUE
     }
     otherargs <- list(...)
-    allargs <- c(list(bases = bases, blend = blend, predominant = predominant), otherargs)
+    allargs <- c(list(bases = bases, blend = blend, stable = stable), otherargs)
     out <- do.call(mosaic, allargs)
     # replace A.bases (affinity calculations for all groups of basis species) with backwards-compatbile A.bases and A.bases2
     if(hasbases2) A.bases2 <- out$A.bases[[2]]
@@ -111,7 +111,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, predominant = list(), ...
   blend <- rep(blend, length(A.bases))
   E.bases <- list()
   for(i in 1:length(A.bases)) {
-    if(blend[i] & is.null(predominant[i][[1]])) {
+    if(blend[i] & is.null(stable[i][[1]])) {
       # this isn't needed (and doesn't work) if all the affinities are NA 20180925
       if(any(!sapply(A.bases[[1]]$values, is.na))) {
         # 20190504: when equilibrating the changing basis species, use a total activity equal to the activity from the basis definition
@@ -129,12 +129,12 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, predominant = list(), ...
     } else {
       # for blend = FALSE, we just look at whether
       # a basis species predominates within its group
-      if(is.null(predominant[i][[1]])) {
+      if(is.null(stable[i][[1]])) {
         d <- diagram(A.bases[[i]], plot.it = FALSE, limit.water = FALSE)
         predom <- d$predominant
       } else {
-        # get the predominances from the argument 20200715
-        predom <- predominant[i][[1]]
+        # get the stable species from the argument 20200715
+        predom <- stable[i][[1]]
       }
       group.fraction[[i]] <- list()
       for(j in 1:length(bases[[i]])) {

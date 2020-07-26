@@ -296,7 +296,7 @@ diagram <- function(
 
     ## handle line type/width/color arguments
     if(is.null(lty)) {
-      if(type=="loga.balance") lty <- 1
+      if(type=="loga.balance" | nd==2) lty <- 1
       else lty <- 1:ngroups
     }
     lty <- rep(lty, length.out=ngroups)
@@ -537,8 +537,7 @@ diagram <- function(
             # loop in case contourLines returns multiple lines
             for(k in 1:length(cLines)) {
               # draw the lines
-              mylty <- lty
-              lines(cLines[[k]][2:3], lty=mylty, col=col, lwd=lwd)
+              lines(cLines[[k]][2:3], lty=lty[i], col=col[i], lwd=lwd[i])
             }
           }
           # mask species to prevent double-plotting contour lines
