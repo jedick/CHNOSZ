@@ -86,8 +86,9 @@ species(c("quartz","enstatite","forsterite"))
 affinity()
 # at higher temperature and pressure
 affinity(T=500, P=2000)
-# at 25 temperatures and pressures
-affinity(T=c(500, 1000, 5), P=c(1000, 5000, 5))
+# at 25 temperatures and pressures,
+# some are in the low-density region so we suppress warnings
+suppressWarnings(affinity(T=c(500, 1000, 5), P=c(1000, 5000, 5)))
 # equilibrium constants of formation reactions
 affinity(property="logK")
 # standard molal Gibbs energies of species,

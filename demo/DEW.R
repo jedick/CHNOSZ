@@ -27,9 +27,9 @@ PT10.0 <- data.frame(P=10000, T=seq(200, 825, 10))
 PT20.0 <- data.frame(P=20000, T=seq(200, 800, 10))
 PT <- rbind(PT0.5, PT1.0, PT2.0, PT5.0, PT10.0, PT20.0)
 # reaction 1: quartz = SiO2(aq) [equivalent to quartz + 3 H2O = Si(OH)4]
-SiO2_logK <- subcrt(c("quartz", "SiO2"), c("cr", "aq"), c(-1, 1), P=PT$P, T=PT$T)$out$logK
+SiO2_logK <- suppressWarnings(subcrt(c("quartz", "SiO2"), c("cr", "aq"), c(-1, 1), P=PT$P, T=PT$T))$out$logK
 # reaction 2: 2 quartz = Si2O4(aq) [equivalent to 2 quartz + 3 H2O = Si2O(OH)6]
-Si2O4_logK <- subcrt(c("quartz", "Si2O4"), c("cr", "aq"), c(-2, 1), P=PT$P, T=PT$T)$out$logK
+Si2O4_logK <- suppressWarnings(subcrt(c("quartz", "Si2O4"), c("cr", "aq"), c(-2, 1), P=PT$P, T=PT$T))$out$logK
 # plot the sum of molalities (== activities) for each pressure
 plot(c(200, 1000), c(-2.5, 0.5), type="n", xlab=axis.label("T"), ylab="log molality")
 for(P in unique(PT$P)) {
@@ -208,3 +208,6 @@ sres <- subcrt("propanoate", T = seq(600, 1000, 100), P = 50000, IS = c(0.39, 0.
 stopifnot(maxdiff(sres$out[[1]]$loggam, loggamma) < 0.023)
 # if m_star in nonideal() was zero, we could decrease the tolerance here
 #stopifnot(maxdiff(sres$out[[1]]$loggam, loggamma) < 0.004)
+
+# reset OBIGT database
+reset()

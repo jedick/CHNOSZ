@@ -57,15 +57,15 @@ b3 <- swap.basis("H2", "oxygen")
 # we have returned to starting point
 stopifnot(all.equal(b1$logact, b3$logact))
 
-## demonstrating the interconvertibility between 
-## chemical potentials of elements and logarithms 
-## of activities of basis species at high temperature
-#basis("CHNOS+")
-#bl1 <- basis()$logact
-#emu <- element.mu(T=100)
-#bl2 <- basis.logact(emu, T=100)
-## note that basis.logact produces a named array
-#stopifnot(all.equal(bl1, as.numeric(bl2)))
+# demonstrating the interconvertibility between 
+# chemical potentials of elements and logarithms 
+# of activities of basis species at high temperature
+basis("CHNOS+")
+bl1 <- basis()$logact
+emu <- element.mu(T=100)
+bl2 <- basis.logact(emu, T=100)
+# note that basis.logact produces a named array
+stopifnot(all.equal(bl1, as.numeric(bl2)))
 
 ## swapping basis species while species are defined
 ## and using numeric species indices

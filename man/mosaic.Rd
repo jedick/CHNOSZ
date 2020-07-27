@@ -73,7 +73,7 @@ T <- 25
 basis(c("FeO", "SO4-2", "H2O", "H+", "e-"))
 basis("SO4-2", -6)
 species(c("Fe+2", "Fe+3"), -6)
-species(c("pyrrhotite", "pyrite", "hematite", "magnetite"))
+species(c("pyrrhotite", "pyrite", "hematite", "magnetite"), add = TRUE)
 # the basis species we'll swap through
 bases <- c("SO4-2", "HSO4-", "HS-", "H2S")
 # calculate affinities using the relative abundances of the basis species

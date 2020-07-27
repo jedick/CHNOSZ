@@ -35,7 +35,7 @@ species <- c("NaCl", "Na+", "Cl-")
 coeffs <- c(-1, 1, 1)
 logK <- numeric()
 for(i in 1:length(T)) {
-  s <- subcrt(species, coeffs, T=T[[i]], P=P[[i]])
+  s <- suppressWarnings(subcrt(species, coeffs, T=T[[i]], P=P[[i]]))
   if(i==2) lty <- 3 else lty <- 1
   lines(s$out$T, s$out$logK, lty=lty)
   # keep the calculated values for each experimental condition (excluding Psat)

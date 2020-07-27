@@ -171,10 +171,8 @@ subcrt(c("pyrite", "pyrrhotite", "H2O", "H2S", "O2"), c(-1, 1, -1, 1, 0.5))
 # above the T, P limits for the H2O equations of state
 subcrt("alanine", T=c(2250, 2251), P=c(30000, 30001), grid="T")
 # Psat is not defined above the critical point
-\dontrun{
-## (also gives a warning)
-subcrt("alanine", T=seq(0, 5000, by=1000))
-}
+## this also gives a warning
+suppressWarnings(subcrt("alanine", T=seq(0, 5000, by=1000)))
 
 ## minerals with phase transitions
 # compare calculated values of heat capacity of iron with
@@ -200,14 +198,13 @@ E.units("cal")
 P <- seq(500, 5000, 500)
 # this is like the temperature specification used 
 # in the example by Johnson et al., 1992
-# T <- seq(0, 1000, 100)
-# we use this one to avoid warnings at 0 deg C, 5000 bar
-T <- c(2, seq(100, 1000, 100))
-s <- subcrt(c("andradite", "carbon dioxide", "H2S", "Cu+", "quartz", 
+T <- seq(0, 1000, 100)
+s <- suppressWarnings(subcrt(
+  c("andradite", "carbon dioxide", "H2S", "Cu+", "quartz", 
   "calcite", "chalcopyrite", "H+", "H2O"), 
   coeff=c(-1, -3, -4, -2, 3, 3, 2, 2, 3),
   state=c("cr", "g", "aq", "aq", "cr", "cr", "cr", "aq", "liq"),
-  P=P, T=T, grid="P")
+  P=P, T=T, grid="P"))
 # The results are not identical to SUPCRT92, as CHNOSZ has updated
 # parameters for species e.g. Cu+ from Shock et al., 1997.
 # Check the calculated phase transitions for chalcopyrite

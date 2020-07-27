@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-61 (2020-07-27)}{
+\section{Changes in CHNOSZ version 1.3.6-62 (2020-07-27)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -131,6 +131,8 @@
       \samp{bugstab.R}. The material is now in the \samp{bison.Rmd} vignette
       and \samp{bugstab.R} demo in the \pkg{JMDplots} package
       (\url{https://github.com/jedick/JMDplots}).
+
+      \item New demo \samp{berman.R}, extracted from \samp{berman.Rd}.
 
     }
   }

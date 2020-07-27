@@ -10,7 +10,7 @@ lines.KH <- function(name = "CO2", T = 1:373, P = "Psat", HKF = FALSE, altH2S = 
   # use alternative parameters for H2S? (AD03 Table 1)
   if(altH2S) mod.OBIGT("H2S", state="aq", a=-11.2303, b=12.6104, c=-0.2102)
   # get properties of aq - gas reaction
-  sres <- subcrt(c(name, name), c("aq", "gas"), c(-1, 1), T = T, P = P)
+  sres <- suppressWarnings(subcrt(c(name, name), c("aq", "gas"), c(-1, 1), T = T, P = P))
   # calculate natural logarithm of Henry's constant in mole-fraction units
   ln_KH <- log(1000/18.0153) + log(10) * sres$out$logK
   # plot with units of reciprocal temperature (1000/K)

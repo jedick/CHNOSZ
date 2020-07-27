@@ -17,7 +17,7 @@
     "density", "ORP", "findit", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "Shh", "saturation",
-    "adenine", "DEW", "lambda", "TCA", "aluminum", "AkDi",
+    "adenine", "DEW", "lambda", "berman", "TCA", "aluminum", "AkDi",
     "comproportionation"),
     save.png=FALSE)
 }
@@ -55,6 +55,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{adenine} \tab HKF regression of heat capacity and volume of aqueous adenine (Lowe et al., 2017) \cr
     \code{DEW} \tab Deep Earth Water (DEW) model for high pressures (Sverjensky et al., 2014a and 2014b) \cr
     \code{lambda} \tab Effects of lambda transition on thermodynamic properties of quartz (Berman, 1988) \cr
+    \code{berman} \tab ineral stabilities in Berman and Helgeson et al. datasets (Sverjensky et al., 1991) \cr
     \code{TCA} \tab Standard Gibbs energies of the tricarboxylic (citric) acid cycle (Canovas and Shock, 2016) \cr
     \code{aluminum} \tab Reactions involving Al-bearing minerals (Zimmer et al., 2016; Tutolo et al., 2014) \cr
     \code{carboxylase} \tab Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase \cr
