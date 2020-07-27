@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-59 (2020-07-26)}{
+\section{Changes in CHNOSZ version 1.3.6-61 (2020-07-27)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -18,13 +18,13 @@
       \strong{methane} now applies exclusively to the gas; the formula
       \strong{CH4} without a state continues to represent the aqueous species.
       This behavior is consistent with inorganic gases but differs from most
-      organic substances, where the English name refers to the aqueous species.
-      This change was made because in the past there was no way to use
-      \code{info()} or \code{subcrt()} with a single character argument to
-      identify gaseous methane, which is common in geochemistry.  (Note that
-      \code{info("CH4", "gas")} can still be used.) A hack to revert to the old
-      behavior, where \strong{methane} refers primarily to the aqueous species,
-      is \code{mod.OBIGT(info("CH4"), name = "methane")}.
+      organic substances, where the name refers to the aqueous species. This
+      change was made because in the past there was no way to use \code{info()}
+      or \code{subcrt()} with a single character argument to identify gaseous
+      methane, which is common in geochemistry. (Note that \code{info("CH4",
+        "gas")} can still be used.) A hack to revert to the old behavior, where
+      \strong{methane} refers primarily to the aqueous species, is
+      \code{mod.OBIGT(info("CH4"), name = "methane")}.
 
       \item The all-uppercase acronym \strong{OBIGT} is used everywhere it
       appears in file, function, and object names. In particular, the
@@ -64,12 +64,13 @@
 
       \item Add a \strong{stable} argument to \code{mosaic()} to use previously
       calculated stabilities of species (e.g. minerals) for the changing basis
-      species. This allows \code{mosaic()} calculations to be linked in series,
-      for instance to sequentially add metals (Fe, then Cu) to a diagram.
+      species. This allows \code{mosaic()} calculations to be linked in series
+      (or "stacked"), for instance to sequentially add metals (Fe, then Cu) to
+      a diagram.
 
       \item Add vignette \strong{multi-metal.Rmd} for examples that use these
-      new features to make diagrams for minerals with multiple metals
-      (specifically Fe and Cu).
+      new features to make diagrams for systems with multiple metals
+      (specifically Fe-V and Fe-Cu).
 
     }
   }
@@ -77,32 +78,35 @@
   \subsection{CHANGES TO OBIGT DATABASE}{
     \itemize{
 
-      \item Update species parameters for the 2019 Deep Earth Water (DEW)
-      model.
+      \item Update species parameters for the 2019 version of the Deep Earth
+      Water (DEW) model (\href{https://doi.org/10.1016/j.gca.2019.03.027}{Huang
+      and Sverjensky, 2019}).
 
-      \item \samp{OBIGT/SUPCRT92.csv}: Change lowercase to uppercase "A"
-      (Angstrom) in names of minerals with suffixes indicating interlayer
-      spacing (amesite, clinochlore, cronstedtite, daphnite).
-
-      \item \samp{OBIGT/inorganic_aq.csv}: Update arsenopyrite with data from
-      Naumov et al., 1974 (via Unitherm).
-
-      \item \samp{OBIGT/inorganic_cr.csv}: Correct syntax for number of \H2O in
-      formulas of some As-bearing minerals.
-
-      \item Install bibtex file (\samp{docs/OBIGT.bib}) for use in the
-      \pkg{logKcalc} package (\url{https://github.com/jedick/logKcalc}).
-
-      \item Use uncompressed data files (i.e. \samp{.csv}, not \samp{.csv.xz})
-      and rename \samp{DEW_aq.csv} to \samp{DEW.csv}.
-
-      \item Remove old data file suffixes in references (e.g. [S92] was used to
-      indicate that the data first appeared in \acronym{SUPCRT92}).
+      \item \samp{inorganic_aq.csv}, \samp{inorganic_aq.csv}: Add arsenopyrite,
+      loellingite, westerveldite, and aqueous As(OH)\s{3} and AsO(OH)\s{3} from
+      \href{https://doi.org/10.1016/j.gca.2007.11.017}{Perfetti et al., 2008}.
 
       \item Add GHS for almandine, dickite, fluorphlogopite, glaucophane,
       grunerite, larnite, pyrope (\samp{SUPCRT92.csv}) and bromellite
       (\samp{inorganic_cr.csv}) from
       \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway, 1995}.
+
+      \item \samp{inorganic_cr.csv}: Correct formulas for number of \H2O in
+      some As-bearing minerals.
+
+      \item \samp{SUPCRT92.csv}: Change lowercase to uppercase "A"
+      (Angstrom) in names of minerals with suffixes indicating interlayer
+      spacing (amesite, clinochlore, cronstedtite, daphnite).
+
+      \item Remove bracketed suffixes in references (e.g. [S92] was used to
+      indicate that the data first appeared in \acronym{SUPCRT92}).
+
+      \item Use uncompressed data files (i.e. \samp{.csv}, not \samp{.csv.xz})
+      and rename \samp{DEW_aq.csv} to \samp{DEW.csv}.
+
+      \item The package is now installed with the bibtex file for the OBIGT
+      database (\samp{docs/OBIGT.bib}), which is used by the \pkg{logKcalc}
+      package (\url{https://github.com/jedick/logKcalc}).
 
     }
   }
@@ -114,22 +118,19 @@
       comproportionation, after
       \href{https://doi.org/10.1111/1462-2920.14982}{Amend et al., 2020}.
 
-      \item Convert \samp{equilibrium.Rnw} to \samp{equilibrium.Rmd} and revise
-      and simplify content.
+      \item Revise and simplify \samp{anintro.Rmd} and \samp{equilibrium.Rmd}
+      (converted from \samp{equilibrium.Rnw}).
 
       \item Revise \samp{OBIGT.Rmd} to reduce the size of the HTML file and
       make deep linking to individual sections work.
 
-      \item Remove vignette \samp{hotspring.Rnw}, demo \samp{bison.R}, and
-      associated data files \samp{DS11.csv} and \samp{DS13.csv}. The plots are
-      now in the \samp{bison.Rmd} vignette in the \pkg{JMDplots} package
-      (\url{https://github.com/jedick/JMDplots}). Also move the demo
-      \samp{bugstab.R} and supporting data files to \pkg{JMDplots}.
-
       \item Add \samp{viglink} Rd macro so HTML versions of Rd files can link
       to vignettes.
 
-      \item \samp{anintro.Rmd} has been made considerably shorter.
+      \item Remove vignette \samp{hotspring.Rnw} and demos \samp{bison.R} and
+      \samp{bugstab.R}. The material is now in the \samp{bison.Rmd} vignette
+      and \samp{bugstab.R} demo in the \pkg{JMDplots} package
+      (\url{https://github.com/jedick/JMDplots}).
 
     }
   }
@@ -138,30 +139,32 @@
     \itemize{
 
       \item Change default resolution in \code{affinity()} from 128 to 256.
+      This greatly improves the appearance of diagrams made with the default
+      settings.
+
+      \item \code{which.pmax()} was rewritten to speed up identification of
+      predominant species, and the drawing of field boundaries in \code{diagram()}
+      was made more efficient. The latter change has prompted the removal of
+      the \samp{lty.aq} and \samp{lty.cr} arguments from \code{diagram()}.
 
       \item Add a \strong{bottom} argument to \code{ratlab()} to allow changing
       the ion in the denominator to something other than \Hplus.
 
-      \item The \strong{srt} argument in \code{diagram()} now can be used to
+      \item The \strong{srt} argument in \code{diagram()} can now be used to
       rotate field labels, not only line labels. This and other arguments
-      (\strong{cex}, \strong{col}, \strong{font}, \strong{family},
-      \strong{bold}, \strong{italic}) now can have length > 1 to apply
-      different settings to each species.
+      (\strong{cex}, \strong{col}, \strong{col.names}, \strong{font},
+      \strong{family}, \strong{bold}, \strong{italic}) can have length > 1 to
+      apply different settings to each species.
 
       \item Add a \strong{min.area} argument to \code{diagram()} to specify the
       minimum area of fields that should be labeled. This is useful for
-      removing labels from small fields on very crowded diagrams.
+      removing labels from small fields on crowded diagrams.
       
-      \item The list returned by diagram \code{diagram()} now includes a
-      \code{predominant.values} component, which has the affinities of the
+      \item The list returned by \code{diagram()} now includes a
+      \strong{predominant.values} component, which has the affinities of the
       predominant species at each grid point. This can be used as shown in the
       \code{multi-metal.Rmd} vignette to compute the Pourbaix energy
       (Δ\emph{G}\s{pbx}) for a metastable material.
-
-      \item \code{which.pmax()} was rewritten to speed up identification of
-      stable species, and \code{diagram()} was made more efficient in drawing
-      field boundaries. The latter change has prompted the removal of the
-      \samp{lty.aq} and \samp{lty.cr} arguments from \code{diagram()}.
 
     }
   }
@@ -169,17 +172,17 @@
   \subsection{OTHER CHANGES}{
     \itemize{
 
-      \item \code{subcrt()}: change \strong{action.unbalanced} argument to
+      \item \code{subcrt()}: replace \samp{action.unbalanced} argument with
       \strong{autobalance}, which now provides the ability to prevent
       autobalancing.
 
-      \item Setting the water model with \code{water()} now updates the
-      literature references in \code{thermo()$OBIGT}.
+      \item Setting the water model with \code{water()} updates the literature
+      references in \code{thermo()$OBIGT}.
 
-      \item \code{thermo.refs()} now shows CHNOSZ version and date.
+      \item \code{thermo.refs()} shows CHNOSZ version and date.
 
-      \item \code{subcrt()} and \code{affinity()} use degree symbol in messages
-      (\strong{°C}).
+      \item \code{subcrt()} and \code{affinity()} use degree symbol
+      (\strong{°C}) in messages.
 
       \item Change \code{thermo$...} to \code{thermo()$...} in messages and
       comments.
@@ -191,8 +194,9 @@
         package-anchored link(s) in documentation object} in \command{R CMD
         check}.
 
-      \item Remove \code{wjd()} and demo and supporting data file
-      \samp{DLEN67.csv}.
+      \item Remove \code{wjd()} (implementation of Gibbs energy minimization
+      method from \href{https://doi.org/10.1063/1.1744264}{White et al., 1958})
+      and demo \code{wjd.R} and supporting data file.
 
       \item Convert this NEWS file to Rd format.
 
@@ -207,8 +211,6 @@
       \item TODO: make a site for community uploaded data
 
       \item TODO: refresh extdata/supcrt/compare.R
-
-      \item TODO: get arsenopyrite from Perfetti et al., 2008
 
       \item TODO: make separate directories for default and optional data files
 

@@ -256,7 +256,7 @@ title("Fe:V = 1:5")
 ```
 
 Then we calculate the affinities for the bimetallic species and save the output of `diagram()` in `dFeV`, again without making a plot, but formatting the names in bold.
-We also write a function to assign the colors for regions with two solids, one solid, and no solids; these are the web colors "burlywood", "antiquewhite" and "aliceblue" with some transparency added to show the underlying water stability region.
+We also write a function to assign the colors for regions with two solids, one solid, and no solids; these are the web colors "burlywood", "antiquewhite" and "aliceblue" with some transparency added to show the underlying water stability region that is plotted first by `diagram()`.
 
 Now we have all the ingredients needed to combine the Fe-bearing, V-bearing, and bimetallic species to generate a given composition.
 The `mix()` function  is used to calculate the affinities of formation from basis species for all combinations of aqueous species and minerals that satisfy each of three different compositions.
@@ -339,7 +339,7 @@ text(pH, Eh, stable, adj = c(0.3, 2), cex = 1.2, col = 7)
 range(aFeVO4_vs_stable[d11$predominant == d11$predominant[imax]])
 ```
 
-Although one point is drawn on the diagram, FeVO~4~ has the same Pourbaix energy difference with respect to the entire Fe~2~O~3~ + Fe~2~V~4~O~13~ field, as shown by the `range()` command; the values are dimensionless values of affinity, *A*/(*RT*) = -Δ*G*~pbx~/(*RT*).
+Although one point is drawn on the diagram, FeVO~4~ has the same Pourbaix energy difference with respect to the entire Fe~2~O~3~ + Fe~2~V~4~O~13~ field, as shown by the `range()` command (the values are dimensionless values of affinity, *A*/(*RT*) = -Δ*G*~pbx~/(*RT*)).
 This can occur only if the decomposition reaction has no free O~2~ or H~2~, and means that in this case Δ*G*~pbx~ in the Fe~2~O~3~ + Fe~2~V~4~O~13~ field is equal to the energy above the hull.
 
 To calculate the energy above the hull "by hand", let's set up the basis species to be the stable decomposition products we just found.
@@ -348,7 +348,7 @@ O~2~ is also needed to make a square stoichiometric matrix (i.e. same number of 
 The `convert()` command divides this value by *-RT* (which yields `r logK` of the reaction), showing the same result as calculated above from the Pourbaix diagram.
 The value of Δ*G*° in cal/mol (the default for `subcrt()`) is converted to J/mol, then to eV/mol, and finally eV/atom.
 
-```{r hull, echo = 1:6, message = FALSE}
+```{r hull, echo = 1:7, message = FALSE}
 b <- basis(c("Fe2O3", "Fe2V4O13", "O2"))
 cal_mol <- subcrt("FeVO4", 1, T = 25)$out$G
 convert(cal_mol, "logK")

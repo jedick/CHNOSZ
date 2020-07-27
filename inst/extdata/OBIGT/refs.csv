@@ -5,7 +5,6 @@ Kel60.3,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gypsum Cp",https:
 Pan70,"L. B. Pankratz",1970,"U. S. Bureau of Mines Report of Investigations 7430",chlorargyrite,https://www.worldcat.org/oclc/14154245
 PK70,"L. B. Pankratz and E. G. King",1970,"U. S. Bureau of Mines Report of Investigations 7435","bornite and chalcopyrite",https://www.worldcat.org/oclc/14154292
 BK73,"I. Barin and O. Knacke",1973,"Thermochemical Properties of Inorganic Substances","scheelite Cp",https://www.worldcat.org/oclc/695258
-NRK74,"G. B. Naumov, B. N. Ryzhenko and I. L. Khodakovskii",1974,"Handbook of Thermodynamic Data, U. S. Geological Survey, Water Resources Division",arsenopyrite,https://trove.nla.gov.au/work/22192707
 HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","data for minerals and phase transitions",https://www.worldcat.org/oclc/13594862
 HDNB78.1,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","litharge S, V, and Cp parameters",https://www.worldcat.org/oclc/13594862
 HDNB78.2,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","celestite V and Cp parameters",https://www.worldcat.org/oclc/13594862
@@ -115,7 +114,6 @@ HS99,"J. R. Haas and E. L. Shock",1998,"Geochim. Cosmochim. Acta 63, 3429-3441",
 MS99,"W. M. Murphy and E. L. Shock",1999,"Rev. Mineral. Geochem. 38, 221-253",actinides,http://rimg.geoscienceworld.org/content/38/1/221
 PSK99,"P. Prapaipong, E. L. Shock and C. M. Koretsky",1999,"Geochim. Cosmochim. Acta 63, 2547-2577","metal-dicarboxylate complexes",https://doi.org/10.1016/S0016-7037(99)00146-5
 PSK99.1,"P. Prapaipong, E. L. Shock and C. M. Koretsky",1999,"Geochim. Cosmochim. Acta 63, 2547-2577","Al(Mal)<sup>+</sup> and Al(Oxal)<sup>+</sup>",https://doi.org/10.1016/S0016-7037(99)00146-5
-SB99,"Yu. Shvarov and E. Bastrakov",1999,"HCh: A software package for geochemical equilibrium modelling. User's Guide","data from HCh Unitherm database",http://pid.geoscience.gov.au/dataset/ga/25473
 SAJ00,"R. E. Stoffregen, C. N. Alpers and J. L. Jambor",2000,"Rev. Mineral. Geochem. 40, 453-479","jarosite, natroalunite, and natrojarosite",https://doi.org/10.2138/rmg.2000.40.9
 TDDZ00,"B. R. Tagirov et al.",2000,"Chem. Geol. 162, 193-219",FeCl<sup>+2</sup>,https://doi.org/10.2138/rmg.2000.40.9
 WS00,"S. A. Wood and I. M. Samson",2000,"Econ. Geol. 95, 143-182","scheelite and ferberite; GHS and V of scheelite and V of ferberite are from @RHF78.",https://doi.org/10.2113/gsecongeo.95.1.143
@@ -169,7 +167,9 @@ SLOP07.1,"E. L. Shock et al.",2007,"slop07.dat computer data file","corrected ch
 SLOP07.2,"E. L. Shock et al.",2007,"slop07.dat computer data file","high-temperature HKF parameters from @AP01",http://geopig.asu.edu/?q=tools
 ZW07,"S. P. Ziemer and E. M. Woolley",2007,"J. Chem. Thermodynamics 39, 645-666",glutamate,https://doi.org/10.1016/j.jct.2006.08.008
 Ric08,"L. Richard",2008,"personal communication",alkenes,
-GM09,"K.-D. Grevel and J. Majzlan",2009,"Geochim. Cosmochim. Acta 73, 6805 - 6815","kieserite, starkeyite, hexahydrite, and epsomite",https://doi.org/10.1016/j.gca.2009.08.005
+PPB+08,"E. Perfetti et al.",2008,"Geochim. Cosmochim. Acta 72, 713-731","arsenopyrite, loellingite, and westerveldite",https://doi.org/10.1016/j.gca.2007.11.017
+PPB+08.1,"E. Perfetti et al.",2008,"Geochim. Cosmochim. Acta 72, 713-731","As(OH)<sub>3</sub> and AsO(OH)<sub>3</sub>",https://doi.org/10.1016/j.gca.2007.11.017
+GM09,"K.-D. Grevel and J. Majzlan",2009,"Geochim. Cosmochim. Acta 73, 6805-6815","kieserite, starkeyite, hexahydrite, and epsomite",https://doi.org/10.1016/j.gca.2009.08.005
 HRMNS09,"H. C. Helgeson, L. Richard et al.",2009,"Geochim. Cosmochim. Acta 73, 594-695",kerogens,https://doi.org/10.1016/j.gca.2008.03.004
 LRB09,"K. H. Lemke, R. J. Rosenbauer and D. K. Bird",2009,"Astrobiology 9, 141-146","diglycine and diketopiperazine",https://doi.org/10.1089/ast.2008.0166
 AML10,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","metal-chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
