@@ -2,6 +2,7 @@
 # 20181101 jmd first version
 # 20181109 add calculation of K+ molality
 # 20190127 update Au species in OBIGT, not here
+library(CHNOSZ)
 
 # set up system
 # use H2S here: it's the predominant species at the pH of the QMK buffer -- see sulfur()

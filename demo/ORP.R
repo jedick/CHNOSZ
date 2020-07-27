@@ -1,5 +1,6 @@
 # CHNOSZ/demo/ORP.R 
 # first version 20100715 jmd
+library(CHNOSZ)
 
 # calculate the temperature dependence of 
 # potentials vs. standard hydrogen electrode (SHE) of various electrodes (Ag/AgCl)

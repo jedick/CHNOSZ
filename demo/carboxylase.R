@@ -2,6 +2,8 @@
 # animate rank-activity diagrams over a temperature
 # and logaH2 gradient, or plot a single one for a single temperature
 # first version ca. 200903; packaged anim.carboxylase() 20110818; converted to demo 20171030
+library(CHNOSZ)
+
 T <- 25:125
 ntop <- 5
 lcex <- 0.8

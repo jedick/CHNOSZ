@@ -1,6 +1,7 @@
 # CHNOSZ/demo/glycinate.R
 # plot logK of metal-glycinate complexes
 # 20190207
+library(CHNOSZ)
 
 # divalent metals
 di <- c("Cu+2", "Ni+2", "Co+2", "Mn+2", "Zn+2", "Cd+2")

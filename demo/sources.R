@@ -1,4 +1,6 @@
 ## cross-checking sources
+library(CHNOSZ)
+
 # the reference sources
 ref.source <- thermo()$refs$key
 # sources in the primary thermodynamic database

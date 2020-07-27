@@ -2,6 +2,8 @@
 ## after Amend and Shock, 2001, Fig. 7
 ##  Amend, J. P. and Shock, E. L. (2001) Energetics of overall metabolic reactions of thermophilic and hyperthermophilic Archaea and Bacteria.
 ##  FEMS Microbiol. Rev. 25, 175--243. https://doi.org/10.1016/S0168-6445(00)00062-0
+library(CHNOSZ)
+
 # use aq state for all basis species (including O2)
 basis(c("CO2", "H2", "NH3", "O2", "H2S", "H+"), "aq")
 # we're going to make H2O

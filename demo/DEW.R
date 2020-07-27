@@ -1,4 +1,5 @@
 # demo for the Deep Earth Water (DEW) model in CHNOSZ 20170927
+library(CHNOSZ)
 
 # set up subplots
 opar <- par(mfrow = c(2, 2), mar=c(3.0, 3.5, 2.5, 1.0), mgp=c(1.7, 0.3, 0), las=1, tcl=0.3, xaxs="i", yaxs="i")

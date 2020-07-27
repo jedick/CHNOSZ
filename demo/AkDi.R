@@ -1,6 +1,7 @@
 # CHNOSZ/demo/AkDi.R
 # calculations using the Akinfiev-Diamond model 20190220
 # after Fig. 1 of Akinfiev and Diamond, 2003
+library(CHNOSZ)
 
 # function to plot natural logarithm of Henry's constant
 lines.KH <- function(name = "CO2", T = 1:373, P = "Psat", HKF = FALSE, altH2S = FALSE) {

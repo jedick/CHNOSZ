@@ -1,4 +1,6 @@
 ## ionize.aa(): Contour plots of net charge and ionization properties of LYSC_CHICK
+library(CHNOSZ)
+
 aa <- pinfo(pinfo("LYSC_CHICK"))
 pH <- seq(0, 14, 0.2)
 T <- seq(0, 200, 2)

@@ -2,6 +2,7 @@
 ## After Fig. 2 of Aksu and Doyle, 2001
 ## (Aksu, S. and Doyle, F. M., 2001. Electrochemistry of copper in aqueous glycine 
 ## solutions. J. Electrochem. Soc., 148, B51-B57. doi:10.1149/1.1344532)
+library(CHNOSZ)
 
 # we need superseded data for Cu-Gly complexes 20190206
 add.OBIGT("OldAA")

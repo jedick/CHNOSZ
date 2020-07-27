@@ -16,7 +16,7 @@
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "findit", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
-    "contour", "sphalerite", "bugstab", "Shh", "saturation",
+    "contour", "sphalerite", "Shh", "saturation",
     "adenine", "DEW", "lambda", "TCA", "aluminum", "AkDi",
     "comproportionation"),
     save.png=FALSE)
@@ -50,7 +50,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{contour} \tab Gold solubility contours on a log fO2 - pH diagram (Williams-Jones et al., 2009) \cr
     \code{sphalerite} \tab Solubility of sphalerite (Akinfiev and Tagirov, 2014) \cr
     \code{dehydration} \tab \logK of dehydration reactions; SVG file contains tooltips and links \cr
-    \code{bugstab} \tab Formation potential of microbial proteins in colorectal cancer (Dick, 2016) \cr
     \code{Shh} \tab Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015) \cr
     \code{saturation} \tab Equilibrium activity diagram showing activity ratios and mineral saturation limits (Bowers et al., 1984) \cr
     \code{adenine} \tab HKF regression of heat capacity and volume of aqueous adenine (Lowe et al., 2017) \cr
@@ -109,8 +108,6 @@ Canovas, P. A., III and Shock, E. L. (2016) Geobiochemistry of metabolism: Stand
 Dick, J. M. and Shock, E. L. (2011) Calculation of the relative chemical stabilities of proteins as a function of temperature and redox chemistry in a hot spring. \emph{PLoS ONE} \bold{6}, e22782. \url{https://doi.org/10.1371/journal.pone.0022782}
 
 Dick, J. M. (2015) Chemical integration of proteins in signaling and development. \emph{bioRxiv}. \url{https://doi.org/10.1101/015826}
-
-Dick, J. M. (2016) Proteomic indicators of oxidation and hydration state in colorectal cancer. \emph{PeerJ} \bold{4}:e2238. \url{https://doi.org/10.7717/peerj.2238}
 
 Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibria}, Harper & Row, New York, 450 p. \url{http://www.worldcat.org/oclc/517586}
 

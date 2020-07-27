@@ -1,9 +1,9 @@
 # CHNOSZ/demo/saturation.R
-# first version (activity_ratios.R) 20170217
-# keep one diagram and add saturation lines 20190127
-
 ## Make equilibrium activity diagrams including saturation limits
 ## and using activity ratios as variables
+# first version (activity_ratios.R) 20170217
+# keep one diagram and add saturation lines 20190127
+library(CHNOSZ)
 
 # The ratios are calculated with pH = 0 (activity of H+ = 1), so (activity of the ion) is equal to
 # (activity of the ion) / [(activity of H+) ^ (charge of the ion)]

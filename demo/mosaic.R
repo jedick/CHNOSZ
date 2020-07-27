@@ -1,5 +1,6 @@
 # CHNOSZ/demo/mosaic.R
 # 20141221 first version
+library(CHNOSZ)
 
 # Fe-minerals and aqueous species in Fe-S-O-H-C system
 # after Garrels and Christ, 1965 Figure 7.21

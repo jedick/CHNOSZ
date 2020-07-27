@@ -1,4 +1,6 @@
 ## findit() calculations for sulfur species
+library(CHNOSZ)
+
 basis("CHNOS+")
 basis("pH", 5)
 species(c("H2S", "S2-2", "S3-2", "S2O3-2", "S2O4-2", "S3O6-2",

@@ -1,5 +1,6 @@
 # CHNOSZ/demos/adenine.R
 # plot thermodynamic data and model fits for aqueous adenine 20170725
+library(CHNOSZ)
 
 # notable functions in this demo:
 # EOSregress() - to regress HKF coefficients from Cp data

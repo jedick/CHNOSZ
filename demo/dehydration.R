@@ -1,4 +1,5 @@
 # plot temperature dependence of log K for some dehydration reactions
+library(CHNOSZ)
 
 # the RSVGTipsDevice package allows us to create an SVG file with
 # tooltips and hyperlinks

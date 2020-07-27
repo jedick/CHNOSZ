@@ -4,6 +4,7 @@
 ##  Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: 
 ##  Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 degrees C and 5 kbar. 
 ##  J. Chem. Soc. Faraday Trans. 88, 803-826. https://doi.org/10.1039/FT9928800803 )
+library(CHNOSZ)
 
 ## uncomment these lines to make the plot with the g-function disabled
 #mod.OBIGT("Cl-", z=0)

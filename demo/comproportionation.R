@@ -2,6 +2,7 @@
 # Gibbs energy of sulfur comproportionation,
 # after Fig. 1 of Amend et al., 2020 (doi:10.1111/1462-2920.14982)
 # 20191112 jmd first version
+library(CHNOSZ)
 
 # set basis species and activities
 basis(c("H2S", "SO4-2", "H2O", "H+"))

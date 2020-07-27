@@ -236,8 +236,6 @@
       different units (cal, J) in OBIGT can be used in subcrt, diagrams, etc.
       in CHNOSZ.
 
-      \item TODO: add library(CHNOSZ) to all scripts in demo/.
-
     }
   }
 

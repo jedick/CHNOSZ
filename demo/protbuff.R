@@ -2,6 +2,8 @@
 ## thiol peroxidases from model bactera
 ## (ECOLI, BACSU mesophile; AQUAE thermophile,
 ## THIDA acidophile, BACHD alkaliphile)
+library(CHNOSZ)
+
 basis("CHNOS+")
 organisms <- c("ECOLI", "AQUAE", "BACSU", "BACHD", "THIDA")
 species("TPX", organisms)

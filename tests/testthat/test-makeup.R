@@ -64,3 +64,12 @@ test_that("as.chemical.formula moves charge to the end", {
   mkp <- makeup("Z-1HCO3")
   expect_equal(as.chemical.formula(mkp), "HCO3-1")  # i.e. not -1HCO3
 })
+
+test_that("makeup can process formulas if the package is not attached", {
+  # test added 20200727
+  CHNOSZattached <- "CHNOSZ" %in% (.packages())
+  if(CHNOSZattached) detach("package:CHNOSZ", unload = TRUE)
+  mH2O <- CHNOSZ::makeup("H2O")
+  expect_identical(mH2O, c(H = 2, O = 1))
+  if(CHNOSZattached) library(CHNOSZ)
+})

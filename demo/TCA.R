@@ -2,6 +2,7 @@
 # Reproduce Fig. 6 in Canovas and Shock, 2016:
 # Plots of the standard partial molal Gibbs energy of reaction for each step in
 # the citric acid cycle for temperatures to 500 degrees C and pressures to 5 kbar.
+library(CHNOSZ)
 
 # species in reactions
 NADox <- "NAD(ox)-"; NADred <- "NAD(red)-2"

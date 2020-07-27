@@ -33,7 +33,7 @@ examples <- function(save.png=FALSE) {
 demos <- function(which=c("sources", "protein.equil", "affinity", "NaCl", "density", 
   "ORP", "findit", "ionize", "buffer", "protbuff", "glycinate",
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite",
-  "bugstab", "Shh", "saturation", "adenine", "DEW", "lambda", "TCA", "aluminum",
+  "Shh", "saturation", "adenine", "DEW", "lambda", "TCA", "aluminum",
   "AkDi", "comproportionation"), save.png=FALSE) {
   # run one or more demos from CHNOSZ with ask=FALSE, and return the value of the last one
   for(i in 1:length(which)) {
@@ -47,7 +47,6 @@ demos <- function(which=c("sources", "protein.equil", "affinity", "NaCl", "densi
       width <- 500
       height <- 500
       if(which[i]=="comproportionation") width <- 600
-      if(which[i]=="bugstab") width <- 700
       png(paste(which[i], "%d.png", sep=""), width = width, height = height, pointsize = 12)
     }
     out <- demo(which[i], package="CHNOSZ", character.only=TRUE, echo=FALSE, ask=FALSE)

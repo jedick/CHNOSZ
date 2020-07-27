@@ -1,8 +1,8 @@
 # CHNOSZ/demo/arsenic.R
 # Eh-pH diagram for the system As-O-H-S,
 # after Lu and Zhu, 2011 (doi:10.1007/s12665-010-0652-x)
-
 # 20190415 extracted from go-IU.R; use retrieve()
+library(CHNOSZ)
 
 # define temperature (degrees C), pressure (bar), grid resolution
 res <- 500

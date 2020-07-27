@@ -1,6 +1,7 @@
 # demos/buffer.R
 # calculate buffered activities of basis species using two methods
 # reproduces Figure 6 of Schulte and Shock, 1995 (doi:10.1007/BF01581580)
+library(CHNOSZ)
 
 b.species <- c("Fe", "CO2", "H2O", "N2", "H2", "H2S", "SiO2")
 b.state <- c("cr", "gas", "liq", "gas", "gas", "aq", "aq")

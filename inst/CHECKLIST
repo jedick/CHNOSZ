@@ -1,14 +1,14 @@
 ****************************
 Release checklist for CHNOSZ
-    (updated 2020-07-11)
+    (updated 2020-07-27)
 ****************************
 
 - Run examples() and demos() and inspect their output (especially plots)
 
 - Install the package with --install-tests and run
-  testthat::test_package("CHNOSZ", reporter = "progress") to:
-  - run *all* tests (long ones are skipped under R CMD check --as-cran)
-  - find warnings from tests that aren't shown in R CMD check
+  library(CHNOSZ); testthat::test_package("CHNOSZ", reporter = "progress")
+    - runs *all* tests (long ones are skipped under R CMD check --as-cran)
+    - finds warnings from tests that aren't shown in R CMD check
 
 - Check that uniprot.aa() works with current UniProt web pages
 

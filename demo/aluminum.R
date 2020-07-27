@@ -1,6 +1,7 @@
 # CHNOSZ/demo/aluminum.R 
 # 20171018 comparisons with calculations of SUPCRTBL
 # 20190415 add diagrams from Tutolo et al., 2014
+library(CHNOSZ)
 
 ## set up plotting area
 opar <- par(mfrow = c(2, 2))

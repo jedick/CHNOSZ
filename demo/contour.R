@@ -1,10 +1,10 @@
 # CHNOSZ/demo/contour.R
 # gold solubility contours on logfO2-pH diagram
-# 20181107 initial version
-# 20190415 cleanup for demo
-
 # After Williams-Jones et al., 2009, Fig. 3
 # doi:10.2113/gselements.5.5.281
+# 20181107 initial version
+# 20190415 cleanup for demo
+library(CHNOSZ)
 
 # define temperature (degrees C), pressure (bar), grid resolution
 T <- 250
