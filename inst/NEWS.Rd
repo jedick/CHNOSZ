@@ -14,6 +14,14 @@
   \subsection{MAJOR CHANGES}{
     \itemize{
 
+      \item An \strong{add} argument has been added to \code{species()}.
+      \emph{With the default of \code{add = FALSE}, loading new species now
+        causes any existing species definition to be \strong{deleted}.} To add
+      species to an existing system, use \samp{add = TRUE}. With this change,
+      scripts can be made more concise because \code{species(delete =
+        TRUE)} is no longer needed to clear the species definition in a series
+      of calculations for different systems. 
+
       \item The naming convention for methane has changed. The name
       \strong{methane} now applies exclusively to the gas; the formula
       \strong{CH4} without a state continues to represent the aqueous species.
@@ -31,13 +39,6 @@
       thermodynamic database now sits at \code{thermo()$OBIGT}, and functions
       \code{add.OBIGT()} and \code{mod.OBIGT()} replace the previous
       \code{add.obigt()} and \code{mod.obigt()}.
-
-      \item An \strong{add} argument has been added to \code{species()}. With
-      the default of \code{FALSE}, loading new species now causes any previous species
-      definition to be removed first. Therefore, \code{species(delete = TRUE)}
-      is no longer needed to clear the species definition in a series of
-      calculations for different species. To add new species to an existing
-      system, use \samp{add = TRUE}.
 
       \item The new default of \code{NULL} for \strong{limit.water} in
       \code{diagram()} causes the main diagram to be overlaid on the fields of
@@ -237,6 +238,8 @@
       \item TODO: anintro.Rmd, help files: make it clear that species with
       different units (cal, J) in OBIGT can be used in subcrt, diagrams, etc.
       in CHNOSZ.
+
+      \item TODO: comment out data modifications in demos/mosaic.R
 
     }
   }

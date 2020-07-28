@@ -267,7 +267,7 @@ Regarding the legend, it should be noted that although the DFT calculations for 
 ```
 
 In these diagrams, changing the Fe:V ratio affects the fully reduced metallic species.
-In the 1:1 mixture, the FeV~3~ + Fe~3~V assemblage is stable instead of FeV.
+In the 1:1 mixture, the FeV~3~ + Fe~3~V assemblage is predicted to be stable instead of FeV.
 This result is unlike Figure 1 of @SZS_17 but is consistent with the [MP page for FeV](https://doi.org/10.17188/1189535) where it shown to decompose to this assemblage.
 On the other hand, [FeV~3~ is stable](https://materialsproject.org/materials/mp-1079399/) in the 1:3 mixture.
 For an even higher proportion of V, the V + FeV~3~ assemblage is stable, which can be seen for instance in the Pourbaix diagram linked from the [MP page for FeV~5~O~12~](https://doi.org/10.17188/1305091).
@@ -319,7 +319,7 @@ text(pH, Eh, stable, adj = c(0.5, -1), cex = 1.2, col = 7)
 ```
 
 We then compute the affinity for formation of a metastable material, in this case triclinic FeVO~4~, from the same basis species used to make the previous diagrams.
-Given the previous diagrams for the stable Fe-, V- and bimetallic materials *mixed with the same stoichiometry* as FeVO~4~ (1:1 Fe:V), the difference between their affinities of formation and that of FeVO~4~ corresponds to the Pourbaix energy difference (-Δ*G*~pbx~).
+Given the diagram for the stable Fe-, V- and bimetallic materials *mixed with the same stoichiometry* as FeVO~4~ (1:1 Fe:V), the difference between their affinities of formation and that of FeVO~4~ corresponds to the Pourbaix energy difference (-Δ*G*~pbx~).
 This is plotted as a color map in the second diagram.
 
 ```{r FeVO4, echo = 22:34, message = FALSE, results = "hide", fig.width = 10, fig.height = 5, out.width = "100%", pngquant = pngquant}

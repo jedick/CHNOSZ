@@ -30,11 +30,16 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
     # - '.balance' is defined to add d3 to get required amount of Fe
     # - d2 (V) is first, so we need to reverse the 'parts' values
     m23 <- mix(d2, d3, d3, parts = rev(parts), .balance = d1$balance)
-    # Mix d3 with itself (combinations of bimetallic species)
-    m33 <- mix(d3, d3, d3, parts = parts, .balance = c(d1$balance, d2$balance))
     # Merge all the species and affinity values
-    species <- rbind(m12$species, m13$species, m23$species, m33$species)
-    values <- c(m12$values, m13$values, m23$values, m33$values)
+    species <- rbind(m12$species, m13$species, m23$species)
+    values <- c(m12$values, m13$values, m23$values)
+    if(nrow(d3$species) > 1) {
+      # Mix d3 with itself (combinations of bimetallic species)
+      m33 <- mix(d3, d3, d3, parts = parts, .balance = c(d1$balance, d2$balance))
+      # Merge all the species and affinity values
+      species <- rbind(species, m33$species)
+      values <- c(values, m33$values)
+    } 
     # Remove duplicates
     # (i.e. bimetallic species that exactly match the composition in 'parts'
     # and therefore appear in multiple combinations with
