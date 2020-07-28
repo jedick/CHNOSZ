@@ -63,7 +63,7 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
     # Remove combinations of a species with itself
     combs <- combs[combs[, 1] != combs[, 2], ]
     # Remove duplicated combinations
-    isdup <- duplicated(lapply(apply(combs, 1, sort, simplify = FALSE), paste))
+    isdup <- duplicated(paste(apply(combs, 1, sort)[1, ], apply(combs, 1, sort)[2, ]))
     combs <- combs[!isdup, ]
   }
   # Get species rows for each combination

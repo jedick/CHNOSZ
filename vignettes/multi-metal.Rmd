@@ -294,7 +294,7 @@ dFeV <- diagram(aFeV, plot.it = FALSE, bold = TRUE)
 # 1:1 mixture (Fe:V)
 a11 <- mix(dFe, dV, dFeV, c(1, 1))
 d11 <- diagram(a11, fill = fill(a11), min.area = 0.01)
-water.lines(d11, col = 2)
+water.lines(d11, col = "orangered")
 
 # Calculate affinity of FeVO4
 species("FeVO4")
@@ -307,15 +307,15 @@ opar <- par(usr = c(0, 1, 0, 1))
 image(aFeVO4_vs_stable, col = topo.colors(100, 0.7, TRUE), add = TRUE)
 par(opar)
 diagram(a11, add = TRUE, names = FALSE)
-water.lines(d11, col = 2)
+water.lines(d11, col = "orangered")
 thermo.axis()
 
 imax <- arrayInd(which.max(aFeVO4_vs_stable), dim(aFeVO4_vs_stable))
 pH <- d11$vals$pH[imax[1]]
 Eh <- d11$vals$Eh[imax[2]]
-points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = 7)
+points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = "gold")
 stable <- d11$names[d11$predominant[imax]]
-text(pH, Eh, stable, adj = c(0.5, -1), cex = 1.2, col = 7)
+text(pH, Eh, stable, adj = c(0.5, -1), cex = 1.2, col = "gold")
 ```
 
 We then compute the affinity for formation of a metastable material, in this case triclinic FeVO~4~, from the same basis species used to make the previous diagrams.
@@ -333,9 +333,9 @@ plot(1:10) # so we can run "points" in this chunk
 imax <- arrayInd(which.max(aFeVO4_vs_stable), dim(aFeVO4_vs_stable))
 pH <- d11$vals$pH[imax[1]]
 Eh <- d11$vals$Eh[imax[2]]
-points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = 7)
+points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = "gold")
 stable <- d11$names[d11$predominant[imax]]
-text(pH, Eh, stable, adj = c(0.3, 2), cex = 1.2, col = 7)
+text(pH, Eh, stable, adj = c(0.3, 2), cex = 1.2, col = "gold")
 range(aFeVO4_vs_stable[d11$predominant == d11$predominant[imax]])
 ```
 
