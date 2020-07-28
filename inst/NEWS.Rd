@@ -241,6 +241,11 @@
 
       \item TODO: comment out data modifications in demos/mosaic.R
 
+      \item TODO: move H2O92D.f and R wrapper to a separate package (so people
+      don't have to compile anything to install CHNOSZ updates).
+
+      \item TODO: get retrieve() into more examples/demos
+
     }
   }
 

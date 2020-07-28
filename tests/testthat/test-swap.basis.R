@@ -29,3 +29,27 @@ test_that("swapping works with a buffer (no recalculation of activities)", {
   # note: logact includes "PPM" for O2 (old) and H2 (new)
   expect_identical(oldb$logact, newb$logact)
 })
+
+# 20200728 moved from swap-basis.Rd
+test_that("swapping doesn't affect affinities of formation reactions of species", {
+  ## swapping basis species while species are defined
+  ## and using numeric species indices
+  basis("MgCHNOPS+") 
+  # load some Mg-ATP species
+  species(c("MgATP-2", "MgHATP-", "MgH2ATP", "Mg2ATP"))
+  # swap in CO2(g) for CO2(aq)
+  swap.basis("CO2", "carbon dioxide")
+  a1 <- affinity()
+  # swap in CH4(g) for CO2(g)
+  swap.basis("carbon dioxide", "methane")
+  a2 <- affinity()
+  # the equilibrium fugacity of CH4 is *very* low
+  # swap in CO2(aq) for CH4(g)
+  swap.basis("methane", "CO2")
+  a3 <- affinity()
+  # swapping the basis species didn't affect the affinities
+  # of the formation reactions of the species, since
+  # the chemical potentials of the elements were unchanged
+  expect_equal(a1$values, a2$values)
+  expect_equal(a1$values, a3$values)
+})

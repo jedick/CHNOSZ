@@ -93,13 +93,12 @@ GHS("H2O", H=water("H"), S=water("S"))[1, ]
 # that not quite equal to the value from water("G");
 # probably using different entropies of the elements
 
-## average oxidation states of carbon
-stopifnot(ZC("CO2") == 4)
-stopifnot(ZC("CH4") == -4)
-stopifnot(ZC("CHNOSZ") == 7)
-si <- info(info("LYSC_CHICK"))
-stopifnot(si$formula == "C613H959N193O185S10")
-stopifnot(all.equal(ZC(si$formula), 0.0163132137031))
+## Average oxidation states of carbon
+ZC(c("CO2", "CH4", "CHNOSZ"))  # 4, -4, 7
+si <- info("LYSC_CHICK")
+# Can use species index or formula
+ZC(si)
+ZC(info(si)$formula)
 
 ## calculate the chemical formulas, then
 ## ZC of all of the proteins in CHNOSZ' database

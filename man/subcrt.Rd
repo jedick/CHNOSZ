@@ -118,61 +118,45 @@ If minerals with phase transitions are present, a third element (a dataframe) in
 
 \examples{
 \dontshow{reset()}
-## properties of species
+## Properties of species
 subcrt("water")
-# calculating at different temperatures
-subcrt("water", T=seq(0, 100, 10))
-# calculating at even increments  	
-subcrt("water", T=seq(500, 1000, length.out=10),
-  P=seq(5000, 10000, length.out=10))
-# calculating on a temperature-pressure grid
-subcrt("water", T=c(500, 1000), P=c(5000, 10000), grid="P")
-# to calculate only selected properties
-subcrt("water", property=c("G", "E"))	
-# the properties of multiple species
-subcrt(c("glucose", "ethanol", "CO2"))
+# Change temperature
+subcrt("water", T = seq(0, 100, 20))
+# Change temperature and pressure 	
+T <- seq(500, 1000, 100)
+P <- seq(5000, 10000, 1000)
+subcrt("water", T = T, P = P)
+# Temperature-pressure grid
+subcrt("water", T = c(500, 1000), P = c(5000, 10000), grid = "P")
 
-## properties of reactions
-subcrt(c("H2O", "H+", "K-feldspar", "kaolinite", "K+", "SiO2"),
-  c(-1, -2, -2, 1, 2, 4))
-subcrt(c("glucose", "ethanol", "CO2"), c(-1, 2, 2))
-# to specify the states
-subcrt(c("glucose", "ethanol", "CO2"), c(-1, 2, 2), c("aq", "aq", "gas")) 
+## Properties of reactions
+subcrt(c("glucose", "ethanol", "CO2"), c(-1, 2, 2), T = 25)
+# Use CO2(gas) (or just change "CO2" to "carbon dioxide")
+subcrt(c("glucose", "ethanol", "CO2"), c(-1, 2, 2), c("aq", "aq", "gas"), T = 25)
 
-## auto balancing reactions
-# the basis species must first be defined
+## Automatically balance reactions
+# First define the basis species
 basis(c("CO2", "H2O", "NH3", "H2S", "O2"))
-subcrt(c("glucose", "ethanol"), c(-1, 3))
-# a bug in CHNOSZ <0.9 caused the following
-# to initiate an infinite loop
+# Auto-balance adds the required amount of H2O and O2
+subcrt(c("ethanol", "glucose"), c(-3, 1), T = 37)
+# An example with H+
 basis(c("H2O", "H2S", "O2", "H+"))
-subcrt(c("HS-", "SO4-2"), c(-1, 1))
-# because O2,aq is in the basis, this is a non-reaction
-# (O2,aq to O2,aq)
-subcrt("O2", 1, "aq")
-# but this one auto-balances into a reaction
-# (O2,aq to O2,gas)
-subcrt("O2", 1, "gas")
-# properties of a species and a formation 
-# reaction for that species
-subcrt("C2H5OH")    # species
-basis("CHNOS")
-subcrt("C2H5OH", 1) # reaction
+subcrt(c("HS-", "SO4-2"), c(-1, 1), T = 100)
 
-## mineral polymorphs
-# properties of the stable polymorph
+## Mineral polymorphs
+# Properties of the stable polymorph
 subcrt("pyrrhotite")
-# properties of just the high-T phase
-subcrt(c("pyrrhotite"), state="cr2")
-# polymorphic transitions in a reaction
+# Properties of one of the polymorphs (metastable at other temperatures)
+subcrt(c("pyrrhotite"), state = "cr2")
+# Reactions automatically use stable polymorph
 subcrt(c("pyrite", "pyrrhotite", "H2O", "H2S", "O2"), c(-1, 1, -1, 1, 0.5))
 
-## these produce messages about problems with the calculation
-# above the T, P limits for the H2O equations of state
-subcrt("alanine", T=c(2250, 2251), P=c(30000, 30001), grid="T")
-# Psat is not defined above the critical point
-## this also gives a warning
-suppressWarnings(subcrt("alanine", T=seq(0, 5000, by=1000)))
+## Messages about problems with the calculation
+# Above the T, P limits for the H2O equations of state
+subcrt("alanine", T = c(2250, 2251), P = c(30000, 30001), grid = "T")
+# Psat is not defined above the critical point;
+# this also gives a warning that is suppressed to keep the examples clean
+suppressWarnings(subcrt("alanine", T = seq(0, 5000, by = 1000)))
 
 ## minerals with phase transitions
 # compare calculated values of heat capacity of iron with
@@ -194,69 +178,6 @@ title(main=paste("Heat capacity of Fe(cr)\n",
 T.units("C")
 E.units("cal")
 
-## Skarn example after Johnson et al., 1992
-P <- seq(500, 5000, 500)
-# this is like the temperature specification used 
-# in the example by Johnson et al., 1992
-T <- seq(0, 1000, 100)
-s <- suppressWarnings(subcrt(
-  c("andradite", "carbon dioxide", "H2S", "Cu+", "quartz", 
-  "calcite", "chalcopyrite", "H+", "H2O"), 
-  coeff=c(-1, -3, -4, -2, 3, 3, 2, 2, 3),
-  state=c("cr", "g", "aq", "aq", "cr", "cr", "cr", "aq", "liq"),
-  P=P, T=T, grid="P"))
-# The results are not identical to SUPCRT92, as CHNOSZ has updated
-# parameters for species e.g. Cu+ from Shock et al., 1997.
-# Check the calculated phase transitions for chalcopyrite
-stopifnot(all.equal(s$polymorphs$chalcopyrite[1:11], 
-  c(1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 3)))
-
-## Standard Gibbs energy of reactions with HCN and 
-## formaldehyde, after Schulte and Shock, 1995 Fig. 1
-rxn1 <- subcrt(c("formaldehyde","HCN","H2O","glycolic acid","NH3"),
-  c(-1,-1,-2,1,1),P=300)
-rxn2 <- subcrt(c("formaldehyde","HCN","H2O","glycine"),
-  c(-1,-1,-1,1),P=300)
-plot(x=rxn1$out$T,rxn1$out$G/1000,type="l",ylim=c(-40,-10),
-  xlab=axis.label("T"),ylab=axis.label("DG0r","k"))
-lines(rxn1$out$T,rxn2$out$G/1000)
-# write the reactions on the plot
-text(150, -14, describe.reaction(rxn1$reaction, iname=c(1,2,4)))
-text(200, -35, describe.reaction(rxn2$reaction, iname=c(1,2)))
-title(main=paste("Standard Gibbs energy of reactions",
-  "after Schulte and Shock, 1995",sep="\n"))
-
-## Calculation of chemical affinities
-# after LaRowe and Helgeson, 2007, Fig. 3 (a): reduction of nicotinamide 
-# adenine dinucleotide (NAD) coupled to oxidation of glucose
-# list the available NAD species
-info("NAD ")
-T <- seq(0, 120, 10)
-# oxidation of glucose (C6H12O6)
-basis(c("glucose", "H2O", "NH3", "CO2", "H+"), c(-3, 0, 999, -3, -7))
-s <- subcrt(c("NAD(ox)-", "NAD(red)-2"), c(-12, 12), logact=c(0, 0), T=T)
-# LH07's diagrams are shown per mole of electron (24 e- per 12 NAD)
-A <- s$out$A/24/1000
-plot(x=T, y=A, xlim=range(T), ylim=c(1.4, 5.4),
-  xlab=axis.label("T"), ylab=axis.label("A", prefix="k"), type="l")
-text("NAD(ox)-/NAD(red)-2 = 1", x=53, y=median(A), srt=21)
-# different activity ratio
-s <- subcrt(c("NAD(ox)-","NAD(red)-2"), c(-12, 12), logact=c(1, 0), T=T)
-A <- s$out$A/24/1000
-lines(x=T, y=A)
-text("NAD(ox)-/NAD(red)-2 = 10", x=55, y=median(A), srt=24)
-# different activity ratio
-s <- subcrt(c("NAD(ox)-","NAD(red)-2"), c(-12, 12), logact=c(0, 1), T=T)
-A <- s$out$A/24/1000
-lines(x=T, y=A)
-text("NAD(ox)-/NAD(red)-2 = 0.1", x=52, y=median(A), srt=18)
-# print the reaction and chemical conditions on the plot
-text(0, 5.3, describe.reaction(s$reaction, iname=c(1, 2)), adj=0)
-text(0, 5.1, describe.basis(oneline=TRUE, ibasis=c(1, 2, 4, 5)), adj=0)
-# label the plot
-title(main=paste("Reduction of NAD coupled to oxidation of glucose",
- "after LaRowe and Helgeson, 2007", sep="\n"))
-
 ## Subzero (degrees C) calculations
 # uncomment the following to try IAPWS95 instead of SUPCRT92
 #water("IAPWS95")
@@ -265,7 +186,7 @@ title(main=paste("Reduction of NAD coupled to oxidation of glucose",
 sb <- subcrt(c("H2O", "Na+"), T=seq(-30, 10), P=1)$out
 # start plot with extra room on right
 opar <- par(mar=c(5, 4, 4, 4))
-# plot G
+# plot Delta G
 plot(sb$water$T, sb$water$G, ylim=c(-63000, -56000), xlab=axis.label("T"),
   ylab=axis.label("DG0"))
 points(sb$`Na+`$T, sb$`Na+`$G, pch=2)
@@ -290,21 +211,16 @@ thermo("opt$varP" = TRUE)
 # at high temperatures (also, the gas is metastable at low
 # temperatures, but that doesn't produce NA in the output)
 sout2 <- subcrt(rep("octane", 2), c("liq", "gas"),
-  c(-1, 1), T=seq(-50, 300, 0.1), P=2, exceed.Ttr=TRUE)$out
+  c(-1, 1), T = seq(-50, 300, 0.1), P = 2, exceed.Ttr = TRUE)$out
 sout20 <- subcrt(rep("octane", 2), c("liq", "gas"),
-  c(-1, 1), T=seq(-50, 300, 0.1), P=20, exceed.Ttr=TRUE)$out
+  c(-1, 1), T = seq(-50, 300, 0.1), P = 20, exceed.Ttr = TRUE)$out
 # find T with the Gibbs energy of reaction that is closest to zero
 Tvap2 <- sout2$T[which.min(abs(sout2$G))]
 Tvap20 <- sout20$T[which.min(abs(sout20$G))]
-# the boiling point increases with pressure
-stopifnot(Tvap20 > Tvap2)
-# more precisely, the calculated boiling points should be near the
-# empirical values (digitized from Fig. 1 of Helgeson et al., 1998)
-Tvap_2bar <- 156
-Tvap_20bar <- 276
-stopifnot(abs(Tvap2 - Tvap_2bar) < 6)
-stopifnot(abs(Tvap20 - Tvap_20bar) < 25)
-# those comparisons would fail if varP were FALSE (the default)
+# Compare these with experimental values (Fig. 1 of Helgeson et al., 1998)
+Tvap2.exp <- 156
+Tvap20.exp <- 276
+# Reset varP to FALSE (the default)
 thermo("opt$varP" = FALSE)
 }
 
@@ -316,8 +232,6 @@ thermo("opt$varP" = FALSE)
   Helgeson, H. C., Owens, C. E., Knox, A. M. and Richard, L. (1998) Calculation of the standard molal thermodynamic properties of crystalline, liquid, and gas organic molecules at high temperatures and pressures. \emph{Geochim. Cosmochim. Acta} \bold{62}, 985--1081. \url{https://doi.org/10.1016/S0016-7037(97)00219-6}
 
   LaRowe, D. E. and Helgeson, H. C. (2007) Quantifying the energetics of metabolic reactions in diverse biogeochemical systems: electron flow and ATP synthesis. \emph{Geobiology} \bold{5}, 153--168. \url{https://doi.org/10.1111/j.1472-4669.2007.00099.x}
-
-  Schulte, M. D. and Shock, E. L. (1995) Thermodynamics of Strecker synthesis in hydrothermal systems. \emph{Orig. Life Evol. Biosph.} \bold{25}, 161--173. \url{https://doi.org/10.1007/BF01581580}
 
   Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \url{https://doi.org/10.1039/FT9928800803}
 }

@@ -84,7 +84,7 @@ The methods are **flattening**, **mixing**, **mosaic stacking**, and **secondary
 Flattening or simple overlay refers to independent calculations for two different systems that are displayed on the same diagram.
 
 This example starts with a log*f*~O<sub>2</sub>~--pH base diagram for the C-O-H system then overlays a diagram for S-O-H.
-The second call to `affinity()` uses the argument recall feature, where the arguments are taken from the previous command.
+The second call to `affinity()` uses the argument recall feature, where the arguments after the first are taken from the previous command.
 This allows calculations to be run at the same conditions for a different system.
 This feature is also used in other examples in this vignette.
 
@@ -514,7 +514,7 @@ The results of a mosaic stack can also be processed with `flatten()` to label ea
 For this example, the speciation of aqueous sulfur is not considered; instead, the fugacity of S~2~ is a plotting variable.
 The stable Fe-bearing minerals (Fe-S-O-H) are used as the changing basis species to make the diagram for Cu-bearing minerals (Cu-Fe-S-O-H).
 Then, the two diagrams are flattened to show all minerals in a single diagram.
-Greener colors are used to indicate minerals with lower S~2~ and higher O~2~ in their formation reactions.
+Greener colors are used to indicate minerals with less S~2~ and more O~2~ in their formation reactions.
 
 <button id="B-stack2" onclick="ToggleDiv('stack2')">Show code</button>
 <div id="D-stack2" style="display: none">

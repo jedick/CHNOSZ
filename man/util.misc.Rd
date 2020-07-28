@@ -75,27 +75,26 @@ sapply(info(0:2 + iiron)$T, function(T) {
   diff(substuff$out$iron$H)
 })
 
-## scale logarithms of activity
+## Scale logarithms of activity
 # suppose we have two proteins whose lengths are 100 and 
 # 200; what are the logarithms of activity of the proteins 
 # that are equal to each other and that give a total 
 # activity of residues equal to unity?
-logact <- c(-3,-3)  # could be any two equal numbers
-length <- c(100,200)
+logact <- c(-3, -3)  # could be any two equal numbers
+length <- c(100, 200)
 logact.tot <- 0
-loga <- unitize(logact,length,logact.tot)
-# the proteins have equal activity
-stopifnot(identical(loga[1],loga[2]))
-# the sum of activity of the residues is unity
-stopifnot(isTRUE(all.equal(sum(10^loga * length),1)))
-## now, what if the activity of protein 2 is ten
-## times that of protein 1?
-logact <- c(-3,-2)
-loga <- unitize(logact,length,logact.tot)
-# the proteins have unequal activity
-stopifnot(isTRUE(all.equal(loga[2]-loga[1],1)))
+loga <- unitize(logact, length, logact.tot)
+# The proteins have equal activity
+loga[1] == loga[2]
+# The sum of activity of the residues is unity
+all.equal(sum(10^loga * length), 1)
+## What if the activity of protein 2 is ten times that of protein 1?
+logact <- c(-3, -2)
+loga <- unitize(logact, length, logact.tot)
+# The proteins have unequal activity,
 # but the activities of residues still add up to one
-stopifnot(isTRUE(all.equal(sum(10^loga * length),1)))
+all.equal(loga[2] - loga[1], 1)
+all.equal(sum(10^loga * length), 1)
 }
 
 \concept{Thermodynamic calculations}
