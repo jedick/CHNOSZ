@@ -68,7 +68,7 @@ thermo("opt$IAPWS.sat" = "vapor")
 V.vapor <- subcrt("water", T=convert(445:455, "C"))$out[[1]]$V
 thermo("opt$IAPWS.sat" = "liquid") # the default
 V.liquid <- subcrt("water", T=convert(445:455, "C"))$out[[1]]$V
-stopifnot(all(V.vapor > V.liquid))
+all(V.vapor > V.liquid)  # TRUE
 water(oldwat)
 }
 

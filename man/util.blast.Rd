@@ -63,7 +63,7 @@ This function is used to reduce the size of the example BLAST files that are pac
 \examples{
 ## using def2gi
 def <- "gi|218295810|ref|ZP_03496590.1|"
-stopifnot(all.equal(def2gi(def), "218295810"))
+def2gi(def)  # "218295810"
 
 ## process some of the BLAST output for proteins
 ## from Bison Pool metagenome (JGI, 2007)

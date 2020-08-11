@@ -139,11 +139,11 @@ title(main = "activity coefficients of -3, -2, -1, 0, +1, +2, +3 charged species
 # (needed for replication of the values in Alberty's book)
 nonideal("Alberty")
 thermo("opt$ideal.H" = FALSE)
-(sres <- subcrt(c("acetate", "H+", "acetic acid"), c(-1, -1, 1),
-  IS=c(0, 0.1, 0.25), T=25, property="logK"))
-# we're within 0.01 log of Alberty's pK values
+sres <- subcrt(c("acetate", "H+", "acetic acid"), c(-1, -1, 1),
+  IS=c(0, 0.1, 0.25), T=25, property="logK")
+# we're within 0.01 of Alberty's pK values
 Alberty_logK <- c(4.75, 4.54, 4.47)
-stopifnot(maxdiff(sres$out$logK, Alberty_logK) < 0.01)
+maxdiff(sres$out$logK, Alberty_logK) # 0.0072
 # reset option to default
 thermo("opt$ideal.H" = TRUE)
 
@@ -181,11 +181,9 @@ oldwat <- water("DEW")
 sres <- subcrt("Na+", T = 700, P = 10000, IS = IS)
 water(oldwat)
 # compare the calculated activity coefficient to values from Manning's figure
-Manning_gamma <- c(0.93, 0.82, 0.65, 0.76, 1.28, 2)
 gamma <- 10^sres$out[[1]]$loggam
-# the error is larger at higher IS
-stopifnot(maxdiff(gamma[1], Manning_gamma[1]) < 0.01)
-stopifnot(maxdiff(gamma, Manning_gamma) < 0.2)
+Manning_gamma <- c(0.93, 0.82, 0.65, 0.76, 1.28, 2)
+gamma - Manning_gamma
 
 ## Plot the data and splines used for calculating b_gamma
 ## (extended term parameter)

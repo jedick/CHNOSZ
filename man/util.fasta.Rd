@@ -94,7 +94,7 @@ count.aa("GGSGG")
 # warnings are issued for unrecognized characters
 atest <- count.aa("WhatAmIMadeOf?")
 # there are 3 "A" (alanine)
-stopifnot(atest[, "A"]==3)
+atest[, "A"]
 }
 }
 

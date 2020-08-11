@@ -81,7 +81,7 @@ a1 <- affinity(O2 = c(-80, -60)) # i.e. pH=7
 a2 <- affinity(O2 = c(-80, -60), pH = c(0, 14, 7))
 # in the 2nd dimension (pH) get the 4th slice (pH=7)
 a3 <- slice.affinity(a2, 2, 4)
-stopifnot(all.equal(a1$values, a3$values))
+all.equal(a1$values, a3$values)  # TRUE
 }
 
 \concept{Utility functions}

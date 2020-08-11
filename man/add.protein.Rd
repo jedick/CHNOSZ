@@ -49,7 +49,7 @@ The value returned by this function is the rownumbers of \code{thermo()$protein}
 # Human Gastric juice peptide 1
 aa <- seq2aa("GAJU_HUMAN", "LAAGKVEDSD")
 ip <- add.protein(aa)
-stopifnot(protein.length(ip)==10)
+protein.length(ip) # 10
 # the chemical formula of this peptide
 as.chemical.formula(protein.formula(ip)) # "C41H69N11O18"
 # we can also calculate a formula without using add.protein

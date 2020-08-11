@@ -73,7 +73,7 @@ sciname(id5,taxdir)
 getrank(id5,taxdir)
 # find the species for each of these
 id6 <- sapply(id5,function(x) parent(x,taxdir=taxdir,rank="species"))
-stopifnot(unique(getrank(id6,taxdir))=="species")
+unique(getrank(id6, taxdir))  # "species"
 # note that the K-12 is dropped
 sciname(id6,taxdir)
 

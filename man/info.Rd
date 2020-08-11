@@ -68,10 +68,10 @@ info(c("methane", "oxygen")) # gas, gas
 
 # formulas default to aqueous species, if available
 i1 <- info(c("CH4", "CO2", "CS2", "MgO"))
-stopifnot(identical(info(i1)$state, c("aq", "aq", "gas", "cr")))
+info(i1)$state  # aq, aq, gas, cr
 # state argument overrides the default
 i2 <- info(c("CH4", "CO2", "MgO"), "gas") 
-stopifnot(identical(info(i2)$state, c("gas", "gas", NA)))
+info(i2)$state  # gas, gas, NA
 
 ## partial name or formula searches
 info("ATP")

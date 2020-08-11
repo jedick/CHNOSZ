@@ -107,8 +107,8 @@ text(-6, 2.3, expr.property("DGtr/2.303RT"))
 title(main=paste("Transformation between metastable equilibrium\n",
   "assemblages of n-alkanes"))
 # DGtr but not DDGmix is positive (or zero) everywhere
-stopifnot(all(DGtr.out >= 0))
-stopifnot(!all(DDGmix.out >= 0))
+all(DGtr.out >= 0)    # TRUE
+all(DDGmix.out >= 0)  # FALSE
 }
 
 \references{
