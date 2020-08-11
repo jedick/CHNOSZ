@@ -19,7 +19,7 @@ export(
   "add.OBIGT", "RH2OBIGT",
   "expr.property", "expr.units",
   "mass", "entropy", "GHS", "water",
-  "i2A", "invertible.combs",
+  "i2A",
   "dPdTtr", "Ttr",
   "count.aa", "nucleic.complement", "nucleic.formula",
   "rho.IAPWS95", "IAPWS95", "water.AW90", "WP02.auxiliary", "water.IAPWS95",
