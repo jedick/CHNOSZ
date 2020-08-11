@@ -835,7 +835,7 @@ legend("topright", legend = lTP(25, 1), bty = "n")
 ```
 
 The diagram shows the expected ionization of acetic acid and NH~3~ at different pHs.
-The appearance of acetamide (CH~3~CONH~2~) is a consequence of the interaction between the N-bearing and C-bearing species, and is analogous to the formation of a bimetallic complex.
+The predicted appearance of acetamide (CH~3~CONH~2~) is a consequence of the interaction between the N-bearing and C-bearing species, and is analogous to the formation of a bimetallic complex.
 
 *Thanks to Kirt Robinson for the feature request and test case used in this example.*
 

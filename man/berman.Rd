@@ -92,7 +92,7 @@ G_Cs <- berman("coesite", T=T, P=P)$G
 # that is close to the univariant curve (Ber88 Fig. 4),
 # so the difference in G is close to 0
 DGrxn <- G_Cs - G_aQz
-stopifnot(all(abs(DGrxn) < 100))
+all(abs(DGrxn) < 100)  # TRUE
 
 # make a P-T diagram for SiO2 minerals (Ber88 Fig. 4)
 basis(c("SiO2", "O2"), c("cr", "gas"))
@@ -113,10 +113,10 @@ add.OBIGT(file.path(datadir, "BA96_OBIGT.csv"))
 thermo("opt$Berman" = file.path(datadir, "BA96_berman.csv"))
 Gex_BA96 <- subcrt(species, coeffs, T=seq(600, 1500, 50), P=1)$out$G
 # Ber88 is lower than BA96 at low T
-stopifnot((Gex_BA96 - Gex_Ber88)[1] > 0)
+(Gex_BA96 - Gex_Ber88)[1] > 0  # TRUE
 # the curves cross at about 725 deg C (BA96 Fig. 8)
 # (actually, in our calculation they cross closer to 800 deg C)
-stopifnot(T[which.min(abs(Gex_BA96 - Gex_Ber88))] == 800)
+T[which.min(abs(Gex_BA96 - Gex_Ber88))]  # 800
 # reset the database (thermo()$opt$E.units, thermo()$OBIGT, and thermo()$opt$Berman)
 reset()
 }

@@ -77,14 +77,6 @@ test_that("'normalize' and 'as.residue' work as expected", {
   expect_equal(d3$predominant, d4$predominant)
 })
 
-test_that("diagram() handles 2D plots with different x and y resolution and warns for >1 species in contour plot", {
-  basis("CHNOS")
-  species(c("alanine", "glycine", "serine", "methionine"))
-  a <- affinity(T=c(0, 200, 6), O2=c(-90, -60, 5))
-  # now the warning is invokes next to the actual plotting, so no warning is produced with plot.it=FALSE 20180315
-  #expect_warning(diagram(a, type="CO2", plot.it=FALSE), "showing only first species in 2-D property diagram")
-})
-
 test_that("NaN values from equilibrate() are preserved (as NA in predominance calculation)", {
   # example provided by Grayson Boyer 20170411
   basis(c("H2", "O2", "CO2"), c(-7.19, -60, -2.65))
@@ -114,3 +106,34 @@ test_that("NaN values from equilibrate() are preserved (as NA in predominance ca
 #  d <- diagram(a, fill="heat", xlim=c(-50, -20), ylim=c(-90, -50), plot.it=FALSE)
 #  expect_equal(sum(is.na(d$namesx)), 2)
 #})
+
+test_that("P-T diagram has expected geometry", {
+  # modifified from kayanite-sillimanite-andalusite example in ?diagram 20200811
+  basis(c("corundum", "quartz", "oxygen"))
+  species(c("kyanite", "sillimanite", "andalusite"))
+  a <- affinity(T = c(200, 900, 50), P = c(0, 9000, 51), exceed.Ttr = TRUE)
+  d <- diagram(a, plot.it = FALSE)
+  expect_equal(species()$name[d$predominant[1, 1]], "andalusite")
+  expect_equal(species()$name[d$predominant[1, 51]], "kyanite")
+  expect_equal(species()$name[d$predominant[50, 51]], "sillimanite")
+})
+
+test_that("diagram(type = .) and affinity(return.buffer = TRUE) give the same results", {
+  # extracted from ?buffer 20200811
+  O2 <- c(-85, -70, 4)
+  T <- c(25, 100, 4)
+  basis("CHNOS")
+  basis("CO2", 999)
+  species("acetic acid", -3)
+  species(1, -10)
+  a <- affinity(O2 = O2, T = T)
+  d <- diagram(a, type = "CO2", plot.it = FALSE)
+  and <- as.numeric(d$plotvals[[1]])
+  # now do the calculation with affinity(return.buffer = TRUE)
+  basis("CO2", "AC")
+  mod.buffer("AC", logact = -10)
+  a.buffer <- affinity(O2 = O2, T = T, return.buffer = TRUE)
+  ana <- as.numeric(unlist(a.buffer[[1]]))
+  expect_equal(ana, and)
+})
+
