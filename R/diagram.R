@@ -588,7 +588,10 @@ diagram <- function(
       ### now on to the diagram itself
 
       # colors to fill predominance fields
-      if(is.null(fill) | length(fill)==0) fill <- "transparent"
+      if(is.null(fill)) {
+        if(length(unique(eout$species$state)) == 1) fill <- "transparent"
+        else fill <- ifelse(grepl("cr,cr", eout$species$state), "#DEB88788", ifelse(grepl("cr", eout$species$state), "#FAEBD788", "#F0F8FF88"))
+      } else if(identical(fill, NA) | length(fill)==0) fill <- "transparent"
       else if(isTRUE(fill[1]=="rainbow")) fill <- rainbow(ngroups)
       else if(isTRUE(fill[1] %in% c("heat", "terrain", "topo", "cm"))) fill <- get(paste0(fill[1], ".colors"))(ngroups)
       else if(getRversion() >= "3.6.0" & length(fill)==1) {

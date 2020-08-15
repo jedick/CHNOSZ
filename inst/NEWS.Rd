@@ -87,8 +87,8 @@
       loellingite, westerveldite, and aqueous As(OH)\s{3} and AsO(OH)\s{3} from
       \href{https://doi.org/10.1016/j.gca.2007.11.017}{Perfetti et al., 2008}.
 
-      \item \samp{inorganic_cr.csv}: Add Mn oxides (manganosite, pyrolusite,
-      bixbyite, and hausmannite) from
+      \item \samp{inorganic_cr.csv}: Add manganese and Mn oxides (manganosite,
+      pyrolusite, bixbyite, and hausmannite) from
       \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway,
         1995}.
 
@@ -254,6 +254,8 @@
       \item TODO: convert dates in OBIGT to ISO 8601 format (2020-08-12).
 
       \item TODO: get entropies for Am, Pu, Cm, Np.
+
+      \item TODO: use default colors for 'fill' in diagram().
 
     }
   }

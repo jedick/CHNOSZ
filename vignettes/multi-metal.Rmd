@@ -235,28 +235,23 @@ dV <- diagram(aV, plot.it = FALSE)
 species(iFeV.cr)
 aFeV <- affinity(aFe)  # argument recall
 dFeV <- diagram(aFeV, plot.it = FALSE, bold = TRUE)
-# Function to assign field colors
-fill <- function(a) {
-  ifelse(grepl("cr,cr", a$species$state), "#DEB88788",
-    ifelse(grepl("cr", a$species$state), "#FAEBD788", "#F0F8FF88")
-)}
 # 1:1 mixture (Fe:V)
 a11 <- mix(dFe, dV, dFeV, c(1, 1))
-diagram(a11, fill = fill(a11), min.area = 0.01)
+diagram(a11, min.area = 0.01)
 title("Fe:V = 1:1")
 label.figure(lTP(25, 1), xfrac = 0.12)
 # 1:3 mixture
 a13 <- mix(dFe, dV, dFeV, c(1, 3))
-diagram(a13, fill = fill(a13), min.area = 0.01)
+diagram(a13, min.area = 0.01)
 title("Fe:V = 1:3")
 # 1:5 mixture
 a15 <- mix(dFe, dV, dFeV, c(1, 5))
-diagram(a15, fill = fill(a15), min.area = 0.01)
+diagram(a15, min.area = 0.01)
 title("Fe:V = 1:5")
 ```
 
 Then we calculate the affinities for the bimetallic species and save the output of `diagram()` in `dFeV`, again without making a plot, but formatting the names in bold.
-We also write a function to assign the colors for regions with two solids, one solid, and no solids; these are the web colors "burlywood", "antiquewhite" and "aliceblue" with some transparency added to show the underlying water stability region that is plotted first by `diagram()`.
+Note that `diagram()` uses different colors for regions with two solids, one solid, and no solids, including some transparency to show the underlying water stability region that is plotted first.
 
 Now we have all the ingredients needed to combine the Fe-bearing, V-bearing, and bimetallic species to generate a given composition.
 The `mix()` function  is used to calculate the affinities of formation from basis species for all combinations of aqueous species and minerals that satisfy each of three different compositions.
@@ -281,19 +276,19 @@ basis(c("VO+2", "Fe+2", "H2O", "e-", "H+"))
 species(c(iFe.aq, iFe.cr))$name
 species(1:length(iFe.aq), loga.Fe)
 aFe <- affinity(pH = c(0, 14), Eh = c(-1.5, 2))
-dFe <- diagram(aFe, fill = fill(aFe), plot.it = FALSE)
+dFe <- diagram(aFe, plot.it = FALSE)
 # V-bearing species
 species(c(iV.aq, iV.cr))$name
 species(1:length(iV.aq), loga.V)
 aV <- affinity(aFe)  # argument recall
-dV <- diagram(aV, fill = fill(aV), plot.it = FALSE)
+dV <- diagram(aV, plot.it = FALSE)
 # Bimetallic species
 species(iFeV.cr)
 aFeV <- affinity(aFe)  # argument recall
 dFeV <- diagram(aFeV, plot.it = FALSE, bold = TRUE)
 # 1:1 mixture (Fe:V)
 a11 <- mix(dFe, dV, dFeV, c(1, 1))
-d11 <- diagram(a11, fill = fill(a11), min.area = 0.01)
+d11 <- diagram(a11, min.area = 0.01)
 water.lines(d11, col = "orangered")
 
 # Calculate affinity of FeVO4
@@ -302,11 +297,11 @@ aFeVO4 <- affinity(aFe)  # argument recall
 # Calculate difference from stable species
 aFeVO4_vs_stable <- aFeVO4$values[[1]] - d11$predominant.values
 # Overlay lines from diagram on color map
-diagram(a11, names = FALSE, limit.water = FALSE)
+diagram(a11, fill = NA, names = FALSE, limit.water = FALSE)
 opar <- par(usr = c(0, 1, 0, 1))
 image(aFeVO4_vs_stable, col = topo.colors(100, 0.7, TRUE), add = TRUE)
 par(opar)
-diagram(a11, add = TRUE, names = FALSE)
+diagram(a11, fill = NA, add = TRUE, names = FALSE)
 water.lines(d11, col = "orangered")
 thermo.axis()
 

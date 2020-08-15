@@ -135,8 +135,10 @@ To connect the points with splines instead of lines, set \code{spline.method} to
 \section{2-D diagrams}{
 On 2-D diagrams, the fields represent the species with the highest equilibrium activity.
 \code{fill} determines the color of the predominance fields, \code{col} that of the boundary lines.
-The default of NULL for \code{fill} produces transparent predominance fields.
-\code{fill} can be any \code{\link{colors}}, or the word \samp{rainbow}, \samp{heat}, \samp{terrain}, \samp{topo}, or \samp{cm}, indicating a palette from \pkg{grDevices}.
+The default of NULL for \code{fill} uses a light blue, light tan, and darker tan color for fields with aqueous species, one solid, or two solids.
+These correspond to the web colors "aliceblue", "antiquewhite", and "burlywood" with some transparency added; see \viglink{multi-metal} for an example with two solids produced using \code{\link{mix}}.
+If all the species in the diagram have the same state, or if the \code{fill} argument is NA or a 0-length value, the predominance fields are transparent, i.e. no fill color is used.
+Otherwise, \code{fill} can be any \code{\link{colors}}, or the word \samp{rainbow}, \samp{heat}, \samp{terrain}, \samp{topo}, or \samp{cm}, indicating a palette from \pkg{grDevices}.
 Starting with \R version 3.6.0, \code{fill} can be the name of any available HCL color palette, matched in the same way as the \code{palette} argument of \code{hcl.colors}.
 
 \code{fill.NA} gives the color for empty fields, i.e. points at which NA values are present for any species.
