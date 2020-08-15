@@ -73,6 +73,7 @@ sed -i '120,$s/<code>equil.reaction()<\/code>/<code><a href="..\/html\/equilibra
 sed -i '120,$s/<code>EOSregress()<\/code>/<code><a href="..\/html\/EOSregress.html" style="background-image:none;">EOSregress()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>RH2OBIGT()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">RH2OBIGT()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>eqdata()<\/code>/<code><a href="..\/html\/eqdata.html" style="background-image:none;">eqdata()<\/a><\/code>/g' anintro.html
+sed -i '120,$s/<code>retrieve()<\/code>/<code><a href="..\/html\/retrieve.html" style="background-image:none;">retrieve()<\/a><\/code>/g' anintro.html
 
 # anintro.html: functions from R base packages
 sed -i '120,$s/<code>install.packages/<code><a href="..\/..\/utils\/html\/install.packages.html" style="background-image:none;">install.packages<\/a>/g' anintro.html

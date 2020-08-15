@@ -40,9 +40,9 @@ Currently there is only partial support for version 8.0a (reading data from aque
 }
 
 \references{
-  Wolery, T. J. (1992) EQ3/6, A Software Package for Geochemical Modeling of Aqueous Systems: Package Overview and Installation Guide (Version 7.0). Lawrence Livermore National Laboratory, UCRL-MA-110662 PT I. \url{http://www.wipp.energy.gov/library/cra/2009_cra/references/Others/Wolery_1992_EQ36_A_Software_Package_for_Geochemical_Modeling_of_Aqueous_Systems_ERMS241375.pdf}
+  Wolery, T. J. (1992) EQ3/6, A Software Package for Geochemical Modeling of Aqueous Systems: Package Overview and Installation Guide (Version 7.0). Lawrence Livermore National Laboratory, UCRL-MA-110662 PT I. \url{https://www.wipp.energy.gov/library/cra/2009_cra/references/Others/Wolery_1992_EQ36_A_Software_Package_for_Geochemical_Modeling_of_Aqueous_Systems_ERMS241375.pdf}
 
-  Wolery, T. J. and Daveler, S. A. (1992) EQ6, A Computer Program for Reaction Path Modeling of Aqueous Geochemical Systems: Theoretical Manual, User's Guide, and Related Documentation (Version 7.0). Lawrence Livermore National Laboratory, UCRL-MA-110662 PT IV. \url{http://www.wipp.energy.gov/library/cra/2009_cra/references/Others/Wolery_Daveler_1992_EQ36_A_Computer_Program_for_Reaction_Path_Modeling_of_Aqueous_Geochemical_Systems_ERMS241379.pdf}
+  Wolery, T. J. and Daveler, S. A. (1992) EQ6, A Computer Program for Reaction Path Modeling of Aqueous Geochemical Systems: Theoretical Manual, User's Guide, and Related Documentation (Version 7.0). Lawrence Livermore National Laboratory, UCRL-MA-110662 PT IV. \url{https://www.wipp.energy.gov/library/cra/2009_cra/references/Others/Wolery_Daveler_1992_EQ36_A_Computer_Program_for_Reaction_Path_Modeling_of_Aqueous_Geochemical_Systems_ERMS241379.pdf}
 
 }
 

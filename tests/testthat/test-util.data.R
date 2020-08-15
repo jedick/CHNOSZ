@@ -2,9 +2,9 @@ context("util.data")
 
 test_that("checkGHS() and checkEOS() (via info()) produce messages", {
   i1 <- info("S2O3-2")
-  expect_message(info(i1), "G of S2O3-2 aq \\(26\\) differs by 939 cal mol-1 from tabulated value")
+  expect_message(info(i1), "G of S2O3-2\\(aq\\) differs by 939 cal mol-1 from tabulated value")
   i2 <- info("Cu+2")
-  expect_message(info(i2), "Cp of Cu\\+2 aq \\(60\\) differs by 3.62 cal K-1 mol-1 from tabulated value")
+  expect_message(info(i2), "Cp of Cu\\+2\\(aq\\) differs by 3.62 cal K-1 mol-1 from tabulated value")
 })
 
 test_that("checkGHS() and checkEOS() respond to thermo()$opt$*.tol", {

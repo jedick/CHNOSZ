@@ -103,7 +103,7 @@ print(C8H18par)
 
   Maier, C. G. and Kelley, K. K. (1932) An equation for the representation of high-temperature heat content data. \emph{J. Am. Chem. Soc.} \bold{54}, 3243--3246. \url{https://doi.org/10.1021/ja01347a029}
 
-  Robie, R. A. and Hemingway, B. S. (1995) \emph{Thermodynamic Properties of Minerals and Related Substances at 298.15 K and 1 Bar (\eqn{10^5} Pascals) Pressure and at Higher Temperatures}. U. S. Geol. Surv., Bull. 2131, 461 p. \url{http://www.worldcat.org/oclc/32590140}
+  Robie, R. A. and Hemingway, B. S. (1995) \emph{Thermodynamic Properties of Minerals and Related Substances at 298.15 K and 1 Bar (\eqn{10^5} Pascals) Pressure and at Higher Temperatures}. U. S. Geol. Surv., Bull. 2131, 461 p. \url{https://www.worldcat.org/oclc/32590140}
 
   Shock, E. L. and Helgeson, H. C. (1988) Calculation of the thermodynamic and transport properties of aqueous species at high pressures and temperatures: Correlation algorithms for ionic species and equation of state predictions to 5 kb and 1000\degC. \emph{Geochim. Cosmochim. Acta} \bold{52}, 2009--2036. \url{https://doi.org/10.1016/0016-7037(88)90181-0}
   

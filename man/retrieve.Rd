@@ -39,7 +39,7 @@ If the function detects a change to any chemical formulas in the database, it up
 }
 
 \seealso{
-\code{\link{info}}
+\code{\link{info}} for basic database searches; \viglink{anintro} for a diagram made with \code{retrieve}d species in the Mn-O-H system.
 }
 
 \examples{
@@ -62,13 +62,6 @@ retrieve("Au", "Cl", add.charge = FALSE)
 
 # minerals in the system SiO2-MgO-CaO-CO2
 retrieve(list("Si", "Mg", "Ca", "C", "O"), state="cr")
-
-# an Eh-pH diagram for Mn-bearing aqueous species
-basis(c("Mn+2", "H2O", "H+", "e-"))
-iMn <- retrieve("Mn", c("O", "H"), "aq")
-species(iMn)
-a <- affinity(pH = c(6, 14), Eh = c(-1, 1))
-diagram(a, fill = "terrain", limit.water = TRUE)
 \dontshow{par(thermo()$opar)}
 }
 

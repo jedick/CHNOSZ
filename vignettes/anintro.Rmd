@@ -117,7 +117,7 @@ knit_hooks$set(warning = color_block('magenta'), error = color_block('red'), mes
 
 # Overview
 
-This vignette was made for version `r sessionInfo()$otherPkgs$CHNOSZ$Version` of CHNOSZ, a package for the [R software environment](http://r-project.org).
+This vignette was made for version `r sessionInfo()$otherPkgs$CHNOSZ$Version` of CHNOSZ, a package for the [R software environment](http://r-project.org/).
 For more information on R, see "[An Introduction to R](https://cran.r-project.org/manuals.html)" and the [contributed documentation](https://cran.r-project.org/other-docs.html) for R.
 
 CHNOSZ has been developed since 2006 as a tool for thermodynamic calculations in geochemistry and compositional biology.
@@ -239,8 +239,8 @@ info("carbon dioxide")
 
 A special case is sulfur; the name refers to both the native mineral, which has precedence, and the gas.
 These two phases can be identifed with the formulas S<sub>2</sub> and S, respectively.
-```{r info_sulfur_S2}
-info("sulfur")
+```{r info_S_S2}
+info("S")
 info("S2")
 ```
 
@@ -539,6 +539,7 @@ By *formation reaction* is meant the stoichiometric requirements for formation o
 The <span style="color:red">`species()`</span> function is used to set these *formed species*.
 Let's consider the stoichiometry of some aqueous sulfur-bearing species.
 Here we use <span style="color:red">`basis()`</span> with a keyword to load a preset basis definition.
+To use Eh as a variable, the electron (*e*<sup>-</sup>) should be in the basis, so we use the keyword (<span style="color:red">`basis("CHNOSe")`</span>).
 ```{marginfigure}
 Some available keywords are `CHNOS` (including CO<sub>2</sub>, H<sub>2</sub>O, NH<sub>3</sub>, H<sub>2</sub>S, and O<sub>2</sub>), `CHNOS+` (also including H<sup>+</sup>), and `CHNOSe` (including H<sup>+</sup>, and *e*<sup>-</sup> instead of O<sub>2</sub>).
 See <span style="color:blue">`?basis`</span> for more options.
@@ -549,7 +550,7 @@ The ambiguity of a digit that could belong to the coefficient for the following 
 `SO4-2` is unambiguously parsed as 1 S, 4 O and 2 negative charges.
 ```
 ```{r basis_CHNOSZ, results="hide"}
-basis("CHNOS+")
+basis("CHNOSe")
 ```
 ```{r species_sulfur}
 species(c("H2S", "HS-", "HSO4-", "SO4-2"))
@@ -558,40 +559,28 @@ species(c("H2S", "HS-", "HSO4-", "SO4-2"))
 Aqueous species are assigned default activities of 10<sup>-3</sup> (`logact` is -3).
 Now, we can use <span style="color:green">`affinity()`</span> to calculate the affinities of the formation reactions of each of the species.
 R's `unlist()` is used here to turn the list of values of affinity into a numeric object that can be printed in a couple of lines (note that the names correspond to `ispecies` above):
-```{marginfigure}
-The values returned by <span style="color:green">`affinity()`</span> are dimensionless, i.e. *A*/(2.303*RT*).
-```
 ```{r affinity}
 unlist(affinity()$values)
 ```
 
-The same result (but expressed in units of cal/mol or J/mol) could be obtained using <span style="color:green">`subcrt()`</span>; however, <span style="color:green">`affinity()`</span> has the advantage of being able to perform calculations on a grid of *T*, *P*, or activities of basis species.
-Let's choose a set of variables commonly used in aqueous speciation diagrams: Eh and pH.
-To use Eh as a variable, the electron (*e*<sup>-</sup>) should be in the basis.
-To put the electron in there, we can use a different keyword (<span style="color:red">`basis("CHNOSe")`</span>), or swap oxygen out of the existing basis:
-```{r swap_basis}
-swap.basis("O2", "e-")
-```
+The values returned by <span style="color:green">`affinity()`</span> are dimensionless, i.e. *A*/(2.303*RT*).
+Although <span style="color:green">`subcrt()`</span> can also calculate affinities (in units of cal/mol or J/mol), the main advantage of <span style="color:green">`affinity()`</span> is that it can perform calculations on an arbitrary grid of *T*, *P*, or activities of basis species.
+This is the foundation for making many types of diagrams that are useful in geochemistry.
 
-<span style="color:red">`swap.basis()`</span> changed the basis species and recalculated their activities, but preserved the species of interest.
-```{marginfigure}
-That is, running <span style="color:green">`affinity()`</span>`$values` again would give the same result.
-```
+Given the values of affinity, the <span style="color:green">`diagram()`</span> function identifies the species that has the maximum affinity at each grid point.
+The result is equivalent to a "predominance diagram" [@Dic19], where the fields represent the predominant aqueous species and the boundaries are equal-activity lines.
+If both aqueous species and minerals are present, it is common practice to assign a constant activity to all aqueous species and unit activity (i.e. log activity = 0) for minerals.
+More sophisticated diagrams can be made by showing the solubility contours of a metal on the diagram; see [<span style="color:blue">`demo(contour)`</span>](../demo) for an example.
 
-```{r EhpH_plot, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="Aqueous sulfur species at 25 °C.", pngquant=pngquant, timeit=timeit}
+Let's use <span style="color:green">`diagram()`</span> to make a simple Pourbaix diagram for aqueous species in the system S-O-H.
+After running the <span style="color:red">`basis()`</span> and <span style="color:red">`species()`</span> commands above, we can calculate the affinities on an Eh-pH grid.
+With the default settings in <span style="color:green">`diagram()`</span>, areas beyond the stability limits of water are colored gray.
+Another function, <span style="color:green">`water.lines()`</span>, can be used to also draw lines at the water stability limits:
+
+```{r EhpH_plot, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", message=FALSE, cache=TRUE, fig.cap="Aqueous sulfur species at 25 °C.", pngquant=pngquant, timeit=timeit}
 a <- affinity(pH = c(0, 12), Eh = c(-0.5, 1))
-diagram(a, fill = "heat")
+diagram(a)
 water.lines(a)
-```
-
-Now we can calculate the affinities on an Eh-pH grid:
-```{r EhpH_plot, echo=1, eval=FALSE}
-```
-
-Given values of affinity, the <span style="color:green">`diagram()`</span> function identifies the regions of maximum affinity (see @Dic19) to make a diagram where the fields represent the predominant species and the boundaries are equal-activity lines.
-On a Pourbaix diagram, areas corresponding to Eh-pH conditions beyond the stability limits of water are colored gray.
-Another function, <span style="color:green">`water.lines()`</span>, is used to draw lines at the water stability limits:
-```{r EhpH_plot, echo=-1, eval=FALSE}
 ```
 
 ```{r EhpH_plot_color, fig.margin=TRUE, fig.width=4, fig.height=4, smallish.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="The same plot, with different colors and labels.", pngquant=pngquant, timeit=timeit}
@@ -615,10 +604,55 @@ Moreover, <span style="color:green">`diagram()`</span> has a "saturation" option
 See [<span style="color:blue">`demo(saturation)`</span>](../demo) for an example that uses activity ratios on the axes and plots saturation limits for calcite, magnesite, dolomite, and brucite on a diagram for the H<sub>2</sub>O&ndash;CO<sub>2</sub>&ndash;CaO&ndash;MgO&ndash;SiO<sub>2</sub> system.
 That demo can be used as a template to produce a wide range of diagrams similar to those in @BJH84.
 
+## Retrieving species in a chemical system
+
+Most of the diagrams in this vignette are made by giving the names of all the species.
+However, it can be tedious to find all the species by manually searching the OBIGT database.
+The <span style="color:green">`retrieve()`</span> function can be used to identify the available species that contain particular chemical elements.
+For example, to get Mn-bearing aqueous species and minerals including the single element, oxides and oxyhydroxides, use this:
+
+```{r retrieve}
+retrieve("Mn", c("O", "H"), "aq")
+retrieve("Mn", c("O", "H"), "cr")
+```
+
+Below, these commands are used to identify the species in a Pourbaix diagram for the Mn-O-H system at 100 °C.
+This diagram includes Mn oxides (pyrolusite, bixbyite, hausmannite), Mn(OH)<sub>2</sub>, and aqueous Mn species.
+
+```{r retrieve_diagram, fig.margin=TRUE, fig.width=5, fig.height=5, dpi=dpi, out.width="100%", message=FALSE, results = "hide", cache=TRUE, fig.cap="Pourbaix diagram for the Mn-O-H system.", pngquant=pngquant, timeit=timeit}
+# Set decimal logarithm of activity of aqueous species,
+# temperature and plot resolution
+logact <- -4
+T <- 100
+res <- 400
+# Start with the aqueous species
+basis(c("Mn+2", "H2O", "H+", "e-"))
+iaq <- retrieve("Mn", c("O", "H"), "aq")
+species(iaq, logact)
+aaq <- affinity(pH = c(4, 16, res), Eh = c(-1.5, 1.5, res), T = T)
+# Show names for only the metastable species here
+names <- names(iaq)
+names[!names(iaq) %in% c("MnOH+", "MnO", "HMnO2-")] <- ""
+diagram(aaq, lty = 2, col = "#4169E188", names = names, col.names = 4)
+# Overlay mineral stability fields
+icr <- retrieve("Mn", c("O", "H"), "cr")
+species(icr, add = TRUE)
+# Supply the previous result from affinity() to use
+# argument recall (for plotted variables and T)
+acr <- affinity(aaq)
+diagram(acr, add = TRUE, bold = acr$species$state=="cr", limit.water = FALSE)
+# Add legend
+legend <- c(
+  bquote(log * italic(a)["Mn(aq)"] == .(logact)),
+  bquote(italic(T) == .(T) ~ degree*C)
+)
+legend("topright", legend = as.expression(legend), bty = "n")
+```
+
 ## Mosaic diagrams
 
-If sulfur is in the basis species, then we should consider that its speciation is sensitive to Eh and pH, as shown in the preceding diagram.
-Mosaic diagrams, which are often shown for oxide, sulfide, and carbonate minerals, account for speciation of the basis species.
+If sulfur is an element in the basis species, then we should consider that its speciation is sensitive to Eh and pH, as shown in a previous diagram.
+Mosaic diagrams account for speciation of the basis species and are useful for visualizing the stabilities of many types of minerals including oxides, sulfides, and carbonates.
 These diagrams are made by constructing individual diagrams for the possible basis species.
 The individual diagrams are then combined, each one contributing to the final diagram only in the range of stability of the corresponding basis species.
 

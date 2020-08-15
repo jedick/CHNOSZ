@@ -211,7 +211,7 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
     if(!is.na(calcval)) {
       if(!is.na(refval)) {
         if(abs(diff) > tol) {
-          message(paste("checkEOS: ", prop, " of ", eos$name, " ", eos$state, " (", rownames(eos),
+          message(paste("checkEOS: ", prop, " of ", eos$name, "(", eos$state,
             ") differs by ", round(diff,2), " ", units, " from tabulated value", sep=""))
           return(calcval)
         }
@@ -245,7 +245,7 @@ checkGHS <- function(ghs, ret.diff=FALSE) {
     if(!is.na(refval)) {
       diff <- calcval - refval
       if(abs(diff) > thermo$opt$G.tol) {
-        message(paste("checkGHS: G of ", ghs$name, " ", ghs$state, " (", rownames(ghs),
+        message(paste("checkGHS: G of ", ghs$name, "(", ghs$state,
           ") differs by ", round(diff), " ", ghs$E_units, " mol-1 from tabulated value", sep=""))
         return(calcval)
       }
