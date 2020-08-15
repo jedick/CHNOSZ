@@ -137,26 +137,26 @@ Scaling of the values by orders of magnitude is adopted for some of the paramete
 Columns 14-21 for aqueous species (parameters in the revised HKF equations of state):
 
     \tabular{lll}{
-      \code{a1} \tab numeric \tab \eqn{a_1\times10}{a1 * 10} (cal mol\eqn{^{-1}}{^-1} bar\eqn{^{-1}}{^-1})\cr
-      \code{a2} \tab numeric \tab \eqn{a_2\times10^{-2}}{a2 * 10^{-2}} (cal mol\eqn{^{-1}}{^-1})\cr
-      \code{a3} \tab numeric \tab \eqn{a_3}{a3} (cal K mol\eqn{^{-1}}{^-1} bar\eqn{^{-1}}{^-1})\cr
-      \code{a4} \tab numeric \tab \eqn{a_4\times10^{-4}}{a4 * 10^-4} (cal mol\eqn{^{-1}}{^-1} K)\cr
-      \code{c1} \tab numeric \tab \eqn{c_1}{c1} (cal mol\eqn{^{-1}}{^-1} K\eqn{^{-1}}{^-1})\cr
-      \code{c2} \tab numeric \tab \eqn{c_2\times10^{-4}}{c2 * 10^-4} (cal mol\eqn{^{-1}}{^-1} K)\cr
-      \code{omega} \tab numeric \tab \eqn{\omega\times10^{-5}}{omega * 10^-5} (cal mol\eqn{^{-1}}{^-1})\cr
+      \code{a1} \tab numeric \tab \a1 * 10 (cal mol\S{-1} bar\S{-1})\cr
+      \code{a2} \tab numeric \tab \a2 * 10\S{-2} (cal mol\S{-1})\cr
+      \code{a3} \tab numeric \tab \a3 (cal K mol\S{-1} bar\S{-1})\cr
+      \code{a4} \tab numeric \tab \a4 * 10\S{-4} (cal mol\S{-1} K)\cr
+      \code{c1} \tab numeric \tab \c1 (cal mol\S{-1} K\S{-1})\cr
+      \code{c2} \tab numeric \tab \c2 * 10\S{-4} (cal mol\S{-1} K)\cr
+      \code{omega} \tab numeric \tab \omega * 10\S{-5} (cal mol\S{-1})\cr
       \code{Z}  \tab numeric \tab Charge
     }
 
-Columns 14-21 for crystalline, gas and liquid species (\eqn{Cp=a+bT+cT^{-2}+dT^{-0.5}+eT^2+fT^{\lambda}}{Cp = a + bT + cT^-2 + dT^-0.5 + eT^2 + fT^lambda}).
+Columns 14-21 for crystalline, gas and liquid species (\eqn{Cp} = \eqn{a} + \eqn{bT} + \eqn{cT}\S{-2} + \eqn{dT}\S{-0.5} + \eqn{eT}\S{2} + \eqn{fT}\S{lambda})
 
     \tabular{lll}{
-      \code{a} \tab numeric \tab \eqn{a} (cal K\eqn{^{-1}}{^-1} mol\eqn{^{-1}}{^-1})\cr
-      \code{b} \tab numeric \tab \eqn{b\times10^3}{b * 10^3} (cal K\eqn{^{-2}}{^-2} mol\eqn{^{-1}}{^-1})\cr
-      \code{c} \tab numeric \tab \eqn{c\times10^{-5}}{c * 10^-5} (cal K mol\eqn{^{-1}}{^-1})\cr
-      \code{d} \tab numeric \tab \eqn{d} (cal K\eqn{^{-0.5}}{^-0.5} mol\eqn{^{-1}}{^-1})\cr
-      \code{e} \tab numeric \tab \eqn{e\times10^5}{e * 10^5} (cal K\eqn{^{-3}}{^-3} mol\eqn{^{-1}}{^-1})\cr
-      \code{f} \tab numeric \tab \eqn{f} (cal K\eqn{^{-\lambda-1}}{-lambda-1} mol\eqn{^{-1}}{^-1})\cr
-      \code{lambda} \tab numeric \tab \eqn{\lambda}{lambda} (exponent on the \eqn{f} term)\cr
+      \code{a} \tab numeric \tab \eqn{a} (cal K\S{-1} mol\S{-1})\cr
+      \code{b} \tab numeric \tab \eqn{b} * 10\S{3} (cal K\S{-2} mol\S{-1})\cr
+      \code{c} \tab numeric \tab \eqn{c} * 10\S{-5} (cal K mol\S{-1})\cr
+      \code{d} \tab numeric \tab \eqn{d} (cal K\S{-0.5} mol\S{-1})\cr
+      \code{e} \tab numeric \tab \eqn{e} * 10\S{5} (cal K\S{-3} mol\S{-1})\cr
+      \code{f} \tab numeric \tab \eqn{f} (cal K\S{-lambda-1} mol\S{-1})\cr
+      \code{lambda} \tab numeric \tab \lambda (exponent on the \eqn{f} term)\cr
       \code{T} \tab numeric \tab Temperature of phase transition or upper\cr
       \tab \tab temperature limit of validity of extrapolation (K)
     }
@@ -175,7 +175,7 @@ Columns 14-21 for aqueous species using the Akinfiev-Diamond model. Note that th
     }
 
     \item \code{thermo()$refs}
-    Dataframe of references to sources of thermodynamic data.
+    References for thermodynamic data.
     \tabular{lll}{
       \code{key} \tab character \tab Source key\cr
       \code{author} \tab character \tab Author(s)\cr

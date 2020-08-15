@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-62 (2020-07-27)}{
+\section{Changes in CHNOSZ version 1.3.6-71 (2020-08-15)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -86,6 +86,11 @@
       \item \samp{inorganic_aq.csv}, \samp{inorganic_aq.csv}: Add arsenopyrite,
       loellingite, westerveldite, and aqueous As(OH)\s{3} and AsO(OH)\s{3} from
       \href{https://doi.org/10.1016/j.gca.2007.11.017}{Perfetti et al., 2008}.
+
+      \item \samp{inorganic_cr.csv}: Add Mn oxides (manganosite, pyrolusite,
+      bixbyite, and hausmannite) from
+      \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway,
+        1995}.
 
       \item Add GHS for almandine, dickite, fluorphlogopite, glaucophane,
       grunerite, larnite, pyrope (\samp{SUPCRT92.csv}) and bromellite
@@ -245,6 +250,10 @@
       don't have to compile anything to install CHNOSZ updates).
 
       \item TODO: get retrieve() into more examples/demos
+
+      \item TODO: convert dates in OBIGT to ISO 8601 format (2020-08-12).
+
+      \item TODO: get entropies for Am, Pu, Cm, Np.
 
     }
   }
