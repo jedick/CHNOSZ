@@ -11,7 +11,7 @@ export(
   "pinfo", "protein.length", "protein.formula",
   "read.fasta", "protein.basis", "add.protein",
   "unitize", "revisit", "seq2aa", "findit",
-  "thermo.refs", "mod.OBIGT", "today",
+  "thermo.refs", "mod.OBIGT",
 # examples
   "examples", "demos", "mtitle",
   "list2array", "slice", "dimSums", "slice.affinity",

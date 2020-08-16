@@ -4,19 +4,6 @@
 ## if this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("info.R")
 
-today <- function() {
-  # write today's date in the format used in SUPCRT data files
-  # e.g. 13.May.12 for 2012-05-13
-  t <- date()
-  tt <- unlist(strsplit(t, " "))
-  # for single-digit days there is an extra space
-  tt <- tt[!tt==""]
-  tday <- tt[3]
-  tmonth <- tt[2]
-  tyear <- substr(tt[5], start=3, stop=4)
-  return(paste(tday, tmonth, tyear, sep="."))
-}
-
 mod.OBIGT <- function(...) {
   # add or modify species in thermo()$OBIGT
   thermo <- get("thermo", CHNOSZ)

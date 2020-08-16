@@ -370,7 +370,7 @@ s_P1000 <- subcrt(c("SiO2", "H2O"), c(1, 2), T = seq(0, 1000, 100), P = 1000)$ou
 Now we can start making the new species, with thermodynamic properties calculated at 25 &deg;C:
 ```{r new_H4SiO4}
 mod.OBIGT("calc-H4SiO4", formula = "H4SiO4", ref1 = "this_vignette",
-          date = today(), G = s_25C$G, H = s_25C$H, S = s_25C$S,
+          date = as.character(Sys.Date()), G = s_25C$G, H = s_25C$H, S = s_25C$S,
           Cp = s_25C$Cp, V = s_25C$V, z = 0)
 ```
 

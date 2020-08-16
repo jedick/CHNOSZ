@@ -7,10 +7,10 @@ test_that("minimal usage of mod.OBIGT() creates usable data entries", {
   # we need at least a name and some property
   expect_error(mod.OBIGT("test"), "species name and a property")
   # a valid formula is needed
-  expect_warning(expect_error(mod.OBIGT("test", date=today()), "is not a simple chemical formula"),
+  expect_warning(expect_error(mod.OBIGT("test", date=as.character(Sys.Date())), "is not a simple chemical formula"),
                "please supply a valid chemical formula")
   # the default state is aq
-  expect_message(itest <- mod.OBIGT("test", formula="Z0", date=today()), "added test\\(aq\\)")
+  expect_message(itest <- mod.OBIGT("test", formula="Z0", date=as.character(Sys.Date())), "added test\\(aq\\)")
   # set the charge so following test use hkf() rather than AkDi()
   mod.OBIGT("test", z = 0)
   # we should get NA values of G for a species with NA properties 

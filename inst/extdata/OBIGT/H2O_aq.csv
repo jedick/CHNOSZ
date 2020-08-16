@@ -1,4 +1,4 @@
 name,abbrv,formula,state,ref1,ref2,date,E_units,G,H,S,Cp,V,a1.a,a2.b,a3.c,a4.d,c1.e,c2.f,omega.lambda,z.T
-water,NA,H2O,liq,HGK84,JOH92,25.Oct.06,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-e-,NA,(Z-1),aq,electron,NA,28.Oct.06,cal,0,0,15.6166,0,0,0,0,0,0,0,0,0,0
-H+,H+,H+,aq,proton,NA,06.Nov.97,cal,0,0,0,0,0,0,0,0,0,0,0,0,0
+water,NA,H2O,liq,HGK84,JOH92,2006-10-25,cal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+e-,NA,(Z-1),aq,electron,NA,2006-10-28,cal,0,0,15.6166,0,0,0,0,0,0,0,0,0,0
+H+,H+,H+,aq,proton,NA,1997-11-06,cal,0,0,0,0,0,0,0,0,0,0,0,0,0

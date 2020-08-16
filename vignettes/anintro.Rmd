@@ -1630,10 +1630,10 @@ The function requires the name of a species and one or more properties to change
 
 Let's add data for CoCl<sub>4</sub><sup>-2</sup> from @LBT_11.
 The values are taken from Table 5 of that paper; as is common for parameters in the HKF model, they are reported in caloric units, and some of the values have multipliers, which are kept when entering the data.
-The date we use for the entry is <span style="color:green">`today()`</span> (i.e. today's date using the date format inherited from SUPCRT92):
+The entry includes the date in ISO 8601 extended format (e.g. 2020-08-16); `Sys.Date()` is used in this example to get the current date.
 ```{r mod_OBIGT_CoCl4_ghs}
 mod.OBIGT("CoCl4-2", formula = "CoCl4-2", state = "aq", ref1 = "LBT+11",
-  date = today(), G = -134150, H = -171558, S = 19.55, Cp = 72.09, V = 27.74)
+  date = as.character(Sys.Date()), G = -134150, H = -171558, S = 19.55, Cp = 72.09, V = 27.74)
 ```
 
 The function prints a message saying that the species was added, and returns the species index of the new species.
@@ -1664,7 +1664,7 @@ H <- -1762000
 S <- 119.6
 V <- 43.56
 mod.OBIGT("magnesiochromite", formula = "MgCr2O4", state = "cr", ref1 = "KOSG00",
-          date = today(), E_units = "J", H = H, S = S, V = V)
+          date = as.character(Sys.Date()), E_units = "J", H = H, S = S, V = V)
 ```
 
 Here are the heat capacity parameters for the "Haas-Fisher" polynomial equation ($Cp = a + bT + cT^{-2} + dT^{-0.5} + eT^2$).

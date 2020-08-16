@@ -2,7 +2,6 @@
 \name{add.OBIGT}
 \alias{add.OBIGT}
 \alias{mod.OBIGT}
-\alias{today}
 \title{Functions to Work with the Thermodynamic Database}
 \description{
 Add or modify species in the thermodynamic database.
@@ -11,7 +10,6 @@ Add or modify species in the thermodynamic database.
 \usage{
   add.OBIGT(file, species = NULL, force = TRUE)
   mod.OBIGT(...)
-  today()
 }
 
 \arguments{
@@ -50,8 +48,6 @@ Unless \samp{state} is specified as one of the properties, its value is taken fr
 When adding species, properties that are not specified become NA, except for \samp{state}, which takes a default value from \code{thermo()$opt$state}, and \samp{z.T}, which for aqueous species is set to the charge calculated from the chemical formula (otherwise, NA charge for newly added species would trigger the \code{\link{AkDi}} model).
 The values provided should have energy units correponding to the current setting (\code{\link{E.units}}), but this can be overridden by giving a value for \samp{E_units} in the new data.
 The values provided should also include any order-of-magnitude scaling factors (see \code{\link{thermo}}).
-
-\code{today} returns the current date in the format adopted for \code{thermo()$OBIGT} (inherited from SUPCRT-format data files) e.g. \samp{13.May.12} for May 13, 2012.
 }
 
 \value{
@@ -71,7 +67,7 @@ info(ialanine)
 iCl2O <- mod.OBIGT("Cl2O", G=20970)
 info(iCl2O)
 # add a species with a name that is different from the formula
-mod.OBIGT("buckminsterfullerene", formula="C60", state="cr", date=today())
+mod.OBIGT("buckminsterfullerene", formula="C60", state="cr", date=as.character(Sys.Date()))
 # retrieve the species data (thermodynamic properties in this toy example are NA)
 info(info("C60"))
 # reset database

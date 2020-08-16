@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-73 (2020-08-15)}{
+\section{Changes in CHNOSZ version 1.3.6-74 (2020-08-16)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -78,6 +78,10 @@
 
   \subsection{CHANGES TO OBIGT DATABASE}{
     \itemize{
+
+      \item Dates in the \samp{date} column have been converted to use ISO 8601
+      extended format (e.g. 2020-08-16). The accessory function \code{today},
+      to render the current date using the previous format, has been removed.
 
       \item Update species parameters for the 2019 version of the Deep Earth
       Water (DEW) model (\href{https://doi.org/10.1016/j.gca.2019.03.027}{Huang
@@ -253,8 +257,6 @@
 
       \item TODO: move H2O92D.f and R wrapper to a separate package (so people
       don't have to compile anything to install CHNOSZ updates).
-
-      \item TODO: convert dates in OBIGT to ISO 8601 format (2020-08-12).
 
       \item TODO: get entropies for Am, Pu, Cm, Np.
 
