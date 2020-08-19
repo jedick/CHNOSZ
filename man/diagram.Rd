@@ -28,8 +28,8 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
     fill.NA = "gray80", limit.water = NULL,
     # field and line labels
     names = NULL, format.names = TRUE, bold = FALSE, italic = FALSE, 
-    font = par("font"), family = par("family"), adj = 0.5, dy = 0, srt = 0,
-    min.area = 0,
+    font = par("font"), family = par("family"), adj = 0.5,
+    dx = 0, dy = 0, srt = 0, min.area = 0,
     # title and legend
     main = NULL, legend.x = NA,
     # plotting controls
@@ -75,7 +75,8 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{font}{character, font type for names (has no effect if \code{format.names} is TRUE)}
   \item{family}{character, font family for names}
   \item{adj}{numeric, adjustment for line labels}
-  \item{dy}{numeric, y offset for line labels}
+  \item{dx}{numeric, x offset for line or field labels}
+  \item{dy}{numeric, y offset for line or field labels}
   \item{srt}{numeric, rotation for line labels}
   \item{min.area}{numeric, minimum area of fields that should be labeled, expressed as a fraction of the total plot area}
   \item{main}{character, a main \code{\link{title}} for the plot; \code{NULL} means to plot no title}
@@ -143,10 +144,12 @@ Starting with \R version 3.6.0, \code{fill} can be the name of any available HCL
 
 \code{fill.NA} gives the color for empty fields, i.e. points at which NA values are present for any species.
 This may occur when there are missing thermodynamic data or the temperature or pressure are not in the range of the equations of state.
-The default for \code{fill.NA} is automatically changed to \samp{transparent} when \code{add} is TRUE.
+To make overlay diagrams easier to construct, the default for \code{fill.NA} is automatically changed to \samp{transparent} when \code{add} is TRUE.
 
-\code{fill.NA} is also used for all areas outside the water stability region on Eh-pH and other diagrams when \code{limit.water} is TRUE.
-The default of NULL for \code{limit.water} causes the main diagram to be overlaid on the water stability regions; change this to FALSE to not show the water limits at all.
+If \code{limit.water} is TRUE, the diagram is clipped to the the water stability region on Eh-pH (and some other) diagrams.
+That is, predominance fields are shown only where water is stable, and \code{fill.NA} is used for areas where \H2O is not stable.
+The default of NULL for \code{limit.water} does not clip the main diagram but instead overlays it on the water stability fields.
+Change \code{limit.water} to FALSE to not show the water stability regions at all; this is automatically done if \code{limit.water} is missing and \code{add} is TRUE.
 
 The default line-drawing algorithm uses \code{\link{contourLines}} to obtain smooth-looking diagonal and curved lines, at the expense of not coinciding exactly with the rectangular grid that is used for drawing colors.
 \code{lty}, \code{col}, and \code{lwd} can be specified, but limiting the lines via \code{xrange} is not currently supported.

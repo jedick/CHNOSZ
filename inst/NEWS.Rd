@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-74 (2020-08-16)}{
+\section{Changes in CHNOSZ version 1.3.6-75 (2020-08-19)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -149,6 +149,10 @@
 
       \item New demo \samp{berman.R}, extracted from \samp{berman.Rd}.
 
+      \item Revise demo \samp{mosaic.R} to use \code{flatten()} to show S and C
+      species together, make better use of transparency, and \code{dy} argument
+      to adjust positions of labels.
+
     }
   }
 
@@ -167,8 +171,9 @@
       \item Add a \strong{bottom} argument to \code{ratlab()} to allow changing
       the ion in the denominator to something other than \Hplus.
 
-      \item The \strong{srt} argument in \code{diagram()} can now be used to
-      rotate field labels, not only line labels. This and other arguments
+      \item The \strong{srt}, \strong{dx} (new), and \strong{dy} arguments in
+      \code{diagram()} can now be used to rotate and adjust the position of
+      field labels, not only line labels. This and other arguments
       (\strong{cex}, \strong{col}, \strong{col.names}, \strong{font},
       \strong{family}, \strong{bold}, \strong{italic}) can have length > 1 to
       apply different settings to each species.
@@ -263,6 +268,8 @@
       \item TODO: link to multi-metal.Rmd from anintro.Rmd.
 
       \item TODO: add empty diagram -> exceed.Ttr hint to anintro.Rmd.
+
+      \item TODO: change ugly 'heat' colors in anintro.Rmd.
 
     }
   }

@@ -31,7 +31,7 @@ diagram <- function(
   fill.NA="gray80", limit.water=NULL,
   # field and line labels
   names=NULL, format.names=TRUE, bold=FALSE, italic=FALSE,
-  font=par("font"), family=par("family"), adj=0.5, dy=0, srt=0,
+  font=par("font"), family=par("family"), adj=0.5, dx=0, dy=0, srt=0,
   min.area=0,
   # title and legend
   main=NULL, legend.x=NA,
@@ -87,6 +87,14 @@ diagram <- function(
   if(type=="loga.balance") {
     plotvals <- list(eout$loga.balance)
     plotvar <- "loga.balance"
+  }
+
+  ## modify default arguments with add = TRUE
+  if(add) {
+    # change missing fill.NA to transparent
+    if(missing(fill.NA)) fill.NA <- "transparent"
+    # change missing limit.water to FALSE 20200819
+    if(missing(limit.water)) limit.water <- FALSE
   }
 
   ## number of dimensions (T, P or chemical potentials that are varied)
@@ -299,9 +307,9 @@ diagram <- function(
       if(type=="loga.balance" | nd==2) lty <- 1
       else lty <- 1:ngroups
     }
-    lty <- rep(lty, length.out=ngroups)
-    lwd <- rep(lwd, length.out=ngroups)
-    col <- rep(col, length.out=ngroups)
+    lty <- rep(lty, length.out = length(plotvals))
+    lwd <- rep(lwd, length.out = length(plotvals))
+    col <- rep(col, length.out = length(plotvals))
 
     if(nd==0) {
 
@@ -353,10 +361,12 @@ diagram <- function(
         # 20120521: use legend.x=NA to label lines rather than make legend
         if(is.na(legend.x)) {
           maxvals <- do.call(pmax, pv)
-          dy <- rep(dy, length.out=length(plotvals))
-          srt <- rep(srt, length.out=length(plotvals))
+          # label placement and rotation
+          dx <- rep(dx, length.out = length(plotvals))
+          dy <- rep(dy, length.out = length(plotvals))
+          srt <- rep(srt, length.out = length(plotvals))
           # don't assign to adj becuase that messes up the missing test below
-          alladj <- rep(adj, length.out=length(plotvals))
+          alladj <- rep(adj, length.out = length(plotvals))
           for(i in 1:length(plotvals)) {
             # y-values for this line
             myvals <- as.numeric(plotvals[[i]])
@@ -392,7 +402,7 @@ diagram <- function(
             }
             # also include y-offset (dy) and y-adjustment (labels bottom-aligned with the line)
             # .. and srt (string rotation) 20171127
-            text(xvalues[imax], plotvals[[i]][imax] + dy[i], labels=names[i], adj=c(thisadj, 0), cex=cex.names, srt=srt[i], font=font, family=family)
+            text(xvalues[imax] + dx[i], plotvals[[i]][imax] + dy[i], labels=names[i], adj=c(thisadj, 0), cex=cex.names, srt=srt[i], font=font, family=family)
           }
         } else legend(x=legend.x, lty=lty, legend=names, col=col, cex=cex.names, lwd=lwd, ...)
       }
@@ -576,9 +586,11 @@ diagram <- function(
           font <- rep(font, length.out = length(names))
           family <- rep(family, length.out = length(names))
           srt <- rep(srt, length.out = length(names))
+          dx <- rep(dx, length.out = length(names))
+          dy <- rep(dy, length.out = length(names))
           for(i in seq_along(names)) {
             if(!(identical(col[i], 0)) & !is.na(col[i]))
-              text(namesx[i], namesy[i], labels=names[i], cex=cex[i], col=col[i], font=font[i], family=family[i], srt = srt[i])
+              text(namesx[i] + dx[i], namesy[i] + dy[i], labels=names[i], cex=cex[i], col=col[i], font=font[i], family=family[i], srt = srt[i])
           }
         }
         return(list(namesx=namesx, namesy=namesy))
@@ -606,8 +618,6 @@ diagram <- function(
         }
       }
       fill <- rep(fill, length.out=ngroups)
-      # modify the default for fill.NA
-      if(add & missing(fill.NA)) fill.NA <- "transparent"
       # the x and y values 
       xs <- eout$vals[[1]]
       ys <- eout$vals[[2]]
