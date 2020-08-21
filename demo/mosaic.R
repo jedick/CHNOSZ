@@ -23,6 +23,7 @@ res <- 500
 pH <- c(0, 14, res)
 Eh <- c(-1, 1, res)
 T <- 25
+P <- 1
 loga_S <- -6
 loga_C <- 0
 # Define chemical system
@@ -39,7 +40,7 @@ bases <- c("SO4-2", "HSO4-", "HS-", "H2S")
 bases2 <- c("CO3-2", "HCO3-", "CO2")
 
 # Make a diagram with log(activity of aqueous Fe species) = -4
-m4 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T)
+m4 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T, P = P)
 diagram(m4$A.species, lty = 2, names = FALSE)
 
 ## Show the predominance fields for the sulfur and carbonate basis species
@@ -50,7 +51,7 @@ diagram(dSC, lty = 3, col = 4, col.names = 4, add = TRUE)
 
 # Show lines for log(activity of aqueous Fe species) = -6
 s6 <- species(c("Fe+2", "Fe+3"), -6)
-m6 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T)
+m6 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T, P = P)
 srt <- dy <- numeric(nrow(s6))
 dy[s6$name == "Fe+2"] <- 0.15
 dy[s6$name == "hematite"] <- -0.4
@@ -61,7 +62,7 @@ bold <- s6$state == "cr"
 diagram(m6$A.species, add = TRUE, dy = dy, srt = srt, bold = bold)
 
 # Add legend and title
-TP <- describe.property(c("T", "P"), c(25, 1))
+TP <- describe.property(c("T", "P"), c(T, P))
 SC <- c(
   bquote(log * italic(a)["S(aq)"] == .(loga_S)),
   bquote(log * italic(a)["C(aq)"] == .(loga_C))

@@ -52,6 +52,8 @@ The basis species identified by these keywords are aqueous except for \H2O (liq)
     \code{QEC4} \tab cysteine, glutamic acid, glutamine, \H2O, \O2 \cr
     \code{QEC} \tab cysteine, glutamic acid, glutamine, \H2O, \O2 \cr
     \code{QEC+} \tab cysteine, glutamic acid, glutamine, \H2O, \O2, \Hplus \cr
+    \code{QCa} \tab glutamine, cysteine, acetic acid, \H2O, \O2 \cr
+    \code{QCa+} \tab glutamine, cysteine, acetic acid, \H2O, \O2, \Hplus \cr
   }
 
 The logarithms of activities of amino acids in the \samp{QEC4} basis are -4 (i.e., basis II in Dick, 2016); those in \samp{QEC} and \samp{QEC+} are set to approximate concentrations in human plasma (see Dick, 2017).

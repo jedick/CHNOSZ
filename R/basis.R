@@ -199,7 +199,7 @@ mod.basis <- function(species, state=NULL, logact=NULL) {
 # to load a preset basis definition by keyword
 preset.basis <- function(key=NULL) {
   # the available keywords
-  basis.key <- c("CHNOS", "CHNOS+", "CHNOSe", "CHNOPS+", "CHNOPSe", "MgCHNOPS+", "MgCHNOPSe", "FeCHNOS", "FeCHNOS+", "QEC4", "QEC", "QEC+")
+  basis.key <- c("CHNOS", "CHNOS+", "CHNOSe", "CHNOPS+", "CHNOPSe", "MgCHNOPS+", "MgCHNOPSe", "FeCHNOS", "FeCHNOS+", "QEC4", "QEC", "QEC+", "QCa", "QCa+")
   # just list the keywords if none is specified
   if(is.null(key)) return(basis.key)
   # delete any previous basis definition
@@ -218,6 +218,8 @@ preset.basis <- function(key=NULL) {
   else if(ibase==9) species <- c("Fe2O3", "CO2", "H2O", "NH3", "H2S", "oxygen", "H+")
   else if(ibase %in% c(10, 11)) species <- c("glutamine", "glutamic acid", "cysteine", "H2O", "oxygen")
   else if(ibase==12) species <- c("glutamine", "glutamic acid", "cysteine", "H2O", "oxygen", "H+")
+  else if(ibase==13) species <- c("glutamine", "cysteine", "acetic acid", "H2O", "oxygen")
+  else if(ibase==14) species <- c("glutamine", "cysteine", "acetic acid", "H2O", "oxygen", "H+")
   # get the preset logact
   logact <- preset.logact(species)
   # for QEC4, we use logact = -4 for the amino acids

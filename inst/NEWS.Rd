@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-75 (2020-08-19)}{
+\section{Changes in CHNOSZ version 1.3.6-76 (2020-08-21)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -171,11 +171,11 @@
       \item Add a \strong{bottom} argument to \code{ratlab()} to allow changing
       the ion in the denominator to something other than \Hplus.
 
-      \item The \strong{srt}, \strong{dx} (new), and \strong{dy} arguments in
+      \item The \samp{srt}, \strong{dx} (new), and \samp{dy} arguments in
       \code{diagram()} can now be used to rotate and adjust the position of
       field labels, not only line labels. This and other arguments
-      (\strong{cex}, \strong{col}, \strong{col.names}, \strong{font},
-      \strong{family}, \strong{bold}, \strong{italic}) can have length > 1 to
+      (\samp{cex}, \samp{col}, \samp{col.names}, \samp{font},
+      \samp{family}, \samp{bold}, \samp{italic}) can have length > 1 to
       apply different settings to each species.
 
       \item Add a \strong{min.area} argument to \code{diagram()} to specify the
@@ -219,6 +219,9 @@
       \item Remove \code{wjd()} (implementation of Gibbs energy minimization
       method from \href{https://doi.org/10.1063/1.1744264}{White et al., 1958})
       and demo \code{wjd.R} and supporting data file.
+
+      \item Add "QCa" as a keyword for preset species in basis() (glutamine,
+        cysteine, acetic acid, \H2O, O\s{2}).
 
       \item Convert this NEWS file to Rd format.
 
