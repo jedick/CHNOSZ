@@ -268,11 +268,7 @@
 
       \item TODO: get entropies for Am, Pu, Cm, Np.
 
-      \item TODO: link to multi-metal.Rmd from anintro.Rmd.
-
       \item TODO: add empty diagram -> exceed.Ttr hint to anintro.Rmd.
-
-      \item TODO: change ugly 'heat' colors in anintro.Rmd.
 
     }
   }

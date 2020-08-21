@@ -209,7 +209,7 @@ An attempt has been made to provide a primary database (OBIGT) that has no major
 As the database includes datasets from many sources, it can not be guaranteed to be fully internally consistent.
 For crucial problems, check not only the accuracy of entries in the database, but also the *suitability of the data* for your problem.
 If there are any doubts, consult the primary sources.
-Use <span style="color:blue">`thermo.refs()`</span> to show a list of references for the data; see also the vignette, [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html), for more information.
+Use <span style="color:blue">`thermo.refs()`</span> to show a list of references for the data; see also the vignette [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) for more information.
 
 ## The <span style="color:green">`info()`</span> function
 
@@ -572,28 +572,27 @@ The result is equivalent to a "predominance diagram" [@Dic19], where the fields 
 If both aqueous species and minerals are present, it is common practice to assign a constant activity to all aqueous species and unit activity (i.e. log activity = 0) for minerals.
 More sophisticated diagrams can be made by showing the solubility contours of a metal on the diagram; see [<span style="color:blue">`demo(contour)`</span>](../demo) for an example.
 
+```{r EhpH_plot, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo = FALSE, message=FALSE, cache=TRUE, fig.cap="Aqueous sulfur species at 25 °C.", pngquant=pngquant, timeit=timeit}
+a <- affinity(pH = c(0, 12), Eh = c(-0.5, 1))
+diagram(a, limit.water = TRUE)
+```
 Let's use <span style="color:green">`diagram()`</span> to make a simple Pourbaix diagram for aqueous species in the system S-O-H.
 After running the <span style="color:red">`basis()`</span> and <span style="color:red">`species()`</span> commands above, we can calculate the affinities on an Eh-pH grid.
 With the default settings in <span style="color:green">`diagram()`</span>, areas beyond the stability limits of water are colored gray.
-Another function, <span style="color:green">`water.lines()`</span>, can be used to also draw lines at the water stability limits:
-
-```{r EhpH_plot, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", message=FALSE, cache=TRUE, fig.cap="Aqueous sulfur species at 25 °C.", pngquant=pngquant, timeit=timeit}
-a <- affinity(pH = c(0, 12), Eh = c(-0.5, 1))
-diagram(a)
-water.lines(a)
+This can be changed by setting the `limit.water` argument to FALSE (to not show the stability region of water) or TRUE (to plot the main diagram only in the stable region of water).
+The names of species that can be parsed as chemical formulas are formatted with subscripts and superscripts; if this is not desired, set `format.names = FALSE`.
+```{r EhpH_plot, echo=TRUE, eval=FALSE}
 ```
 
 ```{r EhpH_plot_color, fig.margin=TRUE, fig.width=4, fig.height=4, smallish.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="The same plot, with different colors and labels.", pngquant=pngquant, timeit=timeit}
 diagram(a, fill = "terrain", lwd = 2, lty = 3,
         names = c("hydrogen sulfide", "bisulfide", "bisulfate", "sulfate"),
-        limit.water = TRUE,
-        tplot = FALSE, main = "sulfur species, 25 °C", bty = "n")
+        las = 0)
+water.lines(a, col = 6, lwd = 2)
 ```
-The names of species that can be parsed as chemical formulas are formatted with subscripts and superscripts; if this is not desired, set `format.names = FALSE`.
-Other arguments in <span style="color:green">`diagram()`</span> can be used to control the line type, color, and width, and field labels and plot title.
-The `limit.water` argument allows clipping the diagram to the water stability region; other areas are colored gray.
-The `tplot` argument turns off plot customizations used in CHNOSZ.
-Additional arguments are passed to R's plotting functions; here, we use `bty` to remove the box around the plot.
+Other arguments in <span style="color:green">`diagram()`</span> can be used to control the line type (`lty`), width (`lwd`), and color (`col`), field colors (`fill`), and species labels (`name`).
+Additional arguments are passed to R's plotting functions; here, we use `las` to change the orientation of axes labels.
+Another function, <span style="color:green">`water.lines()`</span>, can be used to draw lines at the water stability limits:
 ```{r EhpH_plot_color, echo=TRUE, eval=FALSE}
 ```
 
@@ -648,6 +647,9 @@ legend <- c(
 )
 legend("topright", legend = as.expression(legend), bty = "n")
 ```
+
+This introductory vignette shows examples for diagrams with a single metal.
+Other functions are available to make diagrams for multiple metals; see the vignette [<span style="color:blue">*Diagrams with multiple metals*</span>](multi-metal.html) for more information.
 
 ## Mosaic diagrams
 
@@ -1513,7 +1515,7 @@ The OBIGT database lists one or two sources for each entry, and citation informa
 You can locate and view the references with <span style="color:green">`thermo.refs()`</span>.
 Running the function without any arguments opens a browser window with the complete table of references.
 ```{marginfigure}
-See the vignette, [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html), for a more nicely formatted presentation of the sources of thermodynamic data, along with notes and additional comments.
+See the vignette [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) for a more nicely formatted presentation of the sources of thermodynamic data, along with notes and additional comments.
 ```
 Where available, links to the web page for the articles and books are displayed:
 ```{r thermo_refs_table, eval=FALSE}
@@ -1750,7 +1752,7 @@ Some functions in CHNOSZ lie outside the main workflow described above.
 
 * <span style="color:green">`RH2OBIGT()`</span> implements a group additivity calculation of standard molal thermodynamic properties and equations of state parameters of crystalline and liquid organic molecules from @RH98.
 
-* <span style="color:green">`EOSregress()`</span> and related functions can be used to regress "equation of state" parameters (e.g. coefficients in the HKF equations) from heat capacity and volumetric data. See <span style="color:blue">`?EOSregress`</span> and the vignette, [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html).
+* <span style="color:green">`EOSregress()`</span> and related functions can be used to regress "equation of state" parameters (e.g. coefficients in the HKF equations) from heat capacity and volumetric data. See <span style="color:blue">`?EOSregress`</span> and the vignette [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html).
 
 * <span style="color:green">`eqdata()`</span> reads data, including concentrations of aqueous species, numbers of moles of solid phases, and mineral saturation states (affinities), from an EQ6 output file [@Wol92].
 
