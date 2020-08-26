@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-76 (2020-08-21)}{
+\section{Changes in CHNOSZ version 1.3.6-78 (2020-08-26)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -222,6 +222,10 @@
 
       \item Add "QCa" as a keyword for preset species in basis() (glutamine,
         cysteine, acetic acid, \H2O, O\s{2}).
+
+      \item Add \strong{T} and \strong{P} arguments to \code{retrieve()} to
+      require that species have non-NA values of standard Gibbs energy at this
+      temperature and pressure.
 
       \item Convert this NEWS file to Rd format.
 

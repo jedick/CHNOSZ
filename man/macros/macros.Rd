@@ -25,6 +25,7 @@
 % other common variables
 \newcommand{\T}{\ifelse{latex}{\eqn{T}}{\ifelse{html}{\out{<I>T</I>}}{T}}}
 \newcommand{\P}{\ifelse{latex}{\eqn{P}}{\ifelse{html}{\out{<I>P</I>}}{P}}}
+\newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 % italicize any letter
 \newcommand{\I}{\ifelse{latex}{\eqn{#1}}{\ifelse{html}{\out{<I>#1</I>}}{#1}}}
 \newcommand{\logK}{\ifelse{latex}{\out{log\,\emph{K}}}{\ifelse{html}{\out{log&thinsp;<i>K</i>}}{log K}}}

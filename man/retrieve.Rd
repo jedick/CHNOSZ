@@ -8,13 +8,15 @@ Retrieve species in the database containing one or more chemical elements.
 
 \usage{
   retrieve(elements = NULL, ligands = NULL, state = NULL,
-    add.charge = TRUE, hide.groups = TRUE)
+    T = NULL, P = "Psat", add.charge = TRUE, hide.groups = TRUE)
 }
 
 \arguments{
   \item{elements}{character, combination of elements, or list, elements in a chemical system}
   \item{ligands}{character, elements present in any ligands}
   \item{state}{character, filter the result on these state(s).}
+  \item{T}{numeric, temperature where \DG0 of species must be not NA}
+  \item{P}{numeric, pressure where \DG0 of species must be not NA}
   \item{add.charge}{logical, add charge to the system?}
   \item{hide.groups}{logical, exclude groups from the result?}
 }
@@ -33,6 +35,9 @@ A special argument value \samp{all} can be used to retrieve all species in the t
 The return value is a named integer vector giving the species index (i.e. rownumber(s) of \code{thermo()$OBIGT}) with names corresponding to the chemical formulas of the species.
 If the electron is in the result, its name (\samp{e-}) is used instead of its chemical formula (\samp{(Z-1)}).
 An empty (length 0) integer value is returned if no \code{elements} are specified or no species are retrieved.
+
+Set \code{T} (and optionally \code{P}) to require that species have non-NA values of \DG0 at this temperature and pressure.
+These values are passed to \code{\link{subcrt}} and therefore have the units set in \code{\link{T.units}} and \code{\link{P.units}}.
 
 To speed up operation, the function uses a precalculated stoichiometric matrix for the default database, which is loaded with the package (see \code{\link{thermo}}).
 If the function detects a change to any chemical formulas in the database, it updates the stoichiometric matrix using \code{\link{i2A}}.
