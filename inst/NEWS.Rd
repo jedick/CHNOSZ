@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-78 (2020-08-26)}{
+\section{Changes in CHNOSZ version 1.3.6-79 (2020-09-10)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -100,6 +100,10 @@
       \href{https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf}{Wagman et al., 1982}
       (GHS) and \href{https://doi.org/10.1016/S0925-8388(98)00739-7}{Senoh et
         al., 1998} (estimated Cp values).
+
+      \item Add huebnerite (MnWO\s{4}) from
+      \href{https://doi.org/10.1016/j.oregeorev.2019.103289}{Liu and Xiao,
+        2020}.
 
       \item Add GHS for almandine, dickite, fluorphlogopite, glaucophane,
       grunerite, larnite, pyrope (\samp{SUPCRT92.csv}) and bromellite
@@ -273,6 +277,7 @@
       \item TODO: get entropies for Am, Pu, Cm, Np.
 
       \item TODO: add empty diagram -> exceed.Ttr hint to anintro.Rmd.
+
 
     }
   }
