@@ -64,7 +64,7 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
 }
 
     \item \code{thermo()$element}
-  Dataframe containing the thermodynamic properties of elements taken from Cox et al., 1989 and Wagman et al., 1982.
+  Dataframe containing the thermodynamic properties of elements taken from Cox et al., 1989, Wagman et al., 1982, and (for Am, Pu, Np, Cm) Thoenen et al., 2014.
   The standard molal entropy (\eqn{S}(\code{Z})) at 25 \degC and 1 bar for the \dQuote{element} of charge (\code{Z}) was calculated from \eqn{S}(H2,g) + 2\eqn{S}(\code{Z}) =  2\eqn{S}(H+), where the standard molal entropies of H2,g and H+ were taken from Cox et al., 1989.
   The mass of \code{Z} is taken to be zero.
   Accessing this data frame using \code{\link{mass}} or \code{\link{entropy}} will select the first entry found for a given element; i.e., values from Wagman et al., 1982 will only be retrieved if the properties of the element are not found from Cox et al., 1989.
@@ -73,9 +73,9 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
       \code{state}  \tab character \tab Stable state of element at 25 \degC and 1 bar\cr
       \code{source} \tab character \tab Source of data\cr
       \code{mass}  \tab numeric \tab Mass of element (in natural isotopic distribution;\cr
-      \tab \tab referenced to a mass of 12 for \eqn{^{12}}{12}C)\cr
+      \tab \tab referenced to a mass of 12 for \S{12}C)\cr
       \code{s}   \tab numeric \tab Entropy of the compound of the element in its stable\cr
-      \tab \tab state at 25 \degC and 1 bar (cal K\eqn{^{-1}}{^-1} mol\eqn{^{-1}}{^-1})\cr
+      \tab \tab state at 25 \degC and 1 bar (cal K\S{-1} mol\S{-1})\cr
       \code{n}  \tab numeric \tab Number of atoms of the element in its stable\cr
       \tab \tab compound at 25 \degC and 1 bar
     }
@@ -281,6 +281,8 @@ Cox, J. D., Wagman, D. D. and Medvedev, V. A., eds. (1989) \emph{CODATA Key Valu
 Johnson, J. W., Oelkers, E. H. and Helgeson, H. C. (1992) SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000\degC. \emph{Comp. Geosci.} \bold{18}, 899--947. \url{https://doi.org/10.1016/0098-3004(92)90029-Q}
 
 Shock, E. L. et al. {1998} \emph{SLOP98.dat} (computer data file). \url{https://doi.org/10.5281/zenodo.2630820}
+
+Thoenen, T., Hummel, W., Berner, U. and Curti, E. (2014) \emph{The PSI/Nagra Chemical Thermodynamic Database 12/07}. Paul Scherrer Institut. \url{https://www.psi.ch/en/les/database}
 
 Wagman, D. D., Evans, W. H., Parker, V. B., Schumm, R. H., Halow, I., Bailey, S. M., Churney, K. L. and Nuttall, R. L. (1982) The NBS tables of chemical thermodynamic properties. Selected values for inorganic and C\s{1} and C\s{2} organic substances in SI units. \emph{J. Phys. Chem. Ref. Data} \bold{11} (supp. 2), 1--392. \url{https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf}
 }

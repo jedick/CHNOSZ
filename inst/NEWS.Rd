@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-79 (2020-09-10)}{
+\section{Changes in CHNOSZ version 1.3.6-80 (2020-09-15)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -126,6 +126,10 @@
       \item The package is now installed with the bibtex file for the OBIGT
       database (\samp{docs/OBIGT.bib}), which is used by the \pkg{logKcalc}
       package (\url{https://github.com/jedick/logKcalc}).
+
+      \item \samp{thermo/element.csv}: Add entropies for Am, Pu, Cm, Np from
+      Thoenen et al., 2014 (\href{https://www.psi.ch/en/les/database}{The
+        PSI/Nagra Chemical Thermodynamic Database 12/07}).
 
     }
   }
@@ -273,8 +277,6 @@
 
       \item TODO: move H2O92D.f and R wrapper to a separate package (so people
       don't have to compile anything to install CHNOSZ updates).
-
-      \item TODO: get entropies for Am, Pu, Cm, Np.
 
       \item TODO: add empty diagram -> exceed.Ttr hint to anintro.Rmd.
 
