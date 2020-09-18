@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-80 (2020-09-15)}{
+\section{Changes in CHNOSZ version 1.3.6-81 (2020-09-18)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -91,6 +91,9 @@
       loellingite, westerveldite, and aqueous As(OH)\s{3} and AsO(OH)\s{3} from
       \href{https://doi.org/10.1016/j.gca.2007.11.017}{Perfetti et al., 2008}.
 
+      \item \samp{inorganic_aq.csv}: Add Co-chloride species from
+      \href{https://doi.org/10.1016/j.gca.2010.12.002}{Liu et al., 2018}.
+
       \item \samp{inorganic_cr.csv}: Add manganese and Mn oxides (manganosite,
       pyrolusite, bixbyite, and hausmannite) from
       \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway,
@@ -101,7 +104,7 @@
       (GHS) and \href{https://doi.org/10.1016/S0925-8388(98)00739-7}{Senoh et
         al., 1998} (estimated Cp values).
 
-      \item Add huebnerite (MnWO\s{4}) from
+      \item \samp{inorganic_cr.csv}: Add huebnerite (MnWO\s{4}) from
       \href{https://doi.org/10.1016/j.oregeorev.2019.103289}{Liu and Xiao,
         2020}.
 
@@ -280,6 +283,8 @@
 
       \item TODO: add empty diagram -> exceed.Ttr hint to anintro.Rmd.
 
+      \item TODO: replace CoCl2-4 example in anintro.Rmd with different species
+      (CoCl2-4 has been added to OBIGT).
 
     }
   }
