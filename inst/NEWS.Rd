@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-81 (2020-09-18)}{
+\section{Changes in CHNOSZ version 1.3.6-82 (2020-10-05)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -93,6 +93,11 @@
 
       \item \samp{inorganic_aq.csv}: Add Co-chloride species from
       \href{https://doi.org/10.1016/j.gca.2010.12.002}{Liu et al., 2018}.
+
+      \item \samp{inorganic_aq.csv}: Add metal carbonate and bicarbonate
+      complexes and FeSO\s{4} from
+      \href{https://doi.org/10.1021/acsearthspacechem.9b00016}{St Clair et al.,
+        2019}.
 
       \item \samp{inorganic_cr.csv}: Add manganese and Mn oxides (manganosite,
       pyrolusite, bixbyite, and hausmannite) from
@@ -285,6 +290,8 @@
 
       \item TODO: replace CoCl2-4 example in anintro.Rmd with different species
       (CoCl2-4 has been added to OBIGT).
+
+      \item TODO: add wustite from Robie and Hemingway (1995).
 
     }
   }
