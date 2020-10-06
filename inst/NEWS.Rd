@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-82 (2020-10-05)}{
+\section{Changes in CHNOSZ version 1.3.6-83 (2020-10-06)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -80,7 +80,7 @@
     \itemize{
 
       \item Dates in the \samp{date} column have been converted to use ISO 8601
-      extended format (e.g. 2020-08-16). The accessory function \code{today},
+      extended format (e.g. 2020-08-16). The accessory function \code{today()},
       to render the current date using the previous format, has been removed.
 
       \item Update species parameters for the 2019 version of the Deep Earth
@@ -112,6 +112,13 @@
       \item \samp{inorganic_cr.csv}: Add huebnerite (MnWO\s{4}) from
       \href{https://doi.org/10.1016/j.oregeorev.2019.103289}{Liu and Xiao,
         2020}.
+
+      \item \samp{inorganic_cr.csv}: Add linnaeite (Co\s{3}S\s{4}) and
+      Co-pentlandite (Co\s{9}S\s{8}) from
+      \href{https://www.worldcat.org/oclc/801856147}{Vaughan and Craig, 1978}
+      and cattierite (CoS\s{2}) and cobalt from
+      \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway,
+        1995}.
 
       \item Add GHS for almandine, dickite, fluorphlogopite, glaucophane,
       grunerite, larnite, pyrope (\samp{SUPCRT92.csv}) and bromellite
@@ -292,6 +299,8 @@
       (CoCl2-4 has been added to OBIGT).
 
       \item TODO: add wustite from Robie and Hemingway (1995).
+
+      \item TODO: document type = 'loga.balance' (for solubility contours) in ?diagram.
 
     }
   }

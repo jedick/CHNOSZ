@@ -13,6 +13,7 @@ RHF78.1,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological S
 RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",iron,https://pubs.er.usgs.gov/publication/b1452
 RHF78.3,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","gibbsite GHS",https://pubs.er.usgs.gov/publication/b1452
 RHF78.4,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","rutile and titanite",https://pubs.er.usgs.gov/publication/b1452
+VC78,"D. J. Vaughan and J. R. Craig",1978,"Mineral Chemistry of Metal Sulfides","linnaeite and Co-pentlandite",https://www.worldcat.org/oclc/801856147
 PB82,"L. N. Plummer and E. Busenberg",1982,"Geochim. Cosmochim. Acta 46, 1011-1040","aragonite and calcite",https://doi.org/10.1016/0016-7037(82)90056-4
 WEP+82,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","gases GHS",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
 WEP+82.1,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","Mn(OH)<sub>2</sub> (amorphous) and MgSO<sub>4</sub>",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
@@ -58,7 +59,7 @@ HDM+94,"A. W. Hakin et al.",1994,"J. Chem. Soc., Faraday Trans. 90, 2027-2035","
 HSS95,"J. R. Haas, E. L. Shock and D. C. Sassani",1995,"Geochim. Cosmochim. Acta 59, 4329-4350","complexes of rare earth elements",https://doi.org/10.1016/0016-7037(95)00314-P
 PH95,"V. A. Pokrovskii and H. C. Helgeson",1995,"Am. J. Sci. 295, 1255-1342","aluminum species",https://doi.org/10.2475/ajs.295.10.1255
 PK95,"V. B. Parker and I. L. Khodakovskii",1995,"J. Phys. Chem. Ref. Data 24, 1699-1745",melanterite,https://doi.org/10.1063/1.555964
-RH95,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","manganese, manganosite, pyrolusite, bixbyite, hausmannite, and heubnerite",https://pubs.er.usgs.gov/publication/b2131
+RH95,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","manganese, manganosite, pyrolusite, bixbyite, hausmannite, heubnerite, cattierite, and cobalt",https://pubs.er.usgs.gov/publication/b2131
 RH95.1,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","hydrogen fluoride and hydrogen chloride",https://pubs.er.usgs.gov/publication/b2131
 RH95.2,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","dawsonite: Cp coefficients corrected in @TKSS14; Cp value at 25 &deg;C from @BPAH07, citing @FSR76",https://pubs.er.usgs.gov/publication/b2131
 RH95.3,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","almandine, dickite, glaucophane, grunerite, pyrope (G and H not in SUPCRT92)",https://pubs.er.usgs.gov/publication/b2131
@@ -66,6 +67,7 @@ RH95.4,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 213
 RH95.5,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","larnite (G and H not in SUPCRT92); Cp from @Kel60",https://pubs.er.usgs.gov/publication/b2131
 RH95.6,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","bromellite (G and H not in SUPCRT92)",https://pubs.er.usgs.gov/publication/b2131
 RH95.7,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","gypsum GHS",https://pubs.er.usgs.gov/publication/b2131
+RH95.8,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","linnaeite V",https://pubs.er.usgs.gov/publication/b2131
 SK95,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","metal-organic acid complexes",https://doi.org/10.1016/0016-7037(95)00058-8
 SK95.1,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","alanate, glycinate and their complexes with metals. Values are taken from slop98.dat, which notes corrected values for some species.",https://doi.org/10.1016/0016-7037(95)00058-8
 Sho95,"E. L. Shock",1995,"Am. J. Sci. 295, 496-580","carboxylic acids",https://doi.org/10.2475/ajs.295.5.496
@@ -275,5 +277,6 @@ DEW19.5,"D. A. Sverjensky et al.",2019,"Deep Earth Water (DEW) spreadsheet","(Ca
 DEW19.6,"D. A. Sverjensky et al.",2019,"Deep Earth Water (DEW) spreadsheet","(Fe<sup>+2</sup>: HKF a<sub>1</sub>-a<sub>4</sub> parameters taken from @HS19, which are different from 2019 DEW spreadsheet)",http://www.dewcommunity.org
 HS19,"F. Huang and D. A. Sverjensky",2019,"Geochim. Cosmochim. Acta 254, 192-230","ions and metal complexes",https://doi.org/10.1016/j.gca.2019.03.027
 LA19,"D. E. LaRowe and J. P. Amend",2019,"Geomicrobiol. J. 36, 492-505","dimethylamine, trimethylamine, resorcinol, phloroglucinol, cyclohexane carboxylate, and cyclohexane carboxylic acid",https://doi.org/10.1080/01490451.2019.1573278
-SPD+19,"B. St Clair et al.",2019,"ACS Earth Space Chem 3, 905-921","Metal carbonate and bicarbonate complexes and FeSO<sub>4</sub>",https://doi.org/10.1021/acsearthspacechem.9b00016
+SPD+19,"B. St Clair et al.",2019,"ACS Earth Space Chem 3, 905-921","metal carbonate and bicarbonate complexes and FeSO<sub>4</sub>",https://doi.org/10.1021/acsearthspacechem.9b00016
 LX20,"Liu and Xiao",2020,"Ore Geol. Rev. 117, 103289","huebnerite Cp",https://doi.org/10.1016/j.oregeorev.2019.103289
+MP20,"Materials Project",2020,"mp-1513: Co9S8","Co-pentlandite V calculated from density of Co<sub>9</sub>S<sub>8</sub> from Materials Project",https://doi.org/10.17188/1191033
