@@ -156,6 +156,9 @@
       comproportionation, after
       \href{https://doi.org/10.1111/1462-2920.14982}{Amend et al., 2020}.
 
+      \item Add \samp{demo/zinc.R}: Solubilities of multiple minerals (zincite
+      and sphalerite).
+
       \item Revise and simplify \samp{anintro.Rmd} and \samp{equilibrium.Rmd}
       (converted from \samp{equilibrium.Rnw}).
 

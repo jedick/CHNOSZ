@@ -81,7 +81,8 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, stable = list(), ...) {
     mysp <- species(bases[[i]])
     # 20191111 include only aq species in total activity
     iaq <- mysp$state == "aq"
-    if(any(iaq)) species(which(iaq), basis0$logact[ibasis0[i]])
+    # use as.numeric in case a buffer is active 20201014
+    if(any(iaq)) species(which(iaq), as.numeric(basis0$logact[ibasis0[i]]))
     A.bases[[i]] <- suppressMessages(affinity(..., sout = sout))
   }
 
@@ -116,7 +117,7 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, stable = list(), ...) {
       if(any(!sapply(A.bases[[1]]$values, is.na))) {
         # 20190504: when equilibrating the changing basis species, use a total activity equal to the activity from the basis definition
         # 20191111 use equilibrate(loga.balance = ) instead of setting activities in species definition
-        e <- equilibrate(A.bases[[i]], loga.balance = basis0$logact[ibasis0[i]])
+        e <- equilibrate(A.bases[[i]], loga.balance = as.numeric(basis0$logact[ibasis0[i]]))
         # exponentiate to get activities then divide by total activity
         a.equil <- lapply(e$loga.equil, function(x) 10^x)
         a.tot <- Reduce("+", a.equil)
