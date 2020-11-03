@@ -34,5 +34,15 @@ test_that("simple buffer works in 0, 1, and 2 dimensions", {
   #D2 <- diagram(A2)
   expect_equivalent(unique(as.vector(A2$buffer[[1]])), logaSiO2[1])
 
+  # A test for 0 dimensions with a two-mineral buffer 20201103
+  # (buffer errored trying to index columns of non-matrix prior to 1.3.6-85)
+  T <- 400
+  P <- 1000
+  basis(c("Fe", "O2"), c("cr", "gas"))
+  basis("O2", "HM")
+  O2_HM <- affinity(T = T, P = P, return.buffer = TRUE)$O2
+  logfO2 <- subcrt(c("hematite", "magnetite"), c(-6, 4), T = T, P = P)$out$logK
+  expect_equal(O2_HM, logfO2)
+
 })
 

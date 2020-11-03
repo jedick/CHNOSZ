@@ -112,8 +112,7 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
     logact.basis <- logact.basis[ilb]
   }
   #  say hello
-  #cat(paste("buffer: '",bufname,"', of ",length(is.buffer),
-  #' species, ',length(ibasis),' activity(s) requested.\n',sep=''))
+  #cat(paste("buffer: '",bufname,"', of ",length(is.buffer),' species, ',length(ibasis),' activity(s) requested.\n',sep=''))
   ibasisrequested <- ibasis
   # check and maybe add to the number of buffered activities
   ibasisadded <- numeric()
@@ -190,7 +189,8 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
         }
       }
     }
-    B[[i]] <- b
+    # Force this to be matrix so indexing works at a single point (no variables defined in affinity()) 20201102
+    B[[i]] <- as.matrix(b)
   }
   # a place to put the results
   X <- rep(B[1],length(ibasis))

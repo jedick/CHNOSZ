@@ -263,7 +263,7 @@ Regarding the legend, it should be noted that although the DFT calculations for 
 
 In these diagrams, changing the Fe:V ratio affects the fully reduced metallic species.
 In the 1:1 mixture, the FeV~3~ + Fe~3~V assemblage is predicted to be stable instead of FeV.
-This result is unlike Figure 1 of @SZS_17 but is consistent with the [MP page for FeV](https://doi.org/10.17188/1189535) where it shown to decompose to this assemblage.
+This result is unlike Figure 1 of @SZS_17 but is consistent with the [MP page for FeV](https://doi.org/10.17188/1189535) where it is shown to decompose to this assemblage.
 On the other hand, [FeV~3~ is stable](https://materialsproject.org/materials/mp-1079399/) in the 1:3 mixture.
 For an even higher proportion of V, the V + FeV~3~ assemblage is stable, which can be seen for instance in the Pourbaix diagram linked from the [MP page for FeV~5~O~12~](https://doi.org/10.17188/1305091).
 
