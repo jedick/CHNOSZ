@@ -1,0 +1,43 @@
+- fix error in expr.species("AsO4---")
+
+- make a site for community uploaded data
+
+- refresh extdata/supcrt/compare.R
+
+- make separate directories for default and optional data files
+
+- diagram(): make error or warning for NA values of affinity
+
+- move protein.equil() example (previously in equilibrium.Rnw) to JMDplots.
+
+- change add.obigt --> add.OBIGT on website (Fe-O-H-S example) when package is submitted to CRAN.
+
+- move extdata/bison to JMDplots package.
+
+- OBIGT.Rmd: change "CHNOSZ" references to "OBIGT".
+
+- add elements from RH95.
+
+- add check to mosaic() that 'stable' values have the right dimensions.
+
+- remove stopifnot() from examples.
+
+- get water limits on logfO2-logfS2 diagram (multi-metal.Rmd)
+
+- anintro.Rmd, help files: make it clear that species with
+different units (cal, J) in OBIGT can be used in subcrt, diagrams, etc.
+in CHNOSZ.
+
+- comment out data modifications in demos/mosaic.R
+
+- move H2O92D.f and R wrapper to a separate package (so people
+don't have to compile anything to install CHNOSZ updates).
+
+- add empty diagram -> exceed.Ttr hint to anintro.Rmd.
+
+- replace CoCl2-4 example in anintro.Rmd with different species
+(CoCl2-4 has been added to OBIGT).
+
+- add wustite from Robie and Hemingway (1995).
+
+- document type = 'loga.balance' (for solubility contours) in ?diagram.

@@ -261,56 +261,6 @@
     }
   }
 
-  \subsection{TODO}{
-    \itemize{
-
-      \item TODO: fix error in expr.species("AsO4---")
-
-      \item TODO: make a site for community uploaded data
-
-      \item TODO: refresh extdata/supcrt/compare.R
-
-      \item TODO: make separate directories for default and optional data files
-
-      \item TODO: diagram(): make error or warning for NA values of affinity
-
-      \item TODO: move protein.equil() example (previously in equilibrium.Rnw) to JMDplots.
-
-      \item TODO: change add.obigt --> add.OBIGT on website (Fe-O-H-S example) when package is submitted to CRAN.
-
-      \item TODO: move extdata/bison to JMDplots package.
-
-      \item TODO: OBIGT.Rmd: change "CHNOSZ" references to "OBIGT".
-
-      \item TODO: add elements from RH95.
-
-      \item TODO: add check to mosaic() that 'stable' values have the right dimensions.
-
-      \item TODO: remove stopifnot() from examples.
-
-      \item TODO: get water limits on logfO2-logfS2 diagram (multi-metal.Rmd)
-
-      \item TODO: anintro.Rmd, help files: make it clear that species with
-      different units (cal, J) in OBIGT can be used in subcrt, diagrams, etc.
-      in CHNOSZ.
-
-      \item TODO: comment out data modifications in demos/mosaic.R
-
-      \item TODO: move H2O92D.f and R wrapper to a separate package (so people
-      don't have to compile anything to install CHNOSZ updates).
-
-      \item TODO: add empty diagram -> exceed.Ttr hint to anintro.Rmd.
-
-      \item TODO: replace CoCl2-4 example in anintro.Rmd with different species
-      (CoCl2-4 has been added to OBIGT).
-
-      \item TODO: add wustite from Robie and Hemingway (1995).
-
-      \item TODO: document type = 'loga.balance' (for solubility contours) in ?diagram.
-
-    }
-  }
-
 }
 
 \section{Changes in CHNOSZ version 1.3.6 (2020-03-16)}{
