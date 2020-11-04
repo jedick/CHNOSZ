@@ -20,7 +20,7 @@ info <- function(species=NULL, state=NULL, check.it=TRUE) {
     message(paste("thermo()$OBIGT has", nrow(thermo$OBIGT[thermo$OBIGT$state=="aq", ]), "aqueous,",
       nrow(thermo$OBIGT), "total species"))
     message(paste("number of literature sources: ", nrow(thermo$refs), ", elements: ",
-      nrow(thermo$element), ", buffers: ", length(unique(thermo$buffers$name)), sep=""))
+      nrow(thermo$element), ", buffers: ", length(unique(thermo$buffer$name)), sep=""))
     message(paste("number of proteins in thermo()$protein is", nrow(thermo$protein), "from",
       length(unique(thermo$protein$organism)), "organisms"))
     return()

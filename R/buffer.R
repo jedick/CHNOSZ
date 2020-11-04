@@ -2,12 +2,12 @@
 # Calculate chemical activities of buffered species
 # 20061102 jmd
 
-mod.buffer <- function(name,species=NULL,state=thermo()$opt$state,logact=-3) {
+mod.buffer <- function(name, species = NULL, state = "cr", logact = 0) {
   # 20071102 add or change a buffer system
   thermo <- get("thermo", CHNOSZ)
   if(is.null(species)) {
-    iname <- which(name==thermo$buffers$name)
-    if(length(iname)>0) species <- thermo$buffers$species[iname]
+    iname <- which(name==thermo$buffer$name)
+    if(length(iname)>0) species <- thermo$buffer$species[iname]
     else species <- character()
   }
   ls <- length(species)
@@ -15,24 +15,24 @@ mod.buffer <- function(name,species=NULL,state=thermo()$opt$state,logact=-3) {
     stop('species must be at least as long as the other arguments')
   if(length(name)!=ls) name <- rep(name,length.out=ls)
   add <- TRUE
-  if(TRUE %in% (name %in% thermo$buffers$name)) {
+  if(TRUE %in% (name %in% thermo$buffer$name)) {
     add <- FALSE
-    imod <- which(thermo$buffers$name %in% name & thermo$buffers$species %in% species)
+    imod <- which(thermo$buffer$name %in% name & thermo$buffer$species %in% species)
     if(length(imod)>0) {
       if(state[1]=='') {
-        thermo$buffers <- thermo$buffers[-imod,]
+        thermo$buffer <- thermo$buffer[-imod,]
         assign("thermo", thermo, CHNOSZ)
         message(paste('mod.buffer: removed ',c2s(species),' in ',
           c2s(unique(name)),' buffer',sep=''))
       } else {
-        if(missing(state)) state <- thermo$buffers$state[imod]
-        if(missing(logact)) logact <- thermo$buffers$logact[imod]
+        if(missing(state)) state <- thermo$buffer$state[imod]
+        if(missing(logact)) logact <- thermo$buffer$logact[imod]
         if(length(state)!=ls) state <- rep(state,length.out=ls)
         if(length(logact)!=ls) logact <- rep(logact,length.out=ls)
-        state.old <- thermo$buffers$state[imod]
-        logact.old <- thermo$buffers$logact[imod]
-        thermo$buffers$state[imod] <- state
-        thermo$buffers$logact[imod] <- logact
+        state.old <- thermo$buffer$state[imod]
+        logact.old <- thermo$buffer$logact[imod]
+        thermo$buffer$state[imod] <- state
+        thermo$buffer$logact[imod] <- logact
         assign("thermo", thermo, CHNOSZ)
         if(identical(state.old,state) & identical(logact.old,logact)) {
           message(paste('mod.buffer: nothing changed for ',
@@ -49,11 +49,11 @@ mod.buffer <- function(name,species=NULL,state=thermo()$opt$state,logact=-3) {
   if(add) {
     if(state[1]=='') state <- rep(thermo$opt$state,length.out=ls)
     t <- data.frame(name=name,species=species,state=state,logact=logact)
-    thermo$buffers <- rbind(thermo$buffers,t)
+    thermo$buffer <- rbind(thermo$buffer,t)
     assign("thermo", thermo, CHNOSZ)
     message(paste('mod.buffer: added',c2s(unique(name))))
   }
-  return(invisible(thermo$buffers[thermo$buffers$name %in% name,]))
+  return(invisible(thermo$buffer[thermo$buffer$name %in% name,]))
 }
 
 ### unexported functions ###
@@ -70,15 +70,15 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
       ibasis <- which(thermo$basis$logact==buffers[k])
       ispecies <- numeric()
       for(i in 1:length(ibasis)) {
-        ib <- as.character(thermo$buffers$name)==as.character(thermo$basis$logact[ibasis[i]])
-        species <- as.character(thermo$buffers$species)[ib]
-        state <- as.character(thermo$buffers$state)[ib]
+        ib <- as.character(thermo$buffer$name)==as.character(thermo$basis$logact[ibasis[i]])
+        species <- as.character(thermo$buffer$species)[ib]
+        state <- as.character(thermo$buffer$state)[ib]
         #ibuff <- info(species,state,quiet=TRUE)
         ispecies <- c(ispecies, species(species, state, index.return=TRUE, add = TRUE))
       }
       ispecies.new <- c(ispecies.new,list(ispecies))
       # make sure to set the activities
-      species(ispecies,thermo$buffers$logact[ib])
+      species(ispecies,thermo$buffer$logact[ib])
     }
     names(ispecies.new) <- buffers
     return(ispecies.new)

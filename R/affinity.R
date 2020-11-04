@@ -102,8 +102,8 @@ affinity <- function(..., property=NULL, sout=NULL, exceed.Ttr=FALSE, exceed.rho
       for(i in 1:length(is.buffer)) is.buff <- c(is.buff,as.numeric(is.buffer[[i]]))
       is.only.buffer <- is.buff[!is.buff %in% is.species]
       buffers <- names(is.buffer)
-      # reorder the buffers according to thermo$buffers
-      buffers <- buffers[order(match(buffers,thermo$buffers$name))]
+      # reorder the buffers according to thermo$buffer
+      buffers <- buffers[order(match(buffers,thermo$buffer$name))]
     }
 
     # here we call 'energy'

@@ -14,7 +14,7 @@ reset <- function() {
     element = read.csv(file.path(thermodir, "element.csv"), as.is=1:3),
     OBIGT = NULL,
     refs = NULL,
-    buffers = read.csv(file.path(thermodir, "buffer.csv"), as.is=1:3),
+    buffer = read.csv(file.path(thermodir, "buffer.csv"), as.is=1:3),
     protein = read.csv(file.path(thermodir, "protein.csv"), as.is=1:4),
     groups = read.csv(file.path(thermodir, "groups.csv"), row.names=1, check.names=FALSE),
     stoich = read.csv(file.path(thermodir, "stoich.csv.xz"), as.is=TRUE),

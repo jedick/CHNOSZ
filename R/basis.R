@@ -151,17 +151,17 @@ mod.basis <- function(species, state=NULL, logact=NULL) {
     if(!is.null(state)) {
       if(state[i] %in% thermo$buffer$name) {
         # this is the name of a buffer
-        ibuff <- which(as.character(thermo$buffers$name)==state[i])
+        ibuff <- which(as.character(thermo$buffer$name)==state[i])
         # check that each species in the buffer is compositionally
         # compatible with the basis definition
         for(k in 1:length(ibuff)) {
-          ispecies <- suppressMessages(info(as.character(thermo$buffers$species)[ibuff[k]],
-            as.character(thermo$buffers$state)[ibuff[k]], check.it=FALSE))
+          ispecies <- suppressMessages(info(as.character(thermo$buffer$species)[ibuff[k]],
+            as.character(thermo$buffer$state)[ibuff[k]], check.it=FALSE))
           bufmakeup <- makeup(ispecies)
           inbasis <- names(bufmakeup) %in% colnames(basis()) 
           if(FALSE %in% inbasis) {
             stop(paste("the elements '",c2s(names(bufmakeup)[!inbasis]),
-              "' of species '",thermo$buffers$species[ibuff[k]],"' in buffer '",state[i],
+              "' of species '",thermo$buffer$species[ibuff[k]],"' in buffer '",state[i],
               "' are not in the basis\n",sep=""))
           }
         }

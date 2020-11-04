@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-83 (2020-10-06)}{
+\section{Changes in CHNOSZ version 1.3.6-86 (2020-11-04)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -252,6 +252,9 @@
       \item Add \strong{T} and \strong{P} arguments to \code{retrieve()} to
       require that species have non-NA values of standard Gibbs energy at this
       temperature and pressure.
+
+      \item Change defaults in \code{mod.buffer()} to be more suitable for
+      mineral buffers (\code{state = "cr"} and \code{logact = 0}).
 
       \item Convert this NEWS file to Rd format.
 
