@@ -99,7 +99,7 @@ aS <- affinity(aC)  # argument recall
 dS <- diagram(aS, add = TRUE, col = 4, col.names = 4)
 aCS <- flatten(dC, dS)
 diagram(aCS)
-legend("topright", legend = lTP(25, 1))
+legend("topright", legend = lTP(25, 1), bty = "n")
 ```
 
 The second diagram is just like the first, except the function `flatten()` is used to label the fields with names of species from both systems, and a legend is added to indicate the temperature and pressure.
@@ -275,7 +275,7 @@ par(mfrow = c(1, 2))
 basis(c("VO+2", "Fe+2", "H2O", "e-", "H+"))
 species(c(iFe.aq, iFe.cr))$name
 species(1:length(iFe.aq), loga.Fe)
-aFe <- affinity(pH = c(0, 14), Eh = c(-1.5, 2))
+aFe <- affinity(pH = c(0, 14, 400), Eh = c(-1.5, 2, 400))
 dFe <- diagram(aFe, plot.it = FALSE)
 # V-bearing species
 species(c(iV.aq, iV.cr))$name
