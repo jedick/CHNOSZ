@@ -129,7 +129,7 @@ The basis species **are not** in general the stable species, so we begin by iden
 
 First we need to assemble the standard Gibbs energies of the solids and aqueous species.
 For solids, values of formation energy from the elements (in eV/atom) computed using density functional theory (DFT) were retrieved from the [Materials API](https://github.com/materialsproject/mapidoc) [@OCJ_15] and are converted to units of J/mol.
-The Materials Project (MP) website also provides these values, but with fewer decimal places, which leads to a small rounding error in the comparison of energy above the hull at the end of this example.
+The Materials Project (MP) website also provides these values, but with fewer decimal places, which would lead to a small rounding error in the comparison of energy above the hull at the end of this example.
 For aqueous species, values of standard Gibbs energy of formation from the elements at 25 °C (in J/mol) are taken mostly from @WEP_82 augmented with data for FeO~2~^-^ from @SSWS97 and FeO~4~^-2^ from @Mis73.
 Adapting the method described by @PWLC12, a correction for each metal is calculated from the difference between the DFT-based formation energy and the standard Gibbs energy of a representative material; here we use values for Fe~3~O~4~ (magnetite) and V~3~O~5~ from @WEP_82.
 This correction is then applied to all of the aqueous species that have that metal.
@@ -143,9 +143,9 @@ Finally, `mod.OBIGT()` is used to add the obtained energies to the OBIGT databas
 # m = MPRester("USER_API_KEY")
 # m.query(criteria={"task_id": "mp-1279742"}, properties=["formation_energy_per_atom"])
 # mp-13, mp-1279742, mp-19306, mp-19770
-Fe.cr <- c(Fe = 0, FeO = -1.72803, Fe3O4 = -1.85868, Fe2O3 = -1.90736)
+Fe.cr <- c(Fe = 0, FeO = -1.72803, Fe3O4 = -1.85868, Fe2O3 = -1.90736)  # 20201109
 # mp-146, mp-18937, mp-1275946, mp-19094, mp-756395, mp-25279
-V.cr <- c(V = 0, V2O3 = -2.52849, V3O5 = -2.52574, VO2 = -2.48496, V3O7 = -2.32836, V2O5 = -2.29524)
+V.cr <- c(V = 0, V2O3 = -2.52849, V3O5 = -2.52574, VO2 = -2.48496, V3O7 = -2.32836, V2O5 = -2.29524)  # 20201109
 
 # Convert formation energies from eV / atom to eV / molecule
 natom.Fe <- sapply(makeup(names(Fe.cr)), sum)
@@ -198,8 +198,8 @@ iV.cr <- modfun(V.cr, "cr")
 iV.aq <- modfun(V.aq, "aq")
 
 # Formation energies (eV / atom) for bimetallic solids from Materials API
-# mp-1335, mp-1079399, mp-866134, mp-1200054, mp-504509 (triclinic FeVO4)
-FeV.cr <- c(FeV = -0.12928, FeV3 = -0.17128, Fe3V = -0.12854, Fe2V4O13 = -2.23622, FeVO4 = -1.75611)
+# mp-1335, mp-1079399, mp-866134, mp-558525, mp-504509 (triclinic FeVO4)
+FeV.cr <- c(FeV = -0.12928, FeV3 = -0.17128, Fe3V = -0.12854, Fe2V4O13 = -2.23833, FeVO4 = -1.75611)  # 20201109
 # Convert energies and add to OBIGT
 natom.FeV <- sapply(makeup(names(FeV.cr)), sum)
 FeV.cr <- FeV.cr * natom.FeV
@@ -351,10 +351,12 @@ J_mol <- convert(cal_mol, "J")
 eV_mol <- J_mol / 1.602176634e-19
 eV_atom <- eV_mol / 6.02214076e23 / 6
 round(eV_atom, 3)
-stopifnot(round(eV_atom, 3) == 0.412)
+stopifnot(round(eV_atom, 3) == 0.413)
 ```
 
-This is equal to the value for the energy above the hull for [triclinic FeVO~4~ on the MP website](https://materialsproject.org/materials/mp-504509/), showing that we successfully made a round trip starting with the input formation energies (eV/atom) from the Materials API, to standard Gibbs energy (J/mol) in the OBIGT database, and back out to energy above the hull (eV/atom).
+This is nearly equal to the value for the energy above the hull for [triclinic FeVO~4~ on the MP website](https://materialsproject.org/materials/mp-504509/).
+(As of 2020-11-09, the energy above hull / atom listed on the MP website is 0.415 eV.)
+This shows that we successfully made a round trip starting with the input formation energies (eV/atom) from the Materials API, to standard Gibbs energy (J/mol) in the OBIGT database, and back out to energy above the hull (eV/atom).
 
 The concept of using the stable minerals and aqueous species to calculate reaction energetics is formalized in the `mosaic()` function, which is described next.
 Because this example modified the thermodynamic data for some minerals that are used below, we should restore the default OBIGT database before proceeding to the next section.
@@ -552,7 +554,7 @@ cex[names %in% c("Hm+Ccp", "Hm+Cv")] <- 0.8
 oFeCu <- order(aFeCu$species$S2 - aFeCu$species$O2)
 fill <- terrain.colors(length(oFeCu), alpha = 0.3)[oFeCu]
 diagram(aFeCu, cex.names = cex, srt = srt, fill = fill)
-legend("topleft", legend = lTP(T, "Psat"))
+legend("topleft", legend = lTP(T, "Psat"), bg = "white")
 title("Cu-Fe-S-O-H")
 ```
 </div>

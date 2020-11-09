@@ -24,8 +24,6 @@
 different units (cal, J) in OBIGT can be used in subcrt, diagrams, etc.
 in CHNOSZ.
 
-- comment out data modifications in demos/mosaic.R
-
 - move H2O92D.f and R wrapper to a separate package (so people
 don't have to compile anything to install CHNOSZ updates).
 
