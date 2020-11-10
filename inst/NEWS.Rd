@@ -102,7 +102,7 @@
 
       \item \samp{inorganic_cr.csv}: Add wustite, manganese, and Mn oxides
       (manganosite, pyrolusite, bixbyite, and hausmannite) from
-      \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway,
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway,
         1995}.
 
       \item \samp{inorganic_cr.csv}: Add amorphous Mn(OH)\s{2} from
@@ -118,13 +118,13 @@
       Co-pentlandite (Co\s{9}S\s{8}) from
       \href{https://www.worldcat.org/oclc/801856147}{Vaughan and Craig, 1978}
       and cattierite (CoS\s{2}) and cobalt from
-      \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway,
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway,
         1995}.
 
       \item Add GHS and Cp at 25 \degC for almandine, dickite, fluorphlogopite,
       glaucophane, grunerite, halloysite, larnite, pyrope (\samp{SUPCRT92.csv})
       and bromellite (\samp{inorganic_cr.csv}) from
-      \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway,
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway,
         1995}.
 
       \item \samp{inorganic_cr.csv}: Correct formulas for number of \H2O in
