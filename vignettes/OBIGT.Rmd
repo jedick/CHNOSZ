@@ -10,7 +10,7 @@ vignette: >
 bibliography: OBIGT.bib
 # so that these appear in the bibliography
 nocite: | 
-  @SPRONS92, @SLOP98, @SLOP07, @SLOP16, @CHNOSZ, @JOH92, @WP02, @CWM89, @PRPG97, @TH88, @Kul06, @Sho09, @HKF81
+  @SPRONS92, @SLOP98, @SLOP07, @SLOP16, @JOH92, @WP02, @CWM89, @PRPG97, @TH88, @Kul06, @Sho09, @HKF81
 csl: elementa.csl
 ---
 <style>
@@ -172,7 +172,7 @@ filerefs <- function(csvfile, dat=NULL, message=FALSE) {
     if(thisref=="SLOP07") { thisref <- "slop07.dat"; citemark <- "" }
     if(thisref=="SLOP98") { thisref <- "slop98.dat"; citemark <- "" }
     if(thisref=="SPRONS92") { thisref <- "sprons92.dat"; citemark <- "" }
-    if(thisref=="CHNOSZ") { citemark <- "" }
+    if(thisref=="OBIGT") { thisref <- paste0("OBIGT (", thermo()$ref$year[iref], ")"); citemark <- "" }
     cat(bullet, citemark, thisref, " -- ", tab[i], note, "\n\n", sep="")
     # get ref2 if we're in the outer list
     if(whichref!="ref2") filerefs(dat=dat[dat$ref1==names(tab)[i], ])

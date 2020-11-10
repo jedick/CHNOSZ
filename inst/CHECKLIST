@@ -1,6 +1,6 @@
 ****************************
 Release checklist for CHNOSZ
-    (updated 2020-07-27)
+    (updated 2020-11-10)
 ****************************
 
 - Run examples() and demos() and inspect their output (especially plots)
@@ -52,11 +52,9 @@ Updating vignettes
     remove padding-top: 10px; from h2 in
     rmarkdown/templates/html_vignette/resources/vignette.css
 
-- vignettes/OBIGT.bib: check correct year and version for CHNOSZ reference
-
 - Documentation links: after installation, run doc/mklinks.sh
-  to add links (to Rd files and vignettes) to anintro.html and
-  OBIGT.html (for the website)
+  to add links to the vignettes (for posting on the website,
+  so vignettes have links to HTML renditions of Rd files)
 
 ***************
 R compatibility

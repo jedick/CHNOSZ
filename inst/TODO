@@ -10,8 +10,6 @@
 
 - move extdata/bison to JMDplots package.
 
-- OBIGT.Rmd: change "CHNOSZ" references to "OBIGT".
-
 - add elements from RH95.
 
 - add check to mosaic() that 'stable' values have the right dimensions.
