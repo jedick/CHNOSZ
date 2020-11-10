@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0 (2020-11-10)}{
+\section{Changes in CHNOSZ version 1.4.0 (2020-11-11)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
