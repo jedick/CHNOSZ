@@ -77,6 +77,8 @@ protein.length(aa)
 # download amino acid composition of a protein
 # start at position 2 to remove the initiator methionine
 aa <- uniprot.aa("ALAT1_HUMAN", start=2)
+# change the name from "sp|P24298" to "ALAT1" 20201110
+aa$protein <- "ALAT1"
 # add it to thermo()$protein
 ip <- add.protein(aa)
 # now it's possible to calculate some properties
