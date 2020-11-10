@@ -2,6 +2,7 @@
 # sphalerite solubility after Akinfiev and Tagirov, 2014, Fig. 13
 # 20190526 jmd initial version
 library(CHNOSZ)
+opar <- par(no.readonly = TRUE)
 
 # set up chemical system
 basis(c("ZnS", "Cl-", "H2S", "H2O", "O2", "H+"))
@@ -35,6 +36,8 @@ plotfun <- function(T = 400, P = 500, m_tot = 0.1, pHmin = 4, logppmmax = 3) {
 
 plotfun()
 title(main = ("Solubility of sphalerite, after Akinfiev and Tagirov, 2014, Fig. 13"), font.main = 1)
+
+par(opar)
 
 ### the following code for making multiple plots is not used in the demo ###
 

@@ -2,7 +2,8 @@
 library(CHNOSZ)
 
 # set up subplots
-opar <- par(mfrow = c(2, 2), mar=c(3.0, 3.5, 2.5, 1.0), mgp=c(1.7, 0.3, 0), las=1, tcl=0.3, xaxs="i", yaxs="i")
+opar <- par(no.readonly = TRUE)
+par(mfrow = c(2, 2), mar=c(3.0, 3.5, 2.5, 1.0), mgp=c(1.7, 0.3, 0), las=1, tcl=0.3, xaxs="i", yaxs="i")
 
 # activate DEW model
 oldwat <- water("DEW")
@@ -211,3 +212,5 @@ stopifnot(maxdiff(sres$out[[1]]$loggam, loggamma) < 0.023)
 
 # reset OBIGT database
 reset()
+
+par(opar)

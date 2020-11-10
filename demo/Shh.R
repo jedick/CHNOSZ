@@ -50,6 +50,7 @@ ylab <- expression(bold(A)/2.303*italic(RT)*" vs Shh")
 xlab <- expression(log*italic(a)[H[2]][O])
 # set up normal plot, or plot with interpretive drawings
 opar <- par(no.readonly = TRUE)
+par(mar = c(5.1, 4.1, 4.1, 2.1))
 if(interp) {
   if(pdf) pdf("tfactor_interp.pdf", width=6, height=6)
   plot.new()

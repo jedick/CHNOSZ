@@ -68,7 +68,8 @@ rtitle <- list(
     substitute(3*co2 + 4*nred + 2*hplus + atp + h2 * "           ", sublist))
 )
 # set up plot
-opar <- par(mfrow=c(3, 3))
+opar <- par(no.readonly = TRUE)
+par(mfrow=c(3, 3))
 ylims <- list(
   c(-10, 45), c(1, 6),   c(-2.5, 7.5),
   c(-35, 5),  c(-9, 5),  c(5, 28),

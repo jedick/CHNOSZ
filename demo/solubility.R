@@ -70,4 +70,5 @@ s <- solubility(a)
 diagram(s, type = "loga.balance")
 title(main = "Solubility of calcite", font.main = 1)
 
+layout(matrix(1))
 par(opar)

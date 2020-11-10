@@ -24,7 +24,9 @@ lines.KH <- function(name = "CO2", T = 1:373, P = "Psat", HKF = FALSE, altH2S = 
 }
 
 # set up plot
+opar <- par(no.readonly = TRUE)
 par(mfrow=c(2, 2))
+
 ylab <- quote(ln~italic(K[H]))
 xlab <- quote(1000 / list(italic(T), K))
 
@@ -79,3 +81,4 @@ text(3.4, 11, quote(italic(P)[sat]))
 legend("bottomright", c("Data (AD03, Fig. 1d)", "AkDi model", "HKF model"), lty=c(0, 1, 3), pch=c(1, NA, NA), col=c(1, 1, 2), bty="n")
 title(main=syslab(c("CH4", "H2O"), dash = " - "))
 
+par(opar)

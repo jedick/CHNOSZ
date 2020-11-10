@@ -36,8 +36,8 @@
 
       \item The all-uppercase acronym \strong{OBIGT} is used everywhere it
       appears in file, function, and object names. In particular, the
-      thermodynamic database now sits at \code{thermo()$OBIGT}, and functions
-      \code{add.OBIGT()} and \code{mod.OBIGT()} replace the previous
+      thermodynamic database now is located at \code{thermo()$OBIGT}, and
+      functions \code{add.OBIGT()} and \code{mod.OBIGT()} replace the previous
       \code{add.obigt()} and \code{mod.obigt()}.
 
       \item The new default of \code{NULL} for \strong{limit.water} in
@@ -246,8 +246,8 @@
       method from \href{https://doi.org/10.1063/1.1744264}{White et al., 1958})
       and demo \code{wjd.R} and supporting data file.
 
-      \item Add "QCa" as a keyword for preset species in basis() (glutamine,
-        cysteine, acetic acid, \H2O, O\s{2}).
+      \item Add "QCa" as a keyword for preset species in \code{basis()}
+      (glutamine, cysteine, acetic acid, \H2O, O\s{2}).
 
       \item Add \strong{T} and \strong{P} arguments to \code{retrieve()} to
       require that species have non-NA values of standard Gibbs energy at this

@@ -4,7 +4,8 @@
 library(CHNOSZ)
 
 ## set up plotting area
-opar <- par(mfrow = c(2, 2))
+opar <- par(no.readonly = TRUE)
+par(mfrow = c(2, 2))
 
 ###########
 ### plot 1: boehmite - kaolinite equilibrium

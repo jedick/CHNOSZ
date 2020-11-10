@@ -25,8 +25,10 @@ doplot <- function(T) {
     legend=describe.property("T", T, digits=0, ret.val=TRUE) )
 }
 # plot layout with space for title at top
+opar <- par(no.readonly = TRUE)
 layout(matrix(c(1, 1, 2, 3, 4, 5), ncol=2, byrow=TRUE), heights=c(1, 4, 4))
-opar <- par(mar=c(0, 0, 0, 0))
+
+par(mar=c(0, 0, 0, 0))
 plot.new()
 # we use subcrt() to generate a reaction for titling the plot
 rxnexpr <- describe.reaction(subcrt("H2O", 1)$reaction, states="all")
@@ -42,6 +44,7 @@ sapply(c(25, 55, 100, 150), doplot)
 print(affinity(H2=c(-10, 0, 3), O2=c(-10, 0, 3), T=c(25, 150, 4))$values)
 # this is so the plots in the next examples show up OK
 E.units("cal")
+
 layout(matrix(1))
 par(opar)
 

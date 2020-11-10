@@ -119,4 +119,5 @@ legend("bottomright", lty = c(3, 2, 1), lwd = c(1, 1, 2), col = c("black", "blac
 # reset database and computational settings
 reset()
 
+layout(matrix(1))
 par(opar)

@@ -5,6 +5,7 @@
 # 20201014 added to CHNOSZ
 
 library(CHNOSZ)
+opar <- par(no.readonly = TRUE)
 par(mfrow = c(2, 2))
 
 # system variables
@@ -99,3 +100,4 @@ title("Solubilities of 2 minerals", font.main = 1, line = 1.5)
 title(bquote(log[10]~"moles of Zn in solution"), line = 0.7)
 label.figure("C")
 
+par(opar)
