@@ -117,7 +117,7 @@ knit_hooks$set(warning = color_block('magenta'), error = color_block('red'), mes
 
 # Overview
 
-This vignette was made for version `r sessionInfo()$otherPkgs$CHNOSZ$Version` of CHNOSZ, a package for the [R software environment](http://www.r-project.org/).
+This vignette was made for version `r sessionInfo()$otherPkgs$CHNOSZ$Version` of CHNOSZ, a package for the [R software environment](https://www.r-project.org/).
 For more information on R, see "[An Introduction to R](https://cran.r-project.org/manuals.html)" and the [contributed documentation](https://cran.r-project.org/other-docs.html) for R.
 
 CHNOSZ has been developed since 2006 as a tool for thermodynamic calculations in geochemistry and compositional biology.

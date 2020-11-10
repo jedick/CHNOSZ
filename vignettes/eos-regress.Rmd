@@ -445,7 +445,7 @@ While they are not quite negligible, these deviations are comparatively small.
 For example, the almost 200 cal/mol offset in &Delta;<i>G</i>&deg; at 350 &deg;C corresponds to a difference in log<i>K</i> of only -0.07.
 
 The following example uses the `H4SiO4` from Stef&aacute;nsson (2001) to make an activity diagram for the K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O system.
-This is similar to diagrams found, for example, on p. 361 of [Garrels and Christ, 1965](http://www.worldcat.org/oclc/517586) and Figure 3 of [Steinmann et al., 1994](http://ccm.geoscienceworld.org/content/42/2/197), but is quantitatively a closer match to the diagram in the [User's Guide to PHREEQC](https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/html/final-75.html).
+This is similar to diagrams found, for example, on p. 361 of [Garrels and Christ, 1965](https://www.worldcat.org/oclc/517586) and Figure 3 of [Steinmann et al., 1994](http://ccm.geoscienceworld.org/content/42/2/197), but is quantitatively a closer match to the diagram in the [User's Guide to PHREEQC](https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/html/final-75.html).
 
 ```{r activity_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, echo=TRUE, results="hide", message=FALSE, dpi=dpi, out.width="100%", cache=TRUE, fig.cap="Activity diagram for K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O.", pngquant=pngquant}
 basis(c("Al+3", "H4SiO4", "K+", "H2O", "H+", "O2"))
