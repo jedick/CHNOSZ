@@ -1,3 +1,5 @@
+[to 20201110]
+
 - make a site for community uploaded data
 
 - make separate directories for default and optional data files
@@ -13,8 +15,6 @@
 - add elements from RH95.
 
 - add check to mosaic() that 'stable' values have the right dimensions.
-
-- get water limits on logfO2-logfS2 diagram (multi-metal.Rmd)
 
 - anintro.Rmd, help files: make it clear that species with
 different units (cal, J) in OBIGT can be used in subcrt, diagrams, etc.

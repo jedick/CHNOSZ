@@ -4,6 +4,7 @@
 # 20201008 combine solubility contours for different minerals
 # 20201014 added to CHNOSZ
 
+library(CHNOSZ)
 par(mfrow = c(2, 2))
 
 # system variables

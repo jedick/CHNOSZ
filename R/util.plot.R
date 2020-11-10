@@ -101,6 +101,9 @@ water.lines <- function(eout, which=c('oxidation','reduction'),
   xaxis <- eout$vars[1]
   yaxis <- eout$vars[2]
   xpoints <- eout$vals[[1]]
+  # make xaxis "nothing" if it is not pH, T, or P 20201110
+  # (so that horizontal water lines can be drawn for any non-redox variable on the x-axis)
+  if(!identical(xaxis, "pH") & !identical(xaxis, "T") & !identical(xaxis, "P")) xaxis <- "nothing"
 
   # T and P are constants unless they are plotted on one of the axes
   T <- eout$T

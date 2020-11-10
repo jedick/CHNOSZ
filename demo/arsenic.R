@@ -26,12 +26,10 @@ species(1:length(iaq), -5)
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 # calculate affinties of formation reactions using the speciated S basis species
 m <- mosaic(bases, pH = c(0, 14, res), Eh = c(-0.8, 0.8, res), T = T, P = 1, blend = blend)
-# adjust colors and names
-fill <- rev(heat.colors(nrow(species())))
-fill[which(species()$state == "cr")] <- "slategray3"
+# adjust name of realgar
 m$A.species$species$name <- gsub(",alpha", "", m$A.species$species$name)
 # make the plot!
-diagram(m$A.species, fill = fill)
+diagram(m$A.species)
 # add legend and title
 dprop <- describe.property(c("T", "P"), c(T, P))
 legend("bottomleft", legend = dprop, bty = "n")
