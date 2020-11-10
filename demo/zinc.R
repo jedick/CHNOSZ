@@ -53,7 +53,7 @@ legend("topleft", legend = lex(l), bty = "n", cex = 1.5)
 par(xpd = NA)
 legend("bottomleft", c("Predominance diagram: molality of aqueous", "species defines one solubility contour.",
   "Take away aqueous species to see", "all possible minerals.",
-  "Calculate solubility for each mineral separately", "then take the minimum to plot solubilities", "of stable minerals across the diagram."),
+  "Calculate solubility for each mineral separately", "then find the minimum to plot solubilities", "of stable minerals across the diagram."),
        pch = c("A", "", "B", "", "C", "", ""), inset = c(-0.1, 0), cex = 0.95)
 par(xpd = FALSE)
 

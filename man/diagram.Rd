@@ -97,16 +97,6 @@ The first argument is the output from \code{\link{affinity}}, \code{\link{equili
 2-D diagrams, for two variables, are plotted as predominance fields.
 The allowed variables are any that \code{\link{affinity}} or the other functions accepts: temperature, pressure, or the chemical activities of the basis species.
 
-The \code{type} argument only applies when the output from \code{affinity} is being used.
-For \code{type} set to \samp{auto}, and 0 or 1 variables, the property computed by \code{\link{affinity}} for each species is plotted.
-This is usually the affinity of the formation reaction, but can be set to some other property, such as the equilibrium constant (\samp{logK}).
-For two variables, equilibrium predominance (maximum affinity) fields are plotted.
-This \dQuote{maximum affinity method} (Dick, 2019) uses balancing coefficients that are specified by the \code{balance} argument.
-If \code{type} is \samp{saturation}, the function plots the line for each species where the affinity of formation equals zero (see \code{demo("saturation")} for an example).
-If for a given species no saturation line is possible or the range of the diagram does not include the saturation line, the function prints a message instead.
-If \code{type} is the name of a basis species, then the equilibrium activity of the selected basis species in each of the formation reactions is plotted (see the \CO2-acetic acid example in \code{\link{buffer}}).
-In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines, with the method specified in \code{contour.method}.
-
 A new plot is started unless \code{add} is TRUE.
 If \code{plot.it} is FALSE, no plot will be generated but all the intermediate computations will be performed and the results returned.
 
@@ -120,6 +110,23 @@ The x- and y-axis labels are automatically generated unless they are supplied in
 If \code{groups} is supplied, the activities of the species identified in each numeric element of this list are multiplied by the balance coefficients of the species, then summed together.
 The names of the list are used to label the lines or fields for the summed activities of the resulting groups.
 
+}
+
+\section{\code{type} argument}{
+This paragraph describes the effect of the \code{type} argument when the output from \code{affinity} is being used.
+For \code{type} set to \samp{auto}, and with 0 or 1 variables defined in \code{\link{affinity}}, the property computed by \code{affinity} for each species is plotted.
+This is usually the affinity of the formation reactions, but can be set to some other property (using the \code{property} argument of \code{affinity}), such as the equilibrium constant (\samp{logK}).
+For two variables, equilibrium predominance (maximum affinity) fields are plotted.
+This \dQuote{maximum affinity method} (Dick, 2019) uses balancing coefficients that are specified by the \code{balance} argument.
+If \code{type} is \samp{saturation}, the function plots the line for each species where the affinity of formation equals zero (see \code{demo("saturation")} for an example).
+If for a given species no saturation line is possible or the range of the diagram does not include the saturation line, the function prints a message instead.
+If \code{type} is the name of a basis species, then the equilibrium activity of the selected basis species in each of the formation reactions is plotted (see the \CO2-acetic acid example in \code{\link{buffer}}).
+In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines, with the method specified in \code{contour.method}.
+
+This paragraph describes the effect of the \code{type} argument when the output from \code{solubility} is being used.
+For \code{type} set to \samp{auto}, the equilibrium activities (i.e. computed solubilities) of each species are plotted.
+If \code{type} is \samp{loga.balance}, the activity of the balancing basis species (i.e. total solubility) is plotted; this is represented by contours on a 2-D diagram.
+For examples that use these features, see \code{\link{solubility}} and various \code{\link{demos}}: \samp{DEW}, \samp{contour}, \samp{gold}, \samp{solubility}, \samp{sphalerite}, \samp{zinc}.
 }
 
 \section{1-D diagrams}{
