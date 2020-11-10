@@ -55,7 +55,8 @@ Updating vignettes
 - vignettes/OBIGT.bib: check correct year and version for CHNOSZ reference
 
 - Documentation links: after installation, run doc/mklinks.sh
-  and put the modified anintro.html and OBIGT.html in the package
+  to add links (to Rd files and vignettes) to anintro.html and
+  OBIGT.html (for the website)
 
 ***************
 R compatibility

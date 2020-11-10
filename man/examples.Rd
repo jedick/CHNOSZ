@@ -89,7 +89,7 @@ Akinfiev, N. N. and Diamond, L. W. (2003) Thermodynamic description of aqueous n
 
 Akinfiev, N. N. and Tagirov, B. R. (2014) Zn in hydrothermal systems: Thermodynamic description of hydroxide, chloride, and hydrosulfide complexes. \emph{Geochem. Int.} \bold{52}, 197--214. \url{https://doi.org/10.1134/S0016702914030021}
 
-Akinfiev, N. N. and Zotov, A. V. (2001) Thermodynamic description of chloride, hydrosulfide, and hydroxo complexes of Ag(I), Cu(I), and Au(I) at temperatures of 25-500\degC and pressures of 1-2000 bar. \emph{Geochem. Int.} \bold{39}, 990--1006. \url{https://pleiades.online/cgi-perl/search.pl/?type=abstract&name=geochem&number=10&year=1&page=990}
+Akinfiev, N. N. and Zotov, A. V. (2001) Thermodynamic description of chloride, hydrosulfide, and hydroxo complexes of Ag(I), Cu(I), and Au(I) at temperatures of 25-500\degC and pressures of 1-2000 bar. \emph{Geochem. Int.} \bold{39}, 990--1006.
 
 Aksu, S. and Doyle, F. M. (2001) Electrochemistry of copper in aqueous glycine solutions. \emph{J. Electrochem. Soc.} \bold{148}, B51--B57. \url{https://doi.org/10.1149/1.1344532}
 
