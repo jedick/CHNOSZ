@@ -299,7 +299,7 @@ aFeVO4_vs_stable <- aFeVO4$values[[1]] - d11$predominant.values
 # Overlay lines from diagram on color map
 diagram(a11, fill = NA, names = FALSE, limit.water = FALSE)
 opar <- par(usr = c(0, 1, 0, 1))
-image(aFeVO4_vs_stable, col = topo.colors(100, 0.7, TRUE), add = TRUE)
+image(aFeVO4_vs_stable, col = rev(topo.colors(100, 0.7)), add = TRUE)
 par(opar)
 diagram(a11, fill = NA, add = TRUE, names = FALSE)
 water.lines(d11, col = "orangered")

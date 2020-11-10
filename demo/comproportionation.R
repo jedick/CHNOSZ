@@ -48,7 +48,7 @@ pK_HSO4 <- subcrt(c("SO4-2", "H+", "HSO4-"), c(-1, -1, 1), T = T)$out$logK
 # make contour plot
 filled.contour(T, pH, G.kJ.4, xlab = axis.label("T"), ylab = axis.label("pH"),
   levels = -55:0,
-  color.palette = function(n) hcl.colors(n),
+  color.palette = ifelse(getRversion() >= "3.6.0", function(n) hcl.colors(n), topo.colors),
   # use plot.axes to label the contour plot (see ?filled.contour)
   plot.axes = {
     contour(T, pH, G.kJ.4, levels = c(-10, -30, -50), add = TRUE, col = "white", lwd = 2, labcex = 0.8)
