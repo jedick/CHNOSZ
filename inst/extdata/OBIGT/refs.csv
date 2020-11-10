@@ -9,7 +9,6 @@ HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","dat
 HDNB78.1,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","litharge S, V, and Cp parameters",https://www.worldcat.org/oclc/13594862
 HDNB78.2,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","celestite V and Cp parameters",https://www.worldcat.org/oclc/13594862
 RHF78,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",chlorargyrite,https://pubs.er.usgs.gov/publication/b1452
-RHF78.1,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","halloysite",https://pubs.er.usgs.gov/publication/b1452
 RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",iron,https://pubs.er.usgs.gov/publication/b1452
 RHF78.3,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","gibbsite GHS",https://pubs.er.usgs.gov/publication/b1452
 RHF78.4,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","rutile and titanite",https://pubs.er.usgs.gov/publication/b1452
@@ -62,7 +61,7 @@ PK95,"V. B. Parker and I. L. Khodakovskii",1995,"J. Phys. Chem. Ref. Data 24, 16
 RH95,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","manganese, manganosite, pyrolusite, bixbyite, hausmannite, heubnerite, cattierite, cobalt, and wustite",https://pubs.er.usgs.gov/publication/b2131
 RH95.1,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","hydrogen fluoride and hydrogen chloride",https://pubs.er.usgs.gov/publication/b2131
 RH95.2,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","dawsonite: Cp coefficients corrected in @TKSS14; Cp value at 25 &deg;C from @BPAH07, citing @FSR76",https://pubs.er.usgs.gov/publication/b2131
-RH95.3,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","almandine, dickite, glaucophane, grunerite, pyrope (G and H not in SUPCRT92)",https://pubs.er.usgs.gov/publication/b2131
+RH95.3,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","almandine, dickite, glaucophane, grunerite, halloysite, pyrope: GHS and Cp at 25 &deg;C",https://pubs.er.usgs.gov/publication/b2131
 RH95.4,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","fluorphlogopite (Al/Si disordered) (G and H not in SUPCRT92)",https://pubs.er.usgs.gov/publication/b2131
 RH95.5,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","larnite (G and H not in SUPCRT92); Cp from @Kel60",https://pubs.er.usgs.gov/publication/b2131
 RH95.6,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","bromellite (G and H not in SUPCRT92)",https://pubs.er.usgs.gov/publication/b2131

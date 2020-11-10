@@ -341,12 +341,16 @@
 "SLOP98",145,"MnAsO4-","aq","cal",-1.45,,
 "SLOP98",165,"AmCrO4+2","aq","cal",,,-4654
 "SLOP98",169,"PdCl4-2","aq","cal",,-1.05,
+"SUPCRT92",10,"almandine","cr","cal",4.43,,
 "SUPCRT92",26,"antigorite","cr","cal",,,812
 "SUPCRT92",41,"clinochlore,7A","cr","cal",,,666
 "SUPCRT92",57,"daphnite,14A","cr","cal",,,-836
 "SUPCRT92",82,"ferrosilite","cr","cal",,,694
 "SUPCRT92",83,"ferrosilite","cr2","cal",,,694
+"SUPCRT92",93,"glaucophane","cr","cal",-2.57,,
 "SUPCRT92",94,"greenalite","cr","cal",,,142507
+"SUPCRT92",96,"grunerite","cr","cal",9.72,,
+"SUPCRT92",97,"halloysite","cr","cal",-1.6,,
 "OldAA",11,"alanate","aq","cal",-24.28,,
 "OldAA",24,"Fe(Gly)2","aq","cal",,,537
 "OldAA",50,"Fe(Ala)2","aq","cal",,,553

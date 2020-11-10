@@ -3,6 +3,7 @@
 \encoding{UTF-8}
 
 % macros
+\newcommand{\degC}{\ifelse{latex}{\eqn{^{\circ}}C}{\ifelse{html}{\out{&deg;}C}{°C}}}
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 \newcommand{\Hplus}{\ifelse{latex}{\eqn{\mathrm{H^{+}}}}{\ifelse{html}{\out{H<sup>+</sup>}}{H+}}}
 % subscript and superscript
@@ -120,10 +121,11 @@
       \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway,
         1995}.
 
-      \item Add GHS for almandine, dickite, fluorphlogopite, glaucophane,
-      grunerite, larnite, pyrope (\samp{SUPCRT92.csv}) and bromellite
-      (\samp{inorganic_cr.csv}) from
-      \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway, 1995}.
+      \item Add GHS and Cp at 25 \degC for almandine, dickite, fluorphlogopite,
+      glaucophane, grunerite, halloysite, larnite, pyrope (\samp{SUPCRT92.csv})
+      and bromellite (\samp{inorganic_cr.csv}) from
+      \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway,
+        1995}.
 
       \item \samp{inorganic_cr.csv}: Correct formulas for number of \H2O in
       some As-bearing minerals.
