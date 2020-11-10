@@ -9,7 +9,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.3.6-88 (2020-11-05)}{
+\section{Changes in CHNOSZ version 1.4.0 (2020-11-10)}{
 
   \subsection{MAJOR CHANGES}{
     \itemize{
@@ -99,8 +99,8 @@
       \href{https://doi.org/10.1021/acsearthspacechem.9b00016}{St Clair et al.,
         2019}.
 
-      \item \samp{inorganic_cr.csv}: Add manganese and Mn oxides (manganosite,
-      pyrolusite, bixbyite, and hausmannite) from
+      \item \samp{inorganic_cr.csv}: Add wustite, manganese, and Mn oxides
+      (manganosite, pyrolusite, bixbyite, and hausmannite) from
       \href{https://pubs.er.usgs.gov/publication/b2131}{Robie and Hemingway,
         1995}.
 
