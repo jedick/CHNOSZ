@@ -232,7 +232,7 @@ The properties of H<sub>2</sub>O are listed as NA; CHNOSZ calculates its propert
 
 By convention, the standard Gibbs energy of formation, entropy, and heat capacity of the aqueous proton (H<sup>+</sup>) are 0 at all *T* and *P* ([e.g. Cox et al., 1989](https://www.worldcat.org/oclc/18559968)).
 The formation reaction of the proton can be expressed as &frac12;H<sub>2,(*g*)</sub> + Z = H<sup>+</sup>, where Z is the "element" of positive charge.
-Because the conventional standard Gibbs energy of this reaction is 0 at all *T*, the standard entropy of the reaction is also constrained to be zero (cf. [Puigdomenech et al., 1997](https://www.oecd-nea.org/dbtdb/pubs/book-pdf/427-494.pdf)).
+Because the conventional standard Gibbs energy of this reaction is 0 at all *T*, the standard entropy of the reaction is also constrained to be zero (cf. Puigdomenech et al., 1997).
 Therefore, the "element" of positive charge (Z) has zero thermodynamic properties except for an entropy, *S*°<sub>*T*<sub>r</sub></sub>, that is negative one-half that of H<sub>2,(*g*)</sub>.
 The standard entropy of the aqueous electron, which is a solely a pseudospecies defined by *e*<sup>-</sup> = -Z, is opposite that of Z.
 

@@ -1,4 +1,4 @@
-[to 20201110]
+[ - 20201110]
 
 - make a site for community uploaded data
 
@@ -25,3 +25,7 @@ don't have to compile anything to install CHNOSZ updates).
 
 - replace CoCl2-4 example in anintro.Rmd with different species
 (CoCl2-4 has been added to OBIGT).
+
+[20201113 - ]
+
+- add a demo to show user-added data with Berman equations

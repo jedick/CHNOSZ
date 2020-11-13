@@ -53,7 +53,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
 
-      \item Add function \strong{flatten()} for combining two diagrams for
+      \item Add function \strong{mash()} for combining two diagrams for
       different systems (i.e., simple overlay of diagrams for two single-metal
       systems).
 
@@ -177,7 +177,7 @@
 
       \item New demo \samp{berman.R}, extracted from \samp{berman.Rd}.
 
-      \item Revise demo \samp{mosaic.R} to use \code{flatten()} to show S and C
+      \item Revise demo \samp{mosaic.R} to use \code{mash()} to show S and C
       species together, make better use of transparency, and \code{dy} argument
       to adjust positions of labels.
 

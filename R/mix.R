@@ -1,4 +1,4 @@
-# CHNOSZ/flatten.R
+# CHNOSZ/mix.R
 # Combine diagrams for two metals
 # 20200713 first version jmd
 
@@ -7,7 +7,7 @@
 
 # Function to combine two diagrams (simple overlay, no interaction) 20200717
 # -- makes new "species" from all combinations of those in d1 and d2
-flatten <- function(d1, d2) {
+mash <- function(d1, d2) {
   # It's just mixing d1 and d2 (two single-metal diagrams) without adding d3 (bimetal) 20200722
   mix(d1, d2)
 }

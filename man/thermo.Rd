@@ -30,7 +30,7 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
 }
 
 \arguments{
-  \item{...}{list, one or more arguments whose names correspond to the component() to modify}
+  \item{...}{list, one or more arguments whose names correspond to the setting to modify}
 }
 
 \format{

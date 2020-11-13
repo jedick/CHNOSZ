@@ -1,15 +1,15 @@
 \encoding{UTF-8}
 \name{mix}
-\alias{flatten}
+\alias{mash}
 \alias{rebalance}
 \alias{mix}
 \title{Combine Diagrams for Multi-Metal Systems}
 \description{
-  Combine diagrams for different systems by flattening or rebalancing two diagrams or mixing two diagrams with a third.
+  Combine diagrams for different systems by mashing or rebalancing two diagrams or mixing two diagrams with a third.
 }
 
 \usage{
-  flatten(d1, d2)
+  mash(d1, d2)
   rebalance(d1, d2, balance = NULL)
   mix(d1, d2, d3, parts = c(1, 1), .balance = NULL)
 }
@@ -28,12 +28,12 @@
 These functions make a new \code{\link{affinity}} object from the output of \code{\link{diagram}}.
 The result can be used to make a new diagram that shows the combined system.
 
-\code{flatten} creates a set of intersecting predominance fields for all possible combinations of species in \code{d1} and \code{d2}.
-The new names are formed from the \code{names} used in the source diagrams; for example if "Cp" and "Py" are predominant minerals at the same position in diagrams 1 and 2, the field for the flattened diagram will be labeled "Cp+Py".
+\code{mash} creates a set of intersecting predominance fields for all possible combinations of species in \code{d1} and \code{d2}.
+The new names are formed from the \code{names} used in the source diagrams; for example if "Cp" and "Py" are predominant minerals at the same position in diagrams 1 and 2, the field for the mashed diagram will be labeled "Cp+Py".
 The affinities are calculated by summing the formation reactions from the two diagrams to give equal parts of the balancing coefficients in \code{d1} and \code{d2} (that is, equal parts of two different metals).
 Note that the actual values of the affinities (and therefore the ratio between the metals) doesn't affect the resulting diagram because the affinities are assigned values of -Inf wherever one of the species is not predominant in the respective single-metal diagram.
 
-\code{mix} is an expanded form of \code{flatten} that allows combinations not only between two single-metal diagrams (\code{d1} and \code{d2}) but also between each of those diagrams and third diagram for bimetallic species (\code{d3}).
+\code{mix} is an expanded form of \code{mash} that allows combinations not only between two single-metal diagrams (\code{d1} and \code{d2}) but also between each of those diagrams and third diagram for bimetallic species (\code{d3}).
 All combinations of species in all crosses between the diagrams (\code{d1-d2}, \code{d1-d3}, \code{d2-d3}, \code{d3-d3}) are identified.
 The mole fractions of species in each combination are computed to satisfy the ratio of metals defined in \code{parts}.
 For example, if \code{d1} and \code{d2} are balanced on Fe\S{+2} and VO\s{4}\S{-3}, the species are combined by default to give equal parts of Fe and V.
@@ -54,7 +54,7 @@ The affinities of these reactions are then used \emph{only} to identify the pred
 The \emph{returned} value of affinity are carried forward from those used to make the source diagrams (\samp{plotvals} in \code{d1} and \code{d2}), and therefore reflect the primary balancing coefficients.
 The returned values are assigned -Inf wherever that species is determined to not predominate according to the secondary balancing.
 
-Because \code{flatten} yields finite values of affinity for only a single species at any grid point, the final diagram can be made with any setting of \code{balance}.
+Because \code{mash} yields finite values of affinity for only a single species at any grid point, the final diagram can be made with any setting of \code{balance}.
 \code{mix} gives combinations of species that each have the amount of metals defined in \code{parts}, so it makes no difference whether the final diagram is balanced on either of the metals, or on formula units (\code{balance = 1}).
 However, for \code{rebalance}, \code{balance} in the final diagram should be set to \samp{1} to balance on formula units in order to preserve the primary balancing coefficients.
 
@@ -81,9 +81,9 @@ dFe <- diagram(aFe, xlab = xlab, main = "Fe-S-O-H")
 species(c("covellite", "chalcocite", "tenorite", "cuprite"))
 aCu <- affinity(aFe)  # argument recall
 dCu <- diagram(aCu, xlab = xlab, main = "Cu-S-O-H")
-### flatten() diagram
-ac <- flatten(dFe, dCu)
-diagram(ac, xlab = xlab, main = "Cu-Fe-S-O-H with flatten()")
+### mash() diagram
+ac <- mash(dFe, dCu)
+diagram(ac, xlab = xlab, main = "Cu-Fe-S-O-H with mash()")
 ### rebalance() diagram
 ad <- rebalance(dFe, dCu)
 diagram(ad, xlab = xlab, balance = 1, main = "Cu-Fe-S-O-H with rebalance()")

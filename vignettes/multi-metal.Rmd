@@ -77,18 +77,18 @@ This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo(
 Basic diagrams in CHNOSZ are made for reactions that are *balanced on an element* (see [Equilibrium in CHNOSZ](equilibrium.html)) and therefore represent minerals or aqueous species that all have one element, often a metal, in common.
 The package documentation has many examples of diagrams for a single metal appearing in different minerals or complexed with different ligands, but a common request is to make diagrams for multiple metals.
 This vignette describes some methods for constructing diagrams for multi-metal minerals and other multi-element systems.
-The methods are **flattening**, **mixing**, **mosaic stacking**, and **secondary balancing**.
+The methods are **mashing**, **mixing**, **mosaic stacking**, and **secondary balancing**.
 
-## Flattening
+## Mashing
 
-Flattening or simple overlay refers to independent calculations for two different systems that are displayed on the same diagram.
+Mashing or simple overlay refers to independent calculations for two different systems that are displayed on the same diagram.
 
 This example starts with a log*f*~O<sub>2</sub>~--pH base diagram for the C-O-H system then overlays a diagram for S-O-H.
 The second call to `affinity()` uses the argument recall feature, where the arguments after the first are taken from the previous command.
 This allows calculations to be run at the same conditions for a different system.
 This feature is also used in other examples in this vignette.
 
-```{r flatten, echo = 1:8, eval = FALSE}
+```{r mash, echo = 1:8, eval = FALSE}
 par(mfrow = c(1, 2))
 basis("CHNOS+")
 species(c("CH4", "CO2", "HCO3-", "CO3-2"))
@@ -97,14 +97,14 @@ dC <- diagram(aC)
 species(c("H2S", "HS-", "HSO4-", "SO4-2"))
 aS <- affinity(aC)  # argument recall
 dS <- diagram(aS, add = TRUE, col = 4, col.names = 4)
-aCS <- flatten(dC, dS)
+aCS <- mash(dC, dS)
 diagram(aCS)
 legend("topright", legend = lTP(25, 1), bty = "n")
 ```
 
-The second diagram is just like the first, except the function `flatten()` is used to label the fields with names of species from both systems, and a legend is added to indicate the temperature and pressure.
+The second diagram is just like the first, except the function `mash()` is used to label the fields with names of species from both systems, and a legend is added to indicate the temperature and pressure.
 
-```{r flatten, echo = 9:11,  results = "hide", message = FALSE, fig.width = 10, fig.height = 5, out.width = "100%"}
+```{r mash, echo = 9:11,  results = "hide", message = FALSE, fig.width = 10, fig.height = 5, out.width = "100%"}
 ```
 
 Note that these are predominance diagrams, so they show only the species with highest activity; there is in fact a distribution of activities of aqueous species that is not visible here.
@@ -114,7 +114,7 @@ If you prefer plain text names without formatting, add `format.names = FALSE` to
 
 ## Mixing 1
 
-In simple terms, flattening two diagrams portrays the mixing together of the two systems.
+As shown above, mashing two diagrams is essentially a simple combination of the two systems.
 Although it is easy to make such a diagram, there is no interaction between the systems.
 If there is a possibility of forming bimetallic species, then additional considerations are needed to account for the stoichiometry of the mixture.
 The stoichiometry can be given as a fixed composition of both metals; then, all combinations of (mono- and/or bimetallic) species that satisfy this compositional constraint are used as the candidate "species" in the system.
@@ -507,10 +507,10 @@ At a 1:2 ratio, an assemblage consisting of the two bimetallic minerals (chalcop
 
 ## Mosaic Stacking 2
 
-The results of a mosaic stack can also be processed with `flatten()` to label each region with the minerals from both systems.
+The results of a mosaic stack can also be processed with `mash()` to label each region with the minerals from both systems.
 For this example, the speciation of aqueous sulfur is not considered; instead, the fugacity of S~2~ is a plotting variable.
 The stable Fe-bearing minerals (Fe-S-O-H) are used as the changing basis species to make the diagram for Cu-bearing minerals (Cu-Fe-S-O-H).
-Then, the two diagrams are flattened to show all minerals in a single diagram.
+Then, the two diagrams are mashed to show all minerals in a single diagram.
 Greener colors are used to indicate minerals with less S~2~ and more O~2~ in their formation reactions.
 
 <button id="B-stack2" onclick="ToggleDiv('stack2')">Show code</button>
@@ -541,8 +541,8 @@ abbrv <- info(mCu$A.species$species$ispecies)$abbrv
 dCu <- diagram(mCu$A.species, names = abbrv, fill = fill)
 title("Cu-Fe-S-O-H")
 
-# Flatten the diagrams and adjust labels
-aFeCu <- flatten(dFe, dCu)
+# Mash the diagrams and adjust labels
+aFeCu <- mash(dFe, dCu)
 names <- aFeCu$species$name
 srt <- rep(0, length(names))
 srt[names %in% c("Mt+Cu", "Hm+Cu")] <- 90

@@ -2,7 +2,7 @@
 # 20141221 first version jmd
 # 20200819 revision:
 #   - comment out GC65 thermodynamic data
-#   - use flatten() to show S and C species together
+#   - use mash() to show S and C species together
 #   - reorder plot layers to make better use of transparency
 #   - add 'dy' argument to adjust positions of labels
 #   - add legend to show activity of aqueous Fe species
@@ -46,7 +46,7 @@ diagram(m4$A.species, lty = 2, names = FALSE)
 ## Show the predominance fields for the sulfur and carbonate basis species
 dS <- diagram(m4$A.bases, italic = TRUE, plot.it = FALSE)
 dC <- diagram(m4$A.bases2, italic = TRUE, plot.it = FALSE)
-dSC <- flatten(dS, dC)
+dSC <- mash(dS, dC)
 diagram(dSC, lty = 3, col = 4, col.names = 4, add = TRUE)
 
 # Show lines for log(activity of aqueous Fe species) = -6
