@@ -10,6 +10,16 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
+\section{Changes in CHNOSZ version 1.4.0-1 (2020-11-13)}{
+
+  \itemize{
+
+    \item Remove limSolve from Suggests in DESCRIPTION.
+
+  }
+
+}
+
 \section{Changes in CHNOSZ version 1.4.0 (2020-11-11)}{
 
   \subsection{MAJOR CHANGES}{
