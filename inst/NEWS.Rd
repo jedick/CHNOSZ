@@ -55,7 +55,7 @@
       \code{diagram()} causes the main diagram to be overlaid on the fields of
       water stability (white) and instability (gray). Change this to
       \code{TRUE} to obtain the previous default of masking all parts of the
-      diagram oustide of the water stability field.
+      diagram outside of the water stability field.
 
     }
   }

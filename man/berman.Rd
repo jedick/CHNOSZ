@@ -47,7 +47,7 @@ The data files have the following 30 columns:
       \code{GfPrTr} \tab standard Gibbs energy at 298.15 K and 1 bar (J mol\S{-1}) (Benson-Helgeson convention)\cr
       \code{HfPrTr} \tab standard enthalpy at 298.15 K and 1 bar (J mol\S{-1})\cr
       \code{SPrTr} \tab standard entropy at 298.15 K and 1 bar (J mol\S{-1} K\S{-1})\cr
-      \code{VPrTr} \tab standard volume at 298.15 K and 1 bar (J mol\S{-1})\cr
+      \code{VPrTr} \tab standard volume at 298.15 K and 1 bar (J bar\S{-1}) [1 J bar\S{-1} = 10 cm\S{3}]\cr
       \code{k0} ... \code{k6} \tab k0 (J mol\S{-1} K\S{-1}) to k6 \cr
       \code{v1} \tab v1 (K\S{-1}) * 10\S{5} \cr
       \code{v2} \tab v2 (K\S{-2}) * 10\S{5} \cr
