@@ -29,3 +29,11 @@ don't have to compile anything to install CHNOSZ updates).
 [20201113 - ]
 
 - add a demo to show user-added data with Berman equations
+
+- make swap.basis() work when DEW model is active
+
+- Show species name in message: mod.OBIGT(5, G = 0)
+
+- Check that protein ionization calculations are not affected by E.units()
+
+- diagram(): scale predominant.values in output by balancing coefficients?

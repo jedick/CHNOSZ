@@ -44,7 +44,8 @@ test_that("mix() and mosaic() yield same affinities for a bimetallic mineral", {
   abornite <- affinity(aFe)  # argument recall
   # Because of the 1) equal stoichiometry and 2) same basis species
   # used for bornite and the mix() diagram, subtracting these makes sense
-  abornite_vs_predominant.values <- abornite$values[[1]] - dFeCu15$predominant.values
+  # 20201221 But now we have to multiply by 5 because predominant.values is divided by the balancing coefficients
+  abornite_vs_predominant.values <- abornite$values[[1]] - 5 * dFeCu15$predominant.values
   if(plot.it) image(abornite_vs_predominant.values)
 
   # METHOD 2 (mosaic)

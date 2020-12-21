@@ -10,11 +10,21 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-1 (2020-11-13)}{
+\section{Changes in CHNOSZ version 1.4.0-3 (2020-12-21)}{
 
   \itemize{
 
     \item Remove limSolve from Suggests in DESCRIPTION.
+
+    \item In the return value of \code{diagram()}, \code{predominant.values}
+    previously only contained affinities (extracted from the \code{values}
+    element of the \code{eout} argument). Now it has the values for the
+    predominant species extracted from the actual values used to make the plot
+    (the \code{plotvals} list in the output), i.e.  affinities divided by the
+    balancing coefficients if \code{eout} is the output of \code{affinity}, or
+    activities if \code{eout} is the output of \code{equilibrate}. Therefore it
+    can now be used to draw contours or a color image showing the activities of
+    the predominant species.
 
   }
 

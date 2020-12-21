@@ -716,16 +716,18 @@ diagram <- function(
 
   # even if plot=FALSE, return the diagram clipped to the water stability region (for testing) 20200719
   if(isTRUE(limit.water) & !is.null(H2O.predominant)) predominant <- H2O.predominant
-  # make a matrix with the affinities of predominant species 20200724
+
+  # Make a matrix with the affinities or activities of predominant species 20200724
   # (for calculating affinities of metastable species - multi-metal.Rmd example)
   predominant.values <- NA
   if(!identical(predominant, NA)) {
-    predominant.values <- eout$values[[1]]
+    predominant.values <- plotvals[[1]]
     predominant.values[] <- NA
     for(ip in na.omit(unique(as.vector(predominant)))) {
       ipp <- predominant == ip
       ipp[is.na(ipp)] <- FALSE
-      predominant.values[ipp] <- eout$values[[ip]][ipp]
+      # 20201219 Change eout$values to plotvals (return normalized affinities or equilibrium activities)
+      predominant.values[ipp] <- plotvals[[ip]][ipp]
     }
   }
 
