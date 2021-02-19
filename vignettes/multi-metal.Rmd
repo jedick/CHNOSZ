@@ -146,9 +146,11 @@ Finally, `mod.OBIGT()` is used to add the obtained energies to the OBIGT databas
 # m = MPRester("USER_API_KEY")
 # m.query(criteria={"task_id": "mp-1279742"}, properties=["formation_energy_per_atom"])
 # mp-13, mp-1279742, mp-19306, mp-19770
-Fe.cr <- c(Fe = 0, FeO = -1.72803, Fe3O4 = -1.85868, Fe2O3 = -1.90736)  # 20201109
+#Fe.cr <- c(Fe = 0, FeO = -1.72803, Fe3O4 = -1.85868, Fe2O3 = -1.90736)  # 20201109
+Fe.cr <- c(Fe = 0, FeO = -1.72768, Fe3O4 = -1.85838, Fe2O3 = -1.90708)  # 20210219
 # mp-146, mp-18937, mp-1275946, mp-19094, mp-756395, mp-25279
-V.cr <- c(V = 0, V2O3 = -2.52849, V3O5 = -2.52574, VO2 = -2.48496, V3O7 = -2.32836, V2O5 = -2.29524)  # 20201109
+#V.cr <- c(V = 0, V2O3 = -2.52849, V3O5 = -2.52574, VO2 = -2.48496, V3O7 = -2.32836, V2O5 = -2.29524)  # 20201109
+V.cr <- c(V = 0, V2O3 = -2.52787, V3O5 = -2.52516, VO2 = -2.48447, V3O7 = -2.32789, V2O5 = -2.29480)  # 20210219
 
 # Convert formation energies from eV / atom to eV / molecule
 natom.Fe <- sapply(makeup(names(Fe.cr)), sum)
@@ -203,7 +205,8 @@ iV.aq <- modfun(V.aq, "aq")
 
 # Formation energies (eV / atom) for bimetallic solids from Materials API
 # mp-1335, mp-1079399, mp-866134, mp-558525, mp-504509 (triclinic FeVO4)
-FeV.cr <- c(FeV = -0.12928, FeV3 = -0.17128, Fe3V = -0.12854, Fe2V4O13 = -2.23833, FeVO4 = -1.75611)  # 20201109
+#FeV.cr <- c(FeV = -0.12928, FeV3 = -0.17128, Fe3V = -0.12854, Fe2V4O13 = -2.23833, FeVO4 = -1.75611)  # 20201109
+FeV.cr <- c(FeV = -0.12815, FeV3 = -0.17114, Fe3V = -0.12832, Fe2V4O13 = -2.23967, FeVO4 = -1.75573)  # 20210219
 # Convert energies and add to OBIGT
 natom.FeV <- sapply(makeup(names(FeV.cr)), sum)
 FeV.cr <- FeV.cr * natom.FeV
@@ -378,11 +381,10 @@ J_mol <- convert(cal_mol, "J")
 eV_mol <- J_mol / 1.602176634e-19
 eV_atom <- eV_mol / 6.02214076e23 / 6
 round(eV_atom, 3)
-stopifnot(round(eV_atom, 3) == 0.413)
+stopifnot(round(eV_atom, 3) == 0.415)
 ```
 
-This is nearly equal to the value for the energy above the hull for [triclinic FeVO~4~ on the MP website](https://materialsproject.org/materials/mp-504509/).
-(As of 2020-11-09, the energy above hull / atom listed on the MP website is 0.415 eV.)
+This is equal to the value for the energy above the hull / atom for [triclinic FeVO~4~ on the MP website](https://materialsproject.org/materials/mp-504509/) (0.415 eV, accessed on 2020-11-09 and 2021-02-19).
 This shows that we successfully made a round trip starting with the input formation energies (eV/atom) from the Materials API, to standard Gibbs energy (J/mol) in the OBIGT database, and back out to energy above the hull (eV/atom).
 
 The concept of using the stable minerals and aqueous species to calculate reaction energetics is formalized in the `mosaic()` function, which is described next.
@@ -878,6 +880,6 @@ The predicted appearance of acetamide (CH~3~CONH~2~) is a consequence of the int
 ## Document History
 
 * 2020-07-15 First version.
-* 2021-02-19 Improve mineral abbreviations and placement of labels.
+* 2021-02-20 Improve mineral abbreviations and placement of labels; use updated DFT energies from Materials Project.
 
 ## References
