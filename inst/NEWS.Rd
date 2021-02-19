@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-3 (2020-12-21)}{
+\section{Changes in CHNOSZ version 1.4.0-4 (2021-02-19)}{
 
   \itemize{
 
@@ -25,6 +25,9 @@
     activities if \code{eout} is the output of \code{equilibrate}. Therefore it
     can now be used to draw contours or a color image showing the activities of
     the predominant species.
+
+    \item Use standard abbreviations for hematite (Hem) and magnetite (Mag) in
+    OBIGT/Berman_cr.csv.
 
   }
 

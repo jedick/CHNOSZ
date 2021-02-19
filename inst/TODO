@@ -35,5 +35,46 @@ don't have to compile anything to install CHNOSZ updates).
 - Show species name in message: mod.OBIGT(5, G = 0)
 
 - Check that protein ionization calculations are not affected by E.units()
+library(testthat)
+reset()
+basis(c("CO2", "H2", "NH4+", "H2O", "H2S", "H+"))
+a1 <- affinity(iprotein = 1)
+E.units("J")
+a2 <- affinity(iprotein = 1)
+expect_equal(a1$values, a2$values)
 
 - diagram(): scale predominant.values in output by balancing coefficients?
+
+- add HKF parameters from LaRowe and Amend, 2016 (https://doi.org/10.1038/ismej.2015.227)
+
+[20210115]
+
+BUG: Why doesn't this work?
+> basis("QEC")
+> subcrt("LYSC_CHICK", 1/129)
+Error in count.elements(formula) : 
+  'C2.15503876355161e-07H3.72868217191069e-07O1.72868217157562eZ-7' is not a simple chemical formula
+
+[20210116]
+
+- Add an option to disable use of ionize.aa() (it's always active if the basis species have H+)
+
+[20210122] Fix incorrect states in messages:
+> subcrt("C10H22")
+info.character: found C10H22(decane); other available phases are gas, gas, gas, liq, liq, liq
+> subcrt("C10H22", "liq")
+info.character: found C10H22(liq); other available states are liq, liq
+
+[20210201]
+
+- Move alunite from SUPCRT92.csv to inorganic_cr.csv.
+
+[20210212]
+
+- Fix formatting of messages from palply() (seen with read.fasta())
+
+[20210219]
+
+- Don't use data(thermo) in demo Shiny app (citrate)
+
+- Check all mineral abbreviations in Berman_cr.csv.
