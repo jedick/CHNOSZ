@@ -410,8 +410,8 @@ Pyrite is chosen as the starting Fe-bearing basis species, which will be changed
 ```{r stack1_1, results = "hide", message = FALSE}
 logaH2S <- -2
 T <- 200
-pH <- c(0, 14, 500)
-O2 <- c(-46, -31, 500)
+pH <- c(0, 14, 400)
+O2 <- c(-48, -33, 400)
 basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+"))
 basis("H2S", logaH2S)
 S.aq <- c("H2S", "HS-", "HSO4-", "SO4-2")
@@ -422,27 +422,27 @@ Fe.abbrv <- c("Py", "Po", "Mag", "Hem")
 Now we calculate affinities for minerals in the Fe-S-O-H system that take account of the changing aqueous sulfur species in `S.aq`.
 The result is used to make different layers of the diagram (1 and 2 are both made by the first call to `diagram()`):
 
-1. Water stability region (bounded by the grey area)
+1. Water stability region (gray shading)
 2. Predominance fields for the aqueous S species (blue text and dashed lines)
 3. Stability areas for the Fe-bearing minerals (black text and lines)
 
 ```{r stack1_2, eval = FALSE, echo = 1:4}
 species(Fe.cr)
 mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T)
-diagram(mFe$A.bases, lty = 2, col = 4, col.names = 4, italic = TRUE, dx = c(0, 1, 0, 0), dy = c(-1, 0, 0, 0))
-dFe <- diagram(mFe$A.species, add = TRUE, lwd = 2, names = Fe.abbrv, dy = c(0, 0, 1, 0))
+diagram(mFe$A.bases, lty = 2, col = 4, col.names = 4, italic = TRUE, dx = c(0, 1, 0, 0), dy = c(-1.5, 0, 1, 0))
+dFe <- diagram(mFe$A.species, add = TRUE, lwd = 2, names = Fe.abbrv, dx = c(0, 0.5, 0, 0), dy = c(-1, 0, 0.5, 0))
 FeCu.cr <- c("chalcopyrite", "bornite")
 Cu.cr <- c("copper", "cuprite", "tenorite", "chalcocite", "covellite")
 FeCu.abbrv <- c("Ccp", "Bn", "Cu", "Cpr", "Tnr", "Cct", "Cv")
 species(c(FeCu.cr, Cu.cr))
 mFeCu <- mosaic(list(S.aq, Fe.cr), pH = pH, O2 = O2,
               T = T, stable = list(NULL, dFe$predominant))
-diagram(mFeCu$A.species, add = TRUE, col = 2, col.names = 2, bold = TRUE, names = FeCu.abbrv)
+diagram(mFeCu$A.species, add = TRUE, col = 2, col.names = 2, bold = TRUE, names = FeCu.abbrv, dy = c(0, 0, 0, 0, 0, 1, 0))
 col <- c("#FF8C00", rep(NA, 6))
 diagram(mFeCu$A.species, add = TRUE, col = col, lwd = 2, col.names = col, bold = TRUE, names = FeCu.abbrv)
-TP <- describe.property(c("T", "P"), c(T, "Psat"))
-legend("topright", TP, bty = "n")
-title(paste("Cu-Fe-S-O-H; Total S =", 10^logaH2S, "m"))
+TPS <- c(describe.property(c("T", "P"), c(T, "Psat")), expression(sum(S) == 0.01*m))
+legend("topright", TPS, bty = "n")
+title("Cu-Fe-S-O-H (minerals only)", font.main = 1)
 ```
 
 Next we load the Cu-bearing minerals and calculate their affinities while changing *both* the aqueous sulfur species and the Fe-bearing minerals whose stability fields were just calculated.
@@ -461,6 +461,102 @@ After that we add the legend and title.
 
 This diagram has a distinctive  chalcopyrite "hook" surrounded by a thin bornite field.
 Only the chalcopyrite-bornite reaction in the pyrite field is shown in some published diagrams [e.g. @And75;@Gio02], but diagrams with a similar chalcopyrite wedge or hook geometry can be seen in @BBR77 and @Bri80.
+
+## Mosaic Stacking 2
+
+The previous diagram shows the relative stabilities of minerals only.
+The next diagram adds aqueous species to the system.
+The position of the boundaries between the stability fields for minerals and aqueous species are calculated for a given activity for the latter, in this case 10^-6^.
+
+<button id="B-stack2" onclick="ToggleDiv('stack2')">Show code</button>
+<div id="D-stack2" style="display: none">
+```{r stack2, eval = FALSE}
+# Define system
+logaH2S <- -2
+T <- 200
+pH <- c(0, 14, 400)
+O2 <- c(-48, -33, 400)
+basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+"))
+basis("H2S", logaH2S)
+S.aq <- c("H2S", "HS-", "HSO4-", "SO4-2")
+Fe.cr <- c("pyrite", "pyrrhotite", "magnetite", "hematite")
+Fe.abbrv <- c("Py", "Po", "Mag", "Hem")
+
+# Fe-bearing minerals
+species(Fe.cr)
+# Add aqueous species 20210220
+iFe.aq <- retrieve("Fe", c("S", "O", "H"), "aq")
+Fe.aq <- info(iFe.aq)$name
+logaFe <- -6
+species(iFe.aq, logaFe, add = TRUE)
+mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T)
+# Start plot with just the fields for transparency effect
+dFe <- diagram(mFe$A.species, lwd = 0, names = FALSE)
+
+# Cu-bearing minerals
+species(c(FeCu.cr, Cu.cr))
+# Add aqueous species 20210220
+iCu.aq <- retrieve("Cu", c("S", "O", "H"), "aq")
+Cu.aq <- info(iCu.aq)$name
+logaCu <- -6
+species(iCu.aq, logaCu, add = TRUE)
+# FIXME: limitation in mosaic() when using both solid and aqueous basis species (i.e. c(Fe.cr, Fe.aq)):
+#   Only the activity of the first-defined basis species is used for all basis species.
+#   The first-defined basis species is pyrite (logact = 0), but we want logact = -4 for the aq Fe species.
+# Workaround: Adjust standard Gibbs energies of aq Fe species to virtually change their activities
+DG <- convert(-logaFe, "G", T = convert(T, "K"))
+G.orig <- info(iFe.aq)$G
+G.new <- G.orig + DG
+mod.OBIGT(iFe.aq, G = G.new)
+mFeCu <- mosaic(list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, stable = list(NULL, dFe$predominant))
+
+# Adjust labels
+bold <- c(rep(TRUE, length(FeCu.abbrv)), rep(FALSE, length(Cu.aq)))
+names <- c(FeCu.abbrv, Cu.aq)
+srt <- dx <- dy <- rep(0, length(names))
+cex <- rep(1, length(names))
+dx[names == "Cu"] <- -1.5
+dx[names == "Bn"] <- 1.3
+dx[names == "CuHS"] <- 2
+dx[names == "Cu+"] <- -0.5
+dy[names == "Cu"] <- 3
+dy[names == "Cct"] <- 1
+dy[names == "CuHS"] <- 1
+dy[names == "Bn"] <- -0.5
+cex[names == "Bn"] <- 0.8
+srt[names == "Bn"] <- 83
+diagram(mFeCu$A.species, add = TRUE, col = 2, col.names = 2, names = names, bold = bold, dx = dx, dy = dy, cex.names = cex, srt = srt)
+# Add second Cu label
+text(12.5, -47, "Cu", col = 2, font = 2)
+
+# Highlight Bn-Ccp reaction
+col.names <- col <- rep(NA, nrow(mFeCu$A.species$species))
+col[2] <- "#FF8C00"
+col.names[1] <- "#FF8C00"
+diagram(mFeCu$A.species, add = TRUE, col = col, lwd = 2, col.names = col.names, bold = TRUE, names = names, fill = NA)
+
+# Plot the Fe-system lines and names "on top" so they are not covered by fill colors
+diagram(mFe$A.bases, add = TRUE, lty = 2, col = 4, names = FALSE, fill = NA)
+bold <- c(rep(TRUE, length(Fe.abbrv)), rep(FALSE, length(Fe.aq)))
+names <- c(Fe.abbrv, Fe.aq)
+srt <- dx <- dy <- rep(0, length(names))
+cex <- rep(1, length(names))
+dy[names == "Hem"] <- -1.5
+dy[names == "Mag"] <- -0.5
+dx[names == "Mag"] <- 0.2
+srt[names == "Mag"] <- 83
+diagram(mFe$A.species, add = TRUE, lwd = 2, names = names, bold = bold, dx = dx, dy = dy, cex.names = cex, srt = srt, fill = NA)
+TPS <- c(describe.property(c("T", "P"), c(T, "Psat")), expression(sum(S) == 0.01*m))
+legend("topright", TPS, bty = "n")
+title("Cu-Fe-S-O-H (minerals and aqueous species)", font.main = 1)
+
+# Restore default OBIGT database
+OBIGT()
+```
+</div>
+
+```{r stack2, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
+```
 
 ## Mixing 2
 
@@ -539,7 +635,7 @@ At a 1:1 ratio of Fe:Cu, chalcopyrite is a stable single-mineral assemblage.
 At a 2:1 ratio, pyrite, pyrrhotite, or magnetite can coexist in a two-phase assemblage with chalcopyrite.
 At a 1:2 ratio, an assemblage consisting of the two bimetallic minerals (chalcopyrite and bornite) is stable.
 
-## Mosaic Stacking 2
+## Mosaic Stacking 3
 
 The results of a mosaic stack can also be processed with `mash()` to label each region with the minerals from both systems.
 For this example, the speciation of aqueous sulfur is not considered; instead, the fugacity of S~2~ is a plotting variable.
@@ -547,9 +643,9 @@ The stable Fe-bearing minerals (Fe-S-O-H) are used as the changing basis species
 Then, the two diagrams are mashed to show all minerals in a single diagram.
 Greener colors are used to indicate minerals with less S~2~ and more O~2~ in their formation reactions.
 
-<button id="B-stack2" onclick="ToggleDiv('stack2')">Show code</button>
-<div id="D-stack2" style="display: none">
-```{r stack2, eval = FALSE}
+<button id="B-stack3" onclick="ToggleDiv('stack3')">Show code</button>
+<div id="D-stack3" style="display: none">
+```{r stack3, eval = FALSE}
 T <- 125
 layout(matrix(c(1, 2, 3, 3), nrow = 2), widths = c(1, 1.5))
 
@@ -593,7 +689,7 @@ title("Cu-Fe-S-O-H")
 ```
 </div>
 
-```{r stack2, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant}
+```{r stack3, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant}
 ```
 
 The resulting diagram is similar to Figure 2 of @Sve87; that diagram also shows calculations of the solubility of Cu and concentration of SO~4~^-2^ in model Cu ore-forming fluids.
@@ -880,6 +976,6 @@ The predicted appearance of acetamide (CH~3~CONH~2~) is a consequence of the int
 ## Document History
 
 * 2020-07-15 First version.
-* 2021-02-20 Improve mineral abbreviations and placement of labels; use updated DFT energies from Materials Project.
+* 2021-02-21 Improve mineral abbreviations and placement of labels; use updated DFT energies from Materials Project; add Mosaic Stacking 2 (minerals and aqueous species).
 
 ## References

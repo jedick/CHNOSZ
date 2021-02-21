@@ -80,3 +80,5 @@ info.character: found C10H22(liq); other available states are liq, liq
 - Check all mineral abbreviations in Berman_cr.csv.
 
 - Fix transparency issues in demo/mosaic.R
+
+- Fix legend in demo/mosaic.R (-4 and -6 contours are swapped)
