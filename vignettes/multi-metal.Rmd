@@ -8,7 +8,7 @@ vignette: >
   %\VignetteIndexEntry{Diagrams with multiple metals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: vig.bib
+bibliography: [vig.bib, OBIGT.bib]
 csl: elementa.csl
 ---
 <style>
@@ -494,6 +494,9 @@ mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T)
 dFe <- diagram(mFe$A.species, lwd = 0, names = FALSE)
 
 # Cu-bearing minerals
+FeCu.cr <- c("chalcopyrite", "bornite")
+Cu.cr <- c("copper", "cuprite", "tenorite", "chalcocite", "covellite")
+FeCu.abbrv <- c("Ccp", "Bn", "Cu", "Cpr", "Tnr", "Cct", "Cv")
 species(c(FeCu.cr, Cu.cr))
 # Add aqueous species 20210220
 iCu.aq <- retrieve("Cu", c("S", "O", "H"), "aq")
@@ -556,6 +559,25 @@ OBIGT()
 </div>
 
 ```{r stack2, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
+```
+
+After running the code to make this diagram, we can list the reference keys for the minerals and aqueous species.
+
+```{r stack2.refs, message = FALSE}
+minerals <- list(Fe.cr = Fe.cr, Cu.cr = Cu.cr, FeCu.cr = FeCu.cr)
+aqueous <- list(S.aq = S.aq, Fe.aq = Fe.aq, Cu.aq = Cu.aq)
+allspecies <- c(minerals, aqueous)
+iall <- lapply(allspecies, info)
+allkeys <- lapply(iall, function(x) thermo.refs(x)$key)
+allkeys
+```
+
+The next code chunk prepends `@` to the reference keys and uses the chunk option [`results = 'asis'`](https://bookdown.org/yihui/rmarkdown-cookbook/results-asis.html) to insert the citations into the R Markdown document in chronological order.
+
+```{r stack2.cite, results = "asis"}
+allyears <- lapply(iall, function(x) thermo.refs(x)$year)
+o <- order(unlist(allyears))
+cat(paste(paste0("@", unique(unlist(allkeys)[o])), collapse = "; "))
 ```
 
 ## Mixing 2
