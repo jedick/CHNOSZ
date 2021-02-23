@@ -70,6 +70,11 @@ logK <- "log&thinsp;<i>K</i>"
 ```{r CHNOSZ_reset, include=FALSE}
 library(CHNOSZ)
 reset()
+# Change this to TRUE to make high-resolution plots
+# (default is FALSE to save time in CRAN checks)
+hires <- FALSE
+res1 <- ifelse(hires, 256, 150)
+res2 <- ifelse(hires, 400, 200)
 ```
 
 This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
@@ -230,7 +235,7 @@ loga.V <- -5
 basis(c("VO+2", "Fe+2", "H2O", "e-", "H+"))
 species(c(iFe.aq, iFe.cr))
 species(1:length(iFe.aq), loga.Fe)
-aFe <- affinity(pH = c(4, 10), Eh = c(-1.5, 0))
+aFe <- affinity(pH = c(4, 10, res1), Eh = c(-1.5, 0, res1))
 dFe <- diagram(aFe, plot.it = FALSE)
 # V-O-H diagram
 species(c(iV.aq, iV.cr))
@@ -276,7 +281,7 @@ Then we calculate the affinities for the bimetallic species and save the output 
 Note that `diagram()` uses different colors for regions with two solids, one solid, and no solids, including some transparency to show the underlying water stability region that is plotted first.
 
 Now we have all the ingredients needed to combine the Fe-bearing, V-bearing, and bimetallic species to generate a given composition.
-The `mix()` function  is used to calculate the affinities of formation from basis species for all combinations of aqueous species and minerals that satisfy each of three different compositions.
+The `mix()` function is used to calculate the affinities of formation from basis species for all combinations of aqueous species and minerals that satisfy each of three different compositions.
 Finally, the `diagram()`s are plotted; the `min.area` argument is used to remove labels for very small fields.
 Regarding the legend, it should be noted that although the DFT calculations for solids are made for zero temperature and zero pressure [@SZS_17], the standard Gibbs energies of aqueous species [e.g. @WEP_82] are modified by a correction term so that they can be combined with DFT energies to reproduce the experimental energy for dissolution of a representative material for each metal at 25 °C and 1 bar [@PWLC12].
 
@@ -297,7 +302,7 @@ par(mfrow = c(1, 2))
 basis(c("VO+2", "Fe+2", "H2O", "e-", "H+"))
 species(c(iFe.aq, iFe.cr))$name
 species(1:length(iFe.aq), loga.Fe)
-aFe <- affinity(pH = c(0, 14, 400), Eh = c(-1.5, 2, 400))
+aFe <- affinity(pH = c(0, 14, res2), Eh = c(-1.5, 2, res2))
 dFe <- diagram(aFe, plot.it = FALSE)
 # V-bearing species
 species(c(iV.aq, iV.cr))$name
@@ -410,8 +415,8 @@ Pyrite is chosen as the starting Fe-bearing basis species, which will be changed
 ```{r stack1_1, results = "hide", message = FALSE}
 logaH2S <- -2
 T <- 200
-pH <- c(0, 14, 400)
-O2 <- c(-48, -33, 400)
+pH <- c(0, 14, res2)
+O2 <- c(-48, -33, res2)
 basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+"))
 basis("H2S", logaH2S)
 S.aq <- c("H2S", "HS-", "HSO4-", "SO4-2")
@@ -474,8 +479,8 @@ The position of the boundaries between the stability fields for minerals and aqu
 # Define system
 logaH2S <- -2
 T <- 200
-pH <- c(0, 14, 400)
-O2 <- c(-48, -33, 400)
+pH <- c(0, 14, res2)
+O2 <- c(-48, -33, res2)
 basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+"))
 basis("H2S", logaH2S)
 S.aq <- c("H2S", "HS-", "HSO4-", "SO4-2")
@@ -674,7 +679,7 @@ layout(matrix(c(1, 2, 3, 3), nrow = 2), widths = c(1, 1.5))
 # Fe-S-O-H diagram
 basis(c("copper", "hematite", "S2", "oxygen", "H2O", "H+", "Cl-"))
 bFe <- species(c("hematite", "magnetite", "pyrite"))$name
-aFe <- affinity(S2 = c(-34, -10), O2 = c(-55, -40), T = T)
+aFe <- affinity(S2 = c(-34, -10, res1), O2 = c(-55, -40, res1), T = T)
 # Order species by a function of composition to make colors
 oFe <- order(aFe$species$S2 - aFe$species$O2)
 fill <- terrain.colors(length(oFe), alpha = 0.2)[oFe]
@@ -685,7 +690,7 @@ title("Fe-S-O-H")
 # Cu-Fe-S-O-H diagram based on reactions with the
 # stable Fe-bearing minerals (mosaic stack)
 bCu <- species(c("copper", "chalcocite", "covellite", "chalcopyrite", "bornite"))$name
-mCu <- mosaic(bFe, S2 = c(-34, -10), O2 = c(-55, -40),
+mCu <- mosaic(bFe, S2 = c(-34, -10, res1), O2 = c(-55, -40, res1),
               T = T, stable = list(dFe$predominant))
 oCu <- order(mCu$A.species$species$S2 - mCu$A.species$species$O2)
 fill <- terrain.colors(length(oCu), alpha = 0.2)[oCu]
@@ -737,7 +742,7 @@ basis("Cl-", log10(calc$m_Cl))
 
 # Calculate affinities for aqueous Cu species while changing both Fe and Cu minerals
 mfun <- function() {
-  mFeCu <- mosaic(list(bFe, bCu), S2 = c(-34, -10), O2 = c(-55, -40),
+  mFeCu <- mosaic(list(bFe, bCu), S2 = c(-34, -10, res1), O2 = c(-55, -40, res1),
     T = T, IS = calc$IS, stable = list(dFe$predominant, dCu$predominant))
   # Calculate concentration of Cu
   s <- solubility(mFeCu$A.species)
@@ -776,7 +781,7 @@ title(bquote("Helgeson (1969)"~.(CuCl2)~and~.(CuCl3)), line = 0.9)
 
 # Set up system with SO4-2 (to dissolve S2(gas))
 species("SO4-2")
-aSO4 <- affinity(S2 = c(-34, -10), O2 = c(-55, -40), T = T, IS = calc$IS)
+aSO4 <- affinity(S2 = c(-34, -10, res1), O2 = c(-55, -40, res1), T = T, IS = calc$IS)
 # Calculate concentration of SO4-2
 s <- solubility(aSO4, in.terms.of = "SO4-2")
 s <- convert(s, "ppm")
