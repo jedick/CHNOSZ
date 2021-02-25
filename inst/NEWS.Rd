@@ -10,29 +10,32 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-5 (2021-02-21)}{
+\section{Changes in CHNOSZ version 1.4.0-11 (2021-02-25)}{
 
-  \itemize{
+  \subsection{CHANGES}{
+    \itemize{
 
-    \item Remove limSolve from Suggests in DESCRIPTION.
+      \item Remove limSolve from Suggests in DESCRIPTION.
 
-    \item In the return value of \code{diagram()}, \code{predominant.values}
-    previously only contained affinities (extracted from the \code{values}
-    element of the \code{eout} argument). Now it has the values for the
-    predominant species extracted from the actual values used to make the plot
-    (the \code{plotvals} list in the output), i.e.  affinities divided by the
-    balancing coefficients if \code{eout} is the output of \code{affinity}, or
-    activities if \code{eout} is the output of \code{equilibrate}. Therefore it
-    can now be used to draw contours or a color image showing the activities of
-    the predominant species.
+      \item In the return value of \code{diagram()}, \code{predominant.values}
+      previously only contained affinities (extracted from the \code{values}
+      element of the \code{eout} argument). Now it has the values for the
+      predominant species extracted from the actual values used to make the plot
+      (the \code{plotvals} list in the output), i.e.  affinities divided by the
+      balancing coefficients if \code{eout} is the output of \code{affinity}, or
+      activities if \code{eout} is the output of \code{equilibrate}. Therefore it
+      can now be used to draw contours or a color image showing the activities of
+      the predominant species.
 
-    \item Use standard abbreviations for hematite (Hem) and magnetite (Mag) in
-    OBIGT/Berman_cr.csv.
+      \item Use standard abbreviations for hematite (Hem) and magnetite (Mag) in
+      OBIGT/Berman_cr.csv.
 
-    \item Revise multi-metal.Rmd: Improve mineral abbreviations and placement
-    of labels; use updated DFT energies from Materials Project; add Mosaic
-    Stacking 2 (minerals and aqueous species).
+      \item Revise multi-metal.Rmd: Improve mineral abbreviations and placement
+      of labels; use updated DFT energies from Materials Project; add Mosaic
+      Stacking 2 (minerals and aqueous species); add \emph{K}\s{eff} calculation
+      (\href{https://doi.org/10.1016/j.gca.2021.01.038}{Robinson et al., 2021}).
 
+    }
   }
 
 }

@@ -1024,26 +1024,85 @@ See `demo(saturation)` for an example in the H~2~O-CO~2~-CaO-MgO-SiO~2~ system.
 Instead of adding minerals with different metals by stacking mosaic diagrams, it may be possible to include two different metals in the basis species and formed species.
 The `mosaic()` and `equilibrate()` functions can be combined to balance on two different elements.
 The example here is for N and C rather than metals.
+The "effective equilibrium constant" (*K*~eff~) method [@RBG_21] is used first to calculate the activity of acetamide for a total activities of neutral and ionized species, i.e. ∑(ammonia and ammonium) and ∑(acetic acid and acetate).
 
-First, the `mosaic()` command calculates equilibrium activities of NH~3~ and NH~4~^+^ for a given total activity of N in the basis species, and calculates the corresponding affinities of the formed species.
+In the mosaic combo method, the `mosaic()` command calculates equilibrium activities of NH~3~ and NH~4~^+^ for a given total activity of N in the basis species, and calculates the corresponding affinities of the formed species.
 Then, the `equilibrate()` command calculates equilibrium activities of the formed species for given total activity of C, and combines them with the activities of the changing basis species (NH~3~ and NH~4~^+^).
 
-```{r mosaic-combo, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
-loga_N <- -4
-loga_C <- -3
+The mosaic combo method (black line) produces results equivalent to those of the *K*~eff~ method (dashed blue line).
+
+<button id="B-mosaic-combo" onclick="ToggleDiv('mosaic-combo')">Show code</button>
+<div id="D-mosaic-combo" style="display: none">
+```{r mosaic-combo, eval = FALSE}
+## METHOD 1: Keff equation (Robinson et al., 2021)
+
+# A function to calculate Keff for any combination of T and pH
+Keff <- function(T = 25, pH = 7) {
+  # Make T and pH the same length
+  len <- max(length(T), length(pH))
+  T <- rep(T, length.out = len)
+  pH <- rep(pH, length.out = len)
+  # Calculate activity of H+
+  aH <- 10^(-pH)
+  # Calculate logKs
+  logK1 <- subcrt(c("acetic acid", "NH3", "acetamide", "H2O"), c(-1, -1, 1, 1), T = T)$out$logK
+  logK2 <- subcrt(c("acetic acid", "acetate", "H+"), c(-1, 1, 1), T = T)$out$logK
+  logK3 <- subcrt(c("NH3", "H+", "NH4+"), c(-1, -1, 1), T = T)$out$logK
+  # Calculate Ks
+  K1 <- 10^logK1
+  K2 <- 10^logK2
+  K3 <- 10^logK3
+  # Calculate Keff (Eq. 7)
+  Keff <- K1 * (1 + K2 / aH) ^ -1 * (1 + K3 * aH) ^ -1
+  Keff
+}
+
+# Calculate logKeff as a function of pH
+pH <- seq(0, 14, 0.1)
+logKeff <- log10(Keff(pH = pH))
+
+# Calculate activity of acetamide for
+# acetic acid + acetate = 0.001 m
+# ammonia + ammonium = 0.0001 m
+logAc <- log10(0.001)
+logAm <- log10(0.0001)
+logAcAm <- logKeff + logAc + logAm
+
+## METHOD 2: Mosaic combo
+
+# Define total activities
+a_N <- 0.0001
+# This is 2 * 0.001 because acetic acid has 2 carbons
+a_C <- 2 * 0.001
+loga_N <- log10(a_N)
+loga_C <- log10(a_C)
+# Setup basis species
 basis(c("CO2", "NH3", "O2", "H2O", "H+"))
 basis("NH3", loga_N)
+# Load all C-bearing species (including acetamide)
 species(c("acetamide", "acetic acid", "acetate"))
+# Calculate distribution of C-bearing species accounting for ammonia/ammonium speciation
 m <- mosaic(c("NH3", "NH4+"), pH = c(0, 14))
 e <- equilibrate(m, loga.balance = loga_C)
-diagram(e, ylim = c(-10, -2))
-tN <- paste("log(total N in basis species) =", loga_N)
-tC <- paste("log(total C in formed species) =", loga_C)
+
+# Plot and label diagram
+# Start with empty diagram
+diagram(e, ylim = c(-10, -2), lty = 0, names = FALSE)
+# Add line for acetamide activity calculated with Keff
+lines(pH, logAcAm, col = 4, lwd = 6, lty = 2)
+# Add lines from CHNOSZ calculations
+diagram(e, add = TRUE, dy = 0.1, dx = c(-0.2, 0.2, -1.7, 0, 0), lty = c(2, 3, 1, 2, 3), lwd = c(1, 1, 2, 1, 1))
+tN <- paste("Total N in basis species =", format(a_N, scientific = FALSE), "m")
+tC <- paste("Total C in formed species =", format(a_C, scientific = FALSE), "m")
 title(main = paste(tN, tC, sep = "\n"), font.main = 1)
 legend("topright", legend = lTP(25, 1), bty = "n")
 ```
+</div>
 
-The diagram shows the expected ionization of acetic acid and NH~3~ at different pHs.
+```{r mosaic-combo, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+```
+
+The diagram shows the ionization of acetic acid and NH~3~ at different pHs.
 The predicted appearance of acetamide (CH~3~CONH~2~) is a consequence of the interaction between the N-bearing and C-bearing species, and is analogous to the formation of a bimetallic complex.
 
 *Thanks to Kirt Robinson for the feature request and test case used in this example.*
@@ -1051,6 +1110,6 @@ The predicted appearance of acetamide (CH~3~CONH~2~) is a consequence of the int
 ## Document History
 
 * 2020-07-15 First version.
-* 2021-02-21 Improve mineral abbreviations and placement of labels; use updated DFT energies from Materials Project; add Mosaic Stacking 2 (minerals and aqueous species).
+* 2021-02-25 Improve mineral abbreviations and placement of labels; use updated DFT energies from Materials Project; add Mosaic Stacking 2 (minerals and aqueous species); add *K*~eff~ calculation.
 
 ## References
