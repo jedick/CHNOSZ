@@ -529,8 +529,6 @@ basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+", "Cl-"))
 basis("H2S", logmS)
 nacl <- NaCl(T = T, P = "Psat", m_tot = m_NaCl)
 basis("Cl-", log10(nacl$m_Cl))
-# Use values for FeSO4(aq) from Table S2 of St Clair et al. (2019)
-mod.OBIGT("FeSO4", G = -203129, H = -238307)
 # Fe-bearing minerals
 species(Fe.cr)
 # Add aqueous species 20210220
