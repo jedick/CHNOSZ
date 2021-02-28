@@ -82,3 +82,7 @@ info.character: found C10H22(liq); other available states are liq, liq
 - Fix transparency issues in demo/mosaic.R
 
 - Fix legend in demo/mosaic.R (-4 and -6 contours are swapped)
+
+[20210227]
+
+- Add demo: equisolubility lines (p. 312 of Pourbaix, 1974)

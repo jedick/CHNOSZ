@@ -32,7 +32,7 @@
 
       \item Revise multi-metal.Rmd: Improve mineral abbreviations and placement
       of labels; use updated DFT energies from Materials Project; add Mosaic
-      Stacking 2 (minerals and aqueous species); add \emph{K}\s{eff} calculation
+      Stacking 2 (minerals and aqueous species); add \emph{K}\S{eff} calculation
       (\href{https://doi.org/10.1016/j.gca.2021.01.038}{Robinson et al., 2021}).
 
     }

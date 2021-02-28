@@ -749,16 +749,18 @@ title("Cu-Fe-S-O-H")
 # Mash the diagrams and adjust labels
 aFeCu <- mash(dFe, dCu)
 names <- aFeCu$species$name
-srt <- rep(0, length(names))
-srt[names %in% c("Mag+Cu", "Hem+Cu")] <- 90
-srt[names %in% c("Mag+Bn", "Hem+Bn")] <- 63
-srt[names %in% c("Mag+Ccp", "Hem+Ccp")] <- 66
-srt[names %in% c("Py+Bn", "Py+Cv")] <- 90
+dx <- dy <- srt <- rep(0, length(names))
 cex <- rep(1, length(names))
 cex[names %in% c("Hem+Ccp", "Hem+Cv")] <- 0.8
+srt[names %in% c("Mag+Cu", "Hem+Cu")] <- 90
+srt[names %in% c("Mag+Bn", "Hem+Bn")] <- 63
+srt[names %in% c("Mag+Ccp", "Hem+Ccp")] <- 68
+srt[names %in% c("Py+Bn", "Py+Cv")] <- 90
+dx[names == "Hem+Ccp"] <- -0.4
+dy[names == "Hem+Ccp"] <- -0.5
 oFeCu <- order(aFeCu$species$S2 - aFeCu$species$O2)
 fill <- terrain.colors(length(oFeCu), alpha = 0.2)[oFeCu]
-diagram(aFeCu, cex.names = cex, srt = srt, fill = fill)
+diagram(aFeCu, cex.names = cex, srt = srt, dx = dx, dy = dy, fill = fill)
 legend("topleft", legend = lTP(T, "Psat"), bg = "white")
 title("Cu-Fe-S-O-H")
 ```
@@ -1023,13 +1025,15 @@ See `demo(saturation)` for an example in the H~2~O-CO~2~-CaO-MgO-SiO~2~ system.
 
 Instead of adding minerals with different metals by stacking mosaic diagrams, it may be possible to include two different metals in the basis species and formed species.
 The `mosaic()` and `equilibrate()` functions can be combined to balance on two different elements.
-The example here is for N and C rather than metals.
-The "effective equilibrium constant" (*K*~eff~) method [@RBG_21] is used first to calculate the activity of acetamide for a total activities of neutral and ionized species, i.e. ∑(ammonia and ammonium) and ∑(acetic acid and acetate).
+The example here compares two methods applied to N-, C-, and N+C-bearing species because bimetallic aqueous species are not currently available in the OBIGT database.
+The total activities used here are modified from the example for sedimentary basin brines described by @Sho93, which is also the source of the thermodynamic parameters for acetamide.
 
-In the mosaic combo method, the `mosaic()` command calculates equilibrium activities of NH~3~ and NH~4~^+^ for a given total activity of N in the basis species, and calculates the corresponding affinities of the formed species.
+1. The "effective equilibrium constant" (*K*^eff^) method [@RBG_21] is used to calculate the activity of acetamide for a total activities of neutral and ionized species, i.e. ∑(ammonia and ammonium) and ∑(acetic acid and acetate).
+
+2. Using the mosaic combo method, the `mosaic()` command calculates equilibrium activities of NH~3~ and NH~4~^+^ for a given total activity of N in the basis species, and calculates the corresponding affinities of the formed species.
 Then, the `equilibrate()` command calculates equilibrium activities of the formed species for given total activity of C, and combines them with the activities of the changing basis species (NH~3~ and NH~4~^+^).
 
-The mosaic combo method (black line) produces results equivalent to those of the *K*~eff~ method (dashed blue line).
+The mosaic combo method (solid black line) produces results equivalent to those of the *K*^eff^ method (dashed blue line).
 
 <button id="B-mosaic-combo" onclick="ToggleDiv('mosaic-combo')">Show code</button>
 <div id="D-mosaic-combo" style="display: none">
@@ -1057,23 +1061,25 @@ Keff <- function(T = 25, pH = 7) {
   Keff
 }
 
-# Calculate logKeff as a function of pH
-pH <- seq(0, 14, 0.1)
-logKeff <- log10(Keff(pH = pH))
+# Calculate logKeff as a function of pH at 100 °C
+res <- 128
+pH <- seq(0, 14, length.out = res)
+T <- 100
+logKeff <- log10(Keff(pH = pH, T = T))
 
 # Calculate activity of acetamide for
-# acetic acid + acetate = 0.001 m
-# ammonia + ammonium = 0.0001 m
-logAc <- log10(0.001)
-logAm <- log10(0.0001)
+# acetic acid + acetate = 0.01 m
+# ammonia + ammonium = 0.001 m
+logAc <- log10(0.01)
+logAm <- log10(0.001)
 logAcAm <- logKeff + logAc + logAm
 
 ## METHOD 2: Mosaic combo
 
 # Define total activities
-a_N <- 0.0001
-# This is 2 * 0.001 because acetic acid has 2 carbons
-a_C <- 2 * 0.001
+a_N <- 0.001
+# This is 2 * 0.01 because acetic acid has 2 carbons
+a_C <- 2 * 0.01
 loga_N <- log10(a_N)
 loga_C <- log10(a_C)
 # Setup basis species
@@ -1082,20 +1088,24 @@ basis("NH3", loga_N)
 # Load all C-bearing species (including acetamide)
 species(c("acetamide", "acetic acid", "acetate"))
 # Calculate distribution of C-bearing species accounting for ammonia/ammonium speciation
-m <- mosaic(c("NH3", "NH4+"), pH = c(0, 14))
+m <- mosaic(c("NH3", "NH4+"), pH = c(0, 14, res), T = T)
 e <- equilibrate(m, loga.balance = loga_C)
 
 # Plot and label diagram
 # Start with empty diagram
-diagram(e, ylim = c(-10, -2), lty = 0, names = FALSE)
+diagram(e, ylim = c(-8, -0), lty = 0, names = FALSE)
+# Add pH = 6 line
+abline(v = 6, col = "gray60", lty = 5)
 # Add line for acetamide activity calculated with Keff
 lines(pH, logAcAm, col = 4, lwd = 6, lty = 2)
 # Add lines from CHNOSZ calculations
-diagram(e, add = TRUE, dy = 0.1, dx = c(-0.2, 0.2, -1.7, 0, 0), lty = c(2, 3, 1, 2, 3), lwd = c(1, 1, 2, 1, 1))
+diagram(e, add = TRUE, lty = c(2, 3, 1, 2, 3), lwd = c(1, 1, 2, 1, 1), dx = c(-0.2, 0.2, -2.5, 0, 0), dy = c(0.1, 0.1, -1, 0.1, 0.1), srt = c(0, 0, 52, 0, 0))
 tN <- paste("Total N in basis species =", format(a_N, scientific = FALSE), "m")
 tC <- paste("Total C in formed species =", format(a_C, scientific = FALSE), "m")
 title(main = paste(tN, tC, sep = "\n"), font.main = 1)
-legend("topright", legend = lTP(25, 1), bty = "n")
+legend("topright", legend = lTP(T, "Psat"), bty = "n")
+# Check that we got equal values
+stopifnot(all.equal(as.numeric(e$loga.equil[[3]]), logAcAm, tol = 1e-3, scale = 1))
 ```
 </div>
 
