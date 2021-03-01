@@ -86,3 +86,7 @@ info.character: found C10H22(liq); other available states are liq, liq
 [20210227]
 
 - Add demo: equisolubility lines (p. 312 of Pourbaix, 1974)
+
+[20210301]
+
+- anintro.Rmd: change red to blue for sulfur basis species

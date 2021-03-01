@@ -318,8 +318,9 @@ For an even higher proportion of V, the V + FeV~3~ assemblage is stable, which c
 
 Let's make another diagram for the 1:1 Fe:V composition over a broader range of Eh and pH.
 The diagram shows a stable assemblage of Fe~2~O~3~ with an oxidized bimetallic material, [Fe~2~V~4~O~13~](https://materialsproject.org/materials/mp-1200054/).
-```{r FeVO4, eval = FALSE, echo = 1:28}
-par(mfrow = c(1, 2))
+```{r FeVO4, eval = FALSE, echo = 1:29}
+layout(t(matrix(1:3)), widths = c(1, 1, 0.2))
+par(cex = 1)
 # Fe-bearing species
 basis(c("VO+2", "Fe+2", "H2O", "e-", "H+"))
 species(c(iFe.aq, iFe.cr))$name
@@ -356,7 +357,8 @@ aFeVO4_vs_stable <- aFeVO4$values[[1]] - d11$predominant.values
 # Overlay lines from diagram on color map
 diagram(a11, fill = NA, names = FALSE, limit.water = FALSE)
 opar <- par(usr = c(0, 1, 0, 1))
-image(aFeVO4_vs_stable, col = rev(topo.colors(100, 0.7)), add = TRUE)
+col <- rev(hcl.colors(128, palette = "YlGnBu", alpha = 0.8))
+image(aFeVO4_vs_stable, col = col, add = TRUE)
 par(opar)
 diagram(a11, fill = NA, add = TRUE, names = FALSE)
 water.lines(d11, col = "orangered")
@@ -368,13 +370,31 @@ Eh <- d11$vals$Eh[imax[2]]
 points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = "gold")
 stable <- d11$names[d11$predominant[imax]]
 text(pH, Eh, stable, adj = c(0.5, -1), cex = 1.2, col = "gold")
+
+# Make color scale 20210228
+par(mar = c(3, 0, 2.5, 2.7))
+plot.new()
+levels <- 1:length(col)
+plot.window(xlim = c(0, 1), ylim = range(levels), xaxs = "i", yaxs = "i")
+rect(0, levels[-length(levels)], 1, levels[-1L], col = rev(col), border = NA)
+box()
+# To get the limits, convert range of affinities to eV/atom
+arange <- rev(range(aFeVO4_vs_stable))
+# This gets us to J/mol
+Jrange <- convert(convert(arange, "G"), "J")
+# And to eV/atom
+eVrange <- Jrange / 1.602176634e-19 / 6.02214076e23 / 6
+ylim <- formatC(eVrange, digits = 3, format = "f")
+axis(4, at = range(levels), labels = ylim)
+mtext(quote(Delta*italic(G)[pbx]*", eV/atom"), side = 4, las = 0, line = 1)
 ```
 
 We then compute the affinity for formation of a metastable material, in this case triclinic FeVO~4~, from the same basis species used to make the previous diagrams.
 Given the diagram for the stable Fe-, V- and bimetallic materials *mixed with the same stoichiometry* as FeVO~4~ (1:1 Fe:V), the difference between their affinities of formation and that of FeVO~4~ corresponds to the Pourbaix energy difference (-Δ*G*~pbx~).
 This is plotted as a color map in the second diagram.
+(See the source of this vignette for the code used to make the scale bar.)
 
-```{r FeVO4, echo = 30:42, message = FALSE, results = "hide", fig.width = 10, fig.height = 5, out.width = "100%", pngquant = pngquant}
+```{r FeVO4, echo = 31:43, message = FALSE, results = "hide", fig.width = 11, fig.height = 5, out.width = "100%", pngquant = FALSE}
 ```
 
 Now we locate the pH and Eh that maximize the affinity (that is, minimize Δ*G*~pbx~) of FeVO~4~ compared to the stable species.
@@ -1120,6 +1140,6 @@ The predicted appearance of acetamide (CH~3~CONH~2~) is a consequence of the int
 ## Document History
 
 * 2020-07-15 First version.
-* 2021-02-25 Improve mineral abbreviations and placement of labels; use updated DFT energies from Materials Project; add Mosaic Stacking 2 (minerals and aqueous species); add *K*~eff~ calculation.
+* 2021-03-01 Improve mineral abbreviations and placement of labels; use updated DFT energies from Materials Project; add Mosaic Stacking 2 (minerals and aqueous species); add *K*~eff~ calculation; add Δ*G*~pbx~ color scale.
 
 ## References
