@@ -32,8 +32,9 @@
 
       \item Revise multi-metal.Rmd: Improve mineral abbreviations and placement
       of labels; use updated DFT energies from Materials Project; add Mosaic
-      Stacking 2 (minerals and aqueous species); add \emph{K}\S{eff} calculation
-      (\href{https://doi.org/10.1016/j.gca.2021.01.038}{Robinson et al., 2021}).
+      Stacking 2 (minerals and aqueous species); add \emph{K}\S{eff}
+      calculation (\href{https://doi.org/10.1016/j.gca.2021.01.038}{Robinson et
+      al., 2021}); add Δ\emph{G}\s{pbx} color scale.
 
       \item Restore \samp{lty.aq} and \samp{lty.cr} arguments to
       \code{diagram()} to control plotting of aq-aq and cr-cr field boundaries.

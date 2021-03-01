@@ -576,7 +576,7 @@ More sophisticated diagrams can be made by showing the solubility contours of a 
 a <- affinity(pH = c(0, 12), Eh = c(-0.5, 1))
 diagram(a, limit.water = TRUE)
 ```
-Let's use <span style="color:green">`diagram()`</span> to make a simple Pourbaix diagram for aqueous species in the system S-O-H.
+Let's use <span style="color:green">`diagram()`</span> to make a simple Eh-pH diagram for aqueous species in the system S-O-H.
 After running the <span style="color:red">`basis()`</span> and <span style="color:red">`species()`</span> commands above, we can calculate the affinities on an Eh-pH grid.
 With the default settings in <span style="color:green">`diagram()`</span>, areas beyond the stability limits of water are colored gray.
 This can be changed by setting the `limit.water` argument to FALSE (to not show the stability region of water) or TRUE (to plot the main diagram only in the stable region of water).
@@ -595,6 +595,9 @@ Additional arguments are passed to R's plotting functions; here, we use `las` to
 Another function, <span style="color:green">`water.lines()`</span>, can be used to draw lines at the water stability limits:
 ```{r EhpH_plot_color, echo=TRUE, eval=FALSE}
 ```
+
+See the demos in the package for other examples of Eh-pH diagrams.
+In particular, [<span style="color:blue">`demo(pourbaix)`</span>](../demo) shows how to plot the concentrations of metals as equisolubility (or isosolubility) lines on Eh-pH diagrams [@Pou74].
 
 Mineral stability diagrams often depict activity ratios, e.g. log (*a*<sub>Ca<sup>+2</sup></sub>/*a*<sub>H<sup>+</sup></sub><sup>2</sup>), on one or both axes.
 The variables used for potential calculations in CHNOSZ include only a single chemical activity, e.g. log *a*<sub>Ca<sup>+2</sup></sub>.
@@ -615,10 +618,10 @@ retrieve("Mn", c("O", "H"), "aq")
 retrieve("Mn", c("O", "H"), "cr")
 ```
 
-Below, these commands are used to identify the species in a Pourbaix diagram for the Mn-O-H system at 100 °C.
+Below, these commands are used to identify the species in an Eh-pH diagram for the Mn-O-H system at 100 °C.
 This diagram includes Mn oxides (pyrolusite, bixbyite, hausmannite), Mn(OH)<sub>2</sub>, and aqueous Mn species.
 
-```{r retrieve_diagram, fig.margin=TRUE, fig.width=5, fig.height=5, dpi=dpi, out.width="100%", message=FALSE, results = "hide", cache=TRUE, fig.cap="Pourbaix diagram for the Mn-O-H system.", pngquant=pngquant, timeit=timeit}
+```{r retrieve_diagram, fig.margin=TRUE, fig.width=5, fig.height=5, dpi=dpi, out.width="100%", message=FALSE, results = "hide", cache=TRUE, fig.cap="Eh-pH diagram for the Mn-O-H system.", pngquant=pngquant, timeit=timeit}
 # Set decimal logarithm of activity of aqueous species,
 # temperature and plot resolution
 logact <- -4

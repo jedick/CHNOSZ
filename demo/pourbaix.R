@@ -3,6 +3,8 @@
 # After Pourbaix (1974, p. 312)
 # 20210301 jmd first version
 
+library(CHNOSZ)
+
 ### PARAMETERS (to be changed by the user) ###
 
 # Choose an element
@@ -15,24 +17,29 @@ element <- "Fe"
 
 # Set temperature and pressure
 T <- 25
-P <- "Psat"
+# Can use "Psat" for T >= 100 degC
+P <- 1
 
 # Set plot limits and resolution
 pH <- c(-2, 16)
 Eh <- c(-2, 2)
-res <- 400
+res <- 700
 
 # Assign levels for equisolubility lines
 levels <- seq(-6, 0, 2)
 
 # Switches for using colors
 color.fields <- TRUE
-color.lines <- TRUE
 color.water <- TRUE
+color.lines <- TRUE
+color.names <- TRUE
 
-# Adjustment for most aqueous species labels
-# (e.g. to get them out of the way of the upper water line in the Fe diagram)
-dy <- -0.2
+# Names of aqueous species to move down
+# (to avoid conflict with water lines or mineral names)
+namesdown <- c("MnOH+", "MnO", "Cu+2", "CuO")
+# Names of aqueous species to move down even more
+namesdown2 <- c("Fe+3", "FeOH+2", "FeO+", "HFeO2", "FeO2-",
+"HMnO2-", "MnO2-2")
 
 ### SCRIPT (can also be changed by the user if wanted!) ###
 
@@ -65,16 +72,11 @@ species(i_aq, levels[1], add = TRUE)
 # from basis species as a function of Eh and pH
 a_all <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P)
 
-# Create labels using chemical formulas instead of name of minerals
-names_all_a <- names_all_b <- info(a_all$species$ispecies)$formula
-
-# Plot diagram (LAYER 1: colors for all fields and labels for large-enough aqueous fields)
-# (it's better to label smaller aqueous fields relative to each other than to the minerals)
-names_all_a[a_all$species$state == "cr"] <- ""
+# Plot diagram (LAYER 1: colors for all fields)
 limit.water <- fill <- NULL
 if(!color.water) limit.water <- FALSE
 if(!color.fields) fill <- NA
-d_all <- diagram(a_all, names = names_all_a, lty = 0, min.area = 0.1, limit.water = limit.water, fill = fill)
+d_all <- diagram(a_all, names = FALSE, lty = 0, min.area = 0.1, limit.water = limit.water, fill = fill)
 
 # Calculate affinities for minerals
 species(i_cr)
@@ -106,7 +108,7 @@ smin <- do.call(pmin, slist)
 # Put this into the last-computed 'solubility' object
 s$loga.balance <- smin
 
-# Plot diagram (LAYER 3: equisolubility lines)
+# Plot diagram (LAYER 2: equisolubility lines)
 diagram(s, type = "loga.balance", levels = levels, contour.method = "flattest", add = TRUE, lwd = 1.7)
 
 # Calculate affinities for aqueous species
@@ -114,17 +116,26 @@ diagram(s, type = "loga.balance", levels = levels, contour.method = "flattest", 
 species(i_aq, 0)
 a_aq <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P)
 
-# Don't add existing labels
-d_all.ispecies_plotted <- d_all$species$ispecies[!is.na(d_all$namesx)]
-names_aq <- info(a_aq$species$ispecies)$formula
-names_aq[a_aq$species$ispecies %in% d_all.ispecies_plotted] <- ""
-
-# Plot diagram (LAYER 4: equal-activity lines and remaining labels for aqueous species)
+# Plot diagram (LAYER 3: equal-activity lines for aqueous species)
 col <- ifelse(color.lines, 4, 1)
 # Use a white base to improve contrast
 # (so the line remains visible if it coincides with an equisolubility contour)
-diagram(a_aq, add = TRUE, col = "white", names = FALSE)
-diagram(a_aq, add = TRUE, lty = 2, col = col, names = names_aq, dy = dy)
+diagram(a_aq, add = TRUE, col = "white", lwd = 1.3, names = FALSE)
+
+# Plot diagram (LAYER 4: labels for aqueous species fields)
+# Apply y offset for specified names
+dy <- rep(0, nrow(a_aq$species))
+dy[a_aq$species$name %in% namesdown] <- -0.3
+dy[a_aq$species$name %in% namesdown2] <- -0.5
+# Use a white base for names
+rx <- diff(par("usr")[1:2])
+for(ddx in c(-rx/700, rx/700))
+  diagram(a_aq, add = TRUE, lty = 2, lwd = 0.6, col = col, dx = ddx, dy = dy, col.names = "white", bold = TRUE)
+ry <- diff(par("usr")[3:4])
+for(ddy in c(-ry/700, ry/700))
+  diagram(a_aq, add = TRUE, lty = 2, lwd = 0.6, col = col, dy = dy + ddy, col.names = "white", bold = TRUE)
+col.names <- ifelse(color.names, 4, 1)
+diagram(a_aq, add = TRUE, lty = 0, col = col, dy = dy, col.names = col.names)
 
 # Add solids with unit activity
 species(i_cr, 0)
@@ -144,5 +155,13 @@ water.lines(d_all_0, lty = 5, lwd = 1.3)
 # (this is the last layer, so names are above equal-activity lines,
 # but we use positions calculated with the first equisolubility line
 # so that names are within the shrunken parts of the mineral fields)
-names_all_b[a_all$species$state == "aq"] <- ""
-diagram(a_all, fill = NA, names = names_all_b, bold = TRUE, cex.names = 1.2, lty = 0, add = TRUE)
+# Create labels using chemical formulas instead of name of minerals
+formulas <- info(a_all$species$ispecies)$formula
+formulas[a_all$species$state == "aq"] <- ""
+diagram(a_all, fill = NA, names = formulas, bold = TRUE, cex.names = 1.2, lty = 0, add = TRUE)
+
+# Add title
+Texpr <- lT(T)
+Pexpr <- lP(P)
+main <- bquote(.(element)*"-O-H at "*.(Texpr)*" and "*.(Pexpr))
+title(main = main)
