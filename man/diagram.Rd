@@ -21,7 +21,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
     # character sizes
     cex = par("cex"), cex.names = 1, cex.axis = par("cex"),
     # line styles
-    lty = NULL, lwd = par("lwd"), dotted = NULL,
+    lty = NULL, lty.cr = NULL, lty.aq = NULL, lwd = par("lwd"), dotted = NULL,
     spline.method = NULL, contour.method = "edge", levels = NULL,
     # colors
     col = par("col"), col.names = par("col"), fill = NULL,
@@ -58,6 +58,8 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{cex.names}{numeric, character expansion factor to be used for names of species on plots}
   \item{cex.axis}{numeric, character expansion factor for names of axes}
   \item{lty}{numeric, line types to be used in plots}
+  \item{lty.cr}{numeric, line types for cr-cr boundaries (between two minerals)}
+  \item{lty.aq}{numeric, line types for aq-aq boundaries (between two aqueous species)}
   \item{lwd}{numeric, line width}
   \item{dotted}{numeric, how often to skip plotting points on predominance field boundaries (to gain the effect of dotted or dashed boundary lines)}
   \item{spline.method}{character, method used in \code{\link{splinefun}}}
@@ -160,6 +162,8 @@ Change \code{limit.water} to FALSE to not show the water stability regions at al
 
 The default line-drawing algorithm uses \code{\link{contourLines}} to obtain smooth-looking diagonal and curved lines, at the expense of not coinciding exactly with the rectangular grid that is used for drawing colors.
 \code{lty}, \code{col}, and \code{lwd} can be specified, but limiting the lines via \code{xrange} is not currently supported.
+Set \code{lty.cr} or \code{lty.aq} to 0 to suppress boundary lines between minerals or aqueous species.
+
 To go back to the old behavior for drawing lines, set \code{dotted} to \samp{0}.
 The old behavior does not respect \code{lty}; instead, the style of the boundary lines on 2-D diagrams can be altered by supplying one or more non-zero integers in \code{dotted}, which indicates the fraction of line segments to omit; a value of \samp{1} or NULL for \code{dotted} has the effect of not drawing the boundary lines.
 

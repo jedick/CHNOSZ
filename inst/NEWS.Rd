@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-11 (2021-02-25)}{
+\section{Changes in CHNOSZ version 1.4.0-14 (2021-03-01)}{
 
   \subsection{CHANGES}{
     \itemize{
@@ -34,6 +34,13 @@
       of labels; use updated DFT energies from Materials Project; add Mosaic
       Stacking 2 (minerals and aqueous species); add \emph{K}\S{eff} calculation
       (\href{https://doi.org/10.1016/j.gca.2021.01.038}{Robinson et al., 2021}).
+
+      \item Restore \samp{lty.aq} and \samp{lty.cr} arguments to
+      \code{diagram()} to control plotting of aq-aq and cr-cr field boundaries.
+
+      \item Add \samp{demo/pourbaix.R} (Eh-pH diagrams with equisolubility
+      lines, after \href{https://www.worldcat.org/oclc/563921897}{Pourbaix,
+      1974}).
 
     }
   }

@@ -59,7 +59,7 @@ legend("bottomleft", c("Predominance diagram: molality of aqueous", "species def
        pch = c("A", "", "B", "", "C", "", ""), inset = c(-0.1, 0), cex = 0.95)
 par(xpd = FALSE)
 
-# Make diagram for Co minerals only 20201007
+# Make diagram for Zn minerals only 20201007
 if(packageVersion("CHNOSZ") <= "1.3.6") species(delete = TRUE)
 species(icr)
 mcr <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = sat$IS)

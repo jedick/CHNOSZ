@@ -18,7 +18,7 @@
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "zinc", "Shh", "saturation",
     "adenine", "DEW", "lambda", "berman", "TCA", "aluminum", "AkDi",
-    "comproportionation"),
+    "comproportionation", "pourbaix"),
     save.png=FALSE)
 }
 
@@ -62,6 +62,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{carboxylase} \tab Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase \cr
     \code{AkDi} \tab Henry's constant of dissolved gases (Akinfiev and Diamond, 2003) \cr
     \code{comproportionation} \tab Gibbs energy of sulfur comproportionation (Amend et al., 2020) \cr
+    \code{pourbaix} \tab Eh-pH diagram for Fe-O-H with equisolubility lines (Pourbaix, 1974) \cr
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
@@ -120,6 +121,8 @@ Lowe, A. R., Cox, J. S. and Tremaine, P. R. (2017) Thermodynamics of aqueous ade
 Lu, P. and Zhu, C. (2011) Arsenic Eh--pH diagrams at 25\degC and 1 bar. \emph{Environ. Earth Sci.} \bold{62}, 1673--1683. \url{https://doi.org/10.1007/s12665-010-0652-x}
   
 Manning, C. E., Shock, E. L. and Sverjensky, D. A. (2013) The chemistry of carbon in aqueous fluids at crustal and upper-mantle conditions: Experimental and theoretical constraints. \emph{Rev. Mineral. Geochem.} \bold{75}, 109--148. \url{https://doi.org/10.2138/rmg.2013.75.5}
+
+Pourbaix, M. (1974) \emph{Atlas of Electrochemical Equilibria in Aqueous Solutions}, NACE, Houston, TX and CEBELCOR, Brussels. \url{https://www.worldcat.org/oclc/563921897}
 
 Schulte, M. D. and Shock, E. L. (1995) Thermodynamics of Strecker synthesis in hydrothermal systems. \emph{Orig. Life Evol. Biosph.} \bold{25}, 161--173. \url{https://doi.org/10.1007/BF01581580}
 

@@ -29,3 +29,4 @@ aluminum        Reactions involving Al-bearing minerals
 carboxylase     Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase
 AkDi            Henry's constant of dissolved gases
 comproportionation  Gibbs energy of sulfur comproportionation
+pourbaix        Eh-pH diagram for Fe-O-H with equisolubility lines
