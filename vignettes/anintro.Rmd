@@ -597,7 +597,7 @@ Another function, <span style="color:green">`water.lines()`</span>, can be used 
 ```
 
 See the demos in the package for other examples of Eh-pH diagrams.
-In particular, [<span style="color:blue">`demo(pourbaix)`</span>](../demo) shows how to plot the concentrations of metals as equisolubility (or isosolubility) lines on Eh-pH diagrams [@Pou74].
+In particular, [<span style="color:blue">`demo(Pourbaix)`</span>](../demo) shows how to plot the concentrations of metals as equisolubility (or isosolubility) lines on Eh-pH diagrams [@Pou74].
 
 Mineral stability diagrams often depict activity ratios, e.g. log (*a*<sub>Ca<sup>+2</sup></sub>/*a*<sub>H<sup>+</sup></sub><sup>2</sup>), on one or both axes.
 The variables used for potential calculations in CHNOSZ include only a single chemical activity, e.g. log *a*<sub>Ca<sup>+2</sup></sub>.

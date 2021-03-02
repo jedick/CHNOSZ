@@ -1,4 +1,4 @@
-# CHNOSZ/demos/pourbaix.R
+# CHNOSZ/demo/Pourbaix.R
 # Eh-pH diagram for Fe-O-H with equisolubility lines
 # After Pourbaix (1974, p. 312)
 # 20210301 jmd first version
@@ -19,6 +19,8 @@ element <- "Fe"
 T <- 25
 # Can use "Psat" for T >= 100 degC
 P <- 1
+# Ionic strength (mol/kg)
+IS <- 0
 
 # Set plot limits and resolution
 pH <- c(-2, 16)
@@ -70,7 +72,7 @@ species(i_aq, levels[1], add = TRUE)
 
 # Calculate affinities of formation of species
 # from basis species as a function of Eh and pH
-a_all <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P)
+a_all <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS)
 
 # Plot diagram (LAYER 1: colors for all fields)
 limit.water <- fill <- NULL
@@ -80,7 +82,7 @@ d_all <- diagram(a_all, names = FALSE, lty = 0, min.area = 0.1, limit.water = li
 
 # Calculate affinities for minerals
 species(i_cr)
-a_cr <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P)
+a_cr <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS)
 
 # Find all stable minerals across diagram
 d_cr <- diagram(a_cr, plot.it = FALSE)
@@ -95,7 +97,7 @@ for(i in seq_along(d_cr.stable)) {
   # Add aqueous species (no need to define activities here - they will be calculated)
   species(i_aq)
   # Calculate affinities of formation reactions
-  a <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P)
+  a <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS)
   # Calculate solubility of this mineral
   # FIXME: what to do about 'dissociation' argument?
   s <- solubility(a, in.terms.of = element, dissociation = FALSE)
@@ -114,11 +116,11 @@ diagram(s, type = "loga.balance", levels = levels, contour.method = "flattest", 
 # Calculate affinities for aqueous species
 # FIXME: should be able to remove cr species from previous affinity object
 species(i_aq, 0)
-a_aq <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P)
+a_aq <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS)
 
 # Plot diagram (LAYER 3: equal-activity lines for aqueous species)
 col <- ifelse(color.lines, 4, 1)
-# Use a white base to improve contrast
+# Use a white background to improve contrast
 # (so the line remains visible if it coincides with an equisolubility contour)
 diagram(a_aq, add = TRUE, col = "white", lwd = 1.3, names = FALSE)
 
@@ -127,7 +129,7 @@ diagram(a_aq, add = TRUE, col = "white", lwd = 1.3, names = FALSE)
 dy <- rep(0, nrow(a_aq$species))
 dy[a_aq$species$name %in% namesdown] <- -0.3
 dy[a_aq$species$name %in% namesdown2] <- -0.5
-# Use a white base for names
+# Use a white background for names
 rx <- diff(par("usr")[1:2])
 for(ddx in c(-rx/700, rx/700))
   diagram(a_aq, add = TRUE, lty = 2, lwd = 0.6, col = col, dx = ddx, dy = dy, col.names = "white", bold = TRUE)
@@ -145,7 +147,7 @@ species(i_aq, levels[length(levels)], add = TRUE)
 
 # Calculate affinities of formation of species
 # from basis species as a function of Eh and pH
-a_all_0 <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P)
+a_all_0 <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS)
 
 # Plot diagram (LAYER 5: mineral stability boundaries and water lines)
 d_all_0 <- diagram(a_all_0, fill = NA, names = FALSE, lty = 0, lty.cr = 1, lwd = 3, add = TRUE)

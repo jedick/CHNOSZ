@@ -23,10 +23,10 @@ saturation      Equilibrium activity diagram showing activity ratios and mineral
 adenine         HKF parameters regressed from heat capacity and volume of aqueous adenine
 DEW             Deep Earth Water (DEW) model for high pressures
 lambda          Thermodynamic properties of lambda transition in quartz
-berman          Mineral stabilities in Berman and Helgeson et al. datasets
+potassium       Comparison of thermodynamic datasets for predicting mineral stabilities
 TCA             Standard Gibbs energies of steps of the citric acid cycle
 aluminum        Reactions involving Al-bearing minerals
 carboxylase     Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase
 AkDi            Henry's constant of dissolved gases
 comproportionation  Gibbs energy of sulfur comproportionation
-pourbaix        Eh-pH diagram for Fe-O-H with equisolubility lines
+Pourbaix        Eh-pH diagram for Fe-O-H with equisolubility lines

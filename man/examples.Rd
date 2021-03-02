@@ -17,8 +17,8 @@
     "density", "ORP", "findit", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "zinc", "Shh", "saturation",
-    "adenine", "DEW", "lambda", "berman", "TCA", "aluminum", "AkDi",
-    "comproportionation", "pourbaix"),
+    "adenine", "DEW", "lambda", "potsassium", "TCA", "aluminum", "AkDi",
+    "comproportionation", "Pourbaix"),
     save.png=FALSE)
 }
 
@@ -56,13 +56,13 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{adenine} \tab HKF regression of heat capacity and volume of aqueous adenine (Lowe et al., 2017) \cr
     \code{DEW} \tab Deep Earth Water (DEW) model for high pressures (Sverjensky et al., 2014a and 2014b) \cr
     \code{lambda} \tab Effects of lambda transition on thermodynamic properties of quartz (Berman, 1988) \cr
-    \code{berman} \tab ineral stabilities in Berman and Helgeson et al. datasets (Sverjensky et al., 1991) \cr
+    \code{potassium} \tab Comparison of thermodynamic datasets for predicting mineral stabilities (Sverjensky et al., 1991) \cr
     \code{TCA} \tab Standard Gibbs energies of the tricarboxylic (citric) acid cycle (Canovas and Shock, 2016) \cr
     \code{aluminum} \tab Reactions involving Al-bearing minerals (Zimmer et al., 2016; Tutolo et al., 2014) \cr
     \code{carboxylase} \tab Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase \cr
     \code{AkDi} \tab Henry's constant of dissolved gases (Akinfiev and Diamond, 2003) \cr
     \code{comproportionation} \tab Gibbs energy of sulfur comproportionation (Amend et al., 2020) \cr
-    \code{pourbaix} \tab Eh-pH diagram for Fe-O-H with equisolubility lines (Pourbaix, 1974) \cr
+    \code{Pourbaix} \tab Eh-pH diagram for Fe-O-H with equisolubility lines (Pourbaix, 1974) \cr
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.

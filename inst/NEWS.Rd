@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-14 (2021-03-01)}{
+\section{Changes in CHNOSZ version 1.4.0-16 (2021-03-02)}{
 
   \subsection{CHANGES}{
     \itemize{
@@ -39,9 +39,11 @@
       \item Restore \samp{lty.aq} and \samp{lty.cr} arguments to
       \code{diagram()} to control plotting of aq-aq and cr-cr field boundaries.
 
-      \item Add \samp{demo/pourbaix.R} (Eh-pH diagrams with equisolubility
+      \item Add \samp{demo/Pourbaix.R} (Eh-pH diagrams with equisolubility
       lines, after \href{https://www.worldcat.org/oclc/563921897}{Pourbaix,
       1974}).
+
+      \item Rename \samp{demo/berman.R} to \samp{potassium.R}.
 
     }
   }

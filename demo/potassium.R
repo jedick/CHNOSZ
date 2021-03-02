@@ -1,6 +1,6 @@
-# CHNOSZ/demo/berman.R
+# CHNOSZ/demo/potassium.R
 # moved from berman.Rd 20200727
-### compare mineral stabilities in the Berman and Helgeson datasets
+### compare mineral stabilities predicted with the Berman and Helgeson datasets
 ### on a T - log(K+/H+) diagram, after Sverjensky et al., 1991
 ### (doi:10.1016/0016-7037(91)90157-Z)
 library(CHNOSZ)
