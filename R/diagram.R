@@ -41,17 +41,20 @@ diagram <- function(
 
   ### argument handling ###
 
-  ## check that eout is a valid object
+  ## Check that eout is a valid object
   efun <- eout$fun
   if(length(efun)==0) efun <- ""
-  if(!(efun %in% c("affinity", "equilibrate") | grepl("solubility", efun))) stop("'eout' is not the output from affinity(), equilibrate(), or solubility()")
+  if(!(efun %in% c("affinity", "equilibrate") | grepl("solubilit", efun)))
+    stop("'eout' is not the output from affinity(), equilibrate(), solubility(), or solubilities()")
+  # For solubilities(), type is always loga.balance 20210303
+  if(identical(efun, "solubilities")) type <- "loga.balance"
 
   ## 'type' can be:
   #    'auto'                - property from affinity() (1D) or maximum affinity (affinity 2D) (aout) or loga.equil (eout)
   #    'loga.equil'          - equilibrium activities of species of interest (eout)
   #    name of basis species - equilibrium activity of a basis species (aout)
   #    'saturation'          - affinity=0 line for each species (2D)
-  #    'loga.balance'        - activity of balanced basis species (eout from solubility())
+  #    'loga.balance'        - activity of balanced basis species (eout from solubility() or solubilities())
   eout.is.aout <- FALSE
   plot.loga.basis <- FALSE
   if(type %in% c("auto", "saturation")) {

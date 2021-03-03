@@ -83,35 +83,11 @@ d_all <- diagram(a_all, names = FALSE, lty = 0, min.area = 0.1, limit.water = li
 # Calculate affinities for minerals
 species(i_cr)
 a_cr <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS)
-
-# Find all stable minerals across diagram
-d_cr <- diagram(a_cr, plot.it = FALSE)
-d_cr.stable <- d_cr$species$name[unique(as.vector(d_cr$predominant))]
-
-# Make a list to store the calculated solubilities for each mineral
-slist <- list()
-# Loop over stable minerals
-for(i in seq_along(d_cr.stable)) {
-  # Define basis species with mineral to dissolve
-  basis(c(d_cr.stable[i], "H2O", "H+", "e-"))
-  # Add aqueous species (no need to define activities here - they will be calculated)
-  species(i_aq)
-  # Calculate affinities of formation reactions
-  a <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS)
-  # Calculate solubility of this mineral
-  # FIXME: what to do about 'dissociation' argument?
-  s <- solubility(a, in.terms.of = element, dissociation = FALSE)
-  # Store the solubilities in the list
-  slist[[i]] <- s$loga.balance
-}
-
-# The overall solubility is the *minimum* among all the minerals
-smin <- do.call(pmin, slist)
-# Put this into the last-computed 'solubility' object
-s$loga.balance <- smin
+# Calculate overall solubility (i.e. minimum solubility given all candidate minerals)
+s <- solubilities(a_cr, i_aq, in.terms.of = element)
 
 # Plot diagram (LAYER 2: equisolubility lines)
-diagram(s, type = "loga.balance", levels = levels, contour.method = "flattest", add = TRUE, lwd = 1.7)
+diagram(s, levels = levels, contour.method = "flattest", add = TRUE, lwd = 1.5)
 
 # Calculate affinities for aqueous species
 # FIXME: should be able to remove cr species from previous affinity object
@@ -167,3 +143,4 @@ Texpr <- lT(T)
 Pexpr <- lP(P)
 main <- bquote(.(element)*"-O-H at "*.(Texpr)*" and "*.(Pexpr))
 title(main = main)
+

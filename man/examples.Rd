@@ -17,7 +17,7 @@
     "density", "ORP", "findit", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "zinc", "Shh", "saturation",
-    "adenine", "DEW", "lambda", "potsassium", "TCA", "aluminum", "AkDi",
+    "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum", "AkDi",
     "comproportionation", "Pourbaix"),
     save.png=FALSE)
 }

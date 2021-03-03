@@ -181,3 +181,50 @@ if(codeanal) print(paste0("loga.balance [in terms of ", in.terms.of, "]: ", roun
   c(aout, list(balance=bout$balance, m.balance=bout$n.balance, n.balance=bout$n.balance, in.terms.of=in.terms.of,
     loga.balance=loga.balance, Astar=loga.equil, loga.equil=loga.equil))
 }
+
+# Calculate solubilities of multiple minerals 20210303
+# a_cr: affinities for minerals (all bearing the same metal)
+# i_aq: aqueous species that can be produced by dissolution of the minerals
+# FIXME: what to do about 'dissociation' argument?
+solubilities <- function(a_cr, i_aq, in.terms.of = NULL, dissociation = NULL) {
+  # If a_cr is the output from mosaic(), just get the species' affinities
+  is.mosaic <- FALSE
+  m_cr <- a_cr
+  if(identical(a_cr$fun, "mosaic")) {
+    a_cr <- a_cr$A.species
+    is.mosaic <- TRUE
+  }
+  # Find all stable minerals across diagram
+  d_cr <- diagram(a_cr, plot.it = FALSE)
+  d_cr.stable <- d_cr$species$ispecies[unique(as.vector(d_cr$predominant))]
+  # Use basis species in a_cr as a template for the solubility calculations
+  ispecies <- a_cr$basis$ispecies
+  logact <- a_cr$basis$logact
+
+  # Make a list to store the calculated solubilities for each mineral
+  slist <- list()
+  # Loop over stable minerals
+  for(i in seq_along(d_cr.stable)) {
+    # Define basis species with the mineral first (so it will be dissolved)
+    ispecies[1] <- d_cr.stable[i]
+    basis(ispecies, logact)
+    # Add aqueous species (no need to define activities here - they will be calculated)
+    species(i_aq)
+    # Calculate affinities of formation reactions of this mineral at same conditions as a_cr (argument recall)
+    if(is.mosaic) a <- mosaic(m_cr)$A.species else a <- affinity(a_cr)
+    # Calculate solubility of this mineral
+    s <- solubility(a, in.terms.of = in.terms.of, dissociation = dissociation)
+    # Store the solubilities in the list
+    slist[[i]] <- s$loga.balance
+  }
+
+  # The overall solubility is the *minimum* among all the minerals
+  smin <- do.call(pmin, slist)
+  # Put this into the last-computed 'solubility' object
+  s$loga.balance <- smin
+  # Change the function name stored in the object so diagram() plots loga.balance automatically
+  s$fun <- "solubilities"
+  # Return the object
+  s
+}
+

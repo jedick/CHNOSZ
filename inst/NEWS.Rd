@@ -10,25 +10,39 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-16 (2021-03-02)}{
+\section{Changes in CHNOSZ version 1.4.0-17 (2021-03-03)}{
 
-  \subsection{CHANGES}{
+  \subsection{NEW FEATURES}{
     \itemize{
 
-      \item Remove limSolve from Suggests in DESCRIPTION.
+      \item Add \samp{demo/Pourbaix.R} (Eh-pH diagrams with isosolubility
+      lines, after \href{https://www.worldcat.org/oclc/563921897}{Pourbaix,
+      1974}). This demo depends on the following two changes.
+
+      \item Add \code{solubilities()} for calculating overall (i.e. minimum)
+      solubility for multiple minerals. This function is also now used in
+      \samp{demo/zinc.R}.
+
+      \item Restore \samp{lty.aq} and \samp{lty.cr} arguments to
+      \code{diagram()} to control plotting of aq-aq and cr-cr field boundaries.
+
+    }
+  }
+
+  \subsection{OTHER CHANGES}{
+    \itemize{
 
       \item In the return value of \code{diagram()}, \code{predominant.values}
       previously only contained affinities (extracted from the \code{values}
       element of the \code{eout} argument). Now it has the values for the
-      predominant species extracted from the actual values used to make the plot
-      (the \code{plotvals} list in the output), i.e.  affinities divided by the
-      balancing coefficients if \code{eout} is the output of \code{affinity}, or
-      activities if \code{eout} is the output of \code{equilibrate}. Therefore it
-      can now be used to draw contours or a color image showing the activities of
-      the predominant species.
-
-      \item Use standard abbreviations for hematite (Hem) and magnetite (Mag) in
-      OBIGT/Berman_cr.csv.
+      predominant species extracted from the actual values used to make the
+      plot (the \code{plotvals} list in the output), i.e.  affinities divided
+      by the balancing coefficients if \code{eout} is the output of
+      \code{affinity}, or activities if \code{eout} is the output of
+      \code{equilibrate}. Therefore it can now be used to draw contours or a
+      color image showing the activities of the predominant species. This is
+      used for a diagram in a new preprint
+      (\href{https://doi.org/10.1101/2021.01.29.428804}{Dick, 2021}).
 
       \item Revise multi-metal.Rmd: Improve mineral abbreviations and placement
       of labels; use updated DFT energies from Materials Project; add Mosaic
@@ -36,14 +50,12 @@
       calculation (\href{https://doi.org/10.1016/j.gca.2021.01.038}{Robinson et
       al., 2021}); add Δ\emph{G}\s{pbx} color scale.
 
-      \item Restore \samp{lty.aq} and \samp{lty.cr} arguments to
-      \code{diagram()} to control plotting of aq-aq and cr-cr field boundaries.
-
-      \item Add \samp{demo/Pourbaix.R} (Eh-pH diagrams with equisolubility
-      lines, after \href{https://www.worldcat.org/oclc/563921897}{Pourbaix,
-      1974}).
+      \item Use standard abbreviations for hematite (Hem) and magnetite (Mag) in
+      OBIGT/Berman_cr.csv.
 
       \item Rename \samp{demo/berman.R} to \samp{potassium.R}.
+
+      \item Remove unused limSolve package from Suggests in DESCRIPTION.
 
     }
   }

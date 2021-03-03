@@ -1,5 +1,5 @@
 # CHNOSZ/demo/zinc.R
-# make Zn solubility diagram with multiple minerals
+# Make Zn solubility diagram with multiple minerals
 # 20190530 jmd first version (plot_Zn.R)
 # 20201008 combine solubility contours for different minerals
 # 20201014 added to CHNOSZ
@@ -8,22 +8,22 @@ library(CHNOSZ)
 opar <- par(no.readonly = TRUE)
 par(mfrow = c(2, 2))
 
-# system variables
+# System variables
 res <- 300
 T <- 100
 P <- "Psat"
 Stot <- 1e-3
 pH <- c(0, 14, res)
 O2 <- c(-62, -40, res)
-# mass percent NaCl in saturated solution at 100 degC, from CRC handbook
+# Mass percent NaCl in saturated solution at 100 degC, from CRC handbook
 w2 <- 0.2805  
 
-# set up basis species
+# Set up basis species
 basis(c("ZnO", "H2S", "Cl-", "oxygen", "H2O", "H+"))
 basis("H2S", log10(Stot))
-# molality of NaCl in saturated solution
+# Molality of NaCl in saturated solution
 m2 <- 1000 * w2 / (mass("NaCl") * (1 - w2))
-# estimate ionic strength and molality of Cl-
+# Estimate ionic strength and molality of Cl-
 sat <- NaCl(T = 100, m_tot = m2)
 basis("Cl-", log10(sat$m_Cl))
 
@@ -66,34 +66,15 @@ mcr <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = sat$IS)
 diagram(mcr$A.species, col = 2)
 label.figure("B")
 
-## Solubility plot 20201008
-
-# Make a list to store the calculated solubilities for each mineral
-slist <- list()
-# Loop over minerals
-minerals <- c("zincite", "sphalerite")
-for(i in seq_along(minerals)) {
-  # Define basis species with mineral to dissolve
-  basis(c(minerals[i], "H2S", "Cl-", "oxygen", "H2O", "H+"))
-  basis("H2S", log10(Stot))
-  basis("Cl-", log10(sat$m_Cl))
-  # Add aqueous species (no need to define activities here - they will be calculated)
-  species(iaq)
-  # Calculate affinities of formation reactions, using mosaic() to speciate the S-bearing basis species
-  m <- mosaic(bases, pH = pH, O2 = O2, T = T, IS = sat$IS)
-  # Calculate solubility of this mineral
-  s <- solubility(m$A.species, in.terms.of = "Zn", dissociation = FALSE)
-  # Store the solubilities in the list
-  slist[[i]] <- s$loga.balance
-}
-
-# The overall solubility is the *minimum* among all the minerals
-smin <- do.call(pmin, slist)
-# Put this into the last-computed 'solubility' object
-s$loga.balance <- smin
+# Calculate *minimum* solubility among all the minerals 20201008
+# (i.e. saturation condition for the solution)
+# Use solubilities() 20210303
+# FIXME: why do we need to set dissociation = FALSE here?
+s <- solubilities(mcr, iaq, in.terms.of = "Zn", dissociation = FALSE)
 # Specify contour levels
 levels <- seq(-12, 9, 3)
 diagram(s, type = "loga.balance", levels = levels, contour.method = "flattest")
+
 # Show the mineral stability boundaries
 diagram(mcr$A.species, names = NA, add = TRUE, lty = 2, col = 2)
 title("Solubilities of 2 minerals", font.main = 1, line = 1.5)

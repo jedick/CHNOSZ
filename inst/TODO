@@ -83,10 +83,13 @@ info.character: found C10H22(liq); other available states are liq, liq
 
 - Fix legend in demo/mosaic.R (-4 and -6 contours are swapped)
 
-[20210227]
-
-- Add demo: equisolubility lines (p. 312 of Pourbaix, 1974)
-
 [20210301]
 
 - anintro.Rmd: change red to blue for sulfur basis species
+
+[20210303]
+
+- Add demo for effective equilibrium constant for diglycine on T-pH plot at
+  high pressure (DEW model; Robinson et al., 2021)
+
+- Combine solubility() and solubilities() into single function (for CHNOSZ 1.5.0).
