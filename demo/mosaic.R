@@ -27,10 +27,11 @@ P <- 1
 loga_S <- -6
 loga_C <- 0
 # Define chemical system
-basis(c("FeO", "SO4-2", "H2O", "H+", "e-", "CO3-2"))
+basis(c("FeO", "SO4-2", "CO3-2", "H2O", "H+", "e-"))
 basis("SO4-2", loga_S)
 basis("CO3-2", loga_C)
-species(c("Fe+2", "Fe+3"), -4)
+# Start with log(activity of aqueous Fe species) = -4
+species(c("Fe+2", "Fe+3", "HFeO2-"), -4)
 species(c("pyrrhotite", "pyrite", "hematite", "magnetite", "siderite"), add = TRUE)
 
 # Use two sets of changing basis species:
@@ -39,41 +40,51 @@ species(c("pyrrhotite", "pyrite", "hematite", "magnetite", "siderite"), add = TR
 bases <- c("SO4-2", "HSO4-", "HS-", "H2S")
 bases2 <- c("CO3-2", "HCO3-", "CO2")
 
-# Make a diagram with log(activity of aqueous Fe species) = -4
+# Make a diagram with dotted lines and aqueous species labels for log(activity of aqueous Fe species) = -4
 m4 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T, P = P)
-diagram(m4$A.species, lty = 2, names = FALSE)
+names.aq <- species()$name; names.aq[4:8] <- ""
+diagram(m4$A.species, lty = 3, names = names.aq, col.names = 4)
 
-## Show the predominance fields for the sulfur and carbonate basis species
+# Overlay solid lines and mineral labels for log(activity of aqueous Fe species) = -6
+species(c("Fe+2", "Fe+3", "HFeO2-"), -6)
+m6 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T, P = P)
+names <- species()$name; names[1:3] <- ""
+# Adjust labels
+srt <- dy <- numeric(length(names))
+dy[names == "hematite"] <- -0.4
+dy[names == "siderite"] <- 0.2
+srt[names == "pyrite"] <- -25
+diagram(m6$A.species, add = TRUE, names = names, dy = dy, srt = srt, bold = TRUE)
+
+# Replot the aqueous species labels for stronger contrast
+diagram(m4$A.species, lty = 3, names = names.aq, col.names = 4, add = TRUE, fill = NA)
+
+# Show the predominance fields for the sulfur and carbonate basis species
 dS <- diagram(m4$A.bases, italic = TRUE, plot.it = FALSE)
 dC <- diagram(m4$A.bases2, italic = TRUE, plot.it = FALSE)
 dSC <- mash(dS, dC)
-diagram(dSC, lty = 3, col = 4, col.names = 4, add = TRUE)
+diagram(dSC, lty = 2, col = 8, col.names = 8, add = TRUE, srt = 90)
 
-# Show lines for log(activity of aqueous Fe species) = -6
-s6 <- species(c("Fe+2", "Fe+3"), -6)
-m6 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T, P = P)
-srt <- dy <- numeric(nrow(s6))
-dy[s6$name == "Fe+2"] <- 0.15
-dy[s6$name == "hematite"] <- -0.4
-dy[s6$name == "magnetite"] <- 0.07
-dy[s6$name == "siderite"] <- 0.2
-srt[s6$name == "pyrite"] <- -25
-bold <- s6$state == "cr"
-diagram(m6$A.species, add = TRUE, dy = dy, srt = srt, bold = bold)
+# Add water lines
+water.lines(dSC, lty = 5)
 
 # Add legend and title
 TP <- describe.property(c("T", "P"), c(T, P))
 SC <- c(
-  bquote(log * italic(a)["S(aq)"] == .(loga_S)),
-  bquote(log * italic(a)["C(aq)"] == .(loga_C))
+  bquote(sum("S(aq)") == 10^.(loga_S)~m),
+  bquote(sum("C(aq)") == 10^.(loga_C)~m)
 )
+legend1 <- lex(TP, SC)
+legend("topright", legend1, bty = "n")
+
 Fe <- c(
-  bquote(log * italic(a)["Fe(aq)"] == .(-4)),
-  bquote(log * italic(a)["Fe(aq)"] == .(-6))
+  bquote(10^-4~"m Fe"),
+  bquote(10^-6~"m Fe")
 )
-legend <- lex(TP, SC, Fe)
-legend("topright", legend, lty = c(NA, NA, NA, NA, 1, 2), bty = "n")
-title(main = paste("Iron minerals, sulfur, and carbonate in water,",
+legend2 <- lex(Fe)
+legend("bottomleft", legend2, lty = c(3, 1), bty = "n")
+
+title(main = paste("Iron oxides, sulfides, and carbonate in water,",
   "after Garrels and Christ, 1965, Figure 7.21", sep = "\n"), font.main = 1)
 
 ## Reset the database if we changed it using mod.OBIGT()
