@@ -4,49 +4,55 @@
 ##  FEMS Microbiol. Rev. 25, 175--243. https://doi.org/10.1016/S0168-6445(00)00062-0
 library(CHNOSZ)
 
-# use aq state for all basis species (including O2)
+# Use aq state for all basis species (including O2)
 basis(c("CO2", "H2", "NH3", "O2", "H2S", "H+"), "aq")
-# we're going to make H2O
+# We're going to make H2O
 species("H2O")
-# a function to create the plots
+# A function to create the plots
 doplot <- function(T) {
   res <- 20
   # calculate affinity/2.303RT as a function of loga(H2) and loga(O2)
   a <- affinity(H2=c(-10, 0, res), O2=c(-10, 0, res), T=T)
-  T.K <- convert(T, "K")                   # temperature in Kelvin
-  acal <- convert(a$values[[1]], "G", T.K) # affinity (cal/mol)
-  akJ <- convert(acal, "J")/1000           # affinity (kJ/mol)
-  # now contour the values
+  # Temperature in Kelvin
+  T.K <- convert(T, "K")
+  # Convert dimensionless affinity (A/2.303RT) to Gibbs energy (cal/mol)
+  Gcal <- convert(a$values[[1]], "G", T.K)
+  # Convert cal/mol to kJ/mol
+  GkJ <- convert(Gcal, "J")/1000
+  # Now contour the values
   xyvals <- seq(-10, 0, length.out=res)
-  contour(x=xyvals, y=xyvals, z=t(akJ), levels=seq(-150, -250, -20),
+  contour(x=xyvals, y=xyvals, z=t(GkJ), levels=seq(-150, -250, -20),
     labcex=1, xlab=axis.label("H2"), ylab=axis.label("O2"))
-  # show the temperature
+  # Show the temperature
   legend("topleft", bg="white", cex=1,
     legend=describe.property("T", T, digits=0, ret.val=TRUE) )
 }
-# plot layout with space for title at top
+# Plot layout with space for title at top
 opar <- par(no.readonly = TRUE)
 layout(matrix(c(1, 1, 2, 3, 4, 5), ncol=2, byrow=TRUE), heights=c(1, 4, 4))
 
 par(mar=c(0, 0, 0, 0))
 plot.new()
-# we use subcrt() to generate a reaction for titling the plot
+# We use subcrt() to generate a reaction for titling the plot
 rxnexpr <- describe.reaction(subcrt("H2O", 1)$reaction, states="all")
-# also in the title is the property with its units
+# Also in the title is the property with its units
 E.units("J")
 Gexpr <- axis.label("DGr", prefix="k")[[2]]
 text(0.5, 0.6, substitute(paste(G~~"for"~~r), list(G=Gexpr, r=rxnexpr)), cex=2)
 text(0.5, 0.2, "after Amend and Shock, 2001 Figure 7", cex=2)
-# now make the plots
+# Now make the plots
 par(mar=c(3, 3, 0.5, 0.5), cex=1.3, mgp=c(2, 1, 0))
 sapply(c(25, 55, 100, 150), doplot)
 # affinity() can handle the three dimensions simultaneously
 print(affinity(H2=c(-10, 0, 3), O2=c(-10, 0, 3), T=c(25, 150, 4))$values)
-# this is so the plots in the next examples show up OK
+# This is so the plots in the next examples show up OK
 E.units("cal")
 
+# Reset plot settings
 layout(matrix(1))
 par(opar)
+
+
 
 ## amino acid synthesis at low and high temperatures
 ## after Amend and Shock, 1998
