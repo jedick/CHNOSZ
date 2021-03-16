@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-19 (2021-03-08)}{
+\section{Changes in CHNOSZ version 1.4.0-20 (2021-03-16)}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -60,6 +60,11 @@
       \item Renamed \samp{CDC2_HUMAN} to \samp{CDK1_HUMAN} (UniProt:
       \href{https://www.uniprot.org/uniprot/P06493}{P06493}) in
       thermo/protein.csv.
+
+      \item Add properties of some aqueous species to
+      \samp{OBIGT/organic_aq.csv} and associated \samp{demo/E_coli.R} (Gibbs
+      energy of biomass synthesis in E. coli, after
+      \href{https://doi.org/10.1038/ismej.2015.227}{LaRowe and Amend, 2016}).
 
     }
   }

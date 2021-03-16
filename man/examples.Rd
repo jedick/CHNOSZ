@@ -18,7 +18,7 @@
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "zinc", "Shh", "saturation",
     "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum", "AkDi",
-    "comproportionation", "Pourbaix"),
+    "comproportionation", "Pourbaix", "E_coli"),
     save.png=FALSE)
 }
 
@@ -63,6 +63,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \code{AkDi} \tab Henry's constant of dissolved gases (Akinfiev and Diamond, 2003) \cr
     \code{comproportionation} \tab Gibbs energy of sulfur comproportionation (Amend et al., 2020) \cr
     \code{Pourbaix} \tab Eh-pH diagram for Fe-O-H with equisolubility lines (Pourbaix, 1974) \cr
+    \code{E_coli} \tab Gibbs energy of biomass synthesis in \emph{E. coli} (LaRowe and Amend, 2016) \cr
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
@@ -98,7 +99,7 @@ Amend, J. P. and Shock, E. L. (1998) Energetics of amino acid synthesis in hydro
 
 Amend, J. P. and Shock, E. L. (2001) Energetics of overall metabolic reactions of thermophilic and hyperthermophilic Archaea and Bacteria. \emph{FEMS Microbiol. Rev.} \bold{25}, 175--243. \url{https://doi.org/10.1016/S0168-6445(00)00062-0}
 
-Amend, J. P., Aronson, H. S., Macalady, J. and LaRowe, D. E. (2020) Another chemolithotrophic metabolism missing in nature: sulfur comproportionation. \emph{Environ. Microbiol.} \url{https://doi.org/10.1111/1462-2920.14982}
+Amend, J. P., Aronson, H. S., Macalady, J. and LaRowe, D. E. (2020) Another chemolithotrophic metabolism missing in nature: sulfur comproportionation. \emph{Environ. Microbiol.} \bold{22}, 1971--1976. \url{https://doi.org/10.1111/1462-2920.14982}
 
 Azadi, M. R., Karrech, A., Attar, M. and Elchalakani, M. (2019) Data analysis and estimation of thermodynamic properties of aqueous monovalent metal-glycinate complexes. \emph{Fluid Phase Equilib.} \bold{480}, 25-40. \url{https://doi.org/10.1016/j.fluid.2018.10.002}
 
@@ -115,6 +116,8 @@ Dick, J. M. (2015) Chemical integration of proteins in signaling and development
 Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibria}, Harper & Row, New York, 450 p. \url{https://www.worldcat.org/oclc/517586}
 
 Johnson, J. W., Oelkers, E. H. and Helgeson, H. C. (1992) SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000\degC. \emph{Comp. Geosci.} \bold{18}, 899--947. \url{https://doi.org/10.1016/0098-3004(92)90029-Q}
+
+LaRowe, D. E. and Amend, J. P. (2016) The energetics of anabolism in natural settings. \emph{ISME J.} \bold{10}, 1285--1295. \url{https://doi.org/10.1038/ismej.2015.227}
 
 Lowe, A. R., Cox, J. S. and Tremaine, P. R. (2017) Thermodynamics of aqueous adenine: Standard partial molar volumes and heat capacities of adenine, adeninium chloride, and sodium adeninate from \emph{T} = 278.15 K to 393.15 K. \emph{J. Chem. Thermodyn.} \bold{112}, 129--145. \url{https://doi.org/10.1016/j.jct.2017.04.005}
 

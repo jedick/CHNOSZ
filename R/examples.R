@@ -34,7 +34,7 @@ demos <- function(which=c("sources", "protein.equil", "affinity", "NaCl", "densi
   "ORP", "findit", "ionize", "buffer", "protbuff", "glycinate",
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "zinc",
   "Shh", "saturation", "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum",
-  "AkDi", "comproportionation", "Pourbaix"), save.png=FALSE) {
+  "AkDi", "comproportionation", "Pourbaix", "E_coli"), save.png=FALSE) {
   # run one or more demos from CHNOSZ with ask=FALSE, and return the value of the last one
   for(i in 1:length(which)) {
     # say something so the user sees where we are
