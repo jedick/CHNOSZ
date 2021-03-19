@@ -1,35 +1,34 @@
 # CHNOSZ/demo/sphalerite.R
-# sphalerite solubility after Akinfiev and Tagirov, 2014, Fig. 13
+# Sphalerite solubility after Akinfiev and Tagirov, 2014, Fig. 13
 # 20190526 jmd initial version
 library(CHNOSZ)
 opar <- par(no.readonly = TRUE)
 
-# set up chemical system
-basis(c("ZnS", "Cl-", "H2S", "H2O", "O2", "H+"))
-iZn <- retrieve("Zn", c("O", "H", "Cl", "S"), "aq")
-species(iZn)
+# Set up chemical system
+basis(c("Zn+2", "Cl-", "H2S", "H2O", "O2", "H+"))
+species("ZnS")
+iaq <- retrieve("Zn", c("O", "H", "Cl", "S"), "aq")
 
 # a function to make a single plot
 plotfun <- function(T = 400, P = 500, m_tot = 0.1, pHmin = 4, logppmmax = 3) {
-  # calculate NaCl speciation from simplified model
+  # Calculate NaCl speciation from simplified model
   NaCl <- NaCl(T = T, P = P, m_tot = m_tot)
   basis("Cl-", log10(NaCl$m_Cl))
   basis("H2S", log10(0.05))
 
-  # use mosaic to account for HS- and H2S speciation
-  m <- mosaic(c("H2S", "HS-"), pH = c(pHmin, 10), T = T, P = P, IS = NaCl$IS)
-  s <- solubility(m$A.species)
+  # Calculate solubility with mosaic (triggered by bases argument) to account for HS- and H2S speciation
+  s <- solubility(iaq, bases = c("H2S", "HS-"), pH = c(pHmin, 10), T = T, P = P, IS = NaCl$IS)
 
-  # convert log activity to log ppm
+  # Convert log activity to log ppm
   sp <- convert(s, "logppm")
   diagram(sp, ylim = c(-5, logppmmax))
   diagram(sp, type = "loga.balance", add = TRUE, lwd = 2, col = "green3")
 
-  # add water neutrality line
+  # Add water neutrality line
   pKw <- - subcrt(c("H2O", "OH-", "H+"), c(-1, 1, 1), T = T, P = P)$out$logK
   abline(v = pKw / 2, lty = 2, lwd = 2, col = "blue1")
 
-  # add legend
+  # Add legend
   l <- lex(lNaCl(m_tot), lTP(T, P))
   legend("topright", legend = l, bty = "n")
 }
@@ -39,9 +38,9 @@ title(main = ("Solubility of sphalerite, after Akinfiev and Tagirov, 2014, Fig. 
 
 par(opar)
 
-### the following code for making multiple plots is not used in the demo ###
+### The following code for making multiple plots is not used in the demo ###
 
-# a function to make a page of plots
+# A function to make a page of plots
 pagefun <- function() {
   # set the values of temperature, pressure, and total NaCl
   T <- c(400, 400, 250, 250, 100, 100)
@@ -56,7 +55,7 @@ pagefun <- function() {
   for(i in 1:6) plotfun(T = T[i], P = P[[i]], m_tot = m_tot[i], pHmin = pHmin[i], logppmmax = logppmmax[i])
 }
 
-# a function to make a png file with all the plots
+# A function to make a png file with all the plots
 pngfun <- function() {
   png("sphalerite.png", width = 1000, height = 1200, pointsize = 24)
   pagefun()
@@ -67,6 +66,6 @@ pngfun <- function() {
   dev.off()
 }
 
-# we don't run these functions in the demo
+# We don't run these functions in the demo
 #pagefun()
 #pngfun()

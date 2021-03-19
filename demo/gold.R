@@ -56,7 +56,7 @@ Au_pH1 <- function() {
   basis("H2S", "PPM")
   # Calculate solubility of gold
   species("Au")
-  iaq <- c("Au(HS)2-", "AuHS", "AuOH")
+  iaq <- info(c("Au(HS)2-", "AuHS", "AuOH"))
   # (set IS = 0 for diagram to show "log m" instead of "log a")
   s <- solubility(iaq, pH = c(3, 8), T = 300, P = 1000, IS = 0)
   # Make diagram and show total log molality
@@ -76,14 +76,14 @@ Au_pH1 <- function() {
 # log(m_Au)-pH diagram similar to Fig. 12b of Stefansson and Seward, 2004
 # (doi:10.1016/j.gca.2004.04.006)
 Au_pH2 <- function() {
-  species(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
   # Apply PPM buffer for fO2 and aH2S
   basis("O2", "PPM")
   basis("H2S", "PPM")
-  # Calculate affinity and solubility
+  # Calculate solubility of gold
   # (set IS = 0 for diagram to show "log m" instead of "log a")
-  a <- affinity(pH = c(3, 8), T = 450, P = 1000, IS = 0)
-  s <- solubility(a)
+  species("Au")
+  iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
+  s <- solubility(iaq, pH = c(3, 8), T = 450, P = 1000, IS = 0)
   # Make diagram and show total log molality
   diagram(s, ylim = c(-8, -3), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
@@ -113,7 +113,6 @@ chloride <- function(T, P, m_NaCl, m_KCl) {
 # log(m_Au)-T diagram like Fig. 2B of Williams-Jones et al., 2009
 # (doi:10.2113/gselements.5.5.281)
 Au_T1 <- function() {
-  species(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
   # Apply PPM buffer for fO2 and aH2S
   basis("O2", "PPM")
   basis("H2S", "PPM")
@@ -121,9 +120,10 @@ Au_T1 <- function() {
   basis("H+", "QMK")
   # Estimate solution composition for 1.5 m NaCl and 0.5 m KCl
   chl <- chloride(T = seq(150, 550, 10), P = 1000, m_NaCl = 1.5, m_KCl = 0.5)
-  # Calculate affinity and solubility
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
-  s <- solubility(a)
+  # Calculate solubility of gold
+  species("Au")
+  iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
+  s <- solubility(iaq, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
   # Make diagram and show total log molality
   diagram(s, ylim = c(-10, -3), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
@@ -143,7 +143,6 @@ Au_T1 <- function() {
 # (doi:10.2113/gselements.5.5.281)
 # (doi:10.1144/SP402.4)
 Au_T2 <- function() {
-  species(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
   # Total S = 0.01 m
   basis("H2S", -2)
   # Apply HM buffer for fO2
@@ -156,8 +155,9 @@ Au_T2 <- function() {
 #  bases <- c("H2S", "HS-", "SO4-2", "HSO4-")
 #  m <- mosaic(bases, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
 #  s <- solubility(m$A.species)
-  a <- affinity(T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
-  s <- solubility(a)
+  species("Au")
+  iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
+  s <- solubility(iaq, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
   # Make diagram and show total log molality
   diagram(s, ylim = c(-10, -3), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)

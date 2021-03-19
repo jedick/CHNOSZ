@@ -62,13 +62,13 @@ if(is.na(suppressMessages(info(elem_basis)))) {
 basis(c(elem_basis, "H2O", "H+", "e-"))
 
 # Find species
-i_cr <- retrieve(element, c("O", "H"), "cr")
-i_aq <- retrieve(element, c("O", "H"), "aq")
+icr <- retrieve(element, c("O", "H"), "cr")
+iaq <- retrieve(element, c("O", "H"), "aq")
 
 # Add solids with unit activity
-species(i_cr, 0)
+species(icr, 0)
 # Add aqueous species with activity for first equisolubility line
-species(i_aq, levels[1], add = TRUE)
+species(iaq, levels[1], add = TRUE)
 
 # Calculate affinities of formation of species
 # from basis species as a function of Eh and pH
@@ -81,16 +81,16 @@ if(!color.fields) fill <- NA
 d_all <- diagram(a_all, names = FALSE, lty = 0, min.area = 0.1, limit.water = limit.water, fill = fill)
 
 # Calculate affinities for minerals
-species(i_cr)
+species(icr)
 # Calculate overall solubility (i.e. minimum solubility given all candidate minerals)
-s <- solubility(i_aq, pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS, in.terms.of = element)
+s <- solubility(iaq, pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS, in.terms.of = element)
 
 # Plot diagram (LAYER 2: equisolubility lines)
 diagram(s, levels = levels, contour.method = "flattest", add = TRUE, lwd = 1.5)
 
 # Calculate affinities for aqueous species
 # FIXME: should be able to remove cr species from previous affinity object
-species(i_aq, 0)
+species(iaq, 0)
 a_aq <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS)
 
 # Plot diagram (LAYER 3: equal-activity lines for aqueous species)
@@ -115,10 +115,10 @@ col.names <- ifelse(color.names, 4, 1)
 diagram(a_aq, add = TRUE, lty = 0, col = col, dy = dy, col.names = col.names)
 
 # Add solids with unit activity
-species(i_cr, 0)
+species(icr, 0)
 # Add aqueous species with activity for last equisolubility line
 # (i.e. unit activity)
-species(i_aq, levels[length(levels)], add = TRUE)
+species(iaq, levels[length(levels)], add = TRUE)
 
 # Calculate affinities of formation of species
 # from basis species as a function of Eh and pH

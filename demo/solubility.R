@@ -22,12 +22,11 @@ T1 <- 25
 IS <- 0
 
 # Start with CO2
-basis(c("carbon dioxide", "H2O", "O2", "H+"))
+basis(c("CO2", "H2O", "O2", "H+"))
 # This is ca. atmospheric PCO2
-basis("CO2", -3.5)
-species(c("CO2", "HCO3-", "CO3-2"))
-a <- affinity(pH = c(pH, res), T = T1, IS = IS)
-s <- solubility(a)
+species("carbon dioxide", -3.5)
+iaq <- info(c("CO2", "HCO3-", "CO3-2"))
+s <- solubility(iaq, pH = c(pH, res), T = T1, IS = IS)
 # First plot total activity line
 diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
 # Add activities of species
@@ -44,17 +43,16 @@ mtext("cf. Fig. 4.5 of Stumm and Morgan, 1996")
 stopifnot(round(s$loga.balance[c(1, res)])==c(-5, 6))
 
 # CO2 T-pH plot
-a <- affinity(pH = c(pH, res), T = c(T, res), IS = IS)
-s <- solubility(a)
+s <- solubility(iaq, pH = c(pH, res), T = c(T, res), IS = IS)
 diagram(s, type = "loga.balance")
 title(main = substitute("Solubility of"~what, list(what = expr.species("CO2"))))
 
 # Now do calcite
-basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
-species(c("CO2", "HCO3-", "CO3-2"))
-a <- affinity(pH = c(pH, res), T = T1, IS = IS)
+basis(c("CO2", "Ca+2", "H2O", "O2", "H+"))
+species("calcite")
+iaq <- info(c("CO2", "HCO3-", "CO3-2"))
 # Change this to dissociate = 2 to reproduce straight lines in Fig. 4A of Manning et al., 2013
-s <- solubility(a, dissociate = TRUE)
+s <- solubility(iaq, pH = c(pH, res), T = T1, IS = IS, dissociate = TRUE)
 diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
 diagram(s, add = TRUE, dy = 1)
 legend("topright", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
@@ -66,8 +64,7 @@ mtext("cf. Fig. 4A of Manning et al., 2013")
 stopifnot(round(s$loga.balance[c(1, res)])==c(4, -4))
 
 # Calcite T-pH plot
-a <- affinity(pH = c(pH, res), T = c(T, res), IS = IS)
-s <- solubility(a)
+s <- solubility(iaq, pH = c(pH, res), T = c(T, res), IS = IS, dissociate = TRUE)
 diagram(s, type = "loga.balance")
 title(main = "Solubility of calcite", font.main = 1)
 
