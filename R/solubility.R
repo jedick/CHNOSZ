@@ -30,6 +30,7 @@ solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS
   logact <- basis()$logact
   # The current formed species are the minerals to be dissolved
   mineral <- species()
+  if(is.null(mineral)) stop("please load minerals or gases with species()")
 
   # Make a list to store the calculated solubilities for each mineral
   slist <- list()
@@ -40,7 +41,11 @@ solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS
     # Define basis species with the mineral first (so it will be dissolved)
     ispecies[1] <- mineral$ispecies[i]
     logact[1] <- mineral$logact[i]
-    basis(ispecies, logact)
+    # Use numeric values first and put in buffer names second (needed for demo/gold.R)
+    loga.numeric <- suppressWarnings(as.numeric(logact))
+    basis(ispecies, loga.numeric)
+    is.na <- is.na(loga.numeric)
+    if(any(is.na)) basis(rownames(basis())[is.na], logact[is.na])
     # Add aqueous species (no need to define activities here - they will be calculated by solubility_calc)
     species(iaq)
     if(is.mosaic) a <- suppressMessages(mosaic(...)$A.species) else a <- suppressMessages(affinity(...))
