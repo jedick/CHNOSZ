@@ -45,8 +45,6 @@ expect_equal(a1$values, a2$values)
 
 - diagram(): scale predominant.values in output by balancing coefficients?
 
-- add HKF parameters from LaRowe and Amend, 2016 (https://doi.org/10.1038/ismej.2015.227)
-
 [20210115]
 
 BUG: Why doesn't this work?

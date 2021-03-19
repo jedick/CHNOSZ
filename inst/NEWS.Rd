@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-20 (2021-03-16)}{
+\section{Changes in CHNOSZ version 1.4.0-21 (2021-03-19)}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -19,9 +19,9 @@
       lines, after \href{https://www.worldcat.org/oclc/563921897}{Pourbaix,
       1974}). This demo depends on the following two changes.
 
-      \item Add \code{solubilities()} for calculating overall (i.e. minimum)
-      solubility for multiple minerals. This function is also now used in
-      \samp{demo/zinc.R}.
+      \item Revamp \code{solubility()} to enable calculating overall (i.e.
+      minimum) solubility for multiple minerals. Calculations for multiple
+      minerals are also now used in \samp{demo/zinc.R}.
 
       \item Restore \samp{lty.aq} and \samp{lty.cr} arguments to
       \code{diagram()} to control plotting of aq-aq and cr-cr field boundaries.

@@ -58,9 +58,7 @@ export(
   "CHNOSZ", "thermo", "reset", "OBIGT", "retrieve", "AkDi", "moles",
   "lNaCl", "lS", "lT", "lP", "lTP", "lex",
 # added 20200716 or later
-  "mash", "mix", "rebalance",
-# added 20210303 or later
-  "solubilities"
+  "mash", "mix", "rebalance"
 )
 
 # Load shared objects

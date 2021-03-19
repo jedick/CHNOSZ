@@ -93,7 +93,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
 \details{
 
 This function displays diagrams representing either chemical affinities, or equilibrium chemical activities of species.
-The first argument is the output from \code{\link{affinity}}, \code{\link{equilibrate}}, \code{\link{solubility}}, or \code{\link{solubilities}}.
+The first argument is the output from \code{\link{affinity}}, \code{\link{equilibrate}}, or \code{\link{solubility}}.
 0-D diagrams, at a single point, are shown as \code{\link{barplot}}s.
 1-D diagrams, for a single variable on the x-axis, are plotted as lines.
 2-D diagrams, for two variables, are plotted as predominance fields.
@@ -126,12 +126,11 @@ If \code{type} is the name of a basis species, then the equilibrium activity of 
 In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines, with the method specified in \code{contour.method}.
 
 This paragraph describes the effect of the \code{type} argument when the output from \code{solubility} is being used.
-For \code{type} set to \samp{auto}, the equilibrium activities (i.e. computed solubilities) of each species are plotted.
+For one mineral or gas, if \code{type} set to \samp{auto}, the equilibrium activities of each aqueous species are plotted.
 If \code{type} is \samp{loga.balance}, the activity of the balancing basis species (i.e. total solubility) is plotted; this is represented by contours on a 2-D diagram.
+For two or more minerals or gases, if \code{type} set to \samp{auto}, the values of \samp{loga.balance} (overall minimum solubility) are plotted.
+If \code{type} is \samp{loga.equil}, the solubilities of the individual minerals and gases are plotted.
 For examples that use these features, see \code{\link{solubility}} and various \code{\link{demos}}: \samp{DEW}, \samp{contour}, \samp{gold}, \samp{solubility}, \samp{sphalerite}.
-
-When the output from \code{\link{solubilities}} is provided, the only supported option is to plot \samp{loga.balance}.
-See \code{demo("Pourbaix")} and \code{demo("zinc")}.
 }
 
 \section{1-D diagrams}{

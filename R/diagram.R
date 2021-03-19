@@ -46,8 +46,8 @@ diagram <- function(
   if(length(efun)==0) efun <- ""
   if(!(efun %in% c("affinity", "equilibrate") | grepl("solubilit", efun)))
     stop("'eout' is not the output from affinity(), equilibrate(), solubility(), or solubilities()")
-  # For solubilities(), type is always loga.balance 20210303
-  if(identical(efun, "solubilities")) type <- "loga.balance"
+  # For solubilities(), default type is loga.balance 20210303
+  if(identical(efun, "solubilities") & missing(type)) type <- "loga.balance"
 
   ## 'type' can be:
   #    'auto'                - property from affinity() (1D) or maximum affinity (affinity 2D) (aout) or loga.equil (eout)

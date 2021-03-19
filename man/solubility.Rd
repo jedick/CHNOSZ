@@ -1,61 +1,54 @@
 \encoding{UTF-8}
 \name{solubility}
 \alias{solubility}
-\alias{solubilities}
 \title{Equilibrium Chemical Activities of Species}
 \description{
 Calculate chemical activities of aqueous species in equilibrium with a mineral or gas.
 }
 
 \usage{
-  solubility(aout, dissociation = NULL, find.IS = FALSE, in.terms.of = NULL,
-    codeanal = FALSE)
-  solubilities(a_cr, i_aq, in.terms.of = NULL, dissociation = NULL)
+  solubility(iaq, ..., in.terms.of = NULL, dissociation = NULL, find.IS = FALSE)
 }
 
 \arguments{
-  \item{aout}{list, output from \code{\link{affinity}}}
+  \item{iaq}{character (names) or numeric (species indices) of aqueous species}
+  \item{...}{arguments for \code{\link{affinity}} or \code{\link{mosaic}} (i.e. plotting variables)}
+  \item{in.terms.of}{character, express the total solubility in terms of moles of this species}
   \item{dissociation}{logical, does the mineral undergo a dissociation reaction?}
   \item{find.IS}{logical, find the equilibrium ionic strength by iteration?}
-  \item{in.terms.of}{character, express the total solubility in terms of moles of this species}
-  \item{codeanal}{logical, print diagnostic messages and values of internal variables for code analysis}
-  \item{a_cr}{list, output from \code{\link{affinity}} or \code{\link{mosaic}} for one or more minerals}
-  \item{i_aq}{character or numeric, aqueous species that can be formed by dissolving the minerals}
 }
 
 \details{
-\code{solubility} performs a simple task: given the values of \code{\link{affinity}} of formation reactions of species at specified activity, it works backward to find the activities of species that make the affinities zero.
-This corresponds to complete equilibrium with all of the basis species.
+\code{solubility} calculates the activities of aqueous species in equilibrium with one or more minerals or gases.
+The minerals or gases should be loaded as the formed \code{\link{species}}, and the aqueous species (including ions and/or neutral complexes) that can be produced by dissolution should be listed in the \code{iaq} argument.
+The definitions of plotting variables should be provided in \code{...}, which are passed as arguments to \code{\link{affinity}}, or to \code{\link{mosaic}} if the first one is named \code{bases}.
+
+It must be possible to obtain a valid set of basis species by substituting each of the minerals or gases in the first position of the current \code{\link{basis}} defintion, and all of the aqueous species must include that basis species in their formation reactions.
+(This essentially means that all minerals, gases and aqueous species must share a common element, which is what the reactions are balanced on.)
+
+The output of the function is structured to facilitate making useful diagrams.
+For a single mineral or gas, the output of \code{solubility} can be used by \code{\link{diagram}} with \code{type = NULL} (the default) to plot the activities of the aqueous species or with \code{type = "loga.balance"} to plot the sum of activities of aqueous species, which corresponds to the solubility of the mineral or gas.
+This value corresponds to the total extent of dissolution of the mineral or gas; \code{in.terms.of} can be used to express this value in terms of another species or element.
+For example, for dissolution of gaseous S\s{2}, \code{in.terms.of = "S"} gives the total amount of S in solution, which is twice the amount of S\s{2} dissolved.
+Likewise, the solubility of corundum (Al\s{2}O\s{3}) can be expressed in terms of the moles of Al\S{+3} in solution (see the vignette \viglink{anintro}).
+
+For multiple minerals, the function calculates the solubilities for each of the minerals separately; these are stored in the \code{loga.equil} element of the output.
+The overall \emph{minimum} solubility among all the minerals at each point is stored in \code{loga.balance}.
+This corresponds to the total activity of dissolved species in equilibrium with the most stable mineral.
+In contrast to the situation for a single mineral or gas, \code{\link{diagram}} be default plots \code{loga.balance}, and \code{type = "loga.balance"} should be used to plot the solubilities for the individual minerals or gases.
+}
+
+\section{Backward Compatibility}{
+For compatibility with previous versions of the function, the \code{iaq} argument can be the output of \code{\link{affinity}} or \code{\link{mosaic}} for aqueous species.
+The examples for ionic strength and dissociation reactions were designed for this calling style.
+
+In this case the (single) mineral or gas being dissolved is taken from the current \code{\link{basis}} species.
 Usually, the basis species should be set up so that the first basis species represents the substance being dissolved (a mineral such as CaCO\s3 or gas such as CO\s2).
-Internally, this is treated as the conserved basis species, so it must be present in all of the formation reactions of the species.
+This is treated as the conserved basis species, so it must be present in all of the formation reactions of the aqueous species.
 
-To generate \code{aout}, the \code{\link{species}} should be defined to represent one set of aqueous species (including ions and/or neutral complexes) formed in solution, all involving the conserved basis species.
+The \code{\link{species}} should be defined to represent one set of aqueous species (including ions and/or neutral complexes) formed in solution, all involving the conserved basis species.
 For a dissociation reaction, the second basis species should be used to represent the counterion (cation or anion).
-Other variables (pH, ionic strength, activities of other basis species) should be defined in the call to \code{\link{affinity}} to make \code{aout}.
-
-A more complex calculation involves setting \code{find.IS} to TRUE in order to determine the final ionic strength of dissolving a substance in pure water.
-This works by calculating the ionic strength from the equilibrium solubility calculation, then re-running \code{affinity} with those values.
-Note that for dissociation reactions, the ionic strength is calculated from both the ions present in the species definition and the counter ion, which should be the second basis species.
-The calculation is iterated until the ionic strength deviation at every point is lower than a preset tolerance (1e-4).
-Alternatively, speciation of counterions (e.g. ionized forms of carbonate or sulfate) can also be accomplished by using the \code{\link{mosaic}} function instead of \code{affinity}; this is used in the second example below.
-
-The output of \code{solubility} has the same format as that of \code{equilibrate}, and can be used by \code{\link{diagram}} with \code{type = "loga.balance"} to plot the solubilities, or with \code{type = NULL} to plot the activities of species. 
-The value of \code{loga.balance} reflects the activity (or molality) of the conserved basis species, i.e. the thing being dissolved.
-Use \code{in.terms.of} to express this value in terms of another species.
-For example, the solubility of corundum (Al\s{2}O\s{3}) can be expressed in terms of the moles of Al\S{+3} in solution (see the vignette \viglink{anintro}).
-
-Whereas \code{solubility} is limited to calculations for a single mineral at a time, \code{solubilities} combines the results of solubility calculations for multiple minerals.
-\code{a_cr} should contain the affinities of only minerals with any set of basis species, as long as the first one contains the main element.
-\code{i_aq} gives the names or species indices of all the aqueous species that all have that element in combination with the other basis species (possibly generated using \code{\link{retrieve}}).
-The function calculates the solubilities for each of the minerals present in code{a_cr}.
-Then, it takes the \emph{minimum} solubility among all the minerals at each grid location.
-This corresponds to the maximum activity of dissolved species.
-At this point the solution is saturated (not oversaturated) with respect to the most stable mineral.
-
-The result of \code{solubilities} is stored in the \code{loga.balance} component of the returned list object.
-Only this component is used by \code{\link{diagram}} for plotting; the other components, while present, refer to the solubility calculations for only the last mineral.
-This function is used for generating isosolubility (aka. equisolubility) lines in \code{demo("Pourbaix")} and \code{demo{"zinc"}}.
-The latter demo combines the calculation of solubilities with a \code{\link{mosaic}} calculation to account for the speciation of aqueous sulfur.
+Other variables (pH, ionic strength, activities of other basis species) should be defined in the call to \code{\link{affinity}} to make \code{iaq}.
 }
 
 \section{Dissociation Reactions}{
@@ -76,18 +69,30 @@ This setting indicates to calculate activities on a per-reaction basis, where ea
 That does not give a complete equilibrium in the system, but may be required to reproduce some published diagrams.
 }
 
+\section{Ionic Strength}{
+Set \code{find.IS} to TRUE to determine the final ionic strength due to dissolution of a substance in pure water.
+This works by calculating the ionic strength from the amounts of aqueous species formed, then re-running \code{affinity} with the calculated \code{IS} value.
+Note that for dissociation reactions, the ionic strength is calculated from both the ions present in the species definition and the counter ion, which should be the second basis species.
+The calculation is iterated until the ionic strength deviation at every point is lower than a preset tolerance (1e-4).
+Alternatively, speciation of counterions (e.g. ionized forms of carbonate or sulfate) can also be accomplished by using the \code{\link{mosaic}} function instead of \code{affinity}; this is used in the second example below.
+}
+
 \section{Warning}{
 This function has not been tested for systems that may form dimers or higher-order complexes (such as Au\s{2}S\s{2}\S{2-}).
 Except for relatively simple systems, even after careful refinement, the results from CHNOSZ, which considers chemical activities as the independent variables, will not match the results from speciation-solubility (or Gibbs energy minimization) codes, where the system is defined by its bulk composition.
 }
 
 \seealso{
+\code{\link{retrieve}} provides a way to list all of the aqueous species in the database that have the specified elements.
+
 \code{demo("solubility")} shows \T-pH diagrams related to the CO\s{2} and calcite example here.
 \code{demo("gold")} shows solubility calculations for Au in aqueous solutions with hydroxide, chloride, and hydrosulfide complexes.
 In the latter demo, the conserved basis species is not the first one (this might have been done to prevent the incorrect automatic detection of dissociation reactions).
 
-\code{\link{retrieve}} provides a way to list all of the aqueous species in the database that have the specified elements.
-In contrast to \code{solubility}, \code{\link{equilibrate}} calculates equilibrium chemical activities of species given a constant value of \code{loga.balance} (the logarithm of total activity of the conserved basis species).
+Solubility calculations for multiple minerals are used for generating isosolubility (aka. equisolubility) lines in \code{demo("Pourbaix")} and \code{demo{"zinc"}}.
+The latter demo combines the calculation of solubilities with a \code{\link{mosaic}} calculation to account for the speciation of aqueous sulfur.
+
+Whereas \code{solubility} yields a stable equilibrium condition (the affinities of formation reactions of aqueous species are zero), \code{\link{equilibrate}} generates metastable equilibrium (the affinities of formation reactions are equal to each other, but not necessarily zero).
 }
 
 \examples{\dontshow{reset()}
@@ -160,7 +165,7 @@ title(main = "Solubility of calcite: Ionic strength and mosaic method")
 # The two methods give nearly equivalent results
 stopifnot(all.equal(sa0$loga.balance, sm0$loga.balance))
 stopifnot(all.equal(saI$loga.balance, smI$loga.balance, tolerance = 0.003))
-## NOTE: the second method (using mosaic) takes longer, but is
+## NOTE: the second method (using mosaic) is slower, but is
 ## more flexible; e.g. complexes with Ca+2 could be included
 }
 

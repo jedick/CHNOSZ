@@ -82,9 +82,8 @@ d_all <- diagram(a_all, names = FALSE, lty = 0, min.area = 0.1, limit.water = li
 
 # Calculate affinities for minerals
 species(i_cr)
-a_cr <- affinity(pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS)
 # Calculate overall solubility (i.e. minimum solubility given all candidate minerals)
-s <- solubilities(a_cr, i_aq, in.terms.of = element)
+s <- solubility(i_aq, pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS, in.terms.of = element)
 
 # Plot diagram (LAYER 2: equisolubility lines)
 diagram(s, levels = levels, contour.method = "flattest", add = TRUE, lwd = 1.5)

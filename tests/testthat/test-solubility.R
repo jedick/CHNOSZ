@@ -52,3 +52,31 @@ test_that("solubility() catches some error conditions", {
   # TODO: write a test to get this error 20190730
   #expect_error(solubility(a), "Unsure whether the first formation reaction is a dissociation reaction.")
 })
+
+test_that("backward compatible and new calling styles produce identical results", {
+  # Test added 20210319
+  # Calculate solubility of a single substance:
+  # Gaseous S2 with a given fugacity
+
+  # Define basis species (any S-bearing basis species is allowed)
+  basis(c("HS-", "oxygen", "H2O", "H+"))
+  basis("pH", 6)
+  # Load the substances (minerals or gases) to be dissolved
+  species("S2", -20)
+  # List the formed aqueous species
+  i_aq <- info(c("SO4-2", "HS-"))
+  # Place arguments for affinity() or mosaic() after the first argument of solubility()
+  s1 <- solubility(i_aq, O2 = c(-55, -40), T = 125, in.terms.of = "SO4-2")
+
+  # Backward-compatible method limited to dissolving one species:
+  # Include S2(g) in the basis species
+  basis(c("S2", "oxygen", "H2O", "H+"))
+  basis("pH", 6)
+  basis("S2", -20)
+  # Calculate affinities for formation of aqueous species
+  species(c("SO4-2", "HS-"))
+  a <- affinity(O2 = c(-55, -40), T = 125)
+  s_old <- solubility(a, in.terms.of = "SO4-2")
+
+  expect_identical(s1, s_old)
+})

@@ -6,6 +6,7 @@
 # Polymerization scheme from Amend et al. (2013): https://doi.org/10.1098/rstb.2012.0255
 
 library(CHNOSZ)
+opar <- par(no.readonly = TRUE)
 
 # Concentrations of biomolecules (mol (g cell)-1)
 # (from Table 1 of LaRowe and Amend, 2016)
@@ -79,7 +80,7 @@ plot_G <- function(C, N, S) {
   loga_N <- switch(N, "NO3-" = -5, "NH4+" = -6)
   loga_S <- switch(S, "SO4-2" = -3, "HS-" = -6)
   # Set basis species
-  # (Note: we set activity of e- in affinity())
+  # (Note: we set activity of e- in affinity() below)
   basis(c(C, N, S, "HPO4-2", "H2O", "H+", "e-"), c(loga_C, loga_N, loga_S, -5, 0, -7, 0))
   # Load formed species
   species(biomolecules, -9)
@@ -122,11 +123,12 @@ plot_G <- function(C, N, S) {
 
 }
 
-# Make plots with different combinations of basis species
+# Set graphical parameters
 par(mfrow = c(3, 2))
 par(mar = c(2.5, 3, 1.5, 1), mgp = c(1.5, 0.3, 0))
 par(tcl = 0.25)
 par(cex = 1)
+# Make plots with different combinations of basis species
 plot_G("CO2", "NO3-", "SO4-2")
 plot_G("CO2", "NH4+", "HS-")
 plot_G("CH3COO-", "NO3-", "SO4-2")
@@ -136,3 +138,5 @@ plot_G("CH4", "NH4+", "HS-")
 
 # Reset CHNOSZ settings (units and OBIGT database)
 reset()
+# Reset plot settings
+par(opar)
