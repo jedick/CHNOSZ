@@ -48,9 +48,9 @@ solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS
     if(any(is.na)) basis(rownames(basis())[is.na], logact[is.na])
     # Add aqueous species (no need to define activities here - they will be calculated by solubility_calc)
     species(iaq)
-    if(is.mosaic) a <- suppressMessages(mosaic(...)$A.species) else a <- suppressMessages(affinity(...))
+    if(is.mosaic) aout <- suppressMessages(mosaic(...)) else aout <- suppressMessages(affinity(...))
     # Calculate solubility of this mineral
-    scalc <- solubility_calc(a, in.terms.of = in.terms.of, dissociate = dissociate, find.IS = find.IS)
+    scalc <- solubility_calc(aout, in.terms.of = in.terms.of, dissociate = dissociate, find.IS = find.IS)
     # Store the solubilities in the list
     slist[[i]] <- scalc$loga.balance
   }

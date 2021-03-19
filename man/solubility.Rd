@@ -89,29 +89,84 @@ Whereas \code{solubility} yields a stable equilibrium condition (the affinities 
 
 \examples{\dontshow{reset()}
 
+## EXAMPLE 1
+
+# Calculate solubility of a single substance:
+# Gaseous SO2 with a given fugacity
+# Define basis species (any S-bearing basis species should be first)
+basis(c("sulfur", "oxygen", "H2O", "H+"))
+basis("pH", 6)
+# Load the substances (minerals or gases) to be dissolved
+species("sulfur dioxide", -20)
+# List the formed aqueous species
+# We can use retrieve() to identify all the possible aqueous species
+iaq <- retrieve("S", c("O", "H"), "aq")
+# Place arguments for affinity() after the first argument of solubility()
+s1 <- solubility(iaq, O2 = c(-56, -46), T = 125, in.terms.of = "S")
+
+# Calculate overall solubility for multiple substances:
+# Gaseous S2 and SO2 with a given fugacity
+basis(c("sulfur", "oxygen", "H2O", "H+"))
+basis("pH", 6)
+species(c("S2", "sulfur dioxide"), -20)
+s2 <- solubility(iaq, O2 = c(-56, -46), T = 125, in.terms.of = "S")
+
+# Make expressions for legends
+S_ <- expr.species("SO2", "gas", -20, TRUE)
+pH_ <- quote(pH == 6)
+T_ <- lT(125)
+lexpr <- lex(S_, pH_, T_)
+
+# Make diagrams from the results of solubility calculations
+opar <- layout(matrix(c(1, 3, 2, 3), nrow = 2))
+# Logarithm of activity of aqueous species in equilibrium with SO2(gas)
+diagram(s1, ylim = c(-15, 0))
+diagram(s1, type = "loga.balance", col = 3, lwd = 3, add = TRUE)
+legend("topright", legend = lexpr, bty = "n")
+# Logarithm of concentration (parts per million) of aqueous species
+sppm <- convert(s1, "logppm")
+diagram(sppm, ylim = c(-10, 5))
+diagram(sppm, type = "loga.balance", col = 3, lwd = 3, add = TRUE)
+legend("topright", legend = lexpr, bty = "n")
+par(xpd = NA)
+text(-58, 6.5, paste("Solubility of gaseous SO2 (green line) is",
+  "sum of concentrations of aqueous species"), cex = 1.2, font = 2)
+par(xpd = FALSE)
+
+# Show overall (minimum) solubility of multiple gases
+diagram(s2, col = 4, lwd = 3)
+# Show solubilities of individual gases
+names <- info(species()$ispecies)$formula
+diagram(s2, type = "loga.equil", names = names, add = TRUE)
+title("Minimum solubility (blue line) corresponds to the most stable gas")
+par(opar)
+
+## EXAMPLE 2
+
 ## Two ways to calculate pH-dependent solubility of calcite
 ## with ionic strength determination
 ## Method 1: CO2 and carbonate species as formed species
-basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
-species(c("CO2", "HCO3-", "CO3-2"))
+basis(c("CO2", "Ca+2", "H2O", "O2", "H+"))
+species("calcite")
+iaq <- info(c("CO2", "HCO3-", "CO3-2"))
 # Ionic strength calculations don't converge below around pH = 3
-a <- affinity(pH = c(4, 14))
-sa0 <- solubility(a, dissociate = TRUE)
-saI <- solubility(a, dissociate = TRUE, find.IS = TRUE)
+sa0 <- solubility(iaq, pH = c(4, 14), dissociate = TRUE)
+saI <- solubility(iaq, pH = c(4, 14), dissociate = TRUE, find.IS = TRUE)
 ## Method 2: CO2 and carbonate species as basis species
-basis(c("calcite", "CO2", "H2O", "O2", "H+"))
-species(c("Ca+2"))
-m <- mosaic(c("CO2", "HCO3-", "CO3-2"), pH = c(4, 14))
-sm0 <- solubility(m, dissociate = TRUE)
-smI <- solubility(m, dissociate = TRUE, find.IS = TRUE)
+basis(c("Ca+2", "CO2", "H2O", "O2", "H+"))
+species("calcite")
+iaq <- info("Ca+2")
+bases <- c("CO2", "HCO3-", "CO3-2")
+sm0 <- solubility(iaq, bases = bases, pH = c(4, 14), dissociate = TRUE)
+smI <- solubility(iaq, bases = bases, pH = c(4, 14), dissociate = TRUE, find.IS = TRUE)
 ## Plot the results
 plot(0, 0, xlab="pH", ylab="solubility, log mol", xlim = c(4, 14), ylim = c(-5, 2))
 # Method 1 with/without ionic strength
-lines(a$vals[[1]], saI$loga.balance, lwd=5, col="lightblue")
-lines(a$vals[[1]], sa0$loga.balance, lwd=5, col="pink")
+lines(saI$vals[[1]], saI$loga.balance, lwd = 5, col = "lightblue")
+lines(sa0$vals[[1]], sa0$loga.balance, lwd = 5, col = "pink")
 # Method 2 with/without ionic strength
-lines(a$vals[[1]], smI$loga.balance, lty=2)
-lines(a$vals[[1]], sm0$loga.balance, lty=2)
+lines(smI$vals[[1]], smI$loga.balance, lty = 2)
+lines(sm0$vals[[1]], sm0$loga.balance, lty = 2)
 legend("topright", c("I = 0", "I = calculated", "mosaic method"),
        col = c("pink", "lightblue", "black"), lwd = c(5, 5, 1), lty = c(1, 1, 2))
 title(main = "Solubility of calcite: Ionic strength and mosaic method")
