@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-21 (2021-03-19)}{
+\section{Changes in CHNOSZ version 1.4.0-22 (2021-03-19)}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -31,6 +31,10 @@
 
   \subsection{OTHER CHANGES}{
     \itemize{
+
+      \item Automatic detection of dissociation reactions was fragile and has
+      been removed from \code{solubility()}. The new default (\code{dissociate
+        = FALSE}) is to not condiser dissociation reactions.
 
       \item In the return value of \code{diagram()}, \code{predominant.values}
       previously only contained affinities (extracted from the \code{values}

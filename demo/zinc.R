@@ -69,8 +69,7 @@ label.figure("B")
 # Calculate *minimum* solubility among all the minerals 20201008
 # (i.e. saturation condition for the solution)
 # Use solubilities() 20210303
-# FIXME: why do we need to set dissociation = FALSE here?
-s <- solubility(iaq, bases = bases, pH = pH, O2 = O2, T = T, P = P, IS = sat$IS, in.terms.of = "Zn", dissociation = FALSE)
+s <- solubility(iaq, bases = bases, pH = pH, O2 = O2, T = T, P = P, IS = sat$IS, in.terms.of = "Zn")
 # Specify contour levels
 levels <- seq(-12, 9, 3)
 diagram(s, type = "loga.balance", levels = levels, contour.method = "flattest")

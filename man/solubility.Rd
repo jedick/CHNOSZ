@@ -7,14 +7,14 @@ Calculate chemical activities of aqueous species in equilibrium with a mineral o
 }
 
 \usage{
-  solubility(iaq, ..., in.terms.of = NULL, dissociation = NULL, find.IS = FALSE)
+  solubility(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS = FALSE)
 }
 
 \arguments{
   \item{iaq}{character (names) or numeric (species indices) of aqueous species}
   \item{...}{arguments for \code{\link{affinity}} or \code{\link{mosaic}} (i.e. plotting variables)}
   \item{in.terms.of}{character, express the total solubility in terms of moles of this species}
-  \item{dissociation}{logical, does the mineral undergo a dissociation reaction?}
+  \item{dissociate}{logical, does the mineral undergo a dissociation reaction?}
   \item{find.IS}{logical, find the equilibrium ionic strength by iteration?}
 }
 
@@ -26,7 +26,6 @@ The definitions of plotting variables should be provided in \code{...}, which ar
 It must be possible to obtain a valid set of basis species by substituting each of the minerals or gases in the first position of the current \code{\link{basis}} defintion, and all of the aqueous species must include that basis species in their formation reactions.
 (This essentially means that all minerals, gases and aqueous species must share a common element, which is what the reactions are balanced on.)
 
-The output of the function is structured to facilitate making useful diagrams.
 For a single mineral or gas, the output of \code{solubility} can be used by \code{\link{diagram}} with \code{type = NULL} (the default) to plot the activities of the aqueous species or with \code{type = "loga.balance"} to plot the sum of activities of aqueous species, which corresponds to the solubility of the mineral or gas.
 This value corresponds to the total extent of dissolution of the mineral or gas; \code{in.terms.of} can be used to express this value in terms of another species or element.
 For example, for dissolution of gaseous S\s{2}, \code{in.terms.of = "S"} gives the total amount of S in solution, which is twice the amount of S\s{2} dissolved.
@@ -35,7 +34,7 @@ Likewise, the solubility of corundum (Al\s{2}O\s{3}) can be expressed in terms o
 For multiple minerals, the function calculates the solubilities for each of the minerals separately; these are stored in the \code{loga.equil} element of the output.
 The overall \emph{minimum} solubility among all the minerals at each point is stored in \code{loga.balance}.
 This corresponds to the total activity of dissolved species in equilibrium with the most stable mineral.
-In contrast to the situation for a single mineral or gas, \code{\link{diagram}} be default plots \code{loga.balance}, and \code{type = "loga.balance"} should be used to plot the solubilities for the individual minerals or gases.
+In contrast to the situation for a single mineral or gas, \code{\link{diagram}} by default plots \code{loga.balance}; \code{type = "loga.equil"} can be used to plot the solubilities for the individual minerals or gases.
 }
 
 \section{Backward Compatibility}{
@@ -58,15 +57,9 @@ The equilibrium calculation must take account of the \emph{total} activity of th
 The solution is accomplished by recalculating the affinities, essentially working backward from the assumption that the dissociation didn't occur.
 The resulting activities correspond to equilibrium considering the system-wide activity of Ca\S{+2}.
 
-The function attempts to automatically detect whether dissociation reactions are involved.
-If the formation reactions of all species includes \emph{both} the first and second basis species, the \code{dissociation} flag is set to TRUE.
-An example reaction of this type can be found in demo(solubility): CaCO3 (first basis species) = Ca+2 (second basis species) + CO3-2 (first species).
-Note that if the conserved basis species is not the first basis species, then the automatic detection of \code{dissociation} will always return FALSE.
-Therefore, a reaction corresponding to Au (fourth basis species) + ... = ... gives \code{dissociation} = FALSE (see \code{demo(gold)}).
-This algorithm for determining whether dissociation occurs is not perfect, so \code{dissociation} can be explicitly set in the arguments.
-A \emph{not recommended} alternative is to set \code{dissociation} to a numeric value corresponding to the stoichiometry of released species (i.e. 2 for a 1:1 electrolyte).
+A \emph{not recommended} alternative is to set \code{dissociate} to a numeric value corresponding to the number of dissociated species (i.e. 2 for a 1:1 electrolyte).
 This setting indicates to calculate activities on a per-reaction basis, where each reaction has its own (independent) activity of Ca\S{+2}.
-That does not give a complete equilibrium in the system, but may be required to reproduce some published diagrams.
+That does not give a complete equilibrium in the system, but may be required to reproduce some published diagrams (see comment in the calcite example of \code{demo("solubility")}).
 }
 
 \section{Ionic Strength}{
@@ -85,56 +78,16 @@ Except for relatively simple systems, even after careful refinement, the results
 \seealso{
 \code{\link{retrieve}} provides a way to list all of the aqueous species in the database that have the specified elements.
 
-\code{demo("solubility")} shows \T-pH diagrams related to the CO\s{2} and calcite example here.
+\code{demo("solubility")} shows solubilities of CO\s{2} and calcite calculated as a function of pH and T; note that for calcite, the \code{dissociate} argument is set to TRUE.
 \code{demo("gold")} shows solubility calculations for Au in aqueous solutions with hydroxide, chloride, and hydrosulfide complexes.
-In the latter demo, the conserved basis species is not the first one (this might have been done to prevent the incorrect automatic detection of dissociation reactions).
 
-Solubility calculations for multiple minerals are used for generating isosolubility (aka. equisolubility) lines in \code{demo("Pourbaix")} and \code{demo{"zinc"}}.
+Solubility calculations for multiple minerals are used for generating isosolubility (aka. equisolubility) lines in \code{demo("Pourbaix")} and \code{demo("zinc")}.
 The latter demo combines the calculation of solubilities with a \code{\link{mosaic}} calculation to account for the speciation of aqueous sulfur.
 
 Whereas \code{solubility} yields a stable equilibrium condition (the affinities of formation reactions of aqueous species are zero), \code{\link{equilibrate}} generates metastable equilibrium (the affinities of formation reactions are equal to each other, but not necessarily zero).
 }
 
 \examples{\dontshow{reset()}
-## Solubility of CO2 and calcite as a function of pH
-opar <- par(mfrow = c(1, 2))
-## Set pH range and resolution, constant temperature and ionic strength
-pH <- c(0, 14)
-res <- 100
-T <- 25
-IS <- 0
-## Start with CO2 (not a dissociation reaction)
-basis(c("carbon dioxide", "H2O", "O2", "H+"))
-# This is close to atmospheric PCO2
-basis("CO2", -3.5)
-species(c("CO2", "HCO3-", "CO3-2"))
-a <- affinity(pH = c(pH, res), T = T, IS = IS)
-s <- solubility(a)
-# First plot total activity line
-diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
-# Add activities of species
-diagram(s, ylim=c(-10, 4), add = TRUE, dy = 1)
-# Add legend
-lexpr <- as.expression(c("total", expr.species("CO2", state = "aq"),
-  expr.species("HCO3-"), expr.species("CO3-2")))
-legend("topleft", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
-  col = c("green2", rep("black", 3)), legend = lexpr)
-title(main = substitute("Solubility of"~what~"at"~T~degree*"C",
-  list(what = expr.species("CO2"), T = T)), line = 1.5)
-mtext("cf. Fig. 4.5 of Stumm and Morgan, 1996")
-## Now do calcite (a dissociation reaction)
-basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
-species(c("CO2", "HCO3-", "CO3-2"))
-a <- affinity(pH = c(pH, res), T = T, IS = IS)
-s <- solubility(a)
-diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
-diagram(s, add = TRUE, dy = 1)
-legend("topright", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
-  col = c("green2", rep("black", 3)), legend = lexpr)
-title(main = substitute("Solubility of"~what~"at"~T~degree*"C",
-  list(what = "calcite", T = T)))
-mtext("cf. Fig. 4A of Manning et al., 2013")
-par(opar)
 
 ## Two ways to calculate pH-dependent solubility of calcite
 ## with ionic strength determination
@@ -143,14 +96,14 @@ basis(c("calcite", "Ca+2", "H2O", "O2", "H+"))
 species(c("CO2", "HCO3-", "CO3-2"))
 # Ionic strength calculations don't converge below around pH = 3
 a <- affinity(pH = c(4, 14))
-sa0 <- solubility(a)
-saI <- solubility(a, find.IS = TRUE)
+sa0 <- solubility(a, dissociate = TRUE)
+saI <- solubility(a, dissociate = TRUE, find.IS = TRUE)
 ## Method 2: CO2 and carbonate species as basis species
 basis(c("calcite", "CO2", "H2O", "O2", "H+"))
 species(c("Ca+2"))
 m <- mosaic(c("CO2", "HCO3-", "CO3-2"), pH = c(4, 14))
-sm0 <- solubility(m)
-smI <- solubility(m, find.IS = TRUE)
+sm0 <- solubility(m, dissociate = TRUE)
+smI <- solubility(m, dissociate = TRUE, find.IS = TRUE)
 ## Plot the results
 plot(0, 0, xlab="pH", ylab="solubility, log mol", xlim = c(4, 14), ylim = c(-5, 2))
 # Method 1 with/without ionic strength
@@ -167,12 +120,6 @@ stopifnot(all.equal(sa0$loga.balance, sm0$loga.balance))
 stopifnot(all.equal(saI$loga.balance, smI$loga.balance, tolerance = 0.003))
 ## NOTE: the second method (using mosaic) is slower, but is
 ## more flexible; e.g. complexes with Ca+2 could be included
-}
-
-\references{
-Manning, C. E., Shock, E. L. and Sverjensky, D. A. (2013) The chemistry of carbon in aqueous fluids at crustal and upper-mantle conditions: Experimental and theoretical constraints. \emph{Rev. Mineral. Geochem.} \bold{75}, 109--148. \url{https://doi.org/10.2138/rmg.2013.75.5}
-
-Stumm, W. and Morgan, J. J. (1996) \emph{Aquatic Chemistry: Chemical Equilibria and Rates in Natural Waters}, John Wiley & Sons, New York, 1040 p. \url{https://www.worldcat.org/oclc/31754493}
 }
 
 \concept{Main workflow}
