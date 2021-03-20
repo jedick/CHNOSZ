@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-27 (2021-03-20)}{
+\section{Changes in CHNOSZ version 1.4.0-28 (2021-03-20)}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -28,6 +28,29 @@
 
     }
   }
+
+  \subsection{DATA UPDATES}{
+    \itemize{
+
+      \item Use standard abbreviations for hematite (Hem) and magnetite (Mag) in
+      \samp{OBIGT/Berman_cr.csv}.
+
+      \item Add properties of aqueous fatty acids and saccharides to
+      \samp{OBIGT/organic_aq.csv} and associated \samp{demo/E_coli.R} (Gibbs
+      energy of biomass synthesis in \emph{E. coli}, after
+      \href{https://doi.org/10.1038/ismej.2015.227}{LaRowe and Amend, 2016}).
+
+      \item Add properties of aqueous Nb and Ta species
+      (\href{https://doi.org/10.1016/j.gca.2020.04.009}{Akinfiev et al., 2020})
+      to \samp{OBIGT/inorganic_aq.csv}.
+
+      \item Renamed \samp{CDC2_HUMAN} to \samp{CDK1_HUMAN} (UniProt:
+      \href{https://www.uniprot.org/uniprot/P06493}{P06493}) in
+      \samp{thermo/protein.csv}.
+
+    }
+  }
+
 
   \subsection{OTHER CHANGES}{
     \itemize{
@@ -54,21 +77,9 @@
       calculation (\href{https://doi.org/10.1016/j.gca.2021.01.038}{Robinson et
       al., 2021}); add Δ\emph{G}\s{pbx} color scale.
 
-      \item Use standard abbreviations for hematite (Hem) and magnetite (Mag) in
-      OBIGT/Berman_cr.csv.
-
       \item Rename \samp{demo/berman.R} to \samp{potassium.R}.
 
       \item Remove unused limSolve package from Suggests in DESCRIPTION.
-
-      \item Renamed \samp{CDC2_HUMAN} to \samp{CDK1_HUMAN} (UniProt:
-      \href{https://www.uniprot.org/uniprot/P06493}{P06493}) in
-      thermo/protein.csv.
-
-      \item Add properties of some aqueous species to
-      \samp{OBIGT/organic_aq.csv} and associated \samp{demo/E_coli.R} (Gibbs
-      energy of biomass synthesis in E. coli, after
-      \href{https://doi.org/10.1038/ismej.2015.227}{LaRowe and Amend, 2016}).
 
       \item Add option \code{thermo()$opt$ionize.aa} to control calculation of
       properties of ionized proteins in \code{affinity()}.
