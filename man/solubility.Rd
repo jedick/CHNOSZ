@@ -118,7 +118,7 @@ T_ <- lT(125)
 lexpr <- lex(S_, pH_, T_)
 
 # Make diagrams from the results of solubility calculations
-opar <- layout(matrix(c(1, 3, 2, 3), nrow = 2))
+layout(matrix(c(1, 3, 2, 3), nrow = 2))
 # Logarithm of activity of aqueous species in equilibrium with SO2(gas)
 diagram(s1, ylim = c(-15, 0))
 diagram(s1, type = "loga.balance", col = 3, lwd = 3, add = TRUE)
@@ -139,7 +139,7 @@ diagram(s2, col = 4, lwd = 3)
 names <- info(species()$ispecies)$formula
 diagram(s2, type = "loga.equil", names = names, add = TRUE)
 title("Minimum solubility (blue line) corresponds to the most stable gas")
-par(opar)
+layout(matrix(1))
 
 ## EXAMPLE 2
 
