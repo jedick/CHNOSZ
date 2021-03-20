@@ -51,7 +51,7 @@ The \code{property}s to be calculated can be one or more of those shown below:
          \code{kT}      \tab Isothermal compressibility            \tab cm\eqn{^3} bar\eqn{^{-1}}{^-1} \cr
  }
 
-Note that \code{E} and \code{kT} can only be calculated for aqueous species and only if the option (\code{\link{thermo}$opt$water}) for calculations of properties using \code{water} is set to \code{IAPWS}.
+Note that \code{E} and \code{kT} can only be calculated for aqueous species and only if the option (\code{\link{thermo}()$opt$water}) for calculations of properties using \code{water} is set to \code{IAPWS}.
 On the other hand, if the \code{water} option is \samp{SUPCRT} (the default), \code{E} and \code{kT} can be calculated for water but not for aqueous species.
 (This is not an inherent limitation in either formulation, but it is just a matter of implementation.)
 

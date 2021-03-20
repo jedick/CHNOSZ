@@ -19,7 +19,7 @@
 }
 
 \details{
-\code{palply} is a wrapper function to run \code{\link[parallel:clusterApply]{parallel::parLapply}} if length of \code{X} > \code{\link{thermo}$opt$paramin} and multiple cores are available, otherwise it runs \code{\link{lapply}}.
+\code{palply} is a wrapper function to run \code{\link[parallel:clusterApply]{parallel::parLapply}} if length of \code{X} > \code{\link{thermo}()$opt$paramin} and multiple cores are available, otherwise it runs \code{\link{lapply}}.
 Note that \code{parLapply} is called with \code{methods} set to FALSE.
 If lots of package startup messages are created when running \code{parallel::makeCluster} (which is called by \code{palply}), it can probably be stopped by adding a test for \code{\link{interactive}} sessions around any \code{\link{library}} commands in the \code{\link{Rprofile}}.
 }

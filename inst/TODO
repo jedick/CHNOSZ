@@ -53,10 +53,6 @@ BUG: Why doesn't this work?
 Error in count.elements(formula) : 
   'C2.15503876355161e-07H3.72868217191069e-07O1.72868217157562eZ-7' is not a simple chemical formula
 
-[20210116]
-
-- Add an option to disable use of ionize.aa() (it's always active if the basis species have H+)
-
 [20210122] Fix incorrect states in messages:
 > subcrt("C10H22")
 info.character: found C10H22(decane); other available phases are gas, gas, gas, liq, liq, liq

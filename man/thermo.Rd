@@ -60,7 +60,8 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
       \code{nonideal} \tab character \tab Option for charged species in \code{\link{nonideal}} [\code{Bdot}] \cr
       \code{Setchenow} \tab character \tab Option for neutral species in \code{\link{nonideal}} [\code{bgamma0}] \cr
       \code{Berman} \tab character \tab User data file for mineral parameters in the Berman equations [\code{NA}] \cr
-      \code{maxcores} \tab numeric \tab Maximum number of cores for parallel calculations with \code{\link{palply}} [\code{2}]
+      \code{maxcores} \tab numeric \tab Maximum number of cores for parallel calculations with \code{\link{palply}} [\code{2}] \cr
+      \code{ionize.aa} \tab numeric \tab Calculate properties of ionized proteins when \Hplus is in basis species (see \code{\link{affinity}}) [\code{TRUE}]
 }
 
     \item \code{thermo()$element}

@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-22 (2021-03-19)}{
+\section{Changes in CHNOSZ version 1.4.0-27 (2021-03-20)}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -69,6 +69,9 @@
       \samp{OBIGT/organic_aq.csv} and associated \samp{demo/E_coli.R} (Gibbs
       energy of biomass synthesis in E. coli, after
       \href{https://doi.org/10.1038/ismej.2015.227}{LaRowe and Amend, 2016}).
+
+      \item Add option \code{thermo()$opt$ionize.aa} to control calculation of
+      properties of ionized proteins in \code{affinity()}.
 
     }
   }

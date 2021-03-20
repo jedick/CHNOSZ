@@ -37,7 +37,7 @@ Those functions then call \code{nonideal} with all the arguments needed to perfo
 
 \section{Charged Species}{
 The default is to not apply calculations for the proton (\Hplus) and electron (\eminus); this makes sense if you are setting the pH, i.e. activity of \Hplus, to some value.
-To apply the calculations to H+ and/or e-, change \code{\link{thermo}$opt$ideal.H} or \code{ideal.e} to FALSE (see examples).
+To apply the calculations to H+ and/or e-, change \code{\link{thermo}()$opt$ideal.H} or \code{ideal.e} to FALSE (see examples).
 
 For the \samp{Alberty} method, the values of \code{IS} are combined with Alberty's (2003) equation 3.6-1 (extended Debye-Hückel equation with an empirical term valid up to 0.25 M ionic strength) and its derivatives (Alberty, 2001), to calculate adjusted molal properties at the specified ionic strength(s) and temperature(s).
 The calculations use the equation for the Debye-Hückel constant given by Clarke and Glew, 1980, which is valid between 0 and 150 °C at saturated water vapor pressure (\Psat).
@@ -56,7 +56,7 @@ Alternatively, set the extended term parameter to zero with \samp{bgamma0}.
 
 \section{Neutral Species}{
 For neutral species, the Setch{\eacute}now equation is used, as described in Shvarov and Bastrakov, 1999.
-If \code{\link{thermo}$opt$Setchenow} is \samp{bgamma0} (the default), the extended term parameter is set to zero and the only non-zero term is the mole fraction to molality conversion factor (using the value of \code{m_star}).
+If \code{\link{thermo}()$opt$Setchenow} is \samp{bgamma0} (the default), the extended term parameter is set to zero and the only non-zero term is the mole fraction to molality conversion factor (using the value of \code{m_star}).
 If \code{thermo()$opt$Setchenow} is \samp{bgamma}, the extended term paramter is taken from the setting for the charged species (which can be either \samp{Bdot} or \samp{bgamma}).
 Set \code{thermo()$opt$Setchenow} to any other value to disable the calculations for neutral species.
 }

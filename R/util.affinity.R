@@ -203,7 +203,7 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
   A <- function() {
     out <- mapply(`-`, X.fun("logK"), logQ(), SIMPLIFY = FALSE)
     # deal with affinities of protein ionization here 20120527
-    if("H+" %in% rownames(mybasis)) {
+    if("H+" %in% rownames(mybasis) & get("thermo", CHNOSZ)$opt$ionize.aa) {
       # which species are proteins
       isprotein <- grepl("_", myspecies$name)
       if(any(isprotein)) {

@@ -806,11 +806,12 @@ calc <- NaCl(T = T, m_tot = m_tot)
 # Use log molality here, not log activity, because
 # activity coefficients are calculated by setting IS below
 basis("Cl-", log10(calc$m_Cl))
-# Dissolve copper to form aqueous Cu complexes
+# Initial setup: dissolve a single mineral to form aqueous Cu complexes
 species("copper")
 iaq <- retrieve("Cu", c("O", "H", "Cl", "S"), "aq")
 
 # Function to calculate solubility of Cu for stable assemblages of Fe and Cu minerals
+# (i.e. equilibrium is imposed with all of these minerals, not only Cu(s))
 mfun <- function() {
   s <- solubility(iaq, bases = list(bFe, bCu), S2 = c(-34, -10, res1), O2 = c(-55, -40, res1),
     T = T, IS = calc$IS, stable = list(dFe$predominant, dCu$predominant))
