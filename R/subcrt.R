@@ -234,10 +234,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       tb <- thermo$basis
       if(!is.null(tb) & autobalance) {
         if(all(names(miss) %in% colnames(tb)[1:nrow(tb)])) {
-          # the missing composition as formula
-          ft <- as.chemical.formula(miss)
-          # the basis species needed to supply it
-          bc <- species.basis(ft)
+          # the missing composition in terms of the basis species
+          bc <- species.basis(species = NULL, mkp = as.matrix(miss))
           # drop zeroes
           bc.new <- bc[,(bc[1,]!=0),drop=FALSE]
           # and get the states

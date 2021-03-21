@@ -3,6 +3,7 @@
 
 ## if this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("info.R")
+#source("util.data.R")
 
 mod.OBIGT <- function(...) {
   # add or modify species in thermo()$OBIGT
@@ -19,9 +20,11 @@ mod.OBIGT <- function(...) {
   if(is.numeric(args[[1]][1])) {
     ispecies <- args[[1]]
     args <- args[-1]
+    speciesname <- info(ispecies, check.it = FALSE)$name
   } else {
     # if the name of the first argument is missing, assume it's the species name
     if(names(args)[1]=="") names(args)[1] <- "name"
+    speciesname <- args$name
     # search for this species, use check.protein=FALSE to avoid infinite loop when adding proteins
     # and suppressMessages to not show messages about matches of this name to other states
     if("state" %in% names(args)) ispecies <- suppressMessages(mapply(info.character, 
@@ -89,11 +92,11 @@ mod.OBIGT <- function(...) {
       state <- thermo$OBIGT$state[ispecies[iold[i]]]
       # tell user if they're the same, otherwise update the data entry
       if(isTRUE(all.equal(oldprop, args[iold[i], ], check.attributes=FALSE))) 
-        message("mod.OBIGT: no change for ", args$name[iold[i]], "(", state, ")")
+        message("mod.OBIGT: no change for ", speciesname[iold[i]], "(", state, ")")
       else {
         thermo$OBIGT[ispecies[iold[i]], icol] <- args[iold[i], ]
         assign("thermo", thermo, CHNOSZ)
-        message("mod.OBIGT: updated ", args$name[iold[i]], "(", state, ")")
+        message("mod.OBIGT: updated ", speciesname[iold[i]], "(", state, ")")
       }
     }
   }

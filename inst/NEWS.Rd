@@ -44,9 +44,11 @@
       (\href{https://doi.org/10.1016/j.gca.2020.04.009}{Akinfiev et al., 2020})
       to \samp{OBIGT/inorganic_aq.csv}.
 
-      \item Renamed \samp{CDC2_HUMAN} to \samp{CDK1_HUMAN} (UniProt:
+      \item Rename \samp{CDC2_HUMAN} to \samp{CDK1_HUMAN} (UniProt:
       \href{https://www.uniprot.org/uniprot/P06493}{P06493}) in
       \samp{thermo/protein.csv}.
+
+      \item Move alunite from \samp{SUPCRT92.csv} to \samp{inorganic_cr.csv}.
 
     }
   }
@@ -57,7 +59,7 @@
 
       \item Automatic detection of dissociation reactions was fragile and has
       been removed from \code{solubility()}. The new default (\code{dissociate
-        = FALSE}) is to not condiser dissociation reactions.
+        = FALSE}) is to not consider dissociation reactions.
 
       \item In the return value of \code{diagram()}, \code{predominant.values}
       previously only contained affinities (extracted from the \code{values}

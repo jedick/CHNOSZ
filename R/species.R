@@ -173,14 +173,15 @@ species <- function(species=NULL, state=NULL, delete=FALSE, add=FALSE, index.ret
 ### unexported functions ###
 
 # to retrieve the coefficients of reactions to form the species from the basis species
-species.basis <- function(species=get("thermo", CHNOSZ)$species$ispecies) {
+species.basis <- function(species=get("thermo", CHNOSZ)$species$ispecies, mkp = NULL) {
   # current basis elements
   bmat <- basis.elements()
   tbmat <- t(bmat)
   # what are the elements?
   belem <- rownames(tbmat)
   # get the species makeup into a matrix
-  mkp <- as.matrix(sapply(makeup(species, count.zero=TRUE), c))
+  # If 'species' is NULL, get it from the 'mkp' argument (for use by subcrt()) 20210321
+  if(!is.null(species)) mkp <- as.matrix(sapply(makeup(species, count.zero=TRUE), c))
   # the positions of the species elements in the basis elements
   ielem <- match(rownames(mkp), belem)
   # the elements of the species must be contained by the basis species

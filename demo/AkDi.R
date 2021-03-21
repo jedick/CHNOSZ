@@ -25,7 +25,9 @@ lines.KH <- function(name = "CO2", T = 1:373, P = "Psat", HKF = FALSE, altH2S = 
 
 # set up plot
 opar <- par(no.readonly = TRUE)
-par(mfrow=c(2, 2))
+par(mfrow = c(2, 2))
+par(mar = c(3.5, 3.5, 2.5, 1))
+par(mgp = c(2.4, 1, 0))
 
 ylab <- quote(ln~italic(K[H]))
 xlab <- quote(1000 / list(italic(T), K))

@@ -14,10 +14,6 @@
 
 - add check to mosaic() that 'stable' values have the right dimensions.
 
-- anintro.Rmd, help files: make it clear that species with
-different units (cal, J) in OBIGT can be used in subcrt, diagrams, etc.
-in CHNOSZ.
-
 - move H2O92D.f and R wrapper to a separate package (so people
 don't have to compile anything to install CHNOSZ updates).
 
@@ -32,8 +28,6 @@ don't have to compile anything to install CHNOSZ updates).
 
 - make swap.basis() work when DEW model is active
 
-- Show species name in message: mod.OBIGT(5, G = 0)
-
 - Check that protein ionization calculations are not affected by E.units()
 library(testthat)
 reset()
@@ -43,25 +37,12 @@ E.units("J")
 a2 <- affinity(iprotein = 1)
 expect_equal(a1$values, a2$values)
 
-- diagram(): scale predominant.values in output by balancing coefficients?
-
-[20210115]
-
-BUG: Why doesn't this work?
-> basis("QEC")
-> subcrt("LYSC_CHICK", 1/129)
-Error in count.elements(formula) : 
-  'C2.15503876355161e-07H3.72868217191069e-07O1.72868217157562eZ-7' is not a simple chemical formula
-
 [20210122] Fix incorrect states in messages:
 > subcrt("C10H22")
 info.character: found C10H22(decane); other available phases are gas, gas, gas, liq, liq, liq
 > subcrt("C10H22", "liq")
 info.character: found C10H22(liq); other available states are liq, liq
 
-[20210201]
-
-- Move alunite from SUPCRT92.csv to inorganic_cr.csv.
 
 [20210212]
 
@@ -82,13 +63,9 @@ info.character: found C10H22(liq); other available states are liq, liq
 - Add demo for effective equilibrium constant for diglycine on T-pH plot at
   high pressure (DEW model; Robinson et al., 2021)
 
-- Combine solubility() and solubilities() into single function (for CHNOSZ 1.5.0).
-
 [20210306]
 
 - Remove 'bases2' argument from mosaic() (old backward compatibility)
-
-- Widen margins in demo/AkDi.R
 
 [20210309]
 
