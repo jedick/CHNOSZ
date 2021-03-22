@@ -4,8 +4,8 @@ test_that("info.character() produces expected results and messages", {
   expect_equal(info.character("acetate", "cr"), NA)
   expect_message(info.character("acetate", "cr"), "only 'aq' is available")
   expect_message(info.character("methane", "cr"), "only 'gas' 'liq' are available")
-  expect_message(info.character("methane"), "other available state is liq")
-  expect_message(info.character("SiO2", "cr"), "other available phases are")
+  expect_message(info.character("methane"), "also available in liq")
+  expect_message(info.character("SiO2", "cr"), "also available in.*quartz")
   expect_message(info.character("chalcocite"), "found chalcocite\\(cr\\) with 2 phase transitions")
   # H2O is a special case
   expect_equal(info.character("H2O", "aq"), info.character("H2O", "liq"))

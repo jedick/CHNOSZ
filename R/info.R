@@ -144,12 +144,9 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
     mystate <- thermo$OBIGT$state[ispecies.out]
     ispecies.other <- ispecies[!ispecies %in% ispecies.out]
     otherstates <- thermo$OBIGT$state[ispecies.other]
-    # for minerals (cr), use the word "phase"; otherwise, use "state" 20190209
-    word <- "state"
-    # substitute the mineral name for "cr" 20190121
-    if(mystate == "cr" | sum(otherstates=="cr") > 1) {
-      word <- "phase"
-      otherstates[otherstates=="cr"] <- thermo$OBIGT$name[ispecies.other[otherstates=="cr"]]
+    # For non-aqueous species, list other substances (isomers) in the same state 20210321
+    if(mystate != "aq" & sum(otherstates==mystate) > 0) {
+      otherstates[otherstates==mystate] <- thermo$OBIGT$name[ispecies.other[otherstates==mystate]]
     }
     transtext <- othertext <- ""
     # we count, but don't show the states for phase transitions (cr2, cr3, etc)
@@ -159,14 +156,19 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
       ntrans <- sum(istrans)
       if(ntrans == 1) transtext <- paste(" with", ntrans, "phase transition")
       else if(ntrans > 1) transtext <- paste(" with", ntrans, "phase transitions")
-      # if it's not already in the species name, substitute the mineral name for "cr" 20190121
-      if(species != thermo$OBIGT$name[ispecies.out]) mystate <- thermo$OBIGT$name[ispecies.out]
     }
-    otherstates <- otherstates[!istrans]
-    if(length(otherstates) == 1) othertext <- paste0("; other available ", word, " is ", otherstates)
-    if(length(otherstates) > 1) othertext <- paste0("; other available ", word, "s are ", paste(otherstates, collapse=", "))
+    myname <- NULL
+    if(mystate != "aq") {
+      # If it's not already in the species name, append the substance name 20210323
+      myname <- thermo$OBIGT$name[ispecies.out]
+      if(species == myname) myname <- NULL
+    }
+    otherstates <- unique(otherstates[!istrans])
+    if(length(otherstates) == 1) othertext <- paste0("; also available in ", otherstates)
+    if(length(otherstates) > 1) othertext <- paste0("; also available in ", paste(otherstates, collapse=", "))
     if(transtext != "" | othertext != "") {
       starttext <- paste0("info.character: found ", species, "(", mystate, ")")
+      if(!is.null(myname)) starttext <- paste0(starttext, " [", myname, "]")
       message(starttext, transtext, othertext)
     }
   }

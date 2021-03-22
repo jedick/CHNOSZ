@@ -37,13 +37,6 @@ E.units("J")
 a2 <- affinity(iprotein = 1)
 expect_equal(a1$values, a2$values)
 
-[20210122] Fix incorrect states in messages:
-> subcrt("C10H22")
-info.character: found C10H22(decane); other available phases are gas, gas, gas, liq, liq, liq
-> subcrt("C10H22", "liq")
-info.character: found C10H22(liq); other available states are liq, liq
-
-
 [20210212]
 
 - Fix formatting of messages from palply() (seen with read.fasta())
