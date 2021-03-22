@@ -43,7 +43,7 @@ test_that("solubility() produces stable conditions (affinity = 0)", {
   expect_equal(max(abs(unlist(checkfun(99)$values))), 0)
 })
 
-test_that("backward compatible and new calling styles produce identical results", {
+test_that("backward compatible and new calling styles produce the same results", {
   # Test added 20210319
   # Calculate solubility of a single substance:
   # Gaseous S2 with a given fugacity
@@ -67,6 +67,10 @@ test_that("backward compatible and new calling styles produce identical results"
   species(c("SO4-2", "HS-"))
   a <- affinity(O2 = c(-55, -40), T = 125)
   s_old <- solubility(a, in.terms.of = "SO4-2")
+
+  # sout$species (in memoized subcrt() output) have different rownames
+  s1 <- s1[names(s1) != "sout"]
+  s_old <- s_old[names(s_old) != "sout"]
 
   expect_identical(s1, s_old)
 })

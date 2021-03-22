@@ -68,11 +68,19 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, stable = list(), ...) {
     stop("the starting basis does not have ", paste(names0[ina], collapse = " and "))
   }
 
-  # run subcrt() calculations for all basis species and formed species 20190131
-  # this avoids repeating the calculations in different calls to affinity()
-  # add all the basis species here - the formed species are already present
-  lapply(bases, species, add = TRUE)
-  sout <- affinity(..., return.sout = TRUE)
+  ddd <- list(...)
+  if("sout" %in% names(ddd)) {
+    ddd_has_sout <- TRUE
+    # Get sout from ... (from solubility()) 20210322
+    sout <- ddd$sout
+  } else {
+    ddd_has_sout <- FALSE
+    # run subcrt() calculations for all basis species and formed species 20190131
+    # this avoids repeating the calculations in different calls to affinity()
+    # add all the basis species here - the formed species are already present
+    lapply(bases, species, add = TRUE)
+    sout <- affinity(..., return.sout = TRUE)
+  }
 
   # calculate affinities of the basis species themselves
   A.bases <- list()
@@ -83,7 +91,8 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, stable = list(), ...) {
     iaq <- mysp$state == "aq"
     # use as.numeric in case a buffer is active 20201014
     if(any(iaq)) species(which(iaq), as.numeric(basis0$logact[ibasis0[i]]))
-    A.bases[[i]] <- suppressMessages(affinity(..., sout = sout))
+    if(ddd_has_sout) A.bases[[i]] <- suppressMessages(affinity(...))
+    else A.bases[[i]] <- suppressMessages(affinity(..., sout = sout))
   }
 
   # get all combinations of basis species
@@ -104,7 +113,8 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, stable = list(), ...) {
     put.basis(allbases[i, ], thislogact)
     # we have to define the species using the current basis
     species(species0$ispecies, species0$logact)
-    aff.species[[i]] <- suppressMessages(affinity(..., sout = sout))
+    if(ddd_has_sout) aff.species[[i]] <- suppressMessages(affinity(...))
+    else aff.species[[i]] <- suppressMessages(affinity(..., sout = sout))
   }
 
   # calculate equilibrium mole fractions for each group of basis species

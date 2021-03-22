@@ -10,6 +10,8 @@
 #source("species.R")
 #source("util.args.R")
 #source("util.character.R")
+#source("mosaic.R")
+#source("basis.R")
 
 # Function to calculate solubilities of multiple minerals 20210303
 # species() should be used first to load the minerals (all bearing the same metal)
@@ -17,11 +19,17 @@
 # '...' contains arguments for affinity() or mosaic() (i.e. plotting variables)
 solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS = FALSE) {
 
-  # If iaq is the output of affinity(), use old method 20210318
+  # If iaq is the output of affinity(), use old calling style 20210318
   if(is.list(iaq)) return(solubility_calc(aout = iaq, in.terms.of = in.terms.of, dissociate = dissociate, find.IS = find.IS))
   # Check whether to use affinity() or mosaic()
-  ddd <- list(...)
-  if(identical(names(ddd)[1], "bases")) is.mosaic <- TRUE else is.mosaic <- FALSE
+  affargs <- ddd <- list(...)
+  is.mosaic <- FALSE
+  if(identical(names(ddd)[1], "bases")) {
+    is.mosaic <- TRUE
+    # For getting 'sout' from affinity(), drop arguments specific for mosaic()
+    affargs <- ddd[-1]
+    affargs <- affargs[!names(affargs) %in% c("bases", "bases2", "stable", "blend")]
+  }
 
   # Save current thermodynamic system settings
   thermo <- get("thermo", CHNOSZ)
@@ -31,6 +39,15 @@ solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS
   # The current formed species are the minerals to be dissolved
   mineral <- species()
   if(is.null(mineral)) stop("please load minerals or gases with species()")
+
+  if(!find.IS) {
+    # Get subcrt() output for all aqueous species and minerals 20210322
+    # Add aqueous species here - the minerals are already present
+    lapply(iaq, species, add = TRUE)
+    # Also add basis species for mosaic()!
+    if(is.mosaic) lapply(unlist(ddd$bases), species, add = TRUE)
+    sout <- suppressMessages(do.call(affinity, c(affargs, return.sout = TRUE)))
+  }
 
   # Make a list to store the calculated solubilities for each mineral
   slist <- list()
@@ -48,7 +65,11 @@ solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS
     if(any(is.na)) basis(rownames(basis())[is.na], logact[is.na])
     # Add aqueous species (no need to define activities here - they will be calculated by solubility_calc)
     species(iaq)
-    if(is.mosaic) aout <- suppressMessages(mosaic(...)) else aout <- suppressMessages(affinity(...))
+    if(find.IS) {
+      if(is.mosaic) aout <- suppressMessages(mosaic(...)) else aout <- suppressMessages(affinity(...))
+    } else {
+      if(is.mosaic) aout <- suppressMessages(mosaic(..., sout = sout)) else aout <- suppressMessages(affinity(..., sout = sout))
+    }
     # Calculate solubility of this mineral
     scalc <- solubility_calc(aout, in.terms.of = in.terms.of, dissociate = dissociate, find.IS = find.IS)
     # Store the solubilities in the list
