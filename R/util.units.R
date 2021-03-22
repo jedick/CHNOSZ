@@ -46,7 +46,7 @@ convert <- function(value, units, T=298.15,
 
   # process a list value if it's the output from solubility 20190525
   if(is.list(value) & !is.data.frame(value)) {
-    if(!isTRUE(value$fun == "solubility")) stop("'value' is a list but is not the output from solubility()")
+    if(!isTRUE(value$fun %in% c("solubility", "solubilities"))) stop("'value' is a list but is not the output from solubility()")
     if(!is.character(units)) stop("please specify a character argument for the destination units (e.g. ppm or logppm)")
     # determine the element from 'balance' or 'in.terms.of', if it's available
     element <- value$in.terms.of

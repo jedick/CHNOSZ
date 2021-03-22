@@ -67,10 +67,6 @@ info.character: found C10H22(liq); other available states are liq, liq
 
 - Remove 'bases2' argument from mosaic() (old backward compatibility)
 
-[20210309]
-
-- Add argument to OBIGT() to exclude data files for organic species.
-
 [20210312]
 
 - Don't use z.T = NA to trigger AkDi model (makes the more common use case of

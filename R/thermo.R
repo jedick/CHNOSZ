@@ -36,18 +36,25 @@ reset <- function() {
 }
 
 # load default thermodynamic data (OBIGT) in thermo
-OBIGT <- function() {
+OBIGT <- function(no.organics = FALSE) {
   # we only work if thermo is already in the CHNOSZ environment
   if(!"thermo" %in% ls(CHNOSZ)) stop("The CHNOSZ environment doesn't have a \"thermo\" object. Try running reset()")
   # create OBIGT data frame
-  sources_aq <- paste0(c("H2O", "inorganic", "organic", "biotic"), "_aq")
-  sources_cr <- paste0(c("inorganic", "organic", "Berman"), "_cr")
-  sources_liq <- paste0(c("organic"), "_liq")
-  sources_gas <- paste0(c("inorganic", "organic"), "_gas")
-  sources <- c(sources_aq, sources_cr, sources_gas, sources_liq)
+  if(no.organics) {
+    sources_aq <- paste0(c("H2O", "inorganic"), "_aq")
+    sources_cr <- paste0(c("inorganic", "Berman"), "_cr")
+    sources_gas <- paste0(c("inorganic"), "_gas")
+    sources <- c(sources_aq, sources_cr, sources_gas)
+  } else {
+    sources_aq <- paste0(c("H2O", "inorganic", "organic", "biotic"), "_aq")
+    sources_cr <- paste0(c("inorganic", "organic", "Berman"), "_cr")
+    sources_liq <- paste0(c("organic"), "_liq")
+    sources_gas <- paste0(c("inorganic", "organic"), "_gas")
+    sources <- c(sources_aq, sources_cr, sources_gas, sources_liq)
+  }
   OBIGTdir <- system.file("extdata/OBIGT/", package="CHNOSZ")
   # need explicit "/" for Windows
-  sourcefiles <- paste0(OBIGTdir, "/", c(sources_aq, sources_cr, sources_gas, sources_liq), ".csv")
+  sourcefiles <- paste0(OBIGTdir, "/", sources, ".csv")
   datalist <- lapply(sourcefiles, read.csv, as.is=TRUE)
   OBIGT <- do.call(rbind, datalist)
   # also read references file
@@ -60,7 +67,7 @@ OBIGT <- function() {
   # place modified thermo in CHNOSZ environment
   assign("thermo", thermo, CHNOSZ)
   # give a summary of some of the data
-  message(paste("OBIGT: loading default database with",
+  message(paste("OBIGT: loading", ifelse(no.organics, "inorganic", "default"), "database with",
     nrow(thermo$OBIGT[thermo$OBIGT$state=="aq",]),
     "aqueous,", nrow(thermo$OBIGT), "total species"))
   # warn if there are duplicated species

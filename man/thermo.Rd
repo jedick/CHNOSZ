@@ -25,11 +25,12 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
 
 \usage{
   reset()
-  OBIGT()
+  OBIGT(no.organics = FALSE)
   thermo(...)
 }
 
 \arguments{
+  \item{no.organics}{logical, exclude data files for organic and biotic species?}
   \item{...}{list, one or more arguments whose names correspond to the setting to modify}
 }
 
@@ -248,31 +249,31 @@ Other data files, including those supporting the examples and vignettes, are doc
 }
 
 \examples{
-## where are the data files in CHNOSZ?
+## Where are the data files in CHNOSZ?
 system.file("extdata", package="CHNOSZ")
 # What files make up OBIGT?
 # Note: file names with _aq, _cr, _gas, or _liq
 # are used in the default database
 dir(system.file("extdata/OBIGT", package = "CHNOSZ"))
 
-## exploring thermo()$OBIGT
-# what physical states there are
+## Exploring thermo()$OBIGT
+# What physical states are present
 unique(thermo()$OBIGT$state)
-# formulas of ten random species
+# Formulas of ten random species
 n <- nrow(thermo()$OBIGT)
 thermo()$OBIGT$formula[runif(10)*n]
 
-## adding an element
+## Adding an element
 old <- thermo()$element
-# element symbol, state, source (can be anything),
+# Element symbol, state, source (can be anything),
 # mass, entropy, and number in compound
 Xprops <- data.frame(element = "X", state = "cr",
   source = "user", mass = 100, s = 100, n = 1)
 new <- rbind(old, Xprops)
 thermo(element = new)
-# now "X" is recognized as an element in other functions
+# Now "X" is recognized as an element in other functions
 mass("X10")
-# restore default settings to remove X
+# Restore default settings to remove X
 reset()
 }
 

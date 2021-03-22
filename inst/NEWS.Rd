@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-28 (2021-03-20)}{
+\section{Changes in CHNOSZ version 1.4.0-31 (2021-03-22)}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -23,8 +23,11 @@
       minimum) solubility for multiple minerals. Calculations for multiple
       minerals are also now used in \samp{demo/zinc.R}.
 
-      \item Restore \samp{lty.aq} and \samp{lty.cr} arguments to
+      \item Restore \strong{lty.aq} and \strong{lty.cr} arguments to
       \code{diagram()} to control plotting of aq-aq and cr-cr field boundaries.
+
+      \item Add \strong{no.organics} argument to \code{OBIGT()} to load the
+      thermodynamic database without organic species.
 
     }
   }
@@ -32,23 +35,29 @@
   \subsection{DATA UPDATES}{
     \itemize{
 
-      \item Use standard abbreviations for hematite (Hem) and magnetite (Mag) in
-      \samp{OBIGT/Berman_cr.csv}.
+      \item \samp{OBIGT/Berman_cr.csv}: Use standard abbreviations for hematite
+      (Hem) and magnetite (Mag).
 
-      \item Add properties of aqueous fatty acids and saccharides to
-      \samp{OBIGT/organic_aq.csv} and associated \samp{demo/E_coli.R} (Gibbs
-      energy of biomass synthesis in \emph{E. coli}, after
+      \item \samp{OBIGT/organic_aq.csv}: Add properties of aqueous fatty acids
+      and saccharides and add associated \samp{demo/E_coli.R} (Gibbs energy of
+      biomass synthesis in \emph{E. coli}, after
       \href{https://doi.org/10.1038/ismej.2015.227}{LaRowe and Amend, 2016}).
 
-      \item Add properties of aqueous Nb and Ta species
-      (\href{https://doi.org/10.1016/j.gca.2020.04.009}{Akinfiev et al., 2020})
-      to \samp{OBIGT/inorganic_aq.csv}.
+      \item \samp{OBIGT/inorganic_aq.csv}: Add properties of aqueous Nb and Ta
+      species from \href{https://doi.org/10.1016/j.gca.2020.04.009}{Akinfiev et
+        al., 2020}.
+      
+      \item \samp{OBIGT/inorganic_cr.csv}: Add willemite (Zn\s{2}SiO\s{4}) from
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway, 1995} and
+      \href{https://doi.org/10.1007/978-3-662-02293-1}{Barin et al., 1977}
+      (heat capacity equation).
 
-      \item Rename \samp{CDC2_HUMAN} to \samp{CDK1_HUMAN} (UniProt:
-      \href{https://www.uniprot.org/uniprot/P06493}{P06493}) in
-      \samp{thermo/protein.csv}.
+      \item \samp{OBIGT/inorganic_cr.csv}: Move alunite here from
+      \samp{SUPCRT92.csv}.
 
-      \item Move alunite from \samp{SUPCRT92.csv} to \samp{inorganic_cr.csv}.
+      \item \samp{thermo/protein.csv}: Rename \samp{CDC2_HUMAN} to
+      \samp{CDK1_HUMAN} (UniProt:
+      \href{https://www.uniprot.org/uniprot/P06493}{P06493}).
 
     }
   }

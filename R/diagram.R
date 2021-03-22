@@ -47,7 +47,7 @@ diagram <- function(
   if(!(efun %in% c("affinity", "equilibrate") | grepl("solubilit", efun)))
     stop("'eout' is not the output from affinity(), equilibrate(), solubility(), or solubilities()")
   # For solubilities(), default type is loga.balance 20210303
-  if(identical(efun, "solubilities") & missing(type)) type <- "loga.balance"
+  if(grepl("solubilities", efun) & missing(type)) type <- "loga.balance"
 
   ## 'type' can be:
   #    'auto'                - property from affinity() (1D) or maximum affinity (affinity 2D) (aout) or loga.equil (eout)
@@ -203,7 +203,15 @@ diagram <- function(
         else if(as.residue) pv[[i]] <- pv[[i]] + eout$species$logact[i] / n.balance[i]
       }
     }
-    predominant <- which.pmax(pv)
+    if(grepl("solubilities", efun)) {
+      # For solubilites of multiple minerals, find the minimum value (most stable mineral) 20210321
+      mypv <- Map("-", pv)
+      predominant <- which.pmax(mypv)
+    } else {
+      # For all other diagrams, we want the maximum value (i.e. maximum affinity method)
+      predominant <- which.pmax(pv)
+    }
+
     # show water stability region
     if((is.null(limit.water) | isTRUE(limit.water)) & nd==2) {
       wl <- water.lines(eout, plot.it=FALSE)
