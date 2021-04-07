@@ -19,7 +19,7 @@
       lines, after \href{https://www.worldcat.org/oclc/563921897}{Pourbaix,
       1974}). This demo depends on the following two changes.
 
-      \item Revamp \code{solubility()} to enable calculating overall (i.e.
+      \item Revise \code{solubility()} to enable calculating overall (i.e.
       minimum) solubility for multiple minerals. Calculations for multiple
       minerals are also now used in \samp{demo/zinc.R}.
 
@@ -35,8 +35,10 @@
   \subsection{DATA UPDATES}{
     \itemize{
 
-      \item \samp{OBIGT/Berman_cr.csv}: Use standard abbreviations for hematite
-      (Hem) and magnetite (Mag).
+      \item \samp{OBIGT/Berman_cr.csv}: Where possible, use standard
+      abbreviations for mineral names (including hematite (Hem) and magnetite
+      (Mag)), as listed by \href{https://doi.org/10.2138/am.2010.3371}{Whitney
+        and Evans (2010)}.
 
       \item \samp{OBIGT/organic_aq.csv}: Add properties of aqueous fatty acids,
       saccharides, and other species, and add associated \samp{demo/E_coli.R}
@@ -73,7 +75,7 @@
       \item In the return value of \code{diagram()}, \code{predominant.values}
       previously only contained affinities (extracted from the \code{values}
       element of the \code{eout} argument). Now it has the values for the
-      predominant species extracted from the actual values used to make the
+      predominant species extracted from the values actually used to make the
       plot (the \code{plotvals} list in the output), i.e.  affinities divided
       by the balancing coefficients if \code{eout} is the output of
       \code{affinity}, or activities if \code{eout} is the output of
@@ -88,15 +90,16 @@
       calculation (\href{https://doi.org/10.1016/j.gca.2021.01.038}{Robinson et
       al., 2021}); add Δ\emph{G}\s{pbx} color scale.
 
-      \item Rename \samp{demo/berman.R} to \samp{potassium.R}.
+      \item Rename \samp{demo/berman.R} to \samp{demo/potassium.R}.
 
       \item Remove unused limSolve package from Suggests in DESCRIPTION.
 
       \item Add option \code{thermo()$opt$ionize.aa} to control calculation of
       properties of ionized proteins in \code{affinity()}.
 
-      \item Fix bug where protein ionization calculations were incorrected
-      affected by the setting of \code{E.units()}.
+      \item Fix bug where protein ionization calculations with
+      \code{ionize.aa()} were incorrectly affected by the setting of
+      \code{E.units()}.
 
     }
   }

@@ -32,10 +32,6 @@ don't have to compile anything to install CHNOSZ updates).
 
 - Fix formatting of messages from palply() (seen with read.fasta())
 
-[20210219]
-
-- Check all mineral abbreviations in Berman_cr.csv.
-
 [20210301]
 
 - anintro.Rmd: change red to blue for sulfur basis species
