@@ -35,8 +35,8 @@ test_that("info() can be used for cr and aq descriptions of the same species and
 })
 
 test_that("info() gives correct column names for species using the AkDi model", {
-  # add an aqueous species conforming to the AkDi model: it has NA for Z
-  iCO2 <- mod.OBIGT("CO2", a = -8.8321, b = 11.2684, c = -0.0850, z = NA)
+  # add an aqueous species conforming to the AkDi model
+  iCO2 <- mod.OBIGT("CO2", abbrv = "AkDi", a = -8.8321, b = 11.2684, c = -0.0850)
   params <- info(iCO2)
   expect_equal(params$a, -8.8321)
   expect_equal(params$b, 11.2684)

@@ -80,8 +80,8 @@ test_that("gfun() gives expected results", {
 
 test_that("AkDi produces expected results", {
   # 20190220
-  # modify aqueous CO2 to use the AkDi model: it has NA for Z
-  iCO2 <- mod.OBIGT("CO2", a=-8.8321, b=11.2684, c=-0.0850, z=NA)
+  # modify aqueous CO2 to use the AkDi model
+  iCO2 <- mod.OBIGT("CO2", abbrv = "AkDi", a=-8.8321, b=11.2684, c=-0.0850)
   # do the properties we calculate match previously calculated values?
   P <- "Psat"
   T <- seq(50, 350, 100)

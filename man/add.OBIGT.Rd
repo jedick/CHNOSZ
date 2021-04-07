@@ -38,14 +38,15 @@ When adding (not replacing) species, there is no attempt made to keep the order 
 As a result, retrieving the properties of an added aqueous species using \code{\link{info}} requires an explicit \code{state="aq"} argument to that function if a species with the same name is present in one of the cr, liq or gas states.
 
 \code{mod.OBIGT} changes one or more of the properties of species or adds species to the thermodynamic database.
-These changes are lost if you reload the database by calling \code{\link{data}(thermo)} or if you quit the \R session without saving it.
+These changes are lost if you reload the database by calling \code{\link{reset}} or \code{\link{OBIGT}} or if you quit the \R session without saving it.
 The name of the species to add or change must be supplied as the first argument of \code{...} or as a named argument (named \samp{name}).
 When adding new species, a chemical formula should be included along with the values of any of the thermodynamic properties.
 The formula is taken from the \samp{formula} argument, or if that is missing, is taken to be the same as the \samp{name} of the species.
 An error results if the formula is not valid (i.e. can not be parsed by \code{\link{makeup}}).
-Additional arguments refer to the name of the property(s) to be updated and are matched to any part of compound column names in \code{\link{thermo}$OBIGT}, such as \samp{z} or \samp{T} in \samp{z.T}.
-Unless \samp{state} is specified as one of the properties, its value is taken from \code{thermo()$opt$state}.
-When adding species, properties that are not specified become NA, except for \samp{state}, which takes a default value from \code{thermo()$opt$state}, and \samp{z.T}, which for aqueous species is set to the charge calculated from the chemical formula (otherwise, NA charge for newly added species would trigger the \code{\link{AkDi}} model).
+
+Additional arguments to \code{mod.OBIGT} refer to the name of the property(s) to be updated and are matched to any part of compound column names in \code{\link{thermo}()$OBIGT}.
+For instance, either \samp{z} or \samp{T} matches the \samp{z.T} column.
+When adding species, properties that are not specified become NA, except for \samp{state}, which takes a default value from \code{thermo()$opt$state}.
 The values provided should have energy units correponding to the current setting (\code{\link{E.units}}), but this can be overridden by giving a value for \samp{E_units} in the new data.
 The values provided should also include any order-of-magnitude scaling factors (see \code{\link{thermo}}).
 }

@@ -47,8 +47,9 @@ The standard molal volumes (\samp{V}) of species in these calculations are taken
 For both \code{hkf} and \code{cgl}, if at least one equations-of-state parameter for a species is provided, any NA values of the other parameters are reset to zero.
 If all equations-of-state parameters are NA, but values of \samp{Cp} and/or \samp{V} are available, those values are used in the integration of \samp{G}, \samp{H} and \samp{S} as a function of temperature. 
 
-\code{AkDi} provides the Akinfiev-Diamond model for aqueous species (Akinfiev and Diamond, 2003).
-To run this code, the database must also include the corresponding gasesous species (with the same name or chemical formula).
+\code{AkDi} implements the Akinfiev-Diamond model for aqueous species (Akinfiev and Diamond, 2003).
+This model is activated by setting \code{abbrv = "AkDi"} in \code{thermo()$OBIGT} for a given aqueous species.
+The database must also include the corresponding gasesous species (with the same name or chemical formula).
 Currently, only the standard chemical potential (Gibbs energy) is calculated.
 
 }

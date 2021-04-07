@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.0-35 (2021-04-07)}{
+\section{Changes in CHNOSZ version 1.4.0-37 (2021-04-07)}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -101,6 +101,11 @@
       \code{ionize.aa()} were incorrectly affected by the setting of
       \code{E.units()}.
 
+      \item The Akinfiev-Diamond model is now activated by setting \code{abbrv
+        = "AkDi"} for any aqueous species, instead of setting the charge
+      (\code{z}) to NA. This simplifies the more common use case of adding a
+      custom aqueous species to OBIGT with mostly NA parameters.
+      
     }
   }
 

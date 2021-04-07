@@ -65,15 +65,6 @@ mod.OBIGT <- function(...) {
       # transmit the error from makeup
       stop(e)
     }
-    # for aqueous species, supply a value for Z if it is missing, otherwise NA triggers AkDi model 20190224
-    isaq <- newrows$state == "aq"
-    if(any(isaq)) {
-      mnrf <- makeup(newrows$formula)
-      if(nrow(newrows)==1) mnrf <- list(mnrf)
-      Z <- sapply(mnrf, "[", "Z")
-      Z[is.na(Z)] <- 0
-      newrows$z.T[isaq] <- Z[isaq]
-    }
     # assign to thermo()$OBIGT
     thermo$OBIGT <- rbind(thermo$OBIGT, newrows)
     rownames(thermo$OBIGT) <- NULL

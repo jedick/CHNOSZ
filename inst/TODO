@@ -44,8 +44,3 @@ don't have to compile anything to install CHNOSZ updates).
 [20210306]
 
 - Remove 'bases2' argument from mosaic() (old backward compatibility)
-
-[20210312]
-
-- Don't use z.T = NA to trigger AkDi model (makes the more common use case of
-  just adding a simple aqueous species more tricky).

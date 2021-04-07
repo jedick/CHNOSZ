@@ -405,8 +405,10 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, tocal = FALSE) {
   # remove scaling factors from EOS parameters
   # and apply column names depending on the EOS
   if(identical(state, "aq")) {
-    # species in the Akinfiev-Diamond model (AkDi) have NA for Z 20190219
-    isAkDi <- is.na(OBIGT[, 21])
+    # Aqueous species with abbrv = "AkDi" use the AkDi model 20210407
+    abbrv <- OBIGT$abbrv
+    abbrv[is.na(abbrv)] <- ""
+    isAkDi <- abbrv == "AkDi"
     # remove scaling factors for the HKF species, but not for the AkDi species
     # protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
     # (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302
