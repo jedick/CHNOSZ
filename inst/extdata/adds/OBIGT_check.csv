@@ -136,7 +136,6 @@
 "OBIGT",1013,"Ce(Ac)2+","aq","cal",,,567
 "OBIGT",1041,"urea","aq","cal",-23.26,23.32,
 "OBIGT",1054,"propanoic acid","aq","cal",1.42,,
-"OBIGT",1073,"pimelic acid","aq","cal",,,-19931
 "OBIGT",1077,"formate","aq","cal",1.96,,
 "OBIGT",1079,"propanoate","aq","cal",1.68,,
 "OBIGT",1086,"n-decanoate","aq","cal",-1.93,,
@@ -240,9 +239,6 @@
 "OBIGT",1567,"heptose","aq","J",,,-75027
 "OBIGT",1571,"N-acetylmuramic acid","aq","J",,,-38589
 "OBIGT",1572,"ethanolamine","aq","J",,,4598
-"OBIGT",1573,"diaminopimelic acid","aq","J",,,108258
-"OBIGT",1574,"putrescine","aq","J",,,108157
-"OBIGT",1575,"spermidine","aq","J",,,108263
 "OBIGT",1584,"cysteinate","aq","cal",-1,,
 "OBIGT",1610,"glucose","aq","cal",1.11,,
 "OBIGT",1638,"guanine","aq","cal",-4.26,,

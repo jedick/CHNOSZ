@@ -38,9 +38,9 @@
       \item \samp{OBIGT/Berman_cr.csv}: Use standard abbreviations for hematite
       (Hem) and magnetite (Mag).
 
-      \item \samp{OBIGT/organic_aq.csv}: Add properties of aqueous fatty acids
-      and saccharides and add associated \samp{demo/E_coli.R} (Gibbs energy of
-      biomass synthesis in \emph{E. coli}, after
+      \item \samp{OBIGT/organic_aq.csv}: Add properties of aqueous fatty acids,
+      saccharides, and other species, and add associated \samp{demo/E_coli.R}
+      (Gibbs energy of biomass synthesis in \emph{E. coli}, after
       \href{https://doi.org/10.1038/ismej.2015.227}{LaRowe and Amend, 2016}).
 
       \item \samp{OBIGT/inorganic_aq.csv}: Add properties of aqueous Nb and Ta

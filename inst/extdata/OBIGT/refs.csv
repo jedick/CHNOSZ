@@ -202,7 +202,7 @@ SHA14.2,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","
 SHA14.3,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","Fitted to @HP97 data with a<sub>1</sub> pred. from the sum of the ions and used to predict the volume",https://doi.org/10.1016/j.gca.2013.12.019
 SHA14.4,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","BO<sub>2</sub><sup>-</sup>: revised a<sub>1</sub>-a<sub>4</sub> using delkappan for BO<sub>2</sub><sup>-</sup> instead of B(OH)<sub>4</sub><sup>-</sup> used by @SH88; @SSWS97",https://doi.org/10.1016/j.gca.2013.12.019
 PD15,"G. S. Pokrovski and J. Dubessy",2015,"Earth Planet. Sci. Lett. 411, 298-309","trisulfur radical ion",https://doi.org/10.1016/j.epsl.2014.11.035
-LA16,"D. E. LaRowe and J. P. Amend",2016,"ISME J. 10, 1285-1295","fatty acids and saccharides",https://doi.org/10.1038/ismej.2015.227
+LA16,"D. E. LaRowe and J. P. Amend",2016,"ISME J. 10, 1285-1295","fatty acids, saccharides, and other species",https://doi.org/10.1038/ismej.2015.227
 SLOP16.1,"E. L. Shock et al.",2016,"slop16.dat computer data file","&quot;Enthalpy changed to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements.&quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP16.2,"E. L. Shock et al.",2016,"slop16.dat computer data file","Zn(Ac)<sub>3</sub><sup>-</sup>: &quot;Enthalpy changed to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements. See footnote h in table 2 of @SSH97.&quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP16.3,"E. L. Shock et al.",2016,"slop16.dat computer data file","formaldehyde: &quot;Entropy corrected to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements. See footnote i in table 2 of @SS93.&quot;",https://doi.org/10.5281/zenodo.2630820
@@ -225,6 +225,7 @@ OBIGT.5,"J. M. Dick",2017,"OBIGT database in CHNOSZ","Incorrect values of HKF a<
 OBIGT.6,"J. M. Dick",2019,"OBIGT database in CHNOSZ","recalculated values of Cp (those in @AKAE19 appear to be calculated using wrong sign on &omega;) and enthalpy (using &Delta;G=&Delta;H-T&Delta;S and the entropies of the elements)",http://chnosz.net
 OBIGT.7,"J. M. Dick",2019,"OBIGT database in CHNOSZ","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: change Ti to Tl",http://chnosz.net
 OBIGT.8,"J. M. Dick",2019,"OBIGT database in CHNOSZ","GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",http://chnosz.net
+OBIGT.9,"J. M. Dick",2021,"OBIGT database in CHNOSZ","diaminopimelic acid, putrescine and spermidine: parameters recalculated to account for a missing [-CH2NH2] group in the group additivity equations",http://chnosz.net
 LCT17,"A. R. Lowe, J. S. Cox and P. R. Tremaine",2017,"J. Chem. Thermodynamics 112, 129-145","adenine HKF parameters",https://doi.org/10.1016/j.jct.2017.04.005
 DEW17.01,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(acetic acid, glycine, methanol, propanoic acid, propanol: parameters in DEW spreadsheet are the same as in @PS01)",http://www.dewcommunity.org
 DEW17.02,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(ethanol: parameters in DEW spreadsheet are different from @PS01; no comment provided)",http://www.dewcommunity.org
