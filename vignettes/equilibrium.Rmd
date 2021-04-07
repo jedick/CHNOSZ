@@ -423,14 +423,18 @@ show a cross-section of the same system at log*a*~H2O~ = 0.
   balancing coefficients, which become exponents on activities in the
   expression for the activity quotient (*Q*).
 
-* In Diagrams **C** and **D**, the chemical formulas of all the proteins are
-  *normalized*, or divided by the protein length.  Writing the reactions in
-  terms of these "residue equivalents" shows the possibility of similar
-  abundances of proteins in metastable equilibrium.
+* In Diagrams **C** and **D**, the chemical formulas of the proteins are
+  *normalized*, or divided by the protein length, before the equilibration or
+  maximum affinity calculation.  However, the final diagram is not drawn for
+  activities of these "residue equivalents", but for rescaled activities of
+  whole proteins. Because of the rescaling, the fields of the shorter METJA and
+  METVO proteins grow at the expense of the longer BACLI protein.
 
 * Diagrams **E** and **F** are like the normalization calculation, except that
   the final diagram is drawn for the residue equivalents and not the whole
-  proteins.  The activities of residues are higher than those of the proteins.
+  proteins.  The predominance diagram is the same as that for non-normalized
+  reactions (**A**), but the equilibrium activities of residues are higher than
+  those of the proteins.
 
 ## Example 3: Normalization
 

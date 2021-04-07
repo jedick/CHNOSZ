@@ -109,7 +109,7 @@ uniprot.aa <- function(protein, start=NULL, stop=NULL) {
   # download protein sequence information from UniProt
   iprotein <- numeric()
   # construct the initial URL
-  proteinURL <- paste("http://www.uniprot.org/uniprot/", protein, sep="")
+  proteinURL <- paste("https://www.uniprot.org/uniprot/", protein, sep="")
   message("uniprot.aa: trying ", proteinURL, " ...", appendLF=FALSE)
   # try loading the URL, hiding any warnings
   oldopt <- options(warn=-1)
@@ -131,7 +131,7 @@ uniprot.aa <- function(protein, start=NULL, stop=NULL) {
   accession.number <- tail(strsplit(linkhead, "/uniprot/", fixed=TRUE)[[1]], 1)
   message(" accession ", accession.number, " ...")
   # now download the fasta file
-  fastaURL <- paste("http://www.uniprot.org/uniprot/", accession.number, ".fasta", sep="")
+  fastaURL <- paste("https://www.uniprot.org/uniprot/", accession.number, ".fasta", sep="")
   URLstuff <- readLines(fastaURL)
   # get the header information / show  the user
   header <- URLstuff[[1]]

@@ -170,8 +170,8 @@ To go back to the old behavior for drawing lines, set \code{dotted} to \samp{0}.
 The old behavior does not respect \code{lty}; instead, the style of the boundary lines on 2-D diagrams can be altered by supplying one or more non-zero integers in \code{dotted}, which indicates the fraction of line segments to omit; a value of \samp{1} or NULL for \code{dotted} has the effect of not drawing the boundary lines.
 
 \code{normalize} and \code{as.residue} apply only to the 2-D diagrams, and only when \code{eout} is the output from \code{affinity}.
-With \code{normalize}, the activity boundaries are calculated as between the residues of the species (the species divided by the balance coefficients), then the activities are rescaled to the whole species formulas.
-With \code{as.residue}, the activity boundaries are calculated as between the residues of the species, and no rescaling is performed.
+With \code{normalize}, the activity boundaries are calculated between the residues of the species (the species divided by the balance coefficients), then the activities are rescaled to the whole species formulas.
+With \code{as.residue}, the activity boundaries are calculated between the residues of the species, and no rescaling is performed.
 }
 
 \section{Activity Coefficients}{

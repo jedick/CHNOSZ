@@ -7,20 +7,20 @@ test_that("results are consistent with affinity()", {
   basis(c("CO2", "H2O", "NH3", "O2"), c(0, 0, 0, 0))
   species(c("alanine", "glycine"))
   a25 <- affinity()
-  # this is a degenerate case because we only allow NH3 to swap for NH3, and CO2 for CO2;
+  # this is a no-op case because we only allow NH3 to swap for NH3, and CO2 for CO2;
   # however it still exercises the affinity scaling and summing code
-  m1_25 <- mosaic("NH3", "CO2")
+  m1_25 <- mosaic(list("NH3", "CO2"))
   # this failed before we divided by loga.tot to get _relative_ abundances of basis species in mosaic.R
   expect_equal(a25$values, m1_25$A.species$values)
   # the next call failed when which.pmax(), called by diagram(), choked on a list of length one
-  m2_25 <- mosaic("NH3", "CO2", blend = FALSE)
+  m2_25 <- mosaic(list("NH3", "CO2"), blend = FALSE)
   expect_equal(a25$values, m2_25$A.species$values)
   # make sure the function works when all affinities are NA
   a500 <- suppressWarnings(affinity(T=500))
   # using blend=TRUE was failing prior to version 1.1.3-37
-  m1_500 <- suppressWarnings(mosaic("NH3", "CO2", T=500))
+  m1_500 <- suppressWarnings(mosaic(list("NH3", "CO2"), T=500))
   expect_equal(a500$values, m1_500$A.species$values)
-  m2_500 <- suppressWarnings(mosaic("NH3", "CO2", blend = FALSE, T=500))
+  m2_500 <- suppressWarnings(mosaic(list("NH3", "CO2"), blend = FALSE, T=500))
   expect_equal(a500$values, m2_500$A.species$values)
 })
 
