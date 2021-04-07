@@ -11,7 +11,7 @@
 #source("util.args.R")
 
 # function to calculate affinities with mosaic of basis species
-mosaic <- function(bases, bases2 = NULL, blend = TRUE, stable = list(), ...) {
+mosaic <- function(bases, blend = TRUE, stable = list(), ...) {
 
   # argument recall 20190120
   # if the first argument is the result from a previous mosaic() calculation,
@@ -33,22 +33,13 @@ mosaic <- function(bases, bases2 = NULL, blend = TRUE, stable = list(), ...) {
 
   # backward compatibility 20190131:
   # bases can be a vector instead of a list
-  # bases2 can be present
   if(!is.list(bases)) {
     bases <- list(bases)
-    hasbases2 <- FALSE
-    if(!is.null(bases2)) {
-      bases <- c(bases, list(bases2))
-      hasbases2 <- TRUE
-    }
     otherargs <- list(...)
     allargs <- c(list(bases = bases, blend = blend, stable = stable), otherargs)
     out <- do.call(mosaic, allargs)
-    # replace A.bases (affinity calculations for all groups of basis species) with backwards-compatbile A.bases and A.bases2
-    if(hasbases2) A.bases2 <- out$A.bases[[2]]
-    A.bases <- out$A.bases[[1]]
-    out$A.bases <- A.bases
-    if(hasbases2) out <- c(out, list(A.bases2 = A.bases2))
+    # replace A.bases (affinity calculations for all groups of basis species) with backwards-compatbile A.bases
+    out$A.bases <- out$A.bases[[1]]
     return(out)
   }
 

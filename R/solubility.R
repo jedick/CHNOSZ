@@ -28,7 +28,7 @@ solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS
     is.mosaic <- TRUE
     # For getting 'sout' from affinity(), drop arguments specific for mosaic()
     affargs <- ddd[-1]
-    affargs <- affargs[!names(affargs) %in% c("bases", "bases2", "stable", "blend")]
+    affargs <- affargs[!names(affargs) %in% c("bases", "stable", "blend")]
   }
 
   # Save current thermodynamic system settings

@@ -40,7 +40,3 @@ don't have to compile anything to install CHNOSZ updates).
 
 - Add demo for effective equilibrium constant for diglycine on T-pH plot at
   high pressure (DEW model; Robinson et al., 2021)
-
-[20210306]
-
-- Remove 'bases2' argument from mosaic() (old backward compatibility)

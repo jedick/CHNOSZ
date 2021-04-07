@@ -37,17 +37,19 @@ species(c("pyrrhotite", "pyrite", "hematite", "magnetite", "siderite"), add = TR
 # Use two sets of changing basis species:
 #   speciate SO4-2, HSO4-, HS-, H2S as a function of Eh and pH
 #   speciate CO3-2, HCO3-, CO2 as a function of pH
-bases <- c("SO4-2", "HSO4-", "HS-", "H2S")
-bases2 <- c("CO3-2", "HCO3-", "CO2")
+bases <- list(
+  c("SO4-2", "HSO4-", "HS-", "H2S"),
+  c("CO3-2", "HCO3-", "CO2")
+)
 
 # Make a diagram with dotted lines and aqueous species labels for log(activity of aqueous Fe species) = -4
-m4 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T, P = P)
+m4 <- mosaic(bases, pH = pH, Eh = Eh, T = T, P = P)
 names.aq <- species()$name; names.aq[4:8] <- ""
 diagram(m4$A.species, lty = 3, names = names.aq, col.names = 4)
 
 # Overlay solid lines and mineral labels for log(activity of aqueous Fe species) = -6
 species(c("Fe+2", "Fe+3", "HFeO2-"), -6)
-m6 <- mosaic(bases, bases2, pH = pH, Eh = Eh, T = T, P = P)
+m6 <- mosaic(bases, pH = pH, Eh = Eh, T = T, P = P)
 names <- species()$name; names[1:3] <- ""
 # Adjust labels
 srt <- dy <- numeric(length(names))
@@ -60,8 +62,8 @@ diagram(m6$A.species, add = TRUE, names = names, dy = dy, srt = srt, bold = TRUE
 diagram(m4$A.species, lty = 3, names = names.aq, col.names = 4, add = TRUE, fill = NA)
 
 # Show the predominance fields for the sulfur and carbonate basis species
-dS <- diagram(m4$A.bases, italic = TRUE, plot.it = FALSE)
-dC <- diagram(m4$A.bases2, italic = TRUE, plot.it = FALSE)
+dS <- diagram(m4$A.bases[[1]], italic = TRUE, plot.it = FALSE)
+dC <- diagram(m4$A.bases[[2]], italic = TRUE, plot.it = FALSE)
 dSC <- mash(dS, dC)
 diagram(dSC, lty = 2, col = 8, col.names = 8, add = TRUE, srt = 90)
 

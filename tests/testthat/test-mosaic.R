@@ -157,6 +157,4 @@ test_that("mosaic() - equilibrate() produces equilibrium activities that are con
   expect_equivalent(Adiff, rep(0, length(Adiff)))
 })
 
-# TODO: test that basis specifications can be exchanged between bases and bases2 without altering output
-
 }
