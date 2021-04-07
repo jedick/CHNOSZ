@@ -28,7 +28,10 @@ ionize.aa <- function(aa, property="Z", T=25, P="Psat", pH=7, ret.val=NULL, supp
   # what property are we after
   sprop <- c("G", property)
   if(property %in%  c("A", "Z")) sprop <- "G"
-  sout <- subcrt(c(ineutral, icharged), T=T[!dupPT], P=P[!dupPT], property=sprop)$out
+  # Use convert=FALSE so we get results in calories 20210407
+  # (means we need to supply temperature in Kelvin)
+  TK <- convert(T, "K")
+  sout <- subcrt(c(ineutral, icharged), T=TK[!dupPT], P=P[!dupPT], property=sprop, convert = FALSE)$out
   # the G-values
   Gs <- sapply(sout, function(x) x$G)
   # keep it as a matrix even if we have only one unique T, P-combo
@@ -40,7 +43,7 @@ ionize.aa <- function(aa, property="Z", T=25, P="Psat", pH=7, ret.val=NULL, supp
   DG <- t(sapply(pTP, function(x) DG[match(x, uPT), , drop=FALSE]))
   # the pK values (-logK) 
   DG <- DG * charges
-  pK <- apply(DG, 2, function(x) convert(x, "logK", T=convert(T, "K")))
+  pK <- apply(DG, 2, function(x) convert(x, "logK", T=TK))
   # keep it as a matrix even if we have only one T, P-combo
   if(lmax==1) pK <- t(pK)
   if(identical(ret.val, "pK")) {

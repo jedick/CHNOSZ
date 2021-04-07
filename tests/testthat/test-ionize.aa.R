@@ -104,6 +104,17 @@ test_that("affinity of ionization is consistent with manual calculations", {
   expect_equal(ionize.aa(aa, property="A")[1, ], A.protein, check.attributes=FALSE)
 })
 
+# Test added 20210407
+test_that("protein ionization calculations are not affected by E.units()", {
+  E.units("cal")
+  basis(c("CO2", "H2", "NH4+", "H2O", "H2S", "H+"))
+  a1 <- affinity(iprotein = 1)
+  E.units("J")
+  a2 <- affinity(iprotein = 1)
+  expect_equal(a1$values, a2$values)
+  reset()
+})
+
 # references
 
 # Dick, J. M., LaRowe, D. E. and Helgeson, H. C. (2006) 

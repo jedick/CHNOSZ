@@ -28,22 +28,11 @@ don't have to compile anything to install CHNOSZ updates).
 
 - make swap.basis() work when DEW model is active
 
-- Check that protein ionization calculations are not affected by E.units()
-library(testthat)
-reset()
-basis(c("CO2", "H2", "NH4+", "H2O", "H2S", "H+"))
-a1 <- affinity(iprotein = 1)
-E.units("J")
-a2 <- affinity(iprotein = 1)
-expect_equal(a1$values, a2$values)
-
 [20210212]
 
 - Fix formatting of messages from palply() (seen with read.fasta())
 
 [20210219]
-
-- Don't use data(thermo) in demo Shiny app (citrate)
 
 - Check all mineral abbreviations in Berman_cr.csv.
 

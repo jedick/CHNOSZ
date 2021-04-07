@@ -25,7 +25,7 @@
   \item{exceed.Ttr}{logical, calculate Gibbs energies of mineral phases and other species beyond their transition temperatures?}
   \item{exceed.rhomin}{logical, return properties of species in the HKF model below 0.35 g cm\S{-3}?}
   \item{logact}{numeric, logarithms of activities of species in reaction}
-  \item{convert}{logical, are input and output units of T and P those of the user (\code{TRUE}) (see \code{\link{T.units}}), or are they Kelvin and bar (\code{FALSE})?}
+  \item{convert}{logical, are units of T, P, and energy settable by the user (default) (see \code{\link{T.units}})?}
   \item{autobalance}{logical, attempt to automatically balance reaction with basis species?}
   \item{IS}{numeric, ionic strength(s) at which to calculate adjusted molal properties, mol kg\eqn{^{-1}}{^-1}}
 }
@@ -55,8 +55,8 @@ Note that \code{E} and \code{kT} can only be calculated for aqueous species and 
 On the other hand, if the \code{water} option is \samp{SUPCRT} (the default), \code{E} and \code{kT} can be calculated for water but not for aqueous species.
 (This is not an inherent limitation in either formulation, but it is just a matter of implementation.)
 
-Depending on the units currently defined (\code{\link{E.units}}) the values of \code{G}, \code{H}, \code{S} and \code{Cp} are returned using calories or Joules as the unit of energy, but only if \code{convert} is \code{TRUE}.
-Likewise, the input values of \code{T} and \code{P} are interpreted to have the units specified through \code{\link{T.units}} and \code{\link{P.units}}, but setting \code{convert} to \code{FALSE} forces \code{subcrt} to treat them as Kelvin and bar, respectively.
+If \code{convert} is \code{TRUE} (the default), the input values of \code{T} and \code{P} are interpreted to have the units given by \code{\link{T.units}} and \code{\link{P.units}} (default: \degC and bar), and the output values of \code{G}, \code{H}, \code{S} and \code{Cp} are based on the units given in \code{\link{E.units}} (default: calories).
+If \code{convert} is \code{FALSE}, the user units (\code{\link{T.units}}, \code{\link{P.units}}, and \code{\link{E.units}}) are ignored, and \code{T} and \code{P} are taken to be in Kelvin and bar, and the returned values of \code{G}, \code{H}, \code{S} and \code{Cp} are in calories.
 
 A chemical reaction is defined if \code{coeff} is given.
 In this mode the standard molal properties of species are summed according to the stoichiometric \code{coeff}icients, where negative values denote reactants.
