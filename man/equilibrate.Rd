@@ -11,8 +11,9 @@ Calculate equilibrium chemical activities of species from the affinities of form
 
 \usage{
   equilibrate(aout, balance = NULL, loga.balance = NULL,
-    ispecies = !grepl("cr", aout$species$state), normalize = FALSE, as.residue = FALSE,
-    method = c("boltzmann", "reaction"), tol = .Machine$double.eps^0.25)
+    ispecies = !grepl("cr", aout$species$state), normalize = FALSE,
+    as.residue = FALSE, method = c("boltzmann", "reaction"),
+    tol = .Machine$double.eps^0.25)
   equil.boltzmann(Astar, n.balance, loga.balance)
   equil.reaction(Astar, n.balance, loga.balance, tol = .Machine$double.eps^0.25)
   moles(eout)

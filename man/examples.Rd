@@ -30,40 +30,40 @@
 \code{demos} runs all the \code{\link{demo}s} in the package.
 The demo(s) to run is/are specified by \code{which}; the default is to run them in the order of the list below.
 
-  \tabular{ll}{
-    \code{sources} \tab Cross-check the reference list with the thermodynamic database \cr
-    \code{protein.equil} \tab Chemical activities of two proteins in metastable equilibrium (Dick and Shock, 2011) \cr
-    \code{affinity} \tab Affinities of metabolic reactions and amino acid synthesis (Amend and Shock, 1998, 2001) \cr
-    \code{NaCl} \tab Equilibrium constant for aqueous NaCl dissociation (Shock et al., 1992) \cr
-    \code{density} \tab Density of \H2O, inverted from IAPWS-95 equations (\code{\link{rho.IAPWS95}}) \cr
-    \code{ORP} \tab Temperature dependence of oxidation-reduction potential for redox standards \cr
-    \code{findit} \tab Minimize the standard deviation of logarithms of activities of sulfur species \cr
-    \code{ionize} \tab ionize.aa(): contour plots of net charge and ionization properties of LYSC_CHICK \cr
-    \code{buffer} \tab Minerals and aqueous species as buffers of hydrogen fugacity (Schulte and Shock, 1995) \cr
-    \code{protbuff} \tab Chemical activities buffered by thiol peroxidases or sigma factors \cr
-    \code{glycinate} \tab Metal-glycinate complexes (Shock and Koretsky, 1995; Azadi et al., 2019) \cr
-    \code{mosaic} \tab Eh-pH diagram with two sets of changing basis species (Garrels and Christ, 1965) \cr
-    \code{copper} \tab Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001) \cr
-    \code{arsenic} \tab Another example of \code{\link{mosaic}}: Eh-pH diagram for the system As-O-H-S (Lu and Zhu, 2011) \cr
-    \code{solubility} \tab Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996) \cr
-    \code{gold} \tab Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009) \cr
-    \code{contour} \tab Gold solubility contours on a log fO2 - pH diagram (Williams-Jones et al., 2009) \cr
-    \code{sphalerite} \tab Solubility of sphalerite (Akinfiev and Tagirov, 2014) \cr
-    \code{zinc} \tab Solubilities of multiple minerals (zincite and sphalerite) \cr
-    \code{dehydration} \tab \logK of dehydration reactions; SVG file contains tooltips and links \cr
-    \code{Shh} \tab Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015) \cr
-    \code{saturation} \tab Equilibrium activity diagram showing activity ratios and mineral saturation limits (Bowers et al., 1984) \cr
-    \code{adenine} \tab HKF regression of heat capacity and volume of aqueous adenine (Lowe et al., 2017) \cr
-    \code{DEW} \tab Deep Earth Water (DEW) model for high pressures (Sverjensky et al., 2014a and 2014b) \cr
-    \code{lambda} \tab Effects of lambda transition on thermodynamic properties of quartz (Berman, 1988) \cr
-    \code{potassium} \tab Comparison of thermodynamic datasets for predicting mineral stabilities (Sverjensky et al., 1991) \cr
-    \code{TCA} \tab Standard Gibbs energies of the tricarboxylic (citric) acid cycle (Canovas and Shock, 2016) \cr
-    \code{aluminum} \tab Reactions involving Al-bearing minerals (Zimmer et al., 2016; Tutolo et al., 2014) \cr
-    \code{carboxylase} \tab Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase \cr
-    \code{AkDi} \tab Henry's constant of dissolved gases (Akinfiev and Diamond, 2003) \cr
-    \code{comproportionation} \tab Gibbs energy of sulfur comproportionation (Amend et al., 2020) \cr
-    \code{Pourbaix} \tab Eh-pH diagram for Fe-O-H with equisolubility lines (Pourbaix, 1974) \cr
-    \code{E_coli} \tab Gibbs energy of biomass synthesis in \emph{E. coli} (LaRowe and Amend, 2016) \cr
+  \describe{
+    \item{sources}{Cross-check the reference list with the thermodynamic database}
+    \item{protein.equil}{Chemical activities of two proteins in metastable equilibrium (Dick and Shock, 2011)}
+    \item{affinity}{Affinities of metabolic reactions and amino acid synthesis (Amend and Shock, 1998, 2001)}
+    \item{NaCl}{Equilibrium constant for aqueous NaCl dissociation (Shock et al., 1992)}
+    \item{density}{Density of \H2O, inverted from IAPWS-95 equations (\code{\link{rho.IAPWS95}})}
+    \item{ORP}{Temperature dependence of oxidation-reduction potential for redox standards}
+    \item{findit}{Minimize the standard deviation of logarithms of activities of sulfur species}
+    \item{ionize}{ionize.aa(): contour plots of net charge and ionization properties of LYSC_CHICK}
+    \item{buffer}{Minerals and aqueous species as buffers of hydrogen fugacity (Schulte and Shock, 1995)}
+    \item{protbuff}{Chemical activities buffered by thiol peroxidases or sigma factors}
+    \item{glycinate}{Metal-glycinate complexes (Shock and Koretsky, 1995; Azadi et al., 2019)}
+    \item{mosaic}{Eh-pH diagram with two sets of changing basis species (Garrels and Christ, 1965)}
+    \item{copper}{Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001)}
+    \item{arsenic}{Another example of \code{\link{mosaic}}: Eh-pH diagram for the system As-O-H-S (Lu and Zhu, 2011)}
+    \item{solubility}{Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996)}
+    \item{gold}{Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009)}
+    \item{contour}{Gold solubility contours on a log fO2 - pH diagram (Williams-Jones et al., 2009)}
+    \item{sphalerite}{Solubility of sphalerite (Akinfiev and Tagirov, 2014)}
+    \item{zinc}{Solubilities of multiple minerals (zincite and sphalerite)}
+    \item{dehydration}{\logK of dehydration reactions; SVG file contains tooltips and links}
+    \item{Shh}{Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015)}
+    \item{saturation}{Equilibrium activity diagram showing activity ratios and mineral saturation limits (Bowers et al., 1984)}
+    \item{adenine}{HKF regression of heat capacity and volume of aqueous adenine (Lowe et al., 2017)}
+    \item{DEW}{Deep Earth Water (DEW) model for high pressures (Sverjensky et al., 2014a and 2014b)}
+    \item{lambda}{Effects of lambda transition on thermodynamic properties of quartz (Berman, 1988)}
+    \item{potassium}{Comparison of thermodynamic datasets for predicting mineral stabilities (Sverjensky et al., 1991)}
+    \item{TCA}{Standard Gibbs energies of the tricarboxylic (citric) acid cycle (Canovas and Shock, 2016)}
+    \item{aluminum}{Reactions involving Al-bearing minerals (Zimmer et al., 2016; Tutolo et al., 2014)}
+    \item{carboxylase}{Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase}
+    \item{AkDi}{Henry's constant of dissolved gases (Akinfiev and Diamond, 2003)}
+    \item{comproportionation}{Gibbs energy of sulfur comproportionation (Amend et al., 2020)}
+    \item{Pourbaix}{Eh-pH diagram for Fe-O-H with equisolubility lines (Pourbaix, 1974)}
+    \item{E_coli}{Gibbs energy of biomass synthesis in \emph{E. coli} (LaRowe and Amend, 2016)}
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.

@@ -42,7 +42,7 @@ This function is compatible with systems of proteins, but note that for buffers 
 }
 
 \seealso{
-  \code{link{diagram}} with \code{type} set to the name of a basis species solves for the activity of the basis species.
+  \code{\link{diagram}} with \code{type} set to the name of a basis species solves for the activity of the basis species.
 }
 
 \examples{

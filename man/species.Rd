@@ -7,7 +7,8 @@
 }
 
 \usage{
-  species(species = NULL, state = NULL, delete = FALSE, add = FALSE, index.return = FALSE)
+  species(species = NULL, state = NULL, delete = FALSE, add = FALSE,
+    index.return = FALSE)
 }
 
 \arguments{

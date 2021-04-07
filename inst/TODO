@@ -28,14 +28,6 @@ don't have to compile anything to install CHNOSZ updates).
 
 - make swap.basis() work when DEW model is active
 
-[20210212]
-
-- Fix formatting of messages from palply() (seen with read.fasta())
-
-[20210301]
-
-- anintro.Rmd: change red to blue for sulfur basis species
-
 [20210303]
 
 - Add demo for effective equilibrium constant for diglycine on T-pH plot at

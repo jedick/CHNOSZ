@@ -698,7 +698,7 @@ res <- 200
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 m1 <- mosaic(bases, pH = c(0, 12, res), Eh=c(-1.2, 0.75, res), T=T)
 diagram(m1$A.species, lwd = 2)
-diagram(m1$A.bases, add = TRUE, col = "red1", col.names = "red1", lty = 3,
+diagram(m1$A.bases, add = TRUE, col = 4, col.names = 4, lty = 3,
         italic = TRUE)
 water.lines(m1$A.species, col = "blue1")
 ```
