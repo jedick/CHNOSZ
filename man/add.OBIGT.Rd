@@ -145,15 +145,15 @@ reset()
 \references{
 Apps, J. and Spycher, N. (2004) \emph{Data qualification for thermodynamic data used to support THC calculations}. DOC.20041118.0004 ANL-NBS-HS-000043 REV 00. Bechtel SAIC Company, LLC.
 
-Bazarkina, E. F., Zotov, A. V., and Akinfiev, N. N. (2010)  Pressure-dependent stability of cadmium chloride complexes: Potentiometric measurements at 1-1000 bar and 25°C. \emph{Geology of Ore Deposits} \bold{52}, 167--178. \url{https://doi.org/10.1134/S1075701510020054}
+Bazarkina, E. F., Zotov, A. V., and Akinfiev, N. N. (2010)  Pressure-dependent stability of cadmium chloride complexes: Potentiometric measurements at 1-1000 bar and 25°C. \emph{Geology of Ore Deposits} \bold{52}, 167--178. \doi{10.1134/S1075701510020054}
 
-Kitadai, N. (2014)  Thermodynamic prediction of glycine polymerization as a function of temperature and pH consistent with experimentally obtained results. \emph{J. Mol. Evol.} \bold{78}, 171--187. \url{https://doi.org/10.1007/s00239-014-9616-1}
+Kitadai, N. (2014)  Thermodynamic prediction of glycine polymerization as a function of temperature and pH consistent with experimentally obtained results. \emph{J. Mol. Evol.} \bold{78}, 171--187. \doi{10.1007/s00239-014-9616-1}
 
-Shock, E. L., Helgeson, H. C. and Sverjensky, D. A. (1989) Calculation of the thermodynamic and transport properties of aqueous species at high pressures and temperatures: Standard partial molal properties of inorganic neutral species. \emph{Geochim. Cosmochim. Acta} \bold{53}, 2157--2183. \url{https://doi.org/10.1016/0016-7037(89)90341-4}
+Shock, E. L., Helgeson, H. C. and Sverjensky, D. A. (1989) Calculation of the thermodynamic and transport properties of aqueous species at high pressures and temperatures: Standard partial molal properties of inorganic neutral species. \emph{Geochim. Cosmochim. Acta} \bold{53}, 2157--2183. \doi{10.1016/0016-7037(89)90341-4}
 
-Stef{\aacute}nsson, A. (2001) Dissolution of primary minerals of basalt in natural waters. I. Calculation of mineral solubilities from 0\degC to 350\degC. \emph{Chem. Geol.} \bold{172}, 225--250. \url{https://doi.org/10.1016/S0009-2541(00)00263-1}
+Stef{\aacute}nsson, A. (2001) Dissolution of primary minerals of basalt in natural waters. I. Calculation of mineral solubilities from 0\degC to 350\degC. \emph{Chem. Geol.} \bold{172}, 225--250. \doi{10.1016/S0009-2541(00)00263-1}
 
-Sverjensky, D. A., Shock, E. L., and Helgeson, H. C. (1997) Prediction of the thermodynamic properties of aqueous metal complexes to 1000 °C and 5 kbar. \emph{Geochim. Cosmochim. Acta} \bold{61}, 1359--1412. \url{https://doi.org/10.1016/S0016-7037(97)00009-4}
+Sverjensky, D. A., Shock, E. L., and Helgeson, H. C. (1997) Prediction of the thermodynamic properties of aqueous metal complexes to 1000 °C and 5 kbar. \emph{Geochim. Cosmochim. Acta} \bold{61}, 1359--1412. \doi{10.1016/S0016-7037(97)00009-4}
 }
 
 \concept{Thermodynamic data}

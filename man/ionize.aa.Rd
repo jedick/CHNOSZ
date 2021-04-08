@@ -63,9 +63,9 @@ title("Heat capacity of unfolded LYSC_CHICK")
 \references{
   Dick, J. M., LaRowe, D. E. and Helgeson, H. C. (2006) Temperature, pressure, and electrochemical constraints on protein speciation: Group additivity calculation of the standard molal thermodynamic properties of ionized unfolded proteins. \emph{Biogeosciences} \bold{3}, 311--336. \url{http://www.biogeosciences.net/3/311/2006/bg-3-311-2006.html}
 
-  Makhatadze, G. I. and Privalov, P. L. (1990) Heat capacity of proteins. 1. Partial molar heat capacity of individual amino acid residues in aqueous solution: Hydration effect. \emph{J. Mol. Biol.} \bold{213}, 375--384. \url{https://doi.org/10.1016/S0022-2836(05)80197-4}
+  Makhatadze, G. I. and Privalov, P. L. (1990) Heat capacity of proteins. 1. Partial molar heat capacity of individual amino acid residues in aqueous solution: Hydration effect. \emph{J. Mol. Biol.} \bold{213}, 375--384. \doi{10.1016/S0022-2836(05)80197-4}
 
-  Privalov, P. L. and Makhatadze, G. I. (1990) Heat capacity of proteins. II. Partial molar heat capacity of the unfolded polypeptide chain of proteins: Protein unfolding effects. \emph{J. Mol. Biol.} \bold{213}, 385--391. \url{https://doi.org/10.1016/S0022-2836(05)80198-6}
+  Privalov, P. L. and Makhatadze, G. I. (1990) Heat capacity of proteins. II. Partial molar heat capacity of the unfolded polypeptide chain of proteins: Protein unfolding effects. \emph{J. Mol. Biol.} \bold{213}, 385--391. \doi{10.1016/S0022-2836(05)80198-6}
 }
 
 \concept{Protein properties}

@@ -73,47 +73,47 @@
 }
 
 \references{
-Akinfiev, N. N. and Diamond, L. W. (2003) Thermodynamic description of aqueous nonelectrolytes at infinite dilution over a wide range of state parameters. \emph{Geochim. Cosmochim. Acta} \bold{67}, 613--629. \url{https://doi.org/10.1016/S0016-7037(02)01141-9}
+Akinfiev, N. N. and Diamond, L. W. (2003) Thermodynamic description of aqueous nonelectrolytes at infinite dilution over a wide range of state parameters. \emph{Geochim. Cosmochim. Acta} \bold{67}, 613--629. \doi{10.1016/S0016-7037(02)01141-9}
 
-Amend, J. P. and Helgeson, H. C. (1997) Calculation of the standard molal thermodynamic properties of aqueous biomolecules at elevated temperatures and pressures. Part 1. L-\alpha-amino acids. \emph{J. Chem. Soc., Faraday Trans.} \bold{93}, 1927--1941. \url{https://doi.org/10.1039/A608126F}
+Amend, J. P. and Helgeson, H. C. (1997) Calculation of the standard molal thermodynamic properties of aqueous biomolecules at elevated temperatures and pressures. Part 1. L-\alpha-amino acids. \emph{J. Chem. Soc., Faraday Trans.} \bold{93}, 1927--1941. \doi{10.1039/A608126F}
 
-Bazarkina, E. F., Zotov, A. V. and Akinfiev, N. N. (2010) Pressure-dependent stability of cadmium chloride complexes: Potentiometric measurements at 1–1000 bar and 25°C. \emph{Geol. Ore Deposits} \bold{52}, 167--178. \url{https://doi.org/10.1134/S1075701510020054}
+Bazarkina, E. F., Zotov, A. V. and Akinfiev, N. N. (2010) Pressure-dependent stability of cadmium chloride complexes: Potentiometric measurements at 1–1000 bar and 25°C. \emph{Geol. Ore Deposits} \bold{52}, 167--178. \doi{10.1134/S1075701510020054}
 
-Berman, R. G. (1988) Internally-consistent thermodynamic data for minerals in the system Na{\s2}O-K{\s2}O-CaO-MgO-FeO-Fe{\s2}O{\s3}-Al{\s2}O{\s3}-SiO{\s2}-TiO{\s2}-H{\s2}O-CO{\s2}. \emph{J. Petrol.} \bold{29}, 445-522. \url{https://doi.org/10.1093/petrology/29.2.445}
+Berman, R. G. (1988) Internally-consistent thermodynamic data for minerals in the system Na{\s2}O-K{\s2}O-CaO-MgO-FeO-Fe{\s2}O{\s3}-Al{\s2}O{\s3}-SiO{\s2}-TiO{\s2}-H{\s2}O-CO{\s2}. \emph{J. Petrol.} \bold{29}, 445-522. \doi{10.1093/petrology/29.2.445}
 
-Berman, R. G. and Aranovich, L. Ya. (1996) Optimized standard state and solution properties of minerals. I. Model calibration for olivine, orthopyroxene, cordierite, garnet, and ilmenite in the system FeO-MgO-CaO-Al{\s2}O{\s3}-TiO{\s2}-SiO{\s2}. \emph{Contrib. Mineral. Petrol.} \bold{126}, 1-24. \url{https://doi.org/10.1007/s004100050233}
+Berman, R. G. and Aranovich, L. Ya. (1996) Optimized standard state and solution properties of minerals. I. Model calibration for olivine, orthopyroxene, cordierite, garnet, and ilmenite in the system FeO-MgO-CaO-Al{\s2}O{\s3}-TiO{\s2}-SiO{\s2}. \emph{Contrib. Mineral. Petrol.} \bold{126}, 1-24. \doi{10.1007/s004100050233}
 
-Dick, J. M. (2014) Average oxidation state of carbon in proteins. \emph{J. R. Soc. Interface} \bold{11}, 20131095. \url{https://doi.org/10.1098/rsif.2013.1095}
+Dick, J. M. (2014) Average oxidation state of carbon in proteins. \emph{J. R. Soc. Interface} \bold{11}, 20131095. \doi{10.1098/rsif.2013.1095}
 
-Gattiker, A., Michoud, K., Rivoire, C., Auchincloss, A. H., Coudert, E., Lima, T., Kersey, P., Pagni, M., Sigrist, C. J. A., Lachaize, C., Veuthey, A.-L., Gasteiger, E. and Bairoch, A. (2003) Automatic annotation of microbial proteomes in Swiss-Prot. \emph{Comput. Biol. Chem.} \bold{27}, 49--58. \url{https://doi.org/10.1016/S1476-9271(02)00094-4}
+Gattiker, A., Michoud, K., Rivoire, C., Auchincloss, A. H., Coudert, E., Lima, T., Kersey, P., Pagni, M., Sigrist, C. J. A., Lachaize, C., Veuthey, A.-L., Gasteiger, E. and Bairoch, A. (2003) Automatic annotation of microbial proteomes in Swiss-Prot. \emph{Comput. Biol. Chem.} \bold{27}, 49--58. \doi{10.1016/S1476-9271(02)00094-4}
 
-Gaucher, E. A., Thomson, J. M., Burgan, M. F. and Benner, S. A (2003) Inferring the palaeoenvironment of ancient bacteria on the basis of resurrected proteins. \emph{Nature} \bold{425}(6955), 285--288. \url{https://doi.org/10.1038/nature01977}
+Gaucher, E. A., Thomson, J. M., Burgan, M. F. and Benner, S. A (2003) Inferring the palaeoenvironment of ancient bacteria on the basis of resurrected proteins. \emph{Nature} \bold{425}(6955), 285--288. \doi{10.1038/nature01977}
 
-Hnědkovský, L., Wood, R. H. and Majer, V. (1996) Volumes of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 298.15 K to 705 K and pressures to 35 MPa. \emph{J. Chem. Thermodyn.} \bold{28}, 125--142. \url{https://doi.org/10.1006/jcht.1996.0011}
+Hnědkovský, L., Wood, R. H. and Majer, V. (1996) Volumes of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 298.15 K to 705 K and pressures to 35 MPa. \emph{J. Chem. Thermodyn.} \bold{28}, 125--142. \doi{10.1006/jcht.1996.0011}
 
-Hnědkovský, L. and Wood, R. H. (1997) Apparent molar heat capacities of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 304 K to 704 K at a pressure of 28 MPa. \emph{J. Chem. Thermodyn.} \bold{29}, 731--747. \url{https://doi.org/10.1006/jcht.1997.0192}
+Hnědkovský, L. and Wood, R. H. (1997) Apparent molar heat capacities of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 304 K to 704 K at a pressure of 28 MPa. \emph{J. Chem. Thermodyn.} \bold{29}, 731--747. \doi{10.1006/jcht.1997.0192}
 
 Joint Genome Institute (2007) Bison Pool Environmental Genome. Protein sequence files downloaded from IMG/M (\url{https://img.jgi.doe.gov/})
 
-LaRowe, D. E. and Amend, J. P. (2019) The energetics of fermentation in natural settings. \emph{Geomicrobiol. J.} \bold{36}, 492--505. \url{https://doi.org/10.1080/01490451.2019.1573278}
+LaRowe, D. E. and Amend, J. P. (2019) The energetics of fermentation in natural settings. \emph{Geomicrobiol. J.} \bold{36}, 492--505. \doi{10.1080/01490451.2019.1573278}
 
-Merino, E. (1975) Diagenesis in teriary sandstones from Kettleman North Dome, California. II. Interstitial solutions: distribution of aqueous species at 100&deg;C and chemical relation to diagenetic mineralogy. \emph{Geochim. Cosmochim. Acta} \bold{39}, 1629--1645. \url{https://doi.org/10.1016/0016-7037(75)90085-X}
+Merino, E. (1975) Diagenesis in teriary sandstones from Kettleman North Dome, California. II. Interstitial solutions: distribution of aqueous species at 100&deg;C and chemical relation to diagenetic mineralogy. \emph{Geochim. Cosmochim. Acta} \bold{39}, 1629--1645. \doi{10.1016/0016-7037(75)90085-X}
 
-Privalov, P. L. and Makhatadze, G. I. (1990) Heat capacity of proteins. II. Partial molar heat capacity of the unfolded polypeptide chain of proteins: Protein unfolding effects. \emph{J. Mol. Biol.} \bold{213}, 385--391. \url{https://doi.org/10.1016/S0022-2836(05)80198-6}
+Privalov, P. L. and Makhatadze, G. I. (1990) Heat capacity of proteins. II. Partial molar heat capacity of the unfolded polypeptide chain of proteins: Protein unfolding effects. \emph{J. Mol. Biol.} \bold{213}, 385--391. \doi{10.1016/S0022-2836(05)80198-6}
 
-Richard, L. and Helgeson, H. C. (1998) Calculation of the thermodynamic properties at elevated temperatures and pressures of saturated and aromatic high molecular weight solid and liquid hydrocarbons in kerogen, bitumen, petroleum, and other organic matter of biogeochemical interest. \emph{Geochim. Cosmochim. Acta} \bold{62}, 3591--3636. \url{https://doi.org/10.1016/S0016-7037(97)00345-1}
+Richard, L. and Helgeson, H. C. (1998) Calculation of the thermodynamic properties at elevated temperatures and pressures of saturated and aromatic high molecular weight solid and liquid hydrocarbons in kerogen, bitumen, petroleum, and other organic matter of biogeochemical interest. \emph{Geochim. Cosmochim. Acta} \bold{62}, 3591--3636. \doi{10.1016/S0016-7037(97)00345-1}
 
 Robie, R. A. and Hemingway, B. S. (1995) \emph{Thermodynamic Properties of Minerals and Related Substances at 298.15 K and 1 Bar (\eqn{10^5} Pascals) Pressure and at Higher Temperatures}. U. S. Geol. Surv., Bull. 2131, 461 p. \url{https://www.worldcat.org/oclc/32590140}
 
-Shock, E. and Canovas, P. (2010) The potential for abiotic organic synthesis and biosynthesis at seafloor hydrothermal systems. \emph{Geofluids} \bold{10}, 161--192. \url{https://doi.org/10.1111/j.1468-8123.2010.00277.x}
+Shock, E. and Canovas, P. (2010) The potential for abiotic organic synthesis and biosynthesis at seafloor hydrothermal systems. \emph{Geofluids} \bold{10}, 161--192. \doi{10.1111/j.1468-8123.2010.00277.x}
 
-Shock, E. L. and Koretsky, C. M. (1995) Metal-organic complexes in geochemical processes: Estimation of standard partial molal thermodynamic properties of aqueous complexes between metal cations and monovalent organic acid ligands at high pressures and temperatures. \emph{Geochim. Cosmochim. Acta} \bold{59}, 1497--1532. \url{https://doi.org/10.1016/0016-7037(95)00058-8}
+Shock, E. L. and Koretsky, C. M. (1995) Metal-organic complexes in geochemical processes: Estimation of standard partial molal thermodynamic properties of aqueous complexes between metal cations and monovalent organic acid ligands at high pressures and temperatures. \emph{Geochim. Cosmochim. Acta} \bold{59}, 1497--1532. \doi{10.1016/0016-7037(95)00058-8}
 
-Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \url{https://doi.org/10.1039/FT9928800803}
+Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \doi{10.1039/FT9928800803}
 
-Shock, E. L. and Schulte, M. D. (1998) Organic synthesis during fluid mixing in hydrothermal systems. \emph{J. Geophys. Res.} \bold{103}, 28513--28527. \url{https://doi.org/10.1029/98JE02142}
+Shock, E. L. and Schulte, M. D. (1998) Organic synthesis during fluid mixing in hydrothermal systems. \emph{J. Geophys. Res.} \bold{103}, 28513--28527. \doi{10.1029/98JE02142}
 
-Tutolo, B. M., Kong, X.-Z., Seyfried, W. E., Jr. and Saar, M. O. (2014) Internal consistency in aqueous geochemical data revisited: Applications to the aluminum system. \emph{Geochim. Cosmochim. Acta} \bold{133}, 216--234. \url{https://doi.org/10.1016/j.gca.2014.02.036}
+Tutolo, B. M., Kong, X.-Z., Seyfried, W. E., Jr. and Saar, M. O. (2014) Internal consistency in aqueous geochemical data revisited: Applications to the aluminum system. \emph{Geochim. Cosmochim. Acta} \bold{133}, 216--234. \doi{10.1016/j.gca.2014.02.036}
 
 }
 

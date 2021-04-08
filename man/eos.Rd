@@ -96,21 +96,21 @@ print(C8H18par)
 
 \references{
 
-  Akinfiev, N. N. and Diamond, L. W. (2003) Thermodynamic description of aqueous nonelectrolytes at infinite dilution over a wide range of state parameters. \emph{Geochim. Cosmochim. Acta} \bold{67}, 613--629. \url{https://doi.org/10.1016/S0016-7037(02)01141-9}
+  Akinfiev, N. N. and Diamond, L. W. (2003) Thermodynamic description of aqueous nonelectrolytes at infinite dilution over a wide range of state parameters. \emph{Geochim. Cosmochim. Acta} \bold{67}, 613--629. \doi{10.1016/S0016-7037(02)01141-9}
 
-  Helgeson, H. C., Kirkham, D. H. and Flowers, G. C. (1981) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures. IV. Calculation of activity coefficients, osmotic coefficients, and apparent molal and standard and relative partial molal properties to 600\degC and 5 Kb. \emph{Am. J. Sci.} \bold{281}, 1249--1516. \url{https://doi.org/10.2475/ajs.281.10.1249}
+  Helgeson, H. C., Kirkham, D. H. and Flowers, G. C. (1981) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures. IV. Calculation of activity coefficients, osmotic coefficients, and apparent molal and standard and relative partial molal properties to 600\degC and 5 Kb. \emph{Am. J. Sci.} \bold{281}, 1249--1516. \doi{10.2475/ajs.281.10.1249}
 
-  Helgeson, H. C., Owens, C. E., Knox, A. M. and Richard, L. (1998) Calculation of the standard molal thermodynamic properties of crystalline, liquid, and gas organic molecules at high temperatures and pressures. \emph{Geochim. Cosmochim. Acta} \bold{62}, 985--1081. \url{https://doi.org/10.1016/S0016-7037(97)00219-6}
+  Helgeson, H. C., Owens, C. E., Knox, A. M. and Richard, L. (1998) Calculation of the standard molal thermodynamic properties of crystalline, liquid, and gas organic molecules at high temperatures and pressures. \emph{Geochim. Cosmochim. Acta} \bold{62}, 985--1081. \doi{10.1016/S0016-7037(97)00219-6}
 
-  Maier, C. G. and Kelley, K. K. (1932) An equation for the representation of high-temperature heat content data. \emph{J. Am. Chem. Soc.} \bold{54}, 3243--3246. \url{https://doi.org/10.1021/ja01347a029}
+  Maier, C. G. and Kelley, K. K. (1932) An equation for the representation of high-temperature heat content data. \emph{J. Am. Chem. Soc.} \bold{54}, 3243--3246. \doi{10.1021/ja01347a029}
 
   Robie, R. A. and Hemingway, B. S. (1995) \emph{Thermodynamic Properties of Minerals and Related Substances at 298.15 K and 1 Bar (\eqn{10^5} Pascals) Pressure and at Higher Temperatures}. U. S. Geol. Surv., Bull. 2131, 461 p. \url{https://www.worldcat.org/oclc/32590140}
 
-  Shock, E. L. and Helgeson, H. C. (1988) Calculation of the thermodynamic and transport properties of aqueous species at high pressures and temperatures: Correlation algorithms for ionic species and equation of state predictions to 5 kb and 1000\degC. \emph{Geochim. Cosmochim. Acta} \bold{52}, 2009--2036. \url{https://doi.org/10.1016/0016-7037(88)90181-0}
+  Shock, E. L. and Helgeson, H. C. (1988) Calculation of the thermodynamic and transport properties of aqueous species at high pressures and temperatures: Correlation algorithms for ionic species and equation of state predictions to 5 kb and 1000\degC. \emph{Geochim. Cosmochim. Acta} \bold{52}, 2009--2036. \doi{10.1016/0016-7037(88)90181-0}
   
-  Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \url{https://doi.org/10.1039/FT9928800803}
+  Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \doi{10.1039/FT9928800803}
 
-  Tanger, J. C. IV and Helgeson, H. C. (1988) Calculation of the thermodynamic and transport properties of aqueous species at high pressures and temperatures: Revised equations of state for the standard partial molal properties of ions and electrolytes. \emph{Am. J. Sci.} \bold{288}, 19--98. \url{https://doi.org/10.2475/ajs.288.1.19}
+  Tanger, J. C. IV and Helgeson, H. C. (1988) Calculation of the thermodynamic and transport properties of aqueous species at high pressures and temperatures: Revised equations of state for the standard partial molal properties of ions and electrolytes. \emph{Am. J. Sci.} \bold{288}, 19--98. \doi{10.2475/ajs.288.1.19}
 
 }
 

@@ -77,8 +77,5 @@ Documentation
 
 - Ensure all Rd files have \concept{...} as listed in CHNOSZ-package.Rd
 
-- Instead of \doi{...}, use \url{https://doi.org/...}. The \doi macro
-  generates a large (ca. 265K) build/partial.rdb file (see WRE 1.3.2).
-
 - Run R_PAPERSIZE=letter R CMD Rd2pdf chnosz/
   and fix any lines truncated by page margins

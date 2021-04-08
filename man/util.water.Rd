@@ -75,7 +75,7 @@ water(oldwat)
 \references{
 Archer, D. G. and Wang, P. M. (1990) The dielectric constant of water and Debye-Hückel limiting law slopes. \emph{J. Phys. Chem. Ref. Data} \bold{19}, 371--411. \url{https://srd.nist.gov/JPCRD/jpcrd383.pdf}
 
-Wagner, W. and Pruß, A. (2002) The IAPWS formulation 1995 for the thermodynamic properties of ordinary water substance for general and scientific use. \emph{J. Phys. Chem. Ref. Data} \bold{31}, 387--535. \url{https://doi.org/10.1063/1.1461829}
+Wagner, W. and Pruß, A. (2002) The IAPWS formulation 1995 for the thermodynamic properties of ordinary water substance for general and scientific use. \emph{J. Phys. Chem. Ref. Data} \bold{31}, 387--535. \doi{10.1063/1.1461829}
 }
 
 \concept{Water properties}

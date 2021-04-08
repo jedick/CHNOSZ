@@ -111,9 +111,9 @@ The vignette \viglink{eos-regress} has more references and examples, including a
 }
 
 \references{
-  Hnědkovský, L. and Wood, R. H. (1997) Apparent molar heat capacities of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 304 K to 704 K at a pressure of 28 MPa. \emph{J. Chem. Thermodyn.} \bold{29}, 731--747. \url{https://doi.org/10.1006/jcht.1997.0192}
+  Hnědkovský, L. and Wood, R. H. (1997) Apparent molar heat capacities of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 304 K to 704 K at a pressure of 28 MPa. \emph{J. Chem. Thermodyn.} \bold{29}, 731--747. \doi{10.1006/jcht.1997.0192}
 
-  Schulte, M. D., Shock, E. L. and Wood, R. H. (1995) The temperature dependence of the standard-state thermodynamic properties of aqueous nonelectrolytes. \emph{Geochim. Cosmochim. Acta} \bold{65}, 3919--3930. \url{https://doi.org/10.1016/S0016-7037(01)00717-7}
+  Schulte, M. D., Shock, E. L. and Wood, R. H. (1995) The temperature dependence of the standard-state thermodynamic properties of aqueous nonelectrolytes. \emph{Geochim. Cosmochim. Acta} \bold{65}, 3919--3930. \doi{10.1016/S0016-7037(01)00717-7}
 }
 
 
