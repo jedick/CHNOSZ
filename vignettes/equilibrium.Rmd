@@ -331,7 +331,8 @@ prA <- function() {
 prB <- function() {
   a <- affinity(O2 = c(-90, -70))
   e <- equilibrate(a, balance = "length")
-  diagram(e, names = organisms, ylim = c(-5, -1))
+  ylab <- quote(log~italic(a)~protein)
+  diagram(e, names = organisms, ylim = c(-5, -1), ylab = ylab)
 }
 
 prC <- function() {
@@ -342,7 +343,8 @@ prC <- function() {
 prD <- function() {
   a <- affinity(O2 = c(-90, -70))
   e <- equilibrate(a, normalize = TRUE)
-  diagram(e, names = organisms, ylim = c(-5, -1))
+  ylab <- quote(log~italic(a)~protein)
+  diagram(e, names = organisms, ylim = c(-5, -1), ylab = ylab)
 }
 
 prE <- function() {
@@ -353,7 +355,8 @@ prE <- function() {
 prF <- function() {
   a <- affinity(O2 = c(-90, -70))
   e <- equilibrate(a, as.residue = TRUE, loga.balance = 0)
-  diagram(e, names = organisms, ylim = c(-3, 1))
+  ylab <- quote(log~italic(a)~residue)
+  diagram(e, names = organisms, ylim = c(-3, 1), ylab = ylab)
 }
 ```
 

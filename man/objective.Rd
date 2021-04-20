@@ -115,7 +115,7 @@ all(DDGmix.out >= 0)  # FALSE
 
   Anderson, G. M. (2005) \emph{Thermodynamics of Natural Systems}, 2nd ed., Cambridge University Press, 648 p. \url{https://www.worldcat.org/oclc/474880901}
 
-  Dick, J. M. and Shock, E. L. (2013) A metastable equilibrium model for the relative abundance of microbial phyla in a hot spring. \emph{PLoS ONE} \bold{8}, e72395. \doi{10.1371/journal.pone.0072395}
+  Dick, J. M. and Shock, E. L. (2013) A metastable equilibrium model for the relative abundance of microbial phyla in a hot spring. \emph{PLOS One} \bold{8}, e72395. \doi{10.1371/journal.pone.0072395}
 
   Ludovisi, A. and Taticchi, M. I. (2006) Investigating beta diversity by Kullback-Leibler information measures. \emph{Ecological Modelling} \bold{192}, 299--313. \doi{10.1016/j.ecolmodel.2005.05.022}
 

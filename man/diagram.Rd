@@ -41,7 +41,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
   \item{eout}{list, object returned by \code{\link{equilibrate}} or \code{\link{affinity}}}
   \item{type}{character, type of plot, or name of basis species whose activity to plot}
   \item{alpha}{logical or character (\samp{balance}), for speciation diagrams, plot degree of formation instead of activities?}
-  \item{normalize}{logical, divide chemical affinities by balance coefficients (rescale to whole formulas)?}
+  \item{normalize}{logical, divide chemical affinities by balance coefficients and rescale activities to whole formulas?}
   \item{as.residue}{logical, divide chemical affinities by balance coefficients (no rescaling)?}
   \item{balance}{character, balancing constraint; see \code{\link{equilibrate}}}
   \item{groups}{list of numeric, groups of species to consider as a single effective species}
@@ -112,9 +112,15 @@ The x- and y-axis labels are automatically generated unless they are supplied in
 If \code{groups} is supplied, the activities of the species identified in each numeric element of this list are multiplied by the balance coefficients of the species, then summed together.
 The names of the list are used to label the lines or fields for the summed activities of the resulting groups.
 
+Normalizing protein formulas by length gives \dQuote{residue equivalents} (Dick and Shock, 2011) that are useful for equilibrium calculations with proteins.
+\code{normalize} and \code{as.residue} are only usable when \code{eout} is the output from \code{affinity}, and only one can be TRUE.
+If \code{normalize} is TRUE, the strategy is to divide reactions (formulas and affinities) by protein length, calculate activities of residues in equilibrium, but plot corresponding activities of the proteins.
+If \code{as.residue} is TRUE, no rescaling is performed, so the diagram represents activities of the residues, not the whole proteins.
+
 }
 
 \section{\code{type} argument}{
+
 This paragraph describes the effect of the \code{type} argument when the output from \code{affinity} is being used.
 For \code{type} set to \samp{auto}, and with 0 or 1 variables defined in \code{\link{affinity}}, the property computed by \code{affinity} for each species is plotted.
 This is usually the affinity of the formation reactions, but can be set to some other property (using the \code{property} argument of \code{affinity}), such as the equilibrium constant (\samp{logK}).
@@ -131,9 +137,11 @@ If \code{type} is \samp{loga.balance}, the activity of the balancing basis speci
 For two or more minerals or gases, if \code{type} set to \samp{auto}, the values of \samp{loga.balance} (overall minimum solubility) are plotted.
 If \code{type} is \samp{loga.equil}, the solubilities of the individual minerals and gases are plotted.
 For examples that use these features, see \code{\link{solubility}} and various \code{\link{demos}}: \samp{DEW}, \samp{contour}, \samp{gold}, \samp{solubility}, \samp{sphalerite}.
+
 }
 
 \section{1-D diagrams}{
+
 For 1-D diagrams, the default setting for the y-axis is a logarithmic scale (unless \code{alpha} is TRUE) with limits corresponding to the range of logarithms of activities (or 0,1 if \code{alpha} is TRUE); these actions can be overridden by \code{ylog} and \code{ylim}.
 If \code{legend.x} is NA (the default), the lines are labeled with the names of the species near the maximum value.
 Otherwise, a \code{\link{legend}} is placed at the location identified by \code{legend.x}, or omitted if \code{legend.x} is NULL.
@@ -142,9 +150,11 @@ If \code{alpha} is TRUE, the fractional degrees of formation (ratios of activiti
 Or, setting \code{alpha} to \samp{balance} allows the activities to be multiplied by the number of the balancing component; this is useful for making \dQuote{percent carbon} diagrams where the species differ in carbon number.
 The line type and line width can be controlled with \code{lty} and \code{lwd}, respectively.
 To connect the points with splines instead of lines, set \code{spline.method} to one of the methods in \code{\link{splinefun}}.
+
 }
 
 \section{2-D diagrams}{
+
 On 2-D diagrams, the fields represent the species with the highest equilibrium activity.
 \code{fill} determines the color of the predominance fields, \code{col} that of the boundary lines.
 The default of NULL for \code{fill} uses a light blue, light tan, and darker tan color for fields with aqueous species, one solid, or two solids.
@@ -169,35 +179,39 @@ Set \code{lty.cr} or \code{lty.aq} to 0 to suppress boundary lines between miner
 To go back to the old behavior for drawing lines, set \code{dotted} to \samp{0}.
 The old behavior does not respect \code{lty}; instead, the style of the boundary lines on 2-D diagrams can be altered by supplying one or more non-zero integers in \code{dotted}, which indicates the fraction of line segments to omit; a value of \samp{1} or NULL for \code{dotted} has the effect of not drawing the boundary lines.
 
-\code{normalize} and \code{as.residue} apply only to the 2-D diagrams, and only when \code{eout} is the output from \code{affinity}.
-With \code{normalize}, the activity boundaries are calculated between the residues of the species (the species divided by the balance coefficients), then the activities are rescaled to the whole species formulas.
-With \code{as.residue}, the activity boundaries are calculated between the residues of the species, and no rescaling is performed.
 }
 
 \section{Activity Coefficients}{
+
 The wording in this page and names of variables in functions refer exclusively to \samp{activities} of aqueous species.
 However, if activity coefficients are calculated (using the \code{IS} argument in \code{\link{affinity}}), then these variables are effectively transformed to molalities (see \code{tests/testthat/} \code{test-logmolality.R}).
 So that the labels on diagrams are adjusted accordingly, \code{\link{diagram}} sets the \code{molality} argument of \code{\link{axis.label}} to TRUE if \code{IS} was supplied as an argument to \code{\link{affinity}}.
 The labeling as molality takes effect even if \code{IS} is set to 0; this way, by including (or not) the \code{IS = 0} argument to \code{affinity}, the user decides whether to label aqueous species variables as molality (or activity) for calculations at zero ionic strength (where molality = activity).
+
 }
 
 \section{Other Functions}{
+
 \code{find.tp} finds the locations in a matrix of integers that are surrounded by the greatest number of different values.
 The function counts the unique values in a 3x3 grid around each point and returns a matrix of indices (similar to \code{\link{which}(..., arr.ind = TRUE)}) for the maximum count (ties result in more than one pair of indices).
 It can be used with the output from \code{diagram} for calculations in 2 dimensions to approximately locate the triple points on the diagram.
+
 }
 
 \section{Value}{
+
   \code{diagram} returns an \code{\link{invisible}} list containing, first, the contents of \code{eout}, i.e. the output of \code{\link{affinity}} or \code{\link{equilibrate}} supplied in the function call.
   To this are added the names of the plotted variable in \code{plotvar}, the labels used for species (which may be \code{\link{plotmath}} expressions if \code{format.names} is TRUE) in \code{names}, and the values used for plotting in a list named \code{plotvals}.
   For 1-D diagrams, \code{plotvals} usually corresponds to the chemical activities of the species (i.e. \code{eout$loga.equil}), or, if \code{alpha} is \code{TRUE}, their mole fractions (degrees of formation).
   For 2-D diagrams, \code{plotvals} corresponds to the values of affinity (from \code{eout$values}) divided by the respective balancing coefficients for each species.
   For 2-D diagrams, the output also contains the matrices \code{predominant}, which identifies the predominant species in \code{eout$species} at each grid point, and \code{predominant.values}, which has the affinities of the predominant species divided by the balancing coefficients (if \code{eout} is the output of \code{affinity}) or the activities of the predominant species (if \code{eout} is the output of \code{equilibrate}).
   The rows and columns of these matrices correspond to the \emph{x} and \emph{y} variables, respectively.
+
 }
 
 \seealso{ 
-Other examples are present in the help for \code{\link{buffer}}, and even more can be found in \code{\link{demos}}.
+\code{\link{berman}}, \code{\link{mix}}, \code{\link{mosaic}}, \code{\link{nonideal}}, \code{\link{revisit}}, \code{\link{solubility}}, and \code{\link{util.plot}} are other help topics that use \code{diagram} in their examples.
+See the \code{\link{demos}} for even more examples.
 }
 
 \examples{
@@ -303,6 +317,8 @@ points(Ttp, Ptp, pch=10, cex=5)
 Aksu, S. and Doyle, F. M. (2001) Electrochemistry of copper in aqueous glycine solutions. \emph{J. Electrochem. Soc.} \bold{148}, B51--B57.
 
 Dick, J. M. (2019) CHNOSZ: Thermodynamic calculations and diagrams for geochemistry. \emph{Front. Earth Sci.} \bold{7}:180. \doi{10.3389/feart.2019.00180}
+
+Dick, J. M. and Shock, E. L. (2011) Calculation of the relative chemical stabilities of proteins as a function of temperature and redox chemistry in a hot spring. \emph{PLOS One} \bold{6}, e22782. \doi{10.1371/journal.pone.0022782}
 
 Helgeson, H. C. (1970) A chemical and thermodynamic model of ore deposition in hydrothermal systems. \emph{Mineral. Soc. Amer. Spec. Pap.} \bold{3}, 155--186. \url{https://www.worldcat.org/oclc/583263}
 
