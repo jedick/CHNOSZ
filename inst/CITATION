@@ -6,5 +6,13 @@ bibentry(bibtype = "Article",
          volume = "7",
          number = "",
          pages = "180",
-         doi = "10.3389/feart.2019.00180",
+         doi = "10.3389/feart.2019.00180"
+	 )
+
+bibentry(bibtype = "Article",
+         title = "Diagrams with multiple metals in CHNOSZ",
+         author = person(given = c("Jeffrey", "M."), family = "Dick", email="jeff@chnosz.net"),
+         journal = "Applied Computing and Geosciences",
+	 year = "2021",
+         doi = "10.1016/j.acags.2021.100059"
 	 )

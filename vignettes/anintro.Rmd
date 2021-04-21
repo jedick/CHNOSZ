@@ -1767,11 +1767,17 @@ Some functions in CHNOSZ lie outside the main workflow described above.
 
 # Citation and contact information
 
-If you use CHNOSZ for publications, please consider citing the following paper:
+To cite CHNOSZ, use this reference:
 
-```{r citation_CHNOSZ, results="asis"}
+```{r citation_CHNOSZ, results="asis", echo = FALSE}
 cref <- citation("CHNOSZ")
-print(cref, style = "html")
+print(cref[1], style = "html")
+```
+
+For the features described in the [<span style="color:blue">multi-metal vignette</span>](multi-metal.html), use this reference:
+
+```{r citation_multimetal, results="asis", echo = FALSE}
+print(cref[2], style = "html")
 ```
 
 If you found a bug or have questions that aren't answered in the documentation please contact the maintainer:
