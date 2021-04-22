@@ -32,7 +32,7 @@
 
 \details{
 
-  These functions provide a convenient way to read data from NCBI taxonomy files (i.e., the contents of \code{taxdump.tar.gz}, which can be downloaded from \url{ftp://ftp.ncbi.nih.gov/pub/taxonomy/}). 
+  These functions provide a convenient way to read data from NCBI taxonomy files (i.e., the contents of \code{taxdump.tar.gz}, which is available from \url{https://ftp.ncbi.nih.gov/pub/taxonomy/}). 
 
   The \code{taxdir} argument is used to specify the directory where the \code{nodes.dmp} and \code{names.dmp} files are located. \code{getnodes} and \code{getnames} read these files into data frames. \code{getrank} returns the rank (species, genus, etc) of the node with the given taxonomic \code{id}. \code{parent} returns the taxonomic ID of the next-lowest node below that specified by the \code{id} in the argument, unless \code{rank} is supplied, in which case the function descends the tree until a node with that rank is found. \code{allparents} returns all the taxonomic IDs of all nodes between that specified by \code{id} and the root of the tree, inclusive. \code{sciname} returns the scientific name of the node with the given \code{id}.
   
