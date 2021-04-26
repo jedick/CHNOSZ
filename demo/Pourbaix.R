@@ -62,8 +62,8 @@ if(is.na(suppressMessages(info(elem_basis)))) {
 basis(c(elem_basis, "H2O", "H+", "e-"))
 
 # Find species
-icr <- retrieve(element, c("O", "H"), "cr")
-iaq <- retrieve(element, c("O", "H"), "aq")
+icr <- retrieve(element, c("O", "H"), "cr", T = T, P = P)
+iaq <- retrieve(element, c("O", "H"), "aq", T = T, P = P)
 
 # Add solids with unit activity
 species(icr, 0)
