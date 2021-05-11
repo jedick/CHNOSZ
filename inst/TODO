@@ -32,3 +32,7 @@ don't have to compile anything to install CHNOSZ updates).
 
 - Add demo for effective equilibrium constant for diglycine on T-pH plot at
   high pressure (DEW model; Robinson et al., 2021)
+
+[20210426]
+
+- anintro.Rmd: Make bold Fe-bearing mineral names in first mosaic stacking diagram
