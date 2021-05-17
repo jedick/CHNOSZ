@@ -10,6 +10,18 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
+\section{Changes in CHNOSZ version 1.4.1-5 (2021-05-17)}{
+
+  \subsection{OBIGT DATABASE}{
+    \itemize{
+
+      \item Move Ar, Xe, CH\s{4}, and CO\s{2} from organic_aq.csv to inorganic_aq.csv.
+      
+    }
+  }
+
+}
+
 \section{Changes in CHNOSZ version 1.4.1 (2021-04-08)}{
 
   \subsection{NEW FEATURES}{

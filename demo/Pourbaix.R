@@ -4,14 +4,16 @@
 # 20210301 jmd first version
 
 library(CHNOSZ)
+# Load OBIGT database without organic species
+# (speeds up and reduces memory needed for C diagram)
+OBIGT(no.organics = TRUE)
 
 ### PARAMETERS (to be changed by the user) ###
 
 # Choose an element
-# Some mostly working ones: Fe, Cu, Au, Rh, Mn
+# Some mostly working ones: Fe, Cu, Au, Rh, Mn, C
 # Incomplete: Al (no native metal), Ni, ...
-# Not working: C, Cr, ...
-#  (C gives lots of organic species, probably getting an NA affinity somewhere)
+# Not working: Cr, ...
 #  (Cr has no solids in OBIGT)
 element <- "Fe"
 
