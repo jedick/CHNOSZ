@@ -70,7 +70,6 @@ function OpenAllDivs() {
   OpenDiv("optional-DEW");
   OpenDiv("optional-SUPCRT92");
   OpenDiv("optional-SLOP98");
-  OpenDiv("optional-OldAA");
   OpenDiv("optional-AS04");
   OpenDiv("optional-AkDi");
   // change the footer message
@@ -91,7 +90,6 @@ function CloseAllDivs() {
   CloseDiv("optional-DEW");
   CloseDiv("optional-SUPCRT92");
   CloseDiv("optional-SLOP98");
-  CloseDiv("optional-OldAA");
   CloseDiv("optional-AS04");
   CloseDiv("optional-AkDi");
   // change the footer message
@@ -205,7 +203,7 @@ Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthal
 ### Aqueous Species <button id="B-aqueous-H2O" onclick='ToggleDiv("aqueous-H2O")'>H2O</button> <button id="B-aqueous-inorganic" onclick='ToggleDiv("aqueous-inorganic")'>Inorganic</button> <button id="B-aqueous-organic" onclick='ToggleDiv("aqueous-organic")'>Organic</button> <button id="B-aqueous-biotic" onclick='ToggleDiv("aqueous-biotic")'>Biotic</button>
 ### Solids <button id="B-solid-inorganic" onclick='ToggleDiv("solid-inorganic")'>Inorganic</button> <button id="B-solid-berman" onclick='ToggleDiv("solid-berman")'>Berman</button> <button id="B-solid-organic" onclick='ToggleDiv("solid-organic")'>Organic</button>
 ### Gases <button id="B-gas-inorganic" onclick='ToggleDiv("gas-inorganic")'>Inorganic</button> <button id="B-gas-organic" onclick='ToggleDiv("gas-organic")'>Organic</button> &nbsp;&nbsp;&nbsp;Liquids <button id="B-liquid-organic" onclick='ToggleDiv("liquid-organic")'>Organic</button>
-### Optional Data <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-OldAA" onclick='ToggleDiv("optional-OldAA")'>OldAA</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-AkDi" onclick='ToggleDiv("optional-AkDi")'>AkDi</button>
+### Optional Data <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-AkDi" onclick='ToggleDiv("optional-AkDi")'>AkDi</button>
 
 <!-- normal or "all open" footer message --> 
 
@@ -359,15 +357,6 @@ This file also contains aqueous transuranic actinide complexes, for which estima
 Use `add.OBIGT("SLOP98")` to load the data.
 
 **NOTE:** Many other species found in slop98.dat and later versions are still present in the default database.
-
-```{r optreflist, results="asis", echo=FALSE}
-```
-</div>
-
-<div id="D-optional-OldAA" style="display: none">
-## <a id="optional-OldAA" class="anchor"></a> `r setfile("OldAA.csv")`
-Data for these amino acids and related species were present in earlier versions of CHNOSZ but have been replaced by or are incompatible with later updates [@LD12; @Kit14; @AKAE19].
-Use `add.OBIGT("OldAA")` to load the data.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```

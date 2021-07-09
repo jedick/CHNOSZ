@@ -28,7 +28,7 @@ for(i in 1:length(mo2)) logK_mo2[[i]] <- subcrt(c(mo[i], "glycinate", mo2[i]), c
 
 # calculate the logKs for divalent metals using data from Shock and Koretsky, 1995
 # doi:10.1016/0016-7037(95)00058-8
-add.OBIGT("OldAA")
+add.OBIGT(system.file("extdata/adds/SK95.csv", package = "CHNOSZ"))
 logK_di1_SK95 <- logK_di2_SK95 <- list()
 for(i in 1:length(di1)) logK_di1_SK95[[i]] <- subcrt(c(di[i], "glycinate", di1[i]), c(-1, -1, 1), T = T)$out$logK
 for(i in 1:length(di2)) logK_di2_SK95[[i]] <- subcrt(c(di[i], "glycinate", di2[i]), c(-1, -2, 1), T = T)$out$logK

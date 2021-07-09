@@ -45,7 +45,6 @@ JUN92,"C. de Capitani",1992,"JUN92.bs database supplied with Theriak/Domino soft
 JOH92,"J. W. Johnson and E. H. Oelkers and H. C. Helgeson",1992,"Comp. Geosci. 18, 899-947",H<sub>2</sub>O,https://doi.org/10.1016/0098-3004(92)90029-Q
 SPRONS92.1,"H. C. Helgeson et al.",1992,"sprons92.dat computer data file","titanite: @BH83 + &quot;Gibbs free energies and enthalpies were corrected to be consistent with updated values of Gibbs free energies of Ca<sup>2+</sup> and CO<sub>3</sub><sup>2-</sup> [@SH88] together with the solubilities of calcite and aragonite reported by @PB82 &quot;",
 SPRONS92.2,"H. C. Helgeson et al.",1992,"sprons92.dat computer data file","Ca-bearing minerals; &quot;Gibbs free energies and enthalpies were corrected to be consistent with updated values of Gibbs free energies of Ca<sup>2+</sup> and CO<sub>3</sub><sup>2-</sup> [@SH88] together with the solubilities of calcite and aragonite reported by @PB82 &quot;",
-Sho92,"E. L. Shock",1992,"Geochim. Cosmochim. Acta 56, 3481-3491","diglycine, alanylglycine, leucylglycine, and diketopiperazine; not present in slop files after slop98.dat",https://doi.org/10.1016/0016-7037(92)90392-V
 Sho92.1,"E. L. Shock",1992,"Geochim. Cosmochim. Acta 56, 3481-3491","diketopiperazine GHS",https://doi.org/10.1016/0016-7037(92)90392-V
 VGT92,"O. Vidal, B. Goffé and T. Theye",1992,"J. Metamorphic Geol. 10, 603-614",sudoite,https://doi.org/10.1111/j.1525-1314.1992.tb00109.x
 ZS92,"C. Zhu and D. A. Sverjensky",1982,"Geochim. Cosmochim. Acta 56, 3435-3467","F,Cl,OH biotite and apatite endmembers. GHS and V were taken from Table 6 of @ZS92; heat capacity and volume parameters from `berman.dat`.",https://doi.org/10.1016/0016-7037(92)90390-5
@@ -68,12 +67,9 @@ RH95.5,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 213
 RH95.6,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","bromellite (G and H not in SUPCRT92)",https://doi.org/10.3133/b2131
 RH95.8,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","linnaeite V",https://doi.org/10.3133/b2131
 SK95,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","metal-organic acid complexes",https://doi.org/10.1016/0016-7037(95)00058-8
-SK95.1,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","alanate, glycinate and their complexes with metals. Values are taken from slop98.dat, which notes corrected values for some species.",https://doi.org/10.1016/0016-7037(95)00058-8
 Sho95,"E. L. Shock",1995,"Am. J. Sci. 295, 496-580","carboxylic acids",https://doi.org/10.2475/ajs.295.5.496
 DPS+96,"I. Diakonov, G. Pokrovski et al.",1996,"Geochim. Cosmochim. Acta 60, 197-211",NaAl(OH)<sub>4</sub>,https://doi.org/10.1016/0016-7037(95)00403-3
 AH97b,"J. P. Amend and H. C. Helgeson",1997,"J. Chem. Soc., Faraday Trans. 93, 1927-1941","amino acids GHS",https://doi.org/10.1039/A608126F
-AH97b.1,"J. P. Amend and H. C. Helgeson",1997,"J. Chem. Soc., Faraday Trans. 93, 1927-1941","alanate and glycinate GHS",https://doi.org/10.1039/A608126F
-AH97b.2,"J. P. Amend and H. C. Helgeson",1997,"J. Chem. Soc., Faraday Trans. 93, 1927-1941","glycine, glycinium, and methionine GHS",https://doi.org/10.1039/A608126F
 DSM+97,"J. D. Dale, E. L. Shock et al.",1997,"Geochim. Cosmochim. Acta 61, 4017-4024",alkylphenols,https://doi.org/10.1016/S0016-7037(97)00212-3
 DSM+97.1,"J. D. Dale, E. L. Shock et al.",1997,"Geochim. Cosmochim. Acta 61, 4017-4024","phenol, and cresol isomers",https://doi.org/10.1016/S0016-7037(97)00212-3
 DSM+97.2,"J. D. Dale, E. L. Shock et al.",1997,"Geochim. Cosmochim. Acta 61, 4017-4024","dimethylphenol isomers",https://doi.org/10.1016/S0016-7037(97)00212-3
@@ -157,7 +153,6 @@ DLH06.2,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 31
 DLH06.3,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","glycine, [Gly], and [UPBB] HKF parameters",https://doi.org/10.5194/bg-3-311-2006
 DLH06.4,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","methionine HKF parameters",https://doi.org/10.5194/bg-3-311-2006
 DLH06.5,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","triglycine Cp, V, and HKF c<sub>1</sub>, c<sub>2</sub>, &omega; parameters",https://doi.org/10.5194/bg-3-311-2006
-DLH06.6,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","[Gly], [Met], and [UPBB]",https://doi.org/10.5194/bg-3-311-2006
 LEB+06,"W. Liu et al.",2006,"Chem. Geol. 231, 326-349","FeCl<sub>2</sub><sup>+</sup>, FeCl<sub>3</sub>, FeCl<sub>4</sub><sup>-</sup>",https://doi.org/10.1016/j.chemgeo.2006.02.005
 LMR06,"D. Langmuir et al.",2006,"Geochim. Cosmochim. Acta 70, 2942-2956","scorodite and amorphous ferric arsenate: G",https://doi.org/10.1016/j.gca.2006.03.006
 MNM+06,"J. Majzlan, A. Navrotsky et al.",2006,"Eur. J. Mineral. 18, 175-186","coquimbite, ferricopiapite, and rhomboclase",https://doi.org/10.1127/0935-1221/2006/0018-0175
@@ -218,7 +213,6 @@ ZZL+16.1,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","As(&alpha;): V list
 ZZL+16.2,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","Cp parameters listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.3,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","dawsonite GHS",https://doi.org/10.1016/j.cageo.2016.02.013
 OBIGT.1,"J. M. Dick",2017,"OBIGT database in CHNOSZ","GHS (T<sub>r</sub>) of the phase that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the phases that are stable at higher temperatures.",http://chnosz.net
-OBIGT.2,"J. M. Dick",2017,"OBIGT database in CHNOSZ","metal-amino acid complexes: GHS were recalculated by adding the differences between values from @SK95 and @AH97b for alanate or glycinate to the properties of the complexes reported by @SK95.",http://chnosz.net
 OBIGT.3,"J. M. Dick",2017,"OBIGT database in CHNOSZ","AuCl<sub>4</sub><sup>-</sup> renamed to AuCl<sub>4</sub><sup>-3</sup>",http://chnosz.net
 OBIGT.4,"J. M. Dick",2017,"OBIGT database in CHNOSZ","charge of NpO<sub>2</sub>(Oxal), La(Succ)<sup>+</sup>, NH<sub>4</sub>(Succ)<sup>-</sup>, and NpO<sub>2</sub>(Succ) as listed by @PSK99",http://chnosz.net
 OBIGT.5,"J. M. Dick",2017,"OBIGT database in CHNOSZ","Incorrect values of HKF a<sub>1</sub>--a<sub>4</sub> parameters for [-CH<sub>2</sub>NH<sub>2</sub>] were printed in Table 6 of @DLH06; corrected values are used here.",http://chnosz.net

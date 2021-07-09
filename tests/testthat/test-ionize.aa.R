@@ -65,7 +65,9 @@ test_that("heat capacity and Gibbs energy of ionization are consistent with lite
   G.AMY_BACSU.25 <- c(-24.9, -24.9, -24.7, -24.5, -24.4, -23.9, -23.5, -23.2)
   G.AMY_BACSU.100 <- c(-26.7, -26.7, -26.4, -26.1, -25.7, -25.1, -24.9, -24.9)
   # to reproduce the calculations in the paper, use superseded properties of [Met], [Gly], and [UPBB]
-  add.OBIGT("OldAA")
+  mod.OBIGT("[Met]", G = -35245, H = -59310, S = 40.38)
+  mod.OBIGT("[Gly]", G = -6075, H = -5570, S = 17.31)
+  mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62)
   G.nonionized <- subcrt("AMY_BACSU", T=c(25, 100))$out[[1]]$G
   aa <- pinfo(pinfo("AMY_BACSU"))
   G.ionization.25 <- ionize.aa(aa, "G", T=25, pH=seq(0, 14, 2))[,1]

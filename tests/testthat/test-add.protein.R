@@ -28,7 +28,9 @@ test_that("group additivity for proteins gives expected values", {
   V <- 10421
   formula <- "C613H959N193O185S10"
   # to reproduce, use superseded properties of [Met], [Gly], and [UPBB] (Dick et al., 2006)
-  add.OBIGT("OldAA")
+  mod.OBIGT("[Met]", G = -35245, H = -59310, S = 40.38)
+  mod.OBIGT("[Gly]", G = -6075, H = -5570, S = 17.31)
+  mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62)
   lprop <- info(info("LYSC_CHICK"))
   expect_equal(G, lprop$G)
   expect_equal(Cp, lprop$Cp, tolerance=1e-5)

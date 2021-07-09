@@ -3,7 +3,8 @@
 library(CHNOSZ)
 
 # to reproduce the calculations in the paper, use superseded data for [Gly] and [UPBB] 20190206
-add.OBIGT("OldAA", c("[Gly]", "[UPBB]"))
+mod.OBIGT("[Gly]", G = -6075, H = -5570, S = 17.31)
+mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62)
 
 # UniProt names of the proteins
 pname <- c("SHH", "OLIG2", "NKX22", "FOXA2", "IRX3", "PAX6", "NKX62", "DBX1",

@@ -10,12 +10,25 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-5 (2021-05-17)}{
+\section{Changes in CHNOSZ version 1.4.1-7 (2021-07-09)}{
 
   \subsection{OBIGT DATABASE}{
     \itemize{
 
       \item Move Ar, Xe, CH\s{4}, and CO\s{2} from organic_aq.csv to inorganic_aq.csv.
+
+      \item Remove OldAA.csv (superseded thermodynamic parameters for amino
+      acids). This file is now available in the JMDplots package.
+      
+    }
+  }
+
+  \subsection{OTHER CHANGES}{
+    \itemize{
+
+      \item \strong{multi-metal.Rmd} now has a link to the paper published in
+      *Applied Computing & Geosciences*
+      (\href{https://doi.org/10.1016/j.acags.2021.100059}{Dick, 2021}).
       
     }
   }

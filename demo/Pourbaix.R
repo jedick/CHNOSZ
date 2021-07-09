@@ -145,3 +145,5 @@ Pexpr <- lP(P)
 main <- bquote(.(element)*"-O-H at "*.(Texpr)*" and "*.(Pexpr))
 title(main = main)
 
+# Reset OBIGT database to run other demos
+reset()

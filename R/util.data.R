@@ -269,7 +269,6 @@ check.OBIGT <- function() {
     else if(what=="DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package="CHNOSZ"), as.is=TRUE)
-    else if(what=="OldAA") tdata <- read.csv(system.file("extdata/OBIGT/OldAA.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="AS04") tdata <- read.csv(system.file("extdata/OBIGT/AS04.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="AkDi") tdata <- read.csv(system.file("extdata/OBIGT/AkDi.csv", package="CHNOSZ"), as.is=TRUE)
     ntot <- nrow(tdata)
@@ -307,7 +306,6 @@ check.OBIGT <- function() {
   out <- rbind(out, checkfun("DEW"))
   out <- rbind(out, checkfun("SLOP98"))
   out <- rbind(out, checkfun("SUPCRT92"))
-  out <- rbind(out, checkfun("OldAA"))
   # set differences within a tolerance to NA
   out$DCp[abs(out$DCp) < 1] <- NA
   out$DV[abs(out$DV) < 1] <- NA

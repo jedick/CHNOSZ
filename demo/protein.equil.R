@@ -4,7 +4,9 @@ library(CHNOSZ)
 
 protein <- pinfo(c("CSG_METVO", "CSG_METJA"))
 # use superseded properties of [Met], [Gly], and [UPBB] (Dick et al., 2006)
-add.OBIGT("OldAA")
+mod.OBIGT("[Met]", G = -35245, H = -59310, S = 40.38)
+mod.OBIGT("[Gly]", G = -6075, H = -5570, S = 17.31)
+mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62)
 # set up the basis species to those used in DS11
 basis("CHNOS+")
 # note this yields logaH2 = -4.657486

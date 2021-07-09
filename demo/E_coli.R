@@ -44,7 +44,7 @@ pe <- list(pe_ox, pe_red)
 # This command loads "old" parameters for [UPBB]
 #   (Dick et al., 2006; https://doi.org/10.5194/bg-3-311-2006)
 # - increases G.P278 by ca. 35-40% (closer to Figure 5 of Amend et al., 2013)
-add.OBIGT("OldAA")
+mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62)
 
 # Calculate polymerization contribution
 # Standard Gibbs energy (J / mol) for AABB -> PBB + H2O

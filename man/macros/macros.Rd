@@ -50,7 +50,7 @@
 \newcommand{\eacute}{\ifelse{latex}{\out{\'{e}}}{\ifelse{html}{\out{&eacute;}}{é}}}
 \newcommand{\gamma}{\ifelse{latex}{\eqn{\gamma}}{\ifelse{html}{\out{&gamma;}}{γ}}}
 \newcommand{\alpha}{\ifelse{latex}{\eqn{\alpha}}{\ifelse{html}{\out{&alpha;}}{α}}}
-\newcommand{\lambda}{\ifelse{latex}{\eqn{\lambda}}{\ifelse{html}{\out{&lambda;}}{α}}}
+\newcommand{\lambda}{\ifelse{latex}{\eqn{\lambda}}{\ifelse{html}{\out{&lambda;}}{λ}}}
 
 % links to vignettes 20200716
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../doc/#1.html"><strong>#1</strong></a>}}{\bold{#1.html}}}

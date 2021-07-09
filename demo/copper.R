@@ -4,8 +4,8 @@
 ## solutions. J. Electrochem. Soc., 148, B51-B57. doi:10.1149/1.1344532)
 library(CHNOSZ)
 
-# we need superseded data for Cu-Gly complexes 20190206
-add.OBIGT("OldAA")
+# we need data for Cu-Gly complexes 20190206
+add.OBIGT(system.file("extdata/adds/SK95.csv", package = "CHNOSZ"))
 # add some new species to thermo()$OBIGT
 m1 <- makeup(info(c("Cu+", "glycinate", "glycinate")), sum=TRUE)
 mod.OBIGT(name="Cu(Gly)2-", formula=as.chemical.formula(m1))

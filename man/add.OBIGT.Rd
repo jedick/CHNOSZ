@@ -102,14 +102,14 @@ invisible(lapply(1:4, function(i) {
     Cdspecies[i+1]), c(-1, -1, 1), T=25, P=1)$reaction))
 }))
 
-# another use of add.OBIGT()
-# compare Delta G of AABB = UPBB + H2O
+# Another use of add.OBIGT()
+# Compare Delta G of AABB = UPBB + H2O
 # (Figure 9 of Kitadai, 2014)
 E.units("J")
-# default database has values from Kitadai, 2014
+# Default database has values from Kitadai, 2014
 Kit14 <- subcrt(c("[AABB]", "[UPBB]", "H2O"), c(-1, 1, 1), T = seq(0, 300, 10))
-# optional file OldAA has superseded values of [UPBB] from Dick et al., 2006
-add.OBIGT("OldAA")
+# Load superseded parameters for [UPBB] from Dick et al., 2006
+mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62)
 DLH06 <- subcrt(c("[AABB]", "[UPBB]", "H2O"), c(-1, 1, 1), T = seq(0, 300, 10))
 xlab <- axis.label("T"); ylab <- axis.label("DG", prefix="k")
 plot(Kit14$out$T, Kit14$out$G/1000, type = "l", ylim = c(10, 35),
@@ -117,7 +117,7 @@ plot(Kit14$out$T, Kit14$out$G/1000, type = "l", ylim = c(10, 35),
 lines(DLH06$out$T, DLH06$out$G/1000, lty = 2)
 legend("topleft", c("Dick et al., 2006", "Kitadai, 2014"), lty = c(2, 1))
 title(main = "AABB = UPBB + H2O; after Figure 9 of Kitadai, 2014")
-# reset database *and* settings (units)
+# Reset database *and* settings (units)
 reset()
 
 # Another use of add.OBIGT(): calculate Delta G of

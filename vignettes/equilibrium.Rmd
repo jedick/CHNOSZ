@@ -446,7 +446,6 @@ This is like Figure 5 of @Dic08, extended to more extreme conditions.
 If you wish to reproduce the diagram from the 2008 paper more closely, uncomment the `add.OBIGT()` command.
 
 ```{r ProteinSpeciation, results = "hide", message = FALSE, fig.width = 8, fig.height = 5.5, out.width = "100%", pngquant = pngquant}
-#add.OBIGT("OldAA")
 organisms <- c("METSC", "METJA", "METFE",  "METVO", "METBU",
                "HALJP", "ACEKI", "GEOSE", "BACLI", "AERSA")
 proteins <- c(rep("CSG", 6), rep("SLAP", 4))

@@ -113,7 +113,9 @@ test_that("'iprotein' gives consistent results on a transect", {
   sites <- c("N", "S", "R", "Q", "P")
   ip <- pinfo("overall", c("bisonN", "bisonS", "bisonR", "bisonQ", "bisonP"))
   # to reproduce, use superseded properties of [Met], [Gly], and [UPBB] (Dick et al., 2006)
-  add.OBIGT("OldAA")
+  mod.OBIGT("[Met]", G = -35245, H = -59310, S = 40.38)
+  mod.OBIGT("[Gly]", G = -6075, H = -5570, S = 17.31)
+  mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62)
   a <- affinity(T=T, pH=pH, H2=H2, iprotein=ip)
   # divide A/2.303RT by protein length
   pl <- protein.length(ip)
