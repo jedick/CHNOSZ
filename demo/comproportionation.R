@@ -4,48 +4,48 @@
 # 20191112 jmd first version
 library(CHNOSZ)
 
-# set basis species and activities
+# Set basis species and activities
 basis(c("H2S", "SO4-2", "H2O", "H+"))
 basis("H2S", -3)
 basis("SO4-2", -2)
-# form native sulfur from sulfide and sulfate
+# Form native sulfur from sulfide and sulfate
 species("S")
 
-# if we calculate the affinity like this, we're stuck with H2S and SO4-2
+# If we calculate the affinity like this, we're stuck with H2S and SO4-2
 #a <- affinity(T = c(0, 100), pH = c(0, 7))
-# instead, use mosaic() to speciate H2S/HS- and SO4-2/HSO4-
+# Instead, use mosaic() to speciate H2S/HS- and SO4-2/HSO4-
 bases <- list(c("H2S", "HS-"), c("SO4-2", "HSO4-"))
 m <- mosaic(bases, T = c(0, 100), pH = c(0, 7))
 a <- m$A.species
 
-# get plot values
+# Get plot values
 T <- a$vals[[1]]
 pH <- a$vals[[2]]
-# the affinity as a function of T (rows) and pH (columns)
+# The affinity as a function of T (rows) and pH (columns)
 A <- a$values[[1]]
-# convert dimensionless affinity (A/2.303RT) to delta G (cal)
+# Convert dimensionless affinity (A/2.303RT) to delta G (cal)
 TK <- convert(T, "K")
 G.cal <- convert(A, "G", T = TK)
-# convert cal to kJ
+# Convert cal to kJ
 G.J <- convert(G.cal, "J")
 G.kJ <- G.J / 1000
-# multiply by 4
+# Multiply by 4
 # (formation reaction in CHNOSZ is for 1 S; reaction in paper has 4 S)
 G.kJ.4 <- G.kJ * 4
 
-# use subcrt() to write the balanced reaction (shown on the plot)
+# Use subcrt() to write the balanced reaction (shown on the plot)
 rxn <- subcrt("S", 1)$reaction
 rxn$coeff <- rxn$coeff * 4
 rxntext <- describe.reaction(rxn)
-# set units to get label for Delta G (kJ / mol)
+# Set units to get label for Delta G (kJ / mol)
 E.units("J")
 DGlab <- axis.label("DGr", prefix = "k")
 
-# calculate pK of H2S and HSO4-
+# Calculate pK of H2S and HSO4-
 pK_H2S <- subcrt(c("HS-", "H+", "H2S"), c(-1, -1, 1), T = T)$out$logK
 pK_HSO4 <- subcrt(c("SO4-2", "H+", "HSO4-"), c(-1, -1, 1), T = T)$out$logK
 
-# make contour plot
+# Make contour plot
 filled.contour(T, pH, G.kJ.4, xlab = axis.label("T"), ylab = axis.label("pH"),
   levels = -55:0,
   color.palette = ifelse(getRversion() >= "3.6.0", function(n) hcl.colors(n), topo.colors),
@@ -66,7 +66,7 @@ filled.contour(T, pH, G.kJ.4, xlab = axis.label("T"), ylab = axis.label("pH"),
   }
 )
 
-# add legend text
+# Add legend text
 par(xpd = NA)
 text(87, 7.3, DGlab)
 par(xpd = FALSE)

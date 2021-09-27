@@ -41,7 +41,7 @@ Except for \samp{A}, the properties of proteins or their reactions calculated in
 Zero, one, or more leading arguments to the function identify which of the chemical activities of basis species, temperature, pressure and/or ionic strength to vary.
 The names of each of these arguments may be the formula of any of the basis species of the system, or \samp{T}, \samp{P}, \samp{pe}, \samp{pH}, \samp{Eh}, or \samp{IS} (but names may not be repeated).
 The names of charged basis species such as \samp{K+} and \samp{SO4-2} should be quoted when used as arguments.
-The value of each argument is of the form \code{c(min, max)} or \code{c(min, max, res)} where \code{min} and \code{max} refer to the minimimum and maximum values of variable identified by the name of the argument, and \code{res} is the resolution, or number of points along which to do the calculations; \code{res} is assigned a default value of 128 if it is missing.
+The value of each argument is of the form \code{c(min, max)} or \code{c(min, max, res)} where \code{min} and \code{max} refer to the minimimum and maximum values of variable identified by the name of the argument, and \code{res} is the resolution, or number of points along which to do the calculations; \code{res} is assigned a default value of 256 if it is missing.
 For any arguments that refer to basis species, the numerical values are the logarithms of activity (or fugacity for gases) of that basis species.
 
 If \samp{T}, \samp{P}, and/or \samp{IS} are not among the \code{var}s, their constant values can be supplied in \code{T}, \code{P}, or \code{IS} (in mol kg\eqn{^{-1}}{^-1}).

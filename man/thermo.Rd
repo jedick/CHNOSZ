@@ -97,7 +97,6 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
 
   \samp{OrganoBioGeoTherm} is the name of a GUI program to use SUPCRT in Windows, produced in Harold C. Helgeson's Laboratory of Theoretical Geochemistry and Biogeochemistry at the University of California, Berkeley.
   The \acronym{OBIGT} database was originally developed for that program, and was the original basis for the database in CHNOSZ.
-  There may be an additional meaning for the acronym: \dQuote{One BIG Table} of thermodynamic data.
 
   Each entry is referenced to one or two literature sources listed in \code{thermo()$refs}.
   Use \code{\link{thermo.refs}} to look up the citation information for the references.

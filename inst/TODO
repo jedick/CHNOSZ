@@ -36,3 +36,11 @@ don't have to compile anything to install CHNOSZ updates).
 [20210426]
 
 - anintro.Rmd: Make bold Fe-bearing mineral names in first mosaic stacking diagram
+
+[20210711]
+
+- Merge SK95.csv into SLOP98.csv
+
+[20210722]
+
+- Add pyrobitumen properties from Helgeson et al. (2009)

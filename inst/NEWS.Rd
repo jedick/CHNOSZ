@@ -19,6 +19,8 @@
 
       \item Remove OldAA.csv (superseded thermodynamic parameters for amino
       acids). This file is now available in the JMDplots package.
+
+      \item Fix formula of CaCl2 in DEW.csv. Thanks to Grayson Boyer.
       
     }
   }
