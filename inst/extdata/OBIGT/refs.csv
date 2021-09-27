@@ -4,7 +4,6 @@ Kel60.2,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","iron Cp",https://
 Kel60.3,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gypsum Cp",https://www.worldcat.org/oclc/693388901
 Pan70,"L. B. Pankratz",1970,"U. S. Bureau of Mines Report of Investigations 7430",chlorargyrite,https://www.worldcat.org/oclc/14154245
 PK70,"L. B. Pankratz and E. G. King",1970,"U. S. Bureau of Mines Report of Investigations 7435","bornite and chalcopyrite",https://www.worldcat.org/oclc/14154292
-BK73,"I. Barin and O. Knacke",1973,"Thermochemical Properties of Inorganic Substances","scheelite Cp",https://www.worldcat.org/oclc/695258
 BKK77,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","willemite Cp",https://www.worldcat.org/oclc/695258
 HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","data for minerals and phase transitions",https://www.worldcat.org/oclc/13594862
 HDNB78.1,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","litharge S, V, and Cp parameters",https://www.worldcat.org/oclc/13594862
@@ -276,3 +275,5 @@ SPD+19,"B. St Clair et al.",2019,"ACS Earth Space Chem 3, 905-921","metal carbon
 AKK+20,"N. N. Akinfiev et al.",2020,"Geochim. Cosmochim. Acta 280, 102-115","Nb and Ta species",https://doi.org/10.1016/j.gca.2020.04.009
 LX20,"Liu and Xiao",2020,"Ore Geol. Rev. 117, 103289","huebnerite Cp",https://doi.org/10.1016/j.oregeorev.2019.103289
 MP20,"Materials Project",2020,"mp-1513: Co9S8","Co-pentlandite V calculated from density of Co<sub>9</sub>S<sub>8</sub> from Materials Project",https://doi.org/10.17188/1191033
+LXW21,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488","H2WO4",https://doi.org/10.1016/j.chemgeo.2021.120488
+LXW21.1,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488","scheelite Cp",https://doi.org/10.1016/j.chemgeo.2021.120488
