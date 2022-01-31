@@ -143,7 +143,8 @@ sres <- subcrt(c("acetate", "H+", "acetic acid"), c(-1, -1, 1),
   IS=c(0, 0.1, 0.25), T=25, property="logK")
 # we're within 0.01 of Alberty's pK values
 Alberty_logK <- c(4.75, 4.54, 4.47)
-maxdiff(sres$out$logK, Alberty_logK) # 0.0072
+# The maximum (absolute) pairwise difference between x and y
+max(abs(Alberty_logK - sres$out$logK)) # 0.0072
 # reset option to default
 thermo("opt$ideal.H" = TRUE)
 

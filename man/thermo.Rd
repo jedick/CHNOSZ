@@ -232,7 +232,7 @@ Columns 14-21 for aqueous species using the Akinfiev-Diamond model. Note that th
     }
 
     \item \code{thermo()$stoich}
-    A precalculated stoichiometric matrix for the default database. This is a matrix, not a data frame, and as such can accept duplicated row names, corresponding to chemical formulas of the species. See \code{\link{retrieve}}, and the first test in \code{testthat/test-retrieve.R} for how to update this.
+    A precalculated stoichiometric matrix for the default database. This is a matrix, not a data frame, and as such can accept duplicated row names, corresponding to chemical formulas of the species. See \code{\link{retrieve}}, and the first test in \code{inst/tinytest/test-retrieve.R} for how to update this.
     \tabular{lll}{
        \code{rownames} \tab character \tab Chemical formulas from \code{thermo()$OBIGT}\cr
        \code{...} \tab numeric \tab Stoichiometry, one column for each element present in any species

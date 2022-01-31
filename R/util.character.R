@@ -58,23 +58,7 @@ can.be.numeric <- function(x) {
   if(length(x) == 0) FALSE else
   if(length(x) > 1) as.logical(sapply(x, can.be.numeric)) else {
     if(is.numeric(x)) TRUE else
-    if(!is.na(as.numeric.nowarn(x))) TRUE else
+    if(!is.na(suppressWarnings(as.numeric(x)))) TRUE else
     if(x %in% c('.','+','-')) TRUE else FALSE
   }
-}
-
-# something like R's as.numeric(), but without the "NAs introduced by coercion" warnings
-# (needed because testthat somehow detects the warnings suppressed by suppressWarnings) 20170427
-as.numeric.nowarn <- function(x) {
-  if(length(x) == 0) numeric() else
-  if(length(x) > 1) sapply(x, as.numeric.nowarn) else
-  # http://stackoverflow.com/questions/12643009/regular-expression-for-floating-point-numbers
-  if(grepl("^[+-]?([0-9]*[.])?[0-9]+$", x)) as.numeric(x) else NA_real_
-}
-
-# convert to integer without NA coercion warnings
-as.integer.nowarn <- function(x) {
-  if(length(x) == 0) integer() else
-  if(length(x) > 1) sapply(x, as.integer.nowarn) else
-  if(grepl("[^0-9]", x)) NA_integer_ else as.integer(x)
 }

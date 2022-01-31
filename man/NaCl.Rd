@@ -88,6 +88,7 @@ for(i in 1:3) {
   lines(m_tot, gam_Cl.calc[, i], col=col[i])
 }
 # we should be fairly close
+maxdiff <- function(x, y) max(abs(y - x))
 stopifnot(maxdiff(unlist(gam_Cl.calc[seq(1,11,2), ]), unlist(gam_Cl.HCh)) < 0.033)
 par(opar)
 }

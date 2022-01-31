@@ -184,7 +184,7 @@ The old behavior does not respect \code{lty}; instead, the style of the boundary
 \section{Activity Coefficients}{
 
 The wording in this page and names of variables in functions refer exclusively to \samp{activities} of aqueous species.
-However, if activity coefficients are calculated (using the \code{IS} argument in \code{\link{affinity}}), then these variables are effectively transformed to molalities (see \code{tests/testthat/} \code{test-logmolality.R}).
+However, if activity coefficients are calculated (using the \code{IS} argument in \code{\link{affinity}}), then these variables are effectively transformed to molalities (see \code{inst/tinytest/test-logmolality.R}).
 So that the labels on diagrams are adjusted accordingly, \code{\link{diagram}} sets the \code{molality} argument of \code{\link{axis.label}} to TRUE if \code{IS} was supplied as an argument to \code{\link{affinity}}.
 The labeling as molality takes effect even if \code{IS} is set to 0; this way, by including (or not) the \code{IS = 0} argument to \code{affinity}, the user decides whether to label aqueous species variables as molality (or activity) for calculations at zero ionic strength (where molality = activity).
 

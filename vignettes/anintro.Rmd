@@ -969,7 +969,7 @@ There are a few things to remember when using activity coefficients:
     + values of `loga.equil` returned by <span style="color:green">`equilibrate()`</span>.
 
 In other words, the activation of activity coefficients effects a transformation from activity to molality in the main workflow.
-A simple but comprehensive series of calculations demonstrating these tranformations is in `tests/testthat/test-logmolality.R`.
+A simple but comprehensive series of calculations demonstrating these tranformations is in `inst/tinytest/test-logmolality.R`.
 
 Because it is not possible to dynamically change the names of arguments in the functions, the user should be aware of the transformations mentioned above.
 However, the labels on diagrams *can* be automatically adjusted; accordingly, activities of aqueous species are relabeled as molalities by <span style="color:green">`diagram()`</span> when `IS` is used in the calculation of <span style="color:green">`affinity()`</span>.

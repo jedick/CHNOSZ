@@ -73,7 +73,7 @@ diagram <- function(
   } else if(type %in% rownames(eout$basis)) {
     # to calculate the loga of basis species at equilibrium
     if(!missing(groups)) stop("can't plot equilibrium activities of basis species for grouped species")
-    if(isTRUE(alpha) | is.character(alpha)) stop("equilibrium activities of basis species not available with alpha=TRUE")
+    if(isTRUE(alpha) | is.character(alpha)) stop("equilibrium activities of basis species not available with alpha = TRUE")
     plot.loga.basis <- TRUE
   } else if(type=="loga.equil" & !"loga.equil" %in% names(eout)) stop("'eout' is not the output from equil()") 
   else if(!type %in% c("loga.equil", "loga.balance")) stop(type, " is not a valid diagram type")

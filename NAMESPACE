@@ -51,7 +51,7 @@ export(
 # added 20170301 or later
   "GHS_Tr", "calculateDensity", "calculateGibbsOfWater",
   "calculateEpsilon", "calculateQ", "water.DEW", "berman",
-  "maxdiff", "expect_maxdiff", "bgamma",
+  "bgamma",
 # added 20171121 or later
   "dumpdata", "thermo.axis", "solubility", "NaCl",
 # added 20190213 or later
