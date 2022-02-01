@@ -1,7 +1,7 @@
 # test-berman.R 20171001
 
 # This is a long test ... only run it "at home" 20220129
-if(at_home()) {
+if(!at_home()) exit_file("Skipping long test")
 
 # Load default settings for CHNOSZ
 reset()
@@ -109,5 +109,3 @@ expect_equal(sum(is.na(bresult$G)), 2, info = info)
 "NAs don't creep into calculations below 298.15 K for minerals with disorder parameters"
 # 20191116
 expect_false(any(is.na(subcrt("K-feldspar", P = 1, T = seq(273.15, 303.15, 5), convert = FALSE)$out[[1]]$G)), info = info)
-
-}

@@ -1,5 +1,5 @@
 # This is a long test ... only run it "at home" 20220129
-if(at_home()) {
+if(!at_home()) exit_file("Skipping long test")
 
 # Load default settings for CHNOSZ
 reset()
@@ -191,5 +191,3 @@ species(1:2, delete = TRUE)
 a1 <- affinity(T = c(0, 100))
 a2 <- affinity(T = c(0, 100), sout = a0$sout)
 expect_equal(a1$values, a2$values, info = info)
-
-}

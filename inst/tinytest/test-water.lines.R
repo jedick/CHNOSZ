@@ -1,5 +1,5 @@
 # This is a long test ... only run it "at home" 20220131
-if(at_home()) {
+if(!at_home()) exit_file("Skipping long test")
 
 # Load default settings for CHNOSZ
 reset()
@@ -75,5 +75,3 @@ swap.basis("oxygen", "O2"); n4 <- nspecies(affinity(O2 = c(-90, 10, res), T = c(
 swap.basis("O2", "hydrogen"); n5 <- nspecies(affinity(H2 = c(-50, 10, res), T = c(0, 200, res)))  # T-logfH2
 swap.basis("hydrogen", "H2"); n6 <- nspecies(affinity(H2 = c(-50, 10, res), T = c(0, 200, res)))  # T-logaH2
 expect_equal(c(n1, n2, n3, n4, n5, n6), c(1, 1, 1, 1, 1, 1), info = info)
-
-}

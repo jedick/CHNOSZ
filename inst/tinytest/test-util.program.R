@@ -1,5 +1,5 @@
 # This is a long test ... only run it "at home" 20220131
-if(at_home()) {
+if(!at_home()) exit_file("Skipping long test")
 
 # Load default settings for CHNOSZ
 reset()
@@ -28,6 +28,4 @@ if(min(getOption("mc.cores"), 2) > 1 & parallel::detectCores() > 1) {
   species(c("CO2", "acetic acid"))
   a <- affinity(O2 = c(-90, -60, 1000))
   expect_message(e <- equilibrate(a), "equil.reaction running 1000 calculations", info = info)
-}
-
 }

@@ -83,11 +83,10 @@ expect_equal(r1$xopt, -7.5, info = info)
 
 # we can even go into 2 dimensions
 # (it's a slightly longer test, so don't run it on CRAN)
-if(at_home()) {
-  a2 <- affinity(H2 = c(-10, -5, 101), T = c(0, 100, 101), exceed.Ttr = TRUE)
-  e2 <- equilibrate(a2)
-  r2 <- revisit(e2, "DGtr", loga2 = loga2, plot.it = FALSE)
-  # we should DGtr = 0 at the temperature of the reference distribution (25 degC)
-  expect_equal(min(r2$H), 0, info = info)
-  expect_equal(r2$yopt, 25, info = info)
-}
+if(!at_home()) exit_file("Skipping long test")
+a2 <- affinity(H2 = c(-10, -5, 101), T = c(0, 100, 101), exceed.Ttr = TRUE)
+e2 <- equilibrate(a2)
+r2 <- revisit(e2, "DGtr", loga2 = loga2, plot.it = FALSE)
+# we should DGtr = 0 at the temperature of the reference distribution (25 degC)
+expect_equal(min(r2$H), 0, info = info)
+expect_equal(r2$yopt, 25, info = info)

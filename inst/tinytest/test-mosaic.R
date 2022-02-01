@@ -1,5 +1,5 @@
 # This is a long test ... only run it "at home" 20220129
-if(at_home()) {
+if(!at_home()) exit_file("Skipping long test")
 
 # Load default settings for CHNOSZ
 reset()
@@ -152,5 +152,3 @@ Adiff <- A - (m$A.species$values[[2]] - m$A.species$values[[5]])
 #title(main = "A(single basis species) - A(all basis species)")
 #legend("topleft", legend = describe.reaction(s1$reaction))
 expect_equivalent(as.numeric(Adiff), rep(0, length(Adiff)), info = info)
-
-}

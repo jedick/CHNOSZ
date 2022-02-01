@@ -1,5 +1,5 @@
 # This is a long test ... only run it "at home" 20220130
-if(at_home()) {
+if(!at_home()) exit_file("Skipping long test")
 
 # Load default settings for CHNOSZ
 reset()
@@ -38,5 +38,3 @@ expect_equal(tail(f$value[[1]],1), -pi, tolerance = 1e-2, info = info)
 expect_equal(tail(f$value[[2]],1), -exp(1), tolerance = 1e-2, info = info)
 expect_equal(tail(f$value[[3]],1), -sqrt(2), tolerance = 1e-1, info = info)
 # we could decrease the tolerance by increasing the resolution and/or iterations in findit()
-
-}
