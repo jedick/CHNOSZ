@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-11 (2022-01-30)}{
+\section{Changes in CHNOSZ version 1.4.1-13 (2022-02-01)}{
 
   \subsection{OBIGT DATABASE}{
     \itemize{
@@ -26,6 +26,8 @@
       \item Add H\s{2}WO\s{4}(aq) and Cp coefficients of scheelite (CaWO\s{4})
       from \href{https://doi.org/10.1016/j.chemgeo.2021.120488}{Liu et al.
         (2021)}.
+
+      \item Add aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl from \href{https://doi.org/10.1016/j.gca.2016.04.026}{Miron et al. (2016)} and \href{https://doi.org/10.2475/07.2017.01}{Miron et al. (2017)}.
       
     }
   }

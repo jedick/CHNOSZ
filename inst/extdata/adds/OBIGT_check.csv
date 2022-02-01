@@ -148,7 +148,7 @@
 "OBIGT",1220,"Mg(But)2","aq","cal",,,-3347811
 "OBIGT",1249,"Yb(But)+2","aq","cal",,,665
 "OBIGT",1268,"Fe(Pent)2","aq","cal",,,532
-"OBIGT",1353,"Ba(HCO3)+","aq","cal",,,-5800
+"OBIGT",1353,"BaHCO3+","aq","cal",,,-5800
 "OBIGT",1373,"Li(Mal)-","aq","cal",,-3.22,
 "OBIGT",1377,"Pb(Mal)","aq","cal",,1.16,
 "OBIGT",1381,"Pb(Succ)","aq","cal",,1.49,
@@ -287,12 +287,12 @@
 "OBIGT",3388,"5,6-dithiadecane","liq","cal",2,,
 "DEW",8,"AlO2(SiO2)-","aq","cal",,,-897
 "DEW",17,"BO(OH)","aq","cal",,,-1111
-"DEW",19,"Ca(HCO3)+","aq","cal",,,-2971
+"DEW",19,"CaHCO3+","aq","cal",,,-2971
 "DEW",24,"CaCl+","aq","cal",,,-593
 "DEW",26,"CaCO3","aq","cal",,,661
 "DEW",31,"Ce+4","aq","cal",,-1.13,
 "DEW",37,"CO3-2","aq","cal",,-1.41,
-"DEW",55,"Fe(HCOO)+","aq","cal",,,-1082
+"DEW",55,"FeHCOO+","aq","cal",,,-1082
 "DEW",61,"FeCl+2","aq","cal",,,-4165
 "DEW",63,"FeCl2+","aq","cal",,,-8614
 "DEW",64,"FeCl3","aq","cal",,,-14671
@@ -302,7 +302,7 @@
 "DEW",102,"HPO4-2","aq","cal",,-1.02,
 "DEW",112,"In+3","aq","cal",,,7335
 "DEW",115,"KOH","aq","cal",,,-71448
-"DEW",124,"Mg(HCO3)+","aq","cal",,,686
+"DEW",124,"MgHCO3+","aq","cal",,,686
 "DEW",129,"MgOH+","aq","cal",,,11274
 "DEW",130,"Mg(SiO2)(HCO3)+","aq","cal",,,1491
 "DEW",131,"MgSO4","aq","cal",,,-3852

@@ -67,11 +67,12 @@ function OpenAllDivs() {
   OpenDiv("gas-inorganic");
   OpenDiv("gas-organic");
   OpenDiv("liquid-organic");
-  OpenDiv("optional-DEW");
   OpenDiv("optional-SUPCRT92");
   OpenDiv("optional-SLOP98");
-  OpenDiv("optional-AS04");
   OpenDiv("optional-AkDi");
+  OpenDiv("optional-AS04");
+  OpenDiv("optional-DEW");
+  OpenDiv("optional-GEMSFIT");
   // change the footer message
   document.getElementById("footer").style.display = "none";
   document.getElementById("all-open").style.display = "block";
@@ -87,11 +88,12 @@ function CloseAllDivs() {
   CloseDiv("gas-inorganic");
   CloseDiv("gas-organic");
   CloseDiv("liquid-organic");
-  CloseDiv("optional-DEW");
   CloseDiv("optional-SUPCRT92");
   CloseDiv("optional-SLOP98");
-  CloseDiv("optional-AS04");
   CloseDiv("optional-AkDi");
+  CloseDiv("optional-AS04");
+  CloseDiv("optional-DEW");
+  CloseDiv("optional-GEMSFIT");
   // change the footer message
   document.getElementById("footer").style.display = "block";
   document.getElementById("all-open").style.display = "none";
@@ -203,7 +205,7 @@ Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthal
 ### Aqueous Species <button id="B-aqueous-H2O" onclick='ToggleDiv("aqueous-H2O")'>H2O</button> <button id="B-aqueous-inorganic" onclick='ToggleDiv("aqueous-inorganic")'>Inorganic</button> <button id="B-aqueous-organic" onclick='ToggleDiv("aqueous-organic")'>Organic</button> <button id="B-aqueous-biotic" onclick='ToggleDiv("aqueous-biotic")'>Biotic</button>
 ### Solids <button id="B-solid-inorganic" onclick='ToggleDiv("solid-inorganic")'>Inorganic</button> <button id="B-solid-berman" onclick='ToggleDiv("solid-berman")'>Berman</button> <button id="B-solid-organic" onclick='ToggleDiv("solid-organic")'>Organic</button>
 ### Gases <button id="B-gas-inorganic" onclick='ToggleDiv("gas-inorganic")'>Inorganic</button> <button id="B-gas-organic" onclick='ToggleDiv("gas-organic")'>Organic</button> &nbsp;&nbsp;&nbsp;Liquids <button id="B-liquid-organic" onclick='ToggleDiv("liquid-organic")'>Organic</button>
-### Optional Data <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-AkDi" onclick='ToggleDiv("optional-AkDi")'>AkDi</button>
+### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AkDi" onclick='ToggleDiv("optional-AkDi")'>AkDi</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-GEMSFIT" onclick='ToggleDiv("optional-GEMSFIT")'>GEMSFIT</button>
 
 <!-- normal or "all open" footer message --> 
 
@@ -320,23 +322,6 @@ Thermodynamic properties for these minerals are listed as NA in `thermo()$OBIGT`
 
 <!-- Optional species divs --> 
 
-<div id="D-optional-DEW" style="display: none">
-## <a id="optional-DEW" class="anchor"></a> `r setfile("DEW.csv")`
-The [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model extends the applicability of the revised HKF equations of state to 60 kbar.
-Accuracy of the thermodynamic calculations at these conditions is improved by revised correlations for the <i>a</i><sub>1</sub> HKF parameter, as described by [Sverjensky et al., 2014](https://doi.org/10.1016/j.gca.2013.12.019).
-The data here were taken from the May 2017 and January 2019 versions of the [DEW spreadsheet](http://www.dewcommunity.org/resources.html).
-The following species are present in the spreadsheet, but are not used here because the parameters are unchanged from the default database in CHNOSZ: B(OH)<sub>3</sub>, Br<sup>-</sup>, Ca<sup>+2</sup>, Cl<sup>-</sup>, Cs<sup>+</sup>, F<sup>-</sup>, H<sup>+</sup>, H<sub>2</sub>, He, I<sup>-</sup>, K<sup>+</sup>, Kr, Li<sup>+</sup>, Mg<sup>+2</sup>, Na<sup>+</sup>, Ne, O<sub>2</sub>, Rb<sup>+</sup>, Rn, SO<sub>4</sub><sup>-2</sup>.
-
-Besides using `add.OBIGT("DEW")` to load these data, you should also run `water("DEW")` to activate the DEW equations in CHNOSZ.
-See `demo(DEW)` for some examples.
-
-Most of the comments below were transcribed from the DEW spreadsheet. (Comments in parentheses were added by JMD.)
-
-```{r optreflist, results="asis", echo=FALSE}
-optused <- c(optused, filerefs(csvfile))
-```
-</div>
-
 <div id="D-optional-SUPCRT92" style="display: none">
 ## <a id="optional-SUPCRT92" class="anchor"></a> `r setfile("SUPCRT92.csv")`
 These minerals and aqueous species, taken from the SUPCRT92 database, were present in earlier versions of CHNOSZ but have since been superseded by @Ber88 (minerals) and @NA03 (H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>).
@@ -362,6 +347,15 @@ Use `add.OBIGT("SLOP98")` to load the data.
 ```
 </div>
 
+<div id="D-optional-AkDi" style="display: none">
+## <a id="optional-AkDi" class="anchor"></a> `r setfile("AkDi.csv")`
+This file has parameters for aqueous nonelectrolytes in the Akinfiev-Diamond model [@AD03].
+Use `add.OBIGT("AkDi")` to load the data; see `demo(AkDi)` for an example.
+
+```{r optreflist, results="asis", echo=FALSE}
+```
+</div>
+
 <div id="D-optional-AS04" style="display: none">
 ## <a id="optional-AS04" class="anchor"></a> `r setfile("AS04.csv")`
 This file has data for aqueous SiO<sub>2</sub> from @AS04 and a HSiO<sub>3</sub><sup>-</sup> modified to be consistent with the SiO<sub>2</sub> here.
@@ -372,10 +366,26 @@ Use `add.OBIGT("AS04")` to load the data; see the vignette [*Regressing thermody
 ```
 </div>
 
-<div id="D-optional-AkDi" style="display: none">
-## <a id="optional-AkDi" class="anchor"></a> `r setfile("AkDi.csv")`
-This file has parameters for aqueous nonelectrolytes in the Akinfiev-Diamond model [@AD03].
-Use `add.OBIGT("AkDi")` to load the data; see `demo(AkDi)` for an example.
+<div id="D-optional-DEW" style="display: none">
+## <a id="optional-DEW" class="anchor"></a> `r setfile("DEW.csv")`
+The [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model extends the applicability of the revised HKF equations of state to 60 kbar.
+Accuracy of the thermodynamic calculations at these conditions is improved by revised correlations for the <i>a</i><sub>1</sub> HKF parameter, as described by [Sverjensky et al. (2014)](https://doi.org/10.1016/j.gca.2013.12.019).
+The data here were taken from the May 2017 and January 2019 versions of the [DEW spreadsheet](http://www.dewcommunity.org/resources.html).
+The following species are present in the spreadsheet, but are not used here because the parameters are unchanged from the default database in CHNOSZ: B(OH)<sub>3</sub>, Br<sup>-</sup>, Ca<sup>+2</sup>, Cl<sup>-</sup>, Cs<sup>+</sup>, F<sup>-</sup>, H<sup>+</sup>, H<sub>2</sub>, He, I<sup>-</sup>, K<sup>+</sup>, Kr, Li<sup>+</sup>, Mg<sup>+2</sup>, Na<sup>+</sup>, Ne, O<sub>2</sub>, Rb<sup>+</sup>, Rn, SO<sub>4</sub><sup>-2</sup>.
+
+Besides using `add.OBIGT("DEW")` to load these data, you should also run `water("DEW")` to activate the DEW equations in CHNOSZ.
+See `demo(DEW)` for some examples.
+
+Most of the comments below were transcribed from the DEW spreadsheet. (Comments in parentheses were added by JMD.)
+
+```{r optreflist, results="asis", echo=FALSE}
+optused <- c(optused, filerefs(csvfile))
+```
+</div>
+
+<div id="D-optional-GEMSFIT" style="display: none">
+## <a id="optional-GEMSFIT" class="anchor"></a> `r setfile("GEMSFIT.csv")`
+[Miron et al. (2016)](https://doi.org/10.1016/j.gca.2016.04.026) and [Miron et al. (2017)](https://doi.org/10.2475/07.2017.01) described an internally consistent thermodynamic dataset for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl that was obtained by using the [GEMSFIT](https://doi.org/10.1016/j.apgeochem.2014.10.013) package.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```

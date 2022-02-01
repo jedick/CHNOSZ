@@ -28,6 +28,7 @@ SH88,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-20
 SH88.1,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","values of GHS",https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.2,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.3,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",Ag<sup>+</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
+SH88.4,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",Ca<sup>+2</sup> and Mg<sup>+2</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
 SHS89,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","inorganic neutral species",https://doi.org/10.1016/0016-7037(89)90341-4
 SHS89.1,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","aqueous SiO<sub>2</sub>",https://doi.org/10.1016/0016-7037(89)90341-4
 Ber90,"R. G. Berman",1990,"Am. Mineral. 75, 328-344",annite,http://ammin.geoscienceworld.org/content/75/3-4/328
@@ -87,6 +88,7 @@ SSH97.1,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmoc
 SSH97.2,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412",HSiO<sub>3</sub><sup>-</sup>,https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.3,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Au-, Ag-, Cu- and Zn-chloride complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.4,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Zn-acetate complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
+SSH97.5,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412",CaHSiO<sub>3</sub><sup>+</sup> and MgHSiO<sub>3</sub><sup>+</sup>,https://doi.org/10.1016/S0016-7037(97)00009-4
 SSB97,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266","uranium species",https://doi.org/10.1016/S0016-7037(97)00240-8
 SSB97.1,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266",uraninite,https://doi.org/10.1016/S0016-7037(97)00240-8
 TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976","humic acid, microflora, and plants",https://doi.org/10.1016/S1251-8050(97)83981-X
@@ -207,6 +209,7 @@ SLOP16.7,"E. L. Shock et al.",2016,"slop16.dat computer data file","hexanol, hep
 TBB15,"B. R. Tagirov et al.",2015,"Geochem. Int. 53, 327-340","Pt<sup>+2</sup> and complexes",https://doi.org/10.1134/S0016702915040084
 CS16,"P. A. Canovas III and E. L. Shock",2016,"Geochim. Cosmochim. Acta 195, 293-322","citric acid cycle metabolites",https://doi.org/10.1016/j.gca.2016.08.028
 CS16.1,"P. A. Canovas III and E. L. Shock",2016,"Geochim. Cosmochim. Acta 195, 293-322","citric acid species HKF a<sub>1</sub>--a<sub>4</sub> parameters",https://doi.org/10.1016/j.gca.2016.08.028
+MWKH16,"G. D. Miron et al.",2016,"Geochim. Cosmochim. Acta 187, 41-78","aqueous species in the system Na-K-Al-Si-O-H-Cl",https://doi.org/10.1016/j.gca.2016.04.026
 ZZL+16,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","data listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.1,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","As(&alpha;): V listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.2,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","Cp parameters listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
@@ -261,6 +264,8 @@ DEW17.39,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","to
 DEW17.40,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","urea: Revised Feb. 2015 by Dimitri: c<sub>1</sub>, c<sub>2</sub>, and omega from PS01 based on Stokes (1967) data; V from Cabani et al. (1981) with a<sub>1</sub>-a<sub>4</sub> predicted.",http://www.dewcommunity.org
 DEW17.101,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","formate and lactate: revised with new predicted a<sub>1</sub> for ions",https://doi.org/10.1016/0016-7037(90)90429-O
 BDat17.1,"D. A. Sverjensky et al.",2017,"berman.dat file in SUPCRT92b.zip on the DEW website","antigorite: &quot;Oct. 21, 2016: Revised volume coefficients consistent with @HDR06 and @YIY+14 &quot;",http://www.dewcommunity.org/resources.html
+MWKL17,"G. D. Miron et al.",2017,"Am. J. Sci. 317, 755-806","aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl",https://doi.org/10.2475/07.2017.01
+MWKL17.1,"G. D. Miron et al.",2017,"Am. J. Sci. 317, 755-806","&Delta;G&deg;<sub>f</sub> values",https://doi.org/10.2475/07.2017.01
 AKAE19,"M. R. Azadi et al.",2019,"Fluid Phase Equilib. 480, 25-40","metal-glycinate complexes",https://doi.org/10.1016/j.fluid.2018.10.002
 DEW19,"D. A. Sverjensky et al.",2019,"Deep Earth Water (DEW) spreadsheet","(values listed in DEW spreadsheet)",http://www.dewcommunity.org
 DEW19.1,"D. A. Sverjensky et al.",2019,"Deep Earth Water (DEW) spreadsheet","(values from @HS19 listed in DEW spreadsheet)",http://www.dewcommunity.org
