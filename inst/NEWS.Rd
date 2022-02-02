@@ -15,7 +15,8 @@
   \subsection{OBIGT DATABASE}{
     \itemize{
 
-      \item Move Ar, Xe, CH\s{4}, and CO\s{2} from organic_aq.csv to inorganic_aq.csv.
+      \item Move Ar, Xe, CH\s{4}, and CO\s{2} from \samp{organic_aq.csv} to
+      \samp{inorganic_aq.csv}.
 
       \item Remove \samp{OldAA.csv} (superseded thermodynamic parameters for
       amino acids). This file is now available in the
@@ -27,7 +28,7 @@
       from \href{https://doi.org/10.1016/j.chemgeo.2021.120488}{Liu et al.
         (2021)}.
 
-      \item Add aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl from \href{https://doi.org/10.1016/j.gca.2016.04.026}{Miron et al. (2016)} and \href{https://doi.org/10.2475/07.2017.01}{Miron et al. (2017)}.
+      \item Add aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl from \href{https://doi.org/10.1016/j.gca.2016.04.026}{Miron et al. (2016)} and \href{https://doi.org/10.2475/07.2017.01}{Miron et al. (2017)} to \samp{GEMSFIT.csv}.
       
     }
   }
