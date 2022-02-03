@@ -196,9 +196,10 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   this <- OBIGT2eos(this, this$state)
 
   if(all(is.na(this[, 9:21])) & this$name != "water") {
-    # Get G, H, S, and V from datasets using Berman equations 20220203
-    properties <- subset(berman(), name == this$name)
-    this[, c("G", "H", "S", "V")] <- properties[, c("GfPrTr", "HfPrTr", "SPrTr", "VPrTr")] * c(1, 1, 1, 10)
+    # Get G, H, S, and V for minerals with Berman parameters 20220203
+    bermandat <- berman()
+    bermandat <- bermandat[bermandat$name == this$name, ]
+    this[, c("G", "H", "S", "V")] <- bermandat[, c("GfPrTr", "HfPrTr", "SPrTr", "VPrTr")] * c(1, 1, 1, 10)
   }
 
   # Identify any missing GHS values

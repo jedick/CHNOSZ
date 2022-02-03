@@ -14,6 +14,7 @@ reset <- function() {
     element = read.csv(file.path(thermodir, "element.csv"), as.is=1:3),
     OBIGT = NULL,
     refs = NULL,
+    Berman = NULL,
     buffer = read.csv(file.path(thermodir, "buffer.csv"), as.is=1:3),
     protein = read.csv(file.path(thermodir, "protein.csv"), as.is=1:4),
     groups = read.csv(file.path(thermodir, "groups.csv"), row.names=1, check.names=FALSE),
@@ -22,10 +23,23 @@ reset <- function() {
     species = NULL,
     opar = NULL
   )
+
   # store stoich as matrix (with non-unique row names), not data frame
   formula <- thermo$stoich[, 1]
   thermo$stoich <- as.matrix(thermo$stoich[, 2:ncol(thermo$stoich)])
   rownames(thermo$stoich) <- formula
+
+  # Get parameters in Berman equations from data files 20220203
+  path <- system.file("extdata/Berman/", package = "CHNOSZ")
+  files <- dir(path, "\\.csv$")
+  # Put files in reverse chronological order (youngest first)
+  files <- rev(files[order(sapply(strsplit(files, "_"), "[", 2))])
+  # Read the parameters from each file
+  Berman <- list()
+  for(i in 1:length(files)) Berman[[i]] <- read.csv(file.path(path, files[i]), as.is = TRUE)
+  # Assemble the parameters in a single data frame
+  thermo$Berman <- do.call(rbind, Berman)
+
   # give a summary of what we are doing
   if(!"thermo" %in% ls(CHNOSZ)) message("reset: creating \"thermo\" object")
   else message("reset: resetting \"thermo\" object")

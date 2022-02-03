@@ -59,11 +59,6 @@ expect_equal(sum(is.na(bresult$G)), 2, info = info)
 # 20191116
 expect_false(any(is.na(subcrt("K-feldspar", P = 1, T = seq(273.15, 303.15, 5), convert = FALSE)$out[[1]]$G)), info = info)
 
-
-
-# The next set of tests are long ... only run them "at home" 20220129
-if(!at_home()) exit_file("Skipping long test")
-
 # Get parameters for all available minerals
 dat <- berman()
 mineral <- unique(dat$name)

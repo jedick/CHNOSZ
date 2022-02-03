@@ -238,6 +238,8 @@ Columns 14-21 for aqueous species using the Akinfiev-Diamond model. Note that th
        \code{...} \tab numeric \tab Stoichiometry, one column for each element present in any species
     }
 
+    \item \code{thermo()$Berman}
+    A data frame with thermodynamic parameters for minerals in the Berman equations, assembled from files in \samp{extdata/Berman} and used in \code{\link{berman}}.
 
   }  % end of itemize with long descriptions
 
