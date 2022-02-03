@@ -16,7 +16,7 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
     PAR <- parameters[k, ]
     if(all(is.na(PAR[9:21]))) {
       # use Berman equations (parameters not in thermo()$OBIGT)
-      properties <- berman(PAR$name, T=T, P=P, thisinfo=PAR)
+      properties <- berman(PAR$name, T = T, P = P)
       iprop <- match(property, colnames(properties))
       values <- properties[, iprop, drop=FALSE]
     } else {

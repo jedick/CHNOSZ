@@ -1,67 +1,16 @@
 # test-berman.R 20171001
 
-# This is a long test ... only run it "at home" 20220129
-if(!at_home()) exit_file("Skipping long test")
-
 # Load default settings for CHNOSZ
 reset()
 
+# Make sure all Berman minerals are listed with units of J in OBIGT 20220203
+info <- "Berman minerals are listed with units of J in OBIGT"
+file <- system.file("extdata/OBIGT/Berman_cr.csv", package = "CHNOSZ")
+dat <- read.csv(file)
+expect_true(all(dat$E_units == "J"), info = info)
+
 # The maximum absolute pairwise difference between x and y
 maxdiff <- function(x, y) max(abs(y - x))
-
-# get parameters for all available minerals
-dat <- berman()
-mineral <- unique(dat$name)
-prop_Berman <- NULL
-
-info <- "Properties of all minerals are computed without warnings"
-# running this without error means that:
-# - formulas for the minerals are found in thermo()$OBIGT
-# - warning is produced for flourtremolite (GfPrTr(calc) >= 1000 J/cal different from GfPrTr(table))
-expect_warning(properties <- lapply(mineral, berman, check.G = TRUE),
-               "fluortremolite", info = info)
-# save the results so we can use them in the next tests
-assign("prop_Berman", properties, inherits = TRUE)
-
-# assemble a data frame for Berman properties
-prop_Berman <- do.call(rbind, prop_Berman)
-# find the mineral data using Helgeson formulation
-icr <- suppressMessages(info(mineral, "cr"))
-# all of these except rutile (Robie et al., 1979) reference Helgeson et al., 1978
-# NOTE: with check.it = TRUE (the default), this calculates Cp from the tabulated Maier-Kelley parameters
-add.OBIGT("SUPCRT92")
-prop_Helgeson <- suppressMessages(info(icr, check.it = FALSE))
-OBIGT()
-
-# now we can compare Berman and Helgeson G, H, S, Cp, V
-# minerals with missing properties are not matched here
-# (i.e. fluortremolite: no G and H in prop_Helgeson data)
-
-info <- "Berman and Helgeson tabulated properties have large differences for few minerals"
-# which minerals differ in DGf by more than 4 kcal/mol?
-idiffG <- which(abs(prop_Berman$G - prop_Helgeson$G) > 4000)
-DGf.list <- c("paragonite", "anthophyllite", "antigorite", "Ca-Al-pyroxene", "lawsonite", "margarite", "merwinite", "fluorphlogopite")
-expect_true(all(mineral[idiffG] %in% DGf.list), info = info)
-
-# which minerals differ in DHf by more than 4 kcal/mol?
-idiffH <- which(abs(prop_Berman$H - prop_Helgeson$H) > 4000)
-DHf.list <- c("paragonite", "anthophyllite", "antigorite", "Ca-Al-pyroxene", "lawsonite", "margarite", "merwinite", "clinozoisite", "fluorphlogopite")
-expect_true(all(mineral[idiffH] %in% DHf.list), info = info)
-
-# which minerals differ in S by more than 4 cal/K/mol?
-idiffS <- which(abs(prop_Berman$S - prop_Helgeson$S) > 4)
-DS.list <- c("epidote", "annite", "almandine", "fluortremolite", "andradite", "grunerite")
-expect_true(all(mineral[idiffS] %in% DS.list), info = info)
-
-# which minerals differ in Cp by more than 4 cal/K/mol?
-idiffCp <- which(abs(prop_Berman$Cp - prop_Helgeson$Cp) > 4)
-DCp.list <- c("glaucophane", "antigorite", "cristobalite,beta", "K-feldspar", "fluortremolite", "grunerite")
-expect_true(all(mineral[idiffCp] %in% DCp.list), info = info)
-
-# which minerals differ in V by more than 1 cm^3/mol?
-idiffV <- which(abs(prop_Berman$V - prop_Helgeson$V) > 1)
-DV.list <- c("glaucophane", "anthophyllite", "antigorite", "chrysotile", "merwinite", "grunerite")
-expect_true(all(mineral[idiffV] %in% DV.list), info = info)
 
 info <- "high-T,P calculated properties are similar to precalculated ones"
 # Reference values for G were taken from the spreadsheet Berman_Gibbs_Free_Energies.xlsx
@@ -100,12 +49,75 @@ info <- "NA values of P are handled"
 sresult <- suppressWarnings(subcrt("H2O", T = seq(0, 500, 100)))
 T <- sresult$out$water$T
 P <- sresult$out$water$P
-# this stopped with a error prior to version 1.1.3-37
+# This stopped with a error prior to version 1.1.3-37
 bresult <- berman("quartz", T = convert(T, "K"), P = P)
 expect_equal(sum(is.na(bresult$G)), 2, info = info)
-# this also now works (producing the same NA values)
+# This also now works (producing the same NA values)
 #subcrt("quartz", T = seq(0, 500, 100))
 
 "NAs don't creep into calculations below 298.15 K for minerals with disorder parameters"
 # 20191116
 expect_false(any(is.na(subcrt("K-feldspar", P = 1, T = seq(273.15, 303.15, 5), convert = FALSE)$out[[1]]$G)), info = info)
+
+
+
+# The next set of tests are long ... only run them "at home" 20220129
+if(!at_home()) exit_file("Skipping long test")
+
+# Get parameters for all available minerals
+dat <- berman()
+mineral <- unique(dat$name)
+
+info <- "Properties of all minerals are computed without errors"
+# Running this without error means that:
+# - formulas for the minerals are found in thermo()$OBIGT
+# - warning is produced for flourtremolite (GfPrTr(calc) >= 1000 J/mol different from GfPrTr(table))
+# - use units = "cal" for comparison with Helgeson minerals below
+expect_warning(properties <- lapply(mineral, berman, check.G = TRUE, units = "cal"),
+               "fluortremolite", info = info)
+# Save the results so we can use them in the next tests
+Berman <- do.call(rbind, properties)
+
+# Find the mineral data using Helgeson formulation
+icr <- suppressMessages(info(mineral, "cr"))
+add.OBIGT("SUPCRT92")
+# NOTE: with check.it = TRUE (the default), this calculates Cp from the tabulated Maier-Kelley parameters
+#Helgeson <- suppressMessages(info(icr, check.it = FALSE))
+Helgeson <- suppressMessages(info(icr))
+
+# Get the minerals that are present in *both* Berman and Helgeson versions
+# All of these except rutile (Robie et al., 1978) reference Helgeson et al., 1978
+iboth <- Helgeson$ref1 %in% c("HDNB78", "RHF78.4")
+mineral <- mineral[iboth]
+Berman <- Berman[iboth, ]
+Helgeson <- Helgeson[iboth, ]
+
+# Now we can compare Berman and Helgeson G, H, S, Cp, V
+# Minerals with missing properties are not matched here
+# (i.e. fluortremolite: no G and H in Helgeson data)
+
+info <- "Berman and Helgeson tabulated properties have large differences for few minerals"
+# Which minerals differ in DGf by more than 4 kcal/mol?
+idiffG <- which(abs(Berman$G - Helgeson$G) > 4000)
+DGf.list <- c("paragonite", "anthophyllite", "antigorite", "Ca-Al-pyroxene", "lawsonite", "margarite", "merwinite", "fluorphlogopite")
+expect_true(identical(sort(mineral[idiffG]), sort(DGf.list)), info = info)
+
+# Which minerals differ in DHf by more than 4 kcal/mol?
+idiffH <- which(abs(Berman$H - Helgeson$H) > 4000)
+DHf.list <- c("paragonite", "anthophyllite", "antigorite", "Ca-Al-pyroxene", "lawsonite", "margarite", "merwinite", "fluorphlogopite")
+expect_true(identical(sort(mineral[idiffH]), sort(DHf.list)), info = info)
+
+# Which minerals differ in S by more than 4 cal/K/mol?
+idiffS <- which(abs(Berman$S - Helgeson$S) > 4)
+DS.list <- c("epidote", "annite", "fluortremolite", "andradite")
+expect_true(identical(sort(mineral[idiffS]), sort(DS.list)), info = info)
+
+# Which minerals differ in Cp by more than 4 cal/K/mol?
+idiffCp <- which(abs(Berman$Cp - Helgeson$Cp) > 4)
+DCp.list <- c("glaucophane", "antigorite", "cristobalite,beta", "K-feldspar", "fluortremolite")
+expect_true(identical(sort(mineral[idiffCp]), sort(DCp.list)), info = info)
+
+# Which minerals differ in V by more than 1 cm^3/mol?
+idiffV <- which(abs(Berman$V - Helgeson$V) > 1)
+DV.list <- c("glaucophane", "anthophyllite", "antigorite", "chrysotile", "merwinite", "grunerite")
+expect_true(identical(sort(mineral[idiffV]), sort(DV.list)), info = info)

@@ -4,7 +4,7 @@
 #      in the system Na2O-K2O-CaO-MgO-FeO-Fe2O3-Al2O3-SiO2-TiO2-H2O-CO2.
 #      J. Petrol. 29, 445-522. https://doi.org/10.1093/petrology/29.2.445
 
-berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.transition=TRUE, calc.disorder=TRUE, units="cal") {
+berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE, calc.disorder=TRUE, units="cal") {
   # reference temperature and pressure
   Pr <- 1
   Tr <- 298.15
@@ -56,8 +56,10 @@ berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.t
   # assign values to the variables used below
   for(i in 1:ncol(dat)) assign(colnames(dat)[i], dat[irow, i])
   # get the entropy of the elements using the chemical formula in thermo()$OBIGT
-  if(is.null(thisinfo)) thisinfo <- info(info(name, "cr"), check.it = FALSE)
-  SPrTr_elements <- convert(entropy(thisinfo$formula), "J")
+  file <- system.file("extdata/OBIGT/Berman_cr.csv", package = "CHNOSZ")
+  dat <- read.csv(file)
+  formula <- dat$formula[match(name, dat$name)]
+  SPrTr_elements <- convert(entropy(formula), "J")
   # check that G in data file is the G of formation from the elements --> Benson-Helgeson convention (DG = DH - T*DS)
   if(check.G) {
     GfPrTr_calc <- HfPrTr - Tr * (SPrTr - SPrTr_elements)

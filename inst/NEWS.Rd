@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-13 (2022-02-01)}{
+\section{Changes in CHNOSZ version 1.4.1-16 (2022-02-03)}{
 
   \subsection{OBIGT DATABASE}{
     \itemize{
@@ -48,6 +48,10 @@
 
       \item \strong{multi-metal.Rmd} now has a link to the associated paper
       (\href{https://doi.org/10.1016/j.acags.2021.100059}{Dick, 2021}).
+
+      \item \code{info()} with a numeric argument now includes values of
+      \code{G}, \code{H}, \code{S}, and \code{V} at 25 \degC and 1 bar for
+      minerals with thermodynamic parameters in the Berman equations.
       
     }
   }

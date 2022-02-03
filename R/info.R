@@ -190,12 +190,20 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   ispeciesmax <- nrow(thermo$OBIGT)
   if(ispecies > ispeciesmax | ispecies < 1) 
     stop(paste("species index", ispecies, "not found in thermo()$OBIGT\n"))
-  # remove scaling factors on EOS parameters depending on state
-  # use new OBIGT2eos function here
+
+  # Remove scaling factors on EOS parameters depending on state
+  # Use new OBIGT2eos function here
   this <- OBIGT2eos(this, this$state)
-  # identify any missing GHS values
+
+  if(all(is.na(this[, 9:21])) & this$name != "water") {
+    # Get G, H, S, and V from datasets using Berman equations 20220203
+    properties <- subset(berman(), name == this$name)
+    this[, c("G", "H", "S", "V")] <- properties[, c("GfPrTr", "HfPrTr", "SPrTr", "VPrTr")] * c(1, 1, 1, 10)
+  }
+
+  # Identify any missing GHS values
   naGHS <- is.na(this[9:11])
-  # a missing one of G, H or S can cause problems for subcrt calculations at high T
+  # A missing one of G, H or S can cause problems for subcrt calculations at high T
   if(sum(naGHS)==1) {
     # calculate a single missing one of G, H, or S from the others
     GHS <- as.numeric(GHS(as.character(this$formula), G=this[,9], H=this[,10], S=this[,11], E_units=this$E_units))
@@ -203,10 +211,10 @@ info.numeric <- function(ispecies, check.it=TRUE) {
       this$name, "(", this$state, ") is NA; set to ", round(GHS[naGHS],2), " ", this$E_units, " mol-1")
     this[, which(naGHS)+8] <- GHS[naGHS]
   } 
-  # now perform consistency checks for GHS and EOS parameters if check.it=TRUE
-  # don't do it for the AkDi species 20190219
+
+  # Perform consistency checks for GHS and EOS parameters if check.it = TRUE
+  # Don't do it for the AkDi species 20190219
   if(check.it & !"xi" %in% colnames(this)) {
-print(paste("check.it:", this$name))
     # check GHS if they are all present
     if(sum(naGHS)==0) calcG <- checkGHS(this)
     # check tabulated heat capacities against EOS parameters

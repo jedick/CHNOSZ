@@ -7,7 +7,7 @@ Calculate thermodynamic properties of minerals using the equations of Berman (19
 }
 
 \usage{
-  berman(name, T = 298.15, P = 1, thisinfo = NULL, check.G = FALSE,
+  berman(name, T = 298.15, P = 1, check.G = FALSE,
          calc.transition = TRUE, calc.disorder = TRUE, units = "cal")
 }
 
@@ -15,7 +15,6 @@ Calculate thermodynamic properties of minerals using the equations of Berman (19
   \item{name}{character, name of mineral}
   \item{T}{numeric, temperature(s) at which to calculate properties (K)}
   \item{P}{numeric, pressure(s) at which to calculate properties (bar)}
-  \item{thisinfo}{dataframe, row for mineral from \code{thermo()$OBIGT}}
   \item{check.G}{logical, check consistency of G, H, and S?}
   \item{calc.transition}{logical, include calculation of polymorphic transition properties?}
   \item{calc.disorder}{logical, include calculation of disordering properties?}
@@ -69,7 +68,6 @@ The function outputs apparent Gibbs energies according to the Benson-Helgeson co
 If \code{check.G} is TRUE, the tabulated value of \code{GfTrPr} (Benson-Helgeson) is compared with that calculated from \code{HfPrTr} - 298.15*\code{DSPrTr} (\code{DSPrTr} is the difference between the entropies of the elements in the formula and \code{SPrTr} in the table).
 A warning is produced if the absolute value of the difference between tabulated and calculated \code{GfTrPr} is greater than 1000 J/mol.
 
-Providing \code{thisinfo} avoids searching for the mineral in \code{thermo()$OBIGT}, potentially saving some running time.
 If the function is called with missing \code{name}, the parameters for all available minerals are returned.
 }
 
