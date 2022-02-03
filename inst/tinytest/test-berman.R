@@ -30,7 +30,7 @@ icr <- suppressMessages(info(mineral, "cr"))
 # all of these except rutile (Robie et al., 1979) reference Helgeson et al., 1978
 # NOTE: with check.it = TRUE (the default), this calculates Cp from the tabulated Maier-Kelley parameters
 add.OBIGT("SUPCRT92")
-prop_Helgeson <- suppressMessages(info(icr))
+prop_Helgeson <- suppressMessages(info(icr, check.it = FALSE))
 OBIGT()
 
 # now we can compare Berman and Helgeson G, H, S, Cp, V

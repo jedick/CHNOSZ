@@ -56,7 +56,7 @@ berman <- function(name, T = 298.15, P = 1, thisinfo=NULL, check.G=FALSE, calc.t
   # assign values to the variables used below
   for(i in 1:ncol(dat)) assign(colnames(dat)[i], dat[irow, i])
   # get the entropy of the elements using the chemical formula in thermo()$OBIGT
-  if(is.null(thisinfo)) thisinfo <- info(info(name, "cr", check.it=FALSE))
+  if(is.null(thisinfo)) thisinfo <- info(info(name, "cr"), check.it = FALSE)
   SPrTr_elements <- convert(entropy(thisinfo$formula), "J")
   # check that G in data file is the G of formation from the elements --> Benson-Helgeson convention (DG = DH - T*DS)
   if(check.G) {

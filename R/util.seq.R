@@ -44,7 +44,7 @@ nucleic.formula <- function(nucleic=NULL) {
   # we'll normally have at least one NA (U or A for DNA or RNA)
   ina <- is.na(i.lett)
   # the species indices of the bases, in the order appearing above
-  i.base <- suppressMessages(info(names[!ina], check.it=FALSE))
+  i.base <- suppressMessages(info(names[!ina]))
   # the chemical formula of bases
   f.base <- get("thermo", CHNOSZ)$OBIGT$formula[i.base]
   # loop over the base counts

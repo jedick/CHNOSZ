@@ -174,7 +174,7 @@ solubility_calc <- function(aout, dissociate = NULL, find.IS = FALSE, in.terms.o
     }
     # add ions present in the species of interest
     # instead of using aout$species$name, use info() to get formulas 20190309
-    species.formulas <- suppressMessages(info(aout$species$ispecies)$formula)
+    species.formulas <- suppressMessages(info(aout$species$ispecies, check.it = FALSE)$formula)
     for(i in 1:length(loga.equil)) {
       species.ion <- species.formulas[i]
       Z.species.ion <- makeup(species.ion)["Z"]

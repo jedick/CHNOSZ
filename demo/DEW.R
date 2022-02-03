@@ -65,7 +65,7 @@ plot(c(-25, 50), c(-4, 12), type="n", xlab=V0nlab, ylab=a1lab)
 # a function to get the HKF parameters, calculate nonsolvation volume, plot points, labels, error bars, and correlation lines
 plotfun <- function(species, col, pch, cex, dy, error, xlim, corrfun) {
   # get HKF parameters
-  par <- info(info(species))
+  par <- info(info(species), check.it = FALSE)
   a1 <- par$a1 * 10
   # get the nonsolvation volume
   Vn <- unlist(hkf("V", par, contrib="n")$aq)
@@ -188,6 +188,8 @@ mtitle(c(t1, t2))
 
 ### additional checks
 
+# The maximum absolute pairwise difference between x and y
+maxdiff <- function(x, y) max(abs(y - x))
 ## check that we're within 0.1 of the QFM-2 values used by SSH14
 stopifnot(maxdiff((buf$O2-2), c(-17.0, -14.5, -12.5, -10.8, -9.4)) < 0.1)
 

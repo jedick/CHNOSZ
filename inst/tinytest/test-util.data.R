@@ -59,7 +59,7 @@ file <- system.file("extdata/adds/BZA10.csv", package = "CHNOSZ")
 rc <- read.csv(file)
 expect_false("E_units" %in% colnames(rc), info = info)
 inew <- add.OBIGT(file)
-expect_true(unique(info(inew)$E_units) == "cal", info = info)
+expect_true(unique(info(inew, check.it = FALSE)$E_units) == "cal", info = info)
 
 info <- "add.OBIGT() gives an error for an incompatible file"
 # test added 20191210

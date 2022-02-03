@@ -140,7 +140,7 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
     return(x[ix, ])
   } else if(is.numeric(key)) {
     # get the source keys for the indicated species
-    sinfo <- suppressMessages(info(key))
+    sinfo <- suppressMessages(info(key, check.it = FALSE))
     if(keep.duplicates) {
       # output a single reference for each species 20180927
       # (including duplicated references, and not including ref2)

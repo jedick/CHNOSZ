@@ -206,6 +206,7 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   # now perform consistency checks for GHS and EOS parameters if check.it=TRUE
   # don't do it for the AkDi species 20190219
   if(check.it & !"xi" %in% colnames(this)) {
+print(paste("check.it:", this$name))
     # check GHS if they are all present
     if(sum(naGHS)==0) calcG <- checkGHS(this)
     # check tabulated heat capacities against EOS parameters

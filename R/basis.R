@@ -74,8 +74,8 @@ basis <- function(species=NULL, state=NULL, logact=NULL, delete=FALSE) {
     ina <- ispecies > nrow(thermo$OBIGT)
   } else {
     # get species indices using states from the argument, or default states
-    if(!is.null(state)) ispecies <- suppressMessages(info(species, state, check.it=FALSE))
-    else ispecies <- suppressMessages(info(species, check.it=FALSE))
+    if(!is.null(state)) ispecies <- suppressMessages(info(species, state))
+    else ispecies <- suppressMessages(info(species))
     # check if we got all the species
     ina <- is.na(ispecies)
     # info() returns a list if any of the species had multiple approximate matches
@@ -156,7 +156,7 @@ mod.basis <- function(species, state=NULL, logact=NULL) {
         # compatible with the basis definition
         for(k in 1:length(ibuff)) {
           ispecies <- suppressMessages(info(as.character(thermo$buffer$species)[ibuff[k]],
-            as.character(thermo$buffer$state)[ibuff[k]], check.it=FALSE))
+            as.character(thermo$buffer$state)[ibuff[k]]))
           bufmakeup <- makeup(ispecies)
           inbasis <- names(bufmakeup) %in% colnames(basis()) 
           if(FALSE %in% inbasis) {
@@ -169,11 +169,11 @@ mod.basis <- function(species, state=NULL, logact=NULL) {
       } else {
         # first, look for a species with the same _name_ in the requested state
         myname <- thermo$OBIGT$name[thermo$basis$ispecies[ib]]
-        ispecies <- suppressMessages(info(myname, state[i], check.it=FALSE))
+        ispecies <- suppressMessages(info(myname, state[i]))
         if(is.na(ispecies) | is.list(ispecies)) {
           # if that failed, look for a species with the same _formula_ in the requested state
           myformula <- thermo$OBIGT$formula[thermo$basis$ispecies[ib]]
-          ispecies <- suppressMessages(info(myformula, state[i], check.it=FALSE))
+          ispecies <- suppressMessages(info(myformula, state[i]))
           if(is.na(ispecies) | is.list(ispecies)) {
             # if that failed, we're out of luck
             if(myname==myformula) nametxt <- myname else nametxt <- paste(myname, "or", myformula)

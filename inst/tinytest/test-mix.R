@@ -57,8 +57,8 @@ iFe <- c(iFe.cr, iFe.aq)
 iCu <- c(iCu.cr, iCu.aq)
 # TODO: allow numeric values for bases in mosaic()
 #mbornite <- mosaic(list(iFe, iCu), pH = pH, Eh = Eh, T = 300, predominant = list(dFe$predominant, dCu$predominant))
-Fe <- info(iFe)$name
-Cu <- info(iCu)$name
+Fe <- info(iFe, check.it = FALSE)$name
+Cu <- info(iCu, check.it = FALSE)$name
 mbornite <- mosaic(list(Fe, Cu), pH = pH, Eh = Eh, T = 300, blend = FALSE)
 if(plot.it) image(mbornite$A.species$values[[1]])
 

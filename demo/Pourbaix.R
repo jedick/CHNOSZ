@@ -135,7 +135,7 @@ water.lines(d_all_0, lty = 5, lwd = 1.3)
 # but we use positions calculated with the first equisolubility line
 # so that names are within the shrunken parts of the mineral fields)
 # Create labels using chemical formulas instead of name of minerals
-formulas <- info(a_all$species$ispecies)$formula
+formulas <- info(a_all$species$ispecies, check.it = FALSE)$formula
 formulas[a_all$species$state == "aq"] <- ""
 diagram(a_all, fill = NA, names = formulas, bold = TRUE, cex.names = 1.2, lty = 0, add = TRUE)
 

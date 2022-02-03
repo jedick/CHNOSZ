@@ -101,14 +101,14 @@ expect_equal(round(G_calc, 1), G_ref, info = info)
 # compare Gibbs energies at 25 degrees calculated with AkDi model to database values
 iAkDi <- add.OBIGT("AkDi")
 # remove hydroxides because they aren't in the default database (except B(OH)3(aq))
-iAkDi <- iAkDi[-grep("OH", info(iAkDi)$name)]
+iAkDi <- iAkDi[-grep("OH", info(iAkDi, check.it = FALSE)$name)]
 # this would produce an error if any calculations failed
 # (e.g. because gases corresponding to any aqueous species were unavailable)
 sAkDi <- subcrt(iAkDi, T = 25)
 GAkDi <- do.call(rbind, sAkDi$out)$G
 # now get the parameters from default OBIGT
 reset()
-GOBIGT <- info(iAkDi)$G
+GOBIGT <- info(iAkDi, check.it = FALSE)$G
 # the differences are not that big, except for HCl(aq)
 maxdiff <- function(x, y) max(abs(y - x))
 expect_true(maxdiff(GAkDi, GOBIGT) < 300, info = info)
