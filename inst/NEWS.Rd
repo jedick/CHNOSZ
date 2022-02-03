@@ -52,6 +52,9 @@
       \item \code{info()} with a numeric argument now includes values of
       \code{G}, \code{H}, \code{S}, and \code{V} at 25 \degC and 1 bar for
       minerals with thermodynamic parameters in the Berman equations.
+
+      \item All function, variables, and data file names now use capitalized
+      \samp{Berman}, not \samp{berman}.
       
     }
   }

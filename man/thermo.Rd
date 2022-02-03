@@ -92,7 +92,7 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
      \item Properties of most aqueous species (\code{state} = \samp{aq}) are calculated using the revised Helgeson-Kirkham-Flowers (HKF) model (see \code{\link{hkf}}).
      \item Properties of aqueous species with an NA value of \code{Z} (the final column of thermo()$OBIGT) are calculated using the Akinfiev-Diamond model (see \code{\link{AkDi}}).
      \item Properties of most non-aqueous species (liquids, gases, and minerals) are calculated using a heat capacity polynomial expression with up to six terms (see \code{\link{cgl}}).
-     \item Properties of minerals with NA values of all heat capacity parameters are calculated using the Berman model (see \code{\link{berman}}).
+     \item Properties of minerals with NA values of all heat capacity parameters are calculated using the Berman model (see \code{\link{Berman}}).
   } 
 
   \samp{OrganoBioGeoTherm} is the name of a GUI program to use SUPCRT in Windows, produced in Harold C. Helgeson's Laboratory of Theoretical Geochemistry and Biogeochemistry at the University of California, Berkeley.
@@ -239,7 +239,7 @@ Columns 14-21 for aqueous species using the Akinfiev-Diamond model. Note that th
     }
 
     \item \code{thermo()$Berman}
-    A data frame with thermodynamic parameters for minerals in the Berman equations, assembled from files in \samp{extdata/Berman} and used in \code{\link{berman}}.
+    A data frame with thermodynamic parameters for minerals in the Berman equations, assembled from files in \samp{extdata/Berman} and used in \code{\link{Berman}}.
 
   }  % end of itemize with long descriptions
 

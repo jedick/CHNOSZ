@@ -1,13 +1,13 @@
 \encoding{UTF-8}
-\name{berman}
-\alias{berman}
+\name{Berman}
+\alias{Berman}
 \title{Thermodynamic Properties of Minerals}
 \description{
 Calculate thermodynamic properties of minerals using the equations of Berman (1988).
 }
 
 \usage{
-  berman(name, T = 298.15, P = 1, check.G = FALSE,
+  Berman(name, T = 298.15, P = 1, check.G = FALSE,
          calc.transition = TRUE, calc.disorder = TRUE, units = "cal")
 }
 
@@ -25,7 +25,7 @@ Calculate thermodynamic properties of minerals using the equations of Berman (19
 This function calculates the thermodynamic properties of minerals at high \P and \T using equations given by Berman (1988).
 These minerals should be listed in \code{thermo()$OBIGT} with the state \samp{cr} and chemical formula, and optionally an abbreviation and references, but all other properties set to NA.
 
-The standard state thermodynamic properties and parameters for the calculations are stored in data files under \code{extdata/Berman}, or can be read from a user-created file (if available) named \samp{berman.csv} in the working directory.
+The standard state thermodynamic properties and parameters for the calculations are stored in data files under \code{extdata/Berman}, or can be read from a user-created file specified by \code{\link{thermo}()$opt$Berman}.
 
 The equation used for heat capacity is \Cp = k0 + k1*\T\S{-0.5} + k2*\T\S{-2} + k3*\T\S{-3} + k4*\T\S{-1} + k5*\T + k6*\T\S{2}.
 This is an extended form Eq. 4 of Berman (1988) as used in the winTWQ program (Berman, 2007).
@@ -81,12 +81,12 @@ A data frame with \code{T} (K), \code{P} (bar), \code{G}, \code{H}, \code{S}, an
 # thermo()$OBIGT, so this shows NAs
 info(info("quartz", "cr"))
 # properties of alpha-quartz (aQz) at 298.15 K and 1 bar
-berman("quartz")
+Berman("quartz")
 # Gibbs energies of aQz and coesite at higher T and P
 T <- seq(200, 1300, 100)
 P <- seq(22870, 31900, length.out=length(T))
-G_aQz <- berman("quartz", T=T, P=P)$G
-G_Cs <- berman("coesite", T=T, P=P)$G
+G_aQz <- Berman("quartz", T=T, P=P)$G
+G_Cs <- Berman("coesite", T=T, P=P)$G
 # that is close to the univariant curve (Ber88 Fig. 4),
 # so the difference in G is close to 0
 DGrxn <- G_Cs - G_aQz
@@ -108,7 +108,7 @@ Gex_Ber88 <- subcrt(species, coeffs, T=T, P=1)$out$G
 # add data from BA96
 datadir <- system.file("extdata/Berman/testing", package="CHNOSZ")
 add.OBIGT(file.path(datadir, "BA96_OBIGT.csv"))
-thermo("opt$Berman" = file.path(datadir, "BA96_berman.csv"))
+thermo("opt$Berman" = file.path(datadir, "BA96_Berman.csv"))
 Gex_BA96 <- subcrt(species, coeffs, T=seq(600, 1500, 50), P=1)$out$G
 # Ber88 is lower than BA96 at low T
 (Gex_BA96 - Gex_Ber88)[1] > 0  # TRUE

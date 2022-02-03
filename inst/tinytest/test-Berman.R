@@ -1,4 +1,4 @@
-# test-berman.R 20171001
+# test-Berman.R 20171001
 
 # Load default settings for CHNOSZ
 reset()
@@ -39,18 +39,18 @@ expect_true(maxdiff(Kfs$G[3:4], Kfs_G[3:4]) < 350, info = info)
 
 info <- "Nonexistent or incomplete user data file is handled properly"
 thermo("opt$Berman" = "XxXxXx.csv")
-expect_error(berman("calcite"), "the file named in thermo\\(\\)\\$opt\\$Berman \\(XxXxXx.csv\\) does not exist", info = info)
-thermo("opt$Berman" = system.file("extdata/Berman/testing/BA96_berman.csv", package = "CHNOSZ"))
-expect_error(berman("xxx"), "Data for xxx not available. Please add it to", info = info)
+expect_error(Berman("calcite"), "the file named in thermo\\(\\)\\$opt\\$Berman \\(XxXxXx.csv\\) does not exist", info = info)
+thermo("opt$Berman" = system.file("extdata/Berman/testing/BA96_Berman.csv", package = "CHNOSZ"))
+expect_error(Berman("xxx"), "Data for xxx not available. Please add it to", info = info)
 thermo("opt$Berman" = NA)
-expect_error(berman("xxx"), "Data for xxx not available. Please add it to your_data_file.csv", info = info)
+expect_error(Berman("xxx"), "Data for xxx not available. Please add it to your_data_file.csv", info = info)
 
 info <- "NA values of P are handled"
 sresult <- suppressWarnings(subcrt("H2O", T = seq(0, 500, 100)))
 T <- sresult$out$water$T
 P <- sresult$out$water$P
 # This stopped with a error prior to version 1.1.3-37
-bresult <- berman("quartz", T = convert(T, "K"), P = P)
+bresult <- Berman("quartz", T = convert(T, "K"), P = P)
 expect_equal(sum(is.na(bresult$G)), 2, info = info)
 # This also now works (producing the same NA values)
 #subcrt("quartz", T = seq(0, 500, 100))
@@ -60,7 +60,7 @@ expect_equal(sum(is.na(bresult$G)), 2, info = info)
 expect_false(any(is.na(subcrt("K-feldspar", P = 1, T = seq(273.15, 303.15, 5), convert = FALSE)$out[[1]]$G)), info = info)
 
 # Get parameters for all available minerals
-dat <- berman()
+dat <- Berman()
 mineral <- unique(dat$name)
 
 info <- "Properties of all minerals are computed without errors"
@@ -68,7 +68,7 @@ info <- "Properties of all minerals are computed without errors"
 # - formulas for the minerals are found in thermo()$OBIGT
 # - warning is produced for flourtremolite (GfPrTr(calc) >= 1000 J/mol different from GfPrTr(table))
 # - use units = "cal" for comparison with Helgeson minerals below
-expect_warning(properties <- lapply(mineral, berman, check.G = TRUE, units = "cal"),
+expect_warning(properties <- lapply(mineral, Berman, check.G = TRUE, units = "cal"),
                "fluortremolite", info = info)
 # Save the results so we can use them in the next tests
 Berman <- do.call(rbind, properties)

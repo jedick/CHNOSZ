@@ -15,11 +15,11 @@
   \itemize{
     \item \code{Ber88_1988.csv} contains thermodynamic data for minerals taken from Berman (1988).
     \item Other files with names like \code{xxx_yyyy.csv} contain thermodynamic data from other sources; xxx in the filename corresponds to the reference in \code{\link{thermo}$OBIGT} and yyyy gives the year of publication.
-    \code{\link{berman}} uses these data for the calculation of thermodynamic properties at specified \P and \T, which are then available for use in \code{\link{subcrt}}.
+    \code{\link{Berman}} uses these data for the calculation of thermodynamic properties at specified \P and \T, which are then available for use in \code{\link{subcrt}}.
     If there are any duplicated mineral names in the files, only the most recent data are used, as determined by the year in the file name.
     Following conventions used in other data files, the names of sanidine and microcline were changed to K-feldspar,high and K-feldspar,low.
     \item \code{sympy.R} is an R script that uses \CRANpkg{rSymPy} to symbolically integrate Bermans's equations for heat capacity and volume to write experessions for enthalpy, entropy and Gibbs energy.
-    \item The \code{testing} directory contains data files based on Berman and Aranovich (1996). These are used to demonstrate the addition of data from a user-supplied file (see \code{\link{berman}}).
+    \item The \code{testing} directory contains data files based on Berman and Aranovich (1996). These are used to demonstrate the addition of data from a user-supplied file (see \code{\link{Berman}}).
   }
 
   Files in \code{bison} contain BLAST results and taxonomic information for an environmental metagenome from the Bison Pool hot spring in Yellowstone National Park:

@@ -62,7 +62,7 @@ function OpenAllDivs() {
   OpenDiv("aqueous-organic");
   OpenDiv("aqueous-biotic");
   OpenDiv("solid-inorganic");
-  OpenDiv("solid-berman");
+  OpenDiv("solid-Berman");
   OpenDiv("solid-organic");
   OpenDiv("gas-inorganic");
   OpenDiv("gas-organic");
@@ -83,7 +83,7 @@ function CloseAllDivs() {
   CloseDiv("aqueous-organic");
   CloseDiv("aqueous-biotic");
   CloseDiv("solid-inorganic");
-  CloseDiv("solid-berman");
+  CloseDiv("solid-Berman");
   CloseDiv("solid-organic");
   CloseDiv("gas-inorganic");
   CloseDiv("gas-organic");
@@ -203,7 +203,7 @@ Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthal
 <!-- All buttons at top -->
 
 ### Aqueous Species <button id="B-aqueous-H2O" onclick='ToggleDiv("aqueous-H2O")'>H2O</button> <button id="B-aqueous-inorganic" onclick='ToggleDiv("aqueous-inorganic")'>Inorganic</button> <button id="B-aqueous-organic" onclick='ToggleDiv("aqueous-organic")'>Organic</button> <button id="B-aqueous-biotic" onclick='ToggleDiv("aqueous-biotic")'>Biotic</button>
-### Solids <button id="B-solid-inorganic" onclick='ToggleDiv("solid-inorganic")'>Inorganic</button> <button id="B-solid-berman" onclick='ToggleDiv("solid-berman")'>Berman</button> <button id="B-solid-organic" onclick='ToggleDiv("solid-organic")'>Organic</button>
+### Solids <button id="B-solid-inorganic" onclick='ToggleDiv("solid-inorganic")'>Inorganic</button> <button id="B-solid-Berman" onclick='ToggleDiv("solid-Berman")'>Berman</button> <button id="B-solid-organic" onclick='ToggleDiv("solid-organic")'>Organic</button>
 ### Gases <button id="B-gas-inorganic" onclick='ToggleDiv("gas-inorganic")'>Inorganic</button> <button id="B-gas-organic" onclick='ToggleDiv("gas-organic")'>Organic</button> &nbsp;&nbsp;&nbsp;Liquids <button id="B-liquid-organic" onclick='ToggleDiv("liquid-organic")'>Organic</button>
 ### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AkDi" onclick='ToggleDiv("optional-AkDi")'>AkDi</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-GEMSFIT" onclick='ToggleDiv("optional-GEMSFIT")'>GEMSFIT</button>
 
@@ -279,8 +279,8 @@ The source of parameters used here for goethite is different from that in the sl
 ```
 </div>
 
-<div id="D-solid-berman" style="display: none">
-## <a id="solid-berman" class="anchor"></a> `r setfile("Berman_cr.csv")`
+<div id="D-solid-Berman" style="display: none">
+## <a id="solid-Berman" class="anchor"></a> `r setfile("Berman_cr.csv")`
 This file gives the identifiying information for minerals whose properties are calculated using the formulation of [Berman (1988)](https://doi.org/10.1093/petrology/29.2.445).
 Thermodynamic properties for these minerals are listed as NA in `thermo()$OBIGT`; the actual data are stored separately, as CSV files in `extdata/Berman/*.csv`.
 

@@ -1,10 +1,10 @@
-# CHNOSZ/berman.R 20170930
+# CHNOSZ/Berman.R 20170930
 # Calculate thermodynamic properties of minerals using equations from:
 #   Berman, R. G. (1988) Internally-consistent thermodynamic data for minerals
 #      in the system Na2O-K2O-CaO-MgO-FeO-Fe2O3-Al2O3-SiO2-TiO2-H2O-CO2.
 #      J. Petrol. 29, 445-522. https://doi.org/10.1093/petrology/29.2.445
 
-berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE, calc.disorder=TRUE, units="cal") {
+Berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE, calc.disorder=TRUE, units="cal") {
   # Reference temperature and pressure
   Pr <- 1
   Tr <- 298.15
@@ -34,7 +34,7 @@ berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE,
   vcols <- 13:16 # columns with v1, v2, v3, v4
   multexp <- c(5, 5, 5, 8)
   dat[, vcols] <- t(t(dat[, vcols]) / 10^multexp)
-  # If name is missing, return the entire data frame (used in test-berman.R)
+  # If name is missing, return the entire data frame (used in test-Berman.R)
   if(missing(name)) return(dat) else {
     # Which row has data for this mineral?
     irow <- which(dat$name == name)

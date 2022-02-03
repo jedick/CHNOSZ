@@ -197,9 +197,9 @@ info.numeric <- function(ispecies, check.it=TRUE) {
 
   if(all(is.na(this[, 9:21])) & this$name != "water") {
     # Get G, H, S, and V for minerals with Berman parameters 20220203
-    bermandat <- berman()
-    bermandat <- bermandat[bermandat$name == this$name, ]
-    this[, c("G", "H", "S", "V")] <- bermandat[, c("GfPrTr", "HfPrTr", "SPrTr", "VPrTr")] * c(1, 1, 1, 10)
+    Bermandat <- Berman()
+    Bermandat <- Bermandat[Bermandat$name == this$name, ]
+    this[, c("G", "H", "S", "V")] <- Bermandat[, c("GfPrTr", "HfPrTr", "SPrTr", "VPrTr")] * c(1, 1, 1, 10)
   }
 
   # Identify any missing GHS values
