@@ -28,9 +28,9 @@ SH88,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-20
 SH88.1,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","values of GHS",https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.2,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.3,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",Ag<sup>+</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
-SH88.4,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",Ca<sup>+2</sup> and Mg<sup>+2</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
+SH88.4,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","K<sup>+</sup>, Na<sup>+</sup>, Ca<sup>+2</sup>, Mg<sup>+2</sup>, Cl<sup>-</sup>, and OH<sup>-</sup>",https://doi.org/10.1016/0016-7037(88)90181-0
 SHS89,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","inorganic neutral species",https://doi.org/10.1016/0016-7037(89)90341-4
-SHS89.1,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","aqueous SiO<sub>2</sub>",https://doi.org/10.1016/0016-7037(89)90341-4
+SHS89.1,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","SiO<sub>2</sub>",https://doi.org/10.1016/0016-7037(89)90341-4
 Ber90,"R. G. Berman",1990,"Am. Mineral. 75, 328-344",annite,http://ammin.geoscienceworld.org/content/75/3-4/328
 Ber90.1,"R. G. Berman",1990,"Am. Mineral. 75, 328-344","almandine and ilmenite: modified H and/or S",http://ammin.geoscienceworld.org/content/75/3-4/328
 Eva90,"B. W. Evans",1990,"Lithos 25, 3-23","glaucophane and pumpellyite",https://doi.org/10.1016/0024-4937(90)90003-J
@@ -77,6 +77,7 @@ HP97,"P. C. Ho and D. A. Palmer",1997,"Geochim. Cosmochim. Acta 61, 3027-3040",K
 MS97,"T. M. McCollom and E. L. Shock",1997,"Geochim. Cosmochim. Acta 61, 4375-4391","MgSO<sub>4</sub>, NaSO<sub>4</sub><sup>-</sup>, and HCl",https://doi.org/10.1016/S0016-7037(97)00241-X
 MS97.1,"T. M. McCollom and E. L. Shock",1997,"Geochim. Cosmochim. Acta 61, 4375-4391",sulfur,https://doi.org/10.1016/S0016-7037(97)00241-X
 MS97.2,"T. M. McCollom and E. L. Shock",1997,"Geochim. Cosmochim. Acta 61, 4375-4391","aqueous HCl",https://doi.org/10.1016/S0016-7037(97)00241-X
+PH97,"V. A. Pokrovskii and H. C. Helgeson",1997,"Chem. Geol. 137, 221-242",KAl<sub>2</sub>O,https://doi.org/10.1016/S0009-2541(96)00167-2
 SSWS97,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","aqueous ions and hydroxide complexes",https://doi.org/10.1016/S0016-7037(96)00339-0
 SSWS97.1,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","zincite and litharge",https://doi.org/10.1016/S0016-7037(96)00339-0
 SSWS97.2,"E. L. Shock, D. C. Sassani et al.",1997,"Geochim. Cosmochim. Acta 61, 907-950","Au<sup>+</sup> and Cu<sup>+</sup>",https://doi.org/10.1016/S0016-7037(96)00339-0
@@ -88,7 +89,7 @@ SSH97.1,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmoc
 SSH97.2,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412",HSiO<sub>3</sub><sup>-</sup>,https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.3,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Au-, Ag-, Cu- and Zn-chloride complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.4,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Zn-acetate complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
-SSH97.5,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412",CaHSiO<sub>3</sub><sup>+</sup> and MgHSiO<sub>3</sub><sup>+</sup>,https://doi.org/10.1016/S0016-7037(97)00009-4
+SSH97.5,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","NaHSiO<sub>3</sub>, CaHSiO<sub>3</sub><sup>+</sup>, and MgHSiO<sub>3</sub><sup>+</sup>",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSB97,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266","uranium species",https://doi.org/10.1016/S0016-7037(97)00240-8
 SSB97.1,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266",uraninite,https://doi.org/10.1016/S0016-7037(97)00240-8
 TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976","humic acid, microflora, and plants",https://doi.org/10.1016/S1251-8050(97)83981-X
@@ -126,6 +127,7 @@ Ric01,"L. Richard",2001,"Geochim. Cosmochim. Acta 65, 3827-3877","organic sulfur
 Ste01,"A. Stefansson",2001,"Chem. Geol. 172, 225-250","aqueous H<sub>4</sub>SiO<sub>4</sub>",https://doi.org/10.1016/S0009-2541(00)00263-1
 SSW01,"M. D. Schulte, E. L. Shock and R. H. Wood",2001,"Geochim. Cosmochim. Acta 65, 3919-3930","AsH<sub>3</sub>, CF<sub>4</sub>, CH<sub>3</sub>F, Cl<sub>2</sub>, ClO<sub>2</sub>, N<sub>2</sub>O, NF<sub>3</sub>, NO, PH<sub>3</sub>, and SF<sub>6</sub>",https://doi.org/10.1016/S0016-7037(01)00717-7
 TS01,"B. Tagirov and J. Schott",2001,"Geochim. Cosmochim. Acta 65, 3965-3992","aqueous Al<sup>+3</sup> and complexes",https://doi.org/10.1016/S0016-7037(01)00705-0
+TS01.1,"B. Tagirov and J. Schott",2001,"Geochim. Cosmochim. Acta 65, 3965-3992","aqueous Al species",https://doi.org/10.1016/S0016-7037(01)00705-0
 VPT01,"O. Vidal, T. Parra and F. Trotet",2001,"Am. J. Sci. 301, 557-592","daphnite and Mg-amesite",https://doi.org/10.2475/ajs.301.6.557
 GKL02,"R. N. Goldberg et al.",2002,"J. Phys. Chem. Ref. Data 31, 231-370","glycine, diglycine, and triglycine (+1 and -1 ions) GHS",https://doi.org/10.1063/1.1416902
 AD03.1,"N. N. Akinfiev and L. W. Diamond",2003,"Geochim. Cosmochim. Acta 67, 613-629","dissolved gas species; parameters estimated from the experimental Henry's constant",https://doi.org/10.1016/S0016-7037(02)01141-9
@@ -209,7 +211,8 @@ SLOP16.7,"E. L. Shock et al.",2016,"slop16.dat computer data file","hexanol, hep
 TBB15,"B. R. Tagirov et al.",2015,"Geochem. Int. 53, 327-340","Pt<sup>+2</sup> and complexes",https://doi.org/10.1134/S0016702915040084
 CS16,"P. A. Canovas III and E. L. Shock",2016,"Geochim. Cosmochim. Acta 195, 293-322","citric acid cycle metabolites",https://doi.org/10.1016/j.gca.2016.08.028
 CS16.1,"P. A. Canovas III and E. L. Shock",2016,"Geochim. Cosmochim. Acta 195, 293-322","citric acid species HKF a<sub>1</sub>--a<sub>4</sub> parameters",https://doi.org/10.1016/j.gca.2016.08.028
-MWKH16,"G. D. Miron et al.",2016,"Geochim. Cosmochim. Acta 187, 41-78","aqueous species in the system Na-K-Al-Si-O-H-Cl",https://doi.org/10.1016/j.gca.2016.04.026
+MWKH16,"G. D. Miron et al.",2016,"Geochim. Cosmochim. Acta 187, 41-78","aqueous NaCl, NaOH, KCl, KOH, and HCl based on new conductance experiments",https://doi.org/10.1016/j.gca.2016.04.026
+MWKH16.1,"G. D. Miron et al.",2016,"Geochim. Cosmochim. Acta 187, 41-78","Al(OH)<sub>3</sub> and HSiO<sub>3</sub><sup>-</sup> derived from literature data",https://doi.org/10.1016/j.gca.2016.04.026
 ZZL+16,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","data listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.1,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","As(&alpha;): V listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.2,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","Cp parameters listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
