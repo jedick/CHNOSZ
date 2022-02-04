@@ -1561,24 +1561,29 @@ ref <- thermo.refs(iFo)
 browseURL(ref$URL)  ## opens a link to worldcat.org
 ```
 
-## Optional data
+## Default database
 
 Thermodynamic properties of minerals in the default database are mostly taken from @Ber88 (including silicates, aluminosilicates, calcite, dolomite, hematite, and magnetite) and @HDNB78 (native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate any in the Berman dataset).
 Minerals are identified by the state `cr`, and (for the Helgeson dataset) `cr2`, `cr3`, etc. for higher-temperature polymorphs.
+
+Compared to SUPCRT92/SLOP98 (see below), the default database include updates for aqueous Al species [@TS01], Au species [@PAB_14] (see [<span style="color:blue">`demo(gold)`</span>](../demo)), and arsenic-bearing aqueous species and minerals, as compiled in the SUPCRTBL package [@ZZL_16].
+This list of updates is incomplete; see the vignette [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) for a detailed list of data sources.
+
+## Optional data files
 
 Some optional datasets can be activated by using <span style="color:red">`add.OBIGT()`</span>. The first couple of these contain data that have been replaced by or are incompatible with later updates; the superseded data are kept here to reproduce published calculations and for comparison with the newer data:
 
 <span style="color:red">`add.OBIGT("SUPCRT92")`</span> -- This file contains data for minerals from SUPCRT92 (mostly Helgeson et al., 1978) that have been replaced by the Berman data set.
 
-<span style="color:red">`add.OBIGT("SLOP98")`</span> -- This file contains data from `slop98.dat` or later slop files, from Everett Shock's GEOPIG group at Arizona State University, that were previously used in CHNOSZ but have been replaced by newer data.
-This includes updates for aqueous Al species [@TS01], Au species [@PAB_14], and arsenic-bearing aqueous species and minerals, as compiled in the SUPCRTBL package [@ZZL_16].
+<span style="color:red">`add.OBIGT("SLOP98")`</span> -- This file contains data from `slop98.dat` or later slop files, from Everett Shock's GEOPIG group at Arizona State University, that were previously used in CHNOSZ but have been replaced by more recent data updates.
 Some calculations using the older data are shown in [this vignette](#complete-equilibrium-solubility).
-See [<span style="color:blue">`demo(gold)`</span>](../demo) for calculations that depend on the data for Au species that are now loaded by default in CHNOSZ.
 
 The updates for these data have been taken from various publications ([LaRowe and Dick, 2012](https://doi.org/10.1016/j.gca.2011.11.041); [Kitadai, 2014](https://doi.org/10.1007/s00239-014-9616-1); [Azadi et al., 2019](https://doi.org/10.1016/j.fluid.2018.10.002))
 A comparison of log*K* of metal-glycinate complexes using the updated data is in [<span style="color:blue">`demo(glycinate)`</span>](../demo).
 
 The next three optional datasets are provided to support newer data or models:
+
+<span style="color:red">`add.OBIGT("AkDi")`</span> -- These data are used in the Akinfiev-Diamond model for aqeuous nonelectrolytes [@AD03].
 
 <span style="color:red">`add.OBIGT("AS04")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
 These data are included to help transition to the "higher solubility of quartz paradigm" [@WJ17], but are not included in the default database in order to maintain compatibility with existing data for minerals that are linked to the older aqueous `r sio2` data.
@@ -1588,9 +1593,7 @@ See [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.
 You should also run <span style="color:red">`water("DEW")`</span> to activate the equations in the model; then, they will be used by <span style="color:green">`subcrt()`</span> and <span style="color:green">`affinity()`</span>.
 Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
-<span style="color:red">`add.OBIGT("AkDi")`</span> -- These data are used in the Akinfiev-Diamond model for aqeuous nonelectrolytes [@AD03].
-
-Detailed references for these optional datasets are in the vignette [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) (look under **Optional Data**).
+<span style="color:red">`add.OBIGT("GEMSFIT")`</span> -- This is a set of internally-conistent thermodynamic data for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl compiled using the GEMSFIT package [@MWKL17].
 
 ## Adding data
 

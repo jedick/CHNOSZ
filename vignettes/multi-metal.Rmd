@@ -85,7 +85,7 @@ reset()
 
 This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
 
-A companion paper to this vignette has been published in *Applied Computing and Geosciences* ([Dick, 2021](https://doi.org/10.1016/j.acags.2021.100059 "Diagrams with multiple metals in CHNOSZ")).
+An accompanying paper to this vignette has been published in *Applied Computing and Geosciences* ([Dick, 2021](https://doi.org/10.1016/j.acags.2021.100059 "Diagrams with multiple metals in CHNOSZ")).
 Please consider citing that paper if you use the functions or diagrams described here.
 
 The plots in this vignette were made using the following resolution settings, which can be changed if desired (low resolutions are used to save time in CRAN checks):

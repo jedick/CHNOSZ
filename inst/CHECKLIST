@@ -50,10 +50,6 @@ Updating vignettes
     remove padding-top: 10px; from h2 in
     rmarkdown/templates/html_vignette/resources/vignette.css
 
-- Documentation links: after installation, run doc/mklinks.sh
-  to add links to the vignettes (for posting on the website,
-  so vignettes have links to HTML renditions of Rd files)
-
 ***************
 R compatibility
 ***************
@@ -77,3 +73,15 @@ Documentation
 
 - Run R_PAPERSIZE=letter R CMD Rd2pdf chnosz/
   and fix any lines truncated by page margins
+
+*********************
+Vignettes for website
+*********************
+
+- Use dpi <- 72 in anintro.Rmd
+
+- Use hires <- TRUE in multi-metal.Rmd
+
+- Run doc/mklinks.sh in installed directory (adds links to HTML renditions of
+  Rd files)
+
