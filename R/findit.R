@@ -11,7 +11,7 @@ findit <- function(lims=list(), objective="CV", niter=NULL, iprotein=NULL, plot.
   # we iteratively move toward a higher/lower value of the objective
   # within these limits
   
-  # fun stuff: when running on either side of 100 deg C,
+  # fun stuff: when running on either side of 100 degC,
   # set P=1 to force an extreme of some functions near that temperature
   
   # the number of dimensions

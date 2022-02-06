@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-16 (2022-02-03)}{
+\section{Changes in CHNOSZ version 1.4.1-22 (2022-02-06)}{
 
   \subsection{OBIGT DATABASE}{
     \itemize{
@@ -28,17 +28,28 @@
       from \href{https://doi.org/10.1016/j.chemgeo.2021.120488}{Liu et al.
         (2021)}.
 
-      \item Add aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl from \href{https://doi.org/10.1016/j.gca.2016.04.026}{Miron et al. (2016)} and \href{https://doi.org/10.2475/07.2017.01}{Miron et al. (2017)} to \samp{GEMSFIT.csv}.
+      \item Add aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl from
+      \href{https://doi.org/10.1016/j.gca.2016.04.026}{Miron et al. (2016)} and
+      \href{https://doi.org/10.2475/07.2017.01}{Miron et al. (2017)} to
+      \samp{GEMSFIT.csv}.
       
     }
   }
 
-  \subsection{TESTING}{
+  \subsection{THERMODYNAMIC CALCULATIONS}{
     \itemize{
 
-      \item Tests are now run using the \CRANpkg{tinytest} package.
+      \item For minerals with thermodynamic parameters in the equations of
+      \href{https://doi.org/10.1093/petrology/29.2.445}{Berman (1988)},
+      \code{info()} with a numeric argument now lists values of \code{G},
+      \code{H}, \code{S}, and \code{V} at 25 \degC and 1 bar (previously shown
+      as \code{NA}).
 
-      \item \code{maxdiff()} and \code{expect_maxdiff()} have been removed.
+      \item The \code{AkDi()} function, which provides an implementation of the
+      \href{https://doi.org/10.1016/S0016-7037(02)01141-9}{Akinfiev and Diamond
+        (2003)} equation of state for aqueous nonelectrolytes, now calculates
+      entropy in addition to the previously available Gibbs energy. Thanks to
+      Evgeniy Bastrakov for suggesting both of these changes.
       
     }
   }
@@ -46,16 +57,16 @@
   \subsection{OTHER CHANGES}{
     \itemize{
 
+      \item Tests are now run using the \CRANpkg{tinytest} package.
+
+      \item \code{maxdiff()} and \code{expect_maxdiff()} have been removed.
+      
       \item \strong{multi-metal.Rmd} now has a link to the associated paper
       (\href{https://doi.org/10.1016/j.acags.2021.100059}{Dick, 2021}).
 
-      \item \code{info()} with a numeric argument now includes values of
-      \code{G}, \code{H}, \code{S}, and \code{V} at 25 \degC and 1 bar for
-      minerals with thermodynamic parameters in the Berman equations.
-
       \item All function, variables, and data file names now use capitalized
       \samp{Berman}, not \samp{berman}.
-      
+
     }
   }
 

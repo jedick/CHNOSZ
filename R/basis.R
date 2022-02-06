@@ -54,7 +54,7 @@ basis <- function(species=NULL, state=NULL, logact=NULL, delete=FALSE) {
     if(!is.null(logact)) species[species=="pe"] <- "e-"
   }
   if("Eh" %in% species) {
-    # 20090209 should be careful with this conversion as it's only for 25 deg C
+    # 20090209 should be careful with this conversion as it's only for 25 degC
     # to be sure, just don't call species("Eh")
     if(!is.null(logact)) logact[species=="Eh"] <- -convert(logact[species=="Eh"],"pe")
     species[species=="Eh"] <- "e-"

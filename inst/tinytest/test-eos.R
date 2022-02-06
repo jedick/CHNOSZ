@@ -77,42 +77,6 @@ expect_equal(gfun.500$dgdP  * 1e6, dgdP.500.ref,  tolerance = 1e+1, info = info)
 expect_equal(gfun.1000$dgdP * 1e6, dgdP.1000.ref, tolerance = 1e-1, info = info)
 expect_equal(gfun.4000$dgdP * 1e6, dgdP.4000.ref, tolerance = 1e-3, info = info)
 
-info <- "AkDi produces expected results"
-# 20190220
-# modify aqueous CO2 to use the AkDi model
-iCO2 <- mod.OBIGT("CO2", abbrv = "AkDi", a = -8.8321, b = 11.2684, c = -0.0850)
-# do the properties we calculate match previously calculated values?
-P <- "Psat"
-T <- seq(50, 350, 100)
-# J mol-1
-G_ref <- c(-389122.3, -405138.4, -425410.7, -450573.2)
-G_calc <- subcrt(iCO2, T = T, P = P)$out[[1]]$G
-# convert to J mol-1
-G_calc <- convert(G_calc, "J", T = convert(T, "K"))
-expect_equal(round(G_calc, 1), G_ref, info = info)
-
-P <- 500
-T <- seq(200, 1000, 200)
-G_ref <- c(-412767.4, -459654.1, -515231.6, -565736.3, -617927.9)
-G_calc <- subcrt(iCO2, T = T, P = P)$out[[1]]$G
-G_calc <- convert(G_calc, "J", T = convert(T, "K"))
-expect_equal(round(G_calc, 1), G_ref, info = info)
-
-# compare Gibbs energies at 25 degrees calculated with AkDi model to database values
-iAkDi <- add.OBIGT("AkDi")
-# remove hydroxides because they aren't in the default database (except B(OH)3(aq))
-iAkDi <- iAkDi[-grep("OH", info(iAkDi, check.it = FALSE)$name)]
-# this would produce an error if any calculations failed
-# (e.g. because gases corresponding to any aqueous species were unavailable)
-sAkDi <- subcrt(iAkDi, T = 25)
-GAkDi <- do.call(rbind, sAkDi$out)$G
-# now get the parameters from default OBIGT
-reset()
-GOBIGT <- info(iAkDi, check.it = FALSE)$G
-# the differences are not that big, except for HCl(aq)
-maxdiff <- function(x, y) max(abs(y - x))
-expect_true(maxdiff(GAkDi, GOBIGT) < 300, info = info)
-
 # reference
 
 # Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) 

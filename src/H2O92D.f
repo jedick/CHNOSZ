@@ -1106,6 +1106,50 @@
       RETURN
       END
 
+************************************************************************
+
+*** Modified version of ideal with no COMMON block 20220206 jmd
+*** ideal2 - Computes thermodynamic properties for H2O in the 
+*           ideal gas state using equations given by Woolley (1979).
+
+      SUBROUTINE ideal2(t, ai, gi, si, ui, hi, cvi, cpi)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      DOUBLE PRECISION c(18), ai, gi, si, ui, hi, cvi, cpi
+
+      SAVE
+
+      DATA c / .19730271018d2,     .209662681977d2,   -.483429455355d0,
+     1         .605743189245d1,    .2256023885d2,     -.987532442d1,
+     2        -.43135538513d1,     .458155781d0,      -.47754901883d-1,
+     3         .41238460633d-2,   -.27929052852d-3,    .14481695261d-4,
+     4        -.56473658748d-6,    .16200446d-7,      -.3303822796d-9,
+     5         .451916067368d-11, -.370734122708d-13, 
+     6         .137546068238d-15/
+
+
+      tt  = t / 1.0d2
+      tl  = DLOG(tt)
+      gi  = -(c(1)/tt + c(2)) * tl
+      hi  = (c(2) + c(1)*(1.0d0 - tl)/tt)
+      cpi = c(2) - c(1)/tt
+
+      DO i=3,18
+           emult = power(tt,DBLE(i-6))
+           gi  = gi - c(i) * emult
+           hi  = hi + c(i) * (i-6) * emult
+           cpi = cpi + c(i) * (i-6) * (i-5) * emult
+      END DO
+
+      ai  = gi - 1.0d0
+      ui  = hi - 1.0d0
+      cvi = cpi - 1.0d0
+      si  = ui - ai
+
+      RETURN
+      END
+
 ******************************************************************************
 
 *** dalHGK - Computes/returns (d(alpha)/dt)p(d,t,alpha) 

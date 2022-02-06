@@ -50,4 +50,4 @@ don't have to compile anything to install CHNOSZ updates).
 - Allow numeric values for bases in mosaic() (test-mix.R)
 
 - Add a 'model' column to thermo()$OBIGT to indicate the thermodynamic data
-  model (e.g. HKF, CGL, Berman, AkDi, or DEW)
+  model (e.g. H2O, HKF, CGL, Berman, AkDi, or DEW)
