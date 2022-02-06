@@ -12,25 +12,37 @@ AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat =
   # R expressed in volume units
   RV <- 10 * R # cm3 bar K-1 mol-1
 
-  # Calculate properties of H2O
-  # Moved these calculations to unexported functions
+  # Calculate H2O fugacity and derivatives of density
+  # These calculations are done through (unexported) functions
   # to be able to test their output in test-AkDi.R 20220206
   f1 <- .f1(T, P, isPsat)
-  rho1 <- .rho1(T, P)
   drho1_dT <- mapply(.drho1_dT, T, P)
   drho1_dP <- mapply(.drho1_dP, T, P)
   d2rho1_dT2 <- mapply(.d2rho1_dT2, T, P)
-  S1_g <- sapply(T, .S1_g)
-  S1 <- mapply(.S1, T, P, MoreArgs = list(isPsat = isPsat))
 
-#ADstuff <<- list(f1 = f1, drho1_dT = drho1_dT, drho1_dP = drho1_dP, d2rho1_dT2 = d2rho1_dT2, S1_g = S1_g, S1 = S1)
+  # Calculate other properties of H2O solvent
+  waterTP <- water(c("rho", "S", "Cp", "V"), T = T, P = P)
+  # Density (g cm-3)
+  rho1 <- waterTP$rho / 1000
+  # Entropy (dimensionless)
+  S1 <- waterTP$S / 1.9872
+  # Heat capacity (dimensionless)
+  Cp1 <- waterTP$Cp / 1.9872
+  # Volume (cm3 mol-1)
+  V1 <- waterTP$V
+  # Calculate properties of ideal H2O gas
+  S1_g <- sapply(T, .S1_g)
+  Cp1_g <- sapply(T, .Cp1_g)
 
   # Initialize a list for the output
   out <- list()
   # Loop over species
   nspecies <- nrow(parameters)
   for(i in seq_len(nspecies)) {
+
+    # Get thermodynamic parameters for the gas and calculate properties at T, P
     PAR <- parameters[i, ]
+    gasprops <- subcrt(PAR$name, "gas", T = T, P = P, convert = FALSE)$out[[1]]
     # Send a message
     message("AkDi: Akinfiev-Diamond model for ", PAR$name, " gas to aq")
     # Start with an NA-filled data frame
@@ -42,9 +54,7 @@ AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat =
 
       if(property[[j]] == "G") {
         # Get gas properties (J mol-1)
-        G_gas <- subcrt(PAR$name, "gas", T = T, P = P, convert = FALSE)$out[[1]]$G
-        # TODO: Does this work if E.units is cal or J?
-        G_gas <- convert(G_gas, "J", T = T)
+        G_gas <- convert(gasprops$G, "J", T = T)
         # Calculate G_hyd (J mol-1)
         G_hyd <- R*T * ( -log(NW) + (1 - PAR$xi) * log(f1) + PAR$xi * log(RV * T * rho1 / MW) + rho1 * (PAR$a + PAR$b * (1000/T)^0.5) )
         # Calculate the chemical potential (J mol-1)
@@ -57,8 +67,7 @@ AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat =
 
       if(property[[j]] == "S") {
         # Get S_gas
-        S_gas <- subcrt(PAR$name, "gas", T = T, P = P, convert = FALSE)$out[[1]]$S
-        S_gas <- convert(S_gas, "J", T = T)
+        S_gas <- convert(gasprops$S, "J", T = T)
         # Calculate S_hyd
         S_hyd <- R * (
             (1 - PAR$xi) * (S1 - S1_g)
@@ -74,7 +83,34 @@ AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat =
         myprops$S <- S
       }
 
+      if(property[[j]] == "Cp") {
+        # Get Cp_gas
+        Cp_gas <- convert(gasprops$Cp, "J", T = T)
+        # Calculate Cp_hyd
+        Cp_hyd <- R * (
+            (1 - PAR$xi) * (Cp1 - Cp1_g)
+          - (PAR$xi + 2 * PAR$xi * T / rho1 * drho1_dT - PAR$xi * T^2 / rho1^2 * drho1_dT^2 + PAR$xi * T^2 / rho1 * d2rho1_dT2)
+        ) - R*T * (
+            PAR$a * (2 * drho1_dT + T * d2rho1_dT2)
+          + PAR$b * (-0.25 * 10^1.5 * T^-1.5 * rho1 + 10^1.5 * T^-0.5 * drho1_dT + 10^1.5 * T^0.5 * d2rho1_dT2)
+        )
+        Cp <- Cp_gas + Cp_hyd
+        Cp <- convert(Cp, "cal", T = T)
+        myprops$Cp <- Cp
+      }
+
+      if(property[[j]] == "V") {
+        # Get V_gas
+        V_gas <- 0
+        # Calculate V_hyd
+        V_hyd <- V1 * (1 - PAR$xi) + PAR$xi * RV * T / rho1 * drho1_dP + RV * T * drho1_dP * (PAR$a + PAR$b * (1000/T)^0.5)
+        V <- V_gas + V_hyd
+        myprops$V <- V
+      }
+
     }
+    # Calculate enthalpy (NOTE: this is in calories) 20220206
+    myprops$H <- myprops$G - 298.15 * entropy(PAR$formula) + T * myprops$S
     out[[i]] <- myprops
   }
   out
@@ -116,7 +152,9 @@ AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat =
   dP <- 0.1
   P1 <- P - dP
   P2 <- P + dP
-  rho1 <- .rho1(T, c(P1, P2))
+  # Subtract 1 degC from T so the derivative doesn't blow up when P = Psat at T > 100 degC
+  # TODO: Is there a better way?
+  rho1 <- .rho1(T - 1, c(P1, P2))
   diff(rho1) / (P2 - P1)
 }
 
@@ -125,7 +163,8 @@ AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat =
   dT <- 0.1
   # Calculate density at five temperature values
   Tval <- seq(T - 2 * dT, T + 2 * dT, dT)
-  rho1 <- .rho1(Tval, P)
+  # TODO: Is there a better way to calculate the partial derivative for P = Psat?
+  rho1 <- .rho1(Tval, P + 1)
   # https://stackoverflow.com/questions/11081069/calculate-the-derivative-of-a-data-function-in-r
   spl <- smooth.spline(Tval, rho1)
   # The second derivative of the fitted spline function at the third point (i.e., T)
@@ -137,9 +176,7 @@ AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat =
   .Fortran(C_ideal2, T, 0, 0, 0, 0, 0, 0, 0)[[4]]
 }
 
-.S1 <- function(T, P, isPsat) {
-  # Entropy of solvent H2O (dimensionless)
-  if(isPsat) S1 <- water("S", T = T, P = "Psat")$S / 1.9872
-  else S1 <- water("S", T = T, P = P)$S / 1.9872
-  S1
+.Cp1_g <- function(T) {
+  # Heat capacity of the ideal gas (dimensionless)
+  .Fortran(C_ideal2, T, 0, 0, 0, 0, 0, 0, 0)[[8]]
 }

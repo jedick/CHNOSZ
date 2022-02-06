@@ -10,19 +10,19 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-22 (2022-02-06)}{
+\section{Changes in CHNOSZ version 1.4.1-23 (2022-02-06)}{
 
   \subsection{OBIGT DATABASE}{
     \itemize{
 
-      \item Move Ar, Xe, CH\s{4}, and CO\s{2} from \samp{organic_aq.csv} to
-      \samp{inorganic_aq.csv}.
+      \item Move Ar, Xe, CH\s{4}, and CO\s{2} from \file{organic_aq.csv} to
+      \file{inorganic_aq.csv}.
 
-      \item Remove \samp{OldAA.csv} (superseded thermodynamic parameters for
+      \item Remove \file{OldAA.csv} (superseded thermodynamic parameters for
       amino acids). This file is now available in the
       \href{https://github.com/jedick/JMDplots}{JMDplots} package.
 
-      \item Fix formula of CaCl\s{2} in \samp{DEW.csv}. Thanks to Grayson Boyer.
+      \item Fix formula of CaCl\s{2} in \file{DEW.csv}. Thanks to Grayson Boyer.
 
       \item Add H\s{2}WO\s{4}(aq) and Cp coefficients of scheelite (CaWO\s{4})
       from \href{https://doi.org/10.1016/j.chemgeo.2021.120488}{Liu et al.
@@ -31,7 +31,7 @@
       \item Add aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl from
       \href{https://doi.org/10.1016/j.gca.2016.04.026}{Miron et al. (2016)} and
       \href{https://doi.org/10.2475/07.2017.01}{Miron et al. (2017)} to
-      \samp{GEMSFIT.csv}.
+      \file{GEMSFIT.csv}.
       
     }
   }
@@ -42,14 +42,15 @@
       \item For minerals with thermodynamic parameters in the equations of
       \href{https://doi.org/10.1093/petrology/29.2.445}{Berman (1988)},
       \code{info()} with a numeric argument now lists values of \code{G},
-      \code{H}, \code{S}, and \code{V} at 25 \degC and 1 bar (previously shown
-      as \code{NA}).
+      \code{H}, \code{S}, and \code{V} at 25 \degC and 1 bar (these were
+      previously shown as \code{NA}).
 
       \item The \code{AkDi()} function, which provides an implementation of the
       \href{https://doi.org/10.1016/S0016-7037(02)01141-9}{Akinfiev and Diamond
         (2003)} equation of state for aqueous nonelectrolytes, now calculates
-      entropy in addition to the previously available Gibbs energy. Thanks to
-      Evgeniy Bastrakov for suggesting both of these changes.
+      entropy, heat capacity, and volume in addition to the previously
+      available Gibbs energy. Thanks to Evgeniy Bastrakov for suggesting both
+      of these changes.
       
     }
   }
@@ -59,12 +60,13 @@
 
       \item Tests are now run using the \CRANpkg{tinytest} package.
 
-      \item \code{maxdiff()} and \code{expect_maxdiff()} have been removed.
+      \item Remove \code{maxdiff()} and \code{expect_maxdiff()}.
       
-      \item \strong{multi-metal.Rmd} now has a link to the associated paper
+      \item In \file{vignettes/multi-metal.Rmd} (\dQuote{Diagrams with multiple
+        metals}), add a link to the associated paper
       (\href{https://doi.org/10.1016/j.acags.2021.100059}{Dick, 2021}).
 
-      \item All function, variables, and data file names now use capitalized
+      \item Names of functions, variables, and data files now use capitalized
       \samp{Berman}, not \samp{berman}.
 
     }

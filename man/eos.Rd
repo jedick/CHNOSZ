@@ -50,7 +50,6 @@ If all equations-of-state parameters are NA, but values of \samp{Cp} and/or \sam
 \code{AkDi} implements the Akinfiev-Diamond model for aqueous species (Akinfiev and Diamond, 2003).
 This model is activated by setting \code{abbrv = "AkDi"} in \code{thermo()$OBIGT} for a given aqueous species.
 The database must also include the corresponding gasesous species (with the same name or chemical formula).
-Currently, only the standard chemical potential (Gibbs energy) and entropy are calculated.
 
 }
 
