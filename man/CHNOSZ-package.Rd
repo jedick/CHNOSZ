@@ -25,7 +25,7 @@ Each help page (other than this one) has been given one of the following \dQuote
   \item Thermodynamic calculations: \code{\link{util.formula}}, \code{\link{makeup}}, \code{\link{util.units}}, \code{\link{eos}}, \code{\link{Berman}}, \code{\link{nonideal}}, \code{\link{util.misc}}
   \item Water properties: \code{\link{water}}, \code{\link{util.water}}, \code{\link{DEW}}, \code{\link{IAPWS95}}
   \item Protein properties: \code{\link{protein.info}}, \code{\link{add.protein}}, \code{\link{util.fasta}}, \code{\link{util.protein}}, \code{\link{util.seq}}, \code{\link{ionize.aa}}
-  \item Other tools: \code{\link{examples}}, \code{\link{eqdata}}, \code{\link{taxonomy}}
+  \item Other tools: \code{\link{examples}}, \code{\link{taxonomy}}
   \item Utility functions: \code{\link{util.expression}}, \code{\link{util.plot}}, \code{\link{util.array}}, \code{\link{util.list}}, \code{\link{palply}}
 }
 These concept entries are visible to \code{\link{help.search}} (aka \code{??}).

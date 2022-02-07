@@ -45,7 +45,7 @@ export(
   "DGinf", "SD", "pearson", "shannon", "CV", "logact",
   "EOSlab", "EOScalc",
   "basis.elements", "element.mu", "ibasis",
-  "water.SUPCRT92", "eqdata", "plot_findit",
+  "water.SUPCRT92", "plot_findit",
   "nonideal", "uniprot.aa",
 # added 20170301 or later
   "GHS_Tr", "calculateDensity", "calculateGibbsOfWater",

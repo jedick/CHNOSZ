@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-25 (2022-02-07)}{
+\section{Changes in CHNOSZ version 1.4.1-26 (2022-02-07)}{
 
   \subsection{PLANNED API CHANGE}{
     \itemize{
@@ -82,18 +82,30 @@
 
       \item Tests are now run using the \CRANpkg{tinytest} package.
 
-      \item Remove \code{maxdiff()} and \code{expect_maxdiff()}.
-
-      \item Remove \code{read.blast()}, \code{id.blast()},
-      \code{write.blast()}, \code{def2gi()}, and example files in
-      \file{extdata/bison}.
-      
       \item In \file{vignettes/multi-metal.Rmd} (\dQuote{Diagrams with multiple
         metals}), add a link to the associated paper
       (\href{https://doi.org/10.1016/j.acags.2021.100059}{Dick, 2021}).
 
     }
   }
+
+  \subsection{REMOVED FUNCTIONS}{
+    \itemize{
+
+      \item Remove \code{maxdiff()} and \code{expect_maxdiff()}, previously
+      used in tests.
+
+      \item Remove \code{read.blast()}, \code{id.blast()},
+      \code{write.blast()}, \code{def2gi()}, and example files in
+      \file{extdata/bison}.
+
+      \item Remove \code{eqdata()}, a script for extracting data from EQ3/6
+      output files.
+      
+    }
+  }
+
+
 
 }
 
