@@ -30,10 +30,10 @@ V_ref <- c(32.57, 38.125, 58.269, 298.659)
 sout <- subcrt("CO2", T = T, P = P)$out[[1]]
 expect_equal(sout$G, G_ref, tolerance = 13, scale = 1, info = info)
 expect_equal(sout$S, S_ref, tolerance = 0.8, scale = 1, info = info)
-expect_equal(sout$Cp[1:3], Cp_ref[1:3], tolerance = 14, scale = 1, info = info)
+expect_equal(sout$Cp[1:3], Cp_ref[1:3], tolerance = 3, scale = 1, info = info)
 expect_equal(sout$V[1:3], V_ref[1:3], tolerance = 0.11, scale = 1, info = info)
 # Cp and V get much larger, and so do the differences, near the critical point
-expect_equal(sout$Cp[4], Cp_ref[4], tolerance = 1950, scale = 1, info = info)
+expect_equal(sout$Cp[4], Cp_ref[4], tolerance = 800, scale = 1, info = info)
 expect_equal(sout$V[4], V_ref[4], tolerance = 24, scale = 1, info = info)
 
 info <- "AD produces correct values for CO2 at 1000 bar"
@@ -46,14 +46,14 @@ V_ref <- c(45.831, 67.408, 107.656, 129.264)
 # Calculate values using AD model in CHNOSZ
 sout <- subcrt("CO2", T = T, P = P)$out[[1]]
 expect_equal(sout$G, G_ref, tolerance = 11, scale = 1, info = info)
-expect_equal(sout$S, S_ref, tolerance = 0.09, scale = 1, info = info)
-expect_equal(sout$Cp, Cp_ref, tolerance = 10, scale = 1, info = info)
+expect_equal(sout$S, S_ref, tolerance = 0.1, scale = 1, info = info)
+expect_equal(sout$Cp, Cp_ref, tolerance = 14, scale = 1, info = info)
 expect_equal(sout$V, V_ref, tolerance = 0.4, scale = 1, info = info)
 
 info <- "AD gives consistent values of G, H, and S"
 T_in_Kelvin <- convert(T, "K")
 S_of_elements_in_Joules <- convert(entropy("CO2"), "J")
-expect_equal(sout$H - T_in_Kelvin * sout$S + 298.15 * S_of_elements_in_Joules, sout$G, tolerance = 0.24, scale = 1)
+expect_equal(sout$H - T_in_Kelvin * sout$S + 298.15 * S_of_elements_in_Joules, sout$G)
 
 # 20220206
 info <- "Fugacity, density, and density derivatives of H2O are close to values in Akinfiev and Diamond (2003)"
@@ -65,11 +65,11 @@ expect_equal(log(CHNOSZ:::.f1(298.15, 1, TRUE)), -3.4524, tolerance = 0.0007, sc
 # g / cm3
 expect_equal(CHNOSZ:::.rho1(298.15, 1),        0.9970,      tolerance = 0.0001, scale = 1, info = info)
 # g / cm3 / K
-expect_equal(CHNOSZ:::.drho1_dT(298.15, 1),   -0.0002571,   tolerance = 0.000002, scale = 1, info = info)
+expect_equal(CHNOSZ:::.drho1_dT(298.15, 1, FALSE),   -0.0002571,   tolerance = 0.000002, scale = 1, info = info)
 # g / cm3 / bar
-expect_equal(CHNOSZ:::.drho1_dP(298.15, 1),    0.00004511,  tolerance = 0.0000001, scale = 1, info = info)
+expect_equal(CHNOSZ:::.drho1_dP(298.15, 1, FALSE),    0.00004511,  tolerance = 0.0000001, scale = 1, info = info)
 # g / cm3 / K^2
-expect_equal(CHNOSZ:::.d2rho1_dT2(298.15, 1), -0.000009503, tolerance = 0.0000014, scale = 1, info = info)
+expect_equal(CHNOSZ:::.d2rho1_dT2(298.15, 1, FALSE), -0.000009503, tolerance = 0.000007, scale = 1, info = info)
 
 # 20190220 Compare Gibbs energies at 25 degrees calculated with AD model to default OBIGT database
 info <- "Gibbs energies at 25 degree C are comparable between AD and default OBIGT database"

@@ -60,7 +60,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{TCA}{Standard Gibbs energies of the tricarboxylic (citric) acid cycle (Canovas and Shock, 2016)}
     \item{aluminum}{Reactions involving Al-bearing minerals (Zimmer et al., 2016; Tutolo et al., 2014)}
     \item{carboxylase}{Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase}
-    \item{AD}{Henry's constant of dissolved gases (Akinfiev and Diamond, 2003)}
+    \item{AD}{Dissolved gases: Henry's constant, volume, and heat capacity (Akinfiev and Diamond, 2003)}
     \item{comproportionation}{Gibbs energy of sulfur comproportionation (Amend et al., 2020)}
     \item{Pourbaix}{Eh-pH diagram for Fe-O-H with equisolubility lines (Pourbaix, 1974)}
     \item{E_coli}{Gibbs energy of biomass synthesis in \emph{E. coli} (LaRowe and Amend, 2016)}

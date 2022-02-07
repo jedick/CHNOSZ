@@ -16,9 +16,9 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
   # These calculations are done through (unexported) functions
   # to be able to test their output in test-AD.R 20220206
   f1 <- .f1(T, P, isPsat)
-  drho1_dT <- mapply(.drho1_dT, T, P)
-  drho1_dP <- mapply(.drho1_dP, T, P)
-  d2rho1_dT2 <- mapply(.d2rho1_dT2, T, P)
+  drho1_dT <- mapply(.drho1_dT, T, P, MoreArgs = list(isPsat = isPsat))
+  drho1_dP <- mapply(.drho1_dP, T, P, MoreArgs = list(isPsat = isPsat))
+  d2rho1_dT2 <- mapply(.d2rho1_dT2, T, P, MoreArgs = list(isPsat = isPsat))
 
   # Calculate other properties of H2O solvent
   waterTP <- water(c("rho", "S", "Cp", "V"), T = T, P = P)
@@ -136,39 +136,50 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
   water("rho", T = T, P = P)$rho / 1000
 }
 
-.drho1_dT <- function(T, P) {
+.drho1_dT <- function(T, P, isPsat) {
   # Partial derivative of density with respect to temperature at constant pressure 20220206
   dT <- 0.1
   T1 <- T - dT
   T2 <- T + dT
   # Add 1 bar to P so the derivative doesn't blow up when P = Psat at T > 100 degC
   # TODO: Is there a better way?
-  rho1 <- .rho1(c(T1, T2), P + 1)
+  if(isPsat) P <- P +1
+  rho1 <- .rho1(c(T1, T2), P)
   diff(rho1) / (T2 - T1)
 }
 
-.drho1_dP <- function(T, P) {
+.drho1_dP <- function(T, P, isPsat) {
   # Partial derivative of density with respect to pressure at constant temperature 20220206
   dP <- 0.1
   P1 <- P - dP
   P2 <- P + dP
   # Subtract 1 degC from T so the derivative doesn't blow up when P = Psat at T > 100 degC
   # TODO: Is there a better way?
-  rho1 <- .rho1(T - 1, c(P1, P2))
+  if(isPsat) T <- T - 1
+  rho1 <- .rho1(T, c(P1, P2))
   diff(rho1) / (P2 - P1)
 }
 
-.d2rho1_dT2 <- function(T, P) {
+.d2rho1_dT2 <- function(T, P, isPsat) {
   # Second partial derivative of density with respect to temperature at constant pressure 20220206
-  dT <- 0.1
-  # Calculate density at five temperature values
-  Tval <- seq(T - 2 * dT, T + 2 * dT, dT)
+  # NOTE: dT, Tval, and P <- P + 1 are chosen to produce demo/AD.R;
+  # these may not be the best settings for other T-P ranges  20220207
+  dT <- 0.2
+  # Calculate density at seven temperature values
+  Tval <- seq(T - 3 * dT, T + 3 * dT, dT)
   # TODO: Is there a better way to calculate the partial derivative for P = Psat?
-  rho1 <- .rho1(Tval, P + 1)
+  if(isPsat) P <- P + 2 else P <- P + 1
+  rho1 <- .rho1(Tval, P)
+  # At P = 281 bar there are identical values of rho1 between T = 683.15 and 683.35 K
+  # Don't allow duplicates because they produce artifacts in the second derivative 20220207
+  if(any(duplicated(rho1))) {
+    message(paste("AD: detected identical values of rho1 in second derivative calculation; returning NA at", T, "K and", P, "bar"))
+    return(NA)
+  }
   # https://stackoverflow.com/questions/11081069/calculate-the-derivative-of-a-data-function-in-r
   spl <- smooth.spline(Tval, rho1)
-  # The second derivative of the fitted spline function at the third point (i.e., T)
-  predict(spl, deriv = 2)$y[3]
+  # The second derivative of the fitted spline function at the fourth point (i.e., T)
+  predict(spl, deriv = 2)$y[4]
 }
 
 .S1_g <- function(T) {

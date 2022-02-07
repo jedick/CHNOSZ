@@ -122,8 +122,11 @@ The vignette \viglink{eos-regress} has more references and examples, including a
 ## fit experimental heat capacities of CH4
 ## using revised Helgeson-Kirkham-Flowers equations
 # read the data from Hnedkovsky and Wood, 1997
-f <- system.file("extdata/cpetc/Cp.CH4.HW97.csv", package="CHNOSZ")
+f <- system.file("extdata/cpetc/HW97_Cp.csv", package="CHNOSZ")
 d <- read.csv(f)
+# Use data for CH4
+d <- d[d$species == "CH4", ]
+d <- d[, -1]
 # have to convert J to cal and MPa to bar
 d$Cp <- convert(d$Cp, "cal")
 d$P <- convert(d$P, "bar")
@@ -167,8 +170,12 @@ attr(invTX, "label") <- quote(phantom()/italic(T*X))
 
 ## model experimental volumes of CH4
 ## using HKF equation and an exploratory one
-f <- system.file("extdata/cpetc/V.CH4.HWM96.csv", package="CHNOSZ")
+f <- system.file("extdata/cpetc/HWM96_V.csv", package="CHNOSZ")
 d <- read.csv(f)
+# Use data for CH4 near 280 bar
+d <- d[d$species == "CH4", ]
+d <- d[, -1]
+d <- d[abs(d$P - 28) < 0.1, ]
 d$P <- convert(d$P, "bar")
 # the HKF equation
 varHKF <- c("invTTheta", "QBorn")
