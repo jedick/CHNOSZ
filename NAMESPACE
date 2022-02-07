@@ -15,7 +15,6 @@ export(
 # examples
   "examples", "demos", "mtitle",
   "list2array", "slice", "dimSums", "slice.affinity",
-  "def2gi", "read.blast", "id.blast",
   "add.OBIGT", "RH2OBIGT",
   "expr.property", "expr.units",
   "mass", "entropy", "GHS", "water",
@@ -41,7 +40,7 @@ export(
   "count.elements",
 # (no other functions are used in the tests)
 # other exported functions that are not used above
-  "write.blast", "checkEOS", "checkGHS", "check.OBIGT",
+  "checkEOS", "checkGHS", "check.OBIGT",
   "V_s_var", "Cp_s_var",
   "DGinf", "SD", "pearson", "shannon", "CV", "logact",
   "EOSlab", "EOScalc",

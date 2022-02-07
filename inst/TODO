@@ -8,9 +8,7 @@
 
 - move protein.equil() example (previously in equilibrium.Rnw) to JMDplots.
 
-- move extdata/bison to JMDplots package.
-
-- add elements from RH95.
+- add elements from Robie and Hemingway (1995).
 
 - add check to mosaic() that 'stable' values have the right dimensions.
 

@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-24 (2022-02-07)}{
+\section{Changes in CHNOSZ version 1.4.1-25 (2022-02-07)}{
 
   \subsection{PLANNED API CHANGE}{
     \itemize{
@@ -83,6 +83,10 @@
       \item Tests are now run using the \CRANpkg{tinytest} package.
 
       \item Remove \code{maxdiff()} and \code{expect_maxdiff()}.
+
+      \item Remove \code{read.blast()}, \code{id.blast()},
+      \code{write.blast()}, \code{def2gi()}, and example files in
+      \file{extdata/bison}.
       
       \item In \file{vignettes/multi-metal.Rmd} (\dQuote{Diagrams with multiple
         metals}), add a link to the associated paper

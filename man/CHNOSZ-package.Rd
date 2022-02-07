@@ -25,7 +25,7 @@ Each help page (other than this one) has been given one of the following \dQuote
   \item Thermodynamic calculations: \code{\link{util.formula}}, \code{\link{makeup}}, \code{\link{util.units}}, \code{\link{eos}}, \code{\link{Berman}}, \code{\link{nonideal}}, \code{\link{util.misc}}
   \item Water properties: \code{\link{water}}, \code{\link{util.water}}, \code{\link{DEW}}, \code{\link{IAPWS95}}
   \item Protein properties: \code{\link{protein.info}}, \code{\link{add.protein}}, \code{\link{util.fasta}}, \code{\link{util.protein}}, \code{\link{util.seq}}, \code{\link{ionize.aa}}
-  \item Other tools: \code{\link{examples}}, \code{\link{eqdata}}, \code{\link{taxonomy}}, \code{\link{util.blast}}
+  \item Other tools: \code{\link{examples}}, \code{\link{eqdata}}, \code{\link{taxonomy}}
   \item Utility functions: \code{\link{util.expression}}, \code{\link{util.plot}}, \code{\link{util.array}}, \code{\link{util.list}}, \code{\link{palply}}
 }
 These concept entries are visible to \code{\link{help.search}} (aka \code{??}).
@@ -41,13 +41,11 @@ If there is any doubt about the accuracy or suitability of data for a particular
 }
 
 \section{Acknowledgements}{
-  This package would not exist without the encouragement and groudbreaking work of the late Professor Harold C. Helgeson.
-  The revised Helgeson-Kirkham-Flowers equations of state are used in this package, together with thermodynamic properties of minerals and aqueous species from many papers coauthored by Helgeson.
-  CHNOSZ uses Fortran code from \code{H2O92D.f} in the SUPCRT92 package (Johnson et al., 1992), with only minor modifications (masking of WRITE and STOP statements made for compatibility with the \R environment and keep \code{valTP} flag TRUE to permit sub-zero \degC calculations).
+  This package would not exist without the scientific influence and friendship of the late Professor Harold C. Helgeson.
+  The \file{src/H2O92D.f} file with Fortran code for calculating the thermodynamic and electrostatic properties of \H2O is modified from the \acronym{SUPCRT92} package (Johnson et al., 1992).
 
-  Work on this package at U.C. Berkeley from ca. 2003 to 2008 was supported by research grants to HCH from the U.S. National Science Foundation and Department of Energy.
-  In 2009--2011, development of this package was based upon work supported by the National Science Foundation under grant EAR-0847616.
-  The files in \code{extdata/bison} are derived from BLAST calculations made on the Saguaro high performance computer at Arizona State University. 
+  Work on CHNOSZ at U.C. Berkeley from ca. 2003 to 2008 was supported in part by research grants to HCH from the U.S. National Science Foundation and Department of Energy.
+  In 2009--2011, development of this package was partially supported by NSF grant EAR-0847616 to JMD.
 }
 
 \references{
