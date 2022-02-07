@@ -31,9 +31,9 @@ i2 <- info("LYSC_CHICK", c("cr", "aq"))
 expect_equal(thermo()$OBIGT$state[i2], c("cr", "aq"), info = info)
 expect_equal(info(i2)[1, ], info(i2[1]), check.attributes = FALSE, info = info)
 
-info <- "info() gives correct column names for species using the AkDi model"
-# add an aqueous species conforming to the AkDi model
-iCO2 <- mod.OBIGT("CO2", abbrv = "AkDi", a = -8.8321, b = 11.2684, c = -0.0850)
+info <- "info() gives correct column names for species using the AD model"
+# add an aqueous species conforming to the AD model
+iCO2 <- mod.OBIGT("CO2", abbrv = "AD", a = -8.8321, b = 11.2684, c = -0.0850)
 params <- info(iCO2)
 expect_equal(params$a, -8.8321, info = info)
 expect_equal(params$b, 11.2684, info = info)

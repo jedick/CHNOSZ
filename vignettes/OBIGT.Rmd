@@ -69,7 +69,7 @@ function OpenAllDivs() {
   OpenDiv("liquid-organic");
   OpenDiv("optional-SUPCRT92");
   OpenDiv("optional-SLOP98");
-  OpenDiv("optional-AkDi");
+  OpenDiv("optional-AD");
   OpenDiv("optional-AS04");
   OpenDiv("optional-DEW");
   OpenDiv("optional-GEMSFIT");
@@ -90,7 +90,7 @@ function CloseAllDivs() {
   CloseDiv("liquid-organic");
   CloseDiv("optional-SUPCRT92");
   CloseDiv("optional-SLOP98");
-  CloseDiv("optional-AkDi");
+  CloseDiv("optional-AD");
   CloseDiv("optional-AS04");
   CloseDiv("optional-DEW");
   CloseDiv("optional-GEMSFIT");
@@ -205,7 +205,7 @@ Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthal
 ### Aqueous Species <button id="B-aqueous-H2O" onclick='ToggleDiv("aqueous-H2O")'>H2O</button> <button id="B-aqueous-inorganic" onclick='ToggleDiv("aqueous-inorganic")'>Inorganic</button> <button id="B-aqueous-organic" onclick='ToggleDiv("aqueous-organic")'>Organic</button> <button id="B-aqueous-biotic" onclick='ToggleDiv("aqueous-biotic")'>Biotic</button>
 ### Solids <button id="B-solid-inorganic" onclick='ToggleDiv("solid-inorganic")'>Inorganic</button> <button id="B-solid-organic" onclick='ToggleDiv("solid-organic")'>Organic</button> <button id="B-solid-Berman" onclick='ToggleDiv("solid-Berman")'>Berman</button>
 ### Gases <button id="B-gas-inorganic" onclick='ToggleDiv("gas-inorganic")'>Inorganic</button> <button id="B-gas-organic" onclick='ToggleDiv("gas-organic")'>Organic</button> &nbsp;&nbsp;&nbsp;Liquids <button id="B-liquid-organic" onclick='ToggleDiv("liquid-organic")'>Organic</button>
-### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AkDi" onclick='ToggleDiv("optional-AkDi")'>AkDi</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-GEMSFIT" onclick='ToggleDiv("optional-GEMSFIT")'>GEMSFIT</button>
+### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AD" onclick='ToggleDiv("optional-AD")'>AD</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-GEMSFIT" onclick='ToggleDiv("optional-GEMSFIT")'>GEMSFIT</button>
 
 <!-- normal or "all open" footer message --> 
 
@@ -347,10 +347,10 @@ Use `add.OBIGT("SLOP98")` to load the data.
 ```
 </div>
 
-<div id="D-optional-AkDi" style="display: none">
-## <a id="optional-AkDi" class="anchor"></a> `r setfile("AkDi.csv")`
+<div id="D-optional-AD" style="display: none">
+## <a id="optional-AD" class="anchor"></a> `r setfile("AD.csv")`
 This file has parameters for aqueous nonelectrolytes in the Akinfiev-Diamond model [@AD03].
-Use `add.OBIGT("AkDi")` to load the data; see `demo(AkDi)` for an example.
+Use `add.OBIGT("AD")` to load the data; see `demo(AD)` for an example.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```

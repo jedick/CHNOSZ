@@ -270,7 +270,7 @@ check.OBIGT <- function() {
     else if(what=="SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="AS04") tdata <- read.csv(system.file("extdata/OBIGT/AS04.csv", package="CHNOSZ"), as.is=TRUE)
-    else if(what=="AkDi") tdata <- read.csv(system.file("extdata/OBIGT/AkDi.csv", package="CHNOSZ"), as.is=TRUE)
+    else if(what=="AD") tdata <- read.csv(system.file("extdata/OBIGT/AD.csv", package="CHNOSZ"), as.is=TRUE)
     else if(what=="GEMSFIT") tdata <- read.csv(system.file("extdata/OBIGT/GEMSFIT.csv", package="CHNOSZ"), as.is=TRUE)
     ntot <- nrow(tdata)
     # where to keep the results
@@ -406,18 +406,18 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, tocal = FALSE) {
   # remove scaling factors from EOS parameters
   # and apply column names depending on the EOS
   if(identical(state, "aq")) {
-    # Aqueous species with abbrv = "AkDi" use the AkDi model 20210407
+    # Aqueous species with abbrv = "AD" use the AD model 20210407
     abbrv <- OBIGT$abbrv
     abbrv[is.na(abbrv)] <- ""
-    isAkDi <- abbrv == "AkDi"
-    # remove scaling factors for the HKF species, but not for the AkDi species
+    isAD <- abbrv == "AD"
+    # remove scaling factors for the HKF species, but not for the AD species
     # protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
     # (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302
-    if(any(!isAkDi)) OBIGT[!isAkDi, 14:21] <- t(t(OBIGT[!isAkDi, 14:21]) * 10^c(-1,2,0,4,0,4,5,0))
-    # for AkDi species, set NA values in remaining columns (for display only)
-    if(any(isAkDi)) OBIGT[isAkDi, 17:20] <- NA
-    # if all of the species are AkDi, change the variable names
-    if(all(isAkDi)) colnames(OBIGT)[14:21] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
+    if(any(!isAD)) OBIGT[!isAD, 14:21] <- t(t(OBIGT[!isAD, 14:21]) * 10^c(-1,2,0,4,0,4,5,0))
+    # for AD species, set NA values in remaining columns (for display only)
+    if(any(isAD)) OBIGT[isAD, 17:20] <- NA
+    # if all of the species are AD, change the variable names
+    if(all(isAD)) colnames(OBIGT)[14:21] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
     else colnames(OBIGT)[14:21] <- c('a1','a2','a3','a4','c1','c2','omega','Z') 
   } else {
     OBIGT[,14:21] <- t(t(OBIGT[,14:21]) * 10^c(0,-3,5,0,-5,0,0,0))

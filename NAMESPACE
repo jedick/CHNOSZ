@@ -55,7 +55,7 @@ export(
 # added 20171121 or later
   "dumpdata", "thermo.axis", "solubility", "NaCl",
 # added 20190213 or later
-  "CHNOSZ", "thermo", "reset", "OBIGT", "retrieve", "AkDi", "moles",
+  "CHNOSZ", "thermo", "reset", "OBIGT", "retrieve", "AD", "moles",
   "lNaCl", "lS", "lT", "lP", "lTP", "lex",
 # added 20200716 or later
   "mash", "mix", "rebalance"

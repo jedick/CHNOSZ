@@ -214,7 +214,7 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   } 
 
   # Perform consistency checks for GHS and EOS parameters if check.it = TRUE
-  # Don't do it for the AkDi species 20190219
+  # Don't do it for the AD species 20190219
   if(check.it & !"xi" %in% colnames(this)) {
     # check GHS if they are all present
     if(sum(naGHS)==0) calcG <- checkGHS(this)
@@ -269,7 +269,7 @@ info.approx <- function(species, state=NULL) {
   }
   # if we got here there were no approximate matches
   # 20190127 look for the species in optional data files 
-  for(opt in c("SLOP98", "SUPCRT92", "AkDi")) {
+  for(opt in c("SLOP98", "SUPCRT92", "AD")) {
     optdat <- read.csv(system.file(paste0("extdata/OBIGT/", opt, ".csv"), package="CHNOSZ"), as.is=TRUE)
     if(species %in% optdat$name) {
       message('info.approx: ', species, ' is in an optional database; use add.OBIGT("', opt, '", "', species, '") to load it')

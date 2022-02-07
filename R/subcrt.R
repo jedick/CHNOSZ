@@ -9,7 +9,7 @@
 #source("util.units.R")
 #source("util.data.R")
 #source("species.R")
-#source("AkDi.R")
+#source("AD.R")
 #source("nonideal.R")
 
 subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "H", "S", "V", "Cp"),
@@ -106,7 +106,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       P <- rep(tpargs$P,length.out=length(newIS))
     }
   } else {
-    # for AkDi, remember if P = "Psat" 20190219
+    # for AD, remember if P = "Psat" 20190219
     if(identical(P, "Psat")) isPsat <- TRUE
     # expansion of Psat and equivalence of argument lengths
     tpargs <- TP.args(T=T,P=P)
@@ -284,24 +284,24 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   if(TRUE %in% isaq) {
     # 20110808 get species parameters using OBIGT2eos() (faster than using info())
     param <- OBIGT2eos(thermo$OBIGT[iphases[isaq],], "aq", fixGHS = TRUE, tocal = TRUE)
-    # Aqueous species with abbrv = "AkDi" use the AkDi model 20210407
+    # Aqueous species with abbrv = "AD" use the AD model 20210407
     abbrv <- thermo$OBIGT$abbrv[iphases[isaq]]
     abbrv[is.na(abbrv)] <- ""
-    isAkDi <- abbrv == "AkDi"
+    isAD <- abbrv == "AD"
     # always get density
     H2O.props <- "rho"
     # calculate A_DH and B_DH if we're using the B-dot (Helgeson) equation
     if(any(IS != 0) & thermo$opt$nonideal %in% c("Bdot", "Bdot0", "bgamma", "bgamma0")) H2O.props <- c(H2O.props, "A_DH", "B_DH")
     # get other properties for H2O only if it's in the reaction
     if(any(isH2O)) H2O.props <- c(H2O.props, eosprop)
-    # in case everything is AkDi, run hkf (for water properties) but exclude all species
+    # in case everything is AD, run hkf (for water properties) but exclude all species
     hkfpar <- param
-    if(all(isAkDi)) hkfpar <- param[0, ]
+    if(all(isAD)) hkfpar <- param[0, ]
     hkfstuff <- hkf(eosprop, parameters = hkfpar, T = T, P = P, H2O.props=H2O.props)
     p.aq <- hkfstuff$aq
     H2O.PT <- hkfstuff$H2O
     # set properties to NA for density below 0.35 g/cm3 (a little above the critical isochore, threshold used in SUPCRT92) 20180922
-    if(!exceed.rhomin & !all(isAkDi)) {
+    if(!exceed.rhomin & !all(isAD)) {
       ilowrho <- H2O.PT$rho < 350
       ilowrho[is.na(ilowrho)] <- FALSE
       if(any(ilowrho)) {
@@ -311,10 +311,10 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       }
     }
     # calculate properties using Akinfiev-Diamond model 20190219
-    if(any(isAkDi)) {
+    if(any(isAD)) {
       # get the parameters with the right names
-      param <- OBIGT2eos(param[isAkDi, ], "aq", tocal = TRUE)
-      p.aq[isAkDi] <- AkDi(eosprop, parameters = param, T = T, P = P, isPsat = isPsat)
+      param <- OBIGT2eos(param[isAD, ], "aq", tocal = TRUE)
+      p.aq[isAD] <- AD(eosprop, parameters = param, T = T, P = P, isPsat = isPsat)
     }
     # calculate activity coefficients if ionic strength is not zero
     if(any(IS != 0)) {

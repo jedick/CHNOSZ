@@ -1583,7 +1583,7 @@ A comparison of log*K* of metal-glycinate complexes using the updated data is in
 
 The next three optional datasets are provided to support newer data or models:
 
-<span style="color:red">`add.OBIGT("AkDi")`</span> -- These data are used in the Akinfiev-Diamond model for aqeuous nonelectrolytes [@AD03].
+<span style="color:red">`add.OBIGT("AD")`</span> -- These data are used in the Akinfiev-Diamond model for aqeuous nonelectrolytes [@AD03].
 
 <span style="color:red">`add.OBIGT("AS04")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
 These data are included to help transition to the "higher solubility of quartz paradigm" [@WJ17], but are not included in the default database in order to maintain compatibility with existing data for minerals that are linked to the older aqueous `r sio2` data.

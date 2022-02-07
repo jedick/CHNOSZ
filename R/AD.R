@@ -1,9 +1,9 @@
-# CHNOSZ/AkDi.R
+# CHNOSZ/AD.R
 # Akinfiev-Diamond model for aqueous species
 # 20190219 First version
 # 20220206 Calculate S, Cp, and V
 
-AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = TRUE) {
+AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = TRUE) {
 
   # Some constants (from Akinfiev and Diamond, 2004 doi:10.1016/j.fluid.2004.06.010)
   MW <- 18.0153 # g mol-1
@@ -14,7 +14,7 @@ AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat =
 
   # Calculate H2O fugacity and derivatives of density
   # These calculations are done through (unexported) functions
-  # to be able to test their output in test-AkDi.R 20220206
+  # to be able to test their output in test-AD.R 20220206
   f1 <- .f1(T, P, isPsat)
   drho1_dT <- mapply(.drho1_dT, T, P)
   drho1_dP <- mapply(.drho1_dP, T, P)
@@ -44,7 +44,7 @@ AkDi <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat =
     PAR <- parameters[i, ]
     gasprops <- subcrt(PAR$name, "gas", T = T, P = P, convert = FALSE)$out[[1]]
     # Send a message
-    message("AkDi: Akinfiev-Diamond model for ", PAR$name, " gas to aq")
+    message("AD: Akinfiev-Diamond model for ", PAR$name, " gas to aq")
     # Start with an NA-filled data frame
     myprops <- as.data.frame(matrix(NA, ncol = length(property), nrow = length(T)))
     colnames(myprops) <- property

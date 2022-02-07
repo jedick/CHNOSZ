@@ -27,7 +27,7 @@ potassium       Comparison of thermodynamic datasets for predicting mineral stab
 TCA             Standard Gibbs energies of steps of the citric acid cycle
 aluminum        Reactions involving Al-bearing minerals
 carboxylase     Rank abundance distribution for RuBisCO and acetyl-CoA carboxylase
-AkDi            Henry's constant of dissolved gases
+AD              Henry's constant of dissolved gases
 comproportionation  Gibbs energy of sulfur comproportionation
 Pourbaix        Eh-pH diagram for Fe-O-H with equisolubility lines
 E_coli          Gibbs energy of biomass synthesis in E. coli

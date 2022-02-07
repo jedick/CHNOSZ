@@ -3,17 +3,17 @@
 \alias{eos}
 \alias{hkf}
 \alias{cgl}
-\alias{AkDi}
+\alias{AD}
 \title{Equations of State}
 \description{
-Calculate thermodynamic properties using the revised Helgeson-Kirkham-Flowers (HKF) or Akinfiev-Diamond (AkDi) equations of state for aqueous species, or using a generic heat capacity equation for crystalline, gas, and liquid species.
+Calculate thermodynamic properties using the revised Helgeson-Kirkham-Flowers (HKF) or Akinfiev-Diamond (AD) equations of state for aqueous species, or using a generic heat capacity equation for crystalline, gas, and liquid species.
 }
 
 \usage{
   cgl(property = NULL, parameters = NULL, T = 298.15, P = 1)
   hkf(property = NULL, parameters = NULL, T = 298.15, P = 1,
     contrib = c("n", "s", "o"), H2O.props = "rho")
-  AkDi(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = TRUE)
+  AD(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = TRUE)
 }
 
 \arguments{
@@ -47,8 +47,8 @@ The standard molal volumes (\samp{V}) of species in these calculations are taken
 For both \code{hkf} and \code{cgl}, if at least one equations-of-state parameter for a species is provided, any NA values of the other parameters are reset to zero.
 If all equations-of-state parameters are NA, but values of \samp{Cp} and/or \samp{V} are available, those values are used in the integration of \samp{G}, \samp{H} and \samp{S} as a function of temperature. 
 
-\code{AkDi} implements the Akinfiev-Diamond model for aqueous species (Akinfiev and Diamond, 2003).
-This model is activated by setting \code{abbrv = "AkDi"} in \code{thermo()$OBIGT} for a given aqueous species.
+\code{AD} implements the Akinfiev-Diamond model for aqueous species (Akinfiev and Diamond, 2003).
+This model is activated by setting \code{abbrv = "AD"} in \code{thermo()$OBIGT} for a given aqueous species.
 The database must also include the corresponding gasesous species (with the same name or chemical formula).
 
 }
