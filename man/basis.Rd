@@ -7,14 +7,15 @@ Define the basis species of a chemical system.
 }
 
 \usage{
-  basis(species = NULL, state = NULL, logact = NULL, delete = FALSE)
+  basis(species = NULL, state = NULL, logact = NULL, delete = FALSE, add = FALSE)
 }
 
 \arguments{
   \item{species}{character, names or formulas of species, or numeric, indices of species}
   \item{state}{character, physical states or names of buffers}
   \item{logact}{numeric, logarithms of activities or fugacities}
-  \item{delete}{logical, delete the current basis species definition?}
+  \item{delete}{logical, delete the current basis definition?}
+  \item{add}{logical, add species to the current basis definition?}
 }
 
 \details{
@@ -32,8 +33,12 @@ If either of these arguments is numeric it specifies the logarithms of activitie
 In case \samp{pH}, \samp{pe} or \samp{Eh} is named, the logarithm of activity of the basis species is converted from these values.
 For example, a value of 7 for pH is stored as a logarithm of activity of -7.
 
-Whenever \code{basis} is called with NULL values of both \code{state} and \code{logact}, the new set of species, if they are a valid basis set, completely replaces any existing basis definition.
-If this occurs, any existing species definition (created by the \code{species} function) is deleted.
+If \code{add} is TRUE, then the function attempts to \emph{add} the indicated \code{species} to the basis definition.
+This only works if the enlarged set of species is a valid basis set as described above.
+If the formed \code{\link{species}} are currently defined, their formation reactions are modified accordingly (with zeroes for the newly added basis species).
+
+If \code{add} is FALSE, and if \code{basis} is called with NULL values of both \code{state} and \code{logact}, the new set of species, if they are a valid basis set, completely replaces any existing basis definition.
+When this occurs, any existing species definition (created by the \code{species} function) is deleted.
 Call \code{basis} with \code{delete} set to TRUE or \code{species} set to \samp{""} to clear the basis definition and that of the \code{\link{species}}, if present.
 
 If the value of \code{basis} is one of the keywords in the following table, the corresponding set of basis species is loaded, and their activities are given preset values.

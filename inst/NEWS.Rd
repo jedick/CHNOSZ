@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-29 (2022-02-08)}{
+\section{Changes in CHNOSZ version 1.4.1-30 (2022-02-08)}{
 
   \subsection{PLANNED API CHANGE}{
     \itemize{
@@ -75,6 +75,11 @@
   \subsection{OTHER CHANGES}{
     \itemize{
 
+      \item Tests are now run using the \CRANpkg{tinytest} package.
+
+      \item Add an \strong{add} argument to \code{basis()} to allow adding a
+      species to an existing set of basis species.
+
       \item The \code{AkDi()} function has been renamed to \code{AD()}, and all
       variables and data files likewise use the acronym \acronym{AD}. In
       particular, the Akinfiev-Diamond model is activated for an aqueous
@@ -82,8 +87,6 @@
 
       \item Names of functions, variables, and data files now use capitalized
       \samp{Berman}, not \samp{berman}.
-
-      \item Tests are now run using the \CRANpkg{tinytest} package.
 
       \item In \file{vignettes/multi-metal.Rmd} (\dQuote{Diagrams with multiple
         metals}), add a link to the associated paper

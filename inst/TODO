@@ -39,10 +39,6 @@ don't have to compile anything to install CHNOSZ updates).
 
 - Merge SK95.csv into SLOP98.csv
 
-[20210722]
-
-- Add pyrobitumen properties from Helgeson et al. (2009)
-
 [20220203]
 
 - Allow numeric values for bases in mosaic() (test-mix.R)

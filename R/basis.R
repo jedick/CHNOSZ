@@ -1,31 +1,39 @@
 # CHNOSZ/basis.R
 # Set up the basis species of a thermodynamic system
 
-basis <- function(species=NULL, state=NULL, logact=NULL, delete=FALSE) {
+basis <- function(species = NULL, state = NULL, logact = NULL, delete = FALSE, add = FALSE) {
+
+  # Get the current thermo and basis settings
   thermo <- get("thermo", CHNOSZ)
   oldbasis <- thermo$basis
-  ## Delete the basis species if requested
+
+  # Delete the basis species if requested
   if(delete | identical(species, "")) {
     thermo$basis <- NULL
     thermo$species <- NULL
     assign("thermo", thermo, CHNOSZ)
     return(invisible(oldbasis))
   }
-  ## Return the basis definition if requested
+
+  # Return the basis definition if requested
   if(is.null(species)) return(oldbasis)
-  ## From now on we need something to work with
-  if(length(species)==0) stop("species argument is empty")
+
+  # From now on we need something to work with
+  if(length(species) == 0) stop("species argument is empty")
+
   # Is the species one of the preset keywords?
   if(species[1] %in% preset.basis()) return(preset.basis(species[1]))
   # The species names/formulas have to be unique
-  if(!length(unique(species))==length(species)) stop("species names are not unique")
-  ## Processing 'state' and 'logact' arguments
+  if(!length(unique(species)) == length(species)) stop("species names are not unique")
+
+  # Processing 'state' and 'logact' arguments
   # They should be same length as species
-  if(!is.null(state)) state <- rep(state, length.out=length(species))
-  if(!is.null(logact)) logact <- rep(logact, length.out=length(species))
+  if(!is.null(state)) state <- rep(state, length.out = length(species))
+  if(!is.null(logact)) logact <- rep(logact, length.out = length(species))
+
   # Results should be identical for
-  # basis(c('H2O','CO2','H2'), rep('aq',3), c(0,-3,-3))
-  # basis(c('H2O','CO2','H2'), c(0,-3,-3), rep('aq',3))
+  # basis(c("H2O", "CO2", "H2"), rep("aq", 3), c(0, -3, -3))
+  # basis(c("H2O", "CO2", "H2"), c(0, -3, -3), rep("aq", 3))
   # First of all, do we have a third argument?
   if(!is.null(logact)) {
     # Does the 3rd argument look like states?
@@ -42,32 +50,38 @@ basis <- function(species=NULL, state=NULL, logact=NULL, delete=FALSE) {
       state <- NULL
     }
   }
-  ## Processing 'species' argument
+
+  # Processing 'species' argument
   # pH transformation
   if("pH" %in% species) {
-    logact[species=="pH"] <- -logact[species=="pH"]
-    if(!is.null(logact)) species[species=="pH"] <- "H+"
+    logact[species == "pH"] <- -logact[species == "pH"]
+    if(!is.null(logact)) species[species == "pH"] <- "H+"
   }
   # Eh and pe transformations
   if("pe" %in% species) {
-    logact[species=="pe"] <- -logact[species=="pe"]
-    if(!is.null(logact)) species[species=="pe"] <- "e-"
+    logact[species == "pe"] <- -logact[species == "pe"]
+    if(!is.null(logact)) species[species == "pe"] <- "e-"
   }
   if("Eh" %in% species) {
     # 20090209 Should be careful with this conversion as it's only for 25 degC
     # To be sure, just don't call species("Eh")
-    if(!is.null(logact)) logact[species=="Eh"] <- -convert(logact[species=="Eh"],"pe")
-    species[species=="Eh"] <- "e-"
+    if(!is.null(logact)) logact[species == "Eh"] <- -convert(logact[species == "Eh"],"pe")
+    species[species == "Eh"] <- "e-"
   }
-  ## If all species are in the existing basis definition, 
-  ## *and* at least one of state or logact is not NULL
-  ## modify the states and/or logacts of the existing basis species
+
+  # If all species are in the existing basis definition, 
+  # *and* at least one of state or logact is not NULL,
+  # *and* add is not TRUE,
+  # then modify the states and/or logacts of the existing basis species
   if(all(species %in% rownames(oldbasis)) | all(species %in% oldbasis$ispecies)) 
     if(!is.null(state) | !is.null(logact))
-      return(mod.basis(species, state, logact))
-  ## We're on to making a new basis definition
-  # use default logacts if they aren't present
+      if(!add)
+        return(mod.basis(species, state, logact))
+
+  # If we get to this point, we're making a new basis definition or adding to an existing one
+  # Use default logacts if they aren't present
   if(is.null(logact)) logact <- rep(0, length(species))
+
   # If species argument is numeric, it's species indices
   if(is.numeric(species[1])) {
     ispecies <- species
@@ -82,9 +96,45 @@ basis <- function(species=NULL, state=NULL, logact=NULL, delete=FALSE) {
     # We don't accept any of those
     if(is.list(ispecies)) ina <- ina | sapply(ispecies,length) > 1
   }
-  if(any(ina)) stop(paste("species not available:", paste(species[ina], "(", state[ina], ")", sep="", collapse=" ")))
+  if(any(ina)) stop(paste("species not available:", paste(species[ina], "(", state[ina], ")", sep = "", collapse = " ")))
+
+  # Are we adding a species to an existing basis definition? 20220208
+  if(add) {
+    # Check that the species aren't already in the basis definition 20220208
+    ihave <- ispecies %in% oldbasis$ispecies
+    if(any(ihave)) {
+      if(length(ihave) == 1) stop(paste("this species is already in the basis definition:", species[ihave]))
+      stop(paste("these species are already in the basis definition:", paste(species[ihave], collapse = " ")))
+    }
+    # Append the new basis species
+    ispecies <- c(oldbasis$ispecies, ispecies)
+    logact <- c(oldbasis$logact, logact)
+  }
   # Load new basis species
-  return(put.basis(ispecies, logact))
+  newthermo <- put.basis(ispecies, logact)
+  newbasis <- newthermo$basis
+
+  if(add) {
+    oldspecies <- thermo$species
+    # If there are formed species, we need to update their formation reactions
+    if(!is.null(oldspecies)) {
+      nold <- nrow(oldbasis)
+      nnew <- nrow(newbasis)
+      nspecies <- nrow(oldspecies)
+      # Stoichiometric coefficients have zero for the added basis species
+      stoich <- cbind(oldspecies[, 1:nold], matrix(0, nspecies, nnew - nold))
+      colnames(stoich) <- rownames(newbasis)
+      # Complete species data frame
+      newspecies <- cbind(stoich, oldspecies[, -(1:nold)])
+      newthermo$species <- newspecies
+      assign("thermo", newthermo, CHNOSZ)
+    }
+  } else {
+    # Remove the formed species since there's no guarantee the new basis includes all their elements
+    species(delete = TRUE)
+  }
+
+  newbasis
 }
 
 ### unexported functions ###
@@ -126,9 +176,6 @@ put.basis <- function(ispecies, logact = rep(NA, length(ispecies))) {
   # Ready to assign to the global thermo object
   thermo$basis <- comp
   assign("thermo", thermo, CHNOSZ)
-  # Remove the species since there's no guarantee the new basis includes all their elements
-  species(delete=TRUE)
-  return(thermo$basis)
 }
 
 # Modify the states or logact values in the existing basis definition

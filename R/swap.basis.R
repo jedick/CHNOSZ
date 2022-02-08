@@ -93,7 +93,7 @@ swap.basis <- function(species, species2, T = 25) {
   # try to load the new basis species
   ispecies <- oldbasis$ispecies
   ispecies[ib] <- ispecies2
-  newbasis <- put.basis(ispecies)
+  newbasis <- put.basis(ispecies)$basis
   # now deal with the activities
   if(!all(can.be.numeric(oldbasis$logact))) {
     # if there are any buffers, just set the old activities

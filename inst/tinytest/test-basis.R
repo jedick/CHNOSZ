@@ -37,3 +37,19 @@ expect_error(basis("Cu2S", "cr4"), "state or buffer 'cr4' not found for chalcoci
 basis("CHNOS+")  # first basis species is CO2(aq)
 expect_equal(basis("CO2", "gas")$state[1], "gas", info = info)
 expect_equal(basis("CO2", "aq")$state[1], "aq", info = info)
+
+# 20220208
+info <- "Adding basis species to an existing definition works"
+basis(c("iron", "oxygen", "H2O", "H+"), c(0, -80, 1, -7))
+species(c("Fe", "Fe+2", "Fe+2"), c(0, -6, -6))
+a1 <- affinity(pH = c(0, 14))
+expect_error(basis(c("iron"), add = TRUE), "this species is already in the basis definition")
+expect_error(basis(c("iron", "oxygen", "H2O", "H+"), add = TRUE), "these species are already in the basis definition")
+expect_error(basis("Fe+2", add = TRUE), "the number of basis species is greater than the number of elements and charge")
+expect_silent(newbasis <- basis(c("H2S", "Cl-"), c(-5, -3), add = TRUE))
+expect_equal(newbasis$logact[5:6], c(-5, -3))
+newspecies <- species()
+expect_equal(colnames(newspecies)[5:6], c("H2S", "Cl-"))
+expect_equal(newspecies$H2S, numeric(3))
+a2 <- affinity(pH = c(0, 14))
+expect_identical(a1$values, a2$values)
