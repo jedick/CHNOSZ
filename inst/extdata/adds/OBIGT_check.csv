@@ -280,11 +280,11 @@
 "OBIGT",2136,"carbazole","cr","cal",-43.39,,
 "OBIGT",2177,"triphenylene","cr","cal",,,541
 "OBIGT",2490,"deoxyadenosine","cr","cal",,,-2977
-"OBIGT",2648,"ethylene","gas","cal",-4.59,,
-"OBIGT",2658,"3,5-dimethylphenol","gas","cal",,,628
-"OBIGT",2968,"nonacontane","liq","cal",,,635
-"OBIGT",2975,"2-methyloctane","liq","cal",10,,
-"OBIGT",3388,"5,6-dithiadecane","liq","cal",2,,
+"OBIGT",2649,"ethylene","gas","cal",-4.59,,
+"OBIGT",2659,"3,5-dimethylphenol","gas","cal",,,628
+"OBIGT",2969,"nonacontane","liq","cal",,,635
+"OBIGT",2976,"2-methyloctane","liq","cal",10,,
+"OBIGT",3389,"5,6-dithiadecane","liq","cal",2,,
 "DEW",8,"AlO2(SiO2)-","aq","cal",,,-897
 "DEW",17,"BO(OH)","aq","cal",,,-1111
 "DEW",19,"CaHCO3+","aq","cal",,,-2971

@@ -38,7 +38,7 @@ Updating data in OBIGT
   (not used elsewhere in CHNOSZ, but helpful to see which
   species entries have self inconsistencies):
   co <- check.OBIGT()
-  write.csv(co, "OBIGT_check.csv", row.names=FALSE, na="")
+  write.csv(co, "OBIGT_check.csv", row.names = FALSE, na = "")
 
 ******************
 Updating vignettes

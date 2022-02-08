@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-28 (2022-02-08)}{
+\section{Changes in CHNOSZ version 1.4.1-29 (2022-02-08)}{
 
   \subsection{PLANNED API CHANGE}{
     \itemize{
@@ -56,10 +56,14 @@
       \href{https://doi.org/10.2475/07.2017.01}{Miron et al. (2017)} to
       \file{GEMSFIT.csv}.
       
-      \item Fix formula of CaCl\s{2} in \file{DEW.csv}. Thanks to Grayson Boyer.
-
+      \item Add pyrobitumen (C\s{54}H\s{42}) from
+      \href{https://doi.org/10.1016/j.gca.2008.03.004}{Helgeson et al.  (2009)}
+      to \file{organic_cr.csv}.
+      
       \item Move Ar, Xe, CH\s{4}, and CO\s{2} from \file{organic_aq.csv} to
       \file{inorganic_aq.csv}.
+
+      \item Fix formula of CaCl\s{2} in \file{DEW.csv}. Thanks to Grayson Boyer.
 
       \item Remove \file{OldAA.csv} (superseded thermodynamic parameters for
       amino acids). This file is now available in the
