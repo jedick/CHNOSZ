@@ -6,7 +6,7 @@
 #   these functions expect arguments of length 1; 
 #   info() handles longer arguments
 
-## if this file is interactively sourced, the following are also needed to provide unexported functions:
+## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("util.data.R")
 
 info <- function(species=NULL, state=NULL, check.it=TRUE) {
@@ -200,7 +200,8 @@ info.numeric <- function(ispecies, check.it=TRUE) {
     Bermandat <- Berman()
     Bermandat <- Bermandat[Bermandat$name == this$name, ]
     this[, c("G", "H", "S", "V")] <- Bermandat[, c("GfPrTr", "HfPrTr", "SPrTr", "VPrTr")] * c(1, 1, 1, 10)
-  }
+    isBerman <- TRUE
+  } else isBerman <- FALSE
 
   # Identify any missing GHS values
   naGHS <- is.na(this[9:11])
@@ -216,14 +217,19 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   # Perform consistency checks for GHS and EOS parameters if check.it = TRUE
   # Don't do it for the AD species 20190219
   if(check.it & !"xi" %in% colnames(this)) {
-    # check GHS if they are all present
+    # Check GHS if they are all present
     if(sum(naGHS)==0) calcG <- checkGHS(this)
-    # check tabulated heat capacities against EOS parameters
+    # Check tabulated heat capacities against EOS parameters
     calcCp <- checkEOS(this, this$state, "Cp")
     # fill in NA heat capacity
     if(!is.na(calcCp) & is.na(this$Cp)) {
       message("info.numeric: Cp of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcCp, 2), " ", this$E_units, " K-1 mol-1")
       this$Cp <- as.numeric(calcCp)
+    } else if(isBerman) {
+      # Calculate Cp for Berman minerals 20220208
+      calcCp <- Berman(this$name)$Cp
+      if(this$E_units == "J") calcCp <- convert(calcCp, "J")
+      this$Cp <- calcCp
     }
     # check tabulated volumes - only for aq (HKF equation)
     if(identical(this$state, "aq")) {

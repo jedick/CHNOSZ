@@ -1,30 +1,30 @@
-[ - 20201110]
+[to 20201110]
 
-- make a site for community uploaded data
+- Make a site for community uploaded data
 
-- make separate directories for default and optional data files
+- Use separate directories for default and optional data files
 
-- diagram(): make error or warning for NA values of affinity
+- diagram(): produce error or warning for NA values of affinity
 
-- move protein.equil() example (previously in equilibrium.Rnw) to JMDplots.
+- Move protein.equil() example (previously in equilibrium.Rnw) to JMDplots.
 
-- add elements from Robie and Hemingway (1995).
+- Add elements from Robie and Hemingway (1995).
 
-- add check to mosaic() that 'stable' values have the right dimensions.
+- Add check to mosaic() that 'stable' values have the right dimensions.
 
-- move H2O92D.f and R wrapper to a separate package (so people
+- Move H2O92D.f and R wrapper to a separate package (so people
 don't have to compile anything to install CHNOSZ updates).
 
-- add empty diagram -> exceed.Ttr hint to anintro.Rmd.
+- Add hint to anintro.Rmd to try exceed.Ttr = TRUE if there is a blank diagram.
 
-- replace CoCl2-4 example in anintro.Rmd with different species
-(CoCl2-4 has been added to OBIGT).
+- Replace CoCl4-2 example in anintro.Rmd with different species
+(CoCl4-2 has been added to OBIGT).
 
 [20201113 - ]
 
-- add a demo to show user-added data with Berman equations
+- Add a demo to show user-added data with Berman equations
 
-- make swap.basis() work when DEW model is active
+- Make swap.basis() work when DEW model is active
 
 [20210303]
 

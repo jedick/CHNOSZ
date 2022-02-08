@@ -38,3 +38,14 @@ params <- info(iCO2)
 expect_equal(params$a, -8.8321, info = info)
 expect_equal(params$b, 11.2684, info = info)
 expect_equal(params$xi, -0.0850, info = info)
+
+# 20220208
+info <- "info() and subcrt() report consistent values for thermodynamic properties of Berman minerals"
+E.units("J")
+sout <- subcrt("K-feldspar", T = 25)$out[[1]]
+iout <- info(info("K-feldspar"))
+expect_equal(sout$G, iout$G, tolerance = 13, scale = 1)
+expect_equal(sout$H, iout$H)
+expect_equal(sout$S, iout$S, tolerance = 0.00009, scale = 1)
+expect_equal(sout$Cp, iout$Cp)
+expect_equal(sout$V, iout$V)

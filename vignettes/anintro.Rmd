@@ -1352,6 +1352,19 @@ To take an example, let's look at the metastable equilibrium distribution of sel
 This example brings some other functions we haven't seen yet: <span style="color:green">`unitize()`</span> and <span style="color:green">`revisit()`</span>.
 Here, we list the names and relative abundances of proteins taken from the YeastGFP study of @GHB_03.
 There are six proteins identified in the ER-to-Golgi location; one has NA abundance, so it is excluded from the comparisons:
+
+```{marginfigure}
+This can be done programmatically using data from the YeastGFP study that are in the [JMDplots](https://github.com/jedick/JMDplots) package:
+<br>
+`y <- JMDplots::yeastgfp("ER.to.Golgi")`
+<br>
+`ina <- is.na(y[["abundance"]])`
+<br>
+`aa <- JMDplots::yeast.aa(y$protein[!ina])`
+<br>
+`ip <- add.protein(aa)`
+```
+
 ```{r yeastgfp}
 protein <- c("YDL195W", "YHR098C", "YIL109C", "YLR208W", "YNL049C", "YPL085W")
 abundance <- c(1840, 12200, NA, 21400, 1720, 358)
@@ -1361,14 +1374,6 @@ ina <- is.na(abundance)
 Next, we find the rownumbers of the proteins in `thermo()$protein`:
 ```{r add_protein_yeast, message=FALSE}
 ip <- match(protein[!ina], thermo()$protein$protein)
-```
-
-NOTE: It is more convenient to do this with functions and data that have been moved to the [JMDplots](https://github.com/jedick/JMDplots) package:
-```{r JMDplots, eval = FALSE}
-y <- JMDplots::yeastgfp("ER.to.Golgi")
-ina <- is.na(y$abundance)
-aa <- JMDplots::yeast.aa(y$protein[!ina])
-ip <- add.protein(aa)
 ```
 
 The YeastGFP study reported absolute abundances of molecules, but the thermodynamic calculations give relative chemical activities of the proteins.
@@ -1593,7 +1598,7 @@ See [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.
 You should also run <span style="color:red">`water("DEW")`</span> to activate the equations in the model; then, they will be used by <span style="color:green">`subcrt()`</span> and <span style="color:green">`affinity()`</span>.
 Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
-<span style="color:red">`add.OBIGT("GEMSFIT")`</span> -- This is a set of internally-conistent thermodynamic data for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl compiled using the GEMSFIT package [@MWKL17].
+<span style="color:red">`add.OBIGT("GEMSFIT")`</span> -- Thermodynamic data for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl obtained from global optimization of Gibbs energies with the GEMSFIT package [@MWKL17].
 
 ## Adding data
 

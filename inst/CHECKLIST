@@ -1,16 +1,16 @@
 ****************************
 Release checklist for CHNOSZ
-    (updated 2020-11-10)
+    (updated 2022-02-08)
 ****************************
 
 - Run examples() and demos() and inspect their output (especially plots)
 
-- Run the package test with:
+- Run the package tests with:
   suppressMessages(tinytest::test_package("CHNOSZ", at_home = TRUE))
 
 - Check that uniprot.aa() works with current UniProt web pages
 
-- Check reverse dependencies on CRAN: canprot, ecipex, iemisc as of 2019-08-02
+- Check reverse dependencies on CRAN: canprot, accucor, ecipex, iemisc, LipidMS as of 2019-08-02
 
 **********************
 Updating data in OBIGT
@@ -18,7 +18,7 @@ Updating data in OBIGT
 
 - Add data to relevant csv file in extdata/OBIGT.
 
-- Add bibtex references to vignettes/OBIGT.bib
+- Add BibTeX references to vignettes/OBIGT.bib
   (used in the OBIGT.Rmd vignette).
 
 - Add references *and notes* to extdata/OBIGT/refs.csv
@@ -46,7 +46,7 @@ Updating vignettes
 
 - Customize rmarkdown installation (in R local library)
 
-  - to enable page offset from anchor position in OBIGT.Rmd:
+  - To enable page offset from anchor position in OBIGT.Rmd:
     remove padding-top: 10px; from h2 in
     rmarkdown/templates/html_vignette/resources/vignette.css
 

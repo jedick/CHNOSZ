@@ -10,18 +10,17 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-26 (2022-02-07)}{
+\section{Changes in CHNOSZ version 1.4.1-28 (2022-02-08)}{
 
   \subsection{PLANNED API CHANGE}{
     \itemize{
 
-      \item It is expected that in the next major release of CHNOSZ (to be
-      version 2.0.0), units of Joules instead of calories will be used by
-      default for the thermodynamic properties output by \code{subcrt()}. That
-      is, \code{E.units("J")} will be the default setting. User scripts that
-      implicitly depend on the current default units setting of
-      \code{E.units("cal")} will need to be modified to produce expected output
-      after this change is made.
+      \item In the next major release of CHNOSZ (to be version 2.0.0), units of
+      Joules instead of calories will be used by default for the thermodynamic
+      properties output by \code{subcrt()}. That is, \code{E.units("J")} will
+      be the default setting. User scripts that implicitly depend on the
+      current default setting of \code{E.units("cal")} will need to be modified
+      to produce expected output after this change is made.
 
     }
   }
@@ -38,8 +37,8 @@
       \item For minerals with thermodynamic parameters in the equations of
       \href{https://doi.org/10.1093/petrology/29.2.445}{Berman (1988)},
       \code{info()} with a numeric argument now lists values of \code{G},
-      \code{H}, \code{S}, and \code{V} at 25 \degC and 1 bar (these were
-      previously shown as \code{NA}). Thanks to Evgeniy Bastrakov for
+      \code{H}, \code{S}, \code{Cp}, and \code{V} at 25 \degC and 1 bar (these
+      were previously shown as \code{NA}). Thanks to Evgeniy Bastrakov for
       suggesting both of these changes.
 
     }
@@ -75,7 +74,7 @@
       \item The \code{AkDi()} function has been renamed to \code{AD()}, and all
       variables and data files likewise use the acronym \acronym{AD}. In
       particular, the Akinfiev-Diamond model is activated for an aqueous
-      species by setting \code{abbrv = "AD"} in \code{thermo()$OBIGT}.
+      species by using \code{abbrv = "AD"} in \code{thermo()$OBIGT}.
 
       \item Names of functions, variables, and data files now use capitalized
       \samp{Berman}, not \samp{berman}.

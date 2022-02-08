@@ -160,19 +160,17 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
 }
 
 checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
-  # compare calculated properties from equation-of-state
-  # parameters with reference (tabulated) values
-  # print message and return the calculated value
-  # if tolerance is exceeded
-  # or NA if the difference is within the tolerance
+  # Compare calculated properties from equation-of-state parameters with reference (tabulated) values.
+  # Print message and return the calculated value if tolerance is exceeded
+  # or NA if the difference is within the tolerance.
   # 20110808 jmd
   thermo <- get("thermo", CHNOSZ)
   # get calculated value based on EOS
   Theta <- 228  # K
   if(identical(state, "aq")) {
     if(prop=="Cp") {
-      # value of X consistent with IAPWS95
-      X <- -2.773788E-7
+      ## value of X consistent with IAPWS95
+      #X <- -2.773788E-7
       # we use the value of X consistent with SUPCRT
       X <- -3.055586E-7
       refval <- eos$Cp
@@ -180,8 +178,8 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
       tol <- thermo$opt$Cp.tol
       units <- paste(eos$E_units, "K-1 mol-1")
     } else if(prop=="V") {
-      # value of Q consistent with IAPWS95
-      Q <- 0.00002483137
+      ## value of Q consistent with IAPWS95
+      #Q <- 0.00002483137
       # value of Q consistent with SUPCRT92
       Q <- 0.00002775729
       refval <- eos$V
