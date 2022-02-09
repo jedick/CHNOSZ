@@ -71,7 +71,7 @@ Documentation
 
 - Ensure all Rd files have \concept{...} as listed in CHNOSZ-package.Rd
 
-- Run R_PAPERSIZE=letter R CMD Rd2pdf chnosz/
+- Run R_PAPERSIZE=letter R CMD Rd2pdf CHNOSZ/
   and fix any lines truncated by page margins
 
 *********************

@@ -1,6 +1,6 @@
 Date: 2022-02-08
 Package: CHNOSZ
-Version: 1.4.1-30
+Version: 1.4.2
 Title: Thermodynamic Calculations and Diagrams for Geochemistry
 Authors@R: c(
     person("Jeffrey", "Dick", , "j3ffdick@gmail.com", role = c("aut", "cre"),
@@ -25,8 +25,8 @@ Description: An integrated set of tools for thermodynamic calculations in
   developed to handle common calculations in aqueous geochemistry, such as
   solubility due to complexation of metal ions, mineral buffers of redox or pH,
   and changing the basis species across a diagram ("mosaic diagrams"). CHNOSZ
-  also has unique capabilities for comparing the compositional and thermodynamic
-  properties of different proteins.
+  also implements a group additivity algorithm for the standard thermodynamic
+  properties of proteins.
 Encoding: UTF-8
 License: GPL (>= 2)
 VignetteBuilder: knitr

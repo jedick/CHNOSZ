@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.1-30 (2022-02-08)}{
+\section{Changes in CHNOSZ version 1.4.2 (2022-02-08)}{
 
   \subsection{PLANNED API CHANGE}{
     \itemize{
@@ -20,7 +20,7 @@
       properties output by \code{subcrt()}. That is, \code{E.units("J")} will
       be the default setting. User scripts that implicitly depend on the
       current default setting of \code{E.units("cal")} will need to be modified
-      to produce expected output after this change is made.
+      to produce expected results after this change is made.
 
     }
   }
@@ -110,8 +110,6 @@
       
     }
   }
-
-
 
 }
 
