@@ -173,7 +173,6 @@ for(species in c("CH4", "CO2", "H2S", "NH3")) {
   lines.Cp(species)
   lines.Cp(species, HKF = TRUE)
   legend("topleft", legend = expr.species(species, use.state = TRUE), bty = "n")
-#  if(species == "CH4") legend("bottomleft", c("Hnedkovsky and Wood (1997)", "AD model", "HKF model"), pch = c(1, NA, NA), lty = c(1, 2), col = c(1, 2))
 }
 par(mfrow = c(1, 1))
 plot.window(c(0, 1), c(0, 1))
