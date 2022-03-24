@@ -14,7 +14,12 @@ csl: elementa.csl
 
 ```{r setup, include = FALSE}
 library(CHNOSZ)
-oldopt <- options(width = 72)
+options(width = 80)
+## use pngquant to optimize PNG images
+library(knitr)
+knit_hooks$set(pngquant = hook_pngquant)
+pngquant <- "--speed=1 --quality=0-25"
+if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
 ```
 
 ```{r HTML, include = FALSE}
@@ -34,7 +39,13 @@ c <- '<tt style="color: blue;">c</tt>'
 e <- '<tt style="color: blue;">e</tt>'
 f <- '<tt style="color: blue;">f</tt>'
 lambda <- '<tt style="color: blue;">lambda</tt>'
-Cp <- '<tt style="color: blue;">Cp</tt>'
+G_ <- '<tt style="color: blue;">G</tt>'
+H_ <- '<tt style="color: blue;">H</tt>'
+S_ <- '<tt style="color: blue;">S</tt>'
+Cp_ <- '<tt style="color: blue;">Cp</tt>'
+V_ <- '<tt style="color: blue;">V</tt>'
+Cp_0 <- "<i>C<sub>p</sub></i>&deg;"
+DG_0 <- "&Delta;<i>G</i>&deg;"
 # CHNOSZ functions
 reset_ <- '<code style="color: red;">reset()</code>'
 OBIGT_ <- '<code style="color: red;">OBIGT()</code>'
@@ -49,13 +60,21 @@ subcrt_ <- '<code style="color: green;">subcrt()</code>'
 affinity_ <- '<code style="color: green;">affinity()</code>'
 thermo.refs_ <- '<code style="color: green;">thermo.refs()</code>'
 thermo_ <- '<code style="color: green;">thermo()</code>'
+# Math stuff
+logK <- "log&thinsp;<i>K</i>"
+logB <- "log&thinsp;&beta;"
+F_ <- "F<sup>-</sup>"
+Hplus <- "H<sup>+</sup>"
+HWO4_ <- "HWO<sub>4</sub><sup>-</sup>"
+H2WO4 <- "H<sub>2</sub>WO<sub>4</sub>"
+H3WO4F2_ <- "H<sub>3</sub>WO<sub>4</sub>F<sub>2</sub><sup>-</sup>"
 ```
 
 This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
 
 This vignette will cover some topics about using custom thermodynamic data in CHNOSZ.
 The two main functions to remember are `r add.OBIGT_` to add data from a CSV file and `r mod.OBIGT_` to add or modify data through a function interface.
-A third function, `logB_to_OBIGT()`, has been provided to fit thermodynamic parameters to experimental formation constants (&beta;).
+A third function, `r logB_to_OBIGT_`, is provided to fit thermodynamic parameters to experimental formation constants (`r logB`).
 
 Before describing the methods to add or modify data, some notes on the basic structure of the database and data entry conventions are given.
 Column names (or parts thereof) are formatted in blue (e.g. `r formula`), and important notes are highlighted in yellow (`r NOTE`).
@@ -110,7 +129,7 @@ reset()
 `r thermo_` is a convenience function to access or modify parts of the `thermo` list object.
 To see the first few entries in OBIGT, do this:
 
-```{r thermo_.OBIGT}
+```{r thermo.OBIGT}
 head(thermo()$OBIGT)
 ```
 
@@ -154,7 +173,7 @@ REQUIRED:
 
 OPTIONAL: Everything else.
 Really, it depends on what you need.
-For instance, if you just want to use `r subcrt_` to calculate log*K* of a reaction from ΔG°f values at 25 °C, then G is the only parameter that is needed.
+For instance, if you just want to use `r subcrt_` to calculate `r logK` of a reaction from `r DG_0` of species at 25 °C, then `r G_` is the only parameter that is needed.
 
 OPTIONAL but useful:
 
@@ -166,19 +185,19 @@ OPTIONAL but useful:
 
 ### NA or 0?
 
-If a character value or thermo_dynamic parameter (Columns 1-13) is unknown, use `NA`.
+If a character value or thermodynamic parameter (Columns 1-13) is unknown, use `NA`.
 Note that a missing (blank) value in the file is treated as NA.
 
 - Unknown values for character values (Columns 1-8) should be NA.
-- If you have only two of G, H, and S, then the missing one should be NA (definitely not 0). `r NOTE`: `r info_` and dependent functions (particularly `r subcrt_`) "know" the equation DG = DGH - TDS; together with the entropies of the elements, this equation is used to compute a single missing one of G, H, or S from the other two.
-- If you don't have Cp or V, then set it to NA.
-  - If HKF or CGL parameters are present: they will be used to calculate Cp, so thermodynamic properties *can* be calculated at T > 25 °C.
+- If you have only two of G, H, and S, then the missing one should be NA (definitely not 0). `r NOTE`: `r info_` and dependent functions (particularly `r subcrt_`) "know" the equation DG = DGH - TDS; together with the entropies of the elements, this equation is used to compute a single missing one of `r G_`, `r H_`, or `r S_` from the other two.
+- If you don't have `r Cp_` or `r V_`, then set it to NA.
+  - If HKF or CGL parameters are present: they will be used to calculate `r Cp_`, so thermodynamic properties *can* be calculated at T > 25 °C.
   - If HKF or CGL parameters aren't present: thermodynamic properties *can't* be calculated at T > 25 °C (NAs will propagate to higher T).
 
 If an "equation-of-state" or heat capacity coefficient (Columns 14-20) is unknown, use 0.
 
-- Furthermore, if you would like to assume that Cp or V is 0, then set it to 0.
-  - Thermodynamic properties will be extrapolated to T > 25 °C and P > 1 bar assuming that Cp and V are 0.
+- Furthermore, if you would like to assume that `r Cp_` or V is 0, then set it to 0.
+  - Thermodynamic properties will be extrapolated to T > 25 °C and P > 1 bar assuming that `r Cp_` and `r V_` are 0.
 
 ### OOM scaling and `r info_`
 
@@ -192,10 +211,10 @@ This is a summary of its main features:
 
 - Remove OOM scaling. This is used primarily by other functions in CHNOSZ to get a set of unscaled `r model` parameters for calculating thermodynamic properties as a function of T and P.
 - Extract the HKF or CGL parts of column names (only if all matching species have the same `r model`).
-- Calculate a missing one of G, H, or S if two of them are present.
-- Cross-check G, H, and S if all of them are present, and print a message if the difference is above a threshold (see `?checkGHS`).
-- Calculate a missing Cp or V from the `r model` parameters, if possible.
-- Cross-check Cp or V (if present) against the `r model` parameters, if possible, and print a message if the difference is above a threshold (see `?checkEOS`).
+- Calculate a missing one of `r G_`, `r H_`, or `r S_` if two of them are present.
+- Cross-check `r G_`, `r H_`, and `r S_` if all of them are present, and print a message if the difference is above a threshold (see `?checkGHS`).
+- Calculate a missing `r Cp_` or `r V_` from the `r model` parameters, if possible.
+- Cross-check `r Cp_` or `r V_` (if present) against the `r model` parameters, if possible, and print a message if the difference is above a threshold (see `?checkEOS`).
 
 `r NOTE`: `r info_` does **NOT** change the units; the values it displays (including possibly calculated ones) correspond to the `r E.units_` for that species. On the other hand, `r subcrt_` outputs values in the units selected with `r E.units_`.
 
@@ -216,7 +235,7 @@ icr <- info(c("orpiment,amorphous", "arsenic,alpha", "tin"))
 thermo()$OBIGT[icr, ]
 ```
 
-Based on the values in the `r Cp` column, would you predict that thermodynamic properties at T > 25 °C could be calculated for all of these minerals?
+Based on the values in the `r Cp_` column, would you predict that thermodynamic properties at T > 25 °C could be calculated for all of these minerals?
 Let's see ...
 
 For conciseness we'll consider a relatively small temperature range and display only the `out` part of the `r subcrt_` output.
@@ -224,7 +243,7 @@ For conciseness we'll consider a relatively small temperature range and display 
 subcrt("orpiment,amorphous", T = c(25, 50, 75))$out[[1]]
 ```
 
-That makes sense; integrating Cp to calculate Gibbs energy and other thermo_dynamic properties would propagate NA, and that is what appears in the output.
+That makes sense; integrating NA `r Cp_` to calculate Gibbs energy and other thermodynamic properties would propagate NA, and that is what appears in the output.
 Now let's run the calculation for the alpha phase of arsenic.
 
 ```{r arsenic}
@@ -232,7 +251,7 @@ subcrt("arsenic,alpha", T = c(25, 50, 75))$out[[1]]
 ```
 
 What happened here?
-Even though there are no heat capacity coefficients (see above), there is a non-NA value of Cp, and that value is used together with the entropy for calculating Gibbs energy at T > 25 °C.
+Even though there are no heat capacity coefficients (see above), there is a non-NA value of `r Cp_`, and that value is used together with the entropy for calculating Gibbs energy at T > 25 °C.
 Note that zero for the 25 °C values of G and H is not a mistake or a placeholder for unknown values (unknown values should be represented by NA).
 This is the reference state for the element, for which G and H are by convention equal to zero.
 
@@ -243,9 +262,9 @@ subcrt("tin", T = c(25, 50, 75))$out[[1]]
 ```
 
 Are you surprised?
-You might be if you only noticed the NA value for Cp in OBIGT.
-However, there are non-NA values for the heat capacity coefficients, which are used to calculate Cp as a function of temperature.
-When supplied with a numeric argument (species index), `r info_` actually does this to fill in missing 25 °C values of Cp, V, and G, H, or S if possible, in addition to removing OOM scaling and simplifying column names:
+You might be if you only noticed the NA value for `r Cp_` in OBIGT.
+However, there are non-NA values for the heat capacity coefficients, which are used to calculate `r Cp_0` as a function of temperature.
+When supplied with a numeric argument (species index), `r info_` actually does this to fill in missing 25 °C values of `r Cp_`, `r V_`, and `r G_`, `r H_`, or `r S_` if possible, in addition to removing OOM scaling and simplifying column names:
 
 ```{r info_.tin}
 info(info("tin"))
@@ -404,11 +423,110 @@ Some additional steps are shown to refine a thermodynamic model to generate a sp
 <details>
   <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
 
-TODO
+### Fitting formation constants
 
-- Refinement 1: Account for variable activity of F- as a function of pH
-- Refinement 2: Set ionic strength
-- Refinement 3: Use extrapolation based on Bryzgalin-Ryzhenko model
+`r logB_to_OBIGT_` requires three things:
+
+- Experimental decimal logarithms of formation constants (`r logB`) as a function of temperature (at least three different temperatures);
+- The stoichiometry of the formation reaction in terms of known species (the new species must be last);
+- The experimental temperature and pressure.
+
+`r logB_to_OBIGT_` does three things:
+
+- Combines the formation constants with standard Gibbs energies (`r DG_0`) of the known species to calculate `r DG_0` of the new species;
+- Fits `r DG_0` of the new species using a three-term equation with constant heat capacity (i.e., 25 °C `r G_`, `r S_`, and `r Cp_` parameters in OBIGT);
+- Adds the fitted parameters to OBIGT for use by other functions in CHNOSZ.
+
+First we set the pressure for all `r logB` data.
+```{r Psat}
+P <- "Psat"
+```
+
+Add first species: `r HWO4_` [@WTW_19].
+```{r HWO4_}
+T <- c(250, 300, 350)
+logB <- c(5.58, 6.51, 7.99)
+species <- c("WO4-2", "H+", "HWO4-")
+coeff <- c(-1, -1, 1)
+logB_to_OBIGT(logB, species, coeff, T, P)
+```
+
+Add second species: `r H3WO4F2_` [@WWH_21].
+```{r H3WO4F2-}
+T <- seq(100, 250, 25)
+logB <- c(17.00, 17.11, 17.46, 17.75, 18.17, 18.71, 19.23)
+# Species and coefficients in the formation reaction
+species <- c("H+", "WO4-2", "F-", "H3WO4F2-")
+coeff <- c(-3, -1, -2, 1)
+logB_to_OBIGT(logB, species, coeff, T, P)
+```
+
+Add third species: `r H2WO4` [@WWH_21].
+We have to increase the tolerance because there is considerable scatter in the experimental values.
+```{r H2WO4}
+logB <- c(7.12, 7.82, 7.07, 7.76, 7.59, 7.98, 8.28)
+species <- c("H+", "WO4-2", "H2WO4")
+coeff <- c(-2, -1, 1)
+logB_to_OBIGT(logB, species, coeff, T, P, tolerance = 0.3)
+```
+
+We can tell from the low species indices of `r HWO4_` (`r info("HWO4-")`) and `r H2WO4` (`r info("H2WO4")`) that `r logB_to_OBIGT_` replaced parameters for these species that were already present in OBIGT.
+
+### Diagram 1: Constant activity of `r F_`
+
+Now we're ready to make a speciation diagram.
+Our target is to reproduce Fig. 7b of @WWH_21, which is made for 300 °C.
+A constant activity of `r F_` is based on the assumption of complete dissociation of 0.1 m NaF (we'll change this later).
+An ionic strength of 1.2 mol/kg is estimated for a solution with 1.8 m NaCl (use `NaCl(300, m_tot = 1.8)`).
+
+```{r diagram1, message = FALSE, results = "hide", fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
+basis(c("H+", "WO4-2", "F-", "H2O", "O2"))
+basis("F-", log10(0.1))
+iaq <- retrieve("W", c("O", "H", "F"), "aq")
+species(iaq)
+a <- affinity(pH = c(2, 7), T = 300, IS = 1.2)
+e <- equilibrate(a)
+col <- c(1, 4, 5, 2)
+diagram(e, alpha = TRUE, col = col, lty = 1, lwd = 2, ylab = "Fraction total W")
+```
+
+This isn't quite the diagram we were looking for.
+The published diagram shows a broad region of coexistence of `r H3WO4F2_` and `r HWO4_` at pH < 5 and increasing abundance of `r H2WO4` at lower pH.
+
+### Diagram 2: Variable activity of `r F_`
+
+In reality, the activity of `r F_` depends strongly on pH according to the reaction `r Hplus` + `r F_` = HF.
+With a little algebra, we can calculate the activity of `r F_` (`a_F` in the code below) from the equilbrium constant of this reaction for a given total F concentration (`F_tot`).
+`r NOTE`: It is important to call `r subcrt_` with a non-zero `IS` so that it returns effective equilibrium constants corrected for ionic strength (see what hapens to the diagram if you set `IS = 0`).
+
+```{r a_F}
+T <- 300
+pH <- seq(2, 7, 0.1)
+logK_HF <- subcrt(c("H+", "F-", "HF"), c(-1, -1, 1), T = T, IS = 1.2)$out$logK
+F_tot <- 0.1
+a_F <- F_tot / (1 + 10^(logK_HF - pH))
+```
+
+Now that we have the activity of `r F_` as a function of pH, we can provide it in the call to `r affinity_`.
+```{r diagram2, message = FALSE, results = "hide", results = "hide", fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
+basis(c("H+", "WO4-2", "F-", "H2O", "O2"))
+iaq <- retrieve("W", c("O", "H", "F"), "aq")
+species(iaq)
+a <- affinity(pH = pH, "F-" = log10(a_F), T = T, IS = 1.2)
+e <- equilibrate(a)
+diagram(e, alpha = TRUE, col = col, lty = 1, lwd = 2, ylab = "Fraction total W")
+```
+
+That's more like it. 
+We have captured the basic geometry of Fig. 7b in @WWH_21.
+For instance, in accord with the published diagram, `r HWO4_` plateaus at around 40% of total W, and `r H2WO4` and `r H3WO4F2_` are nearly equally abundant at pH = 2.
+
+The highest experimental temperature for the formation constants of `r H2WO4` and `r H3WO4F2_` is 250 °C, but this diagram is drawn for 300 °C.
+@WWH_21 used the modified Ryzhenko-Bryzgalin (MRB) model to extrapolate to 300 °C.
+In contrast, we used a different model but obtained quite similar results.
+
+`r NOTE`: The coefficients in the model used by `r logB_to_OBIGT_` are 25 °C values of `r G_`, `r S_`, and `r Cp_`.
+In a conservative interpretation, these should be regarded only as *fitting parameters*, and should not be used to report thermodynamic properties close to 25 °C unless they were fit to experimental data in that temperature range.
 
 </details>
 

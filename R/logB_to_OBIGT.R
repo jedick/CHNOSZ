@@ -4,6 +4,9 @@
 
 logB_to_OBIGT <- function(logB, species, coeff, T, P, tolerance = 0.05) {
 
+  # We need at least three temperature values
+  if(length(unique(T)) < 3) stop("at least 3 unique temperature values are needed")
+
   ## Get the formula of the formed species (used as the species name in OBIGT)
   ### NOTE: the formed species has to be *last* in this list
   name <- tail(species, 1)

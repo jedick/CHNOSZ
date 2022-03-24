@@ -10,6 +10,26 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
+\section{Changes in CHNOSZ version 1.4.3-4 (2022-03-24)}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+
+      \item Add logB_to_OBIGT() to fit three thermodynamic parameters (G, S,
+      and Cp) to formation constants of aqueous species as a function of
+      temperature.
+
+      \item Add \code{zap} argument to mod.OBIGT() to clear parameters of
+      preexisting species.
+
+      \item Add vignette customizing.Rmd about customizing the thermodynamic
+      database.
+
+    }
+  }
+
+}
+
 \section{Changes in CHNOSZ version 1.4.3 (2022-02-20)}{
 
   \subsection{UNIT TESTING}{
