@@ -9,7 +9,7 @@ Add or modify species in the thermodynamic database.
 
 \usage{
   add.OBIGT(file, species = NULL, force = TRUE)
-  mod.OBIGT(...)
+  mod.OBIGT(..., zap = FALSE)
 }
 
 \arguments{
@@ -17,9 +17,12 @@ Add or modify species in the thermodynamic database.
   \item{species}{character, names of species to load from file}
   \item{force}{logical, force replacement of already existing species?}
   \item{...}{character or numeric, properties of species to modify in the thermodynamic database}
+  \item{zap}{logical, clear preexisting parameters?}
 }
 
 \details{
+Note: change made to OBIGT are lost if you reload the database by calling \code{\link{reset}} or \code{\link{OBIGT}} or if you quit the \R session without saving it.
+
 \code{\link{add.OBIGT}} is used to update the thermodynamic database (\code{\link{thermo}$OBIGT}) in the running session.
 The format (column names) of the specified file must be the same as the \code{extdata/OBIGT/*.csv} files provided with CHNOSZ.
 Howvever, for backwards compatibility, the \code{E_units} column of the input can be missing; then, it is assigned a value of \samp{cal}.
@@ -38,24 +41,26 @@ When adding (not replacing) species, there is no attempt made to keep the order 
 As a result, retrieving the properties of an added aqueous species using \code{\link{info}} requires an explicit \code{state="aq"} argument to that function if a species with the same name is present in one of the cr, liq or gas states.
 
 \code{mod.OBIGT} changes one or more of the properties of species or adds species to the thermodynamic database.
-These changes are lost if you reload the database by calling \code{\link{reset}} or \code{\link{OBIGT}} or if you quit the \R session without saving it.
 The name of the species to add or change must be supplied as the first argument of \code{...} or as a named argument (named \samp{name}).
-When adding new species, a chemical formula should be included along with the values of any of the thermodynamic properties.
-The formula is taken from the \samp{formula} argument, or if that is missing, is taken to be the same as the \samp{name} of the species.
-An error results if the formula is not valid (i.e. can not be parsed by \code{\link{makeup}}).
-
 Additional arguments to \code{mod.OBIGT} refer to the name of the property(s) to be updated and are matched to any part of compound column names in \code{\link{thermo}()$OBIGT}.
 For instance, either \samp{z} or \samp{T} matches the \samp{z.T} column.
-When adding species, properties that are not specified become NA, except for \samp{state}, which takes a default value from \code{thermo()$opt$state}.
-The values provided should have energy units correponding to the current setting (\code{\link{E.units}}), but this can be overridden by giving a value for \samp{E_units} in the new data.
 The values provided should also include any order-of-magnitude scaling factors (see \code{\link{thermo}}).
+
+When adding new species, a chemical formula should be included along with the values of any of the thermodynamic properties.
+The formula is taken from the \samp{formula} argument, or if that is missing, is taken to be the same as the \samp{name} of the species.
+An error occurs if the formula is not valid (i.e. can not be parsed by \code{\link{makeup}}).
+For new species, properties that are not specified become NA, except for \samp{state} and \samp{E_units}, which take default values from \code{thermo()$opt}.
+These defaults can be overridden by giving a value for \samp{state} or \samp{E_units} in the new data.
+
+When modifying species, the parameters indicated by the named arguments of \code{mod.OBIGT} are updated.
+Use \code{zap = TRUE} to replace all prexisting parameters (except for \code{state}) with NA values.
 }
 
 \value{
 The values returned (\code{\link{invisible}}-y) are the indices of the added and/or modified species.
 }
 
-\seealso{ \code{\link{thermo}}, \code{\link{util.data}}, \code{\link{mod.buffer}}, \code{\link{logB_to_OBIGT}} }
+\seealso{ \code{\link{thermo}} (description of OBIGT), \code{\link{mod.buffer}} (modify buffer definitions), \code{\link{logB_to_OBIGT}} (fit thermodynamic parameters to formation constants) }
 
 \examples{\dontshow{reset()}
 ## Modify an existing species (not real properties)

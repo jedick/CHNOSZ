@@ -1,11 +1,11 @@
 # CHNOSZ/add.OBIGT.R
 # add or change entries in the thermodynamic database
 
-## if this file is interactively sourced, the following are also needed to provide unexported functions:
+## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("info.R")
 #source("util.data.R")
 
-mod.OBIGT <- function(...) {
+mod.OBIGT <- function(..., zap = FALSE) {
   # Add or modify species in thermo()$OBIGT
   thermo <- get("thermo", CHNOSZ)
   # The names and values are in the arguments
@@ -25,12 +25,12 @@ mod.OBIGT <- function(...) {
     # If the name of the first argument is missing, assume it's the species name
     if(names(args)[1]=="") names(args)[1] <- "name"
     speciesname <- args$name
-    # search for this species, use check.protein=FALSE to avoid infinite loop when adding proteins
+    # Search for this species, use check.protein = FALSE to avoid infinite loop when adding proteins
     # and suppressMessages to not show messages about matches of this name to other states
     if("state" %in% names(args)) ispecies <- suppressMessages(mapply(info.character, 
-      species=args$name, state=args$state, check.protein=FALSE, SIMPLIFY=TRUE, USE.NAMES=FALSE))
+      species = args$name, state = args$state, check.protein = FALSE, SIMPLIFY = TRUE, USE.NAMES = FALSE))
     else ispecies <- suppressMessages(mapply(info.character, 
-      species=args$name, check.protein=FALSE, SIMPLIFY=TRUE, USE.NAMES=FALSE))
+      species = args$name, check.protein = FALSE, SIMPLIFY = TRUE, USE.NAMES = FALSE))
   }
   # The column names of thermo()$OBIGT, split at the "."
   cnames <- c(do.call(rbind, strsplit(colnames(thermo$OBIGT), ".", fixed=TRUE)), colnames(thermo$OBIGT))
@@ -81,8 +81,13 @@ mod.OBIGT <- function(...) {
       # The old values and the state
       oldprop <- thermo$OBIGT[ispecies[iold[i]], icol]
       state <- thermo$OBIGT$state[ispecies[iold[i]]]
+      # Zap (clear) all preexisting values except for state 20220324
+      if(zap) {
+        thermo$OBIGT[ispecies[iold[i]], ] <- NA
+        thermo$OBIGT$state[ispecies[iold[i]]] <- state
+      }
       # Tell user if they're the same, otherwise update the data entry
-      if(isTRUE(all.equal(oldprop, args[iold[i], ], check.attributes=FALSE))) 
+      if(isTRUE(all.equal(oldprop, args[iold[i], ], check.attributes = FALSE))) 
         message("mod.OBIGT: no change for ", speciesname[iold[i]], "(", state, ")")
       else {
         thermo$OBIGT[ispecies[iold[i]], icol] <- args[iold[i], ]

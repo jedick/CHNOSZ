@@ -7,16 +7,9 @@ logB_to_OBIGT <- function(logB, species, coeff, T, P, tolerance = 0.05) {
   ## Get the formula of the formed species (used as the species name in OBIGT)
   ### NOTE: the formed species has to be *last* in this list
   name <- tail(species, 1)
-  # Check if the species is already present in OBIGT and delete its properties
-  iname <- suppressMessages(info(name))
-  if(!is.na(iname)) {
-    message(paste("logB_to_OBIGT: deleting existing", name, "from OBIGT"))
-    thermo <- get("thermo", CHNOSZ)
-    thermo$OBIGT <- thermo$OBIGT[-iname, ]
-    assign("thermo", thermo, CHNOSZ)
-  }
   # Add the formed species to the thermodynamic database with ΔG°f = 0 at all temperatures
-  suppressMessages(mod.OBIGT(name, G = 0, S = 0, Cp = 0))
+  # Be sure to zap properties of a formed species that is already in the database
+  suppressMessages(mod.OBIGT(name, formula = name, E_units = E.units(), G = 0, S = 0, Cp = 0, zap = TRUE))
   # Calculate logK of the formation reaction with ΔG°f = 0 for the formed species
   logK0 <- suppressMessages(subcrt(species, coeff, T = T, P = P)$out$logK)
 
@@ -63,4 +56,3 @@ logB_to_OBIGT <- function(logB, species, coeff, T, P, tolerance = 0.05) {
   ispecies
 
 }
-
