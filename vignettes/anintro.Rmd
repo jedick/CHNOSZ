@@ -203,17 +203,11 @@ diagram(e)           ## or diagram(a)
 reset()         ## clear settings for next calculation
 ```
 
-# Thermodynamic database
-
-An attempt has been made to provide a primary database (OBIGT) that has no major inconsistencies.
-As the database includes datasets from many sources, it can not be guaranteed to be fully internally consistent.
-For crucial problems, check not only the accuracy of entries in the database, but also the *suitability of the data* for your problem.
-If there are any doubts, consult the primary sources.
-Use <span style="color:blue">`thermo.refs()`</span> to show a list of references for the data; see also the vignette [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) for more information.
+# Querying the thermodynamic database
 
 ## The <span style="color:green">`info()`</span> function
 
-<span style="color:green">`info()`</span> provides an interface to the thermodynamic database packaged with CHNOSZ.
+<span style="color:green">`info()`</span> provides an interface to the OBIGT thermodynamic database that is packaged with CHNOSZ.
 Suppose you are interested in the thermodynamic properties of aqueous methane.
 Because the database is assembled with aqueous species first, they take precedence over other states.
 Searching by chemical formula alone gives the first matching species, in this case aqueous methane:
@@ -250,7 +244,7 @@ iCH4 <- info("CH4")
 info(iCH4)
 ```
 
-Liquid water is species number 1; it has NA entries in the database because specialized functions are used to compute its properties:
+Liquid water is species number 1; it has NA entries in the database because dedicated functions are used to compute its properties:
 ```{r info_info_water}
 info(info("water"))
 ```
@@ -1413,7 +1407,7 @@ The normalization step is followed by conversion of activities of residues to ac
 
 The experimental relative abundances are plotted as thin horizontal lines with the same style and color as the thicker curved lines calculated for metastable equilibrium.
 With the exception of YNL049C, the overlap between the calculations and experiments looks to be greatest near the middle-left part of the figure.
-The <span style="color:green">`revisit()`</span> function ([see below](#optimization-of-chemical-activities)) offers some statistical and thermodynamic measures that can quantify this comparison.
+The <span style="color:green">`revisit()`</span> function offers some statistical and thermodynamic measures that can quantify this comparison.
 Here, we plot the information-theoretic free energy Δ*G<sub>inf</sub>* (calculated from the relative entropy or Kullback--Leibler divergence):
 ```{r yeastplot, eval=FALSE, echo=10}
 ```
@@ -1518,7 +1512,23 @@ myaa <- rbind(aa_Ef, aa_PRIO, aa_ALAT1)
 protein.length(myaa)
 ```
 
-# Thermodynamic data
+# Sources of thermodynamic data
+
+An attempt has been made to assemble a default database that has no major inconsistencies between species.
+As the database includes thermodynamic data from many sources, it can not be guaranteed to be fully internally consistent.
+For crucial problems, check not only the accuracy of entries in the database, but also the *suitability of the data* for your problem.
+If there are any doubts, consult the primary sources.
+
+Most of the species in OBIGT have parameters for one of two models for calculating thermodynamic properties.
+The coefficients in these models are indicated by the column names with a dot, for example `a1.a`.
+Most aqueous species use the revised Helgeson-Kirkham-Flowers (HKF) equations (text before the dot), and crystalline, gas and liquid species other than `r h2o` use a polynomial equation for heat capacity.
+See <span style="color:blue">`?hkf`</span> and <span style="color:blue">`?cgl`</span> for information about the equations used for thermodynamic properties.
+
+Besides this vignette, here's where to look for more information about the database:
+
+- Be sure to read the help page at <span style="color:blue">`?thermo`</span> for information about the format of the OBIGT data frame.
+- See the vignette [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) for a summary of all sources for the default database and optional data files.
+- See the vignette [<span style="color:blue">*Customizing the thermodynamic database*</span>](customizing.html) for a broader description of the structure of OBIGT, data entry conventions, and examples of adding species to the database.
 
 ## Viewing data sources: <span style="color:green">`thermo.refs()`</span>
 
@@ -1600,119 +1610,6 @@ Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
 <span style="color:red">`add.OBIGT("GEMSFIT")`</span> -- Thermodynamic data for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl obtained from global optimization of Gibbs energies with the GEMSFIT package [@MWKL17].
 
-## Adding data
-
-You can also use <span style="color:red">`add.OBIGT()`</span> to add data from a user-specified file to the database in the current session.
-The file must be a CSV (comma separated value) file with column headers that match those in the main database.
-To show the required format, take a look at `BZA10.csv`, which has parameters taken from @BZA10.
-Missing values are indicated by `NA`:
-```{marginfigure}
-R's `read.csv()` has a useful option: `as.is = TRUE`.
-This prevents columns with character data from being read as factors (i.e. categorical data).
-Passing factors to functions that are designed for character data can give unexpected results or errors.
-```
-```{r BZA10}
-file <- system.file("extdata/adds/BZA10.csv", package = "CHNOSZ")
-read.csv(file, as.is = TRUE)
-```
-
-The column names with a dot (`.`) refer to different sets of equations for calculating standard thermodynamic properties.
-Aqueous species use the revised Helgeson-Kirkham-Flowers (HKF) equations (symbols before the dot), and crystalline, gas and liquid species other than `r h2o` use a polynomial equation for heat capacity (see [below](#solids)).
-See <span style="color:blue">`?thermo`</span> for details about what's in the data table, and <span style="color:blue">`?hkf`</span> and <span style="color:blue">`?cgl`</span> for information about the equations used for thermodynamic properties.
-
-Loading the data with <span style="color:red">`add.OBIGT()`</span> produces a message that the new data replace existing species.
-We can then use <span style="color:green">`subcrt()`</span> to calculate the equilibrium constant for a reaction involving the new species.
-This shows a decrease in the stepwise stability constant for the second cadmium chloride complex with increasing pressure (Bazarkina et al., 2010, Fig. 4).
-```{r BZA10_Cd}
-iCd <- add.OBIGT(file)
-subcrt(c("CdCl+", "Cl-", "CdCl2"), c(-1, -1, 1), T = 25, P = c(1, 2000))
-```
-
-After using <span style="color:red">`reset()`</span> we can find the source of data in the default database [@SSH97].
-Running the reaction now with these data, we see that the equilibrium constant is not as sensitive to pressure:
-```{r SSH97_subcrt}
-reset()
-thermo.refs(iCd)[, 1:3]
-subcrt(c("CdCl+", "Cl-", "CdCl2"), c(-1, -1, 1), T = 25, P = c(1, 2000))
-```
-
-## Modifying data
-
-Use <span style="color:red">`mod.OBIGT()`</span> to add or modify the database in the current session.
-The function requires the name of a species and one or more properties to change.
-
-### Aqueous species
-
-Let's add data for CoCl<sub>4</sub><sup>-2</sup> from @LBT_11.
-The values are taken from Table 5 of that paper; as is common for parameters in the HKF model, they are reported in caloric units, and some of the values have multipliers, which are kept when entering the data.
-The entry includes the date in ISO 8601 extended format (e.g. 2020-08-16); `Sys.Date()` is used in this example to get the current date.
-```{r mod_OBIGT_CoCl4_ghs}
-mod.OBIGT("CoCl4-2", formula = "CoCl4-2", state = "aq", ref1 = "LBT+11",
-  date = as.character(Sys.Date()), G = -134150, H = -171558, S = 19.55, Cp = 72.09, V = 27.74)
-```
-
-The function prints a message saying that the species was added, and returns the species index of the new species.
-Now let's modify the new species by adding the HKF coefficients.
-The `z` at the end refers to the charge of the species, and is used only for calculating the "*g* function" in the revised HKF model, not for balancing reactions.
-```{r mod_OBIGT_CoCl4_eos}
-mod.OBIGT("CoCl4-2", a1 = 6.5467, a2 = 8.2069, a3 = 2.0130, a4 = -3.1183,
-  c1 = 76.3357, c2 = 11.6389, omega = 2.9159, z = -2)
-```
-
-Let us now calculate the equilibrium constant for the formation of CoCl<sub>4</sub><sup>-2</sup> from Co<sup>+2</sup> and Cl<sup>-</sup>.
-```{r CoCl4_reaction, message = FALSE, echo = 1:3}
-T <- c(25, seq(50, 350, 50))
-sres <- subcrt(c("Co+2", "Cl-", "CoCl4-2"), c(-1, -4, 1), T = T)
-round(sres$out$logK, 2)
-stopifnot(identical(round(sres$out$logK, 2), c(-3.2, -2.96, -2.02, -0.74, 0.77, 2.5, 4.57, 7.29)))
-```
-
-The calculated values of log*K* are identical to those in Table 9 of Liu et al. (2011), which provides a good indication that the thermodynamic parameters were entered correctly.
-
-### Solids
-
-Let's add data for magnesiochromite from @KOSG00.
-The parameters in this paper are reported in Joules, so we set the `E_units` to J.
-The value for volume, in cm<sup>3</sup> mol<sup>-1</sup>, is from @RH95.
-```{r mod_OBIGT_magnesiochromite_ghs}
-H <- -1762000
-S <- 119.6
-V <- 43.56
-mod.OBIGT("magnesiochromite", formula = "MgCr2O4", state = "cr", ref1 = "KOSG00",
-          date = as.character(Sys.Date()), E_units = "J", H = H, S = S, V = V)
-```
-
-Here are the heat capacity parameters for the "Haas-Fisher" polynomial equation ($Cp = a + bT + cT^{-2} + dT^{-0.5} + eT^2$).
-Order-of-magnitude multipliers are required for the values of `b` and `c` (and also `e` if it is present; see the description for columns 14-21 of the `OBIGT` data frame in <span style="color:blue">`?thermo`</span>).
-Note that an additional `f` term is available, which can have any exponent given by `lambda`, but it is not needed here.
-1500 K is a generic value for the high-temperature limit; experimental heat capacities were only reported up to 340 K (Klemme et al., 2000).
-```{r mod_OBIGT_magnesiochromite_eos}
-a <- 221.4
-b <- -0.00102030 * 1e3
-c <- -1757210 * 1e-5
-d <- -1247.9
-mod.OBIGT("magnesiochromite", E_units = "J", a = a, b = b, c = c, d = d,
-          e = 0, f = 0, lambda = 0, T = 1500)
-```
-
-Now we can use <span style="color:green">`subcrt()`</span> to calculate the heat capacity of magnesiochromite.
-For this calculation, we set the temperature units to K and the energy units to Joules.
-We also specify a pressure of 1 bar to prevent an error in the calculation of *P*<sub>sat</sub> below the freezing temperature of water.
-```{r subcrt_magnesiochromite}
-T.units("K")
-E.units("J")
-subcrt("magnesiochromite", property = "Cp", T = c(250, 300, 340), P = 1)
-```
-
-The calculated values are with 0.1 J K<sup>-1</sup> mol<sup>-1</sup> of those shown in Fig. 1 of Klemme et al. (2000).
-If we wanted to restore the units setting for later calculations with <span style="color:green">`subcrt()`</span>, we could use <span style="color:red">`reset()`</span>.
-However, that also resets the thermodynamic database, so we don't do it here, in order to run the check in the next section.
-Instead, we can just set the units to their defaults manually.
-```{r restore_units_magnesiochromite}
-T.units("C")
-E.units("cal")
-```
-
 ## Cross-checking data entries
 
 <span style="color:green">`info()`</span> automatically performs some cross-checks of the thermodynamic data.
@@ -1721,13 +1618,6 @@ This only checks the parameters for individual species, not the internal consist
 ```
 Given a numeric species index, it runs <span style="color:green">`checkEOS()`</span>, which is a function that calculates values of *C*<sub>*P*</sub>° and *V*° from the HKF or heat capacity parameters and indicates whether differences from the database are greater than 1 cal K<sup>-1</sup> mol<sup>-1</sup> or 1 cm<sup>3</sup> mol<sup>-1</sup>.
 <span style="color:green">`info()`</span> also runs <span style="color:green">`checkGHS()`</span>, which calculates the value of Δ*G*°<sub>*f*</sub> from those of Δ*H*°<sub>*f*</sub> and *S*° and from the entropy of the elements [@CWM89] in the chemical formula of the species.
-Let's do this for the new CoCl<sub>4</sub><sup>-2</sup> species:
-```{r info_CoCl4, results = "hide"}
-inew <- info("CoCl4-2")
-info(inew)
-```
-
-The messages indicate that the values of *C*<sub>*P*</sub>° and *V*° added to the database differ slightly from those calculated using the HKF parameters.
 
 Some species in the default and optional databases are known to have inconsistent parameters.
 For instance, we can check the data for the trisulfur radical ion (S<sub>3</sub><sup>-</sup>) from @PD15:
