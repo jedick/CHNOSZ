@@ -63,3 +63,6 @@
 \newcommand{\c1}{\ifelse{latex}{\eqn{c_1}}{\ifelse{html}{\out{<I>c</I><sub>1</sub>}}{c1}}}
 \newcommand{\c2}{\ifelse{latex}{\eqn{c_2}}{\ifelse{html}{\out{<I>c</I><sub>2</sub>}}{c2}}}
 \newcommand{\omega}{\ifelse{latex}{\eqn{\omega}}{\ifelse{html}{\out{&omega;}}{ω}}}
+
+% For logB_to_OBIGT.Rd
+\newcommand{\logB}{\ifelse{latex}{\eqn{\log \beta}}{\ifelse{html}{\out{log&thinsp;&beta;}}{log β}}}

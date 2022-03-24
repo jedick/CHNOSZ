@@ -170,7 +170,7 @@ If a character value or thermo_dynamic parameter (Columns 1-13) is unknown, use 
 Note that a missing (blank) value in the file is treated as NA.
 
 - Unknown values for character values (Columns 1-8) should be NA.
-- Also, if you have only two of G, H, and S, then the missing one should be NA, not 0. This is because CHNOSZ "knows" the equation DG = DGH - TDS, and will handle a single missing one of those parameters.
+- If you have only two of G, H, and S, then the missing one should be NA (definitely not 0). `r NOTE`: `r info_` and dependent functions (particularly `r subcrt_`) "know" the equation DG = DGH - TDS; together with the entropies of the elements, this equation is used to compute a single missing one of G, H, or S from the other two.
 - If you don't have Cp or V, then set it to NA.
   - If HKF or CGL parameters are present: they will be used to calculate Cp, so thermodynamic properties *can* be calculated at T > 25 °C.
   - If HKF or CGL parameters aren't present: thermodynamic properties *can't* be calculated at T > 25 °C (NAs will propagate to higher T).
@@ -187,7 +187,7 @@ This is particularly applicable to HKF parameters, for which OOM scaling is near
 OOM scaling is also applied to the CGL parameters.
 See `?thermo` for details of the OOM scaling.
 
-`r info_` provides a way for the user to query the OBIGT database.
+`r info_` provides a simple user interface to the OBIGT database and is called by other functions in CHNOSZ to retrieve unscaled values from the database.
 This is a summary of its main features:
 
 - Remove OOM scaling. This is used primarily by other functions in CHNOSZ to get a set of unscaled `r model` parameters for calculating thermodynamic properties as a function of T and P.
@@ -210,7 +210,7 @@ Use the `r info_` function to look at the database and `r subcrt_` to calculate 
   <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
 
 Let's look at some minerals first.
-Use `r info_` to get the species indices (i.e. rownumbers) in OBIGT, and then the "raw" data (including OOM scaling and any NA values).
+First use `r info_` to get the species indices (i.e. rownumbers) in OBIGT, then pull out the "raw" data (including OOM scaling and any NA values).
 ```{r icr, message = FALSE}
 icr <- info(c("orpiment,amorphous", "arsenic,alpha", "tin"))
 thermo()$OBIGT[icr, ]
@@ -245,7 +245,7 @@ subcrt("tin", T = c(25, 50, 75))$out[[1]]
 Are you surprised?
 You might be if you only noticed the NA value for Cp in OBIGT.
 However, there are non-NA values for the heat capacity coefficients, which are used to calculate Cp as a function of temperature.
-`r info_` actually does this to fills in missing 25 °C values of Cp, V, and G, H, or S if possible, in addition to removing OOM scaling and simplifying column names:
+When supplied with a numeric argument (species index), `r info_` actually does this to fill in missing 25 °C values of Cp, V, and G, H, or S if possible, in addition to removing OOM scaling and simplifying column names:
 
 ```{r info_.tin}
 info(info("tin"))

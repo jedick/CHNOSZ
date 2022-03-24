@@ -55,7 +55,7 @@ The values provided should also include any order-of-magnitude scaling factors (
 The values returned (\code{\link{invisible}}-y) are the indices of the added and/or modified species.
 }
 
-\seealso{ \code{\link{thermo}}, \code{\link{util.data}}, \code{\link{mod.buffer}} }
+\seealso{ \code{\link{thermo}}, \code{\link{util.data}}, \code{\link{mod.buffer}}, \code{\link{logB_to_OBIGT}} }
 
 \examples{\dontshow{reset()}
 ## Modify an existing species (not real properties)

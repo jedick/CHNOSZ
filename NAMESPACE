@@ -57,7 +57,9 @@ export(
   "CHNOSZ", "thermo", "reset", "OBIGT", "retrieve", "AD", "moles",
   "lNaCl", "lS", "lT", "lP", "lTP", "lex",
 # added 20200716 or later
-  "mash", "mix", "rebalance"
+  "mash", "mix", "rebalance",
+# added 20220324
+  "logB_to_OBIGT"
 )
 
 # Load shared objects
@@ -73,7 +75,7 @@ importFrom("graphics", "abline", "axTicks", "axis", "barplot", "box",
   "plot.new", "plot.window", "points", "rect", "text", "title")
 importFrom("stats", "D", "as.formula", "cor", "lm", "loess.smooth",
   "na.omit", "predict.lm", "qqline", "qqnorm", "sd", "splinefun",
-  "uniroot", "median", "predict", "smooth.spline")
+  "uniroot", "median", "predict", "smooth.spline", "optimize")
 importFrom("utils", "browseURL", "capture.output", "combn", "demo",
   "example", "head", "installed.packages", "read.csv", "tail",
   "write.csv", "write.table", "read.table", "packageDescription")
