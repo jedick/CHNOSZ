@@ -13,29 +13,29 @@ expect_true(all(dat$E_units == "J"), info = info)
 maxdiff <- function(x, y) max(abs(y - x))
 
 info <- "high-T,P calculated properties are similar to precalculated ones"
-# Reference values for G were taken from the spreadsheet Berman_Gibbs_Free_Energies.xlsx
+# Reference values for G (cal/mol) were taken from the spreadsheet Berman_Gibbs_Free_Energies.xlsx
 #   (http://www.dewcommunity.org/uploads/4/1/7/6/41765907/sunday_afternoon_sessions__1_.zip accessed on 2017-10-03)
 T <- c(100, 100, 1000, 1000)
 P <- c(5000, 50000, 5000, 50000)
 
 # anadalusite: an uncomplicated mineral (no transitions)
-And_G <- c(-579368, -524987, -632421, -576834)
+And_G <- convert(c(-579368, -524987, -632421, -576834), "J")
 And <- subcrt("andalusite", T = T, P = P)$out[[1]]
-expect_true(maxdiff(And$G, And_G) < 7.5, info = info)
+expect_true(maxdiff(And$G, And_G) < 32, info = info)
 
 # quartz: a mineral with polymorphic transitions
-aQz_G <- c(-202800, -179757, -223864, -200109)
+aQz_G <- convert(c(-202800, -179757, -223864, -200109), "J")
 aQz <- subcrt("quartz", T = T, P = P)$out[[1]]
-expect_true(maxdiff(aQz$G[-2], aQz_G[-2]) < 1.2, info = info)
-# here, the high-P, low-T point suffers
-expect_true(maxdiff(aQz$G[2], aQz_G[2]) < 1250, info = info)
+expect_true(maxdiff(aQz$G[-2], aQz_G[-2]) < 5, info = info)
+# The high-P, low-T point suffers
+expect_true(maxdiff(aQz$G[2], aQz_G[2]) < 5200, info = info)
 
 # K-feldspar: this one has disordering effects
-Kfs_G <- c(-888115, -776324, -988950, -874777)
+Kfs_G <- convert(c(-888115, -776324, -988950, -874777), "J")
 Kfs <- subcrt("K-feldspar", T = T, P = P)$out[[1]]
-expect_true(maxdiff(Kfs$G[1:2], Kfs_G[1:2]) < 5, info = info)
+expect_true(maxdiff(Kfs$G[1:2], Kfs_G[1:2]) < 20, info = info)
 # we are less consistent with the reference values at high T
-expect_true(maxdiff(Kfs$G[3:4], Kfs_G[3:4]) < 350, info = info)
+expect_true(maxdiff(Kfs$G[3:4], Kfs_G[3:4]) < 1500, info = info)
 
 info <- "Nonexistent or incomplete user data file is handled properly"
 thermo("opt$Berman" = "XxXxXx.csv")
@@ -55,7 +55,7 @@ expect_equal(sum(is.na(bresult$G)), 2, info = info)
 # This also now works (producing the same NA values)
 #subcrt("quartz", T = seq(0, 500, 100))
 
-"NAs don't creep into calculations below 298.15 K for minerals with disorder parameters"
+info <- "NAs don't creep into calculations below 298.15 K for minerals with disorder parameters"
 # 20191116
 expect_false(any(is.na(subcrt("K-feldspar", P = 1, T = seq(273.15, 303.15, 5), convert = FALSE)$out[[1]]$G)), info = info)
 

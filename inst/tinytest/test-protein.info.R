@@ -1,6 +1,9 @@
 # Load default settings for CHNOSZ
 reset()
 
+# TODO: we have to use calories for protein.equil()
+E.units("cal")
+
 info <- "pinfo() deals with underscore in first argument"
 expect_equal(pinfo("LYSC_CHICK"), 6, info = info)
 

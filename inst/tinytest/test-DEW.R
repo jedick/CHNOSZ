@@ -55,6 +55,9 @@ Rg <- CHNOSZ:::gfun(w$rho/1000, temperature, pressure, w$alpha, w$daldT, w$beta)
 DEWg <- CHNOSZ:::calculateG(pressure, temperature, w$rho/1000)
 expect_equal(Rg, DEWg, info = info)
 
+## The following test use reference values in calories
+E.units("cal")
+
 info <- "Gibbs energies of species are calculated correctly"
 P <- c(5000, 5000, 10000, 10000, 20000, 20000, 50000, 50000)
 T <- c(100, 1000, 100, 1000, 100, 1000, 100, 1000)

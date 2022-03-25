@@ -323,23 +323,27 @@ The additional operations (`$out$water`) are used to extract a specific part of 
 
 ## Changing units
 
-The default units of temperature, pressure, and energy are °C, bar, and calories.
-The functions <span style="color:red">`T.units()`</span>, <span style="color:red">`P.units()`</span>, and <span style="color:red">`E.units()`</span> can be used to change the units used by various functions in CHNOSZ.
-What is the Gibbs energy in J/mol of aqueous methane at 298.15 K and 0.1 MPa?
-```{r units_CH4, message=FALSE}
+The default units of temperature, pressure, and energy in the input and output of <span style="color:green">`subcrt()`</span> are °C, bar, and Joules.
+The functions <span style="color:red">`T.units()`</span>, <span style="color:red">`P.units()`</span>, and <span style="color:red">`E.units()`</span> can be used to change the units used by <span style="color:green">`subcrt()`</span> and some other functions in CHNOSZ.
+What is the Gibbs energy in J/mol (the default) and cal/mol of aqueous methane at 298.15 K and 0.1 MPa?
+```{r units_CH4}
 T.units("K")
 P.units("MPa")
-E.units("J")
+subcrt("CH4", T = 298.15, P = 0.1)$out$CH4$G
+E.units("cal")
 subcrt("CH4", T = 298.15, P = 0.1)$out$CH4$G
 ```
 
-A related function, <span style="color:green">`convert()`</span>, can be used to convert given values between units.
-Let's convert the standard Gibbs energy of aqueous methane listed in the database from cal/mol to J/mol:
+The parameters for each species in the OBIGT database have the units indicated by the `E_units` column there, which is independent of the setting of <span style="color:red">`E.units()`</span>.
+Unlike <span style="color:green">`subcrt()`</span>, <span style="color:green">`info()`</span> always displays the database values in the units given in the database.
+A separate function, <span style="color:green">`convert()`</span>, can be used to convert values to selected units.
+The following code shows that the database parameters for CH<sub>4</sub>(aq) are in calories, then converts the standard Gibbs energy from cal/mol to J/mol.
 ```{r convert_G, message=FALSE}
-convert(info(info("CH4"))$G, "J")
+(CH4dat <- info(info("CH4")))
+convert(CH4dat$G, "J")
 ```
 
-As expected, we get the same result from both operations.
+As expected, we find that converting the database value to J/mol gives the same result as running <span style="color:green">`subcrt()`</span> with the default units of J.
 
 Use <span style="color:red">`reset()`</span> to restore the units and all other settings for CHNOSZ to their defaults:
 ```{r reset}
@@ -459,11 +463,9 @@ Let us calculate the chemical affinity of acetoclastic methanogenesis.
 ```{marginfigure}
 The affinity is equal to the negative of the overall (non-standard) Gibbs energy change of the reaction.
 ```
-We begin by changing the energy units to Joules.
-Then, we change the state of `r h2o` and CO<sub>2</sub> in the basis from `aq` (aqueous) to `gas`, and set the logarithm of fugacity of gaseous H<sub>2</sub> and the pH, using values from @MDS_13.
+We change the states of CO<sub>2</sub> and H<sub>2</sub> in the basis from `aq` (aqueous) to `gas`, and set the logarithm of fugacity of gaseous H<sub>2</sub> and the pH, using values from @MDS_13.
 The activity of acetate and fugacity of methane, as well as temperature and pressure, are set in the call to <span style="color:green">`subcrt()`</span>:
 ```{r basis_mayumi, message=FALSE, results="hide"}
-E.units("J")
 basis(c("CO2", "H2", "H2O", "H+"))
 basis(c("CO2", "H2"), "gas")
 basis(c("H2", "pH"), c(-3.92, 7.3))
@@ -519,7 +521,7 @@ legend("topleft", c("acetate oxidation", "acetoclastic methanogenesis",
 ```{r methanogenesis_plot, eval=FALSE}
 ```
 
-Let's not forget to clear the system settings, which were modified by <span style="color:red">`basis()`</span> and <span style="color:red">`E.units()`</span>, before running other calculations:
+Let's not forget to clear the system settings, which were modified by <span style="color:red">`basis()`</span>, before running other calculations:
 ```{r reset, message=FALSE}
 ```
 

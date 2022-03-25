@@ -11,11 +11,9 @@ s <- subcrt(c("malic acid", "citric acid"), c(-1, 1))
 expect_equal(s$reaction$coeff, c(-1, 1, -2, -1, 1.5), info = info)
 expect_equal(s$reaction$name, c("malic acid", "citric acid", "CO2", "water", "oxygen"), info = info)
 
-info <- "Standard Gibbs energies of reactions involving aqueous species are consistent with the literature"
+info <- "Standard Gibbs energies (kJ/mol) of reactions involving aqueous species are consistent with the literature"
 # from Amend and Shock, 2001 [AS01] Table 3
 T <- c(2, 18, 25, 37, 45, 55, 70, 85, 100, 115, 150, 200)
-# standard Gibbs energies in kJ/mol
-E.units("J")
 
 # H2O(l) = H+ + OH-
 AS01.H2O <- c(78.25, 79.34, 79.89, 80.90, 81.63, 82.59, 84.13, 85.78, 87.55, 89.42, 94.22, 102.21)
@@ -36,16 +34,13 @@ expect_true(maxdiff(sout.C7$G/1000, AS01.C7) < 0.05, info = info)
 # we can also check that sulfur has expected phase transitions
 expect_equal(s.C7$polymorphs$sulfur, c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3), info = info)
 
-# return to default units
-E.units("cal")
-
 info <- "Subzero degree C calculations are possible"
 ## start with H2O
 s.H2O <- subcrt("H2O", T = c(-20.1, seq(-20, 0)), P = 1)$out$water
 # we shouldn't get anything at -20.1 deg C
 expect_true(is.na(s.H2O$G[1]), info = info)
 # we should get something at -20 deg C
-expect_equal(floor(s.H2O$G[2]), -56001, info = info)
+expect_equal(s.H2O$G[2], convert(-56001, "J"), tolerance = 1, scale = 1, info = info)
 # following SUPCRT92, an input temperature of 0 is converted to 0.01
 expect_equal(s.H2O$T[22], 0.01, info = info)
 
@@ -65,6 +60,9 @@ expect_equal(subcrt("acanthite")$out$acanthite$polymorph, c(1, 1, 1, 1, 1, 1, 1,
 expect_equal(subcrt(c("bunsenite", "nickel", "oxygen"), c(-1, 1, 0.5))$reaction$coeff, c(-1, 1, 0.5), info = info) 
 # properties are NA only above (not at) the transition temperature 20191111
 expect_equal(is.na(subcrt("rhodochrosite", T = c(699:701), P = 1, convert = FALSE)$out[[1]]$G), c(FALSE, FALSE, TRUE), info = info)
+
+# Use calories for comparisons with SUPCRT92
+E.units("cal")
 
 info <- "Calculations for K-feldspar are consistent with SUPCRT92"
 # use the superseded Helgeson et al., 1978 data

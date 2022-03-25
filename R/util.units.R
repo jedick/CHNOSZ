@@ -101,6 +101,7 @@ convert <- function(value, units, T=298.15,
   }
   else if(units %in% c('g','logk')) {
     R <- 1.9872  # gas constant, cal K^-1 mol^-1
+    #R <- 8.31446261815324  # gas constant, J K^-1 mol^-1  20220325
     if(units=='logk') value <- value / (-log(10) * R * T)
     if(units=='g') value <- value * (-log(10) * R * T)
   }
@@ -141,7 +142,7 @@ outvert <- function(value,units) {
     if(units=='k' & opt$T.units=='C') return(convert(value,'c'))
   }
   if(units %in% c('j','cal')) {
-    if(units=='j' & opt$E.units=='Cal') return(convert(value,'cal'))
+    if(units=='j' & opt$E.units=='cal') return(convert(value,'cal'))
     if(units=='cal' & opt$E.units=='J') return(convert(value,'j'))
   }
   if(units %in% c('bar','mpa')) {

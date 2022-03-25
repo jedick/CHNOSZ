@@ -55,7 +55,7 @@ Note that \code{E} and \code{kT} can only be calculated for aqueous species and 
 On the other hand, if the \code{water} option is \samp{SUPCRT} (the default), \code{E} and \code{kT} can be calculated for water but not for aqueous species.
 (This is not an inherent limitation in either formulation, but it is just a matter of implementation.)
 
-If \code{convert} is \code{TRUE} (the default), the input values of \code{T} and \code{P} are interpreted to have the units given by \code{\link{T.units}} and \code{\link{P.units}} (default: \degC and bar), and the output values of \code{G}, \code{H}, \code{S} and \code{Cp} are based on the units given in \code{\link{E.units}} (default: calories).
+If \code{convert} is \code{TRUE} (the default), the input values of \code{T} and \code{P} are interpreted to have the units given by \code{\link{T.units}} and \code{\link{P.units}} (default: \degC and bar), and the output values of \code{G}, \code{H}, \code{S} and \code{Cp} are based on the units given in \code{\link{E.units}} (default: Joules).
 If \code{convert} is \code{FALSE}, the user units (\code{\link{T.units}}, \code{\link{P.units}}, and \code{\link{E.units}}) are ignored, and \code{T} and \code{P} are taken to be in Kelvin and bar, and the returned values of \code{G}, \code{H}, \code{S} and \code{Cp} are in calories.
 
 A chemical reaction is defined if \code{coeff} is given.
@@ -154,67 +154,65 @@ subcrt(c("pyrite", "pyrrhotite", "H2O", "H2S", "O2"), c(-1, 1, -1, 1, 0.5))
 ## Messages about problems with the calculation
 # Above the T, P limits for the H2O equations of state
 subcrt("alanine", T = c(2250, 2251), P = c(30000, 30001), grid = "T")
-# Psat is not defined above the critical point;
-# this also gives a warning that is suppressed to keep the examples clean
+# Psat is not defined above the critical point
+# (suppressWarnings is used so that checks of examples don't raise warnings)
 suppressWarnings(subcrt("alanine", T = seq(0, 5000, by = 1000)))
 
-## minerals with phase transitions
-# compare calculated values of heat capacity of iron with
+## Minerals with phase transitions
+# Compare calculated values of heat capacity of iron with
 # values from Robie and Hemingway, 1995
 T.units("K")
-E.units("J")
-# we set pressure here otherwise subcrt uses Psat (saturation 
-# vapor pressure of H2O above 100 degrees C) which can not be 
+# We set pressure here otherwise subcrt uses Psat (saturation 
+# vapor pressure of H2O above 100 degrees C) which can't be 
 # calculated above the critical point of H2O (~647 K)
 s <- subcrt("Fe", T=seq(300, 1800, 20), P=1)
 plot(s$out[[1]]$T, s$out[[1]]$Cp, type="l",
   xlab=axis.label("T"), ylab=axis.label("Cp"))
-# add points from RH95
+# Add points from RH95
 RH95 <- read.csv(system.file("extdata/cpetc/RH95.csv", package="CHNOSZ"))
 points(RH95[,1], RH95[,2])
 title(main=paste("Heat capacity of Fe(cr)\n",
   "(points - Robie and Hemingway, 1995)"))
-# reset the units to default values
+# Reset the units to default values
 T.units("C")
-E.units("cal")
 
 ## Subzero (degrees C) calculations
-# uncomment the following to try IAPWS95 instead of SUPCRT92
+# Uncomment the following to try IAPWS95 instead of SUPCRT92
 #water("IAPWS95")
-# the limit for H2O92D.f (from SUPCRT92) is currently -20 deg C
+# The limit for H2O92D.f (from SUPCRT92) is currently -20 deg C
 # but we go to -30 knowing properties will become NA
-sb <- subcrt(c("H2O", "Na+"), T=seq(-30, 10), P=1)$out
-# start plot with extra room on right
+sb <- subcrt(c("H2O", "Na+"), T = seq(-30, 10), P = 1)$out
+# Start plot with extra room on right
 opar <- par(mar=c(5, 4, 4, 4))
-# plot Delta G
-plot(sb$water$T, sb$water$G, ylim=c(-63000, -56000), xlab=axis.label("T"),
-  ylab=axis.label("DG0"))
-points(sb$`Na+`$T, sb$`Na+`$G, pch=2)
-# add Cp
+# Plot Delta G
+plot(sb$water$T, sb$water$G, ylim = c(-264000, -234000),
+  xlab = axis.label("T"), ylab = axis.label("DG0"))
+points(sb$`Na+`$T, sb$`Na+`$G, pch = 2)
+# Add Cp
 # change y-axis
-par("usr"=c(par("usr")[1:2], -100, 25))
+par("usr" = c(par("usr")[1:2], -400, 100))
 axis(4)
-mtext(axis.label("Cp0"), side=4, line=3)
-points(sb$water$T, sb$water$Cp, pch=16)
-points(sb$`Na+`$T, sb$`Na+`$Cp, pch=17)
-legend("topleft", pch=c(16, 1, 17, 2), legend=c("H2O Cp", "H2O G", "Na+ Cp", "Na+ G"))
+mtext(axis.label("Cp0"), side = 4, line = 3)
+points(sb$water$T, sb$water$Cp, pch = 16)
+points(sb$`Na+`$T, sb$`Na+`$Cp, pch = 17)
+legend("topleft", c("H2O Cp", "H2O G", "Na+ Cp", "Na+ G"), pch = c(16, 1, 17, 2))
 H2O <- expr.species("H2O")
 Na <- expr.species("Na+")
 degC <- expr.units("T")
-title(main=substitute(H2O~and~Na~to~-20~degC, list(H2O=H2O, Na=Na, degC=degC)))
+title(main = substitute(H2O~and~Na~to~-20~degC, list(H2O = H2O, Na = Na, degC = degC)))
 par(opar)
 
 ## Calculations using a variable-pressure standard state
 thermo("opt$varP" = TRUE)
 # Calculate the boiling point of octane at 2 and 20 bar
-# We need exceed.Ttr=TRUE because the liquid is metastable
+# We need exceed.Ttr = TRUE because the liquid is metastable
 # at high temperatures (also, the gas is metastable at low
 # temperatures, but that doesn't produce NA in the output)
 sout2 <- subcrt(rep("octane", 2), c("liq", "gas"),
   c(-1, 1), T = seq(-50, 300, 0.1), P = 2, exceed.Ttr = TRUE)$out
 sout20 <- subcrt(rep("octane", 2), c("liq", "gas"),
   c(-1, 1), T = seq(-50, 300, 0.1), P = 20, exceed.Ttr = TRUE)$out
-# find T with the Gibbs energy of reaction that is closest to zero
+# Find T with the Gibbs energy of reaction that is closest to zero
 Tvap2 <- sout2$T[which.min(abs(sout2$G))]
 Tvap20 <- sout20$T[which.min(abs(sout20$G))]
 # Compare these with experimental values (Fig. 1 of Helgeson et al., 1998)

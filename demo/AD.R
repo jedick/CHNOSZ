@@ -5,8 +5,6 @@ library(CHNOSZ)
 
 # Start with default settings
 reset()
-# Change energy units to Joules (affects plot labels and subcrt() output)
-E.units("J")
 
 ########################
 ### HENRY'S CONSTANT ###

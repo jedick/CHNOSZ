@@ -37,8 +37,7 @@ G.kJ.4 <- G.kJ * 4
 rxn <- subcrt("S", 1)$reaction
 rxn$coeff <- rxn$coeff * 4
 rxntext <- describe.reaction(rxn)
-# Set units to get label for Delta G (kJ / mol)
-E.units("J")
+# Get label for Delta G (kJ / mol)
 DGlab <- axis.label("DGr", prefix = "k")
 
 # Calculate pK of H2S and HSO4-

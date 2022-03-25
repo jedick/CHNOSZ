@@ -14,8 +14,6 @@ TC <- 0:1200
 T <- convert(TC, "K")
 
 labplot <- function(x) label.plot(x, xfrac=0.9, yfrac=0.1, paren=TRUE)
-# this sets the units used for making the axis labels
-E.units("J")
 Cplab <- axis.label("Cp")
 Vlab <- axis.label("V")
 Tlab <- axis.label("T")

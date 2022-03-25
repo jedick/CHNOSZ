@@ -85,3 +85,9 @@ Vignettes for website
 - Run doc/mklinks.sh in installed directory (adds links to HTML renditions of
   Rd files)
 
+*******
+Testing
+*******
+
+- Comment this line in test-AD.R:
+exit_file("Skipping tests so development builds on R-Forge work")

@@ -77,22 +77,22 @@ A data frame with \code{T} (K), \code{P} (bar), \code{G}, \code{H}, \code{S}, an
 
 \examples{
 \dontshow{reset()}
-# other than the formula, the parameters aren't stored in
+# Other than the formula, the parameters aren't stored in
 # thermo()$OBIGT, so this shows NAs
 info(info("quartz", "cr"))
-# properties of alpha-quartz (aQz) at 298.15 K and 1 bar
+# Properties of alpha-quartz (aQz) at 298.15 K and 1 bar
 Berman("quartz")
 # Gibbs energies of aQz and coesite at higher T and P
 T <- seq(200, 1300, 100)
 P <- seq(22870, 31900, length.out=length(T))
 G_aQz <- Berman("quartz", T=T, P=P)$G
 G_Cs <- Berman("coesite", T=T, P=P)$G
-# that is close to the univariant curve (Ber88 Fig. 4),
+# That is close to the univariant curve (Ber88 Fig. 4),
 # so the difference in G is close to 0
 DGrxn <- G_Cs - G_aQz
 all(abs(DGrxn) < 100)  # TRUE
 
-# make a P-T diagram for SiO2 minerals (Ber88 Fig. 4)
+# Make a P-T diagram for SiO2 minerals (Ber88 Fig. 4)
 basis(c("SiO2", "O2"), c("cr", "gas"))
 species(c("quartz", "quartz,beta", "coesite"), "cr")
 a <- affinity(T=c(200, 1700, 200), P=c(0, 50000, 200))
@@ -100,22 +100,21 @@ diagram(a)
 
 ## Getting data from a user-supplied file
 ## Ol-Opx exchange equilibrium, after Berman and Aranovich, 1996
-E.units("J")
 species <- c("fayalite", "enstatite", "ferrosilite", "forsterite")
 coeffs <- c(-1, -2, 2, 1)
 T <- seq(600, 1500, 50)
 Gex_Ber88 <- subcrt(species, coeffs, T=T, P=1)$out$G
-# add data from BA96
+# Add data from BA96
 datadir <- system.file("extdata/Berman/testing", package="CHNOSZ")
 add.OBIGT(file.path(datadir, "BA96_OBIGT.csv"))
 thermo("opt$Berman" = file.path(datadir, "BA96_Berman.csv"))
 Gex_BA96 <- subcrt(species, coeffs, T=seq(600, 1500, 50), P=1)$out$G
 # Ber88 is lower than BA96 at low T
 (Gex_BA96 - Gex_Ber88)[1] > 0  # TRUE
-# the curves cross at about 725 deg C (BA96 Fig. 8)
+# The curves cross at about 725 deg C (BA96 Fig. 8)
 # (actually, in our calculation they cross closer to 800 deg C)
 T[which.min(abs(Gex_BA96 - Gex_Ber88))]  # 800
-# reset the database (thermo()$opt$E.units, thermo()$OBIGT, and thermo()$opt$Berman)
+# Reset the database (thermo()$OBIGT, and thermo()$opt$Berman)
 reset()
 }
 

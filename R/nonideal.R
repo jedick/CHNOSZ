@@ -4,7 +4,7 @@
 # added Helgeson method 20171012
 
 nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, method=thermo()$opt$nonideal) {
-  # generate nonideal contributions to thermodynamic properties
+  # Generate nonideal contributions to thermodynamic properties
   # number of species, same length as speciesprops list
   # T in Kelvin, same length as nrows of speciespropss
   # arguments A_DH and B_DH are needed for all methods other than "Alberty", and P is needed for "bgamma"
@@ -16,7 +16,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     mettext
   }
 
-  # we can use this function to change the nonideal method option
+  # We can use this function to change the nonideal method option
   if(missing(speciesprops)) {
     if(species[1] %in% c("Bdot", "Bdot0", "bgamma", "bgamma0", "Alberty")) {
       thermo <- get("thermo", CHNOSZ)
@@ -28,23 +28,26 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     } else stop(species[1], " is not a valid nonideality setting (Bdot, Bdot0, bgamma, bgamma0, or Alberty)")
   }
 
-  # check if we have a valid method setting
+  # Check if we have a valid method setting
   if(!method %in% c("Alberty", "Bdot", "Bdot0", "bgamma", "bgamma0")) {
     if(missing(method)) stop("invalid setting (", thermo$opt$nonideal, ") in thermo()$opt$nonideal")
     else stop("invalid method (", thermo$opt$nonideal, ")")
   }
 
-  # function to calculate extended Debye-Huckel equation and derivatives using Alberty's parameters
+  R <- 1.9872  # gas constant, cal K^-1 mol^-1
+  #R <- 8.31446261815324  # gas constant, J K^-1 mol^-1  20220325
+
+  # Function to calculate extended Debye-Huckel equation and derivatives using Alberty's parameters
   Alberty <- function(prop = "loggamma", Z, I, T) {
-    # extended Debye-Huckel equation ("log")
+    # Extended Debye-Huckel equation ("log")
     # and its partial derivatives ("G","H","S","Cp")
     # T in Kelvin
     B <- 1.6 # L^0.5 mol^-0.5 (Alberty, 2003 p. 47)
-    # equation for A from Clarke and Glew, 1980
+    # Equation for A from Clarke and Glew, 1980
     #A <- expression(-16.39023 + 261.3371/T + 3.3689633*log(T)- 1.437167*(T/100) + 0.111995*(T/100)^2)
     # A = alpha / 3 (Alberty, 2001)
     alpha <- expression(3 * (-16.39023 + 261.3371/T + 3.3689633*log(T)- 1.437167*(T/100) + 0.111995*(T/100)^2))
-    ## equation for alpha from Alberty, 2003 p. 48
+    ## Equation for alpha from Alberty, 2003 p. 48
     #alpha <- expression(1.10708 - 1.54508E-3 * T + 5.95584E-6 * T^2)
     # from examples for deriv() to take first and higher-order derivatives
     DD <- function(expr, name, order = 1) {
@@ -54,7 +57,6 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     }
     # Alberty, 2003 Eq. 3.6-1
     lngamma <- function(alpha, Z, I, B) - alpha * Z^2 * I^(1/2) / (1 + B * I^(1/2))
-    R <- 1.9872  # gas constant, cal K^-1 mol^-1
     # 20171013 convert lngamma to common logarithm
     # 20190603 use equations for H, S, and Cp from Alberty, 2001 (doi:10.1021/jp011308v)
     if(prop=="loggamma") return(lngamma(eval(alpha), Z, I, B) / log(10))
@@ -64,24 +66,22 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     else if(prop=="Cp") return(- 2 * R * T * lngamma(eval(DD(alpha, "T", 1)), Z, I, B) - R * T^2 * lngamma(eval(DD(alpha, "T", 2)), Z, I, B))
   }
   
-  # function for Debye-Huckel equation with b_gamma or B-dot extended term parameter (Helgeson, 1969)
+  # Function for Debye-Huckel equation with b_gamma or B-dot extended term parameter (Helgeson, 1969)
   Helgeson <- function(prop = "loggamma", Z, I, T, A_DH, B_DH, acirc, m_star, bgamma) {
     loggamma <- - A_DH * Z^2 * I^0.5 / (1 + acirc * B_DH * I^0.5) - log10(1 + 0.0180153 * m_star) + bgamma * I
-    R <- 1.9872  # gas constant, cal K^-1 mol^-1
     if(prop=="loggamma") return(loggamma)
     else if(prop=="G") return(R * T * log(10) * loggamma)
     # note the log(10) (=2.303) ... use natural logarithm to calculate G
   }
 
-  # function for Setchenow equation with b_gamma or B-dot extended term parameter (Shvarov and Bastrakov, 1999)  20181106
+  # Function for Setchenow equation with b_gamma or B-dot extended term parameter (Shvarov and Bastrakov, 1999)  20181106
   Setchenow <- function(prop = "loggamma", I, T, m_star, bgamma) {
     loggamma <- - log10(1 + 0.0180153 * m_star) + bgamma * I
-    R <- 1.9872  # gas constant, cal K^-1 mol^-1
     if(prop=="loggamma") return(loggamma)
     else if(prop=="G") return(R * T * log(10) * loggamma)
   }
 
-  # get species indices
+  # Get species indices
   if(!is.numeric(species[[1]])) species <- info(species, "aq")
   # loop over species #1: get the charge
   Z <- numeric(length(species))
@@ -111,7 +111,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
       "Th+4"=11, "Zr+4"=11, "Ce+4"=11, "Sn+4"=11)
     acirc <- as.numeric(acircdat[formula])
     acirc[is.na(acirc)] <- 4.5
-    ## make a message
+    ## Make a message
     #nZ <- sum(Z!=0)
     #if(nZ > 1) message("nonideal: using ", paste(acirc[Z!=0], collapse=" "), " for ion size parameters of ", paste(formula[Z!=0], collapse=" "))
     #else if(nZ==1) message("nonideal: using ", acirc[Z!=0], " for ion size parameter of ", formula[Z!=0])
@@ -121,11 +121,11 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     # "distance of closest approach" of ions in NaCl solutions (HKF81 Table 2)
     acirc <- rep(3.72e-8, length(species))
   }
-  # get b_gamma or B-dot
+  # Get b_gamma or B-dot
   if(method=="bgamma") bgamma <- bgamma(convert(T, "C"), P)
   else if(method=="Bdot") bgamma <- Bdot(convert(T, "C"))
   else if(method %in% c("Bdot0", "bgamma0")) bgamma <- 0
-  # loop over species #2: activity coefficient calculations
+  # Loop over species #2: activity coefficient calculations
   if(is.null(m_star)) m_star <- IS
   iH <- info("H+")
   ie <- info("e-")
@@ -133,11 +133,11 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
   icharged <- ineutral <- logical(length(species))
   for(i in 1:length(species)) {
     myprops <- speciesprops[[i]]
-    # to keep unit activity coefficients of the proton and electron
+    # To keep unit activity coefficients of the proton and electron
     if(species[i] == iH & get("thermo", CHNOSZ)$opt$ideal.H) next
     if(species[i] == ie & get("thermo", CHNOSZ)$opt$ideal.e) next
     didcharged <- didneutral <- FALSE
-    # logic for neutral and charged species 20181106
+    # Logic for neutral and charged species 20181106
     if(Z[i]==0) {
       for(j in 1:ncol(myprops)) {
         pname <- colnames(myprops)[j]
@@ -163,7 +163,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
         }
       }
     }
-    # append a loggam column if we did any calculations of adjusted thermodynamic properties
+    # Append a loggam column if we did any calculations of adjusted thermodynamic properties
     if(didcharged) {
       if(method=="Alberty") myprops <- cbind(myprops, loggam = Alberty("loggamma", Z[i], IS, T))
       else myprops <- cbind(myprops, loggam = Helgeson("loggamma", Z[i], IS, T, A_DH, B_DH, acirc[i], m_star, bgamma))
@@ -172,7 +172,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
       if(get("thermo", CHNOSZ)$opt$Setchenow == "bgamma") myprops <- cbind(myprops, loggam = Setchenow("loggamma", IS, T, m_star, bgamma))
       else if(get("thermo", CHNOSZ)$opt$Setchenow == "bgamma0") myprops <- cbind(myprops, loggam = Setchenow("loggamma", IS, T, m_star, bgamma = 0))
     }
-    # save the calculated properties and increment progress counters
+    # Save the calculated properties and increment progress counters
     speciesprops[[i]] <- myprops
     if(didcharged) icharged[i] <- TRUE
     if(didneutral) ineutral[i] <- TRUE

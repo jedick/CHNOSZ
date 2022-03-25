@@ -44,7 +44,7 @@ expect_equal(ionize.aa(aa, pH = pH, T = 100)[, 1], Z.LYSC_CHICK.100, tolerance =
 expect_equal(ionize.aa(aa, pH = pH, T = 150)[, 1], Z.LYSC_CHICK.150, tolerance = 1e-1, check.attributes = FALSE, info = info)
 expect_equal(ionize.aa(aa, pH = pH, T = 25, suppress.Cys = TRUE)[, 1], Z.LYSC_CHICK.25_oxid, tolerance = 1e-2, check.attributes = FALSE, info = info)
 
-info <- "Heat capacity and Gibbs energy of ionization are consistent with literature"
+info <- "Heat capacity of ionization is consistent with literature"
 # heat capacity (kcal mol-1 K-1) of AMYA_PYRFU at 60, 80, 100, 120, 140 degrees
 # for nonionzed protein and ionized protein at pH 6 and 12
 # digitized from Fig. 11 of Dick et al., 2006
@@ -58,15 +58,18 @@ Cp.ionization.pH12 <- ionize.aa(aa, "Cp", T = c(60, 80, 100, 120, 140), pH = 12)
 # expect_equal(Cp.AMYA_PYRFU.pH6 - Cp.AMYA_PYRFU.nonion, Cp.AMYA_PYRFU.pH12 - Cp.AMYA_PYRFU.nonion, 1e-2, info = info)
 expect_equal(Cp.ionization.pH6[,1], (Cp.AMYA_PYRFU.pH6 - Cp.AMYA_PYRFU.nonion)*1000, tolerance = 1e-2, check.attributes = FALSE, info = info)
 expect_equal(Cp.ionization.pH12[,1], (Cp.AMYA_PYRFU.pH12 - Cp.AMYA_PYRFU.nonion)*1000, tolerance = 1e-2, check.attributes = FALSE, info = info)
+
+info <- "Gibbs energy of ionization is consistent with literature"
 # Gibbs energy (Mcal mol-1) of AMY_BACSU at pH 0, 2, 4, 6, 8, 10, 12, 14 at 25 and 100 degrees
 # digitized from Fig. 12 of Dick et al., 2006
 G.AMY_BACSU.25 <- c(-24.9, -24.9, -24.7, -24.5, -24.4, -23.9, -23.5, -23.2)
 G.AMY_BACSU.100 <- c(-26.7, -26.7, -26.4, -26.1, -25.7, -25.1, -24.9, -24.9)
 # to reproduce the calculations in the paper, use superseded properties of [Met], [Gly], and [UPBB]
-mod.OBIGT("[Met]", G = -35245, H = -59310, S = 40.38)
-mod.OBIGT("[Gly]", G = -6075, H = -5570, S = 17.31)
-mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62)
-G.nonionized <- subcrt("AMY_BACSU", T=c(25, 100))$out[[1]]$G
+mod.OBIGT("[Met]", G = -35245, H = -59310, S = 40.38, E_units = "cal")
+mod.OBIGT("[Gly]", G = -6075, H = -5570, S = 17.31, E_units = "cal")
+mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62, E_units = "cal")
+# Use convert = FALSE to get results in calories 20220325
+G.nonionized <- subcrt("AMY_BACSU", T = convert(c(25, 100), "K"), convert = FALSE)$out[[1]]$G
 aa <- pinfo(pinfo("AMY_BACSU"))
 G.ionization.25 <- ionize.aa(aa, "G", T = 25, pH = seq(0, 14, 2))[,1]
 G.ionization.100 <- ionize.aa(aa, "G", T = 100, pH = seq(0, 14, 2))[,1]

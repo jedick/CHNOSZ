@@ -10,7 +10,24 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.3-4 (2022-03-24)}{
+\section{Changes in CHNOSZ version 1.4.3-5 (2022-03-25)}{
+
+  \subsection{MAJOR CHANGE}{
+    \itemize{
+
+      \item Units of Joules instead of calories are now used by default for the
+      thermodynamic properties output by \code{subcrt()}. That is,
+      \code{E.units("J")} is the default setting. User scripts that implicitly
+      depend on the previous default setting of \code{E.units("cal")} need to
+      be modified to produce expected output.
+
+      \item The switch to Joules is work in progress. \code{convert()} and
+      other functions still use calories, in particular for the value of the
+      gas constant. Functions will continue to be modified to make the units as
+      consistent as possible and avoid unit conversions.
+
+    }
+  }
 
   \subsection{NEW FEATURES}{
     \itemize{

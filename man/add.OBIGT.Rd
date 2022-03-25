@@ -25,7 +25,7 @@ Note: change made to OBIGT are lost if you reload the database by calling \code{
 
 \code{\link{add.OBIGT}} is used to update the thermodynamic database (\code{\link{thermo}$OBIGT}) in the running session.
 The format (column names) of the specified file must be the same as the \code{extdata/OBIGT/*.csv} files provided with CHNOSZ.
-Howvever, for backwards compatibility, the \code{E_units} column of the input can be missing; then, it is assigned a value of \samp{cal}.
+However, for backwards compatibility, the \code{E_units} column of the input can be missing; then, it is assigned a value of \samp{cal} (this differs from the default setting for \code{\link{E.units}}, which applies to the thermodynamic properties output by \code{\link{subcrt}} and not to database entries).
 
 \code{file} is first matched against the names of files in the \code{extdata/OBIGT} directory packaged with CHNOSZ.
 In this case, the file suffixes are removed, so \samp{DEW}, \samp{organic_aq}, and \samp{organic_cr} are valid names.
@@ -70,7 +70,8 @@ ialanine <- mod.OBIGT("alanine", state = "cr", G = 0, H = 0, S = 0)
 # now produces a message about that
 info(ialanine)
 
-## Add an aqueous species (default) with Gibbs energy given in J/mol and today's date
+## Add an aqueous species (default) with Gibbs energy given in J/mol 
+## (the same as the default) and today's date
 date <- as.character(Sys.Date())
 iCl2O <- mod.OBIGT("Cl2O", date = date, E_units = "J", G = 87738)
 info(iCl2O)
@@ -108,13 +109,12 @@ invisible(lapply(1:4, function(i) {
   text(800, y[i], describe.reaction(subcrt(c(Cdspecies[i], "Cl-",
     Cdspecies[i+1]), c(-1, -1, 1), T=25, P=1)$reaction))
 }))
-# Reset default database
+# Restore default database
 OBIGT()
 
 # Another use of add.OBIGT()
 # Compare Delta G of AABB = UPBB + H2O
 # (Figure 9 of Kitadai, 2014)
-E.units("J")
 # Default database has values from Kitadai, 2014
 Kit14 <- subcrt(c("[AABB]", "[UPBB]", "H2O"), c(-1, 1, 1), T = seq(0, 300, 10))
 # Load superseded parameters for [UPBB] from Dick et al., 2006
@@ -126,8 +126,8 @@ plot(Kit14$out$T, Kit14$out$G/1000, type = "l", ylim = c(10, 35),
 lines(DLH06$out$T, DLH06$out$G/1000, lty = 2)
 legend("topleft", c("Dick et al., 2006", "Kitadai, 2014"), lty = c(2, 1))
 title(main = "AABB = UPBB + H2O; after Figure 9 of Kitadai, 2014")
-# Reset database *and* settings (units)
-reset()
+# Restore default database
+OBIGT()
 
 # Another use of add.OBIGT(): calculate Delta G of
 # H4SiO4 = SiO2 + 2H2O using different data for SiO2.
@@ -140,7 +140,7 @@ add.OBIGT("AS04", "SiO2")
 s2 <- subcrt(c("H4SiO4", "SiO2", "H2O"), c(-1, 1, 2), T = T)
 # plot logK from the first and second calculations
 plot(T, s1$out$G, type = "l", xlab = axis.label("T"),
-  ylab = axis.label("DG"), ylim = c(-100, 600))
+  ylab = axis.label("DG"), ylim = c(-500, 2500))
 lines(T, s2$out$G, lty = 2)
 # add title and legend
 title(main = describe.reaction(s1$reaction))
@@ -148,7 +148,7 @@ stxt <- lapply(c("H4SiO4", "SiO2", "SiO2"), expr.species)
 legend("top", legend = as.expression(stxt), bty = "n")
 legend("topright", c("Stef\u00e1nsson, 2001", "Shock et al., 1989",
   "Apps and Spycher, 2004"), lty = c(0, 1, 2), bty = "n")
-reset()
+OBIGT()
 }
 
 \references{

@@ -41,7 +41,6 @@ expect_equal(params$xi, -0.0850, info = info)
 
 # 20220208
 info <- "info() and subcrt() report consistent values for thermodynamic properties of Berman minerals"
-E.units("J")
 sout <- subcrt("K-feldspar", T = 25)$out[[1]]
 iout <- info(info("K-feldspar"))
 expect_equal(sout$G, iout$G, tolerance = 13, scale = 1)

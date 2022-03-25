@@ -4,6 +4,9 @@
 # the citric acid cycle for temperatures to 500 degrees C and pressures to 5 kbar.
 library(CHNOSZ)
 
+# These plots use calories 20220325
+E.units("cal")
+
 # species in reactions
 NADox <- "NAD(ox)-"; NADred <- "NAD(red)-2"
 ADP <- "ADP-3"; ATP <- "ATP-4"
@@ -96,3 +99,6 @@ par(xpd=NA)
 text(-70, 284, "Citric Acid Cycle, after Canovas and Shock, 2016", font=2, cex=1.5)
 par(xpd=FALSE)
 par(opar)
+
+# Reset the units
+reset()

@@ -582,7 +582,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     }
     if(convert) {
       for(j in 1:ncol(OUT[[i]])) {
-        if(colnames(OUT[[i]])[j] %in% c('G','H','S','Cp')) OUT[[i]][,j] <- outvert(OUT[[i]][,j],'cal')
+        if(colnames(OUT[[i]])[j] %in% c("G", "H", "S", "Cp")) OUT[[i]][,j] <- outvert(OUT[[i]][,j], "cal")
       }
     }
   }

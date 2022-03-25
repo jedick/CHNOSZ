@@ -223,9 +223,9 @@ nV <- sapply(makeup(names(V.aq)), "[", "V")
 V.aq <- V.aq + nV * V.corr
 
 # Add energies to OBIGT
-# Be sure to set E_units to Joules; the default in OBIGT is calories!
 # This function modifies OBIGT and returns the species indices of the affected species
 modfun <- function(x, state) sapply(seq_along(x), function(i) {
+  # We explicitly set the units to Joules (this is the default as of CHNOSZ 2.0.0)
   mod.OBIGT(names(x)[i], formula = names(x)[i], state = state, E_units = "J", G = x[i])
 })
 iFe.cr <- modfun(Fe.cr, "cr")
@@ -421,13 +421,12 @@ To calculate the energy above the hull "by hand", let's set up the basis species
 O~2~ is also needed to make a square stoichiometric matrix (i.e. same number of elements and basis species), but it does not appear in the reaction to form FeVO~4~ from the basis species.
 `subcrt()` is used to automatically balance the formation reaction for 1 mole of FeVO~4~ and calculate the standard Gibbs energy of the reaction.
 The `convert()` command divides this value by *-RT* (which yields `r logK` of the reaction), showing the same result as calculated above from the Pourbaix diagram.
-The value of Δ*G*° in cal/mol (the default for `subcrt()`) is converted to J/mol, then to eV/mol, and finally eV/atom.
+The value of Δ*G*° in J/mol is converted to eV/mol, and finally eV/atom.
 
 ```{r hull, echo = 1:7, message = FALSE}
 b <- basis(c("Fe2O3", "Fe2V4O13", "O2"))
-cal_mol <- subcrt("FeVO4", 1, T = 25)$out$G
-convert(cal_mol, "logK")
-J_mol <- convert(cal_mol, "J")
+J_mol <- subcrt("FeVO4", 1, T = 25)$out$G
+#convert(cal_mol, "logK")
 eV_mol <- J_mol / 1.602176634e-19
 eV_atom <- eV_mol / 6.02214076e23 / 6
 round(eV_atom, 3)

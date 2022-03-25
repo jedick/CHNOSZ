@@ -149,6 +149,8 @@ protein.basis <- function(protein, T=25, normalize=FALSE) {
 }
 
 protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
+  # For now we have to use calories 20220325
+  if(thermo()$opt$E.units != "cal") stop('please run E.units("cal") first')
   out <- character()
   mymessage <- function(...) {
     message(...)

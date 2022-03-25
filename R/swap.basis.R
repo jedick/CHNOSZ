@@ -18,9 +18,10 @@ element.mu <- function(basis = thermo()$basis, T = 25) {
   # the standard Gibbs energies of the basis species
   # don't take it from thermo()$OBIGT, even at 25 degC, because G for H2O is NA there
   # the sapply(..., "[", 1) is needed to get the first value, in case subcrt appends a polymorph column (i.e. for S(cr))  20171105
-  G <- unlist(sapply(subcrt(basis$ispecies, T=T, property="G")$out, "[", 1))
+  TK <- convert(T, "K")
+  G <- unlist(sapply(subcrt(basis$ispecies, T = TK, property="G", convert = FALSE)$out, "[", 1))
   # chemical potentials of the basis species
-  species.mu <- G - convert(basis$logact, "G", T=convert(T, "K"))
+  species.mu <- G - convert(basis$logact, "G", T = TK)
   # chemical potentials of the elements
   element.mu <- solve(basis.mat, species.mu)
   # give them useful names
@@ -41,12 +42,13 @@ basis.logact <- function(emu, basis = thermo()$basis, T = 25) {
   # the standard Gibbs energies of the basis species
   # don't take it from thermo()$OBIGT, even at 25 degC, because G for H2O is NA there
   # the sapply(..., "[", 1) is needed to get the first value, in case subcrt appends a polymorph column (i.e. for S(cr))  20171105
-  G <- unlist(sapply(subcrt(basis$ispecies, T=T, property="G")$out, "[", 1))
+  TK <- convert(T, "K")
+  G <- unlist(sapply(subcrt(basis$ispecies, T = TK, property = "G", convert = FALSE)$out, "[", 1))
   # the chemical potentials of the basis species in equilibrium
   # with the chemical potentials of the elements
   basis.mu <- colSums((t(basis.mat)*emu)) - G
   # convert chemical potentials to logarithms of activity
-  basis.logact <- -convert(basis.mu, "logK", T=convert(T, "K"))
+  basis.logact <- -convert(basis.mu, "logK", T = TK)
   # give them useful names
   names(basis.logact) <- rownames(basis.mat)
   return(basis.logact)

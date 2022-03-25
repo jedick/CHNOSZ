@@ -10,6 +10,9 @@ info <- "Non-zero ionic strength transforms variables from activity to molality"
 # The maximum absolute pairwise difference between x and y
 maxdiff <- function(x, y) max(abs(y - x))
 
+# TODO: we shouldn't need to be in calories for these tests 20220325
+E.units("cal")
+
 ### first get the activity coefficients of H+ and HCO3-
 ## the long way...
 wprop <- water(c("A_DH", "B_DH"), P = 1)

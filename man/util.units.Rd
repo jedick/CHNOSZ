@@ -28,7 +28,7 @@ These functions convert values between units and set the user's preferred units.
 
 \details{
 The units settings are used by \code{\link{subcrt}}, \code{\link{affinity}}, and \code{\link{diagram}} to accept input in or convert output to the units desired by the user.
-The settings, which can be queried or changed with \code{T.units}, \code{E.units} and \code{P.units}, refer to the units of temperature (\code{C} or \code{K}), energy (\code{cal} or \code{J}), and pressure (\code{bar}, \code{MPa}).
+The settings, which can be queried or changed with \code{T.units}, \code{E.units} and \code{P.units}, refer to the units of temperature (\code{C} or \code{K}), energy (\code{J} or \code{cal}), and pressure (\code{bar}, \code{MPa}).
 (The first value in each of those pairs refers to the default units).
 
 The actual units conversions are handled by \code{convert}, through which \code{values} are transformed into destination \code{units} (names not case sensitive).
@@ -53,10 +53,10 @@ See \code{\link{demo}("contour")} and \code{\link{demo}("sphalerite")} for examp
 }
 
 \examples{\dontshow{reset()}
-### direct usage of convert
-# temperature (Kelvin) to degrees C
+## Direct usage of convert
+# Temperature (Kelvin) to degrees C
 convert(273.15, "C")
-# temperature (degrees C) to Kelvin
+# Temperature (degrees C) to Kelvin
 convert(100, "K")
 # Gibbs energy (cal mol-1) to/from logK
 convert(1000, "logK")		
@@ -69,16 +69,16 @@ convert(-1, "pe", T=373.15)
 convert(-80, "E0")             
 convert(-80, "E0", pH=5)
 convert(-80, "E0", pH=5, logaH2O=-5)
-# calorie to/from joule
+# Calorie to/from joule
 convert(10, "J")		
 convert(10, "cal")
 # cm3bar to calories		
 convert(10, "calories")
 
-### setting the units
-# make K the units for temperature arguments to subcrt() and affinity()
+## Setting the units
+# Make K the units for temperature arguments to subcrt() and affinity()
 T.units("K") 
-# return to default - degrees C
+# Return to default - degrees C
 T.units("C")
 }
 

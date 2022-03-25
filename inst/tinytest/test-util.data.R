@@ -102,7 +102,7 @@ expect_true(maxdiff(scal$out[[1]]$H, sJ$out[[1]]$H) < 1, info = info)
 expect_true(maxdiff(scal$out[[1]]$S, sJ$out[[1]]$S) < 0.006, info = info)
 expect_true(maxdiff(scal$out[[1]]$V, sJ$out[[1]]$V) < 0.011, info = info)
 expect_true(maxdiff(scal$out[[1]]$Cp, sJ$out[[1]]$Cp) < 0.16, info = info)
-# if we set the output to J, it should be the same as the parameters at 25 degC
+# Now switch output to J (default units)
 E.units("J")
 calcJ25 <- subcrt("DMA_J", T = 25)$out[[1]]
 infoJ25 <- info(info("DMA_J"))
@@ -110,8 +110,6 @@ expect_equivalent(calcJ25[, c("G", "H", "S")], calcJ25[, c("G", "H", "S")], info
 # in the case of Cp and V, there are bigger difference because they are calculated from the HKF parameters
 expect_true(maxdiff(calcJ25$Cp, infoJ25$Cp) < 8.1, info = info)
 expect_true(maxdiff(calcJ25$V, infoJ25$V) < 0.55, info = info)
-# go back to default units
-E.units("cal")
 
 info <- "OBIGT2eos() doesn't convert lambda for cr species"
 ## bug visible with change of ferberite data to J:

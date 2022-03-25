@@ -12,6 +12,7 @@ basis("CHNOS+")
 # note this yields logaH2 = -4.657486
 swap.basis("O2", "H2")
 # demonstrate the steps of the equilibrium calculation
+E.units("cal")
 protein.equil(protein, loga.protein=-3)
 ## we can also look at the affinities
 # (Reaction 7, Dick and Shock, 2011)
@@ -26,5 +27,6 @@ loga.residue <- log10(pl*10^-3)
 Aref.residue <- Astar.residue - loga.residue  # 0.446, after Eq. 16
 # A-star of the residue in natural log units (A/RT)
 log(10) * Astar.residue  # 0.4359, after Eq. 23
-# forget about the superseded group properties for whatever comes next
+
+# forget about the changed units and superseded group properties for whatever comes next
 reset()
