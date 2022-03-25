@@ -28,7 +28,7 @@ These functions convert values between units and set the user's preferred units.
 
 \details{
 The units settings are used by \code{\link{subcrt}}, \code{\link{affinity}}, and \code{\link{diagram}} to accept input in or convert output to the units desired by the user.
-The settings, which can be queried or changed with \code{T.units}, \code{E.units} and \code{P.units}, refer to the units of temperature (\code{C} or \code{K}), energy (\code{J} or \code{cal}), and pressure (\code{bar}, \code{MPa}).
+The settings, which can be queried or changed with \code{T.units}, \code{E.units} and \code{P.units}, refer to the units of temperature (\code{C} or \code{K}), energy (\code{J} or \code{cal}), and pressure (\code{bar} or \code{MPa}).
 (The first value in each of those pairs refers to the default units).
 
 The actual units conversions are handled by \code{convert}, through which \code{values} are transformed into destination \code{units} (names not case sensitive).
@@ -40,8 +40,8 @@ Note that \samp{Eh} and \samp{E0} both stand for the value of Eh (oxidation-redu
      temperature \tab \degC, K \tab \code{C}, \code{K} \cr
      pressure \tab bar, MPa \tab \code{bar}, \code{MPa} \cr
      energy \tab cal, J \tab \code{cal}, \code{J} \cr
-     energy \tab cal, cm\eqn{^3}{^3} bar \tab \code{calories}, \code{cm3bar} \cr
-     energy \tab cal, [none] \tab \code{G}, \code{logK} \cr
+     energy \tab J, cm\eqn{^3}{^3} bar \tab \code{joules}, \code{cm3bar} \cr
+     energy \tab J, [none] \tab \code{G}, \code{logK} \cr
      oxidation potential \tab volt, [none] \tab \code{Eh}, \code{pe} \cr
      oxidation potential \tab volt, [none] \tab \code{E0}, \code{logfO2} \cr
   }
@@ -58,22 +58,22 @@ See \code{\link{demo}("contour")} and \code{\link{demo}("sphalerite")} for examp
 convert(273.15, "C")
 # Temperature (degrees C) to Kelvin
 convert(100, "K")
-# Gibbs energy (cal mol-1) to/from logK
+# Gibbs energy (J mol-1) to/from logK
 convert(1000, "logK")		
-convert(1000, "logK", T=373.15)
+convert(1000, "logK", T = 373.15)
 convert(1, "G") 
 # Eh (volt) to pe 
 convert(-1, "pe")		
-convert(-1, "pe", T=373.15)
+convert(-1, "pe", T = 373.15)
 # logfO2 to E0 (volt)
 convert(-80, "E0")             
-convert(-80, "E0", pH=5)
-convert(-80, "E0", pH=5, logaH2O=-5)
+convert(-80, "E0", pH = 5)
+convert(-80, "E0", pH = 5, logaH2O = -5)
 # Calorie to/from joule
 convert(10, "J")		
 convert(10, "cal")
-# cm3bar to calories		
-convert(10, "calories")
+# cm3bar to joules
+convert(10, "joules")
 
 ## Setting the units
 # Make K the units for temperature arguments to subcrt() and affinity()

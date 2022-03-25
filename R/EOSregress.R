@@ -199,7 +199,7 @@ EOScoeffs <- function(species, property, P=1) {
     names(out) <- c("(Intercept)", "invTTheta2", "TXBorn")
   } else if(property=="V") {
     iis <- iis[,c("a1", "a2", "a3", "a4", "omega")]
-    # calculate sigma and xi and convert to volumetric units: 1 cal = 41.84 cm^3 bar
+    # calculate sigma and xi and convert to volumetric units: 1 J = 10 cm^3 bar
     sigma <- convert( iis$a1 + iis$a2 / (2600 + P), "cm3bar" )
     xi <- convert( iis$a3 + iis$a4 / (2600 + P), "cm3bar" )
     omega <- convert( iis$omega, "cm3bar" )

@@ -48,9 +48,9 @@ info <- "Heat capacity of ionization is consistent with literature"
 # heat capacity (kcal mol-1 K-1) of AMYA_PYRFU at 60, 80, 100, 120, 140 degrees
 # for nonionzed protein and ionized protein at pH 6 and 12
 # digitized from Fig. 11 of Dick et al., 2006
-Cp.AMYA_PYRFU.nonion <- c(41.26, 42.22, 42.85, 43.33, 43.74)
-Cp.AMYA_PYRFU.pH6 <- c(37.44, 37.81, 37.78, 37.41, 36.70)
-Cp.AMYA_PYRFU.pH12 <- c(36.19, 36.59, 36.52, 36.11, 35.30)
+Cp.AMYA_PYRFU.nonion <- convert(c(41.26, 42.22, 42.85, 43.33, 43.74), "J")
+Cp.AMYA_PYRFU.pH6 <- convert(c(37.44, 37.81, 37.78, 37.41, 36.70), "J")
+Cp.AMYA_PYRFU.pH12 <- convert(c(36.19, 36.59, 36.52, 36.11, 35.30), "J")
 aa <- pinfo(pinfo("AMYA_PYRFU"))
 Cp.ionization.pH6 <- ionize.aa(aa, "Cp", T = c(60, 80, 100, 120, 140), pH = 6)
 Cp.ionization.pH12 <- ionize.aa(aa, "Cp", T = c(60, 80, 100, 120, 140), pH = 12)
@@ -62,14 +62,13 @@ expect_equal(Cp.ionization.pH12[,1], (Cp.AMYA_PYRFU.pH12 - Cp.AMYA_PYRFU.nonion)
 info <- "Gibbs energy of ionization is consistent with literature"
 # Gibbs energy (Mcal mol-1) of AMY_BACSU at pH 0, 2, 4, 6, 8, 10, 12, 14 at 25 and 100 degrees
 # digitized from Fig. 12 of Dick et al., 2006
-G.AMY_BACSU.25 <- c(-24.9, -24.9, -24.7, -24.5, -24.4, -23.9, -23.5, -23.2)
-G.AMY_BACSU.100 <- c(-26.7, -26.7, -26.4, -26.1, -25.7, -25.1, -24.9, -24.9)
+G.AMY_BACSU.25 <- convert(c(-24.9, -24.9, -24.7, -24.5, -24.4, -23.9, -23.5, -23.2), "J")
+G.AMY_BACSU.100 <- convert(c(-26.7, -26.7, -26.4, -26.1, -25.7, -25.1, -24.9, -24.9), "J")
 # to reproduce the calculations in the paper, use superseded properties of [Met], [Gly], and [UPBB]
 mod.OBIGT("[Met]", G = -35245, H = -59310, S = 40.38, E_units = "cal")
 mod.OBIGT("[Gly]", G = -6075, H = -5570, S = 17.31, E_units = "cal")
 mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62, E_units = "cal")
-# Use convert = FALSE to get results in calories 20220325
-G.nonionized <- subcrt("AMY_BACSU", T = convert(c(25, 100), "K"), convert = FALSE)$out[[1]]$G
+G.nonionized <- subcrt("AMY_BACSU", T = c(25, 100))$out[[1]]$G
 aa <- pinfo(pinfo("AMY_BACSU"))
 G.ionization.25 <- ionize.aa(aa, "G", T = 25, pH = seq(0, 14, 2))[,1]
 G.ionization.100 <- ionize.aa(aa, "G", T = 100, pH = seq(0, 14, 2))[,1]

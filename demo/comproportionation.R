@@ -23,11 +23,9 @@ T <- a$vals[[1]]
 pH <- a$vals[[2]]
 # The affinity as a function of T (rows) and pH (columns)
 A <- a$values[[1]]
-# Convert dimensionless affinity (A/2.303RT) to delta G (cal)
+# Convert dimensionless affinity (A/2.303RT) to delta G (kJ / mol)
 TK <- convert(T, "K")
-G.cal <- convert(A, "G", T = TK)
-# Convert cal to kJ
-G.J <- convert(G.cal, "J")
+G.J <- convert(A, "G", T = TK)
 G.kJ <- G.J / 1000
 # Multiply by 4
 # (formation reaction in CHNOSZ is for 1 S; reaction in paper has 4 S)

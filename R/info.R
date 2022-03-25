@@ -228,7 +228,6 @@ info.numeric <- function(ispecies, check.it=TRUE) {
     } else if(isBerman) {
       # Calculate Cp for Berman minerals 20220208
       calcCp <- Berman(this$name)$Cp
-      if(this$E_units == "J") calcCp <- convert(calcCp, "J")
       this$Cp <- calcCp
     }
     # check tabulated volumes - only for aq (HKF equation)

@@ -228,8 +228,8 @@ checkGHS <- function(ghs, ret.diff=FALSE) {
   thermo <- get("thermo", CHNOSZ)
   # get calculated value based on H and S
   Se <- entropy(as.character(ghs$formula))
-  isJoules <- ghs$E_units == "J"
-  if(any(isJoules)) Se[isJoules] <- convert(Se[isJoules], "J")
+  iscalories <- ghs$E_units == "cal"
+  if(any(iscalories)) Se[iscalories] <- convert(Se[iscalories], "cal")
   refval <- ghs$G
   DH <- ghs$H
   S <- ghs$S
@@ -400,7 +400,7 @@ dumpdata <- function(file=NULL) {
 # If fixGHS is TRUE a missing one of G, H or S for any species is calculated
 #   from the other two and the chemical formula of the species.
 # This function is used by both info and subcrt when retrieving entries from the thermodynamic database.
-OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, tocal = FALSE) {
+OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
   # remove scaling factors from EOS parameters
   # and apply column names depending on the EOS
   if(identical(state, "aq")) {
@@ -421,13 +421,14 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, tocal = FALSE) {
     OBIGT[,14:21] <- t(t(OBIGT[,14:21]) * 10^c(0,-3,5,0,-5,0,0,0))
     colnames(OBIGT)[14:21] <- c('a','b','c','d','e','f','lambda','T')
   }
-  if(tocal) {
-    # convert values from Joules to calories 20190530
-    iJ <- OBIGT$E_units=="J"
-    if(any(iJ)) {
-      # we only convert column 20 for aqueous species (omega), not for cgl species (lambda)  20190903
-      if(identical(state, "aq")) OBIGT[iJ, c(9:12, 14:20)] <- convert(OBIGT[iJ, c(9:12, 14:20)], "cal")
-      else OBIGT[iJ, c(9:12, 14:19)] <- convert(OBIGT[iJ, c(9:12, 14:19)], "cal")
+  if(toJoules) {
+    # Convert parameters from calories to Joules 20220325
+    # [Was: convert parameters from Joules to calories 20190530]
+    ical <- OBIGT$E_units == "cal"
+    if(any(ical)) {
+      # We only convert column 20 for aqueous species (omega), not for cgl species (lambda)  20190903
+      if(identical(state, "aq")) OBIGT[ical, c(9:12, 14:20)] <- convert(OBIGT[ical, c(9:12, 14:20)], "J")
+      else OBIGT[ical, c(9:12, 14:19)] <- convert(OBIGT[ical, c(9:12, 14:19)], "J")
     }
   }
   if(fixGHS) {
@@ -441,7 +442,7 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, tocal = FALSE) {
         # calculate the missing value from the others
         ii <- imiss[i]
         GHS <- as.numeric(GHS(as.character(OBIGT$formula[ii]), G=OBIGT[ii,9], H=OBIGT[ii,10], S=OBIGT[ii,11],
-                              E_units = ifelse(tocal, "cal", OBIGT$E_units[ii])))
+                              E_units = ifelse(toJoules, "J", OBIGT$E_units[ii])))
         icol <- which(is.na(OBIGT[ii,9:11]))
         OBIGT[ii,icol+8] <- GHS[icol]
       }

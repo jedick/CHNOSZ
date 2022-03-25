@@ -149,8 +149,6 @@ protein.basis <- function(protein, T=25, normalize=FALSE) {
 }
 
 protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
-  # For now we have to use calories 20220325
-  if(thermo()$opt$E.units != "cal") stop('please run E.units("cal") first')
   out <- character()
   mymessage <- function(...) {
     message(...)
@@ -159,6 +157,9 @@ protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
   }
   # show the individual steps in calculating metastable equilibrium among proteins
   mymessage("protein.equil: temperature from argument is ", T, " degrees C")
+  # Display units
+  E_units <- E.units()
+  mymessage("protein.equil: energy units is ", E_units)
   TK <- convert(T, "K")
   # get the amino acid compositions of the proteins
   aa <- pinfo(pinfo(protein))
@@ -189,18 +190,21 @@ protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
   G0basissum <- colSums(t(protbasis) * G0basis)
   # standard Gibbs energies of nonionized proteins
   G0prot <- unlist(suppressMessages(subcrt(pname, T=T, property="G")$out))
-  # standard Gibbs energy of formation reaction of nonionized protein, cal/mol
+  # standard Gibbs energy of formation reaction of nonionized protein, E_units/mol
   G0protform <- G0prot - G0basissum
-  mymessage("protein.equil [1]: reaction to form nonionized protein from basis species has G0(cal/mol) of ", signif(G0protform[1], digits))
+  mymessage("protein.equil [1]: reaction to form nonionized protein from basis species has G0(", E_units, "/mol) of ", signif(G0protform[1], digits))
   if(ionize.it) {
-    # standard Gibbs energy of ionization of protein, cal/mol
+    # standard Gibbs energy of ionization of protein, J/mol
     G0ionization <- suppressMessages(ionize.aa(aa, property="G", T=T, pH=pH))[1, ]
-    mymessage("protein.equil [1]: ionization reaction of protein has G0(cal/mol) of ", signif(G0ionization[1], digits))
-    # standard Gibbs energy of formation reaction of ionized protein, cal/mol
+    # standard Gibbs energy of ionization of protein, E_units/mol
+    if(E_units == "cal") G0ionization <- convert(G0ionization, "cal")
+    mymessage("protein.equil [1]: ionization reaction of protein has G0(", E_units, "/mol) of ", signif(G0ionization[1], digits))
+    # standard Gibbs energy of formation reaction of ionized protein, E_units/mol
     G0protform <- G0protform + G0ionization
   }
   # standard Gibbs energy of formation reaction of non/ionized residue equivalents, dimensionless
-  R <- 1.9872  # gas constant, cal K^-1 mol^-1
+  if(E_units == "cal") R <- 1.9872  # gas constant, cal K^-1 mol^-1
+  if(E_units == "J") R <- 8.314445  # gas constant, J K^-1 mol^-1  20220325
   G0res.RT <- G0protform/R/TK/plength
   mymessage("protein.equil [1]: per residue, reaction to form ", iword, " protein from basis species has G0/RT of ", signif(G0res.RT[1], digits))
   # coefficients of basis species in formation reactions of residues

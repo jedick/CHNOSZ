@@ -3,7 +3,7 @@ reset()
 
 info <- "water.SUPCRT92() gives expected erros and warnings"
 expect_error(water.SUPCRT92("X"), "not available: X", info = info)
-expect_error(water.SUPCRT92("Psat"), "please set P='Psat'", info = info)
+expect_error(water.SUPCRT92("Psat"), 'please set P = "Psat"', info = info)
 
 info <- "water.SUPCRT92() gives expected values for E and kT"
 # E = V * alpha, kT = V * beta
@@ -19,7 +19,17 @@ info <- "water.DEW() gives expected erros and messages"
 expect_error(water.DEW("G", P = "Psat"), "Psat isn\'t supported", info = info)
 expect_message(water.DEW("G", T = c(298.15, 373.15), P = c(1, 1000)), "using SUPCRT calculations", info = info)
 
-# reference
+# Added 20220335
+info <- "water.* functions return energies in correct units"
+# This is in J / mol calculated with SUPCRT92
+G.H.S.Cp_ref <- c(-237181.4, -285837.3, 69.9, 75.4)
+expect_equal(round(as.numeric(water.SUPCRT92(c("G", "H", "S", "Cp"))), 1), G.H.S.Cp_ref)
+# Cp from SUPCRT92 and IAPWS95 differ at the tenths place, so round to whole numbers
+expect_equal(round(as.numeric(water.IAPWS95(c("G", "H", "S", "Cp")))), round(G.H.S.Cp_ref))
+# We can't do it for DEW because it needs higher pressure
+#expect_equal(round(as.numeric(water.DEW(c("G", "H", "S", "Cp")))), round(G.H.S.Cp_ref))
+
+# Reference
 
 # Fine, R. A. and Millero, F. J. (1973)
 #   Compressibility of water as a function of temperature and pressure

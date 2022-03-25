@@ -15,10 +15,10 @@ doplot <- function(T) {
   a <- affinity(H2 = c(-10, 0, res), O2 = c(-10, 0, res), T = T)
   # Temperature in Kelvin
   T.K <- convert(T, "K")
-  # Convert dimensionless affinity (A/2.303RT) to Gibbs energy (cal/mol)
-  Gcal <- convert(a$values[[1]], "G", T.K)
-  # Convert cal/mol to kJ/mol
-  GkJ <- convert(Gcal, "J")/1000
+  # Convert dimensionless affinity (A/2.303RT) to Gibbs energy (J/mol)
+  GJ <- convert(a$values[[1]], "G", T.K)
+  # Convert J/mol to kJ/mol
+  GkJ <- GJ / 1000
   # Now contour the values
   xyvals <- seq(-10, 0, length.out = res)
   contour(x = xyvals, y = xyvals, z = t(GkJ), levels = seq(-150, -250, -20),
@@ -61,11 +61,11 @@ species(sort(aminoacids("Z")),
   0.8, 1.0, 2.8, 0.5, 0.5, 4.6, 5.8, 0.6, 0.9, 2.8)/1e9))
 T <- 18
 TK <- convert(T, "K")
-# Calculate A/2.303RT (dimensionless), convert to G of reaction (cal/mol)
+# Calculate A/2.303RT (dimensionless), convert to G of reaction (J/mol)
 a <- affinity(T = T)
-G.18.cal <- convert(unlist(a$values), "G", T = TK)
+G.18.J <- convert(unlist(a$values), "G", T = TK)
 # Convert to kJ/mol
-G.18.kJ <- convert(G.18.cal, "J")/1000
+G.18.kJ <- G.18.J / 1000
 # The 100 degree C case
 basis(c("H2O", "CO2", "NH4+", "H2", "H+", "H2S"),
   log10(c(1, 2.2e-3, 2.9e-6, 3.4e-4, 1.9e-6, 1.6e-3)))
@@ -75,8 +75,8 @@ species(1:20, log10(c(2.8e-9, 5.0e-10, 7.9e-10, 2.4e-9, 3.6e-10,
 T <- 100
 TK <- convert(T, "K")
 a <- affinity(T = T)
-G.100.cal <- convert(unlist(a$values), "G", T = TK)
-G.100.kJ <- convert(G.100.cal, "J")/1000
+G.100.J <- convert(unlist(a$values), "G", T = TK)
+G.100.kJ <- G.100.J / 1000
 # Rhe average oxidation states of carbon
 Z.C <- ZC(thermo()$OBIGT$formula[thermo()$species$ispecies])
 # Put everything together like Table 3 in the paper

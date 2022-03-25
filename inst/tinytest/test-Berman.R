@@ -67,11 +67,11 @@ info <- "Properties of all minerals are computed without errors"
 # Running this without error means that:
 # - formulas for the minerals are found in thermo()$OBIGT
 # - warning is produced for flourtremolite (GfPrTr(calc) >= 1000 J/mol different from GfPrTr(table))
-# - use units = "cal" for comparison with Helgeson minerals below
-expect_warning(properties <- lapply(mineral, Berman, check.G = TRUE, units = "cal"),
-               "fluortremolite", info = info)
+expect_warning(properties <- lapply(mineral, Berman, check.G = TRUE), "fluortremolite", info = info)
 # Save the results so we can use them in the next tests
 Berman <- do.call(rbind, properties)
+# Convert to calories for comparison with Helgeson minerals below
+Berman[, c("G", "H", "S", "Cp")] <- convert(Berman[, c("G", "H", "S", "Cp")], "cal")
 
 # Find the mineral data using Helgeson formulation
 icr <- suppressMessages(info(mineral, "cr"))

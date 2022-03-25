@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.3-5 (2022-03-25)}{
+\section{Changes in CHNOSZ version 1.4.3-7 (2022-03-25)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -21,10 +21,12 @@
       depend on the previous default setting of \code{E.units("cal")} need to
       be modified to produce expected output.
 
-      \item The switch to Joules is work in progress. \code{convert()} and
-      other functions still use calories, in particular for the value of the
-      gas constant. Functions will continue to be modified to make the units as
-      consistent as possible and avoid unit conversions.
+      \item The switch to Joules is work in progress. As much as possible,
+      functions in CHNOSZ have been modified to use Joules in internal
+      variables, and the gas constant has been changed to Joules in
+      \code{convert()} and other functions.
+
+      \item The documentation is still catching up ...
 
     }
   }
@@ -41,6 +43,15 @@
 
       \item Add vignette customizing.Rmd about customizing the thermodynamic
       database.
+
+    }
+  }
+
+  \subsection{REMOVED FEATURES}{
+    \itemize{
+
+      \item The eos-regress.Rmd vignette has been removed to debug problems
+      associated with the switch to Joules.
 
     }
   }

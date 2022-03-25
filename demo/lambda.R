@@ -19,8 +19,8 @@ Vlab <- axis.label("V")
 Tlab <- axis.label("T")
 
 # calculate properties at 1 kbar with and without transition
-Qz_1bar <- Berman("quartz", T=T, units="J")
-Qz_1bar_notrans <- Berman("quartz", T=T, calc.transition=FALSE, units="J")
+Qz_1bar <- Berman("quartz", T=T)
+Qz_1bar_notrans <- Berman("quartz", T=T, calc.transition=FALSE)
 
 ## Fig. 1a: volume
 plot(TC, Qz_1bar$V, type="l", xlab=Tlab, ylab=Vlab, ylim=c(22.5, 24))
@@ -38,15 +38,15 @@ points(ghioroso$T, ghioroso$V, pch=0)
 
 ## calculate finite difference derivative of dGlambda/dP = Vlambda between 1 and 1.001 bar
 Glambda_1bar <- Qz_1bar_notrans$G - Qz_1bar$G
-Qz_1.001bar <- Berman("quartz", T=T, P=1.001, units="J")
-Qz_1.001bar_notrans <- Berman("quartz", T=T, P=1.001, calc.transition=FALSE, units="J")
+Qz_1.001bar <- Berman("quartz", T=T, P=1.001)
+Qz_1.001bar_notrans <- Berman("quartz", T=T, P=1.001, calc.transition=FALSE)
 Glambda_1.001bar <- Qz_1.001bar_notrans$G - Qz_1.001bar$G
 dGlambdadP <- (Glambda_1.001bar - Glambda_1bar) / 0.001
 # we're using Joules, so multiply by ten to get cm^3
 Vlambda <- -10 * dGlambdadP 
 VQz <- Qz_1bar$V + Vlambda
 # above 848K, we have beta quartz
-Qz_beta <- Berman("quartz,beta", T=T, P=1, units="J")
+Qz_beta <- Berman("quartz,beta", T=T, P=1)
 VQz[T >= 848.15] <- Qz_beta$V[T >= 848.14]
 lines(TC, VQz, lty=2)
 legend("topleft", legend="1 bar", bty="n")
@@ -59,8 +59,8 @@ legend("topleft", legend="1 bar", bty="n")
 labplot("b")
 
 ## calculate properties at 10 kbar with and without transition
-Qz_10bar <- Berman("quartz", T=T, P=10000, units="J")
-Qz_10bar_notrans <- Berman("quartz", T=T, P=10000, calc.transition=FALSE, units="J")
+Qz_10bar <- Berman("quartz", T=T, P=10000)
+Qz_10bar_notrans <- Berman("quartz", T=T, P=10000, calc.transition=FALSE)
 ## Fig. 1c: heat capacity
 plot(TC, Qz_10bar$Cp, type="l", xlab=Tlab, ylab=Cplab)
 lines(TC, Qz_10bar_notrans$Cp, lty=3)
@@ -73,8 +73,8 @@ dTdP <- 0.0237
 Pkb <- seq(1, 50, 1)
 P <- 1000 * Pkb
 T <- Tlambda + dTdP * (P - 1)
-Qz_withtrans <- Berman("quartz", T=T, P=P, units="J")
-Qz_notrans <- Berman("quartz", T=T, P=P, calc.transition=FALSE, units="J")
+Qz_withtrans <- Berman("quartz", T=T, P=P)
+Qz_notrans <- Berman("quartz", T=T, P=P, calc.transition=FALSE)
 Qz_lambda <- Qz_withtrans - Qz_notrans
 Plab <- expression(list(italic(P), "kb"))
 plot(Pkb, Qz_lambda$G, type="l", ylim=c(-300, -50), ylab=axis.label("DlG"), xlab=Plab)

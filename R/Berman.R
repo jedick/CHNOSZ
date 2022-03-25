@@ -4,7 +4,7 @@
 #      in the system Na2O-K2O-CaO-MgO-FeO-Fe2O3-Al2O3-SiO2-TiO2-H2O-CO2.
 #      J. Petrol. 29, 445-522. https://doi.org/10.1093/petrology/29.2.445
 
-Berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE, calc.disorder=TRUE, units="cal") {
+Berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE, calc.disorder=TRUE) {
   # Reference temperature and pressure
   Pr <- 1
   Tr <- 298.15
@@ -55,7 +55,7 @@ Berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE,
   # Get the entropy of the elements using the chemical formula in thermo()$OBIGT
   OBIGT <- thermo()$OBIGT
   formula <- OBIGT$formula[match(name, OBIGT$name)]
-  SPrTr_elements <- convert(entropy(formula), "J")
+  SPrTr_elements <- entropy(formula)
   # Check that G in data file is the G of formation from the elements --> Benson-Helgeson convention (DG = DH - T*DS)
   if(check.G) {
     GfPrTr_calc <- HfPrTr - Tr * (SPrTr - SPrTr_elements)
@@ -189,15 +189,8 @@ Berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE,
   # The output will just have "G" and "H"
   G <- Gf
   H <- Ha
-  # Convert J to cal
-  if(grepl("cal", units)) {
-    G <- convert(Gf, "cal")
-    H <- convert(Ha, "cal")
-    S <- convert(S, "cal")
-    Cp <- convert(Cp, "cal")
-  }
   # Convert J/bar to cm^3/mol
   V <- V * 10
 
-  data.frame(T=T, P=P, G=G, H=H, S=S, Cp=Cp, V=V)
+  data.frame(T = T, P = P, G = G, H = H, S = S, Cp = Cp, V = V)
 }

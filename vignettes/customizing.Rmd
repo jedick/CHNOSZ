@@ -382,11 +382,10 @@ mod.OBIGT("magnesiochromite", E_units = "J", a = a, b = b, c = c, d = d,
 ```
 
 Now we can use `r subcrt_` to calculate the heat capacity of magnesiochromite.
-For this calculation, we set the temperature units to K and the energy units to Joules.
+For this calculation, we set the temperature units to Kelvin.
 We also specify a pressure of 1 bar to prevent an error in the calculation of *P*<sub>sat</sub> below the freezing temperature of water.
 ```{r subcrt__magnesiochromite}
 T.units("K")
-E.units("J")
 subcrt("magnesiochromite", property = "Cp", T = c(250, 300, 340), P = 1)
 ```
 
@@ -396,7 +395,6 @@ Finally, let's restore the units setting for later calculations with `r subcrt_`
 (Another way would be to run `r reset_`, which also resets the OBIGT database.)
 ```{r restore_units_magnesiochromite}
 T.units("C")
-E.units("cal")
 ```
 
 </details>

@@ -25,9 +25,9 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
   # Density (g cm-3)
   rho1 <- waterTP$rho / 1000
   # Entropy (dimensionless)
-  S1 <- waterTP$S / 1.9872
+  S1 <- waterTP$S / R
   # Heat capacity (dimensionless)
-  Cp1 <- waterTP$Cp / 1.9872
+  Cp1 <- waterTP$Cp / R
   # Volume (cm3 mol-1)
   V1 <- waterTP$V
   # Calculate properties of ideal H2O gas
@@ -54,20 +54,18 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
 
       if(property[[j]] == "G") {
         # Get gas properties (J mol-1)
-        G_gas <- convert(gasprops$G, "J", T = T)
+        G_gas <- gasprops$G
         # Calculate G_hyd (J mol-1)
         G_hyd <- R*T * ( -log(NW) + (1 - PAR$xi) * log(f1) + PAR$xi * log(RV * T * rho1 / MW) + rho1 * (PAR$a + PAR$b * (1000/T)^0.5) )
         # Calculate the chemical potential (J mol-1)
         G <- G_gas + G_hyd
-        # Convert J to cal
-        G <- convert(G, "cal", T = T)
         # Insert into data frame of properties
         myprops$G <- G
       }
 
       if(property[[j]] == "S") {
         # Get S_gas
-        S_gas <- convert(gasprops$S, "J", T = T)
+        S_gas <- gasprops$S
         # Calculate S_hyd
         S_hyd <- R * (
             (1 - PAR$xi) * (S1 - S1_g)
@@ -79,13 +77,12 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
           )
         )
         S <- S_gas + S_hyd
-        S <- convert(S, "cal", T = T)
         myprops$S <- S
       }
 
       if(property[[j]] == "Cp") {
         # Get Cp_gas
-        Cp_gas <- convert(gasprops$Cp, "J", T = T)
+        Cp_gas <- gasprops$Cp
         # Calculate Cp_hyd
         Cp_hyd <- R * (
             (1 - PAR$xi) * (Cp1 - Cp1_g)
@@ -95,7 +92,6 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
           + PAR$b * (-0.25 * 10^1.5 * T^-1.5 * rho1 + 10^1.5 * T^-0.5 * drho1_dT + 10^1.5 * T^0.5 * d2rho1_dT2)
         )
         Cp <- Cp_gas + Cp_hyd
-        Cp <- convert(Cp, "cal", T = T)
         myprops$Cp <- Cp
       }
 
@@ -109,7 +105,7 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
       }
 
     }
-    # Calculate enthalpy (NOTE: this is in calories) 20220206
+    # Calculate enthalpy 20220206
     myprops$H <- myprops$G - 298.15 * entropy(PAR$formula) + T * myprops$S
     out[[i]] <- myprops
   }
@@ -122,7 +118,7 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
   # Get H2O fugacity (bar)
   GH2O_P <- water("G", T = T, P = P)$G
   GH2O_1 <- water("G", T = T, P = 1)$G
-  f1 <- exp ( (GH2O_P - GH2O_1) / (1.9872 * T) )
+  f1 <- exp ( (GH2O_P - GH2O_1) / (8.31441 * T) )
   # For Psat, calculate the real liquid-vapor curve (not 1 bar below 100 degC)
   if(isPsat) {
     P <- water("Psat", T = T, P = "Psat", P1 = FALSE)$Psat

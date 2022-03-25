@@ -1,43 +1,42 @@
 # CHNOSZ/hkf.R
-# calculate thermodynamic properties using equations of state
+# Calculate thermodynamic properties using equations of state
 # 11/17/03 jmd
 
-## if this file is interactively sourced, the following is also needed to provide unexported functions:
+## If this file is interactively sourced, the following is also needed to provide unexported functions:
 #source("util.args.R")
 
 hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
   contrib = c("n", "s", "o"), H2O.props="rho") {
-  # calculate G, H, S, Cp, V, kT, and/or E using
-  # the revised HKF equations of state
+  # Calculate G, H, S, Cp, V, kT, and/or E using the revised HKF equations of state
   # H2O.props - H2O properties needed for subcrt() output
-  # constants
+  # Constants
   Tr <- 298.15 # K
   Pr <- 1      # bar
   Theta <- 228 # K
   Psi <- 2600  # bar
-  # make T and P equal length
+  # Make T and P equal length
   if(!identical(P, "Psat")) {
     if(length(P) < length(T)) P <- rep(P, length.out = length(T))
     if(length(T) < length(P)) T <- rep(T, length.out = length(P))
   }
-  # nonsolvation, solvation, and origination contribution
+  # Nonsolvation, solvation, and origination contribution
   notcontrib <- ! contrib %in% c("n", "s", "o")
   if(TRUE %in% notcontrib) stop(paste("contrib must be in c('n', 's', 'o); got", c2s(contrib[notcontrib])))
-  # get water properties
+  # Get water properties
   # rho - for subcrt() output and g function
   # Born functions and epsilon - for HKF calculations
   H2O.props <- c(H2O.props, "QBorn", "XBorn", "YBorn", "epsilon")
   thermo <- get("thermo", CHNOSZ)
   if(grepl("SUPCRT", thermo$opt$water)) {
-    # using H2O92D.f from SUPCRT92: alpha, daldT, beta - for partial derivatives of omega (g function)
+    # Using H2O92D.f from SUPCRT92: alpha, daldT, beta - for partial derivatives of omega (g function)
     H2O.props <- c(H2O.props, "alpha", "daldT", "beta")
   }
   if(grepl("IAPWS", thermo$opt$water)) {
-    # using IAPWS-95: NBorn, UBorn - for compressibility, expansibility
+    # Using IAPWS-95: NBorn, UBorn - for compressibility, expansibility
     H2O.props <- c(H2O.props, "NBorn", "UBorn")
   }
   if(grepl("DEW", thermo$opt$water)) {
-    # using DEW model: get beta to calculate dgdP
+    # Using DEW model: get beta to calculate dgdP
     H2O.props <- c(H2O.props, "beta")
   }
   H2O <- water(H2O.props, T = c(Tr, T), P = c(Pr, P))
@@ -45,38 +44,39 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
   H2O.PT <- H2O[-1, ]
   ZBorn <- -1 / H2O.PT$epsilon
   ZBorn.PrTr <- -1 / H2O.PrTr$epsilon
-  # a list to store the result
+  # A list to store the result
   aq.out <- list()
   nspecies <- nrow(parameters)
   for(k in seq_len(nspecies)) {
-    # loop over each species
+    # Loop over each species
     PAR <- parameters[k, ]
-    # substitute Cp and V for missing EoS parameters
-    # here we assume that the parameters are in the same position as in thermo()$OBIGT
-    # we don't need this if we're just looking at solvation properties (Cp_s_var, V_s_var)
+    # Substitute Cp and V for missing EoS parameters
+    # Here we assume that the parameters are in the same position as in thermo()$OBIGT
+    # We don't need this if we're just looking at solvation properties (Cp_s_var, V_s_var)
     if("n" %in% contrib) {
-      # put the heat capacity in for c1 if both c1 and c2 are missing
+      # Put the heat capacity in for c1 if both c1 and c2 are missing
       if(all(is.na(PAR[, 18:19]))) PAR[, 18] <- PAR$Cp
-      # put the volume in for a1 if a1, a2, a3 and a4 are missing
-      if(all(is.na(PAR[, 14:17]))) PAR[, 14] <- convert(PAR$V, "calories")
-      # test for availability of the EoS parameters
+      # Put the volume in for a1 if a1, a2, a3 and a4 are missing
+      if(all(is.na(PAR[, 14:17]))) PAR[, 14] <- convert(PAR$V, "joules")
+      # Test for availability of the EoS parameters
       hasEOS <- any(!is.na(PAR[, 14:21]))
-      # if at least one of the EoS parameters is available, zero out any NA's in the rest
+      # If at least one of the EoS parameters is available, zero out any NA's in the rest
       if(hasEOS) PAR[, 14:21][, is.na(PAR[, 14:21])] <- 0
     }
-    # compute values of omega(P,T) from those of omega(Pr,Tr)
-    # using g function etc. (Shock et al., 1992 and others)
+    # Compute values of omega(P,T) from those of omega(Pr,Tr)
+    # Using g function etc. (Shock et al., 1992 and others)
     omega <- PAR$omega  # omega.PrTr
-    # its derivatives are zero unless the g function kicks in
+    # The derivatives are zero unless the g function kicks in
     dwdP <- dwdT <- d2wdT2 <- numeric(length(T))
     Z <- PAR$Z
     omega.PT <- rep(PAR$omega, length(T))
     if(!identical(Z, 0) & !is.na(Z) & !identical(PAR$name, "H+")) {
-      # compute derivatives of omega: g and f functions (Shock et al., 1992; Johnson et al., 1992)
+      # Compute derivatives of omega: g and f functions (Shock et al., 1992; Johnson et al., 1992)
       rhohat <- H2O.PT$rho/1000  # just converting kg/m3 to g/cm3
       g <- gfun(rhohat, convert(T, "C"), P, H2O.PT$alpha, H2O.PT$daldT, H2O.PT$beta)
-      # after SUPCRT92/reac92.f
-      eta <- 1.66027E5
+      # After SUPCRT92/reac92.f
+      # eta needs to be converted to Joules! 20220325
+      eta <- convert(1.66027E5, "J")
       reref <- Z^2 / (omega/eta + Z/(3.082 + 0))
       re <- reref + abs(Z) * g$g
       omega.PT <- eta * (Z^2/re - Z/(3.082 + g$g))
@@ -86,16 +86,16 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
       dwdT <- (-eta * Z3 * g$dgdT)
       d2wdT2 <- (2 * eta * Z4 * g$dgdT^2 - eta * Z3 * g$d2gdT2)
     }
-    # loop over each property
+    # Loop over each property
     w <- NULL
     for(i in 1:length(property)) {
       PROP <- property[i]
-      # over nonsolvation, solvation, or origination contributions
+      # Over nonsolvation, solvation, or origination contributions
       hkf.p <- numeric(length(T))
       for(icontrib in contrib) {
-        # various contributions to the properties
+        # Various contributions to the properties
         if(icontrib == "n") {
-          # nonsolvation ghs equations
+          # Nonsolvation ghs equations
           if(PROP == "H") {
             p.c <- PAR$c1*(T-Tr) - PAR$c2*(1/(T-Theta)-1/(Tr-Theta))
             p.a <- PAR$a1*(P-Pr) + PAR$a2*log((Psi+P)/(Psi+Pr)) + 
@@ -114,9 +114,9 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
             p.a <- PAR$a1*(P-Pr) + PAR$a2*log((Psi+P)/(Psi+Pr)) + 
               (PAR$a3*(P-Pr) + PAR$a4*log((Psi+P)/(Psi+Pr)))/(T-Theta)
             p <- p.c + p.a
-            # at Tr,Pr, if the origination contribution is not NA, ensure the solvation contribution is 0, not NA
+            # If the origination contribution is not NA at Tr,Pr, ensure the solvation contribution is 0, not NA
             if(!is.na(PAR$G)) p[T==Tr & P==Pr] <- 0
-          # nonsolvation cp v kt e equations
+          # Nonsolvation cp v kt e equations
           } else if(PROP == "Cp") {
             p <- PAR$c1 + PAR$c2 * ( T - Theta ) ^ (-2)        
           } else if(PROP == "V") {
@@ -127,15 +127,15 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
             p <- (convert(PAR$a2, "cm3bar") + 
               convert(PAR$a4, "cm3bar") / (T - Theta)) * (Psi + P) ^ (-2)
           } else if(PROP == "E") {
-            p <- convert( - (PAR$a3 + PAR$a4 / convert((Psi + P), "calories")) * 
+            p <- convert( - (PAR$a3 + PAR$a4 / convert((Psi + P), "joules")) * 
               (T - Theta) ^ (-2), "cm3bar")
           }
         }
         if(icontrib == "s") {
-          # solvation ghs equations
+          # Solvation ghs equations
           if(PROP == "G") {
             p <- -omega.PT*(ZBorn+1) + omega*(ZBorn.PrTr+1) + omega*H2O.PrTr$YBorn*(T-Tr)
-            # at Tr,Pr, if the origination contribution is not NA, ensure the solvation contribution is 0, not NA
+            # If the origination contribution is not NA at Tr,Pr, ensure the solvation contribution is 0, not NA
             if(!is.na(PAR$G)) p[T==Tr & P==Pr] <- 0
           }
           if(PROP == "H") 
@@ -143,7 +143,7 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
                    omega*(ZBorn.PrTr+1) - omega*Tr*H2O.PrTr$YBorn
           if(PROP == "S") 
             p <- omega.PT*H2O.PT$YBorn + (ZBorn+1)*dwdT - omega*H2O.PrTr$YBorn
-          # solvation cp v kt e equations
+          # Solvation cp v kt e equations
           if(PROP == "Cp") p <- omega.PT*T*H2O.PT$XBorn + 2*T*H2O.PT$YBorn*dwdT + 
             T*(ZBorn+1)*d2wdT2
           if(PROP == "V") p <- -convert(omega.PT, "cm3bar") * 
@@ -154,18 +154,18 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
           if(PROP == "E") p <- -convert(omega, "cm3bar") * H2O.PT$UBorn
         }
         if(icontrib == "o") {
-          # origination ghs equations
+          # Origination ghs equations
           if(PROP == "G") {
             p <- PAR$G - PAR$S * (T-Tr)
-            # don"t inherit NA from PAR$S at Tr
+            # Don't inherit NA from PAR$S at Tr
             p[T==Tr] <- PAR$G
           }
           else if(PROP == "H") p <- PAR$H
           else if(PROP == "S") p <- PAR$S
-          # origination eos equations (Cp, V, kT, E): senseless
+          # Origination eos equations (Cp, V, kT, E): senseless
           else p <- 0 * T
         }
-        # accumulate the contribution
+        # Accumulate the contribution
         hkf.p <- hkf.p + p
       }
       wnew <- data.frame(hkf.p)
@@ -174,10 +174,11 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
     colnames(w) <- property
     aq.out[[k]] <- w
   }
-  return(list(aq=aq.out, H2O=H2O.PT))
+
+  return(list(aq = aq.out, H2O = H2O.PT))
 }
 
-### unexported functions ###
+### Unexported functions ###
 
 gfun <- function(rhohat, Tc, P, alpha, daldT, beta) {
   ## g and f functions for describing effective electrostatic radii of ions

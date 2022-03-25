@@ -8,7 +8,7 @@ Calculate thermodynamic properties of minerals using the equations of Berman (19
 
 \usage{
   Berman(name, T = 298.15, P = 1, check.G = FALSE,
-         calc.transition = TRUE, calc.disorder = TRUE, units = "cal")
+         calc.transition = TRUE, calc.disorder = TRUE)
 }
 
 \arguments{
@@ -18,7 +18,6 @@ Calculate thermodynamic properties of minerals using the equations of Berman (19
   \item{check.G}{logical, check consistency of G, H, and S?}
   \item{calc.transition}{logical, include calculation of polymorphic transition properties?}
   \item{calc.disorder}{logical, include calculation of disordering properties?}
-  \item{units}{character, energy units, \samp{cal} or \samp{J}}
 }
 
 \details{
@@ -72,7 +71,7 @@ If the function is called with missing \code{name}, the parameters for all avail
 }
 
 \value{
-A data frame with \code{T} (K), \code{P} (bar), \code{G}, \code{H}, \code{S}, and \code{Cp} expressed in the given \code{units} (\samp{cal} or \samp{J}), and \code{V} (cm\S{3} mol\S{-1}).
+A data frame with \code{T} (K), \code{P} (bar), \code{G}, \code{H}, \code{S}, and \code{Cp} (energetic units in Joules), and \code{V} (cm\S{3} mol\S{-1}).
 }
 
 \examples{
@@ -84,9 +83,9 @@ info(info("quartz", "cr"))
 Berman("quartz")
 # Gibbs energies of aQz and coesite at higher T and P
 T <- seq(200, 1300, 100)
-P <- seq(22870, 31900, length.out=length(T))
-G_aQz <- Berman("quartz", T=T, P=P)$G
-G_Cs <- Berman("coesite", T=T, P=P)$G
+P <- seq(22870, 31900, length.out = length(T))
+G_aQz <- Berman("quartz", T = T, P = P)$G
+G_Cs <- Berman("coesite", T = T, P = P)$G
 # That is close to the univariant curve (Ber88 Fig. 4),
 # so the difference in G is close to 0
 DGrxn <- G_Cs - G_aQz
@@ -95,7 +94,7 @@ all(abs(DGrxn) < 100)  # TRUE
 # Make a P-T diagram for SiO2 minerals (Ber88 Fig. 4)
 basis(c("SiO2", "O2"), c("cr", "gas"))
 species(c("quartz", "quartz,beta", "coesite"), "cr")
-a <- affinity(T=c(200, 1700, 200), P=c(0, 50000, 200))
+a <- affinity(T = c(200, 1700, 200), P = c(0, 50000, 200))
 diagram(a)
 
 ## Getting data from a user-supplied file
@@ -103,12 +102,12 @@ diagram(a)
 species <- c("fayalite", "enstatite", "ferrosilite", "forsterite")
 coeffs <- c(-1, -2, 2, 1)
 T <- seq(600, 1500, 50)
-Gex_Ber88 <- subcrt(species, coeffs, T=T, P=1)$out$G
+Gex_Ber88 <- subcrt(species, coeffs, T = T, P = 1)$out$G
 # Add data from BA96
-datadir <- system.file("extdata/Berman/testing", package="CHNOSZ")
+datadir <- system.file("extdata/Berman/testing", package = "CHNOSZ")
 add.OBIGT(file.path(datadir, "BA96_OBIGT.csv"))
 thermo("opt$Berman" = file.path(datadir, "BA96_Berman.csv"))
-Gex_BA96 <- subcrt(species, coeffs, T=seq(600, 1500, 50), P=1)$out$G
+Gex_BA96 <- subcrt(species, coeffs, T = seq(600, 1500, 50), P = 1)$out$G
 # Ber88 is lower than BA96 at low T
 (Gex_BA96 - Gex_Ber88)[1] > 0  # TRUE
 # The curves cross at about 725 deg C (BA96 Fig. 8)

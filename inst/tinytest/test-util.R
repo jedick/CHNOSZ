@@ -27,7 +27,7 @@ expect_equal(coe$S, GHS[[3]], info = info)
 # the "-1" is a single negative charge, the electron
 testform <- c("CH4", "H2O", "-1")
 testmass <- mass(testform)
-testent <- entropy(testform)
+testent <- convert(entropy(testform), "cal")
 expect_equal(testmass, c(16.04276, 18.01528, 0), info = info)
 expect_equal(testent, c(63.83843212237, 55.74952198853, 15.61663479924), info = info)
 # another way to calculate the entropy of the elements in H2O

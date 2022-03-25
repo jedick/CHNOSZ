@@ -132,15 +132,15 @@ A.2303RT.ionized <- -3075.222
 basis("CHNOS")
 # try it with iprotein
 ip <- pinfo("CSG_HALJP")
-expect_equal(affinity(iprotein = ip)$values[[1]][1], A.2303RT.nonionized, tolerance = 1e-6, info = info)
+expect_equal(affinity(iprotein = ip)$values[[1]][1], A.2303RT.nonionized, tolerance = 1e-5, info = info)
 # then with the protein loaded as a species
 species("CSG_HALJP")
-expect_equal(affinity()$values[[1]][1], A.2303RT.nonionized, tolerance = 1e-6, info = info)
+expect_equal(affinity()$values[[1]][1], A.2303RT.nonionized, tolerance = 1e-5, info = info)
 # now for ionized protein
 basis("CHNOS+")
-expect_equal(affinity(iprotein = ip)$values[[1]][1], A.2303RT.ionized, tolerance = 1e-6, info = info)
+expect_equal(affinity(iprotein = ip)$values[[1]][1], A.2303RT.ionized, tolerance = 1e-5, info = info)
 species("CSG_HALJP")
-expect_equal(affinity()$values[[1]][1], A.2303RT.ionized, tolerance = 1e-6, info = info)
+expect_equal(affinity()$values[[1]][1], A.2303RT.ionized, tolerance = 1e-5, info = info)
 
 info <- "affinity() for proteins keeps track of pH on 2-D calculations"
 # (relates to the "thisperm" construction in A.ionization() )

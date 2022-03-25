@@ -100,14 +100,14 @@ convert <- function(value, units, T=298.15,
     if(units=='cal') value <- value / Jcal
   }
   else if(units %in% c('g','logk')) {
-    R <- 1.9872  # gas constant, cal K^-1 mol^-1
-    #R <- 8.31446261815324  # gas constant, J K^-1 mol^-1  20220325
+    #R <- 1.9872  # gas constant, cal K^-1 mol^-1
+    R <- 8.314445  # gas constant, J K^-1 mol^-1  20220325
     if(units=='logk') value <- value / (-log(10) * R * T)
     if(units=='g') value <- value * (-log(10) * R * T)
   }
-  else if(units %in% c('cm3bar','calories')) {
-    if(units=='cm3bar') value <- convert(value,'J') * 10
-    if(units=='calories') value <- convert(value,'cal') / 10
+  else if(units %in% c('cm3bar','joules')) {
+    if(units=='cm3bar') value <- value * 10
+    if(units=='joules') value <- value / 10
   }
   else if(units %in% c('eh','pe')) {
     R <- 0.00831470
@@ -132,22 +132,21 @@ convert <- function(value, units, T=298.15,
 
 ### unexported functions ###
 
-outvert <- function(value,units) {
-  # converts the given value from the given units to
-  # those specified in thermo()$opt
+outvert <- function(value, units) {
+  # Converts the given value from the given units to those specified in thermo()$opt
   units <- tolower(units)
   opt <- get("thermo", CHNOSZ)$opt
-  if(units %in% c('c','k')) {
-    if(units=='c' & opt$T.units=='K') return(convert(value,'k'))
-    if(units=='k' & opt$T.units=='C') return(convert(value,'c'))
+  if(units %in% c("c", "k")) {
+    if(units == "c" & opt$T.units == "K") return(convert(value, "k"))
+    if(units == "k" & opt$T.units == "C") return(convert(value, "c"))
   }
-  if(units %in% c('j','cal')) {
-    if(units=='j' & opt$E.units=='cal') return(convert(value,'cal'))
-    if(units=='cal' & opt$E.units=='J') return(convert(value,'j'))
+  if(units %in% c("j", "cal")) {
+    if(units == "j" & opt$E.units == "cal") return(convert(value, "cal"))
+    if(units == "cal" & opt$E.units == "J") return(convert(value, "j"))
   }
-  if(units %in% c('bar','mpa')) {
-    if(units=='mpa' & opt$P.units=='bar') return(convert(value,'bar'))
-    if(units=='bar' & opt$P.units=='MPa') return(convert(value,'mpa'))
+  if(units %in% c("bar", "mpa")) {
+    if(units == "mpa" & opt$P.units == "bar") return(convert(value, "bar"))
+    if(units == "bar" & opt$P.units == "MPa") return(convert(value, "mpa"))
   }
   return(value)
 }

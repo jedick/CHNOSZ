@@ -23,11 +23,6 @@ logB_to_OBIGT <- function(logB, species, coeff, T, P, tolerance = 0.05) {
   Gr <- convert(logB, "G", TK)
   # logK0 gives values for ΔG°r of the reaction with ΔG°f = 0 for the formed species
   Gr0 <- convert(logK0, "G", TK)
-  # TODO: fix convert() so that it uses Joules
-  if(E.units() == "J") {
-    Gr <- convert(Gr, "J")
-    Gr0 <- convert(Gr0, "J")
-  }
   # Calculate ΔG°f of the formed species
   Gf <- Gr - Gr0
 

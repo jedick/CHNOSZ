@@ -747,17 +747,19 @@ The target of the conversion is `G`, or free energy, from `logK`.
 That conversion requires temperature in Kelvin, which is obtained by conversion from °C.
 We finish with a negation (affinity is negative Gibbs energy) and scaling from cal to kcal.
 ```
-Using R's `lapply()` to run <span style="color:green">`convert()`</span> for each species, we convert the affinity from dimensionless values (*A*/(2.303*RT*)) to cal/mol, then kcal/mol.
+Using R's `lapply()` to run <span style="color:green">`convert()`</span> for each species, we first convert the affinity from dimensionless values (*A*/(2.303*RT*)) to J/mol.
+A second call to <span style="color:green">`convert()`</span> is used to obtain energies in cal/mol, and these are finally converted to kcal/mol.
 ```{r rainbow_affinity, message=FALSE}
 a <- affinity(T = rb$T, CO2 = rb$CO2, H2 = rb$H2,
               `NH4+` = rb$`NH4+`, H2S = rb$H2S, pH = rb$pH)
 T <- convert(a$vals[[1]], "K")
 a$values <- lapply(a$values, convert, "G", T)
+a$values <- lapply(a$values, convert, "cal")
 a$values <- lapply(a$values, `*`, -0.001)
 ```
 
 ```{r rainbow_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="Affinities of organic synthesis in a hydrothermal system, after Shock and Canovas (2010).", pngquant=pngquant, timeit=timeit}
-diagram(a, balance = 1, ylim = c(-100, 100), ylab = axis.label("A", prefix="k"),
+diagram(a, balance = 1, ylim = c(-100, 100), ylab = quote(italic(A)*", kcal/mol"),
         col = rainbow(8), lwd = 2, bg = "slategray3")
 abline(h = 0, lty = 2, lwd = 2)
 ```

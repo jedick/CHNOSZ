@@ -70,13 +70,13 @@ mass <- function(formula) {
 }
 
 entropy <- function(formula) {
-  # calculate the standard molal entropy at Tref of elements in chemical formulas
+  # Calculate the standard molal entropy at Tref of elements in chemical formulas
   thermo <- get("thermo", CHNOSZ)
   formula <- i2A(get.formula(formula))
   ielem <- match(colnames(formula), thermo$element$element)
   if(any(is.na(ielem))) warning(paste("element(s)",
     paste(colnames(formula)[is.na(ielem)], collapse=" "), "not available in thermo()$element"))
-  # entropy per atom
+  # Entropy per atom
   Sn <- thermo$element$s[ielem] / thermo$element$n[ielem]
   # if there are any NA values of entropy, put NA in the matrix, then set the value to zero
   # this allows mixed finite and NA values to be calculated 20190802
@@ -89,7 +89,8 @@ entropy <- function(formula) {
     Sn[ina] <- 0
   }
   entropy <- as.numeric( formula %*% Sn )
-  return(entropy)
+  # Convert to Joules 20220325
+  convert(entropy, "J")
 }
 
 GHS <- function(formula, G=NA, H=NA, S=NA, T=298.15, E_units = "cal") {
@@ -104,7 +105,7 @@ GHS <- function(formula, G=NA, H=NA, S=NA, T=298.15, E_units = "cal") {
     stop("formula, G, H and S arguments are not same length")
   # calculate Se (entropy of elements)
   Se <- entropy(formula)
-  if(E_units == "J") Se <- convert(Se, "J")
+  if(E_units == "cal") Se <- convert(Se, "cal")
   # calculate one of G, H, or S if the other two are given
   GHS <- lapply(seq_along(G), function(i) {
     G <- G[i]

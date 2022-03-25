@@ -73,23 +73,23 @@ Furthermore, in \code{hkf}, the output is a list consisting of the above-describ
 
 \examples{
 \dontshow{reset()}
-## aqueous species
+## Aqueous species
 CH4aq <- info(info("CH4", "aq"))	
 hkf(property = "Cp", parameters = CH4aq)
-# the non-solvation heat capacity
+# Non-solvation heat capacity
 hkf(property = "Cp", parameters = CH4aq, contrib = "n")	
-# at different temperature and pressure
+# Change temperature and pressure
 hkf(property = "Cp", parameters = CH4aq, T = c(373.15,473.15), P = 1000)
 
-## crystalline, gas, liquid species
+## Crystalline, gas, liquid species
 CH4gas <- info(info("CH4", "gas"))	
 cgl(property = "Cp", parameters = CH4gas)
-# melting and vaporization of octane
+# Melting and vaporization of octane
 C8H18par <- info(info(rep("octane", 3), c("cr", "liq", "gas")))
 myT <- seq(200, 420, 10)
 DG0f <- cgl(property = "G", parameters = C8H18par, T = myT, P = 1)
 cbind(T = myT, which.pmax(DG0f, FALSE))  # 1 = cr, 2 = liq, 3 = gas
-# compare that result with the tabulated transition temperatures
+# Compare that result with the tabulated transition temperatures
 print(C8H18par)
 }
 

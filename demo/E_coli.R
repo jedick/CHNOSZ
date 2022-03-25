@@ -94,8 +94,7 @@ plot_G <- function(C, N, S) {
     # Calculate dimensionless affinity (A/2.303RT) from 0 to 125 degC at 1 bar
     a <- affinity(T = T, `e-` = -pe[[ipe]])
     # Convert affinity to Gibbs energy (kJ/mol)
-    G.cal <- lapply(a$values, convert, "G", T = T.K)
-    G.J <- lapply(G.cal, convert, "J")
+    G.J <- lapply(a$values, convert, "G", T = T.K)
     G.kJ <- lapply(G.J, "*", 1e-3)
     # Calculate Gibbs energy (kJ (g cell)-1) for each biomolecule
     G.kJ.g_cell <- Map("*", G.kJ, concentrations)
