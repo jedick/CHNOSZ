@@ -4,6 +4,7 @@ author: "Jeffrey M. Dick"
 output:
   html_vignette:
     mathjax: null
+    toc: true
 vignette: >
   %\VignetteIndexEntry{Customizing the thermodynamic database}
   %\VignetteEngine{knitr::rmarkdown}
@@ -158,18 +159,32 @@ paste(1:21, colnames(thermo()$OBIGT))
   - Columns 14-20 have parameters for calculating thermodynamic properties at other temperatures and pressures. There are two main `r model`s:
     - Revised Helgeson-Kirkham-Flowers "equation-of-state" parameters for aqueous species (HKF)
     - Heat capacity coefficients for crystalline, gaseous, and liquid species (CGL).
-      `r NOTE`: "crystalline" is the terminology inherited from SUPCRT92 data files, but this refers to any solid phases including amorphous SiO2 and other minerals.
     - The columns are named by combining the the names of the HKF and CGL coefficients, separated by a dot.
-  - Column 21 has the charge used in the HKF EOS or the maximum temperature for CGL species.
+  - Column 21 has the charge used in the HKF EOS or the maximum temperature for CGL species. The HKF EOS parameter for charge (*Z*), which appears in the *g* function for the temperature derivatives of the &omega; parameter [@SOJSH92], is taken from this column and not from the chemical formula of the species.
+
+### Ranges of HKF and CGL models
+
+To a first approximation, the revised HKF equations of state are applicable within the stability region of liquid water or the supercritical fluid with a density greater than 0.35 g/cm3, and not exceeding the ranges of 0 to 1000 &deg;C and 1 to 5000 bar [see @SOJSH92 for details].
+There are two ways in which these limits are enforced in CHNOSZ:
+
+- The default source of water properties (H2O92D Fortran subroutine modified from SUPCRT92) yields NA values beyonds these T and P ranges.
+  Note that the Deep Earth Water (DEW) model is available to extend the applicable range to pressures of up to 60 kbar (6 GPa) [@SHA14].
+- `r subcrt_` generates NA values beyond the density limit; the `exceed.rhomin` argument can be used to enable calculations at lower density in the supercritical region.
+
+The first three terms in the CGL heat capacity equation correspond to the Maier-Kelley equation for heat capacity [@MK32]; the additional terms are useful for representing heat capacities of minerals [@RH95] and organic gases and liquids [@HOKR98].
+The upper temperature limit for applicability of the CGL heat-capacity equation corresponds to the temperature of phase transition or to a temperature beyond which extrapolations from experimental data becomes highly uncertain.
+A maximum temperature can be stored in the final column of OBIGT, and is used by `r subcrt_` to replace computed values with NA above the maximum.
 
 ### Required and optional data
 
 REQUIRED: 
 
 - All species need a `r name` and a `r state`.
+  The state can be one of `aq`, `gas`, or `cr`.
+  For minerals with higher-temperature polymorphs, they are named `cr2`, `cr3`, etc.
+  `r NOTE`: `cr` stands for "crystalline"; this naming convention (which was inherited from SUPCRT92 data files) refers to any solid phases including amorphous SiO<sub>2</sub> and other minerals.
 - A chemical `r formula` is required to do almost anything useful in CHNOSZ (e.g. check reaction balancing with `r subcrt_` and add species with `r basis_` or `r species_`). `r NOTE`: The convention has been adopted that the `r name` of aqueous species in OBIGT is the same as the chemical formula. Most minerals, gases, and liquids have a `r name` that is a common name.
 - Likewise, `E_units` needs to be specified to perform any calculations of thermodynamic properties. The value can be `J` for Joules or `cal` for calories.
-
 
 OPTIONAL: Everything else.
 Really, it depends on what you need.
@@ -198,6 +213,9 @@ If an "equation-of-state" or heat capacity coefficient (Columns 14-20) is unknow
 
 - Furthermore, if you would like to assume that `r Cp_` or V is 0, then set it to 0.
   - Thermodynamic properties will be extrapolated to T > 25 °C and P > 1 bar assuming that `r Cp_` and `r V_` are 0.
+
+More detail on the inner working of the functions: For both HKF and CGL, if at least one parameter for a species is provided, any NA values of the other parameters are taken to be zero.
+If all EOS parameters are NA, but values of `r Cp_` and/or `r V_` are present, they are assumed to be constants for extrapolating thermodynamic properties (e.g. `r DG_0`) as a function of temperature and pressure.
 
 ### OOM scaling and `r info_`
 
@@ -273,12 +291,12 @@ info(info("tin"))
 </details>
 
 ## Examples of adding data from a file
-Using `r add.OBIGT_` to add data from optional database files in CHNOSZ or CSV files you make yourself.
+Using `r add.OBIGT_` to add data from optional data files for OBIGT or CSV files you make yourself.
 
 <details>
   <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
 
-### `r add.OBIGT_` with files in CHNOSZ
+### `r add.OBIGT_` with optional data files
 
 TODO
 
@@ -407,6 +425,11 @@ Here we'll look at how to add minerals that use the Berman equations and aqueous
 <details>
   <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
 
+### Akinfiev-Diamond model
+
+The Akinfiev-Diamond model for aqueous species [@AD03] is activated by setting \code{abbrv = "AD"} in `r thermo_` for a given aqueous species.
+The database must also include a corresponding gasesous species with the same name or chemical formula.
+
 TODO
 
 TODO: Add van't Hoff example?
@@ -524,7 +547,7 @@ The highest experimental temperature for the formation constants of `r H2WO4` an
 In contrast, we used a different model but obtained quite similar results.
 
 `r NOTE`: The coefficients in the model used by `r logB_to_OBIGT_` are 25 °C values of `r G_`, `r S_`, and `r Cp_`.
-In a conservative interpretation, these should be regarded only as *fitting parameters*, and should not be used to report thermodynamic properties close to 25 °C unless they were fit to experimental data in that temperature range.
+In a conservative interpretation, these should be regarded only as *fitting parameters*, and should not be used to compute thermodynamic properties close to 25 °C unless they were fit to experimental data in that temperature range.
 
 </details>
 

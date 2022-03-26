@@ -23,7 +23,7 @@ export(
   "count.aa", "nucleic.complement", "nucleic.formula",
   "rho.IAPWS95", "IAPWS95", "water.AW90", "WP02.auxiliary", "water.IAPWS95",
   "getrank", "parent", "sciname", "allparents", "getnodes", "getnames",
-  "protein.OBIGT", "hkf", "cgl", "which.pmax",
+  "protein.OBIGT", "which.pmax",
   "equil.boltzmann", "equil.reaction", "find.tp",
   "ionize.aa", "MP90.cp", "aasum",
   "qqr", "RMSD", "CVRMSD", "spearman", "DGmix", "DDGmix", "DGtr",
@@ -54,7 +54,7 @@ export(
 # added 20171121 or later
   "dumpdata", "thermo.axis", "solubility", "NaCl",
 # added 20190213 or later
-  "CHNOSZ", "thermo", "reset", "OBIGT", "retrieve", "AD", "moles",
+  "CHNOSZ", "thermo", "reset", "OBIGT", "retrieve", "moles",
   "lNaCl", "lS", "lT", "lP", "lTP", "lex",
 # added 20200716 or later
   "mash", "mix", "rebalance",

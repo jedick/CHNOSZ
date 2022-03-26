@@ -18,13 +18,12 @@
       \item Units of Joules instead of calories are now used by default for the
       thermodynamic properties output by \code{subcrt()}. That is,
       \code{E.units("J")} is the default setting. User scripts that implicitly
-      depend on the previous default setting of \code{E.units("cal")} need to
-      be modified to produce expected output.
+      depend on the previous default setting of \code{E.units("cal")} may need
+      to be modified to produce expected output.
 
-      \item The switch to Joules is work in progress. As much as possible,
-      functions in CHNOSZ have been modified to use Joules in internal
-      variables, and the gas constant has been changed to Joules in
-      \code{convert()} and other functions.
+      \item As much as possible, functions in CHNOSZ have been modified to use
+      Joules in internal variables, and the gas constant has been changed to
+      Joules in \code{convert()} and other functions.
 
       \item The documentation is still catching up ...
 
@@ -52,6 +51,10 @@
 
       \item The eos-regress.Rmd vignette has been removed to debug problems
       associated with the switch to Joules.
+
+      \item Remove exports of \code{cgl}, \code{hkf}, and \code{AD}.
+      \code{subcrt} should be used for all calculations of thermodynamic
+      properties.
 
     }
   }

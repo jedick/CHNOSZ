@@ -89,9 +89,9 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
   \itemize{
      \item The combination of \code{name} and \code{state} defines a species in \code{thermo()$OBIGT}. A species cannot be duplicated (this is checked when running \code{reset()}).
      \item English names of inorganic gases are used only for the gas state. The dissolved species is named with the chemical formula. Therefore, \code{info("oxygen")} refers to the gas, and \code{info("O2")} refers to the aqueous species.
-     \item Properties of most aqueous species (\code{state} = \samp{aq}) are calculated using the revised Helgeson-Kirkham-Flowers (HKF) model (see \code{\link{hkf}}).
-     \item Properties of aqueous species with \code{abbrv} = \samp{AD} are calculated using the Akinfiev-Diamond model (see \code{\link{AD}}).
-     \item Properties of most non-aqueous species (liquids, gases, and minerals) are calculated using a heat capacity polynomial expression with up to six terms (see \code{\link{cgl}}).
+     \item Properties of most aqueous species (\code{state} = \samp{aq}) are calculated using the revised Helgeson-Kirkham-Flowers (HKF) model.
+     \item Properties of aqueous species with \code{abbrv} = \samp{AD} are calculated using the Akinfiev-Diamond model.
+     \item Properties of most non-aqueous species (liquids, gases, and minerals) are calculated using a heat capacity function with up to six terms; the exponent on the final term can be defined in the database (see below).
      \item Properties of minerals with NA values of all heat capacity parameters are calculated using the Berman model (see \code{\link{Berman}}).
   } 
 

@@ -1231,7 +1231,7 @@ The `ispecies` index (top) refers to the rownumber of `thermo()\$species`; that 
 unlist(a_nonion$values)
 ```
 
-## Compositional analysis
+## Chemical analysis of proteins
 
 Functions in CHNOSZ make it easy to get the chemical formulas of proteins from their amino acid compositions.
 Calculations based on the formulas, such as the average oxidation state of carbon (`r zc`), and the coefficients of basis species in formation reactions, are also available.
@@ -1312,7 +1312,7 @@ The calculation of *Z*<sub>C</sub>, which sums elemental ratios, is not affected
 The `QEC` keyword to <span style="color:red">`basis()`</span> loads basis species including three amino acids (glutamine, glutamic acid, cysteine, `r h2o`, `r o2`).
 This basis strengthens the relationship between `r zc` and *n*&#773;<sub>`r o2`</sub>, but weakens that between `r zc` and *n*&#773;<sub>`r h2o`</sub> (shown in the plots on the right).
 
-```{r rubisco_O2, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap="Compositions of proteins projected into different sets of basis species.", cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r rubisco_O2, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap="Elemental compositions of proteins projected into different sets of basis species.", cache=TRUE, pngquant=pngquant, timeit=timeit}
 layout(matrix(1:4, nrow = 2))
 par(mgp = c(1.8, 0.5, 0))
 pl <- protein.length(aa)
@@ -1333,7 +1333,7 @@ lapply(c("CHNOS", "QEC"), function(thisbasis) {
 ```
 
 By projecting the compositions of proteins into the `QEC` set of basis species, *n*&#773;<sub>`r o2`</sub> emerges as a strong indicator of oxidation state, while *n*&#773;<sub>`r h2o`</sub> is a relatively uncorrelated (i.e. independent) compositional variable.
-These independent variables make it easier to distinguish the effects of oxidation and hydration state in proteomic datasets [@Dic17].
+These independent variables make it easier to distinguish the effects of oxidation and hydration state in proteomic datasets [@DYT20].
 
 ## Normalization to residues
 
@@ -1651,7 +1651,7 @@ In part because of intrinsic thermodynamic differences between SUPCRT92 and IAPW
 However, the IAPWS-95 equations are useful for other applications, and may be extrapolated to a greater range of *T* and *P* than SUPCRT.
 See <span style="color:blue">`?water`</span> for more information, as well as the last example in <span style="color:blue">`?subcrt`</span>, where uncommenting the line for the `IAPWS95` option allows extrapolation to lower temperatures for supercooled water.
 
-More recently (late 2017), an implementation of the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model was added; see [Optional data](#optional-data) for more information.
+An implementation of the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model is also available; see [Optional data](#optional-data) for more information.
 
 # Functions outside the main workflow
 

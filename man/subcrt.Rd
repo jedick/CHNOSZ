@@ -33,7 +33,7 @@
 \details{
 \code{subcrt} calculates the standard molal thermodynamic properties of species and reactions as a function of temperature and pressure.
 For each of the \code{species} (a formula or name), optionally identified in a given \code{state}, the standard molal thermodynamic properties and equations-of-state parameters are retrieved via \code{\link{info}} (except for \H2O liquid).
-The standard molal properties of the species are computed using equations-of-state functions for aqueous species (\code{\link{hkf}}), crystalline, gas, and liquid species (\code{\link{cgl}}) and liquid or supercritical \H2O (\code{\link{water}}).
+The standard molal properties of the species are computed using the revised Helgeson-Kirkham-Flowers (HKF) equations of state for aqueous species, a heat capacity equation for crystalline, gas, and liquid species (CGL), and dedicated functions for liquid and supercritical \H2O (\code{\link{water}}).
 
 \code{T} and \code{P} denote the temperature and pressure conditions for the calculations and should generally be of the same length, unless \code{P} is \samp{Psat} (the default; see \code{\link{water}}).
 Argument \code{\link{grid}} if present can be one of \code{T} or \code{P} to perform the computation of a \code{T}\eqn{\times}{x}\code{P} or \code{P}\eqn{\times}{x}\code{T} grid.
