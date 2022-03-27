@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.4.3-7 (2022-03-25)}{
+\section{Changes in CHNOSZ version 1.9.9-9 (2022-03-27)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -22,10 +22,8 @@
       to be modified to produce expected output.
 
       \item As much as possible, functions in CHNOSZ have been modified to use
-      Joules in internal variables, and the gas constant has been changed to
-      Joules in \code{convert()} and other functions.
-
-      \item The documentation is still catching up ...
+      Joules in internal variables. In particular, the value of the gas
+      constant is based on Joules in \code{convert()} and other functions.
 
     }
   }
@@ -33,15 +31,17 @@
   \subsection{NEW FEATURES}{
     \itemize{
 
-      \item Add logB_to_OBIGT() to fit three thermodynamic parameters (G, S,
-      and Cp) to formation constants of aqueous species as a function of
-      temperature.
+      \item Add \code{logB_to_OBIGT()} to fit three thermodynamic parameters
+      (\samp{G}, \samp{S}, and \samp{Cp}) to formation constants of aqueous
+      species as a function of temperature.
 
-      \item Add \code{zap} argument to mod.OBIGT() to clear parameters of
-      preexisting species.
+      \item Add \code{zap} argument to \code{mod.OBIGT()} to clear parameters
+      of preexisting species.
 
-      \item Add vignette customizing.Rmd about customizing the thermodynamic
-      database.
+      \item Add vignette \strong{customizing.Rmd} with description of database
+      format, data-entry conventions, and examples of customizing the
+      thermodynamic database using \code{add.OBIGT()}, \code{mod.OBIGT()}, and
+      \code{logB_to_OBIGT()}.
 
     }
   }
@@ -49,12 +49,12 @@
   \subsection{REMOVED FEATURES}{
     \itemize{
 
-      \item The eos-regress.Rmd vignette has been removed to debug problems
-      associated with the switch to Joules.
-
-      \item Remove exports of \code{cgl}, \code{hkf}, and \code{AD}.
-      \code{subcrt} should be used for all calculations of thermodynamic
+      \item Remove exports of \code{cgl()}, \code{hkf()}, and \code{AD()}.
+      \code{subcrt()} should be used for all calculations of thermodynamic
       properties.
+
+      \item \code{EOSregress()} and the associated demo and vignette have been
+      removed.
 
     }
   }

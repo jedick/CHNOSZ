@@ -33,7 +33,7 @@ for(i in 1:length(G)) {
   if(i == 12) myG <- myG + getG("Cu+2") + 2*getG("glycinate")
   if(i == 13) myG <- myG + getG("Cu+") + 2*getG("glycinate")
   if(i == 14) myG <- myG + getG("Cu(Gly)+")
-  # Energies are in Joules, so we have to change units of species in default OBIGT 20220326
+  # Energies are in Joules, so we have to change units of species in default OBIGT 20220325
   mod.OBIGT(names[i], G = myG, E_units = "J")
 }  
 

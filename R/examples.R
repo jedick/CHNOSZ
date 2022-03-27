@@ -15,7 +15,7 @@ examples <- function(save.png=FALSE) {
     "diagram", "mosaic", "mix",
     "buffer", "nonideal", "NaCl",
     "add.protein", "ionize.aa",
-    "objective", "revisit", "EOSregress")
+    "objective", "revisit")
   plot.it <- FALSE
   if(is.character(save.png))
     png(paste(save.png,"%d.png",sep=""),width=500,height=500,pointsize=12)
@@ -33,7 +33,7 @@ examples <- function(save.png=FALSE) {
 demos <- function(which=c("sources", "protein.equil", "affinity", "NaCl", "density", 
   "ORP", "findit", "ionize", "buffer", "protbuff", "glycinate",
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "zinc",
-  "Shh", "saturation", "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum",
+  "Shh", "saturation", "DEW", "lambda", "potassium", "TCA", "aluminum",
   "AD", "comproportionation", "Pourbaix", "E_coli"), save.png=FALSE) {
   # run one or more demos from CHNOSZ with ask=FALSE, and return the value of the last one
   for(i in 1:length(which)) {

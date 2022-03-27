@@ -84,9 +84,6 @@ Function names in CHNOSZ are colored red for functions that have side effects (i
 <!-- ######## SECTION MARKER ######## -->
 ## Basic structure of OBIGT
 
-<details>
-  <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
-
 OBIGT is the name of the thermodynamic database in CHNOSZ.
 The data are distributed in CSV files files in the `inst/extdata/OBIGT` directory of the CHNOSZ package.
 When the package is installed, the files are copied to the `exdata/OBIGT` directory of the installed package location.
@@ -134,14 +131,9 @@ To see the first few entries in OBIGT, do this:
 head(thermo()$OBIGT)
 ```
 
-</details>
-
 <!-- ######## SECTION MARKER ######## -->
 ## Conventions for data entry in OBIGT
 Types of data, required and optional data, order-of-magnitude scaling and `r info_`.
-
-<details>
-  <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
 
 The format of OBIGT is described in the CHNOSZ manual: see `?thermo`.
 Next, we point out some special conventions.
@@ -236,15 +228,10 @@ This is a summary of its main features:
 
 `r NOTE`: `r info_` does **NOT** change the units; the values it displays (including possibly calculated ones) correspond to the `r E.units_` for that species. On the other hand, `r subcrt_` outputs values in the units selected with `r E.units_`.
 
-</details>
-
 <!-- ######## SECTION MARKER ######## -->
 ## Case study: NA and 0 in the default database
 
 Use the `r info_` function to look at the database and `r subcrt_` to calculate thermodynamic properties.
-
-<details>
-  <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
 
 Let's look at some minerals first.
 First use `r info_` to get the species indices (i.e. rownumbers) in OBIGT, then pull out the "raw" data (including OOM scaling and any NA values).
@@ -288,13 +275,8 @@ When supplied with a numeric argument (species index), `r info_` actually does t
 info(info("tin"))
 ```
 
-</details>
-
 ## Examples of adding data from a file
 Using `r add.OBIGT_` to add data from optional data files for OBIGT or CSV files you make yourself.
-
-<details>
-  <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
 
 ### `r add.OBIGT_` with optional data files
 
@@ -327,15 +309,10 @@ thermo.refs(iCd)[, 1:3]
 subcrt(c("CdCl+", "Cl-", "CdCl2"), c(-1, -1, 1), T = 25, P = c(1, 2000))
 ```
 
-</details>
-
 <!-- ######## SECTION MARKER ######## -->
 ## Examples of adding and modifying data with a function
 Use `r mod.OBIGT_` to add or modify the database in the current session.
 The function requires the name of a species and one or more properties to change.
-
-<details>
-  <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
 
 ### `r mod.OBIGT_` for aqueous species
 
@@ -415,15 +392,10 @@ Finally, let's restore the units setting for later calculations with `r subcrt_`
 T.units("C")
 ```
 
-</details>
-
 <!-- ######## SECTION MARKER ######## -->
 ## Other models
 
 Here we'll look at how to add minerals that use the Berman equations and aqueous nonelectrolytes that use the Akinfiev-Diamond model.
-
-<details>
-  <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
 
 ### Akinfiev-Diamond model
 
@@ -434,15 +406,10 @@ TODO
 
 TODO: Add van't Hoff example?
 
-</details>
-
 <!-- ######## SECTION MARKER ######## -->
 ## Case study: Formation constants for aqueous tungsten species
 Here we use `r logB_to_OBIGT_` to fit formation constants to thermodynamic parameters using a constant heat capacity.
 Some additional steps are shown to refine a thermodynamic model to generate a speciation diagram as a function of pH.
-
-<details>
-  <summary><span style="background-color: #DDDDDD">*&nbsp;Click to expand&nbsp;*</span></summary>
 
 ### Fitting formation constants
 
@@ -493,12 +460,13 @@ logB_to_OBIGT(logB, species, coeff, T, P, tolerance = 0.3)
 
 We can tell from the low species indices of `r HWO4_` (`r info("HWO4-")`) and `r H2WO4` (`r info("H2WO4")`) that `r logB_to_OBIGT_` replaced parameters for these species that were already present in OBIGT.
 
-### Diagram 1: Constant activity of `r F_`
+### Diagram 1: Constant molality of `r F_`
 
 Now we're ready to make a speciation diagram.
 Our target is to reproduce Fig. 7b of @WWH_21, which is made for 300 °C.
-A constant activity of `r F_` is based on the assumption of complete dissociation of 0.1 m NaF (we'll change this later).
+A constant molality of `r F_` is based on the assumption of complete dissociation of 0.1 m NaF (we'll change this later).
 An ionic strength of 1.2 mol/kg is estimated for a solution with 1.8 m NaCl (use `NaCl(300, m_tot = 1.8)`).
+`r NOTE`: because the ionic strength is non-zero, the calculations here refer to molality instead of activity of species (see [An Introduction to CHNOSZ](anintro.html#from-activity-to-molality)).
 
 ```{r diagram1, message = FALSE, results = "hide", fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
 basis(c("H+", "WO4-2", "F-", "H2O", "O2"))
@@ -514,10 +482,10 @@ diagram(e, alpha = TRUE, col = col, lty = 1, lwd = 2, ylab = "Fraction total W")
 This isn't quite the diagram we were looking for.
 The published diagram shows a broad region of coexistence of `r H3WO4F2_` and `r HWO4_` at pH < 5 and increasing abundance of `r H2WO4` at lower pH.
 
-### Diagram 2: Variable activity of `r F_`
+### Diagram 2: Variable molality of `r F_`
 
-In reality, the activity of `r F_` depends strongly on pH according to the reaction `r Hplus` + `r F_` = HF.
-With a little algebra, we can calculate the activity of `r F_` (`a_F` in the code below) from the equilbrium constant of this reaction for a given total F concentration (`F_tot`).
+In reality, the molality of `r F_` depends strongly on pH according to the reaction `r Hplus` + `r F_` = HF.
+With a little algebra, we can calculate the molality of `r F_` (`a_F` in the code below) from the equilbrium constant of this reaction for a given total F concentration (`F_tot`).
 `r NOTE`: It is important to call `r subcrt_` with a non-zero `IS` so that it returns effective equilibrium constants corrected for ionic strength (see what hapens to the diagram if you set `IS = 0`).
 
 ```{r a_F}
@@ -528,7 +496,7 @@ F_tot <- 0.1
 a_F <- F_tot / (1 + 10^(logK_HF - pH))
 ```
 
-Now that we have the activity of `r F_` as a function of pH, we can provide it in the call to `r affinity_`.
+Now that we have the molality of `r F_` as a function of pH, we can provide it in the call to `r affinity_`.
 ```{r diagram2, message = FALSE, results = "hide", results = "hide", fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
 basis(c("H+", "WO4-2", "F-", "H2O", "O2"))
 iaq <- retrieve("W", c("O", "H", "F"), "aq")
@@ -548,7 +516,5 @@ In contrast, we used a different model but obtained quite similar results.
 
 `r NOTE`: The coefficients in the model used by `r logB_to_OBIGT_` are 25 °C values of `r G_`, `r S_`, and `r Cp_`.
 In a conservative interpretation, these should be regarded only as *fitting parameters*, and should not be used to compute thermodynamic properties close to 25 °C unless they were fit to experimental data in that temperature range.
-
-</details>
 
 ## References

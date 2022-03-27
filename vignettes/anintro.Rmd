@@ -836,11 +836,11 @@ Here, values of log*f*<sub>H<sub>2</sub></sub> buffered by minerals or set by eq
 demo(buffer)
 ```
 
-# Equilibration
+# Equilibrium
 
-Above we considered this kind of question: for equal activities of species, what are the affinities of their formation reactions from basis species?
-Turning the question around, we would like to know: for equal affinities, what are the activities of species?
-This is the question of equilibration.
+Above we considered this question: for equal activities of species, what are the affinities of their formation reactions from basis species?
+Turning the question around, we would like to know: for equal affinities of formation reactions, what are the activities of species?
+The first question is about non-equilibrium conditions; the second is about equilibrium.
 
 Before presenting some examples, it is helpful to know about the limitations of the functions.
 CHNOSZ does not take account of all possible reactions in the speciation of a system.
@@ -858,7 +858,7 @@ This is total equilibrium.
 An example of total equilibrium was given above for the PPM buffer.
 In contrast, models for systems of organic and biomolecules often involve metastable equilibrium constraints.
 
-## Getting from affinity to equilibrium
+## Equilibration methods
 
 The <span style="color:green">`equilibrate()`</span> function in CHNOSZ automatically chooses between two methods for calculating equilibrium.
 The method based on the Boltzmann equation is fast, but is applicable only to systems where the coefficient on the balanced basis species in each of the formation reactions is one.
@@ -938,7 +938,7 @@ Other examples of using <span style="color:green">`solubility()`</span> are avai
 See [<span style="color:blue">`demo(solubility)`</span>](../demo) for calculations of the solubility of CO<sub>2(<i>gas</i>)</sub> and calcite as a function of pH and temperature.
 The calculation considers the stoichiometric dissolution of calcite, in which CaCO<sub>3</sub> dissociates to form equal quantities of Ca<sup>+2</sup> and CO<sub>3</sub><sup>-2</sup> ions.
 Adding in activity coefficients, an example in <span style="color:blue">`?solubility`</span> uses the `find.IS` option to find the final ionic strength for dissolving calcite into pure water.
-[<span style="color:blue">`demo(gold)`</span>](../demo) shows calculations of the solubility of gold as a function of pH and *T* as well as oxygen fugacity set by diferent mineral buffers, and considers ionic strength effects on activity coefficients, so that activities are transformed to molalities ([see below](#transformation-of-variables)).
+[<span style="color:blue">`demo(gold)`</span>](../demo) shows calculations of the solubility of gold as a function of pH and *T* as well as oxygen fugacity set by diferent mineral buffers, and considers ionic strength effects on activity coefficients, so that activities are transformed to molalities ([see below](#from-activity-to-molality)).
 
 # Activity coefficients
 
@@ -946,7 +946,7 @@ For calculating activity coefficients of charged species, <span style="color:gre
 The activity coefficients are calculated as a function of ionic strength (*I*), temperature, and charge of each species, without any other species-specific parameters.
 Using the default `Helgeson` method, the extended term parameter ("B-dot") is derived from data of @Hel69 and Helgeson et al. (1981), and extrapolations of @MSS13.
 
-## Transformation of variables
+## From activity to molality
 
 Following the main workflow of CHNOSZ, <span style="color:green">`nonideal()`</span> normally does not need to be used directly.
 Intead, invoke the calculations by setting the `IS` argument in <span style="color:green">`subcrt()`</span> or <span style="color:green">`affinity()`</span>.
@@ -1195,7 +1195,7 @@ basis("CHNOS+")
 a_ion <- affinity(pH = c(0, 14), iprotein = ip)
 basis("CHNOS")
 a_nonion <- affinity(iprotein = ip)
-plot(c(0, 14), c(50, 300), xlab = "pH", ylab = axis.label("A"), type = "n")
+plot(c(0, 14), c(50, 300), xlab = "pH", ylab = quote(italic(A/2.303*RT)), type="n")
 for(i in 1:4) {
   A_ion <- as.numeric(a_ion$values[[i]])
   A_nonion <- as.numeric(a_nonion$values[[i]])
@@ -1658,8 +1658,6 @@ An implementation of the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) 
 Some functions in CHNOSZ lie outside the main workflow described above.
 
 * <span style="color:green">`RH2OBIGT()`</span> implements a group additivity calculation of standard molal thermodynamic properties and equations of state parameters of crystalline and liquid organic molecules from @RH98.
-
-* <span style="color:green">`EOSregress()`</span> and related functions can be used to regress "equation of state" parameters (e.g. coefficients in the HKF equations) from heat capacity and volumetric data. See <span style="color:blue">`?EOSregress`</span> and the vignette [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html).
 
 * Some functions are available (see <span style="color:blue">`?taxonomy`</span>) to read data from [NCBI taxonomy files](https://www.ncbi.nlm.nih.gov/taxonomy), traverse taxonomic ranks, and get scientific names of taxonomic nodes.
 

@@ -28,7 +28,6 @@ export(
   "ionize.aa", "MP90.cp", "aasum",
   "qqr", "RMSD", "CVRMSD", "spearman", "DGmix", "DDGmix", "DGtr",
   "ratlab",
-  "EOSregress", "EOScoeffs", "EOSplot", "EOSvar",
 # demos
   "protein.equil", "palply",
   "label.plot",
@@ -41,9 +40,7 @@ export(
 # (no other functions are used in the tests)
 # other exported functions that are not used above
   "checkEOS", "checkGHS", "check.OBIGT",
-  "V_s_var", "Cp_s_var",
   "DGinf", "SD", "pearson", "shannon", "CV", "logact",
-  "EOSlab", "EOScalc",
   "basis.elements", "element.mu", "ibasis",
   "water.SUPCRT92", "plot_findit",
   "nonideal", "uniprot.aa",

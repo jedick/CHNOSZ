@@ -76,7 +76,10 @@ expect_equal(gfun.500$dgdP  * 1e6, dgdP.500.ref,  tolerance = 1e+1, info = info)
 expect_equal(gfun.1000$dgdP * 1e6, dgdP.1000.ref, tolerance = 1e-1, info = info)
 expect_equal(gfun.4000$dgdP * 1e6, dgdP.4000.ref, tolerance = 1e-3, info = info)
 
-# load SiO2 and Si2O4 data taken from DEW spreadsheet
+info <- "hkf() and subcrt() give consistent values for non-solvation volume"
+# Added on 20220326 to check usage of subcrt() with omega = 0
+# in demo/DEW.R (b/c hkf() is no longer exported)
+# Load SiO2 and Si2O4 data taken from DEW spreadsheet
 iSi <- add.OBIGT("DEW", c("SiO2", "Si2O4"))
 Vn1 <- Vn2 <- numeric()
 species <- c("CO3-2", "BO2-", "MgCl+", "SiO2", "HCO3-", "Si2O4")
@@ -87,7 +90,7 @@ for(i in 1:length(species)) {
   # Get the nonsolvation volume from hkf()
   Vn1 <- c(Vn1, CHNOSZ:::hkf("V", par, contrib="n")$aq[[1]]$V)
 }
-# In version 2.0.0, hkf() assumes the parameters are Joules,
+# In CHNOSZ 2.0.0, hkf() assumes the parameters are Joules,
 # but we gave it calorie-based parameters, so we need to convert to Joules
 Vn1 <- convert(Vn1, "J")
 # Second method: subcrt() with omega = 0
@@ -96,8 +99,6 @@ for(i in 1:length(species)) {
   Vn2 <- c(Vn2, subcrt(species[i], T = 25)$out[[1]]$V)
 }
 expect_equal(Vn1, Vn2)
-
-
 
 # Reference
 

@@ -396,9 +396,9 @@ dumpdata <- function(file=NULL) {
 # Take a data frame in the format of thermo()$OBIGT of one or more rows,
 #   remove scaling factors from equations-of-state parameters,
 #   and apply new column names depending on the state.
-# And convert energy units from J to cal (used by subcrt()) 20190530
 # If fixGHS is TRUE a missing one of G, H or S for any species is calculated
 #   from the other two and the chemical formula of the species.
+# If toJoules is TRUE, convert parameters to Joules 20220325
 # This function is used by both info and subcrt when retrieving entries from the thermodynamic database.
 OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
   # remove scaling factors from EOS parameters
@@ -429,6 +429,8 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
       # We only convert column 20 for aqueous species (omega), not for cgl species (lambda)  20190903
       if(identical(state, "aq")) OBIGT[ical, c(9:12, 14:20)] <- convert(OBIGT[ical, c(9:12, 14:20)], "J")
       else OBIGT[ical, c(9:12, 14:19)] <- convert(OBIGT[ical, c(9:12, 14:19)], "J")
+      # Also update the E_units column 20220325
+      OBIGT$E_units[ical] <- "J"
     }
   }
   if(fixGHS) {

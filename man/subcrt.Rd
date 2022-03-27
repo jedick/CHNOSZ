@@ -56,7 +56,7 @@ On the other hand, if the \code{water} option is \samp{SUPCRT} (the default), \c
 (This is not an inherent limitation in either formulation, but it is just a matter of implementation.)
 
 If \code{convert} is \code{TRUE} (the default), the input values of \code{T} and \code{P} are interpreted to have the units given by \code{\link{T.units}} and \code{\link{P.units}} (default: \degC and bar), and the output values of \code{G}, \code{H}, \code{S} and \code{Cp} are based on the units given in \code{\link{E.units}} (default: Joules).
-If \code{convert} is \code{FALSE}, the user units (\code{\link{T.units}}, \code{\link{P.units}}, and \code{\link{E.units}}) are ignored, and \code{T} and \code{P} are taken to be in Kelvin and bar, and the returned values of \code{G}, \code{H}, \code{S} and \code{Cp} are in calories.
+If \code{convert} is \code{FALSE}, the user units (\code{\link{T.units}}, \code{\link{P.units}}, and \code{\link{E.units}}) are ignored, and \code{T} and \code{P} are taken to be in Kelvin and bar, and the returned values of \code{G}, \code{H}, \code{S} and \code{Cp} are in Joules.
 
 A chemical reaction is defined if \code{coeff} is given.
 In this mode the standard molal properties of species are summed according to the stoichiometric \code{coeff}icients, where negative values denote reactants.

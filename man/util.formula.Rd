@@ -47,12 +47,12 @@ If the formula is uncharged, and the last element has a negative coefficient, +0
 The remaining functions documented here accept vectors of chemical formulas, species indices, or a mixture of both, or stoichiometric matrices with elements on the columns.
 
 \code{mass} and \code{entropy} return the sums of masses or entropies of elements in each of the \code{formula}s.
-The masses are calculated using the masses of the elements in their natural isotopic distribution, and the entropies, in cal K\eqn{^{-1}}{^-1} mol\eqn{^{-1}}{^-1}, are calculated using the entropies of the compounds of the pure elements in their stable states at 25 \degC and 1 bar.
+The masses are calculated using the masses of the elements in their natural isotopic distribution, and the entropies, in J K\eqn{^{-1}}{^-1} mol\eqn{^{-1}}{^-1}, are calculated using the entropies of the compounds of the pure elements in their stable states at 25 \degC and 1 bar.
 The properties of the elements used by this function are taken from \code{\link{thermo}$element}.
 
 \code{GHS} computes one of the standard molal Gibbs energy or enthalpy of formation from the elements, or standard molal entropy, from values of the other two.
 The \code{formula}, \code{G}, \code{H} and \code{S} arguments must all have the same length.
-The entropies of the elements (\code{Se}) in each \code{formula} are calculated using \code{\link{entropy}}, which gives values in calories.
+The entropies of the elements (\code{Se}) in each \code{formula} are calculated using \code{\link{entropy}}, which gives values in Joules.
 If \code{E_units} is \samp{J}, the values are converted to Joules.
 The equation in effect can be written as \eqn{{\Delta}G^{\circ}={\Delta}H^{\circ}-T{\Delta}S^{\circ}}{delta_G = delta_H - T * delta_S}, where \eqn{{\Delta}S^{\circ}=S-S_e}{delta_S = S - Se} and \eqn{T}{T} is the temperature given in \code{T} (defaults to 298.15 K) (note that \code{G} and \code{H} in the arguments correspond respectively to \eqn{{\Delta}G^{\circ}}{delta_G} and \eqn{{\Delta}H^{\circ}}{delta_H} in the equation).
 For each formula, if one of \code{G}, \code{H}, or \code{S} is NA, its value is calculated from the other two.
