@@ -32,24 +32,19 @@
     \itemize{
 
       \item Add the following \emph{Disclaimer} to the Aqueous Inorganic
-      section of \strong{OBIGT.Rmd}: The maintenance of separate data files for
-      inorganic and organic species is done only for convenience, and is not
-      meant to imply a preference for any substrate, mechanism, or process. In
-      particular, CH\s{4} (methane) is an organic compound that can also be
-      formed abiotically (\href{https://doi.org/10.1002/rog.20011}{Etiope and
-        Sherwood Lollar, 2013}). The words \emph{organic} and \emph{inorganic}
-      (for substrates), \emph{biological} and \emph{thermochemical} (for
-      mechanisms), and \emph{methanogenesis}, \emph{pyrolysis}, and
-      \emph{synthesis} (for processes) can be used to describe different
-      methane-generating pathways in nature
-      (\href{https://doi.org/10.1007/978-3-319-39312-4_166}{Strąpoć, 2018}).
-      The details of this classification system are out of scope for the OBIGT
-      database. For practical reasons, CH\s{4} is placed in the
-      \dQuote{inorganic} data files in OBIGT simply so that the database can be
-      pruned of organic compounds \emph{except} CH\s{4} by running
-      \code{OBIGT(no.organics = TRUE)}. The ability to remove hundreds of
-      less-common organic species while keeping CH\s{4} is useful for some
-      models of inorganic reactions in hydrothermal systems.
+      section of \strong{OBIGT.Rmd}: A choice has been made to put inorganic
+      and organic species into separate data files. There is a well-known
+      ambiguity owing to the slightly different usage of these \emph{-ic} words
+      in different fields. That is, while CH\s{4} (methane) is classified in
+      chemistry as an organic compound, in nature it can be derived from living
+      organisms or formed abiotically
+      (\href{https://doi.org/10.1002/rog.20011}{Etiope and Sherwood Lollar,
+        2013}) – that is, through inorganic processes. For practical reasons,
+      CH\s{4} is placed in the \dQuote{inorganic} data files in OBIGT simply so
+      that the database can be pruned of organic compounds \emph{except}
+      CH\s{4} by running \code{OBIGT(no.organics = TRUE)}. The ability to
+      remove hundreds of more complex organic compounds while keeping CH\s{4}
+      is useful for some models of inorganic reactions in hydrothermal systems.
 
     }
   }
