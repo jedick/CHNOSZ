@@ -64,7 +64,7 @@ legend <- c("Migdisov et al. (2011)", "logB_to_OBIGT()")
 legend("topleft", legend, pch = c(19, NA), lty = c(0, 1), col = c(1, 4), pt.cex = 2)
 
 ## ZnCl+ from Mei et al. (2015)
-# These are values calculated from the modified Ryzhenko-Bryzgalin model
+# These are values for 5000 bar calculated from the modified Ryzhenko-Bryzgalin model
 logB <- c(-1.93, -1.16, -0.38, 0.45, 1.15, 1.76, 2.30, 2.80, 3.26, 3.70, 4.12, 4.53, 4.92)
 species <- c("Zn+2", "Cl-", "ZnCl+")
 coeff <- c(-1, -1, 1)
@@ -78,7 +78,8 @@ plot(T, logB, xlab = axis.label("T"), ylab = quote(log~beta), pch = 19, cex = 2)
 Tfit <- seq(25, 600, 25)
 sres <- subcrt(species, coeff, T = Tfit, P = P)
 lines(sres$out$T, sres$out$logK, col = 4)
-title(describe.reaction(sres$reaction))
+title(describe.reaction(sres$reaction), line = 3)
+title("5000 bar", font.main = 1, line = 1)
 legend <- c("Mei et al. (2015)", "logB_to_OBIGT()")
 legend("topleft", legend, pch = c(19, NA), lty = c(0, 1), col = c(1, 4), pt.cex = 2)
 }

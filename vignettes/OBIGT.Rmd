@@ -246,6 +246,12 @@ All other calculations in CHNOSZ obtain the elemental makeup, including the corr
 
 <div id="D-aqueous-inorganic" style="display: none">
 ## <a id="aqueous-inorganic" class="anchor"></a> `r setfile("inorganic_aq.csv")`
+*Disclaimer*: The maintenance of separate data files for inorganic and organic species is done only for convenience, and is not meant to imply a preference for any substrate, mechanism, or process.
+In particular, CH<sub>4</sub> (methane) is an organic compound that can also be formed abiotically [@ES13].
+The words *organic* and *inorganic* (for substrates), *biological* and *thermochemical* (for mechanisms), and *biogenic*, *abiogenic*, and *pyrolytic* (for processes) can be used to describe different methane-generating pathways in nature [@Str18].
+The details of this classification system are out of scope for the OBIGT database.
+For practical reasons, CH<sub>4</sub> is placed in the "inorganic" data files in OBIGT simply so that the database can be pruned of organic compounds *except* CH<sub>4</sub> by running `OBIGT(no.organics = TRUE)`.
+The ability to remove hundreds of less-common organic species while keeping CH<sub>4</sub> is useful for some models of inorganic reactions in hydrothermal systems.
 
 ```{r reflist, results="asis", echo=FALSE}
 ```

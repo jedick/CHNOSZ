@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.9.9-9 (2022-03-27)}{
+\section{Changes in CHNOSZ version 1.9.9-10 (2022-04-06)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -28,12 +28,38 @@
     }
   }
 
+  \subsection{OBIGT DATABASE}{
+    \itemize{
+
+      \item Add the following \emph{Disclaimer} to the Aqueous Inorganic
+      section of \strong{OBIGT.Rmd}: The maintenance of separate data files for
+      inorganic and organic species is done only for convenience, and is not
+      meant to imply a preference for any substrate, mechanism, or process. In
+      particular, CH\s{4} (methane) is an organic compound that can also be
+      formed abiotically (\href{https://doi.org/10.1002/rog.20011}{Etiope and
+        Sherwood Lollar, 2013}). The words \emph{organic} and \emph{inorganic}
+      (for substrates), \emph{biological} and \emph{thermochemical} (for
+      mechanisms), and \emph{methanogenesis}, \emph{pyrolysis}, and
+      \emph{synthesis} (for processes) can be used to describe different
+      methane-generating pathways in nature
+      (\href{https://doi.org/10.1007/978-3-319-39312-4_166}{Strąpoć, 2018}).
+      The details of this classification system are out of scope for the OBIGT
+      database. For practical reasons, CH\s{4} is placed in the
+      \dQuote{inorganic} data files in OBIGT simply so that the database can be
+      pruned of organic compounds \emph{except} CH\s{4} by running
+      \code{OBIGT(no.organics = TRUE)}. The ability to remove hundreds of
+      less-common organic species while keeping CH\s{4} is useful for some
+      models of inorganic reactions in hydrothermal systems.
+
+    }
+  }
+
   \subsection{NEW FEATURES}{
     \itemize{
 
       \item Add \code{logB_to_OBIGT()} to fit three thermodynamic parameters
-      (\samp{G}, \samp{S}, and \samp{Cp}) to formation constants of aqueous
-      species as a function of temperature.
+      (\samp{G}, \samp{S}, and \samp{Cp} at 25 \degC) to formation constants of
+      aqueous species as a function of temperature.
 
       \item Add \code{zap} argument to \code{mod.OBIGT()} to clear parameters
       of preexisting species.
@@ -230,7 +256,6 @@
 
     }
   }
-
 
   \subsection{OTHER CHANGES}{
     \itemize{
