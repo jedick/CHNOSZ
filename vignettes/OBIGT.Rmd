@@ -60,7 +60,6 @@ function OpenAllDivs() {
   OpenDiv("aqueous-H2O");
   OpenDiv("aqueous-inorganic");
   OpenDiv("aqueous-organic");
-  OpenDiv("aqueous-biotic");
   OpenDiv("solid-inorganic");
   OpenDiv("solid-organic");
   OpenDiv("solid-Berman");
@@ -81,7 +80,6 @@ function CloseAllDivs() {
   CloseDiv("aqueous-H2O");
   CloseDiv("aqueous-inorganic");
   CloseDiv("aqueous-organic");
-  CloseDiv("aqueous-biotic");
   CloseDiv("solid-inorganic");
   CloseDiv("solid-organic");
   CloseDiv("solid-Berman");
@@ -202,7 +200,7 @@ Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthal
 
 <!-- All buttons at top -->
 
-### Aqueous Species <button id="B-aqueous-H2O" onclick='ToggleDiv("aqueous-H2O")'>H2O</button> <button id="B-aqueous-inorganic" onclick='ToggleDiv("aqueous-inorganic")'>Inorganic</button> <button id="B-aqueous-organic" onclick='ToggleDiv("aqueous-organic")'>Organic</button> <button id="B-aqueous-biotic" onclick='ToggleDiv("aqueous-biotic")'>Biotic</button>
+### Aqueous Species <button id="B-aqueous-H2O" onclick='ToggleDiv("aqueous-H2O")'>H2O</button> <button id="B-aqueous-inorganic" onclick='ToggleDiv("aqueous-inorganic")'>Inorganic</button> <button id="B-aqueous-organic" onclick='ToggleDiv("aqueous-organic")'>Organic</button>
 ### Solids <button id="B-solid-inorganic" onclick='ToggleDiv("solid-inorganic")'>Inorganic</button> <button id="B-solid-organic" onclick='ToggleDiv("solid-organic")'>Organic</button> <button id="B-solid-Berman" onclick='ToggleDiv("solid-Berman")'>Berman</button>
 ### Gases <button id="B-gas-inorganic" onclick='ToggleDiv("gas-inorganic")'>Inorganic</button> <button id="B-gas-organic" onclick='ToggleDiv("gas-organic")'>Organic</button> &nbsp;&nbsp;&nbsp;Liquids <button id="B-liquid-organic" onclick='ToggleDiv("liquid-organic")'>Organic</button>
 ### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AD" onclick='ToggleDiv("optional-AD")'>AD</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-GEMSFIT" onclick='ToggleDiv("optional-GEMSFIT")'>GEMSFIT</button>
@@ -246,9 +244,8 @@ All other calculations in CHNOSZ obtain the elemental makeup, including the corr
 
 <div id="D-aqueous-inorganic" style="display: none">
 ## <a id="aqueous-inorganic" class="anchor"></a> `r setfile("inorganic_aq.csv")`
-*Disclaimer*: A choice has been made to put inorganic and organic species into separate data files.
-There is a well-known ambiguity owing to the slightly different usage of these *-ic* words in different fields.
-That is, while CH<sub>4</sub> (methane) is classified in chemistry as an organic compound, in nature it can be derived from living organisms or formed abiotically [@ES13] -- that is, through inorganic processes.
+*Disclaimer*: To make the database easier to maintain, inorganic and organic species have been placed into separate data files, but some ambiguities surround the usage of these *-ic* words in different contexts.
+In particular, while CH<sub>4</sub> (methane) is classified in chemistry as an organic compound, in nature it can be derived from living organisms or formed abiotically [@ES13] -- that is, through inorganic processes.
 For practical reasons, CH<sub>4</sub> is placed in the "inorganic" data files in OBIGT simply so that the database can be pruned of organic compounds *except* CH<sub>4</sub> by running `OBIGT(no.organics = TRUE)`.
 The ability to remove hundreds of more complex organic compounds while keeping CH<sub>4</sub> is useful for some models of inorganic reactions in hydrothermal systems.
 
@@ -258,13 +255,6 @@ The ability to remove hundreds of more complex organic compounds while keeping C
 
 <div id="D-aqueous-organic" style="display: none">
 ## <a id="aqueous-organic" class="anchor"></a> `r setfile("organic_aq.csv")`
-
-```{r reflist, results="asis", echo=FALSE}
-```
-</div>
-
-<div id="D-aqueous-biotic" style="display: none">
-## <a id="aqueous-biotic" class="anchor"></a> `r setfile("biotic_aq.csv")`
 Charged amino acid sidechain groups have a Z parameter that is tabulated as zero; their chemical formulas indicate the correct charge.
 Non-zero values of Z would yield derivatives of the omega parameter (&omega;) in the revised HKF equations of state for the cations and anions *that are not opposites of each other*.
 This would be incompatible with group additivity of cations and anions to give a neutral species, for which the derivatives of &omega; are taken to be zero (cf. [Dick et al., 2006](https://doi.org/10.5194/bg-3-311-2006)).

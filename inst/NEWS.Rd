@@ -32,12 +32,12 @@
     \itemize{
 
       \item Add the following \emph{Disclaimer} to the Aqueous Inorganic
-      section of \strong{OBIGT.Rmd}: A choice has been made to put inorganic
-      and organic species into separate data files. There is a well-known
-      ambiguity owing to the slightly different usage of these \emph{-ic} words
-      in different fields. That is, while CH\s{4} (methane) is classified in
-      chemistry as an organic compound, in nature it can be derived from living
-      organisms or formed abiotically
+      section of \strong{OBIGT.Rmd}: To make the database easier to maintain,
+      inorganic and organic species have been placed into separate data files,
+      but some ambiguities surround the usage of these \emph{*-ic*} words in
+      different contexts. In particular, while CH\s{4} (methane) is classified
+      in chemistry as an organic compound, in nature it can be derived from
+      living organisms or formed abiotically
       (\href{https://doi.org/10.1002/rog.20011}{Etiope and Sherwood Lollar,
         2013}) – that is, through inorganic processes. For practical reasons,
       CH\s{4} is placed in the \dQuote{inorganic} data files in OBIGT simply so
@@ -45,6 +45,8 @@
       CH\s{4} by running \code{OBIGT(no.organics = TRUE)}. The ability to
       remove hundreds of more complex organic compounds while keeping CH\s{4}
       is useful for some models of inorganic reactions in hydrothermal systems.
+
+      \item Merge \file{biotic_aq.csv} into \file{organic_aq.csv}.
 
     }
   }

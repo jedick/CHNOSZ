@@ -30,7 +30,7 @@ The main data files provided with CHNOSZ, as \code{*.csv} files in the \code{ext
 }
 
 \arguments{
-  \item{no.organics}{logical, exclude data files for organic and biotic species?}
+  \item{no.organics}{logical, load the database without data files for organic species (NOTE: \CH4 is listed as an \dQuote{inorganic} species)?}
   \item{...}{list, one or more arguments whose names correspond to the setting to modify}
 }
 

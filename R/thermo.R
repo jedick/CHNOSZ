@@ -60,7 +60,7 @@ OBIGT <- function(no.organics = FALSE) {
     sources_gas <- paste0(c("inorganic"), "_gas")
     sources <- c(sources_aq, sources_cr, sources_gas)
   } else {
-    sources_aq <- paste0(c("H2O", "inorganic", "organic", "biotic"), "_aq")
+    sources_aq <- paste0(c("H2O", "inorganic", "organic"), "_aq")
     sources_cr <- paste0(c("inorganic", "organic", "Berman"), "_cr")
     sources_liq <- paste0(c("organic"), "_liq")
     sources_gas <- paste0(c("inorganic", "organic"), "_gas")
