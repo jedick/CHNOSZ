@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.9.9-10 (2022-04-06)}{
+\section{Changes in CHNOSZ version 1.9.9-12 (2022-04-07)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -34,7 +34,7 @@
       \item Add the following \emph{Disclaimer} to the Aqueous Inorganic
       section of \strong{OBIGT.Rmd}: To make the database easier to maintain,
       inorganic and organic species have been placed into separate data files,
-      but some ambiguities surround the usage of these \emph{*-ic*} words in
+      but some ambiguities surround the usage of these \emph{-ic} words in
       different contexts. In particular, while CH\s{4} (methane) is classified
       in chemistry as an organic compound, in nature it can be derived from
       living organisms or formed abiotically
@@ -78,6 +78,19 @@
 
       \item \code{EOSregress()} and the associated demo and vignette have been
       removed.
+
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+
+      \item Add \code{stringsAsFactors = FALSE} to a \code{cbind()} call in
+      \code{mix()}, needed for \R < 4.0.0. Thanks to Xiaojia Jiang for the bug
+      report.
+
+      \item In \strong{multi-metal.Rmd}, work around absence of
+      \code{hcl.colors()} in \R < 3.6.0.
 
     }
   }

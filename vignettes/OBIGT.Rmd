@@ -355,7 +355,7 @@ Use `add.OBIGT("AD")` to load the data; see `demo(AD)` for an example.
 ## <a id="optional-AS04" class="anchor"></a> `r setfile("AS04.csv")`
 This file has data for aqueous SiO<sub>2</sub> from @AS04 and a HSiO<sub>3</sub><sup>-</sup> modified to be consistent with the SiO<sub>2</sub> here.
 This file also has H<sub>4</sub>SiO<sub>4</sub> from an earlier publication [@Ste01] that is roughly consistent with the SiO<sub>2</sub> here.
-Use `add.OBIGT("AS04")` to load the data; see the vignette [*Regressing thermodynamic data*](eos-regress.html) for an example.
+Use `add.OBIGT("AS04")` to load the data; see `demo(aluminum)` for an example.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```

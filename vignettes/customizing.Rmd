@@ -317,7 +317,7 @@ The function requires the name of a species and one or more properties to change
 ### `r mod.OBIGT_` for aqueous species
 
 Let's add data for CoCl<sub>4</sub><sup>-2</sup> from @LBT_11.
-The values are taken from Table 5 of that paper; as is common for parameters in the HKF model, they are reported in caloric units, and some of the values have multipliers, which are kept when entering the data.
+The values are taken from Table 5 of that paper; as is common for parameters in the HKF model, they are reported in caloric units.
 The entry includes the date in ISO 8601 extended format (e.g. 2020-08-16); `Sys.Date()` is used in this example to get the current date.
 ```{r mod.OBIGT__CoCl4_ghs}
 mod.OBIGT("CoCl4-2", formula = "CoCl4-2", state = "aq", ref1 = "LBT+11", E_units = "cal",
@@ -325,7 +325,7 @@ mod.OBIGT("CoCl4-2", formula = "CoCl4-2", state = "aq", ref1 = "LBT+11", E_units
 ```
 
 The function prints a message saying that the species was added, and returns the species index of the new species.
-Now let's modify the new species by adding the HKF coefficients.
+Now let's modify the new species by adding the HKF coefficients including the OOM multipliers, as they are usually given in publications.
 The `z` at the end refers to the charge of the species, and is used only for calculating the "*g* function" in the revised HKF model, not for balancing reactions.
 ```{r mod.OBIGT__CoCl4_eos}
 mod.OBIGT("CoCl4-2", a1 = 6.5467, a2 = 8.2069, a3 = 2.0130, a4 = -3.1183,

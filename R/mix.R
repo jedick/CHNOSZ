@@ -149,7 +149,7 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
       else paste(d1$names[combs[i, 1]], d2$names[combs[i, 2]], sep="+")
     })
   }
-  species <- cbind(species, ispecies, logact, state, name)
+  species <- cbind(species, ispecies, logact, state, name, stringsAsFactors = FALSE)
 
   # Get affinities for each combination of species
   v1 <- d1$values[combs[, 1]]

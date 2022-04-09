@@ -360,7 +360,8 @@ aFeVO4_vs_stable <- aFeVO4$values[[1]] - d11$predominant.values
 # Overlay lines from diagram on color map
 diagram(a11, fill = NA, names = FALSE, limit.water = FALSE)
 opar <- par(usr = c(0, 1, 0, 1))
-col <- rev(hcl.colors(128, palette = "YlGnBu", alpha = 0.8))
+col <- rev(topo.colors(128)) # No hcl.colors() in R < 3.6.0
+if(getRversion() >= "3.6.0") col <- rev(hcl.colors(128, palette = "YlGnBu", alpha = 0.8))
 image(aFeVO4_vs_stable, col = col, add = TRUE)
 par(opar)
 diagram(a11, fill = NA, add = TRUE, names = FALSE)
@@ -397,7 +398,7 @@ Given the diagram for the stable Fe-, V- and bimetallic materials *mixed with th
 This is plotted as a color map in the second diagram.
 (See the source of this vignette for the code used to make the scale bar.)
 
-```{r FeVO4, echo = 31:43, message = FALSE, results = "hide", fig.width = 11, fig.height = 5, out.width = "100%", pngquant = FALSE}
+```{r FeVO4, echo = 31:44, message = FALSE, results = "hide", fig.width = 11, fig.height = 5, out.width = "100%", pngquant = FALSE}
 ```
 
 Now we locate the pH and Eh that maximize the affinity (that is, minimize Δ*G*~pbx~) of FeVO~4~ compared to the stable species.
@@ -411,7 +412,7 @@ Eh <- d11$vals$Eh[imax[2]]
 points(pH, Eh, pch = 10, cex = 2, lwd = 2, col = "gold")
 stable <- d11$names[d11$predominant[imax]]
 text(pH, Eh, stable, adj = c(0.3, 2), cex = 1.2, col = "gold")
-range(aFeVO4_vs_stable[d11$predominant == d11$predominant[imax]])
+(Apbx <- range(aFeVO4_vs_stable[d11$predominant == d11$predominant[imax]]))
 ```
 
 Although one point is drawn on the diagram, FeVO~4~ has the same Pourbaix energy difference with respect to the entire Fe~2~O~3~ + Fe~2~V~4~O~13~ field, as shown by the `range()` command (the values are dimensionless values of affinity, *A*/(*RT*) = -Δ*G*~pbx~/(*RT*)).
@@ -420,13 +421,13 @@ This can occur only if the decomposition reaction has no free O~2~ or H~2~, and 
 To calculate the energy above the hull "by hand", let's set up the basis species to be the stable decomposition products we just found.
 O~2~ is also needed to make a square stoichiometric matrix (i.e. same number of elements and basis species), but it does not appear in the reaction to form FeVO~4~ from the basis species.
 `subcrt()` is used to automatically balance the formation reaction for 1 mole of FeVO~4~ and calculate the standard Gibbs energy of the reaction.
-The `convert()` command divides this value by *-RT* (which yields `r logK` of the reaction), showing the same result as calculated above from the Pourbaix diagram.
-The value of Δ*G*° in J/mol is converted to eV/mol, and finally eV/atom.
+We first test that `r logK` of the reaction (calculated with `convert()`, which divides Δ*G*° by *-RT*) is the same as the dimensionless affinity for FeVO~4~ calculated above.
+Then, the value of Δ*G*° in J/mol is converted to eV/mol, and finally eV/atom.
 
-```{r hull, echo = 1:7, message = FALSE}
+```{r hull, message = FALSE}
 b <- basis(c("Fe2O3", "Fe2V4O13", "O2"))
 J_mol <- subcrt("FeVO4", 1, T = 25)$out$G
-#convert(cal_mol, "logK")
+stopifnot(all.equal(rep(convert(J_mol, "logK"), 2), Apbx))
 eV_mol <- J_mol / 1.602176634e-19
 eV_atom <- eV_mol / 6.02214076e23 / 6
 round(eV_atom, 3)
