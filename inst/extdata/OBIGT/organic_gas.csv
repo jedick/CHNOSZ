@@ -1,4 +1,5 @@
 name,abbrv,formula,state,ref1,ref2,date,E_units,G,H,S,Cp,V,a1.a,a2.b,a3.c,a4.d,c1.e,c2.f,omega.lambda,z.T
+methane,CH4,CH4,gas,WEP+82,Kel60,1987-12-15,cal,-12122.4,-17880,44.518,NA,0,5.65,11.44,-0.46,0,0,0,0,1500
 "carbon monoxide",CO,CO,gas,Sho93.1,NA,1993-03-18,cal,-32784,-26416,47.245,6.965,0,6.79,0.98,-0.11,0,0,0,0,5000
 ethylene,C2H4,C2H4,gas,Sho93.1,NA,1993-09-22,cal,16280,12500,52.45,10.41,0,8.35,0.15,-2.29,0,0,0,0,1000
 phenol,C6H6O,C6H6O,gas,DSM+97.1,NA,1997-11-20,cal,-7860,-23030,75.4,24.5,0,30.424,27.016,-12.431,0,0,0,0,1000

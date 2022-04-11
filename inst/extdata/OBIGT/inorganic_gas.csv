@@ -1,6 +1,5 @@
 name,abbrv,formula,state,ref1,ref2,date,E_units,G,H,S,Cp,V,a1.a,a2.b,a3.c,a4.d,c1.e,c2.f,omega.lambda,z.T
 argon,Ar,Ar,gas,WEP+82,Kel60,1989-12-27,cal,0,0,37.008,NA,0,4.968,0,0,0,0,0,0,8000
-methane,CH4,CH4,gas,WEP+82,Kel60,1987-12-15,cal,-12122.4,-17880,44.518,NA,0,5.65,11.44,-0.46,0,0,0,0,1500
 "carbon dioxide",CO2,CO2,gas,WEP+82,Kel60,1989-12-27,cal,-94254,-94051,51.085,NA,0,10.57,2.1,-2.06,0,0,0,0,2500
 hydrogen,H2,H2,gas,WEP+82,Kel60,1989-12-27,cal,0,0,31.234,NA,0,6.52,0.78,0.12,0,0,0,0,3000
 "hydrogen sulfide",H2S,H2S,gas,WEP+82,Kel60,1989-12-27,cal,-8021,-4931,49.185,NA,0,7.81,2.96,-0.46,0,0,0,0,2300

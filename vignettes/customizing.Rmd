@@ -175,7 +175,7 @@ REQUIRED:
   The state can be one of `aq`, `gas`, or `cr`.
   For minerals with higher-temperature polymorphs, they are named `cr2`, `cr3`, etc.
   `r NOTE`: `cr` stands for "crystalline"; this naming convention (which was inherited from SUPCRT92 data files) refers to any solid phases including amorphous SiO<sub>2</sub> and other minerals.
-- A chemical `r formula` is required to do almost anything useful in CHNOSZ (e.g. check reaction balancing with `r subcrt_` and add species with `r basis_` or `r species_`). `r NOTE`: The convention has been adopted that the `r name` of aqueous species in OBIGT is the same as the chemical formula. Most minerals, gases, and liquids have a `r name` that is a common name.
+- A chemical `r formula` is required to do almost anything useful in CHNOSZ (e.g. check reaction balancing with `r subcrt_` and add species with `r basis_` or `r species_`). `r NOTE`: The `r name` of *inorganic* aqueous species *and CH<sub>4</sub>* in OBIGT is the same as the chemical formula. Most minerals, gases, liquids, and organic aqueous species have a `r name` that is a common name. This permits a shortcut to identify commonly used species in `r subcrt_`: `O2` without a state refers to dissolved oxygen, while `oxygen` refer to the gas.
 - Likewise, `E_units` needs to be specified to perform any calculations of thermodynamic properties. The value can be `J` for Joules or `cal` for calories.
 
 OPTIONAL: Everything else.

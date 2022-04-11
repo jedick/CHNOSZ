@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.9.9-12 (2022-04-07)}{
+\section{Changes in CHNOSZ version 1.9.9-14 (2022-04-11)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -31,20 +31,14 @@
   \subsection{OBIGT DATABASE}{
     \itemize{
 
-      \item Add the following \emph{Disclaimer} to the Aqueous Inorganic
-      section of \strong{OBIGT.Rmd}: To make the database easier to maintain,
-      inorganic and organic species have been placed into separate data files,
-      but some ambiguities surround the usage of these \emph{-ic} words in
-      different contexts. In particular, while CH\s{4} (methane) is classified
-      in chemistry as an organic compound, in nature it can be derived from
-      living organisms or formed abiotically
-      (\href{https://doi.org/10.1002/rog.20011}{Etiope and Sherwood Lollar,
-        2013}) – that is, through inorganic processes. For practical reasons,
-      CH\s{4} is placed in the \dQuote{inorganic} data files in OBIGT simply so
-      that the database can be pruned of organic compounds \emph{except}
-      CH\s{4} by running \code{OBIGT(no.organics = TRUE)}. The ability to
-      remove hundreds of more complex organic compounds while keeping CH\s{4}
-      is useful for some models of inorganic reactions in hydrothermal systems.
+      \item Move aqueous CH\s{4} back to \file{organic_aq.csv}. Thanks to
+      Irucka Embry for flagging this. Also move gaseous CH\s{4} from
+      \file{inorganic_gas.csv} to \file{organic_gas.csv}.
+      
+      \item Modify \code{OBIGT(no.organics = TRUE)} to prune the database of
+      organic compounds \emph{except} CH\s{4}. The ability to remove hundreds
+      of more complex organic compounds while keeping CH\s{4} is useful for
+      some models of inorganic reactions in hydrothermal systems.
 
       \item Merge \file{biotic_aq.csv} into \file{organic_aq.csv}.
 
@@ -58,8 +52,8 @@
       (\samp{G}, \samp{S}, and \samp{Cp} at 25 \degC) to formation constants of
       aqueous species as a function of temperature.
 
-      \item Add \code{zap} argument to \code{mod.OBIGT()} to clear parameters
-      of preexisting species.
+      \item Add a \strong{zap} argument to \code{mod.OBIGT()} to clear
+      parameters of preexisting species.
 
       \item Add vignette \strong{customizing.Rmd} with description of database
       format, data-entry conventions, and examples of customizing the

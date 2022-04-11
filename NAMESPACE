@@ -72,7 +72,7 @@ importFrom("graphics", "abline", "axTicks", "axis", "barplot", "box",
   "plot.new", "plot.window", "points", "rect", "text", "title")
 importFrom("stats", "D", "as.formula", "cor", "lm", "loess.smooth",
   "na.omit", "predict.lm", "qqline", "qqnorm", "sd", "splinefun",
-  "uniroot", "median", "predict", "smooth.spline", "optimize")
+  "uniroot", "median", "predict", "smooth.spline", "optimize", "formula")
 importFrom("utils", "browseURL", "capture.output", "combn", "demo",
   "example", "head", "installed.packages", "read.csv", "tail",
   "write.csv", "write.table", "read.table", "packageDescription")
