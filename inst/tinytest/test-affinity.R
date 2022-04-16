@@ -122,10 +122,6 @@ expect_equal(A.2303RT_max, A.2303RT_ref, tolerance = 1e-3, info = info)
 # TODO: add comparison with results from loading proteins via species()
 
 info <- "affinity() for proteins (with/without 'iprotein') returns same value as in previous package versions"
-# our test case is CSG_HALJP because it has no methionine
-# (aqueous [Met] was updated in 0.9-9)
-# these values were calculated using versions 0.6, 0.8 and 0.9-7
-# (25 degrees C, 1 bar, basis species "CHNOS" or "CHNOS+")
 A.2303RT.nonionized <- -3795.297
 A.2303RT.ionized <- -3075.222
 # first for nonionized protein

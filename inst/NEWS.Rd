@@ -31,9 +31,8 @@
   \subsection{OBIGT DATABASE}{
     \itemize{
 
-      \item Move aqueous CH\s{4} back to \file{organic_aq.csv}. Thanks to
-      Irucka Embry for flagging this. Also move gaseous CH\s{4} from
-      \file{inorganic_gas.csv} to \file{organic_gas.csv}.
+      \item Move aqueous CH\s{4} back to \file{organic_aq.csv} and move gaseous
+      CH\s{4} from \file{inorganic_gas.csv} to \file{organic_gas.csv}.
       
       \item Modify \code{OBIGT(no.organics = TRUE)} to prune the database of
       organic compounds \emph{except} CH\s{4}. The ability to remove hundreds
@@ -45,7 +44,7 @@
     }
   }
 
-  \subsection{NEW FEATURES}{
+  \subsection{NEW FEATURES: THERMODYNAMIC DATA}{
     \itemize{
 
       \item Add \code{logB_to_OBIGT()} to fit three thermodynamic parameters
@@ -59,6 +58,20 @@
       format, data-entry conventions, and examples of customizing the
       thermodynamic database using \code{add.OBIGT()}, \code{mod.OBIGT()}, and
       \code{logB_to_OBIGT()}.
+
+    }
+  }
+
+  \subsection{NEW FEATURES: PROTEINS}{
+    \itemize{
+
+      \item Add an \strong{as.residue} argument to \code{add.protein()} to
+      normalize amino acid compositions by protein length.
+
+      \item Add function \code{affinity_rank()} to calculate (sums of ranks of
+      affinities for species in designated groups) normalized by number of
+      species in each group. The output of the new function can be used by
+      \code{diagram()}.
 
     }
   }

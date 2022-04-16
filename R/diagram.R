@@ -44,10 +44,18 @@ diagram <- function(
   ## Check that eout is a valid object
   efun <- eout$fun
   if(length(efun)==0) efun <- ""
-  if(!(efun %in% c("affinity", "equilibrate") | grepl("solubilit", efun)))
-    stop("'eout' is not the output from affinity(), equilibrate(), solubility(), or solubilities()")
+  if(!(efun %in% c("affinity", "affinity_rank", "equilibrate") | grepl("solubilit", efun)))
+    stop("'eout' is not the output from one of these functions: affinity, affinity_rank, equilibrate, or solubility")
   # For solubilities(), default type is loga.balance 20210303
   if(grepl("solubilities", efun) & missing(type)) type <- "loga.balance"
+  # Check balance argument for affinity_rank() 20220416
+  if(efun == "affinity_rank") {
+    if(!identical(balance, 1)) {
+      if(!is.null(balance)) stop("balance = 1 or NULL is required for plotting output of affinity_rank()")
+      if(is.null(balance)) message("diagram: setting balance = 1 for plotting output of affinity_rank()")
+      balance <- 1
+    }
+  }
 
   ## 'type' can be:
   #    'auto'                - property from affinity() (1D) or maximum affinity (affinity 2D) (aout) or loga.equil (eout)

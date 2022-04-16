@@ -56,7 +56,9 @@ export(
 # added 20200716 or later
   "mash", "mix", "rebalance",
 # added 20220324
-  "logB_to_OBIGT"
+  "logB_to_OBIGT",
+# added 20220416
+  "affinity_rank"
 )
 
 # Load shared objects

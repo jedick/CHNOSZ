@@ -38,7 +38,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
 }
 
 \arguments{
-  \item{eout}{list, object returned by \code{\link{equilibrate}} or \code{\link{affinity}}}
+  \item{eout}{list, object returned by \code{\link{affinity}}, \code{\link{equilibrate}} or related functions}
   \item{type}{character, type of plot, or name of basis species whose activity to plot}
   \item{alpha}{logical or character (\samp{balance}), for speciation diagrams, plot degree of formation instead of activities?}
   \item{normalize}{logical, divide chemical affinities by balance coefficients and rescale activities to whole formulas?}
@@ -92,8 +92,8 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
 
 \details{
 
-This function displays diagrams representing either chemical affinities, or equilibrium chemical activities of species.
-The first argument is the output from \code{\link{affinity}}, \code{\link{equilibrate}}, or \code{\link{solubility}}.
+This function displays diagrams representing either chemical affinities or equilibrium chemical activities of species.
+The first argument is the output from \code{\link{affinity}}, \code{\link{affinity_rank}}, \code{\link{equilibrate}}, or \code{\link{solubility}}.
 0-D diagrams, at a single point, are shown as \code{\link{barplot}}s.
 1-D diagrams, for a single variable on the x-axis, are plotted as lines.
 2-D diagrams, for two variables, are plotted as predominance fields.
@@ -114,7 +114,7 @@ The names of the list are used to label the lines or fields for the summed activ
 
 Normalizing protein formulas by length gives \dQuote{residue equivalents} (Dick and Shock, 2011) that are useful for equilibrium calculations with proteins.
 \code{normalize} and \code{as.residue} are only usable when \code{eout} is the output from \code{affinity}, and only one can be TRUE.
-If \code{normalize} is TRUE, the strategy is to divide reactions (formulas and affinities) by protein length, calculate activities of residues in equilibrium, but plot corresponding activities of the proteins.
+If \code{normalize} is TRUE, formation reactions and their affinities are first divided by protein length, so equal activities of residue equivalents are considered; then, the residue activities are rescaled to whole proteins for making the plot.
 If \code{as.residue} is TRUE, no rescaling is performed, so the diagram represents activities of the residues, not the whole proteins.
 
 }

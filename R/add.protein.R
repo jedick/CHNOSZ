@@ -54,26 +54,31 @@ aasum <- function(aa, abundance=1, average=FALSE, protein=NULL, organism=NULL) {
   return(out)
 }
 
-add.protein <- function(aa) {
-  # add a properly constructed data frame of 
+add.protein <- function(aa, as.residue = FALSE) {
+  # Add a properly constructed data frame of 
   # amino acid counts to thermo()$protein
   thermo <- get("thermo", CHNOSZ)
   if(!identical(colnames(aa), colnames(thermo$protein)))
     stop("'aa' does not have the same columns as thermo()$protein")
-  # find any protein IDs that are duplicated
-  po <- paste(aa$protein, aa$organism, sep="_")
+  # Normalize by protein length if as.residue = TRUE 20220416
+  if(as.residue) {
+    pl <- protein.length(aa)
+    aa[, 5:25] <- aa[, 5:25] / pl
+  }
+  # Find any protein IDs that are duplicated
+  po <- paste(aa$protein, aa$organism, sep = "_")
   ip <- pinfo(po)
   ipdup <- !is.na(ip)
-  # now we're ready to go
+  # Now we're ready to go
   tp.new <- thermo$protein
   if(!all(ipdup)) tp.new <- rbind(tp.new, aa[!ipdup, ])
   if(any(ipdup)) tp.new[ip[ipdup], ] <- aa[ipdup, ]
   rownames(tp.new) <- NULL
   thermo$protein <- tp.new
   assign("thermo", thermo, CHNOSZ)
-  # return the new rownumbers
+  # Return the new rownumbers
   ip <- pinfo(po)
-  # make some noise
+  # Make some noise
   if(!all(ipdup)) message("add.protein: added ", nrow(aa)-sum(ipdup), " new protein(s) to thermo()$protein")
   if(any(ipdup)) message("add.protein: replaced ", sum(ipdup), " existing protein(s) in thermo()$protein")
   return(ip)

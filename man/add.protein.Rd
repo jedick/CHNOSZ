@@ -9,13 +9,14 @@
 }
 
 \usage{
-  add.protein(aa)
+  add.protein(aa, as.residue = FALSE)
   seq2aa(protein, sequence)
   aasum(aa, abundance = 1, average = FALSE, protein = NULL, organism = NULL)
 }
 
 \arguments{
   \item{aa}{data frame, amino acid composition in the format of \code{thermo()$protein}}
+  \item{as.residue}{logical, normalize by protein length?}
   \item{protein}{character, name of protein; numeric, indices of proteins (rownumbers of \code{\link{thermo}$protein})}
   \item{sequence}{character, protein sequence}
   \item{abundance}{numeric, abundances of proteins}
@@ -39,20 +40,23 @@ If \code{average} is TRUE the final sum is divided by the number of input compos
 The name used in the output is taken from the first row of \code{aa} or from \code{protein} and \code{organism} if they are specified.
 
 Given amino acid compositions returned by the \code{*aa} functions described above, \code{add.protein} adds them to \code{thermo()$protein} for use by other functions in CHNOSZ.
+Set \code{as.residue} to TRUE to normalize by protein length; each input amino acid composition is divided by the corresponding number of residues, with the result that the sum of amino acid frequencies for each protein is 1.
 The amino acid compositions of proteins in \code{aa} with the same name as one in \code{thermo()$protein} are replaced.
 The value returned by this function is the rownumbers of \code{thermo()$protein} that are added and/or replaced.
 }
 
 \examples{
 \dontshow{reset()}
-# manually adding a new protein
-# Human Gastric juice peptide 1
+# Get the amino acid composition of a protein sequence
+# (Human Gastric juice peptide 1)
 aa <- seq2aa("GAJU_HUMAN", "LAAGKVEDSD")
+# Add the protein to CHNOSZ
 ip <- add.protein(aa)
+# Calculate the protein length and chemical formula
 protein.length(ip) # 10
-# the chemical formula of this peptide
 as.chemical.formula(protein.formula(ip)) # "C41H69N11O18"
-# we can also calculate a formula without using add.protein
+
+# Calculate a formula without using add.protein
 aa <- seq2aa("pentapeptide_test", "ANLSG")
 as.chemical.formula(protein.formula(aa))
 }
