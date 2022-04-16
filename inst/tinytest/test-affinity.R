@@ -122,19 +122,20 @@ expect_equal(A.2303RT_max, A.2303RT_ref, tolerance = 1e-3, info = info)
 # TODO: add comparison with results from loading proteins via species()
 
 info <- "affinity() for proteins (with/without 'iprotein') returns same value as in previous package versions"
+# These values were calculated using versions 0.6, 0.8 and 0.9-7 (25 degrees C, 1 bar, basis species "CHNOS" or "CHNOS+")
 A.2303RT.nonionized <- -3795.297
 A.2303RT.ionized <- -3075.222
 # first for nonionized protein
 basis("CHNOS")
 # try it with iprotein
 ip <- pinfo("CSG_HALJP")
-expect_equal(affinity(iprotein = ip)$values[[1]][1], A.2303RT.nonionized, tolerance = 1e-5, info = info)
+expect_equal(affinity(iprotein = ip, loga.protein = -3)$values[[1]][1], A.2303RT.nonionized, tolerance = 1e-5, info = info)
 # then with the protein loaded as a species
 species("CSG_HALJP")
 expect_equal(affinity()$values[[1]][1], A.2303RT.nonionized, tolerance = 1e-5, info = info)
 # now for ionized protein
 basis("CHNOS+")
-expect_equal(affinity(iprotein = ip)$values[[1]][1], A.2303RT.ionized, tolerance = 1e-5, info = info)
+expect_equal(affinity(iprotein = ip, loga.protein = -3)$values[[1]][1], A.2303RT.ionized, tolerance = 1e-5, info = info)
 species("CSG_HALJP")
 expect_equal(affinity()$values[[1]][1], A.2303RT.ionized, tolerance = 1e-5, info = info)
 

@@ -9,7 +9,7 @@ Calculate the chemical affinities of formation reactions of species.
 \usage{
   affinity(..., property = NULL, sout = NULL, exceed.Ttr = FALSE,
     exceed.rhomin = FALSE, return.buffer = FALSE, return.sout = FALSE,
-    balance = "PBB", iprotein = NULL, loga.protein = -3, transect = NULL)
+    balance = "PBB", iprotein = NULL, loga.protein = 0, transect = NULL)
 }
 
 \arguments{
