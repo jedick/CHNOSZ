@@ -9,7 +9,7 @@ examples <- function(save.png=FALSE) {
     "util.array", "util.data", "util.expression", "util.legend", "util.plot",
     "util.fasta", "util.formula", "util.misc", "util.seq", "util.units",
     "util.water", "taxonomy", "info", "retrieve", "add.OBIGT", "protein.info",
-    "hkf", "water", "IAPWS95", "subcrt", "Berman",
+    "water", "IAPWS95", "subcrt", "Berman",
     "makeup", "basis", "swap.basis", "species", "affinity",
     "solubility", "equilibrate", 
     "diagram", "mosaic", "mix",

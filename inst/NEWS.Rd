@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.9.9-16 (2022-04-16)}{
+\section{Changes in CHNOSZ version 1.9.9-17 (2022-04-18)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -37,7 +37,7 @@
       \item Modify \code{OBIGT(no.organics = TRUE)} to prune the database of
       organic compounds \emph{except} CH\s{4}. The ability to remove hundreds
       of more complex organic compounds while keeping CH\s{4} is useful for
-      some models of inorganic reactions in hydrothermal systems.
+      some models of non-biological reactions in hydrothermal systems.
 
       \item Merge \file{biotic_aq.csv} into \file{organic_aq.csv}.
 
@@ -64,6 +64,9 @@
 
       \item Add an \strong{as.residue} argument to \code{add.protein()} to
       normalize amino acid compositions by protein length.
+
+      \item Add a check to \code{add.protein()} that all new protein IDs
+      (protein name + organism name) are unique.
 
       \item Add function \code{affinity_rank()} to calculate (sums of ranks of
       affinities for species in designated groups) normalized by number of

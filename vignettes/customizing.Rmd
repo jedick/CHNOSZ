@@ -203,7 +203,7 @@ Note that a missing (blank) value in the file is treated as NA.
 
 If an "equation-of-state" or heat capacity coefficient (Columns 14-20) is unknown, use 0.
 
-- Furthermore, if you would like to assume that `r Cp_` or V is 0, then set it to 0.
+- Furthermore, if you would like to assume that `r Cp_` or `r V_` is 0, then set it to 0.
   - Thermodynamic properties will be extrapolated to T > 25 °C and P > 1 bar assuming that `r Cp_` and `r V_` are 0.
 
 More detail on the inner working of the functions: For both HKF and CGL, if at least one parameter for a species is provided, any NA values of the other parameters are taken to be zero.
@@ -226,7 +226,8 @@ This is a summary of its main features:
 - Calculate a missing `r Cp_` or `r V_` from the `r model` parameters, if possible.
 - Cross-check `r Cp_` or `r V_` (if present) against the `r model` parameters, if possible, and print a message if the difference is above a threshold (see `?checkEOS`).
 
-`r NOTE`: `r info_` does **NOT** change the units; the values it displays (including possibly calculated ones) correspond to the `r E.units_` for that species. On the other hand, `r subcrt_` outputs values in the units selected with `r E.units_`.
+`r NOTE`: `r info_` does **NOT** change the units of energy; the values it displays (including possibly calculated ones) correspond to the `r E_units` for that species in OBIGT.
+On the other hand, `r subcrt_` outputs values in the units previously selected with the function `r E.units_`.
 
 <!-- ######## SECTION MARKER ######## -->
 ## Case study: NA and 0 in the default database
