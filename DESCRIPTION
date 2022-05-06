@@ -1,6 +1,6 @@
 Date: 2022-05-06
 Package: CHNOSZ
-Version: 1.9.9-17
+Version: 1.9.9-18
 Title: Thermodynamic Calculations and Diagrams for Geochemistry
 Authors@R: c(
     person("Jeffrey", "Dick", , "j3ffdick@gmail.com", role = c("aut", "cre"),
@@ -28,6 +28,6 @@ Description: An integrated set of tools for thermodynamic calculations in
   also implements a group additivity algorithm for the standard thermodynamic
   properties of proteins.
 Encoding: UTF-8
-License: GPL (>= 2)
+License: GPL-3
 VignetteBuilder: knitr
 URL: http://www.chnosz.net/, http://chnosz.r-forge.r-project.org/
