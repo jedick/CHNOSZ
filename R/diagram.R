@@ -124,9 +124,12 @@ diagram <- function(
     })
     names(plotvals) <- names(eout$values)
     plotvar <- eout$property
-    # we change 'A' to 'A/(2.303RT)' so the axis label is made correctly
-    # 20171027 use parentheses to avoid ambiguity about order of operations
-    if(plotvar=="A") {
+    if(efun == "affinity_rank") {
+      plotvar <- "affinity_rank"
+      message(paste("diagram: plotting average affinity ranking for", length(plotvals), "groups"))
+    } else if(plotvar=="A") {
+      # we change 'A' to 'A/(2.303RT)' so the axis label is made correctly
+      # 20171027 use parentheses to avoid ambiguity about order of operations
       plotvar <- "A/(2.303RT)"
       if(nd==2 & type=="auto") message("diagram: using maximum affinity method for 2-D diagram")
       else if(nd==2 & type=="saturation") message("diagram: plotting saturation lines for 2-D diagram")
@@ -200,7 +203,7 @@ diagram <- function(
   ## identify predominant species
   predominant <- NA
   H2O.predominant <- NULL
-  if(plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)") & type!="saturation") {
+  if(plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)", "affinity_rank") & type!="saturation") {
     pv <- plotvals
     # some additional steps for affinity values, but not for equilibrated activities
     if(eout.is.aout) {
@@ -349,6 +352,7 @@ diagram <- function(
         if(missing(xlab)) xlab <- axis.label(eout$vars[1], basis=eout$basis, molality=molality)
         if(missing(ylab)) {
           ylab <- axis.label(plotvar, units="", molality=molality)
+          if(plotvar == "affinity_rank") ylab <- "Average affinity ranking"
           # use ppb, ppm, ppt (or log ppb etc.) for converted values of solubility 20190526
           if(grepl("solubility.", eout$fun, fixed=TRUE)) {
             ylab <- strsplit(eout$fun, ".", fixed=TRUE)[[1]][2]
@@ -558,23 +562,20 @@ diagram <- function(
           # DEFAULT method: loop over species
           for(i in 1:(length(zvals)-1)) {
             # get the "z" values
-            z <- predominant
-            # assign values to get one contour line between this species and all others
-            i0 <- z==zvals[i]
-            i1 <- z!=zvals[i]
-            z[i0] <- 0
-            z[i1] <- 1
+            # Use + 0 trick to convert T/F to 1/0 20220524
+            z <- (predominant == zvals[i]) + 0
+            z[is.na(z)] <- 0
             # use contourLines() instead of contour() in order to get line coordinates 20181029
             cLines <- contourLines(xs, ys, z, levels = 0.5)
             if(length(cLines) > 0) {
               # loop in case contourLines returns multiple lines
               for(k in 1:length(cLines)) {
                 # draw the lines
-                lines(cLines[[k]][2:3], lty = lty[i], col = col[i], lwd = lwd[i])
+                lines(cLines[[k]][2:3], lty = lty[zvals[i]], col = col[zvals[i]], lwd = lwd[zvals[i]])
               }
             }
             # mask species to prevent double-plotting contour lines
-            predominant[i0] <- NA
+            predominant[z == zvals[i]] <- NA
           }
 
         } else {
@@ -595,7 +596,7 @@ diagram <- function(
                 # loop in case contourLines returns multiple lines
                 for(k in 1:length(cLines)) {
                   # draw the lines
-                  mylty <- lty[i]
+                  mylty <- lty[zvals[i]]
                   if(!is.null(lty.cr)) {
                     # use lty.cr for cr-cr boundaries 20190530
                     if(all(grepl("cr", eout$species$state[c(zvals[i], zvals[j])]))) mylty <- lty.cr
@@ -604,7 +605,7 @@ diagram <- function(
                     # use lty.aq for aq-aq boundaries 20190531
                     if(all(grepl("aq", eout$species$state[c(zvals[i], zvals[j])]))) mylty <- lty.aq
                   }
-                  lines(cLines[[k]][2:3], lty = mylty, col = col[i], lwd = lwd[i])
+                  lines(cLines[[k]][2:3], lty = mylty, col = col[zvals[i]], lwd = lwd[zvals[i]])
                 }
               }
             }

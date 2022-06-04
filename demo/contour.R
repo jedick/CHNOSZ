@@ -17,7 +17,7 @@ blend <- TRUE
 basis(c("Au", "Cl-", "H2S", "H2O", "oxygen", "H+"))
 iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
 species(iaq)
-# This get us close to total S = 0.01 m
+# This gets us close to total S = 0.01 m
 basis("H2S", -2)
 # Calculate solution composition for 1 mol/kg NaCl
 NaCl <- NaCl(T = T, P = P, m_tot=1)

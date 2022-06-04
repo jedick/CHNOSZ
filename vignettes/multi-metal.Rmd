@@ -69,7 +69,7 @@ logK <- "log&thinsp;<i>K</i>"
 ## Resolution settings
 # Change this to TRUE to make high-resolution plots
 # (default is FALSE to save time in CRAN checks)
-hires <- FALSE
+hires <- TRUE
 res1.lo <- 150
 res1.hi <- 256
 res1 <- ifelse(hires, res1.hi, res1.lo)
@@ -385,7 +385,7 @@ box()
 # To get the limits, convert range of affinities to eV/atom
 arange <- rev(range(aFeVO4_vs_stable))
 # This gets us to J/mol
-Jrange <- convert(convert(arange, "G"), "J")
+Jrange <- convert(arange, "G")
 # And to eV/atom
 eVrange <- Jrange / 1.602176634e-19 / 6.02214076e23 / 6
 ylim <- formatC(eVrange, digits = 3, format = "f")
@@ -487,9 +487,10 @@ FeCu.abbrv <- c("Ccp", "Bn", "Cu", "Cpr", "Tnr", "Cct", "Cv")
 species(c(FeCu.cr, Cu.cr))
 mFeCu <- mosaic(list(S.aq, Fe.cr), pH = pH, O2 = O2,
               T = T, stable = list(NULL, dFe$predominant))
-diagram(mFeCu$A.species, add = TRUE, col = 2, col.names = 2, bold = TRUE, names = FeCu.abbrv, dy = c(0, 0, 0, 0, 0, 1, 0))
-col <- c("#FF8C00", rep(NA, 6))
-diagram(mFeCu$A.species, add = TRUE, col = col, lwd = 2, col.names = col, bold = TRUE, names = FeCu.abbrv)
+col <- c("#FF8C00", rep(2, 6))
+lwd <- c(2, 1, 1, 1, 1, 1, 1)
+dy = c(0, 0, 0, 0, 0, 1, 0)
+diagram(mFeCu$A.species, add = TRUE, col = col, lwd = lwd, col.names = col, bold = TRUE, names = FeCu.abbrv, dy = dy)
 TPS <- c(describe.property(c("T", "P"), c(T, "Psat")), expression(sum(S) == 0.01*m))
 legend("topright", TPS, bty = "n")
 title("Cu-Fe-S-O-H (minerals only)", font.main = 1)
@@ -506,7 +507,7 @@ The result is used to plot the last layer of the diagram:
 
 After that we add the legend and title.
 
-```{r stack1_2, echo=5:16, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
+```{r stack1_2, echo=5:17, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
 ```
 
 This diagram has a distinctive  chalcopyrite "hook" surrounded by a thin bornite field.
@@ -547,11 +548,6 @@ Sexpr <- as.expression(bquote(sum(S) == .(10^logmS)*m))
 NaClexpr <- as.expression(bquote(NaCl == .(m_NaCl)*m))
 aqexpr <- as.expression(bquote("("*aq*")"[italic(i)] == 10^.(logm_aq)*m))
 
-
-
-
-
-
 # Setup basis species
 basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+", "Cl-"))
 basis("H2S", logmS)
@@ -570,22 +566,21 @@ species(c(FeCu.cr, Cu.cr))
 # Add aqueous species 20210220
 species(iCu.aq, logm_aq, add = TRUE)
 
-
-
-
-
-
-# TODO: limitation in mosaic() when using both solid and aqueous basis species (i.e. c(Fe.cr, Fe.aq)):
+# NOTE: limitation in mosaic() when using both solid and aqueous basis species (i.e. c(Fe.cr, Fe.aq)):
 #   Only the activity of the first-defined basis species is used for all basis species.
 #   The first-defined basis species is pyrite (logact = 0), but logact < 0 for the aq Fe species.
 # Workaround: Adjust standard Gibbs energies of aq Fe species to virtually change their activities
-DG <- convert(-logm_aq, "G", T = convert(T, "K"))
+DG_J <- convert(-logm_aq, "G", T = convert(T, "K"))
+# We should use calories here because the database values are in calories 20220604
+stopifnot(all(info(iFe.aq)$E_units == "cal"))
+DG_cal <- convert(DG_J, "cal")
 G.orig <- info(iFe.aq)$G
-G.new <- G.orig + DG
+G.new <- G.orig + DG_cal
 mod.OBIGT(iFe.aq, G = G.new)
 
+## Mosaic with all Fe species as basis species
 #mFeCu <- mosaic(list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, stable = list(NULL, dFe$predominant))
-# Use only predominant species as basis species (to speed up calculation) 20210224
+# Use only predominant Fe species as basis species (to speed up calculation) 20210224
 predom <- dFe$predominant
 ipredom <- sort(unique(as.numeric(predom)))
 for(i in seq_along(ipredom)) predom[dFe$predominant == ipredom[i]] <- i
@@ -610,14 +605,15 @@ dx[names == "CuCl2-"] <- -1
 dy[names == "CuCl2-"] <- 2
 cex[names == "Bn"] <- 0.8
 srt[names == "Bn"] <- 85
-diagram(mFeCu$A.species, add = TRUE, col = 2, col.names = 2, names = names, bold = bold, dx = dx, dy = dy, cex.names = cex, srt = srt)
+# Highlight Ccp field
+col.names <- col <- rep(2, nrow(mFeCu$A.species$species))
+col[1] <- "#FF8C00"
+col.names[1] <- "#FF8C00"
+lwd <- rep(1, nrow(mFeCu$A.species$species))
+lwd[1] <- 2
+diagram(mFeCu$A.species, add = TRUE, lwd = lwd, col = col, col.names = col.names, names = names, bold = bold, dx = dx, dy = dy, cex.names = cex, srt = srt)
 # Add second Cu label
 text(12.3, -47, "Cu", col = 2, font = 2)
-# Highlight Bn-Ccp reaction
-col.names <- col <- rep(NA, nrow(mFeCu$A.species$species))
-col[3] <- "#FF8C00"
-col.names[1] <- "#FF8C00"
-diagram(mFeCu$A.species, add = TRUE, col = col, lwd = 2, col.names = col.names, bold = TRUE, names = names, fill = NA)
 
 # Plot the Fe-system lines and names "on top" so they are not covered by fill colors
 diagram(mFe$A.bases, add = TRUE, lty = 2, col = 4, names = FALSE, fill = NA)
@@ -843,16 +839,21 @@ logK <- subcrt(c("CuCl2-", "Cu+", "Cl-"), c(-1, 1, 2), T = T)$out$logK
 # Sverjensky (1987) used Helgeson (1969) value, which is ca. -5.2
 dlogK <- logK - -5.2
 # Calculate the difference in ΔG° corresponding to this logK difference
-dG <- convert(dlogK, "G", T = convert(T, "K"))
+dG_J <- convert(dlogK, "G", T = convert(T, "K"))
+# We should use calories here because the database values are in calories 20220604
+stopifnot(info(info("CuCl2-"))$E_units == "cal")
+dG_cal <- convert(dG_J, "cal")
 # Apply this difference to the CuCl2- entry in OBIGT
-newG <- info(info("CuCl2-"))$G + dG
+newG <- info(info("CuCl2-"))$G + dG_cal
 mod.OBIGT("CuCl2-", G = newG)
 
 # Do the same thing for CuCl3-2
 logK <- subcrt(c("CuCl3-2", "Cu+", "Cl-"), c(-1, 1, 3), T = T)$out$logK
 dlogK <- logK - -5.6
-dG <- convert(dlogK, "G", T = convert(T, "K"))
-newG <- info(info("CuCl3-2"))$G + dG
+dG_J <- convert(dlogK, "G", T = convert(T, "K"))
+stopifnot(info(info("CuCl3-2"))$E_units == "cal")
+dG_cal <- convert(dG_J, "cal")
+newG <- info(info("CuCl3-2"))$G + dG_cal
 mod.OBIGT("CuCl3-2", G = newG)
 
 # DIAGRAM 2

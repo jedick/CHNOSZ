@@ -46,7 +46,7 @@ arank <- affinity_rank(aout, groups = groups)
 nspecies <- sapply(groups, sum)
 names <- paste0(names(groups), " (", nspecies, ")")
 diagram(arank, fill = "terrain", font = 2, names = names, format.names = FALSE)
-title("Chemical affinity ranking of Rubisco proteins")
+title("Average affinity ranking of Rubisco proteins")
 }
 
 \concept{Extended workflow}

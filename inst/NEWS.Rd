@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.9.9-17 (2022-04-18)}{
+\section{Changes in CHNOSZ version 1.9.9-19 (2022-06-04)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -85,6 +85,8 @@
       \item Change default for \code{affinity()} to \code{loga.protein = 0}
       (was -3).
 
+      \item Change license from GPL (>= 2) to GPL-3.
+
     }
   }
 
@@ -110,6 +112,17 @@
 
       \item In \strong{multi-metal.Rmd}, work around absence of
       \code{hcl.colors()} in \R < 3.6.0.
+
+      \item \code{diagram()}: Improve handling of length > 2 \code{col},
+      \code{lty} and \code{lwd} arguments for predominance diagrams. Because
+      field boundaries are drawn for the first species, then removing that
+      species before drawing boundaries for the second species, etc., species
+      for which different-colored or -styled lines are desired should be placed
+      at the top of the species list. This change makes possible one less call
+      to \code{diagram()} in the Mosaic Stacking sections in
+      \strong{multi-metal.Rmd}, and now the entire chalcopyrite field in Mosaic
+      Stacking 2 is bounded by a thick orange line, instead of just the
+      border shared with bornite.
 
     }
   }
