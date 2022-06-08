@@ -34,9 +34,6 @@ expect_equal(testent, c(63.83843212237, 55.74952198853, 15.61663479924), info = 
 testGHS <- GHS("H2O", G = 0, H = 0)
 expect_equal(as.numeric(testGHS[1, 3]), testent[2], info = info)
   
-info <- "expr.species() produces expected errors"
-expect_error(expr.species(c("H2O", "CO2")), "more than one species", info = info)
-
 info <- "[P|T|E].units() do not accept invalid units"
 expect_error(P.units("X"), "units of pressure must be either bar or MPa", info = info)
 expect_error(T.units("X"), "units of temperature must be either C or K", info = info)

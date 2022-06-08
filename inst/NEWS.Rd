@@ -124,6 +124,10 @@
       Stacking 2 is bounded by a thick orange line, instead of just the
       border shared with bornite.
 
+      \item Improve handling of non-integer coefficients in
+      \code{expr.species()}. The result for FeS1.33 was previously equivalent
+      to FeS[.33] but is now shown correctly as FeS[1.33].
+
     }
   }
 

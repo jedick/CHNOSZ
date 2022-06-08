@@ -324,18 +324,19 @@ split.formula <- function(formula) {
   ## like makeup(), but split apart the formula based on
   ## numbers (subscripts); don't scan for elemental symbols 20171018
   # if there are no numbers or charge, return the formula as-is
-  if(! (grepl("[0-9]", formula) | grepl("\\+[0-9]?$", formula) | grepl("-[0-9]?$", formula))) return(formula)
+  # Change [0-9]? to [\\.0-9]* (recognize decimal point in numbers, recognize charge longer than one digit) 20220608
+  if(! (grepl("[\\.0-9]", formula) | grepl("\\+[\\.0-9]*$", formula) | grepl("-[\\.0-9]*$", formula))) return(formula)
   # first split off charge
   # (assume that no subscripts are signed)
   Z <- 0
-  hascharge <- grepl("\\+[0-9]?$", formula) | grepl("-[0-9]?$", formula)
+  hascharge <- grepl("\\+[\\.0-9]*$", formula) | grepl("-[\\.0-9]*$", formula)
   if(hascharge) {
     # for charge, we match + or - followed by zero or more numbers at the end of the string
-    if(grepl("\\+[0-9]?$", formula)) {
+    if(grepl("\\+[\\.0-9]*$", formula)) {
       fsplit <- strsplit(formula, "+", fixed=TRUE)[[1]]
       if(is.na(fsplit[2])) Z <- 1 else Z <- as.numeric(fsplit[2])
     }
-    if(grepl("-[0-9]?$", formula)) {
+    if(grepl("-[\\.0-9]*$", formula)) {
       fsplit <- strsplit(formula, "-")[[1]]
       # for formula=="H-citrate-2", unsplit H-citrate
       if(length(fsplit) > 2) {
@@ -349,10 +350,10 @@ split.formula <- function(formula) {
   }
   # to get strings, replace all numbers with placeholder (#), then split on that symbol
   # the outer gsub is to replace multiple #'s with one
-  numhash <- gsub("#+", "#", gsub("[0-9]", "#", formula))
+  numhash <- gsub("#+", "#", gsub("[\\.0-9]", "#", formula))
   strings <- strsplit(numhash, "#")[[1]]
   # to get coefficients, replace all characters (non-numbers) with placeholder, then split
-  charhash <- gsub("#+", "#", gsub("[^0-9]", "#", formula))
+  charhash <- gsub("#+", "#", gsub("[^\\.0-9]", "#", formula))
   coeffs <- strsplit(charhash, "#")[[1]]
   # if the first coefficient is empty, remove it
   if(coeffs[1]=="") coeffs <- tail(coeffs, -1) else {
