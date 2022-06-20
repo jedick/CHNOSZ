@@ -31,6 +31,10 @@ The reaction coefficients in the \code{species} element of the returned value of
 Because balancing on a basis species (i.e., dividing by its reaction coefficient) would be incorrect, \code{diagram} enforces \code{balance = 1} so that that the normalized sums of ranks are used as-is.
 }
 
+\seealso{
+\code{demo("rank_affinity")}
+}
+
 \examples{
 \dontshow{reset()}# Compare Rubisco proteins from three domains
 datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")

@@ -44,6 +44,9 @@
     \item \code{POLG.csv}
       Amino acid compositions of a few proteins used for some tests and examples.
       These are various subunits of the Poliovirus type 1 polyprotein (POLG_POL1M in UniProt).
+    \item \code{TBD+05.csv} lists genes with transcriptomic expression changes in carbon limitation stress response experiments in yeast (Tai et al., 2005).
+    \item \code{TBD+05_aa.csv} has the amino acid compositions of proteins coded by those genes.
+      The last two files are used in \code{demo{"rank_affinity"}}.
   }
 
   Files in \code{taxonomy} contain taxonomic data files:
@@ -103,6 +106,8 @@ Shock, E. L. and Koretsky, C. M. (1995) Metal-organic complexes in geochemical p
 Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \doi{10.1039/FT9928800803}
 
 Shock, E. L. and Schulte, M. D. (1998) Organic synthesis during fluid mixing in hydrothermal systems. \emph{J. Geophys. Res.} \bold{103}, 28513--28527. \doi{10.1029/98JE02142}
+
+Tai, S. L., Boer, V. M., Daran-Lapujade, P., Walsh, M. C., de Winde, J. H., Daran, J.-M. and Pronk, J. T. (2005) Two-dimensional transcriptome analysis in chemostat cultures: Combinatorial effects of oxygen availability and macronutrient limitation in \emph{Saccharomyces cerevisiae}. \emph{J. Biol. Chem.} \bold{280}, 437--447. \url{https://doi.org/10.1074/jbc.M410573200}
 
 Tutolo, B. M., Kong, X.-Z., Seyfried, W. E., Jr. and Saar, M. O. (2014) Internal consistency in aqueous geochemical data revisited: Applications to the aluminum system. \emph{Geochim. Cosmochim. Acta} \bold{133}, 216--234. \doi{10.1016/j.gca.2014.02.036}
 
