@@ -446,6 +446,8 @@ reset()
 
 ## Mosaic Stacking 1
 
+*For a function that implements the workflow described below, see `stack_mosaic()` (added in CHNOSZ 2.0.0).*
+
 A mosaic diagram shows the effects of changing basis species on the stabilities of minerals.
 The Fe-S-O-H system is a common example: the speciation of aqueous sulfur species affects the stabilities of iron oxides and sulfides.
 Examples of mosaic diagrams with Fe or other single metals are given elsewhere.

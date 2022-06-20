@@ -58,7 +58,9 @@ export(
 # added 20220324
   "logB_to_OBIGT",
 # added 20220416
-  "rank_affinity"
+  "rank_affinity",
+# added 20220620
+  "stack_mosaic", "add_alpha"
 )
 
 # Load shared objects
@@ -68,7 +70,7 @@ useDynLib(CHNOSZ, .registration = TRUE, .fixes = "C_")
 # Imports from default packages
 importFrom("grDevices", "dev.cur", "dev.off", "extendrange",
   "heat.colors", "png", "rainbow", "topo.colors", "dev.list",
-  "contourLines")
+  "contourLines", "col2rgb", "rgb")
 importFrom("graphics", "abline", "axTicks", "axis", "barplot", "box",
   "contour", "image", "legend", "lines", "mtext", "par", "plot",
   "plot.new", "plot.window", "points", "rect", "text", "title")

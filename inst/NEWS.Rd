@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.9.9-22 (2022-06-20)}{
+\section{Changes in CHNOSZ version 1.9.9-24 (2022-06-20)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -59,33 +59,31 @@
     }
   }
 
+  \subsection{NEW FEATURES: DIAGRAMS}{
+    \itemize{
+
+      \item Add \code{stack_mosaic()} to create stacked mosaic diagrams, where
+      the species formed in the first layer become the basis species for the
+      species formed in the second layer. This function implements the main
+      steps for making mosaic diagrams for bimetallic systems described in
+      \strong{multi-metal.Rmd}.
+
+    }
+  }
+
   \subsection{NEW FEATURES: PROTEINS}{
     \itemize{
+
+      \item Add function and demo for \code{rank_affinity()} to calculate means
+      of affinity rankings for specified groups of proteins, intended for
+      evolutionary comparisons. The output of the new function can be used by
+      \code{diagram()}.
 
       \item Add an \strong{as.residue} argument to \code{add.protein()} to
       normalize amino acid compositions by protein length.
 
       \item Add a check to \code{add.protein()} that all new protein IDs
       (protein name + organism name) are unique.
-
-      \item Add function and demo for \code{rank_affinity()} to calculate (sums
-      of ranks of affinities for species in designated groups) normalized by
-      number of species in each group. The output of the new function can be
-      used by \code{diagram()}.
-
-    }
-  }
-
-  \subsection{OTHER CHANGES}{
-    \itemize{
-
-      \item Add a \strong{zap} argument to \code{mod.OBIGT()} to clear
-      parameters of preexisting species (used by \code{logB_to_OBIGT()}).
-
-      \item Change default for \code{affinity()} to \code{loga.protein = 0}
-      (was -3).
-
-      \item Change license from GPL (>= 2) to GPL-3.
 
     }
   }
@@ -117,18 +115,32 @@
 
       \item \code{diagram()}: Improve handling of length > 2 \code{col},
       \code{lty} and \code{lwd} arguments for predominance diagrams. Because
-      field boundaries are drawn for the first species, then removing that
-      species before drawing boundaries for the second species, etc., species
-      for which different-colored or -styled lines are desired should be placed
-      at the top of the species list. This change makes possible one less call
-      to \code{diagram()} in the Mosaic Stacking sections in
+      field boundaries are drawn for the first species, then that species is
+      removed before drawing boundaries for the second species, and so on,
+      species for which different-colored or -styled lines are desired should
+      be placed at the top of the species list. This change makes possible one
+      less call to \code{diagram()} in the Mosaic Stacking sections in
       \strong{multi-metal.Rmd}, and now the entire chalcopyrite field in Mosaic
-      Stacking 2 is bounded by a thick orange line, instead of just the
-      border shared with bornite.
+      Stacking 2 is bounded by a thick orange line, instead of just the border
+      shared with bornite.
 
       \item Improve handling of non-integer coefficients in
       \code{expr.species()}. The result for FeS1.33 was previously equivalent
       to FeS[.33] but is now shown correctly as FeS[1.33].
+
+    }
+  }
+
+  \subsection{OTHER CHANGES}{
+    \itemize{
+
+      \item Add a \strong{zap} argument to \code{mod.OBIGT()} to clear
+      parameters of preexisting species (used by \code{logB_to_OBIGT()}).
+
+      \item Change default for \code{affinity()} to \code{loga.protein = 0}
+      (was -3).
+
+      \item Change license from GPL (>= 2) to GPL-3.
 
     }
   }

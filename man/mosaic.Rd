@@ -55,6 +55,7 @@ If \code{blend} is TRUE, the output also contains \code{E.bases} (the output of 
 \seealso{
 \code{demo("mosaic")}, which extends the example below with carbonate species in order to plot a siderite field.
 To calculate mineral solubilities with mosaic calculations that account for ligand speciation, use \code{bases} as the first argument to \code{\link{solubility}}.
+\code{\link{stack_mosaic}} implements calculations for bimetallic systems.
 }
 
 \examples{
