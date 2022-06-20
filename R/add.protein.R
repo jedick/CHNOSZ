@@ -4,7 +4,6 @@
 
 # add.protein - add amino acid counts to thermo()$protein (returns iprotein)
 # seq2aa - calculate amino acid counts from a sequence
-# aasum - combine amino acid counts (sum, average, or weighted sum by abundance)
 
 seq2aa <- function(protein, sequence) {
   # remove newlines and whitespace
@@ -20,38 +19,6 @@ seq2aa <- function(protein, sequence) {
   aa <- data.frame(protein=po[1], organism=po[2], ref=NA, abbrv=NA, stringsAsFactors=FALSE)
   aa <- cbind(aa, chains=1, caa)
   return(aa)
-}
-
-aasum <- function(aa, abundance=1, average=FALSE, protein=NULL, organism=NULL) {
-  # returns the sum of the amino acid counts in aa,
-  # multiplied by the abundances of the proteins
-  abundance <- rep(abundance, length.out=nrow(aa))
-  # drop any NA rows or abundances
-  ina.aa <- is.na(aa$chains)
-  ina.ab <- is.na(abundance)
-  ina <- ina.aa | ina.ab
-  if(any(ina)) {
-    aa <- aa[!ina, ]
-    abundance <- abundance[!ina]
-    message("aasum: dropped ", sum(ina), " proteins with NA composition and/or abundance")
-  }
-  # we don't know how to deal with different numbers of polypeptide chains
-  if(!all(aa$chains==aa$chains[1])) stop("different numbers of polypeptide chains")
-  # multiply
-  aa[, 6:25] <- aa[, 6:25] * abundance
-  # sum
-  out <- aa[1, ]
-  out[, 5:25] <- colSums(aa[, 5:25])
-  # average if told to do so
-  if(average) {
-    # polypeptide chains by number of proteins, residues by frequence
-    out[, 5] <- out[, 5]/nrow(aa)
-    out[, 6:25] <- out[, 6:25]/sum(abundance)
-  }
-  # add protein and organism names if given
-  if(!is.null(protein)) out$protein <- protein
-  if(!is.null(organism)) out$organism <- organism
-  return(out)
 }
 
 add.protein <- function(aa, as.residue = FALSE) {

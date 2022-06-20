@@ -100,6 +100,8 @@
       \item \code{EOSregress()} and the associated demo and vignette have been
       removed.
 
+      \item Remove \code{aasum()}.
+
     }
   }
 

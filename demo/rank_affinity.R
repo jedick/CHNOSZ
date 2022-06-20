@@ -5,12 +5,13 @@
 library(CHNOSZ)
 
 # Experimental data are from Tai et al. (2005)
+# https://doi.org/10.1074/jbc.M410573200
 file <- system.file("extdata/protein/TBD+05.csv", package = "CHNOSZ")
 dat <- read.csv(file, row.names = 1, check.names = FALSE)
 
-# The activities of ammonium and sulfate used here
-# are similar to the non-growth-limiting concentrations
-# used by Boer et al. (2003)
+# The activities of ammonium and sulfate are similar to the
+# non-growth-limiting concentrations used by Boer et al. (2003)
+# https://doi.org/10.1074/jbc.M209759200 
 basis(c("glucose", "H2O", "NH4+", "oxygen", "SO4-2", "H+"),
   c(-1, 0, -1.3, 999, -1.4, -7))
 

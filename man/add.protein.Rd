@@ -2,7 +2,6 @@
 \name{add.protein}
 \alias{add.protein}
 \alias{seq2aa}
-\alias{aasum}
 \title{Amino Acid Compositions of Proteins}
 \description{
   Functions to get amino acid compositions and add them to protein list for use by other functions.
@@ -11,7 +10,6 @@
 \usage{
   add.protein(aa, as.residue = FALSE)
   seq2aa(protein, sequence)
-  aasum(aa, abundance = 1, average = FALSE, protein = NULL, organism = NULL)
 }
 
 \arguments{
@@ -19,9 +17,6 @@
   \item{as.residue}{logical, normalize by protein length?}
   \item{protein}{character, name of protein; numeric, indices of proteins (rownumbers of \code{\link{thermo}$protein})}
   \item{sequence}{character, protein sequence}
-  \item{abundance}{numeric, abundances of proteins}
-  \item{average}{logical, return the weighted average of amino acid counts?}
-  \item{organism}{character, name of organism}
 }
 
 \details{
@@ -33,11 +28,6 @@ From the amino acid compositions, the thermodynamic properties of the proteins c
 
 \code{seq2aa} returns a data frame of amino acid composition, in the format of \code{thermo()$protein}, corresponding to the provided \code{sequence}.
 Here, the \code{protein} argument indicates the name of the protein with an underscore (e.g. \samp{LYSC_CHICK}).
-
-\code{aasum} returns a data frame representing the sum of amino acid compositions in the rows of the input \code{aa} data frame.
-The amino acid compositions are multiplied by the indicated \code{abundance}; that argument is recycled to match the number of rows of \code{aa}.
-If \code{average} is TRUE the final sum is divided by the number of input compositions.
-The name used in the output is taken from the first row of \code{aa} or from \code{protein} and \code{organism} if they are specified.
 
 Given amino acid compositions returned by the \code{*aa} functions described above, \code{add.protein} adds them to \code{thermo()$protein} for use by other functions in CHNOSZ.
 Set \code{as.residue} to TRUE to normalize by protein length; each input amino acid composition is divided by the corresponding number of residues, with the result that the sum of amino acid frequencies for each protein is 1.
