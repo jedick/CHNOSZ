@@ -1,13 +1,13 @@
 \encoding{UTF-8}
-\name{affinity_rank}
-\alias{affinity_rank}
+\name{rank_affinity}
+\alias{rank_affinity}
 \title{Normalized Sums of Ranks of Chemical Affinities}
 \description{
 Affinity ranking for groups of species.
 }
 
 \usage{
-  affinity_rank(aout, groups)
+  rank_affinity(aout, groups)
 }
 
 \arguments{
@@ -42,7 +42,7 @@ names(groups) <- c("Archaea", "Bacteria", "Eukaryota")
 ip <- add.protein(aa, as.residue = TRUE)
 basis("QEC")
 aout <- affinity(O2 = c(-74, -66, 100), H2O = c(-4, 4, 100), iprotein = ip)
-arank <- affinity_rank(aout, groups = groups)
+arank <- rank_affinity(aout, groups = groups)
 nspecies <- sapply(groups, sum)
 names <- paste0(names(groups), " (", nspecies, ")")
 diagram(arank, fill = "terrain", font = 2, names = names, format.names = FALSE)

@@ -58,7 +58,7 @@ export(
 # added 20220324
   "logB_to_OBIGT",
 # added 20220416
-  "affinity_rank"
+  "rank_affinity"
 )
 
 # Load shared objects

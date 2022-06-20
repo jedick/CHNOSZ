@@ -1,7 +1,7 @@
 # Calculate normalized sum of ranking of affinities for species in designated groups
 # 20220416 jmd first version
 
-affinity_rank <- function(aout, groups) {
+rank_affinity <- function(aout, groups) {
   # Put the affinities into matrix form
   amat <- sapply(aout$values, as.numeric)
   # Calculate ranks
@@ -22,6 +22,6 @@ affinity_rank <- function(aout, groups) {
   aout$species <- aout$species[1:length(groups), ]
   aout$species$name <- names(groups)
   # "Sign" the object with our function name
-  aout$fun <- "affinity_rank"
+  aout$fun <- "rank_affinity"
   aout
 }

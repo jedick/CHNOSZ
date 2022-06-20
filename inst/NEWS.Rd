@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.9.9-19 (2022-06-04)}{
+\section{Changes in CHNOSZ version 1.9.9-21 (2022-06-08)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -68,7 +68,7 @@
       \item Add a check to \code{add.protein()} that all new protein IDs
       (protein name + organism name) are unique.
 
-      \item Add function \code{affinity_rank()} to calculate (sums of ranks of
+      \item Add function \code{rank_affinity()} to calculate (sums of ranks of
       affinities for species in designated groups) normalized by number of
       species in each group. The output of the new function can be used by
       \code{diagram()}.

@@ -44,15 +44,15 @@ diagram <- function(
   ## Check that eout is a valid object
   efun <- eout$fun
   if(length(efun)==0) efun <- ""
-  if(!(efun %in% c("affinity", "affinity_rank", "equilibrate") | grepl("solubilit", efun)))
-    stop("'eout' is not the output from one of these functions: affinity, affinity_rank, equilibrate, or solubility")
+  if(!(efun %in% c("affinity", "rank_affinity", "equilibrate") | grepl("solubilit", efun)))
+    stop("'eout' is not the output from one of these functions: affinity, rank_affinity, equilibrate, or solubility")
   # For solubilities(), default type is loga.balance 20210303
   if(grepl("solubilities", efun) & missing(type)) type <- "loga.balance"
-  # Check balance argument for affinity_rank() 20220416
-  if(efun == "affinity_rank") {
+  # Check balance argument for rank_affinity() 20220416
+  if(efun == "rank_affinity") {
     if(!identical(balance, 1)) {
-      if(!is.null(balance)) stop("balance = 1 or NULL is required for plotting output of affinity_rank()")
-      if(is.null(balance)) message("diagram: setting balance = 1 for plotting output of affinity_rank()")
+      if(!is.null(balance)) stop("balance = 1 or NULL is required for plotting output of rank_affinity()")
+      if(is.null(balance)) message("diagram: setting balance = 1 for plotting output of rank_affinity()")
       balance <- 1
     }
   }
@@ -124,8 +124,8 @@ diagram <- function(
     })
     names(plotvals) <- names(eout$values)
     plotvar <- eout$property
-    if(efun == "affinity_rank") {
-      plotvar <- "affinity_rank"
+    if(efun == "rank_affinity") {
+      plotvar <- "rank_affinity"
       message(paste("diagram: plotting average affinity ranking for", length(plotvals), "groups"))
     } else if(plotvar=="A") {
       # we change 'A' to 'A/(2.303RT)' so the axis label is made correctly
@@ -203,7 +203,7 @@ diagram <- function(
   ## identify predominant species
   predominant <- NA
   H2O.predominant <- NULL
-  if(plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)", "affinity_rank") & type!="saturation") {
+  if(plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)", "rank_affinity") & type!="saturation") {
     pv <- plotvals
     # some additional steps for affinity values, but not for equilibrated activities
     if(eout.is.aout) {
@@ -352,7 +352,7 @@ diagram <- function(
         if(missing(xlab)) xlab <- axis.label(eout$vars[1], basis=eout$basis, molality=molality)
         if(missing(ylab)) {
           ylab <- axis.label(plotvar, units="", molality=molality)
-          if(plotvar == "affinity_rank") ylab <- "Average affinity ranking"
+          if(plotvar == "rank_affinity") ylab <- "Average affinity ranking"
           # use ppb, ppm, ppt (or log ppb etc.) for converted values of solubility 20190526
           if(grepl("solubility.", eout$fun, fixed=TRUE)) {
             ylab <- strsplit(eout$fun, ".", fixed=TRUE)[[1]][2]
