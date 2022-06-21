@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.9.9-25 (2022-06-21)}{
+\section{Changes in CHNOSZ version 1.9.9-26 (2022-06-21)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -88,6 +88,9 @@
 
       \item Add a check to \code{add.protein()} that all new protein IDs
       (protein name + organism name) are unique.
+
+      \item In \code{affinity()}, print a message to indicate whether
+      ionization calculations for proteins are being done.
 
     }
   }

@@ -202,21 +202,24 @@ energy <- function(what,vars,vals,lims,T=298.15,P="Psat",IS=0,sout=NULL,exceed.T
   # A/2.303RT
   A <- function() {
     out <- mapply(`-`, X.fun("logK"), logQ(), SIMPLIFY = FALSE)
-    # deal with affinities of protein ionization here 20120527
-    if("H+" %in% rownames(mybasis) & get("thermo", CHNOSZ)$opt$ionize.aa) {
-      # which species are proteins
+    # Deal with affinities of protein ionization here 20120527
+    if("H+" %in% rownames(mybasis)) {
+      # Which species are proteins
       isprotein <- grepl("_", myspecies$name)
       if(any(isprotein)) {
-        # the rownumbers in thermo()$protein
-        ip <- pinfo(myspecies$name[isprotein])
-        # get the affinity of ionization
-        iHplus <- match("H+", rownames(mybasis))
-        # as.numeric is needed in case the logact column is character mode
-        # due to buffer definition (that means we can't do pH buffers)
-        pH <- -as.numeric(mybasis$logact[iHplus])
-        A.ionization <- A.ionization(ip, vars, vals, T=T, P=P, pH=pH, transect=transect)
-        # add it to the affinities of formation reactions of the non-ionized proteins
-        out[isprotein] <- lsum(out[isprotein], A.ionization)
+        if(get("thermo", CHNOSZ)$opt$ionize.aa) {
+            message("affinity: ionizing proteins ...")
+            # The rownumbers in thermo()$protein
+            ip <- pinfo(myspecies$name[isprotein])
+            # Get the affinity of ionization
+            iHplus <- match("H+", rownames(mybasis))
+            # as.numeric is needed in case the logact column is character mode
+            # due to buffer definition (that means we can't do pH buffers)
+            pH <- -as.numeric(mybasis$logact[iHplus])
+            A.ionization <- A.ionization(ip, vars, vals, T = T, P = P, pH = pH, transect = transect)
+            # Add it to the affinities of formation reactions of the non-ionized proteins
+            out[isprotein] <- lsum(out[isprotein], A.ionization)
+        } else message("affinity: NOT ionizing proteins because thermo()$opt$ionize.aa is FALSE")
       }
     }
     return(out)
