@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.9.9-24 (2022-06-20)}{
+\section{Changes in CHNOSZ version 1.9.9-25 (2022-06-21)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -40,6 +40,10 @@
       some models of non-biological reactions in hydrothermal systems.
 
       \item Merge \file{biotic_aq.csv} into \file{organic_aq.csv}.
+
+      \item \samp{OBIGT/inorganic_cr.csv}: Add cobalt monoxide (CoO) and guite
+      (Co\s{3}O\s{4}) from \href{https://doi.org/10.3133/b2131}{Robie and
+        Hemingway (1995)}.
 
     }
   }
@@ -119,7 +123,7 @@
       removed before drawing boundaries for the second species, and so on,
       species for which different-colored or -styled lines are desired should
       be placed at the top of the species list. This change makes possible one
-      less call to \code{diagram()} in the Mosaic Stacking sections in
+      less call to \code{diagram()} in Mosaic Stacking 1 and 2 in
       \strong{multi-metal.Rmd}, and now the entire chalcopyrite field in Mosaic
       Stacking 2 is bounded by a thick orange line, instead of just the border
       shared with bornite.

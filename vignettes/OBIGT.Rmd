@@ -377,6 +377,7 @@ optused <- c(optused, filerefs(csvfile))
 <div id="D-optional-GEMSFIT" style="display: none">
 ## <a id="optional-GEMSFIT" class="anchor"></a> `r setfile("GEMSFIT.csv")`
 [Miron et al. (2016)](https://doi.org/10.1016/j.gca.2016.04.026) and [Miron et al. (2017)](https://doi.org/10.2475/07.2017.01) described an internally consistent thermodynamic dataset for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl that was obtained by using the [GEMSFIT](https://doi.org/10.1016/j.apgeochem.2014.10.013) package.
+Use `add.OBIGT("GEMSFIT")` to load the data.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```

@@ -71,7 +71,7 @@ O2 <- c(-48, -33, res)
 basis(c("pyrite", "Cu", "Cl-", "H2S", "H2O", "oxygen", "H+"))
 basis("H2S", -2)
 # Calculate solution composition for 1 mol/kg NaCl
-NaCl <- NaCl(T = T, P = P, m_tot=1)
+NaCl <- NaCl(T = T, P = P, m_tot = 1)
 basis("Cl-", log10(NaCl$m_Cl))
 
 # Define arguments for stack_mosaic: Speciate aqueous sulfur
