@@ -10,7 +10,7 @@
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
 
-\section{Changes in CHNOSZ version 1.9.9-26 (2022-06-21)}{
+\section{Changes in CHNOSZ version 1.9.9-27 (2022-07-15)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -41,9 +41,9 @@
 
       \item Merge \file{biotic_aq.csv} into \file{organic_aq.csv}.
 
-      \item \samp{OBIGT/inorganic_cr.csv}: Add cobalt monoxide (CoO) and guite
-      (Co\s{3}O\s{4}) from \href{https://doi.org/10.3133/b2131}{Robie and
-        Hemingway (1995)}.
+      \item \samp{OBIGT/inorganic_cr.csv}: Add cobalt monoxide (CoO), guite
+      (Co\s{3}O\s{4}), and zinc from \href{https://doi.org/10.3133/b2131}{Robie
+        and Hemingway (1995)}.
 
     }
   }
