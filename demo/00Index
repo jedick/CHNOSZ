@@ -16,7 +16,7 @@ solubility      Solubility of calcite and CO2(gas) as a function of pH
 gold            Solubility of gold
 contour         Gold solubility contours on a log fO2 - pH diagram
 sphalerite      Solubility of sphalerite
-zinc            Solubilities of multiple minerals (zincite and sphalerite)
+minsol          Solubilities of multiple minerals
 dehydration     log K of dehydration reactions; SVG file contains tooltips and links
 Shh             Affinities of transcription factors relative to Sonic hedgehog
 saturation      Equilibrium activity diagram showing activity ratios and mineral saturation limits

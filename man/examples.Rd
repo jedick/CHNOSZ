@@ -16,7 +16,7 @@
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "findit", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
-    "contour", "sphalerite", "zinc", "Shh", "saturation",
+    "contour", "sphalerite", "minsol", "Shh", "saturation",
     "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
     "comproportionation", "Pourbaix", "E_coli"),
     save.png=FALSE)
@@ -49,7 +49,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{gold}{Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009)}
     \item{contour}{Gold solubility contours on a log fO2 - pH diagram (Williams-Jones et al., 2009)}
     \item{sphalerite}{Solubility of sphalerite (Akinfiev and Tagirov, 2014)}
-    \item{zinc}{Solubilities of multiple minerals (zincite and sphalerite)}
+    \item{minsol}{Solubilities of multiple minerals}
     \item{dehydration}{\logK of dehydration reactions; SVG file contains tooltips and links}
     \item{Shh}{Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015)}
     \item{saturation}{Equilibrium activity diagram showing activity ratios and mineral saturation limits (Bowers et al., 1984)}
