@@ -6,7 +6,8 @@
 #   (default of NA for col[3] means to plot species12 boundaries with color for species2)
 # ...: Arguments for mosaic() (incl. affinity() arguments)
 stack_mosaic <- function(bases, species1, species2, species12, names = NULL, col = list(4, 3, 6), col.names = list(4, 3, 6),
-  fill = NULL, dx = list(0, 0, 0), dy = list(0, 0, 0), srt = list(0, 0, 0), lwd = list(1, 1, 1), lty = list(1, 1, 1), ...) {
+  fill = NULL, dx = list(0, 0, 0), dy = list(0, 0, 0), srt = list(0, 0, 0), lwd = list(1, 1, 1), lty = list(1, 1, 1),
+  plot.it = TRUE, ...) {
 
   # Default is to use semi-transparent fill for bimetallic species
   if(is.null(fill)) fill <- list(NA, NA, add_alpha(col.names[3], "50"))
@@ -17,7 +18,7 @@ stack_mosaic <- function(bases, species1, species2, species12, names = NULL, col
   mosaic1 <- mosaic(bases, ...)
   # Show predominance fields
   diagram1 <- diagram(mosaic1$A.species, names = names[[1]], col = col[[1]], col.names = col.names[[1]], fill = fill[[1]],
-    dx = dx[[1]], dy = dy[[1]], srt = srt[[1]], lwd = lwd[[1]], lty = lty[[1]])
+    dx = dx[[1]], dy = dy[[1]], srt = srt[[1]], lwd = lwd[[1]], lty = lty[[1]], plot.it = plot.it)
 
   # Load species12 (bimetallic species) and species2 (second metal-bearing species)
   species(c(species12, species2))
@@ -39,7 +40,7 @@ stack_mosaic <- function(bases, species1, species2, species12, names = NULL, col
   lty <- c(rep_len(lty[[3]], length(species12)), rep_len(lty[[2]], length(species2)))
   fill <- c(rep_len(fill[[3]], length(species12)), rep_len(fill[[2]], length(species2)))
   diagram2 <- diagram(mosaic2$A.species, add = TRUE, names = names, col = col, col.names = col.names, fill = fill,
-    dx = dx, dy = dy, srt = srt, lwd = lwd, lty = lty)
+    dx = dx, dy = dy, srt = srt, lwd = lwd, lty = lty, plot.it = plot.it)
 
   out <- list(diagram1, diagram2)
   invisible(out)

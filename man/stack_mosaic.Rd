@@ -12,7 +12,7 @@ The species in each layer are usually minerals with different metals; any bimeta
   stack_mosaic(bases, species1, species2, species12, names = NULL,
     col = list(4, 3, 6), col.names = list(4, 3, 6), fill = NULL,
     dx = list(0, 0, 0), dy = list(0, 0, 0), srt = list(0, 0, 0),
-    lwd = list(1, 1, 1), lty = list(1, 1, 1), ...)
+    lwd = list(1, 1, 1), lty = list(1, 1, 1), plot.it = TRUE, ...)
   add_alpha(col, alpha)
 }
 
@@ -30,6 +30,7 @@ The species in each layer are usually minerals with different metals; any bimeta
   \item{srt}{label rotation}
   \item{lwd}{line width}
   \item{lty}{line type}
+  \item{plot.it}{make plots?}
   \item{...}{arguments for \code{\link{mosaic}} and \code{\link{affinity}}}
   \item{alpha}{character, hexadecimal value of color transparency (alpha)}
 }
