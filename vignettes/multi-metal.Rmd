@@ -69,7 +69,7 @@ logK <- "log&thinsp;<i>K</i>"
 ## Resolution settings
 # Change this to TRUE to make high-resolution plots
 # (default is FALSE to save time in CRAN checks)
-hires <- TRUE
+hires <- FALSE
 res1.lo <- 150
 res1.hi <- 256
 res1 <- ifelse(hires, res1.hi, res1.lo)
@@ -568,18 +568,6 @@ species(c(FeCu.cr, Cu.cr))
 # Add aqueous species 20210220
 species(iCu.aq, logm_aq, add = TRUE)
 
-# NOTE: limitation in mosaic() when using both solid and aqueous basis species (i.e. c(Fe.cr, Fe.aq)):
-#   Only the activity of the first-defined basis species is used for all basis species.
-#   The first-defined basis species is pyrite (logact = 0), but logact < 0 for the aq Fe species.
-# Workaround: Adjust standard Gibbs energies of aq Fe species to virtually change their activities
-DG_J <- convert(-logm_aq, "G", T = convert(T, "K"))
-# We should use calories here because the database values are in calories 20220604
-stopifnot(all(info(iFe.aq)$E_units == "cal"))
-DG_cal <- convert(DG_J, "cal")
-G.orig <- info(iFe.aq)$G
-G.new <- G.orig + DG_cal
-mod.OBIGT(iFe.aq, G = G.new)
-
 ## Mosaic with all Fe species as basis species
 #mFeCu <- mosaic(list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, stable = list(NULL, dFe$predominant))
 # Use only predominant Fe species as basis species (to speed up calculation) 20210224
@@ -587,7 +575,11 @@ predom <- dFe$predominant
 ipredom <- sort(unique(as.numeric(predom)))
 for(i in seq_along(ipredom)) predom[dFe$predominant == ipredom[i]] <- i
 Fe.predom <- c(Fe.cr, Fe.aq)[ipredom]
-mFeCu <- mosaic(list(S.aq, Fe.predom), pH = pH, O2 = O2, T = T, stable = list(NULL, predom), IS = nacl$IS)
+# Use loga_aq argument to control the activity of aqueous species in mosaic calculation 20220722
+# c(NA, logm_aq) means to use:
+#   basis()'s value for logact of aqueous S species
+#   logm_aq for logact of aqueous Fe species
+mFeCu <- mosaic(list(S.aq, Fe.predom), pH = pH, O2 = O2, T = T, stable = list(NULL, predom), IS = nacl$IS, loga_aq = c(NA, logm_aq))
 
 # Adjust labels
 bold <- c(rep(TRUE, length(FeCu.abbrv)), rep(FALSE, length(Cu.aq)))

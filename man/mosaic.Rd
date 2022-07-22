@@ -7,19 +7,20 @@ Calculate chemical affinities of formation reactions of species using basis spec
 }
 
 \usage{
-  mosaic(bases, blend = TRUE, stable = list(), ...)
+  mosaic(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...)
 }
 
 \arguments{
   \item{bases}{character, basis species to be changed in the calculation, or list, each element of which defines an independent group of changing basis species}
   \item{blend}{logical, use relative abundances of basis species?}
   \item{stable}{list, previously determined stable species}
+  \item{loga_aq}{numeric, activities of aqueous species (overrides current values in \code{\link{basis}})}
   \item{...}{additional arguments to be passed to \code{\link{affinity}}}
 }
 
 \details{
 
-\code{mosaic} can be used to calculate the affinities of formation of species when the relative abundances of the basis species listed in \code{bases} change over the range of conditions, due to e.g. ionization, complexation or redox reactions.
+\code{mosaic} calculates the affinities of formation of species when the relative abundances of the basis species listed in \code{bases} change over the range of conditions, due to e.g. ionization, complexation or redox reactions.
 This is a way to \dQuote{speciate the basis species}.
 For example, the speciation of sulfur (\samp{SO4-2}, \samp{HSO4-}, \samp{HS-} and \samp{H2S}) as a function of Eh and pH affects the formation affinities, and therefore relative stabilities of iron oxide and sulfide minerals.
 Chemical activity diagrams constructed by assembling sub-diagrams corresponding to the predominant (i.e. most stable) basis species can described as \dQuote{mosaic diagrams}.
@@ -39,11 +40,16 @@ If \code{blend} is FALSE, the function returns the affinities calculated using t
 This is appropriate when minerals, rather than aqueous species, are used as the changing basis species.
 Note, however, that \code{mosaic} is not internally recursive: the stabilities of one group of basis species (e.g. minerals) are not affected by changes in another group (e.g. aqueous species).
 
-This limitation can be overcome by supplying the calculated stabilities (from the \code{predominant} element of the output of \code{\link{diagram}}) as an element of the list in the \code{stable} argument whose position corresponds to the appropriate group of basis species.
-By using the stabilities of minerals in one calculation to identify the basis species in a subsequent calculation, a series of linked \code{mosaic} diagrams with increasing complexity can be made.
-This is useful for diagrams for minerals with multiple metallic elements.
+(\dQuote{Stacked mosaic diagrams}) are useful for making diagrams for multi-metal systems.
+By using the stable minerals in one calculation as the new basis species in a subsequent calculation, a series of stacked \code{mosaic} diagrams with increasing complexity can be made.
+Specifically, this is done by supplying previously calculated stabilities (from the \code{predominant} element of the output of \code{\link{diagram}}) as an element of the list in the \code{stable} argument whose position corresponds to the appropriate group of basis species.
 Note that a value in any position of the \code{stable} list forces \code{blend = FALSE} for the corresponding group of basis species, so there is no need to explicity change the \code{blend} argument.
 
+The activities of mosaiced basis species in each group are taken from the current \code{\link{basis}} definition.
+Generally it makes sense to set the activity of minerals to 1 (logact = 0) and the activity of aqueous species to some smaller value.
+For mosaic stacking calculations where the mosaiced basis species include both minerals and aqueous species, the \code{loga_aq} argument specifies the activity of aqueous species to be used \emph{in each group}.
+That is, there should be one value of \code{loga_aq} for each group of basis species; use NA to indicate that the activity comes from the current \code{\link{basis}} definition.
+See the Mosaic Stacking 2 section of the vignette \viglink{multi-metal} for an example.
 }
 
 \value{

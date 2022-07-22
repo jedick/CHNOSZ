@@ -12,7 +12,8 @@ The species in each layer are usually minerals with different metals; any bimeta
   stack_mosaic(bases, species1, species2, species12, names = NULL,
     col = list(4, 3, 6), col.names = list(4, 3, 6), fill = NULL,
     dx = list(0, 0, 0), dy = list(0, 0, 0), srt = list(0, 0, 0),
-    lwd = list(1, 1, 1), lty = list(1, 1, 1), plot.it = TRUE, ...)
+    lwd = list(1, 1, 1), lty = list(1, 1, 1), loga_aq = NULL,
+    plot.it = TRUE, ...)
   add_alpha(col, alpha)
 }
 
@@ -30,6 +31,7 @@ The species in each layer are usually minerals with different metals; any bimeta
   \item{srt}{label rotation}
   \item{lwd}{line width}
   \item{lty}{line type}
+  \item{loga_aq}{numeric, activity of aqueous species}
   \item{plot.it}{make plots?}
   \item{...}{arguments for \code{\link{mosaic}} and \code{\link{affinity}}}
   \item{alpha}{character, hexadecimal value of color transparency (alpha)}
@@ -38,7 +40,12 @@ The species in each layer are usually minerals with different metals; any bimeta
 \details{
 \code{stack_mosaic} creates a stacked mosaic diagram following steps that are described in detail in the vignette \viglink{multi-metal}.
 Briefly, the first layer of the diagram is made by speciating the species in \code{bases} across the diagram to form the first set of species in \code{species1}.
-Then, both \code{bases} \emph{and} \code{species1} (the stable species at each point on the diagram) are used to form the second set of species, consisting of both \code{species2} \emph{and} \code{species12}.
+Then, both \code{bases} \emph{and} \code{species1} (the stable species at each point on the diagram) are used to form the second set of species, including those in both \code{species2} \emph{and} \code{species12}.
+
+Note that \code{basis} has aqueous S species in the examples provided, and \code{species1} consists of minerals and/or aqueous species with a single metal (e.g. Fe).
+\code{species2} has minerals and/or aqueous species with a second metal (e.g. Cu), and \code{species12} has bimetallic minerals.
+For \dQuote{mixed} diagrams (where \code{species1} or \code{species2} has both minerals and aqueous species), use \code{loga_aq} to set the logarithms of activities of aqueous species.
+Here, only a single value of \code{loga_aq} is needed, unlike in \code{\link{mosaic}}, where a value for each set of basis species is required.
 
 The plot parameters \code{col}, \code{col.names}, \code{fill}, \code{dx}, \code{dy}, \code{srt}, \code{lwd}, and \code{lty} should be length-3 lists (not vectors).
 The values of elements 1--3 of the list are recycled to the number of species in \code{species1}, \code{species2}, and \code{species12}, respectively.
@@ -51,7 +58,7 @@ The default definition of \code{fill} is \code{list(NA, NA, add_alpha(col.names[
 \section{Warning}{
 The bimetallic species in \code{species12} are shown as part of the second layer, although their formation is sensitive to the presence of stable species in the first layer.
 It follows that changing the order of layers (i.e., swapping \code{species1} and \code{species2}) can affect the depiction of mineral assemblages that have \code{species12}.
-Only one of the alternatives is thermodynamically correct, but currently there is no check to determine which one it is.
+It is likely that only one of the alternatives is thermodynamically correct, but currently there is no check to determine which one it is.
 }
 
 \value{

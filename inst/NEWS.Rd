@@ -9,8 +9,10 @@
 % subscript and superscript
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
+% links to vignettes 20220723
+\newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-27 (2022-07-15)}{
+\section{Changes in CHNOSZ version 1.9.9-29 (2022-07-23)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -55,7 +57,7 @@
       (\samp{G}, \samp{S}, and \samp{Cp} at 25 \degC) to formation constants of
       aqueous species as a function of temperature.
 
-      \item Add vignette \strong{customizing.Rmd} with description of database
+      \item Add vignette \viglink{customizing} with description of database
       format, data-entry conventions, and examples of customizing the
       thermodynamic database using \code{add.OBIGT()}, \code{mod.OBIGT()}, and
       \code{logB_to_OBIGT()}.
@@ -68,9 +70,14 @@
 
       \item Add \code{stack_mosaic()} to create stacked mosaic diagrams, where
       the species formed in the first layer become the basis species for the
-      species formed in the second layer. This function implements the main
+      species formed in the second layer. This function serves as a wrapper for the
       steps for making mosaic diagrams for bimetallic systems described in
-      \strong{multi-metal.Rmd}.
+      \viglink{multi-metal}.
+
+      \item Add \code{loga_aq} argument to \code{mosiac()} (also present in new
+      function \code{stack_mosaic()}) to control the activity of mosaiced
+      aqueous basis species. This obviates a workaround that was previously
+      used in the Mosaic Stacking 2 section of \strong{multi-metal.Rmd}.
 
     }
   }
