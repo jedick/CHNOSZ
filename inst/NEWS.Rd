@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-29 (2022-07-23)}{
+\section{Changes in CHNOSZ version 1.9.9-30 (2022-07-23)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
