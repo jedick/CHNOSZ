@@ -18,9 +18,10 @@ stack_mosaic <- function(bases, species1, species2, species12, names = NULL, col
   if(!is.null(loga_aq)) {
     iaq1 <- which(isp1$state == "aq")
     if(length(iaq1) > 0) species(iaq1, loga_aq)
-  }
+    loga_aq_arg <- c(NA, loga_aq)
+  } else loga_aq_arg <- NULL
   # Calculate affinity of species1 while speciating bases (e.g. aqueous S species)
-  mosaic1 <- mosaic(bases, loga_aq = c(NA, loga_aq), ...)
+  mosaic1 <- mosaic(bases, loga_aq = loga_aq_arg, ...)
   # Show predominance fields
   diagram1 <- diagram(mosaic1$A.species, names = names[[1]], col = col[[1]], col.names = col.names[[1]], fill = fill[[1]],
     dx = dx[[1]], dy = dy[[1]], srt = srt[[1]], lwd = lwd[[1]], lty = lty[[1]], plot.it = plot.it)
@@ -32,14 +33,9 @@ stack_mosaic <- function(bases, species1, species2, species12, names = NULL, col
     iaq2 <- which(isp2$state == "aq")
     if(length(iaq2) > 0) species(iaq2, loga_aq)
   }
-  # Use only predominant species1 as basis species (to speed up calculation) 20210224
-  predom <- diagram1$predominant
-  ipredom <- sort(unique(as.numeric(predom)))
-  for(i in seq_along(ipredom)) predom[diagram1$predominant == ipredom[i]] <- i
-  species1.predom <- species1[ipredom]
   # Speciate bases again (NULL)
-  # Take the predominant members of species1 (predom)
-  mosaic2 <- mosaic(list(bases, species1.predom), stable = list(NULL, predom), loga_aq = c(NA, loga_aq), ...)
+  # Take the predominant members of species1 (diagram1$predominant)
+  mosaic2 <- mosaic(list(bases, species1), stable = list(NULL, diagram1$predominant), loga_aq = loga_aq_arg, ...)
 
   # Set colors
   col <- c(rep_len(col[[3]], length(species12)), rep_len(col[[2]], length(species2)))

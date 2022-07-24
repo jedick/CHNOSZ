@@ -4,7 +4,7 @@
 # 20190117 add find.IS and test for dissociation reaction
 # 20210319 use vector of aqueous species as main argument (with back-compatibility for affinity output) and handle multiple minerals
 
-## if this file is interactively sourced, the following are also needed to provide unexported functions:
+## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("equilibrate.R")
 #source("util.misc.R")
 #source("species.R")
@@ -28,7 +28,7 @@ solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS
     is.mosaic <- TRUE
     # For getting 'sout' from affinity(), drop arguments specific for mosaic()
     affargs <- ddd[-1]
-    affargs <- affargs[!names(affargs) %in% c("bases", "stable", "blend")]
+    affargs <- affargs[!names(affargs) %in% c("bases", "stable", "blend", "loga_aq")]
   }
 
   # Save current thermodynamic system settings

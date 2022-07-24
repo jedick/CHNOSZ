@@ -54,7 +54,7 @@ Other variables (pH, ionic strength, activities of other basis species) should b
 The function perfoms some additional steps to calculate the solubility of something that dissociates (not just dissolves).
 For example, the dissolution of calcite (CaCO\s3), involves the release of both calcium ions and different forms of carbonate in solution, depending on the pH.
 The equilibrium calculation must take account of the \emph{total} activity of the shared ion (Ca\S{+2}), which is unknown at the start of the calculation.
-The solution is accomplished by recalculating the affinities, essentially working backward from the assumption that the dissociation didn't occur.
+The solution is found by recalculating the affinities, essentially working backward from the assumption that the dissociation didn't occur.
 The resulting activities correspond to equilibrium considering the system-wide activity of Ca\S{+2}.
 
 A \emph{not recommended} alternative is to set \code{dissociate} to a numeric value corresponding to the number of dissociated species (i.e. 2 for a 1:1 electrolyte).
@@ -67,7 +67,7 @@ Set \code{find.IS} to TRUE to determine the final ionic strength due to dissolut
 This works by calculating the ionic strength from the amounts of aqueous species formed, then re-running \code{affinity} with the calculated \code{IS} value.
 Note that for dissociation reactions, the ionic strength is calculated from both the ions present in the species definition and the counter ion, which should be the second basis species.
 The calculation is iterated until the ionic strength deviation at every point is lower than a preset tolerance (1e-4).
-Alternatively, speciation of counterions (e.g. ionized forms of carbonate or sulfate) can also be accomplished by using the \code{\link{mosaic}} function instead of \code{affinity}; this is used in the second example below.
+Alternatively, speciation of counterions (e.g. ionized forms of carbonate or sulfate) can also be performed by using the \code{\link{mosaic}} function instead of \code{affinity}; this is used in the second example below.
 }
 
 \section{Warning}{

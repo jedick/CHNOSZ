@@ -38,9 +38,21 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
     otherargs <- list(...)
     allargs <- c(list(bases = bases, blend = blend, stable = stable), otherargs)
     out <- do.call(mosaic, allargs)
-    # Replace A.bases (affinity calculations for all groups of basis species) with backwards-compatbile A.bases
+    # Replace A.bases (affinity calculations for all groups of basis species) with backwards-compatible A.bases
     out$A.bases <- out$A.bases[[1]]
     return(out)
+  }
+
+  if(length(stable) == 2) {
+    # Use only predominant basis species for mosaic stacking 20220723
+    stable2.orig <- stable2 <- stable[[2]]
+    # Why c(1, ?
+    # The first basis species should always be included (because it has to be swapped out for the others)
+    istable2 <- sort(unique(c(1, as.numeric(stable2))))
+    for(i in seq_along(istable2)) stable2[stable2.orig == istable2[i]] <- i
+    bases2 <- bases[[2]][istable2]
+    bases[[2]] <- bases2
+    stable[[2]] <- stable2
   }
 
   # Save starting basis and species definition
@@ -104,6 +116,7 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
     thislogact[icr] <- 0
     # Use loga_aq for log(activity) of mosaiced aqueous basis species 20220722
     if(!is.null(loga_aq)) {
+      if(length(loga_aq) != length(ibasis0)) stop("'loga_aq' should have same length as 'bases'")
       iaq <- grep("aq", states)
       # Loop over sets of mosaiced basis species
       for(j in 1:length(ibasis0)) {
