@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-30 (2022-07-23)}{
+\section{Changes in CHNOSZ version 1.9.9-32 (2022-09-18)}{
 
   \subsection{MAJOR CHANGE}{
     \itemize{
@@ -46,6 +46,9 @@
       \item \samp{OBIGT/inorganic_cr.csv}: Add cobalt monoxide (CoO), guite
       (Co\s{3}O\s{4}), and zinc from \href{https://doi.org/10.3133/b2131}{Robie
         and Hemingway (1995)}.
+
+      \item \samp{OBIGT/organic_aq.csv}: Correct formulas of Na(Mal)-, K(Mal)-,
+      and Dy(Mal)+. Thanks to Grayson Boyer.
 
     }
   }
@@ -153,6 +156,9 @@
 
       \item Change default for \code{affinity()} to \code{loga.protein = 0}
       (was -3).
+
+      \item Add tests stack_mosaic.R and stack_solubility.R (these create PDF
+      files for visual inspection of results).
 
       \item Change license from GPL (>= 2) to GPL-3.
 

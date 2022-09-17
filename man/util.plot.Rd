@@ -30,8 +30,8 @@
   label.figure(x, xfrac = 0.05, yfrac = 0.95, paren = FALSE,
     italic = FALSE, ...)
   water.lines(eout, which = c("oxidation","reduction"),
-    lty = 2, lwd=1, col = par("fg"), plot.it = TRUE)
-  mtitle(main, line=0, spacing=1, ...)
+    lty = 2, lwd = 1, col = par("fg"), plot.it = TRUE)
+  mtitle(main, line = 0, spacing = 1, ...)
   ZC.col(z)
 }
 
