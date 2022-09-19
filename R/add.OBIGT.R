@@ -117,10 +117,8 @@ add.OBIGT <- function(file, species=NULL, force=TRUE) {
 #    isys <- which(file==sysnostate)
 #    if(length(isys)==1) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package="CHNOSZ")
 #  }
-  # Tead data from the file
+  # Read data from the file
   to2 <- read.csv(file, as.is=TRUE)
-  # Add E_units column if it's missing 20190529
-  if(!"E_units" %in% colnames(to2)) to2 <- data.frame(to2[, 1:8], E_units = "cal", to2[, 9:21], stringsAsFactors = FALSE)
   Etxt <- paste(unique(to2$E_units), collapse = " and ")
   # Load only selected species if requested
   if(!is.null(species)) {
@@ -132,7 +130,7 @@ add.OBIGT <- function(file, species=NULL, force=TRUE) {
   id2 <- paste(to2$name,to2$state)
   # Check if the data is compatible with thermo$OBIGT
   tr <- tryCatch(rbind(to1, to2), error = identity)
-  if(inherits(tr, "error")) stop(paste(file, "is not compatible with thermo$OBIGT data table."))
+  if(inherits(tr, "error")) stop(paste(file, "is not compatible with thermo$OBIGT data frame."))
   # Match the new species to existing ones
   does.exist <- id2 %in% id1
   ispecies.exist <- na.omit(match(id2, id1))

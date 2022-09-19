@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-34 (2022-09-19)}{
+\section{Changes in CHNOSZ version 1.9.9-35 (2022-09-19)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -28,9 +28,12 @@
       read using \code{add.OBIGT()} must have this column; there is no
       back-compatibility support for data files in the older format.
 
+      \item Backward compatibility for OBIGT data files without an
+      \code{E_units} column has been removed.
+
       \item Units of Joules instead of calories are now used by default for the
       thermodynamic properties output by \code{subcrt()}. That is,
-      \code{E.units("J")} is the default setting. User scripts that implicitly
+      \code{E.units("J")} is the default setting. Scripts that implicitly
       depend on the previous default setting of \code{E.units("cal")} may need
       to be modified to produce expected output.
 

@@ -53,14 +53,6 @@ newdat <- read.csv(file, stringsAsFactors = FALSE)
 # the order isn't guaranteed ... just make sure they're all there
 expect_true(all(newdat$name %in% thermo()$OBIGT$name[isp]), info = info)
 
-info <- "add.OBIGT() is backwards compatible for a file that doesn't have an E_units column"
-# test added 20190529
-file <- system.file("extdata/adds/BZA10.csv", package = "CHNOSZ")
-rc <- read.csv(file)
-expect_false("E_units" %in% colnames(rc), info = info)
-inew <- add.OBIGT(file)
-expect_true(unique(info(inew, check.it = FALSE)$E_units) == "cal", info = info)
-
 info <- "add.OBIGT() gives an error for an incompatible file"
 # test added 20191210
 file <- system.file("extdata/Berman/Ber88_1988.csv", package = "CHNOSZ")

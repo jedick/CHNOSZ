@@ -25,7 +25,7 @@ Note: change made to OBIGT are lost if you reload the database by calling \code{
 
 \code{\link{add.OBIGT}} is used to update the thermodynamic database (\code{\link{thermo}$OBIGT}) in the running session.
 The format (column names) of the specified file must be the same as the \code{extdata/OBIGT/*.csv} files provided with CHNOSZ.
-However, for backwards compatibility, the \code{E_units} column of the input can be missing; then, it is assigned a value of \samp{cal} (this differs from the default setting for \code{\link{E.units}}, which applies to the thermodynamic properties output by \code{\link{subcrt}} and not to database entries).
+Note that this includes both the \code{E_units} and \code{model} columns, which were added in versions 1.3.3 and 2.0.0.
 
 \code{file} is first matched against the names of files in the \code{extdata/OBIGT} directory packaged with CHNOSZ.
 In this case, the file suffixes are removed, so \samp{DEW}, \samp{organic_aq}, and \samp{organic_cr} are valid names.
