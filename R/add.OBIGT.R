@@ -38,8 +38,8 @@ mod.OBIGT <- function(..., zap = FALSE) {
   icol <- match(names(args), cnames)
   if(any(is.na(icol))) stop(paste("properties not in thermo$OBIGT:", paste(names(args)[is.na(icol)], collapse=" ")) )
   # The column numbers for properties that matched after the split
-  icol[icol > 42] <- icol[icol > 42] - 42
-  icol[icol > 21] <- icol[icol > 21] - 21
+  icol[icol > 44] <- icol[icol > 44] - 44
+  icol[icol > 22] <- icol[icol > 22] - 22
   # Which species are new and which are old
   inew <- which(is.na(ispecies))
   iold <- which(!is.na(ispecies))
@@ -120,7 +120,7 @@ add.OBIGT <- function(file, species=NULL, force=TRUE) {
   # Tead data from the file
   to2 <- read.csv(file, as.is=TRUE)
   # Add E_units column if it's missing 20190529
-  if(!"E_units" %in% colnames(to2)) to2 <- data.frame(to2[, 1:7], E_units = "cal", to2[, 8:20], stringsAsFactors = FALSE)
+  if(!"E_units" %in% colnames(to2)) to2 <- data.frame(to2[, 1:8], E_units = "cal", to2[, 9:21], stringsAsFactors = FALSE)
   Etxt <- paste(unique(to2$E_units), collapse = " and ")
   # Load only selected species if requested
   if(!is.null(species)) {

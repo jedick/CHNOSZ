@@ -12,20 +12,27 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-32 (2022-09-18)}{
+\section{Changes in CHNOSZ version 1.9.9-34 (2022-09-19)}{
 
-  \subsection{MAJOR CHANGE}{
+  \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
+
+      \item A \code{model} column has been added to the OBIGT thermodynamic
+      database. This specifies the model for calculating standard thermodynamic
+      properties and supersedes the heuristics for determining the model to use
+      based on values in other columns. Currently used models are \samp{H2O}
+      (water), \samp{HKF} (Helgeson-Kirkham-Flowers), \samp{CGL} (general heat
+      capacity equation for crystalline, gas, and liquid species),
+      \samp{Berman} (Berman equations), \samp{AD} (Akinfiev-Diamond), and
+      \samp{DEW} (Deep-Earth Water model). All OBIGT data files that can be
+      read using \code{add.OBIGT()} must have this column; there is no
+      back-compatibility support for data files in the older format.
 
       \item Units of Joules instead of calories are now used by default for the
       thermodynamic properties output by \code{subcrt()}. That is,
       \code{E.units("J")} is the default setting. User scripts that implicitly
       depend on the previous default setting of \code{E.units("cal")} may need
       to be modified to produce expected output.
-
-      \item As much as possible, functions in CHNOSZ have been modified to use
-      Joules in internal variables. In particular, the value of the gas
-      constant is based on Joules in \code{convert()} and other functions.
 
     }
   }
@@ -150,6 +157,10 @@
 
   \subsection{OTHER CHANGES}{
     \itemize{
+
+      \item As much as possible, functions in CHNOSZ have been modified to use
+      Joules in internal variables. In particular, the value of the gas
+      constant is based on Joules in \code{convert()} and other functions.
 
       \item Add a \strong{zap} argument to \code{mod.OBIGT()} to clear
       parameters of preexisting species (used by \code{logB_to_OBIGT()}).

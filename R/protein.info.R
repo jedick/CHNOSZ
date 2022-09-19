@@ -83,7 +83,7 @@ protein.OBIGT <- function(protein, organism=NULL, state=thermo()$opt$state) {
   OBIGT_state <- paste(OBIGT$name, OBIGT$state)
   igroup <- match(groups_state, OBIGT_state)
   # the properties are in columns 9-21 of thermo()$OBIGT
-  groupprops <- OBIGT[igroup, 9:21]
+  groupprops <- OBIGT[igroup, 10:22]
   # the elements in each of the groups
   groupelements <- i2A(igroup)
   # a function to work on a single row of aa
@@ -105,12 +105,15 @@ protein.OBIGT <- function(protein, organism=NULL, state=thermo()$opt$state) {
     f <- as.chemical.formula(f.in)
     # now the species name
     name <- paste(aa$protein, aa$organism, sep="_")
-    # make some noise for the user
+    # tell the user about it
     message("protein.OBIGT: found ", appendLF=FALSE)
     message(name, " (", f, ", ", appendLF=FALSE)
     message(round(length, 3), " residues)")
     ref <- aa$ref
-    header <- data.frame(name=name, abbrv=NA, formula=f, state=state, ref1=ref, ref2=NA, date=NA, E_units = "cal", stringsAsFactors=FALSE)
+    # Include 'model' column 20220919
+    model <- ifelse(state == "aq", "HKF", "CGL")
+    header <- data.frame(name = name, abbrv = NA, formula = f, state = state, ref1 = ref, ref2 = NA,
+      date = NA, model = model, E_units = "cal", stringsAsFactors = FALSE)
     eosout <- cbind(header, eos)
     return(eosout)
   }

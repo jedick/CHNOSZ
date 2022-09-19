@@ -195,7 +195,7 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   # Use new OBIGT2eos function here
   this <- OBIGT2eos(this, this$state)
 
-  if(all(is.na(this[, 9:21])) & this$name != "water") {
+  if(all(is.na(this[, 10:22])) & this$name != "water") {
     # Get G, H, S, and V for minerals with Berman parameters 20220203
     Bermandat <- Berman()
     Bermandat <- Bermandat[Bermandat$name == this$name, ]
@@ -204,14 +204,14 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   } else isBerman <- FALSE
 
   # Identify any missing GHS values
-  naGHS <- is.na(this[9:11])
+  naGHS <- is.na(this[10:12])
   # A missing one of G, H or S can cause problems for subcrt calculations at high T
   if(sum(naGHS)==1) {
     # calculate a single missing one of G, H, or S from the others
-    GHS <- as.numeric(GHS(as.character(this$formula), G=this[,9], H=this[,10], S=this[,11], E_units=this$E_units))
-    message("info.numeric: ", colnames(this)[9:11][naGHS], " of ",
+    GHS <- as.numeric(GHS(as.character(this$formula), G = this[, 10], H = this[, 11], S = this[, 12], E_units=this$E_units))
+    message("info.numeric: ", colnames(this)[10:12][naGHS], " of ",
       this$name, "(", this$state, ") is NA; set to ", round(GHS[naGHS],2), " ", this$E_units, " mol-1")
-    this[, which(naGHS)+8] <- GHS[naGHS]
+    this[, which(naGHS) + 9] <- GHS[naGHS]
   } 
 
   # Perform consistency checks for GHS and EOS parameters if check.it = TRUE

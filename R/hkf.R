@@ -55,13 +55,13 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
     # We don't need this if we're just looking at solvation properties (Cp_s_var, V_s_var)
     if("n" %in% contrib) {
       # Put the heat capacity in for c1 if both c1 and c2 are missing
-      if(all(is.na(PAR[, 18:19]))) PAR[, 18] <- PAR$Cp
+      if(all(is.na(PAR[, 19:20]))) PAR[, 19] <- PAR$Cp
       # Put the volume in for a1 if a1, a2, a3 and a4 are missing
-      if(all(is.na(PAR[, 14:17]))) PAR[, 14] <- convert(PAR$V, "joules")
+      if(all(is.na(PAR[, 15:18]))) PAR[, 15] <- convert(PAR$V, "joules")
       # Test for availability of the EoS parameters
-      hasEOS <- any(!is.na(PAR[, 14:21]))
+      hasEOS <- any(!is.na(PAR[, 15:22]))
       # If at least one of the EoS parameters is available, zero out any NA's in the rest
-      if(hasEOS) PAR[, 14:21][, is.na(PAR[, 14:21])] <- 0
+      if(hasEOS) PAR[, 15:22][, is.na(PAR[, 15:22])] <- 0
     }
     # Compute values of omega(P,T) from those of omega(Pr,Tr)
     # Using g function etc. (Shock et al., 1992 and others)

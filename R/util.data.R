@@ -357,7 +357,7 @@ RH2OBIGT <- function(compound=NULL, state="cr", file=system.file("extdata/adds/R
     ina <- is.na(ispecies)
     if(any(ina)) stop(paste("group(s)", paste(colnames(thisdat)[igroup][ina], collapse=" "), "not found in", thisdat$state, "state"))
     # group additivity of properties and parameters: add contributions from all groups
-    thiseos <- t(colSums(get("thermo", CHNOSZ)$OBIGT[ispecies, 9:21] * as.numeric(thisdat[, igroup])))
+    thiseos <- t(colSums(get("thermo", CHNOSZ)$OBIGT[ispecies, 10:22] * as.numeric(thisdat[, igroup])))
     # group additivity of chemical formula
     formula <- as.chemical.formula(colSums(i2A(ispecies) * as.numeric(thisdat[, igroup])))
     # check if the formula is the same as in the file
@@ -411,15 +411,15 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
     # remove scaling factors for the HKF species, but not for the AD species
     # protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
     # (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302
-    if(any(!isAD)) OBIGT[!isAD, 14:21] <- t(t(OBIGT[!isAD, 14:21]) * 10^c(-1,2,0,4,0,4,5,0))
+    if(any(!isAD)) OBIGT[!isAD, 15:22] <- t(t(OBIGT[!isAD, 15:22]) * 10^c(-1,2,0,4,0,4,5,0))
     # for AD species, set NA values in remaining columns (for display only)
-    if(any(isAD)) OBIGT[isAD, 17:20] <- NA
+    if(any(isAD)) OBIGT[isAD, 18:21] <- NA
     # if all of the species are AD, change the variable names
-    if(all(isAD)) colnames(OBIGT)[14:21] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
-    else colnames(OBIGT)[14:21] <- c('a1','a2','a3','a4','c1','c2','omega','Z') 
+    if(all(isAD)) colnames(OBIGT)[15:22] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
+    else colnames(OBIGT)[15:22] <- c('a1','a2','a3','a4','c1','c2','omega','Z') 
   } else {
-    OBIGT[,14:21] <- t(t(OBIGT[,14:21]) * 10^c(0,-3,5,0,-5,0,0,0))
-    colnames(OBIGT)[14:21] <- c('a','b','c','d','e','f','lambda','T')
+    OBIGT[, 15:22] <- t(t(OBIGT[, 15:22]) * 10^c(0,-3,5,0,-5,0,0,0))
+    colnames(OBIGT)[15:22] <- c('a','b','c','d','e','f','lambda','T')
   }
   if(toJoules) {
     # Convert parameters from calories to Joules 20220325
@@ -427,8 +427,8 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
     ical <- OBIGT$E_units == "cal"
     if(any(ical)) {
       # We only convert column 20 for aqueous species (omega), not for cgl species (lambda)  20190903
-      if(identical(state, "aq")) OBIGT[ical, c(9:12, 14:20)] <- convert(OBIGT[ical, c(9:12, 14:20)], "J")
-      else OBIGT[ical, c(9:12, 14:19)] <- convert(OBIGT[ical, c(9:12, 14:19)], "J")
+      if(identical(state, "aq")) OBIGT[ical, c(10:13, 15:21)] <- convert(OBIGT[ical, c(10:13, 15:21)], "J")
+      else OBIGT[ical, c(10:13, 15:20)] <- convert(OBIGT[ical, c(10:13, 15:20)], "J")
       # Also update the E_units column 20220325
       OBIGT$E_units[ical] <- "J"
     }
@@ -438,15 +438,15 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
     # for use esp. by subcrt because NA for one of G, H or S 
     # will preclude calculations at high T
     # which entries are missing just one
-    imiss <- which(rowSums(is.na(OBIGT[,9:11]))==1)
+    imiss <- which(rowSums(is.na(OBIGT[, 10:12])) == 1)
     if(length(imiss) > 0) {
       for(i in 1:length(imiss)) {
         # calculate the missing value from the others
         ii <- imiss[i]
-        GHS <- as.numeric(GHS(as.character(OBIGT$formula[ii]), G=OBIGT[ii,9], H=OBIGT[ii,10], S=OBIGT[ii,11],
+        GHS <- as.numeric(GHS(as.character(OBIGT$formula[ii]), G = OBIGT[ii, 10], H = OBIGT[ii, 11], S = OBIGT[ii, 12],
                               E_units = ifelse(toJoules, "J", OBIGT$E_units[ii])))
-        icol <- which(is.na(OBIGT[ii,9:11]))
-        OBIGT[ii,icol+8] <- GHS[icol]
+        icol <- which(is.na(OBIGT[ii, 10:12]))
+        OBIGT[ii, icol + 9] <- GHS[icol]
       }
     }
   }
