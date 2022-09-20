@@ -197,6 +197,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   if(length(unique(iphases))==length(iphases)) rownames(reaction) <- as.character(iphases)
   # Which are aqueous species
   isaq <- reaction$state == "aq"
+  # Save this test for debugging 20220920
   isaq.model <- toupper(reaction$model) %in% c("HKF", "AD", "DEW")
   stopifnot(all(isaq == isaq.model))
 

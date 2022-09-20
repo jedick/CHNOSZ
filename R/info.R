@@ -195,7 +195,7 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   # Use new OBIGT2eos function here
   this <- OBIGT2eos(this, this$state)
 
-  if(all(is.na(this[, 10:22])) & this$name != "water") {
+  if(tolower(this$model) == "berman") { # this is Berman
     # Get G, H, S, and V for minerals with Berman parameters 20220203
     Bermandat <- Berman()
     Bermandat <- Bermandat[Bermandat$name == this$name, ]

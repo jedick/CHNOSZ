@@ -59,7 +59,8 @@ mod.OBIGT <- function(..., zap = FALSE) {
     # Fill in the columns
     newrows[, icol] <- args[inew, ]
     # Guess model from state 20220919
-    if(is.na(newrows$model)) newrows$model <- ifelse(newrows$state == "aq", "HKF", "CGL")
+    namodel <- is.na(newrows$model)
+    if(any(namodel)) newrows$model[namodel] <- ifelse(newrows$state[namodel] == "aq", "HKF", "CGL")
     # Now check the formulas
     e <- tryCatch(makeup(newrows$formula), error=function(e) e)
     if(inherits(e, "error")) {
