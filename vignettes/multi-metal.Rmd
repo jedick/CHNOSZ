@@ -224,13 +224,15 @@ V.aq <- V.aq + nV * V.corr
 
 # Add energies to OBIGT
 # This function modifies OBIGT and returns the species indices of the affected species
-modfun <- function(x, state) sapply(seq_along(x), function(i) {
+modfun <- function(x, state, model = NULL) sapply(seq_along(x), function(i) {
   # We explicitly set the units to Joules (this is the default as of CHNOSZ 2.0.0)
-  mod.OBIGT(names(x)[i], formula = names(x)[i], state = state, E_units = "J", G = x[i])
+  if(is.null(model)) mod.OBIGT(names(x)[i], formula = names(x)[i], state = state, E_units = "J", G = x[i])
+  else mod.OBIGT(names(x)[i], formula = names(x)[i], state = state, model = model, E_units = "J", G = x[i])
 })
-iFe.cr <- modfun(Fe.cr, "cr")
+# We need model = "CGL" to override the Berman model for some minerals 20220919
+iFe.cr <- modfun(Fe.cr, "cr", model = "CGL")
 iFe.aq <- modfun(Fe.aq, "aq")
-iV.cr <- modfun(V.cr, "cr")
+iV.cr <- modfun(V.cr, "cr", model = "CGL")
 iV.aq <- modfun(V.aq, "aq")
 
 # Formation energies (eV / atom) for bimetallic solids from Materials API

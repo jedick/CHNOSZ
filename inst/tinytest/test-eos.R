@@ -81,6 +81,8 @@ info <- "hkf() and subcrt() give consistent values for non-solvation volume"
 # in demo/DEW.R (b/c hkf() is no longer exported)
 # Load SiO2 and Si2O4 data taken from DEW spreadsheet
 iSi <- add.OBIGT("DEW", c("SiO2", "Si2O4"))
+# Override check for DEW water model 20220920
+mod.OBIGT(iSi, model = rep("HKF", 2))
 Vn1 <- Vn2 <- numeric()
 species <- c("CO3-2", "BO2-", "MgCl+", "SiO2", "HCO3-", "Si2O4")
 # First method: use hkf() function

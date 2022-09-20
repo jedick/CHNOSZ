@@ -50,10 +50,13 @@ When adding new species, a chemical formula should be included along with the va
 The formula is taken from the \samp{formula} argument, or if that is missing, is taken to be the same as the \samp{name} of the species.
 An error occurs if the formula is not valid (i.e. can not be parsed by \code{\link{makeup}}).
 For new species, properties that are not specified become NA, except for \samp{state} and \samp{E_units}, which take default values from \code{thermo()$opt}.
-These defaults can be overridden by giving a value for \samp{state} or \samp{E_units} in the new data.
+These defaults can be overridden by giving a value for \samp{state} or \samp{E_units} in the arguments.
+
+\samp{model}, if missing, is set to \samp{HKF} for \code{state == "aq"} or \samp{CGL} otherwise.
+When modifying some existing minerals in OBIGT, \code{model = "CGL"} should be explicitly given in order to override the Berman model.
 
 When modifying species, the parameters indicated by the named arguments of \code{mod.OBIGT} are updated.
-Use \code{zap = TRUE} to replace all prexisting parameters (except for \code{state}) with NA values.
+Use \code{zap = TRUE} to replace all prexisting parameters (except for \code{state} and \code{model}) with NA values.
 }
 
 \value{

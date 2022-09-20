@@ -8,7 +8,7 @@ iAD <- add.OBIGT("AD")
 # Get the indices of the modified aqueous species
 iaq <- iAD[info(iAD)$state == "aq"]
 # Each aqueous species should be associated with the AD model
-expect_equal(unique(info(iaq)$abbrv), "AD", info = info)
+expect_equal(unique(info(iaq)$model), "AD", info = info)
 # Each aqueous species should have a gaseous counterpart
 igas <- info(info(iAD)$name, "gas")
 expect_true(!any(is.na(igas)), info = info)

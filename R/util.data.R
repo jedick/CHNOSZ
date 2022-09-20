@@ -404,17 +404,17 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
   # remove scaling factors from EOS parameters
   # and apply column names depending on the EOS
   if(identical(state, "aq")) {
-    # Aqueous species with abbrv = "AD" use the AD model 20210407
-    abbrv <- OBIGT$abbrv
-    abbrv[is.na(abbrv)] <- ""
-    isAD <- abbrv == "AD"
-    # remove scaling factors for the HKF species, but not for the AD species
+    # Aqueous species with model = "AD" use the AD model 20210407
+    model <- OBIGT$model
+    model[is.na(model)] <- ""
+    isAD <- model == "AD"
+    # Remove scaling factors for the HKF species, but not for the AD species;
     # protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
     # (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302
     if(any(!isAD)) OBIGT[!isAD, 15:22] <- t(t(OBIGT[!isAD, 15:22]) * 10^c(-1,2,0,4,0,4,5,0))
-    # for AD species, set NA values in remaining columns (for display only)
+    # For AD species, set NA values in remaining columns (for display only)
     if(any(isAD)) OBIGT[isAD, 18:21] <- NA
-    # if all of the species are AD, change the variable names
+    # If all of the species are AD, change the variable names
     if(all(isAD)) colnames(OBIGT)[15:22] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
     else colnames(OBIGT)[15:22] <- c('a1','a2','a3','a4','c1','c2','omega','Z') 
   } else {
@@ -434,14 +434,13 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
     }
   }
   if(fixGHS) {
-    # fill in one of missing G, H, S
-    # for use esp. by subcrt because NA for one of G, H or S 
-    # will preclude calculations at high T
-    # which entries are missing just one
+    # Fill in one of missing G, H, S;
+    # for use esp. by subcrt because NA for one of G, H or S precludes calculations at high T
+    # Which entries are missing just one
     imiss <- which(rowSums(is.na(OBIGT[, 10:12])) == 1)
     if(length(imiss) > 0) {
       for(i in 1:length(imiss)) {
-        # calculate the missing value from the others
+        # Calculate the missing value from the others
         ii <- imiss[i]
         GHS <- as.numeric(GHS(as.character(OBIGT$formula[ii]), G = OBIGT[ii, 10], H = OBIGT[ii, 11], S = OBIGT[ii, 12],
                               E_units = ifelse(toJoules, "J", OBIGT$E_units[ii])))

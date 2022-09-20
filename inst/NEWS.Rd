@@ -12,19 +12,19 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-35 (2022-09-19)}{
+\section{Changes in CHNOSZ version 1.9.9-36 (2022-09-20)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
 
       \item A \code{model} column has been added to the OBIGT thermodynamic
       database. This specifies the model for calculating standard thermodynamic
-      properties and supersedes the heuristics for determining the model to use
-      based on values in other columns. Currently used models are \samp{H2O}
-      (water), \samp{HKF} (Helgeson-Kirkham-Flowers), \samp{CGL} (general heat
-      capacity equation for crystalline, gas, and liquid species),
-      \samp{Berman} (Berman equations), \samp{AD} (Akinfiev-Diamond), and
-      \samp{DEW} (Deep-Earth Water model). All OBIGT data files that can be
+      properties and will eventually supersede the heuristics for determining
+      the model to use based on values in other columns. Currently used models
+      are \samp{H2O} (water), \samp{HKF} (Helgeson-Kirkham-Flowers), \samp{CGL}
+      (general heat capacity equation for crystalline, gas, and liquid
+      species), \samp{Berman} (Berman equations), \samp{AD} (Akinfiev-Diamond),
+      and \samp{DEW} (Deep Earth Water model). All OBIGT data files that can be
       read using \code{add.OBIGT()} must have this column; there is no
       back-compatibility support for data files in the older format.
 
@@ -49,7 +49,7 @@
       \item Modify \code{OBIGT(no.organics = TRUE)} to prune the database of
       organic compounds \emph{except} CH\s{4}. The ability to remove hundreds
       of more complex organic compounds while keeping CH\s{4} is useful for
-      some models of non-biological reactions in hydrothermal systems.
+      some calculations for abiotic reactions in hydrothermal systems.
 
       \item Merge \file{biotic_aq.csv} into \file{organic_aq.csv}.
 
@@ -98,9 +98,9 @@
   \subsection{NEW FEATURES: PROTEINS}{
     \itemize{
 
-      \item Add function and demo for \code{rank_affinity()} to calculate means
-      of affinity rankings for specified groups of proteins, intended for
-      evolutionary comparisons. The output of the new function can be used by
+      \item Add function \code{rank_affinity()} to calculate means of affinity
+      rankings for specified groups of proteins, intended for evolutionary
+      comparisons. The output of the new function can be used by
       \code{diagram()}.
 
       \item Add an \strong{as.residue} argument to \code{add.protein()} to
@@ -149,11 +149,11 @@
       less call to \code{diagram()} in Mosaic Stacking 1 and 2 in
       \strong{multi-metal.Rmd}, and now the entire chalcopyrite field in Mosaic
       Stacking 2 is bounded by a thick orange line, instead of just the border
-      shared with bornite.
+      with bornite.
 
       \item Improve handling of non-integer coefficients in
-      \code{expr.species()}. The result for FeS1.33 was previously equivalent
-      to FeS[.33] but is now shown correctly as FeS[1.33].
+      \code{expr.species()}. The result for FeS1.33 was previously shown as
+      FeS[.33] but is now shown correctly as FeS[1.33].
 
     }
   }
@@ -161,9 +161,16 @@
   \subsection{OTHER CHANGES}{
     \itemize{
 
-      \item As much as possible, functions in CHNOSZ have been modified to use
-      Joules in internal variables. In particular, the value of the gas
-      constant is based on Joules in \code{convert()} and other functions.
+      \item The \code{\var{reaction}} component of the output of
+      \code{subcrt()} contains the \code{model} for each species.
+
+      \item \code{subcrt()} produces an error if an aqueous species with the
+      \samp{DEW} \code{model} is requested but the DEW water model isn't
+      activated.
+
+      \item Most functions have been modified to use Joules in internal
+      variables. In particular, the value of the gas constant is expressed in
+      J K\S{-1} mol\S{-1} in \code{convert()} and other functions.
 
       \item Add a \strong{zap} argument to \code{mod.OBIGT()} to clear
       parameters of preexisting species (used by \code{logB_to_OBIGT()}).
@@ -171,8 +178,8 @@
       \item Change default for \code{affinity()} to \code{loga.protein = 0}
       (was -3).
 
-      \item Add tests stack_mosaic.R and stack_solubility.R (these create PDF
-      files for visual inspection of results).
+      \item Add tests \file{stack_mosaic.R} and \file{stack_solubility.R}
+      (these create PDF files for visual inspection of results).
 
       \item Change license from GPL (>= 2) to GPL-3.
 

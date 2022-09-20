@@ -14,11 +14,11 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
   for(k in 1:nrow(parameters)) {
     # The parameters for *this* species
     PAR <- parameters[k, ]
-    if(all(is.na(PAR[10:22]))) {
+    if(PAR$model == "Berman") {
       # Use Berman equations (parameters not in thermo()$OBIGT)
       properties <- Berman(PAR$name, T = T, P = P)
       iprop <- match(property, colnames(properties))
-      values <- properties[, iprop, drop=FALSE]
+      values <- properties[, iprop, drop = FALSE]
     } else {
       # In CHNOSZ, we have
       # 1 cm^3 bar --> convert(1, "calories") == 0.02390057 cal

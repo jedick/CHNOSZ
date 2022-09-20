@@ -38,6 +38,9 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
   if(grepl("DEW", thermo$opt$water)) {
     # Using DEW model: get beta to calculate dgdP
     H2O.props <- c(H2O.props, "beta")
+  } else {
+    # Don't allow DEW aqueous species if DEW water model isn't loaded 20220919
+    if(any(grepl("DEW", toupper(parameters$model)))) stop('The DEW water model is needed for one or more aqueous species. Run water("DEW") first.')
   }
   H2O <- water(H2O.props, T = c(Tr, T), P = c(Pr, P))
   H2O.PrTr <- H2O[1, ]

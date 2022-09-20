@@ -11,6 +11,8 @@
 #source("species.R")
 #source("AD.R")
 #source("nonideal.R")
+#source("hkf.R")
+#source("cgl.R")
 
 subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "H", "S", "V", "Cp"),
   T = seq(273.15, 623.15, 25), P = "Psat", grid = NULL, convert = TRUE, exceed.Ttr = FALSE,
@@ -181,15 +183,22 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   }
 
   # Where we keep info about the species involved
+  # Add model information 20220919
+  model <- thermo$OBIGT$model[iphases]
+  # Label specific water model;
+  # this is also how we record a "wet" reaction
+  isH2O <- model == "H2O"
+  isH2O[is.na(isH2O)] <- FALSE
+  model[isH2O] <- paste0("water.", thermo$opt$water)
   reaction <- data.frame(coeff = coeff.new, name = thermo$OBIGT$name[iphases],
     formula = thermo$OBIGT$formula[iphases], state = thermo$OBIGT$state[iphases],
-    ispecies = iphases, stringsAsFactors = FALSE)
+    ispecies = iphases, model = model, stringsAsFactors = FALSE)
   # Make the rownames readable ... but they have to be unique
   if(length(unique(iphases))==length(iphases)) rownames(reaction) <- as.character(iphases)
-
-  # Wetness etc.
-  isH2O <- reaction$name=='water' & reaction$state=='liq'
-  isaq <- reaction$state=='aq'
+  # Which are aqueous species
+  isaq <- reaction$state == "aq"
+  isaq.model <- toupper(reaction$model) %in% c("HKF", "AD", "DEW")
+  stopifnot(all(isaq == isaq.model))
 
   # Produce message about conditions
   if(length(species)==1 & convert==FALSE) {
@@ -282,12 +291,12 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   # Aqueous species and H2O properties
   if(TRUE %in% isaq) {
     # 20110808 get species parameters using OBIGT2eos()
-    # (this faster than using info() and is how we get everything in the same units)
+    # (this is faster than using info() and is how we get everything in the same units)
     param <- OBIGT2eos(thermo$OBIGT[iphases[isaq],], "aq", fixGHS = TRUE, toJoules = TRUE)
-    # Aqueous species with abbrv = "AD" use the AD model 20210407
-    abbrv <- thermo$OBIGT$abbrv[iphases[isaq]]
-    abbrv[is.na(abbrv)] <- ""
-    isAD <- abbrv == "AD"
+    # Aqueous species with model = "AD" use the AD model 20210407
+    model <- thermo$OBIGT$model[iphases[isaq]]
+    model[is.na(model)] <- ""
+    isAD <- model == "AD"
     # Always get density
     H2O.props <- "rho"
     # Calculate A_DH and B_DH if we're using the B-dot (Helgeson) equation

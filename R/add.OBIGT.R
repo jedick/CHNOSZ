@@ -58,6 +58,8 @@ mod.OBIGT <- function(..., zap = FALSE) {
     newrows$E_units <- thermo$opt$E.units
     # Fill in the columns
     newrows[, icol] <- args[inew, ]
+    # Guess model from state 20220919
+    if(is.na(newrows$model)) newrows$model <- ifelse(newrows$state == "aq", "HKF", "CGL")
     # Now check the formulas
     e <- tryCatch(makeup(newrows$formula), error=function(e) e)
     if(inherits(e, "error")) {
@@ -73,7 +75,7 @@ mod.OBIGT <- function(..., zap = FALSE) {
     ntotal <- nrow(thermo$OBIGT)
     ispecies[inew] <- (ntotal-length(inew)+1):ntotal
     # Inform user
-    message(paste("mod.OBIGT: added ", newrows$name, "(", newrows$state, ")", " with energy units of ", newrows$E_units, sep="", collapse="\n"))
+    message(paste("mod.OBIGT: added ", newrows$name, "(", newrows$state, ")", " with ", newrows$model, " model and energy units of ", newrows$E_units, sep="", collapse="\n"))
   }
   if(length(iold) > 0) {
     # Loop over species
@@ -81,10 +83,12 @@ mod.OBIGT <- function(..., zap = FALSE) {
       # The old values and the state
       oldprop <- thermo$OBIGT[ispecies[iold[i]], icol]
       state <- thermo$OBIGT$state[ispecies[iold[i]]]
-      # Zap (clear) all preexisting values except for state 20220324
+      model <- thermo$OBIGT$model[ispecies[iold[i]]]
+      # Zap (clear) all preexisting values except for state and model 20220324
       if(zap) {
         thermo$OBIGT[ispecies[iold[i]], ] <- NA
         thermo$OBIGT$state[ispecies[iold[i]]] <- state
+        thermo$OBIGT$model[ispecies[iold[i]]] <- model
       }
       # Tell user if they're the same, otherwise update the data entry
       if(isTRUE(all.equal(oldprop, args[iold[i], ], check.attributes = FALSE))) 
@@ -110,13 +114,6 @@ add.OBIGT <- function(file, species=NULL, force=TRUE) {
   sysnosuffix <- sapply(strsplit(sysfiles, "\\."), "[", 1)
   isys <- match(file, sysnosuffix)
   if(!is.na(isys)) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package="CHNOSZ")
-#  else {
-#    # We also match single system files with the state suffix removed
-#    # (e.g. "DEW" for "DEW_aq", but not "organic" because we have "organic_aq", "organic_cr", etc.)
-#    sysnostate <- sapply(strsplit(sysnosuffix, "_"), "[", 1)
-#    isys <- which(file==sysnostate)
-#    if(length(isys)==1) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package="CHNOSZ")
-#  }
   # Read data from the file
   to2 <- read.csv(file, as.is=TRUE)
   Etxt <- paste(unique(to2$E_units), collapse = " and ")
