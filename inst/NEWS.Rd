@@ -12,30 +12,35 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-36 (2022-09-20)}{
+\section{Changes in CHNOSZ version 1.9.9-39 (2022-09-29)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
-
-      \item A \code{model} column has been added to the OBIGT thermodynamic
-      database. This specifies the model for calculating standard thermodynamic
-      properties and will eventually supersede the heuristics for determining
-      the model to use based on values in other columns. Currently used models
-      are \samp{H2O} (water), \samp{HKF} (revised Helgeson-Kirkham-Flowers),
-      \samp{CGL} (heat capacity equation for crystalline, gas, and liquid
-      species), \samp{Berman} (Berman equations), \samp{AD} (Akinfiev-Diamond),
-      and \samp{DEW} (Deep Earth Water model). All OBIGT data files that can be
-      read using \code{add.OBIGT()} must have this column; there is no
-      back-compatibility support for data files in the old format.
-
-      \item Backward compatibility for OBIGT data files without an
-      \code{E_units} column has been removed.
 
       \item Units of Joules instead of calories are now used by default for the
       thermodynamic properties output by \code{subcrt()}. That is,
       \code{E.units("J")} is the default setting. Scripts that implicitly
       depend on the previous default setting of \code{E.units("cal")} may need
       to be modified to produce expected output.
+
+      \item A \code{model} column has been added to the OBIGT thermodynamic
+      database. This specifies the model for calculating standard thermodynamic
+      properties and will eventually supersede the heuristics for determining
+      the model based on values in other columns. Currently used models are
+      \samp{H2O} (water), \samp{HKF} (revised Helgeson-Kirkham-Flowers),
+      \samp{CGL} (heat capacity equation for crystalline, gas, and liquid
+      species), \samp{Berman} (Berman equations), \samp{AD} (Akinfiev-Diamond),
+      and \samp{DEW} (Deep Earth Water model, a variation of HKF). All OBIGT
+      data files that can be read using \code{add.OBIGT()} must have this
+      column; there is no back-compatibility support for data files in the old
+      format.
+
+      \item Backward compatibility for OBIGT data files without an
+      \code{E_units} column has been removed.
+
+      \item Order-of-magnitude (OOM) scaling of heat capacity coefficients for
+      the CGL model in OBIGT data files has been removed. OOM scaling of HKF
+      (including DEW) model parameters is still in effect.
 
       \item Change license from GPL (>= 2) to GPL-3.
 
@@ -120,7 +125,7 @@
   \subsection{REMOVED FEATURES}{
     \itemize{
 
-      \item Remove exports of \code{cgl()}, \code{hkf()}, and \code{AD()}.
+      \item \code{cgl()}, \code{hkf()}, and \code{AD()} are no longer exported.
       \code{subcrt()} should be used for all calculations of thermodynamic
       properties.
 
@@ -177,8 +182,8 @@
       \item Add a \strong{zap} argument to \code{mod.OBIGT()} to clear
       parameters of preexisting species (used by \code{logB_to_OBIGT()}).
 
-      \item Change default for \code{affinity()} to \code{loga.protein = 0}
-      (was -3).
+      \item In \code{affinity()}, make \code{loga.protein = 0} the default
+      (changed from -3).
 
       \item Add tests \file{stack_mosaic.R} and \file{stack_solubility.R}
       (these create PDF files for visual inspection of results).

@@ -20,19 +20,19 @@ iSi <- add.OBIGT("DEW", c("SiO2", "Si2O4"))
 thermo.refs(iSi)
 # Set temperature ranges for different pressures
 # data.frame is used to make P and T the same length
-PT0.5 <- data.frame(P=500, T=seq(200, 550, 10))
-PT1.0 <- data.frame(P=1000, T=seq(200, 700, 10))
-PT2.0 <- data.frame(P=2000, T=seq(200, 700, 10))
-PT5.0 <- data.frame(P=5000, T=seq(200, 850, 10))
-PT10.0 <- data.frame(P=10000, T=seq(200, 825, 10))
-PT20.0 <- data.frame(P=20000, T=seq(200, 800, 10))
+PT0.5 <- data.frame(P = 500, T = seq(200, 550, 10))
+PT1.0 <- data.frame(P = 1000, T = seq(200, 700, 10))
+PT2.0 <- data.frame(P = 2000, T = seq(200, 700, 10))
+PT5.0 <- data.frame(P = 5000, T = seq(200, 850, 10))
+PT10.0 <- data.frame(P = 10000, T = seq(200, 825, 10))
+PT20.0 <- data.frame(P = 20000, T = seq(200, 800, 10))
 PT <- rbind(PT0.5, PT1.0, PT2.0, PT5.0, PT10.0, PT20.0)
 # Reaction 1: quartz = SiO2(aq) [equivalent to quartz + 3 H2O = Si(OH)4]
-SiO2_logK <- suppressWarnings(subcrt(c("quartz", "SiO2"), c("cr", "aq"), c(-1, 1), P=PT$P, T=PT$T))$out$logK
+SiO2_logK <- suppressWarnings(subcrt(c("quartz", "SiO2"), c("cr", "aq"), c(-1, 1), P = PT$P, T = PT$T))$out$logK
 # Reaction 2: 2 quartz = Si2O4(aq) [equivalent to 2 quartz + 3 H2O = Si2O(OH)6]
-Si2O4_logK <- suppressWarnings(subcrt(c("quartz", "Si2O4"), c("cr", "aq"), c(-2, 1), P=PT$P, T=PT$T))$out$logK
+Si2O4_logK <- suppressWarnings(subcrt(c("quartz", "Si2O4"), c("cr", "aq"), c(-2, 1), P = PT$P, T = PT$T))$out$logK
 # Plot the sum of molalities (== activities) for each pressure
-plot(c(200, 1000), c(-2.5, 0.5), type="n", xlab=axis.label("T"), ylab="log molality")
+plot(c(200, 1000), c(-2.5, 0.5), type = "n", xlab = axis.label("T"), ylab = "log molality")
 for(P in unique(PT$P)) {
   icond <- PT$P == P
   SiO2_logm <- SiO2_logK[icond]
@@ -41,8 +41,8 @@ for(P in unique(PT$P)) {
   lines(PT$T[icond], logm)
   # add text label
   lastT <- tail(PT$T[icond], 1)
-  Pkb <- paste(format(P/1000, nsmall=1), "kb")
-  text(lastT+25, tail(logm, 1), Pkb, adj=0)
+  Pkb <- paste(format(P/1000, nsmall = 1), "kb")
+  text(lastT+25, tail(logm, 1), Pkb, adj = 0)
 }
 t1 <- quote("Solubility of"~alpha*"-quartz")
 t2 <- "after Sverjensky et al., 2014a"
@@ -54,16 +54,18 @@ mtitle(as.expression(c(t1, t2)))
 ## after Figures 12B and 12C of Sverjensky et al., 2014a [SHA14]
 ###########
 
-# For this plot we don't need the DEW water model
+# We can't use the DEW water model at 25 degC
 reset()
 # Load the fitted parameters for species as used by SHA14
 # TODO: also use their Ca+2??
 # NOTE: don't load NaCl, NH4+, or HS- here because the DEW spreadsheet lists a1 from the correlation
-add.OBIGT("DEW", c("CO3-2", "BO2-", "MgCl+", "SiO2", "HCO3-", "Si2O4"))
+iDEW <- add.OBIGT("DEW", c("CO3-2", "BO2-", "MgCl+", "SiO2", "HCO3-", "Si2O4"))
+# Override the check in subcrt() for the DEW water model 20220929
+lapply(iDEW, mod.OBIGT, model = "HKF")
 # Set up the plot
 V0nlab <- expression(Delta * italic(V) * degree[n]~~(cm^3~mol^-1))
 a1lab <- expression(italic(a)[1]%*%10~~(cal~mol~bar^-1))
-plot(c(-25, 50), c(-4, 12), type="n", xlab=V0nlab, ylab=a1lab)
+plot(c(-25, 50), c(-4, 12), type = "n", xlab = V0nlab, ylab = a1lab)
 # A function to get the HKF parameters, calculate nonsolvation volume, plot points, labels, error bars, and correlation lines
 plotfun <- function(species, col, pch, cex, dy, error, xlim, corrfun) {
   # Get HKF a1 parameter
@@ -71,10 +73,10 @@ plotfun <- function(species, col, pch, cex, dy, error, xlim, corrfun) {
   # Set omega to zero to calculate non-solvation volume 20220326
   mod.OBIGT(species, omega = 0)
   Vn <- do.call(rbind, subcrt(species, T = 25)$out)$V
-  points(Vn, a1, col=col, pch=pch, cex=cex)
-  for(i in 1:length(species)) text(Vn[i], a1[i]+dy, expr.species(species[i]))
-  arrows(Vn, a1 - error, Vn, a1 + error, length = 0.03, angle = 90, code = 3, col=col)
-  lines(xlim, corrfun(xlim), col=col)
+  points(Vn, a1, col = col, pch = pch, cex = cex)
+  for(i in 1:length(species)) text(Vn[i], a1[i] + dy, expr.species(species[i]))
+  arrows(Vn, a1 - error, Vn, a1 + error, length = 0.03, angle = 90, code = 3, col = col)
+  lines(xlim, corrfun(xlim), col = col)
 }
 # Monovalent ions: Na+, K+, Cl-, Br-
 monofun <- function(Vn) 2.0754 + 0.10871 * Vn
@@ -95,6 +97,7 @@ mtitle(as.expression(c(t1, t2)))
 
 # Clean up for next plot 
 OBIGT()
+water("DEW")
 
 ###########
 #### Plot 3: logfO2-pH diagram for aqueous inorganic and organic carbon species at high pressure
@@ -116,8 +119,8 @@ dfun <- function(T = 600, P = 50000, res = 300) {
   # (from EQ3NR model for eclogite [Supporting Information of SSH14])
   e <- equilibrate(a, loga.balance = log10(0.03))
   diagram(e, fill = fill)
-  dp <- describe.property(c("     T", "     P"), c(T, P), digits=0)
-  legend("bottomleft", legend=dp, bty="n")
+  dp <- describe.property(c("     T", "     P"), c(T, P), digits = 0)
+  legend("bottomleft", legend = dp, bty = "n")
 }
 
 water("DEW")
@@ -157,7 +160,7 @@ basis(c("Fe", "SiO2", "CO3-2", "H2O", "oxygen", "H+"))
 ## Calculate logfO2 in QFM buffer
 basis("O2", "QFM")
 T <- seq(600, 1000, 100)
-buf <- affinity(T=T, P=50000, return.buffer=TRUE)
+buf <- affinity(T = T, P = 50000, return.buffer = TRUE)
 ## Add species
 species(c(inorganics, organics))
 ## Generate spline functions from IS, pH, and molC values at every 100 degC
@@ -177,9 +180,9 @@ names[c(4, 5, 7, 9)] <- ""
 col <- rep("black", length(names))
 col[c(1, 3, 6, 8, 10)] <- c("red", "darkgreen", "purple", "orange", "navyblue")
 if(packageVersion("CHNOSZ") > "1.1.3") {
-  diagram(e, alpha = "balance", names = names, col = col, ylim = c(0, 0.8), ylab="carbon fraction", spline.method="natural")
+  diagram(e, alpha = "balance", names = names, col = col, ylim = c(0, 0.8), ylab = "carbon fraction", spline.method = "natural")
 } else {
-  diagram(e, alpha = "balance", names = names, col = col, ylim = c(0, 0.8), ylab="carbon fraction")
+  diagram(e, alpha = "balance", names = names, col = col, ylim = c(0, 0.8), ylab = "carbon fraction")
 }
 
 ## Add legend and title

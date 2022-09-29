@@ -10,11 +10,12 @@
 #source("util.data.R")
 
 info <- function(species=NULL, state=NULL, check.it=TRUE) {
-  ## return information for one or more species in thermo()$OBIGT
+
+  ## Return information for one or more species in thermo()$OBIGT
   thermo <- get("thermo", CHNOSZ)
-  # that should give us the data, not the thermo() function 20190928
+  # That should give us the data, not the thermo() function 20190928
   if(is.function(thermo)) stop("CHNOSZ package data is not available; use reset() or library(CHNOSZ) to load it")
-  ## if no species are requested, summarize the available data  20101129
+  ## If no species are requested, summarize the available data  20101129
   if(is.null(species)) {
     message("info: 'species' is NULL; summarizing information about thermodynamic data...")
     message(paste("thermo()$OBIGT has", nrow(thermo$OBIGT[thermo$OBIGT$state=="aq", ]), "aqueous,",
@@ -25,54 +26,62 @@ info <- function(species=NULL, state=NULL, check.it=TRUE) {
       length(unique(thermo$protein$organism)), "organisms"))
     return()
   }
-  ## run info.numeric or info.character depending on the input type
+
+  ## Run info.numeric or info.character depending on the input type
   if(is.numeric(species)) {
+
     out <- lapply(species, info.numeric, check.it)
-    # if we have different states the column names could be different
+    # If we have different states the column names could be different
     if(length(unique(unlist(lapply(out, names)))) > ncol(thermo$OBIGT)) {
       # make them the same as thermo$OBIGT
       out <- lapply(out, function(row) {
         colnames(row) <- colnames(thermo$OBIGT); return(row)
       }) 
     }
-    # turn the list into a data frame
+    # Turn the list into a data frame
     out <- do.call(rbind, out)
-    # ensure that the rownames are numeric values (not names possibly inherited from retrieve()) 20190224
+    # Ensure that the rownames are numeric values (not names possibly inherited from retrieve()) 20190224
     if(!is.null(attr(species, "names"))) row.names(out) <- species
+
   } else {
-    # state and species should be same length
+
+    # State and species should be same length
     if(!is.null(state)) {
       lmax <- max(length(species), length(state))
       state <- rep(state, length.out=lmax)
       species <- rep(species, length.out=lmax)
     }
-    # loop over the species
+    # Loop over the species
     out <- sapply(seq_along(species), function(i) {
-      # first look for exact match
+      # First look for exact match
       ispecies <- info.character(species[i], state[i])
-      # if no exact match and it's not a protein, show approximate matches (side effect of info.approx)
+      # If no exact match and it's not a protein, show approximate matches (side effect of info.approx)
       if(identical(ispecies, NA) & !grepl("_", species[i])) ispecies.notused <- info.approx(species[i], state[i])
-      # do not accept multiple matches
+      # Do not accept multiple matches
       if(length(ispecies) > 1) ispecies <- NA
       return(ispecies)
     })
+
   }
-  ## all done!
+
+  ## All done!
   return(out)
 }
 
-### unexported functions ###
+### Unexported functions ###
 
-info.text <- function(ispecies) {
+info.text <- function(ispecies, withsource = TRUE) {
   # a textual description of species name, formula, source, e.g.
   # CO2 [CO2(aq)] (SSW01, SHS89, 11.Oct.07)
   this <- get("thermo", CHNOSZ)$OBIGT[ispecies, ]
+  out <- paste(this$name, " [", this$formula, "(", this$state, ")", "]", sep="")
+  if(!withsource) return(out)
   sourcetext <- this$ref1
   ref2 <- this$ref2
   if(!is.na(ref2)) sourcetext <- paste(sourcetext, ref2, sep=", ")
   date <- this$date
   if(!is.na(date)) sourcetext <- paste(sourcetext, date, sep=", ")
-  out <- paste(this$name, " [", this$formula, "(", this$state, ")", "] (", sourcetext, ")", sep="")
+  out <- paste(out, " (", sourcetext, ")", sep = "")
   return(out)
 }
 
@@ -176,8 +185,8 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
 }
 
 info.numeric <- function(ispecies, check.it=TRUE) {
-  # from a numeric species index in 'ispecies' return the 
-  # thermodynamic properties and equations-of-state parameters
+  # From a numeric species index in 'ispecies' return the 
+  #   thermodynamic properties and equations-of-state parameters
   thermo <- get("thermo", CHNOSZ)
   # if we're called with NA, return an empty row
   if(is.na(ispecies)) {
@@ -186,7 +195,7 @@ info.numeric <- function(ispecies, check.it=TRUE) {
     return(this)
   }
   this <- thermo$OBIGT[ispecies,]
-  # species indices must be in range
+  # Species indices must be in range
   ispeciesmax <- nrow(thermo$OBIGT)
   if(ispecies > ispeciesmax | ispecies < 1) 
     stop(paste("species index", ispecies, "not found in thermo()$OBIGT\n"))
@@ -194,6 +203,10 @@ info.numeric <- function(ispecies, check.it=TRUE) {
   # Remove scaling factors on EOS parameters depending on state
   # Use new OBIGT2eos function here
   this <- OBIGT2eos(this, this$state)
+
+  # Stop with an informative message if species don't have a model 20220929
+  namodel <- is.na(this$model)
+  if(namodel) stop(paste("Species has NA model:", info.text(ispecies, FALSE)), call. = FALSE)
 
   if(tolower(this$model) == "berman") { # this is Berman
     # Get G, H, S, and V for minerals with Berman parameters 20220203

@@ -3,13 +3,13 @@
 # 20181031 use new vectorized, non-uniroot solubility(); add T-pH plots
 library(CHNOSZ)
 
-# for comparison with published CO2 solubility plot, see Fig. 4.5 in
-# Stumm and Morgan, 1996, Aquatic Chemistry: Chemical Equilibria and Rates in Natural Waters
-# (New York: John Wiley & Sons), 3rd edition
+# For comparison with published CO2 solubility plot, see Fig. 4.5 in
+#   Stumm and Morgan, 1996, Aquatic Chemistry: Chemical Equilibria and Rates in Natural Waters
+#   (New York: John Wiley & Sons), 3rd edition
 
-# for comparison with published calcite solubility plot, see Fig. 4A in
-# Manning et al., 2013, Reviews in Mineralogy & Geochemistry, v. 75, pp. 109-148
-# (doi: 10.2138/rmg.2013.75.5)
+# For comparison with published calcite solubility plot, see Fig. 4A in
+#   Manning et al., 2013, Reviews in Mineralogy & Geochemistry, v. 75, pp. 109-148
+#   (doi: 10.2138/rmg.2013.75.5)
 
 opar <- par(no.readonly = TRUE)
 layout(matrix(1:4, nrow = 2))

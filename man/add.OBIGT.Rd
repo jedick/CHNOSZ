@@ -44,7 +44,7 @@ As a result, retrieving the properties of an added aqueous species using \code{\
 The name of the species to add or change must be supplied as the first argument of \code{...} or as a named argument (named \samp{name}).
 Additional arguments to \code{mod.OBIGT} refer to the name of the property(s) to be updated and are matched to any part of compound column names in \code{\link{thermo}()$OBIGT}.
 For instance, either \samp{z} or \samp{T} matches the \samp{z.T} column.
-The values provided should also include any order-of-magnitude scaling factors (see \code{\link{thermo}}).
+The values provided should also include order-of-magnitude scaling of HKF and DEW model parameters (see \code{\link{thermo}}).
 
 When adding new species, a chemical formula should be included along with the values of any of the thermodynamic properties.
 The formula is taken from the \samp{formula} argument, or if that is missing, is taken to be the same as the \samp{name} of the species.

@@ -262,14 +262,15 @@ check.OBIGT <- function() {
   # and among G, H, S values
   # 20110808 jmd replaces 'check=TRUE' argument of info()
   checkfun <- function(what) {
+    message(paste("check.OBIGT: checking", what))
     # looking at thermo$OBIGT
     if(what=="OBIGT") tdata <- get("thermo", CHNOSZ)$OBIGT
-    else if(what=="DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW.csv", package="CHNOSZ"), as.is=TRUE)
-    else if(what=="SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)
-    else if(what=="SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package="CHNOSZ"), as.is=TRUE)
-    else if(what=="AS04") tdata <- read.csv(system.file("extdata/OBIGT/AS04.csv", package="CHNOSZ"), as.is=TRUE)
-    else if(what=="AD") tdata <- read.csv(system.file("extdata/OBIGT/AD.csv", package="CHNOSZ"), as.is=TRUE)
-    else if(what=="GEMSFIT") tdata <- read.csv(system.file("extdata/OBIGT/GEMSFIT.csv", package="CHNOSZ"), as.is=TRUE)
+    else if(what=="DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW.csv", package = "CHNOSZ"), as.is = TRUE)
+    else if(what=="SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package = "CHNOSZ"), as.is = TRUE)
+    else if(what=="SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package = "CHNOSZ"), as.is = TRUE)
+    else if(what=="AS04") tdata <- read.csv(system.file("extdata/OBIGT/AS04.csv", package = "CHNOSZ"), as.is = TRUE)
+    else if(what=="AD") tdata <- read.csv(system.file("extdata/OBIGT/AD.csv", package = "CHNOSZ"), as.is = TRUE)
+    else if(what=="GEMSFIT") tdata <- read.csv(system.file("extdata/OBIGT/GEMSFIT.csv", package = "CHNOSZ"), as.is = TRUE)
     ntot <- nrow(tdata)
     # where to keep the results
     DCp <- DV <- DG <- rep(NA,ntot)
@@ -318,8 +319,6 @@ check.OBIGT <- function() {
   out$DCp <- round(out$DCp,2)
   out$DV <- round(out$DV,2)
   out$DG <- round(out$DG)
-  # how to make the file at extdata/thermo/OBIGT_check.csv
-  # write.csv(out,"OBIGT_check.csv",na="",row.names=FALSE)
   # return the results
   return(out)
 }
@@ -406,42 +405,45 @@ dumpdata <- function(file = NULL) {
 # If fixGHS is TRUE a missing one of G, H or S for any species is calculated
 #   from the other two and the chemical formula of the species.
 # If toJoules is TRUE, convert parameters to Joules 20220325
-# This function is used by both info and subcrt when retrieving entries from the thermodynamic database.
+# This function is used by both info() and subcrt() when retrieving entries from the thermodynamic database.
 OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
-  # Remove scaling factors from EOS parameters and apply column names depending on the EOS
-  if(identical(state, "aq")) {
-    # Aqueous species with model = "AD" use the AD model 20210407
-    model <- OBIGT$model
-    model[is.na(model)] <- ""
-    isAD <- model == "AD"
-    # Remove scaling factors for the HKF species, but not for the AD species;
-    # protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
-    # (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302
-    if(any(!isAD)) OBIGT[!isAD, 15:22] <- t(t(OBIGT[!isAD, 15:22]) * 10 ^ c(-1, 2, 0, 4, 0, 4, 5, 0))
-    # For AD species, set NA values in remaining columns (for display only)
-    if(any(isAD)) OBIGT[isAD, 18:21] <- NA
-    # If all of the species are AD, change the variable names
-    if(all(isAD)) colnames(OBIGT)[15:22] <- c("a", "b", "xi", "XX1", "XX2", "XX3", "XX4", "Z") 
-    else colnames(OBIGT)[15:22] <- c("a1", "a2", "a3", "a4", "c1", "c2", "omega", "Z") 
-  } else {
-    OBIGT[, 15:22] <- t(t(OBIGT[, 15:22]) * 10 ^ c(0, -3, 5, 0, -5, 0, 0, 0))
-    colnames(OBIGT)[15:22] <- c("a", "b", "c", "d", "e", "f", "lambda", "T")
-  }
+
+  # Figure out the model for each species 20220929
+  model <- OBIGT$model
+  model[is.na(model)] <- ""
+  isCGL <- model == "CGL"
+  isHKF <- model == "HKF"
+  isDEW <- model == "DEW"
+  isAD <- model == "AD"
+  # Remove scaling factors for the HKF and DEW species
+  #   protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
+  #   (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302
+  is_HKF <- isHKF | isDEW
+  if(any(is_HKF)) OBIGT[is_HKF, 15:22] <- t(t(OBIGT[is_HKF, 15:22]) * 10 ^ c(-1, 2, 0, 4, 0, 4, 5, 0))
+  # For AD species, set NA values in unused columns
+  if(any(isAD)) OBIGT[isAD, 18:21] <- NA
+  # Change column names depending on the model
+  if(all(isAD)) colnames(OBIGT)[15:22] <- c("a", "b", "xi", "XX1", "XX2", "XX3", "XX4", "Z") 
+  else if(all(isHKF | isAD | isDEW)) colnames(OBIGT)[15:22] <- c("a1", "a2", "a3", "a4", "c1", "c2", "omega", "Z") 
+  else colnames(OBIGT)[15:22] <- c("a", "b", "c", "d", "e", "f", "lambda", "T")
+
   if(toJoules) {
     # Convert parameters from calories to Joules 20220325
     # [Was: convert parameters from Joules to calories 20190530]
-    ical <- OBIGT$E_units == "cal"
-    if(any(ical)) {
-      # We only convert column 20 for aqueous species (omega), not for cgl species (lambda)  20190903
-      if(identical(state, "aq")) OBIGT[ical, c(10:13, 15:21)] <- convert(OBIGT[ical, c(10:13, 15:21)], "J")
-      else OBIGT[ical, c(10:13, 15:20)] <- convert(OBIGT[ical, c(10:13, 15:20)], "J")
+    iscal <- OBIGT$E_units == "cal"
+    if(any(iscal)) {
+      OBIGT[iscal, c(10:13, 15:20)] <- convert(OBIGT[iscal, c(10:13, 15:20)], "J")
+      # We only convert the last column for aqueous species (HKF parameter: omega), not for CGL species (arbitrary exponent: lambda)  20190903
+      isaq <- OBIGT$state == "aq"
+      if(any(isaq)) OBIGT[iscal & isaq, 21] <- convert(OBIGT[iscal & isaq, 21], "J")
       # Also update the E_units column 20220325
-      OBIGT$E_units[ical] <- "J"
+      OBIGT$E_units[iscal] <- "J"
     }
   }
+
   if(fixGHS) {
     # Fill in one of missing G, H, S;
-    #   for use esp. by subcrt because NA for one of G, H or S precludes calculations at high T
+    #   for use esp. by subcrt() because NA for one of G, H or S precludes calculations at high T
     # Which entries are missing just one
     imiss <- which(rowSums(is.na(OBIGT[, 10:12])) == 1)
     if(length(imiss) > 0) {
@@ -455,5 +457,6 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
       }
     }
   }
-  return(OBIGT)
+
+  OBIGT
 }

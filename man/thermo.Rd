@@ -130,7 +130,7 @@ Properties of these species are calculated using a heat capacity function with u
 
 The meanings of the remaining columns depend on the model for each species.
 The names of these columns are compounded from those of the parameters in the HKF equations of state and general heat capacity equation; for example, column 13 is named \code{a1.a}.
-Scaling of the values by orders of magnitude is adopted for some of the parameters, following common usage in the literature.
+Scaling of the values by integral powers of ten (i.e., orders of magnitude; OOM) for the HKF parameters (this also includes the DEW model) is based on the usual (but by no means universal) convention in the literature.
 
 Columns 15-22 for aqueous species (parameters in the revised HKF equations of state):
 
@@ -145,14 +145,15 @@ Columns 15-22 for aqueous species (parameters in the revised HKF equations of st
       \code{Z}  \tab numeric \tab Charge
     }
 
-Columns 15-22 for crystalline, gas and liquid species (\eqn{Cp} = \eqn{a} + \eqn{bT} + \eqn{cT}\S{-2} + \eqn{dT}\S{-0.5} + \eqn{eT}\S{2} + \eqn{fT}\S{lambda})
+Columns 15-22 for crystalline, gas and liquid species (\eqn{Cp} = \eqn{a} + \eqn{bT} + \eqn{cT}\S{-2} + \eqn{dT}\S{-0.5} + \eqn{eT}\S{2} + \eqn{fT}\S{lambda}).
+NOTE: OOM scaling for heat capacity coefficients of CGL species has been removed as of CHNOSZ version 2.0.0.
 
     \tabular{lll}{
       \code{a} \tab numeric \tab \eqn{a} (cal K\S{-1} mol\S{-1})\cr
-      \code{b} \tab numeric \tab \eqn{b} * 10\S{3} (cal K\S{-2} mol\S{-1})\cr
-      \code{c} \tab numeric \tab \eqn{c} * 10\S{-5} (cal K mol\S{-1})\cr
+      \code{b} \tab numeric \tab \eqn{b} (cal K\S{-2} mol\S{-1})\cr
+      \code{c} \tab numeric \tab \eqn{c} (cal K mol\S{-1})\cr
       \code{d} \tab numeric \tab \eqn{d} (cal K\S{-0.5} mol\S{-1})\cr
-      \code{e} \tab numeric \tab \eqn{e} * 10\S{5} (cal K\S{-3} mol\S{-1})\cr
+      \code{e} \tab numeric \tab \eqn{e} (cal K\S{-3} mol\S{-1})\cr
       \code{f} \tab numeric \tab \eqn{f} (cal K\S{-lambda-1} mol\S{-1})\cr
       \code{lambda} \tab numeric \tab \lambda (exponent on the \eqn{f} term)\cr
       \code{T} \tab numeric \tab Temperature of phase transition or upper\cr

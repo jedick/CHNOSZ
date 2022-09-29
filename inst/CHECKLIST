@@ -74,20 +74,20 @@ Documentation
 - Run R_PAPERSIZE=letter R CMD Rd2pdf CHNOSZ/
   and fix any lines truncated by page margins
 
-*********************
-Vignettes for website
-*********************
+**********************************************
+Run tests that are skipped for routine testing
+**********************************************
+
+- Comment this line in test-AD.R:
+exit_file("Skipping tests so development builds on R-Forge work")
+
+*************************************************
+Making vignettes for website (https://chnosz.net)
+*************************************************
 
 - Use dpi <- 72 in anintro.Rmd
 
 - Use hires <- TRUE in multi-metal.Rmd
 
-- Run doc/mklinks.sh in installed directory (adds links to HTML renditions of
-  Rd files)
-
-*******
-Testing
-*******
-
-- Comment this line in test-AD.R:
-exit_file("Skipping tests so development builds on R-Forge work")
+- After making vignettes, run doc/mklinks.sh in installed directory
+  (this adds links to the HTML renditions of Rd files)
