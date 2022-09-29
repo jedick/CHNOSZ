@@ -74,7 +74,7 @@ P <- 5000
 # logB_to_OBIGT() "zaps" the previous parameters before adding the fitted ones
 inew <- logB_to_OBIGT(logB, species, coeff, T, P)
 # Plot MRB and logB_to_OBIGT fitted values
-plot(T, logB, xlab = axis.label("T"), ylab = quote(log~beta), pch = 19, cex = 2)
+plot(T, logB, xlab = axis.label("T"), ylab = axis.label("logB"), pch = 19, cex = 2)
 Tfit <- seq(25, 600, 25)
 sres <- subcrt(species, coeff, T = Tfit, P = P)
 lines(sres$out$T, sres$out$logK, col = 4)

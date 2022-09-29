@@ -325,73 +325,80 @@ check.OBIGT <- function() {
 }
 
 RH2OBIGT <- function(compound=NULL, state="cr", file=system.file("extdata/adds/RH98_Table15.csv", package="CHNOSZ")) {
-  # get thermodynamic properties and equations of state parameters using 
-  # group contributions from Richard and Helgeson, 1998   20120609 jmd
-  # read the compound names, physical states, chemical formulas and group stoichiometry from the file
-  # we use check.names=FALSE because the column names are the names of the groups,
-  # and are not syntactically valid R names, and stringsAsFactors=FALSE
-  # so that formulas are read as characters (for checking with as.chemical.formula)
+  # Get thermodynamic properties and equations of state parameters using 
+  #   group contributions from Richard and Helgeson, 1998   20120609 jmd
+  # Read the compound names, physical states, chemical formulas and group stoichiometry from the file
+  # We use check.names=FALSE because the column names are the names of the groups,
+  #   and are not syntactically valid R names, and stringsAsFactors=FALSE
+  #   so that formulas are read as characters (for checking with as.chemical.formula)
   dat <- read.csv(file, check.names=FALSE, stringsAsFactors=FALSE)
   # "compound" the compound names and states from the file
   comate.arg <- comate.dat <- paste(dat$compound, "(", dat$state, ")", sep="")
   # "compound" the compound names and states from the arguments
   if(!is.null(compound)) comate.arg <- paste(compound, "(", state, ")", sep="")
-  # identify the compounds
+  # Identify the compounds
   icomp <- match(comate.arg, comate.dat)
-  # check if all compounds were found
+  # Check if all compounds were found
   ina <- is.na(icomp)
   if(any(ina)) stop(paste("compound(s)", paste(comate.arg[ina], collapse=" "), "not found in", file))
-  # initialize output data frame
+  # Initialize output data frame
   out <- get("thermo", CHNOSZ)$OBIGT[0, ]
-  # loop over the compounds
+  # Loop over the compounds
   for(i in icomp) {
-    # the group stoichiometry for this compound
+    # The group stoichiometry for this compound
     thisdat <- dat[i, ]
-    # take out groups that are NA or 0
+    # Take out groups that are NA or 0
     thisdat <- thisdat[, !is.na(thisdat)]
     thisdat <- thisdat[, thisdat!=0]
-    # identify the groups in this compound
+    # Identify the groups in this compound
     igroup <- 4:ncol(thisdat)
     ispecies <- info(colnames(thisdat)[igroup], state=thisdat$state)
-    # check if all groups were found
+    # Check if all groups were found
     ina <- is.na(ispecies)
     if(any(ina)) stop(paste("group(s)", paste(colnames(thisdat)[igroup][ina], collapse=" "), "not found in", thisdat$state, "state"))
-    # group additivity of properties and parameters: add contributions from all groups
+    # Group additivity of properties and parameters: add contributions from all groups
     thiseos <- t(colSums(get("thermo", CHNOSZ)$OBIGT[ispecies, 10:22] * as.numeric(thisdat[, igroup])))
-    # group additivity of chemical formula
+    # Group additivity of chemical formula
     formula <- as.chemical.formula(colSums(i2A(ispecies) * as.numeric(thisdat[, igroup])))
-    # check if the formula is the same as in the file
+    # Check if the formula is the same as in the file
     if(!identical(formula, thisdat$formula)) 
       stop(paste("formula", formula, "of", comate.dat[i], "(from groups) is not identical to", thisdat$formula, "(listed in file)" ))
-    # build the front part of OBIGT data frame
+    # Build the front part of OBIGT data frame
     thishead <- data.frame(name=thisdat$compound, abbrv=NA, formula=formula, state=thisdat$state, 
       ref1=NA, ref2=NA, date=as.character(Sys.Date()), E_units = "cal", stringsAsFactors=FALSE)
-    # insert the result into the output
+    # Insert the result into the output
     out <- rbind(out, cbind(thishead, thiseos))
   }
   return(out)
 }
 
-# dump all thermodynamic data in default and optional OBIGT files 20171121
-dumpdata <- function(file=NULL) {
-  # default database (OBIGT)
+# Dump all thermodynamic data in default and optional OBIGT files 20171121
+dumpdata <- function(file = NULL) {
+  # The default database (OBIGT)
   dat <- get("thermo", CHNOSZ)$OBIGT
-  OBIGT <- cbind(source="OBIGT", dat)
-  # optional data
-  dat <- read.csv(system.file("extdata/OBIGT/DEW.csv", package="CHNOSZ"), as.is=TRUE)
-  DEW <- cbind(source="DEW", dat)
-  dat <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package="CHNOSZ"), as.is=TRUE)
-  SLOP98 <- cbind(source="SLOP98", dat)
-  dat <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package="CHNOSZ"), as.is=TRUE)
-  SUPCRT92 <- cbind(source="SUPCRT92", dat)
-  # put it all together
-  out <- rbind(OBIGT, DEW, SLOP98, SUPCRT92)
-  # quote columns 2 (name) and 3 (abbrv) because they have commas for some entries
-  if(!is.null(file)) write.csv(out, file, row.names=FALSE, quote=c(2, 3))
+  OBIGT <- cbind(source = "OBIGT", dat)
+  # Optional data
+  dat <- read.csv(system.file("extdata/OBIGT/DEW.csv", package = "CHNOSZ"), as.is = TRUE)
+  DEW <- cbind(source = "DEW", dat)
+  dat <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package = "CHNOSZ"), as.is = TRUE)
+  SLOP98 <- cbind(source = "SLOP98", dat)
+  dat <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package = "CHNOSZ"), as.is = TRUE)
+  SUPCRT92 <- cbind(source = "SUPCRT92", dat)
+  # More optional data 20220929
+  dat <- read.csv(system.file("extdata/OBIGT/AS04.csv", package = "CHNOSZ"), as.is = TRUE)
+  AS04 <- cbind(source = "AS04", dat)
+  dat <- read.csv(system.file("extdata/OBIGT/AD.csv", package = "CHNOSZ"), as.is = TRUE)
+  AD <- cbind(source = "AD", dat)
+  dat <- read.csv(system.file("extdata/OBIGT/GEMSFIT.csv", package = "CHNOSZ"), as.is = TRUE)
+  GEMSFIT <- cbind(source = "GEMSFIT", dat)
+  # Put it all together
+  out <- rbind(OBIGT, SUPCRT92, SLOP98, AS04, AD, DEW, GEMSFIT)
+  # Quote columns 2 (name) and 3 (abbrv) because they have commas for some entries
+  if(!is.null(file)) write.csv(out, file, row.names = FALSE, quote = c(2, 3))
   else(return(out))
 }
 
-### unexported functions ###
+### Unexported functions ###
 
 # Take a data frame in the format of thermo()$OBIGT of one or more rows,
 #   remove scaling factors from equations-of-state parameters,
@@ -401,8 +408,7 @@ dumpdata <- function(file=NULL) {
 # If toJoules is TRUE, convert parameters to Joules 20220325
 # This function is used by both info and subcrt when retrieving entries from the thermodynamic database.
 OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
-  # remove scaling factors from EOS parameters
-  # and apply column names depending on the EOS
+  # Remove scaling factors from EOS parameters and apply column names depending on the EOS
   if(identical(state, "aq")) {
     # Aqueous species with model = "AD" use the AD model 20210407
     model <- OBIGT$model
@@ -411,15 +417,15 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
     # Remove scaling factors for the HKF species, but not for the AD species;
     # protect this by an if statement to workaround error in subassignment to empty subset of data frame in R < 3.6.0
     # (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17483) 20190302
-    if(any(!isAD)) OBIGT[!isAD, 15:22] <- t(t(OBIGT[!isAD, 15:22]) * 10^c(-1,2,0,4,0,4,5,0))
+    if(any(!isAD)) OBIGT[!isAD, 15:22] <- t(t(OBIGT[!isAD, 15:22]) * 10 ^ c(-1, 2, 0, 4, 0, 4, 5, 0))
     # For AD species, set NA values in remaining columns (for display only)
     if(any(isAD)) OBIGT[isAD, 18:21] <- NA
     # If all of the species are AD, change the variable names
-    if(all(isAD)) colnames(OBIGT)[15:22] <- c('a','b','xi','XX1','XX2','XX3','XX4','Z') 
-    else colnames(OBIGT)[15:22] <- c('a1','a2','a3','a4','c1','c2','omega','Z') 
+    if(all(isAD)) colnames(OBIGT)[15:22] <- c("a", "b", "xi", "XX1", "XX2", "XX3", "XX4", "Z") 
+    else colnames(OBIGT)[15:22] <- c("a1", "a2", "a3", "a4", "c1", "c2", "omega", "Z") 
   } else {
-    OBIGT[, 15:22] <- t(t(OBIGT[, 15:22]) * 10^c(0,-3,5,0,-5,0,0,0))
-    colnames(OBIGT)[15:22] <- c('a','b','c','d','e','f','lambda','T')
+    OBIGT[, 15:22] <- t(t(OBIGT[, 15:22]) * 10 ^ c(0, -3, 5, 0, -5, 0, 0, 0))
+    colnames(OBIGT)[15:22] <- c("a", "b", "c", "d", "e", "f", "lambda", "T")
   }
   if(toJoules) {
     # Convert parameters from calories to Joules 20220325
@@ -435,7 +441,7 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
   }
   if(fixGHS) {
     # Fill in one of missing G, H, S;
-    # for use esp. by subcrt because NA for one of G, H or S precludes calculations at high T
+    #   for use esp. by subcrt because NA for one of G, H or S precludes calculations at high T
     # Which entries are missing just one
     imiss <- which(rowSums(is.na(OBIGT[, 10:12])) == 1)
     if(length(imiss) > 0) {

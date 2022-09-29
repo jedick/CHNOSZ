@@ -21,12 +21,12 @@
       database. This specifies the model for calculating standard thermodynamic
       properties and will eventually supersede the heuristics for determining
       the model to use based on values in other columns. Currently used models
-      are \samp{H2O} (water), \samp{HKF} (Helgeson-Kirkham-Flowers), \samp{CGL}
-      (general heat capacity equation for crystalline, gas, and liquid
+      are \samp{H2O} (water), \samp{HKF} (revised Helgeson-Kirkham-Flowers),
+      \samp{CGL} (heat capacity equation for crystalline, gas, and liquid
       species), \samp{Berman} (Berman equations), \samp{AD} (Akinfiev-Diamond),
       and \samp{DEW} (Deep Earth Water model). All OBIGT data files that can be
       read using \code{add.OBIGT()} must have this column; there is no
-      back-compatibility support for data files in the older format.
+      back-compatibility support for data files in the old format.
 
       \item Backward compatibility for OBIGT data files without an
       \code{E_units} column has been removed.
@@ -36,6 +36,8 @@
       \code{E.units("J")} is the default setting. Scripts that implicitly
       depend on the previous default setting of \code{E.units("cal")} may need
       to be modified to produce expected output.
+
+      \item Change license from GPL (>= 2) to GPL-3.
 
     }
   }
@@ -140,7 +142,7 @@
       \item In \strong{multi-metal.Rmd}, work around absence of
       \code{hcl.colors()} in \R < 3.6.0.
 
-      \item \code{diagram()}: Improve handling of length > 2 \code{col},
+      \item \code{diagram()}: Improve handling of length > 1 \code{col},
       \code{lty} and \code{lwd} arguments for predominance diagrams. Because
       field boundaries are drawn for the first species, then that species is
       removed before drawing boundaries for the second species, and so on,
@@ -180,8 +182,6 @@
 
       \item Add tests \file{stack_mosaic.R} and \file{stack_solubility.R}
       (these create PDF files for visual inspection of results).
-
-      \item Change license from GPL (>= 2) to GPL-3.
 
     }
   }

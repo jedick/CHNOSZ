@@ -78,6 +78,7 @@ expr.property <- function(property, molality=FALSE) {
   # some special cases
   if(is.na(property)) return("")
   if(property=="logK") return(quote(log~italic(K)))
+  if(property=="logB") return(quote(log~beta))
   # grepl here b/c diagram() uses "loga.equil" and "loga.basis"
   if(grepl("loga", property)) {
     if(molality) return(quote(log~italic(m)))
