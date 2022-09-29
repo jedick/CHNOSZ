@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-39 (2022-09-29)}{
+\section{Changes in CHNOSZ version 1.9.9-40 (2022-09-29)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -131,8 +131,6 @@
 
       \item \code{EOSregress()} and the associated demo and vignette have been
       removed.
-
-      \item Remove \code{aasum()}.
 
     }
   }

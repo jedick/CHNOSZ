@@ -2,9 +2,7 @@
 # calculate properties of proteins 20061109 jmd
 # reorganize protein functions 20120513
 
-# add.protein - add amino acid counts to thermo()$protein (returns iprotein)
-# seq2aa - calculate amino acid counts from a sequence
-
+# Calculate amino acid counts from a sequence
 seq2aa <- function(protein, sequence) {
   # remove newlines and whitespace
   sequence <- gsub("\\s", "", gsub("[\r\n]", "", sequence))
@@ -21,6 +19,7 @@ seq2aa <- function(protein, sequence) {
   return(aa)
 }
 
+# Add amino acid counts to thermo()$protein (returns iprotein)
 add.protein <- function(aa, as.residue = FALSE) {
   # Add a properly constructed data frame of 
   # amino acid counts to thermo()$protein
@@ -53,3 +52,35 @@ add.protein <- function(aa, as.residue = FALSE) {
   if(any(ip.present)) message("add.protein: replaced ", sum(ip.present), " existing protein(s) in thermo()$protein")
   return(ip)
 }
+
+# Combine amino acid counts (sum, average, or weighted sum by abundance)
+aasum <- function(aa, abundance = 1, average = FALSE, protein = NULL, organism = NULL) {
+  # Returns the sum of the amino acid counts in aa,
+  #   multiplied by the abundances of the proteins
+  abundance <- rep(abundance, length.out=nrow(aa))
+  # Drop any NA rows or abundances
+  ina.aa <- is.na(aa$chains)
+  ina.ab <- is.na(abundance)
+  ina <- ina.aa | ina.ab
+  if(any(ina)) {
+    aa <- aa[!ina, ]
+    abundance <- abundance[!ina]
+    message("aasum: dropped ", sum(ina), " proteins with NA composition and/or abundance")
+  }
+  # Multiply
+  aa[, 6:25] <- aa[, 6:25] * abundance
+  # Sum
+  out <- aa[1, ]
+  out[, 5:25] <- colSums(aa[, 5:25])
+  # Average if told to do so
+  if(average) {
+    # Polypeptide chains by number of proteins, residues by frequency
+    out[, 5] <- out[, 5]/nrow(aa)
+    out[, 6:25] <- out[, 6:25]/sum(abundance)
+  }
+  # Add protein and organism names if given
+  if(!is.null(protein)) out$protein <- protein
+  if(!is.null(organism)) out$organism <- organism
+  return(out)
+}
+
