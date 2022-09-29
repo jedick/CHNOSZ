@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-40 (2022-09-29)}{
+\section{Changes in CHNOSZ version 1.9.9-41 (2022-09-29)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -166,16 +166,16 @@
   \subsection{OTHER CHANGES}{
     \itemize{
 
+      \item Most functions have been modified to use Joules in internal
+      variables. In particular, the value of the gas constant is expressed in
+      J K\S{-1} mol\S{-1} in \code{convert()} and other functions.
+
       \item The \code{\var{reaction}} component of the output of
       \code{subcrt()} contains the \code{model} for each species.
 
       \item \code{subcrt()} produces an error if an aqueous species with the
       \samp{DEW} \code{model} is requested but the DEW water model isn't
       activated.
-
-      \item Most functions have been modified to use Joules in internal
-      variables. In particular, the value of the gas constant is expressed in
-      J K\S{-1} mol\S{-1} in \code{convert()} and other functions.
 
       \item Add a \strong{zap} argument to \code{mod.OBIGT()} to clear
       parameters of preexisting species (used by \code{logB_to_OBIGT()}).
@@ -185,6 +185,9 @@
 
       \item Add tests \file{stack_mosaic.R} and \file{stack_solubility.R}
       (these create PDF files for visual inspection of results).
+
+      \item \code{axis.label()} now produces labels with units delimited by
+      parentheses instead of a comma.
 
     }
   }

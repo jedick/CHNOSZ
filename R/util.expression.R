@@ -175,7 +175,7 @@ axis.label <- function(label, units=NULL, basis=thermo()$basis, prefix="", molal
     if(is.null(units)) units <- expr.units(label, prefix=prefix)
     # no comma needed if there are no units
     if(units=="") desc <- substitute(a, list(a=property))
-    else desc <- substitute(list(a, b), list(a=property, b=units))
+    else desc <- substitute(a~"("*b*")", list(a=property, b=units))
   }
   # done!
   return(desc)
