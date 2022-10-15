@@ -12,7 +12,6 @@ ip2 <- add.protein(aa)
 expect_equal(ip1, ip2, info = info)
 
 info <- "Errors and messages occur in some circumstances"
-expect_error(seq2aa("LYS_CHICK", "XXX"), "no characters match an amino acid", info = info)
 expect_error(add.protein(count.aa("AAA")), "does not have the same columns as thermo\\(\\)\\$protein", info = info)
 expect_message(add.protein(pinfo(pinfo("CYC_BOVIN"))), "replaced 1 existing protein\\(s\\)", info = info)
 

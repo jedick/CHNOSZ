@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-41 (2022-09-29)}{
+\section{Changes in CHNOSZ version 1.9.9-42 (2022-10-15)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -119,6 +119,9 @@
       \item In \code{affinity()}, print a message to indicate whether
       ionization calculations for proteins are being done.
 
+      \item \code{seq2aa()} allows an empty sequence (zero counts of amino
+      acids), useful for intializing a data frame of amino acid composition.
+
     }
   }
 
@@ -186,7 +189,7 @@
       \item Add tests \file{stack_mosaic.R} and \file{stack_solubility.R}
       (these create PDF files for visual inspection of results).
 
-      \item \code{axis.label()} now produces labels with units delimited by
+      \item \code{axis.label()} produces labels with units delimited by
       parentheses instead of a comma.
 
     }

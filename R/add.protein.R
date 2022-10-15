@@ -4,18 +4,18 @@
 
 # Calculate amino acid counts from a sequence
 seq2aa <- function(protein, sequence) {
-  # remove newlines and whitespace
+  # $emove newlines and whitespace
   sequence <- gsub("\\s", "", gsub("[\r\n]", "", sequence))
-  # make a data frame from counting the amino acids in the sequence
+  # Make a data frame from counting the amino acids in the sequence
   caa <- count.aa(sequence)
   colnames(caa) <- aminoacids(3)
-  # a protein with no amino acids is sort of boring
-  if(all(caa==0)) stop("no characters match an amino acid")
   ip <- pinfo(protein)
-  # now make the data frame
+  # Now make the data frame
   po <- strsplit(protein, "_")[[1]]
-  aa <- data.frame(protein=po[1], organism=po[2], ref=NA, abbrv=NA, stringsAsFactors=FALSE)
-  aa <- cbind(aa, chains=1, caa)
+  aa <- data.frame(protein = po[1], organism = po[2], ref = NA, abbrv = NA, stringsAsFactors = FALSE)
+  # chains = 1 for any sequence, chains = 0 for no sequence
+  chains <- sum(nchar(sequence) > 0)
+  aa <- cbind(aa, chains = chains, caa)
   return(aa)
 }
 
