@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-42 (2022-10-15)}{
+\section{Changes in CHNOSZ version 1.9.9-43 (2022-10-15)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -134,6 +134,9 @@
 
       \item \code{EOSregress()} and the associated demo and vignette have been
       removed.
+
+      \item Remove parallel calculations in \code{read.fasta()} and
+      \code{count.aa()} (they just made things slower in my tests).
 
     }
   }

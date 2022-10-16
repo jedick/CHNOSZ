@@ -66,7 +66,7 @@ read.fasta <- function(file, iseq=NULL, ret="count", lines=NULL, ihead=NULL,
   # protein/gene name is from header line for entry
   # (strip the ">" and go to the first space)
   missid <- missing(id)
-  if(is.null(id)) id <- as.character(palply("", iseq, function(j) {
+  if(is.null(id)) id <- as.character(lapply(iseq, function(j) {
     # get the text of the line
     f1 <- linefun(ihead[j],ihead[j])
     # stop if the first character is not ">"
@@ -179,7 +179,7 @@ count.aa <- function(seq, start=NULL, stop=NULL, type="protein") {
     return(counts)
   }
   # counts for each sequence
-  counts <- palply("", seq, countfun, start, stop)
+  counts <- lapply(seq, countfun, start, stop)
   counts <- do.call(rbind, counts)
   # check for letters that aren't in our alphabet
   ina <- colSums(counts[, -ilett, drop=FALSE]) > 0
