@@ -35,7 +35,7 @@ s2c <- function(x,sep=NULL,keep.sep=TRUE) {
           xtail <- paste("",xtail,sep=sep)
         } 
         # a match at the end ... grep here causes problems
-        # when sep contains control characters (e.g. protein.refseq)
+        # when sep contains control characters
         #if(length(grep(paste(sep,"$",sep=""),x[[i]]) > 0)) xtail <- c(xtail,sep)
         # use substr instead
         nx <- nchar(x[[i]])

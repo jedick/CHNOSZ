@@ -69,39 +69,39 @@ If \code{normalize} is TRUE, the coefficients on the basis species are divided b
 }
 
 \examples{\dontshow{reset()}
-# search by name in thermo()$protein
-# these are the same: ip1 == ip2
+# Search by name in thermo()$protein
+# These are the same: ip1 == ip2
 ip1 <- pinfo("LYSC_CHICK")
 ip2 <- pinfo("LYSC", "CHICK")
-# two organisms with the same protein name
+# Two organisms with the same protein name
 ip3 <- pinfo("MYG", c("HORSE", "PHYCA"))
-# their amino acid compositions
+# Their amino acid compositions
 pinfo(ip3)
-# their thermodynamic properties by group additivity
+# Their thermodynamic properties by group additivity
 protein.OBIGT(ip3)
 
-# an unknown protein name gives NA
+# An unknown protein name gives NA
 ip4 <- pinfo("MYGPHYCA")
 
-## example for chicken lysozyme C
-# index in thermo()$protein
+## Example for chicken lysozyme C
+# Index in thermo()$protein
 ip <- pinfo("LYSC_CHICK")
-# amino acid composition
+# Amino acid composition
 pinfo(ip)
-# length and chemical formula
+# Protein length and chemical formula
 protein.length(ip)
 protein.formula(ip)
-# group additivity for thermodynamic properties and HKF equation-of-state
+# Group additivity for thermodynamic properties and HKF equation-of-state
 # parameters of non-ionized protein
 protein.OBIGT(ip)
-# calculation of standard thermodynamic properties
+# Calculation of standard thermodynamic properties
 # (subcrt uses the species name, not ip)
 subcrt("LYSC_CHICK")
 # NOTE: subcrt() only shows the properties of the non-ionized
 # protein, but affinity() uses the properties of the ionized
 # protein if the basis species have H+
 
-## these are all the same
+## These are all the same
 protein.formula("P53_PIG")
 protein.formula(pinfo("P53_PIG"))
 protein.formula(pinfo(pinfo("P53_PIG")))
