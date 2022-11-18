@@ -10,15 +10,15 @@
 
 \usage{
   add.protein(aa, as.residue = FALSE)
-  seq2aa(protein, sequence)
+  seq2aa(sequence, protein = NA)
   aasum(aa, abundance = 1, average = FALSE, protein = NULL, organism = NULL)
 }
 
 \arguments{
   \item{aa}{data frame, amino acid composition in the format of \code{thermo()$protein}}
   \item{as.residue}{logical, normalize by protein length?}
-  \item{protein}{character, name of protein; numeric, indices of proteins (rownumbers of \code{\link{thermo}$protein})}
   \item{sequence}{character, protein sequence}
+  \item{protein}{character, name of protein; numeric, indices of proteins (rownumbers of \code{\link{thermo}()$protein})}
   \item{abundance}{numeric, abundances of proteins}
   \item{average}{logical, return the weighted average of amino acid counts?}
   \item{organism}{character, name of organism}
@@ -31,8 +31,9 @@ An example is \samp{LYSC_CHICK}.
 The purpose of the functions described here is to identify proteins and work with their amino acid compositions.
 From the amino acid compositions, the thermodynamic properties of the proteins can be estimated by group additivity.
 
-\code{seq2aa} returns a data frame of amino acid composition, in the format of \code{thermo()$protein}, corresponding to the provided \code{sequence}.
-Here, the \code{protein} argument indicates the name of the protein with an underscore (e.g. \samp{LYSC_CHICK}).
+\code{seq2aa} returns a data frame of amino acid composition for the provided \code{sequence}, in the format of \code{thermo()$protein}.
+In this function, the value of the \code{protein} argument is put into the \code{protein} column of the result.
+If there is an underscore (e.g. \samp{LYSC_CHICK}), it is used to split the text, and the two parts are put into the \code{protein} and \code{organism} columns.
 
 Given amino acid compositions returned by \code{seq2aa}, \code{add.protein} adds them to \code{thermo()$protein} for use by other functions in CHNOSZ.
 The amino acid compositions of proteins in \code{aa} with the same name as one in \code{thermo()$protein} are replaced.
@@ -54,7 +55,7 @@ For \code{aasum}, a one-row data frame of amino acid composition and identifying
 \dontshow{reset()}
 # Get the amino acid composition of a protein sequence
 # (Human Gastric juice peptide 1)
-aa <- seq2aa("GAJU_HUMAN", "LAAGKVEDSD")
+aa <- seq2aa("LAAGKVEDSD", "GAJU_HUMAN")
 # Add the protein to CHNOSZ
 ip <- add.protein(aa)
 # Calculate the protein length and chemical formula
@@ -62,10 +63,10 @@ protein.length(ip) # 10
 as.chemical.formula(protein.formula(ip)) # "C41H69N11O18"
 
 # Calculate a formula without using add.protein
-aa <- seq2aa("pentapeptide_test", "ANLSG")
+aa <- seq2aa("ANLSG", "pentapeptide_test")
 as.chemical.formula(protein.formula(aa))
 
-# Add the amino acid compositions of several poliovirus protein subunits
+# Sum the amino acid compositions of several poliovirus protein subunits
 file <- system.file("extdata/protein/POLG.csv", package = "CHNOSZ")
 aa <- read.csv(file, as.is = TRUE)
 aasum(aa, protein = "POLG_sum")

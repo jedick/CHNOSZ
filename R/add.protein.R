@@ -1,17 +1,16 @@
 # CHNOSZ/add.protein.R
-# calculate properties of proteins 20061109 jmd
-# reorganize protein functions 20120513
+# Calculate properties of proteins 20061109 jmd
+# Reorganize protein functions 20120513
 
-# Calculate amino acid counts from a sequence
-seq2aa <- function(protein, sequence) {
+# Count numbers of amino acids in a sequence
+seq2aa <- function(sequence, protein = NA) {
   # $emove newlines and whitespace
   sequence <- gsub("\\s", "", gsub("[\r\n]", "", sequence))
   # Make a data frame from counting the amino acids in the sequence
   caa <- count.aa(sequence)
   colnames(caa) <- aminoacids(3)
-  ip <- pinfo(protein)
   # Now make the data frame
-  po <- strsplit(protein, "_")[[1]]
+  po <- strsplit(as.character(protein), "_")[[1]]
   aa <- data.frame(protein = po[1], organism = po[2], ref = NA, abbrv = NA, stringsAsFactors = FALSE)
   # chains = 1 for any sequence, chains = 0 for no sequence
   chains <- sum(nchar(sequence) > 0)

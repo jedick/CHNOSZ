@@ -399,6 +399,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
           Tmax <- min(T[T > Ttr])
           if(warn.above) message(paste("subcrt: temperature(s) of", Tmax, "K and above exceed limit for", myname, mystate, status.Ttr))
         }
+        # Use variable-pressure standard Gibbs energy for gases if varP is TRUE (not the default)
+        if(mystate == "gas" & thermo$opt$varP) p.cgl[[ncgl[i]]]$G <- p.cgl[[ncgl[i]]]$G - convert(log10(P), "G", T = T)
       }
     }
     outprops <- c(outprops,p.cgl)
@@ -409,12 +411,6 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     p.H2O <- H2O.PT[, match(eosprop, colnames(H2O.PT)), drop = FALSE]
     p.H2O <- list(p.H2O)
     outprops <- c(outprops, rep(p.H2O, sum(isH2O == TRUE)))
-  }
-
-  # Use variable-pressure standard Gibbs energy for gases
-  isgas <- reaction$state %in% "gas" 
-  if(any(isgas) & "G" %in% eosprop & thermo$opt$varP) {
-    for(i in which(isgas)) outprops[[i]]$G <- outprops[[i]]$G - convert(log10(P), "G", T = T)
   }
 
   # logK
