@@ -17,7 +17,7 @@
     \item Other files with names like \code{xxx_yyyy.csv} contain thermodynamic data from other sources; xxx in the filename corresponds to the reference in \code{\link{thermo}$OBIGT} and yyyy gives the year of publication.
     \code{\link{Berman}} uses these data for the calculation of thermodynamic properties at specified \P and \T, which are then available for use in \code{\link{subcrt}}.
     If there are any duplicated mineral names in the files, only the most recent data are used, as determined by the year in the file name.
-    Following conventions used in other data files, the names of sanidine and microcline were changed to K-feldspar,high and K-feldspar,low.
+    Following conventions used SUPCRT92 (see Helgeson et al., 1978), the names of sanidine and microcline were changed to K-feldspar,high and K-feldspar,low (by using the same names in all data files, loading the optional SUPCRT92 data file updates these minerals rather than makes new ones).
     \item \code{sympy.R} is an R script that uses \CRANpkg{rSymPy} to symbolically integrate Bermans's equations for heat capacity and volume to write experessions for enthalpy, entropy and Gibbs energy.
     \item The \code{testing} directory contains data files based on Berman and Aranovich (1996). These are used to demonstrate the addition of data from a user-supplied file (see \code{\link{Berman}}).
   }
@@ -82,6 +82,8 @@ Dick, J. M. (2014) Average oxidation state of carbon in proteins. \emph{J. R. So
 Gattiker, A., Michoud, K., Rivoire, C., Auchincloss, A. H., Coudert, E., Lima, T., Kersey, P., Pagni, M., Sigrist, C. J. A., Lachaize, C., Veuthey, A.-L., Gasteiger, E. and Bairoch, A. (2003) Automatic annotation of microbial proteomes in Swiss-Prot. \emph{Comput. Biol. Chem.} \bold{27}, 49--58. \doi{10.1016/S1476-9271(02)00094-4}
 
 Gaucher, E. A., Thomson, J. M., Burgan, M. F. and Benner, S. A (2003) Inferring the palaeoenvironment of ancient bacteria on the basis of resurrected proteins. \emph{Nature} \bold{425}(6955), 285--288. \doi{10.1038/nature01977}
+
+Helgeson, H. C., Delany, J. M., Nesbitt, H. W. and Bird, D. K. (1978) Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am. J. Sci.} \bold{278-A}, 1--229. \url{https://www.worldcat.org/oclc/13594862}
 
 Hnědkovský, L., Wood, R. H. and Majer, V. (1996) Volumes of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 298.15 K to 705 K and pressures to 35 MPa. \emph{J. Chem. Thermodyn.} \bold{28}, 125--142. \doi{10.1006/jcht.1996.0011}
 

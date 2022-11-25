@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-45 (2022-11-18)}{
+\section{Changes in CHNOSZ version 1.9.9-46 (2022-11-22)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -98,6 +98,9 @@
       function \code{stack_mosaic()}) to control the activity of mosaiced
       aqueous basis species. This obviates a workaround that was previously
       used in the Mosaic Stacking 2 section of \strong{multi-metal.Rmd}.
+
+      \item Add \code{add_alpha()} to add alpha value to a color specified in
+      any notation accepted by \code{col2rgb()}.
 
     }
   }
@@ -195,8 +198,10 @@
       \item \code{axis.label()} produces labels with units delimited by
       parentheses instead of a comma.
 
-      \item \code{seq2aa} now has the \strong{sequence} argument first and a
+      \item \code{seq2aa()} now has the \strong{sequence} argument first and a
       default of NA for \strong{protein} (the protein name).
+
+      \item \code{NaCl()} now works with \code{mtot = 0}.
 
     }
   }
