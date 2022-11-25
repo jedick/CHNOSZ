@@ -34,7 +34,7 @@ species <- c("Co+2", "HS-", "CoHS+")
 coeff <- c(-1, -1, 1)
 T <- c(120, 150, 200, 250, 300)
 P <- "Psat"
-expect_error(logB_to_OBIGT(logB[1:2], species, coeff, T[1:2], P))
+expect_error(logB.to.OBIGT(logB[1:2], species, coeff, T[1:2], P))
 
 # Test added 20220920
 info <- "Can add > 1 species; different states get different default models; info() works after mod.OBIGT"

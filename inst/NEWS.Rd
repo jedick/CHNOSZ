@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-46 (2022-11-22)}{
+\section{Changes in CHNOSZ version 1.9.9-47 (2022-11-25)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -73,14 +73,14 @@
   \subsection{NEW FEATURES: THERMODYNAMIC DATA}{
     \itemize{
 
-      \item Add \code{logB_to_OBIGT()} to fit three thermodynamic parameters
+      \item Add \code{logB.to.OBIGT()} to fit three thermodynamic parameters
       (\samp{G}, \samp{S}, and \samp{Cp} at 25 \degC) to formation constants of
       aqueous species as a function of temperature.
 
       \item Add vignette \viglink{customizing} with description of database
       format, data-entry conventions, and examples of customizing the
       thermodynamic database using \code{add.OBIGT()}, \code{mod.OBIGT()}, and
-      \code{logB_to_OBIGT()}.
+      \code{logB.to.OBIGT()}.
 
     }
   }
@@ -99,7 +99,7 @@
       aqueous basis species. This obviates a workaround that was previously
       used in the Mosaic Stacking 2 section of \strong{multi-metal.Rmd}.
 
-      \item Add \code{add_alpha()} to add alpha value to a color specified in
+      \item Add \code{add.alpha()} to add alpha value to a color specified in
       any notation accepted by \code{col2rgb()}.
 
     }
@@ -108,7 +108,7 @@
   \subsection{NEW FEATURES: PROTEINS}{
     \itemize{
 
-      \item Add function \code{rank_affinity()} to calculate means of affinity
+      \item Add function \code{rank.affinity()} to calculate means of affinity
       rankings for specified groups of proteins, intended for evolutionary
       comparisons. The output of the new function can be used by
       \code{diagram()}.
@@ -187,7 +187,7 @@
       activated.
 
       \item Add a \strong{zap} argument to \code{mod.OBIGT()} to clear
-      parameters of preexisting species (used by \code{logB_to_OBIGT()}).
+      parameters of preexisting species (used by \code{logB.to.OBIGT()}).
 
       \item In \code{affinity()}, make \code{loga.protein = 0} the default
       (changed from -3).

@@ -9,6 +9,7 @@
 \alias{water.lines}
 \alias{mtitle}
 \alias{ZC.col}
+\alias{add.alpha}
 \title{Functions to Create and Modify Plots}
 
 \description{
@@ -33,6 +34,7 @@
     lty = 2, lwd = 1, col = par("fg"), plot.it = TRUE)
   mtitle(main, line = 0, spacing = 1, ...)
   ZC.col(z)
+  add.alpha(col, alpha)
 }
 
 \arguments{
@@ -46,7 +48,7 @@
   \item{side}{numeric, which sides of plot to draw axes}
   \item{mgp}{numeric, sizes of margins of plot}
   \item{cex.axis}{numeric, character expansion factor for names of axes}
-  \item{col}{character, line color}
+  \item{col}{character, color}
   \item{yline}{numeric, margin line on which to plot \eqn{y}{y}-axis name}
   \item{axs}{character, setting for axis limit calculation}
   \item{plot.box}{logical, draw a box around the plot?}
@@ -70,6 +72,7 @@
   \item{main}{character, text for plot title}
   \item{spacing}{numeric, spacing between multiple lines}
   \item{z}{numeric, set of values}
+  \item{alpha}{character, hexadecimal value of color transparency (alpha)}
 }
 
 \details{
@@ -105,6 +108,7 @@ This function exists to facilitate using \code{\link{expression}}s in multiline 
 Red is associated with lower values of \code{z}.
 This function is intended to generate colors for distinguishing average oxidation state of carbon \code{\link{ZC}}, but any numeric values can be supplied.
 
+\code{add.alpha} adds transparency to a color by appending the value of \code{alpha} to the hexadecimal representation of the color given in \code{col}.
 }
 
 \seealso{

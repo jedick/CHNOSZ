@@ -1,8 +1,8 @@
-# CHNOSZ/logB_to_OBIGT.R
+# CHNOSZ/logB.to.OBIGT.R
 # Fit G, S, and Cp to formation constants (logB) as a function of temperature
 # 20220324 jmd
 
-logB_to_OBIGT <- function(logB, species, coeff, T, P, tolerance = 0.05) {
+logB.to.OBIGT <- function(logB, species, coeff, T, P, tolerance = 0.05) {
 
   # We need at least three temperature values
   if(length(unique(T)) < 3) stop("at least 3 unique temperature values are needed")
@@ -52,7 +52,7 @@ logB_to_OBIGT <- function(logB, species, coeff, T, P, tolerance = 0.05) {
   logK <- suppressMessages(subcrt(species, coeff, T = T, P = P)$out$logK)
   # Calculate the mean absolute difference
   mad <- mean(abs(logK - logB))
-  message(paste("logB_to_OBIGT: mean absolute difference between logB (experimental) and logK (calculated) is", round(mad, 4)))
+  message(paste("logB.to.OBIGT: mean absolute difference between logB (experimental) and logK (calculated) is", round(mad, 4)))
   # Check that calculated values are close to input values
   stopifnot(all.equal(logK, logB, tolerance = tolerance, scale = 1))
   # Return the species index in OBIGT

@@ -23,7 +23,7 @@ res <- 200
 aout <- affinity(C6H12O6 = c(-60, -20, res), O2 = c(-72, -60, res), iprotein = iprotein)
 groups <- apply(dat, 2, which)
 names(groups) <- paste0(names(groups), "\n(", colSums(dat), ")")
-arank <- rank_affinity(aout, groups)
+arank <- rank.affinity(aout, groups)
 fill <- c("#d2b48c", "#b0e0e6", "#d3d3d3", "#d8bfd8")
 diagram(arank, format.names = FALSE, fill = fill)
 

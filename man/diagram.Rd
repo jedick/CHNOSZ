@@ -93,7 +93,7 @@ Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predo
 \details{
 
 This function displays diagrams representing either chemical affinities or equilibrium chemical activities of species.
-The first argument is the output from \code{\link{affinity}}, \code{\link{rank_affinity}}, \code{\link{equilibrate}}, or \code{\link{solubility}}.
+The first argument is the output from \code{\link{affinity}}, \code{\link{rank.affinity}}, \code{\link{equilibrate}}, or \code{\link{solubility}}.
 0-D diagrams, at a single point, are shown as \code{\link{barplot}}s.
 1-D diagrams, for a single variable on the x-axis, are plotted as lines.
 2-D diagrams, for two variables, are plotted as predominance fields.

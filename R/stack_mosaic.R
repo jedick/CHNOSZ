@@ -10,7 +10,7 @@ stack_mosaic <- function(bases, species1, species2, species12, names = NULL, col
   loga_aq = NULL, plot.it = TRUE, ...) {
 
   # Default is to use semi-transparent fill for bimetallic species
-  if(is.null(fill)) fill <- list(NA, NA, add_alpha(col.names[3], "50"))
+  if(is.null(fill)) fill <- list(NA, NA, add.alpha(col.names[3], "50"))
 
   # Load species1 (first metal-bearing species)
   isp1 <- species(species1)
@@ -58,12 +58,3 @@ stack_mosaic <- function(bases, species1, species2, species12, names = NULL, col
   invisible(out)
 
 }
-
-# Function to add transparency to given color 20220223
-add_alpha <- function(col, alpha) {
-  x <- col2rgb(col)
-  newcol <- rgb(x[1], x[2], x[3], maxColorValue = 255)
-  newcol <- paste0(newcol, alpha)
-  newcol
-}
-

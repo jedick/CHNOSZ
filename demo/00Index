@@ -30,4 +30,4 @@ AD              Dissolved gases: Henry's constant, volume, and heat capacity
 comproportionation  Gibbs energy of sulfur comproportionation
 Pourbaix        Eh-pH diagram for Fe-O-H with equisolubility lines
 E_coli          Gibbs energy of biomass synthesis in E. coli
-rank_affinity   Affinity ranking for proteins in yeast nutrient limitation
+rank.affinity   Affinity ranking for proteins in yeast nutrient limitation

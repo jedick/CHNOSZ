@@ -56,11 +56,11 @@ export(
 # added 20200716 or later
   "mash", "mix", "rebalance",
 # added 20220324
-  "logB_to_OBIGT",
+  "logB.to.OBIGT",
 # added 20220416
-  "rank_affinity",
+  "rank.affinity",
 # added 20220620
-  "stack_mosaic", "add_alpha"
+  "stack_mosaic", "add.alpha"
 )
 
 # Load shared objects

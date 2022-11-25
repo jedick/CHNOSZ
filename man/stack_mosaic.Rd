@@ -1,7 +1,6 @@
 \encoding{UTF-8}
 \name{stack_mosaic}
 \alias{stack_mosaic}
-\alias{add_alpha}
 \title{Stacked mosaic diagram}
 \description{
 Create a stacked mosaic diagram, where the species formed in the first layer become the basis species for the species formed in the second layer.
@@ -14,7 +13,6 @@ The species in each layer are usually minerals with different metals; any bimeta
     dx = list(0, 0, 0), dy = list(0, 0, 0), srt = list(0, 0, 0),
     lwd = list(1, 1, 1), lty = list(1, 1, 1), loga_aq = NULL,
     plot.it = TRUE, ...)
-  add_alpha(col, alpha)
 }
 
 \arguments{
@@ -34,7 +32,6 @@ The species in each layer are usually minerals with different metals; any bimeta
   \item{loga_aq}{numeric, activity of aqueous species}
   \item{plot.it}{make plots?}
   \item{...}{arguments for \code{\link{mosaic}} and \code{\link{affinity}}}
-  \item{alpha}{character, hexadecimal value of color transparency (alpha)}
 }
 
 \details{
@@ -51,8 +48,7 @@ The plot parameters \code{col}, \code{col.names}, \code{fill}, \code{dx}, \code{
 The values of elements 1--3 of the list are recycled to the number of species in \code{species1}, \code{species2}, and \code{species12}, respectively.
 
 For \code{fill}, the default is to use no fill except for \code{species12}, where the fill color is taken from \code{col.names} with added transparency.
-The default definition of \code{fill} is \code{list(NA, NA, add_alpha(col.names[3], "50"))}.
-\code{add_alpha} adds transparency to a color by appending the value of \code{alpha} to the hexadecimal representation of the color given in \code{col}.
+The default definition of \code{fill} is \code{list(NA, NA, add.alpha(col.names[3], "50"))}.
 }
 
 \section{Warning}{

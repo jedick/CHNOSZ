@@ -1,13 +1,13 @@
 \encoding{UTF-8}
-\name{logB_to_OBIGT}
-\alias{logB_to_OBIGT}
+\name{logB.to.OBIGT}
+\alias{logB.to.OBIGT}
 \title{Fit Thermodynamic Parameters to Formation Constants (\logB)}
 \description{
 Fit thermodynamic parameters to experimental formation constants for an aqueous species and add the parameters to OBIGT.
 }
 
 \usage{
-  logB_to_OBIGT(logB, species, coeff, T, P, tolerance = 0.05)
+  logB.to.OBIGT(logB, species, coeff, T, P, tolerance = 0.05)
 }
 
 \arguments{
@@ -21,7 +21,7 @@ Fit thermodynamic parameters to experimental formation constants for an aqueous 
 
 \details{
 
-\code{logB_to_OBIGT} starts with the decimal logarithms of equilibrium constants (\logB) for a formation reaction.
+\code{logB.to.OBIGT} starts with the decimal logarithms of equilibrium constants (\logB) for a formation reaction.
 The formation reaction is defined by \code{species} and \code{coeff}.
 All species in the formation reaction must be available in OBIGT except for the \emph{last} species, which must be the newly formed species.
 The properties of the known species are combined with \logB to calculate the standard Gibbs energy (G[T]) of the formed species as a function of \T and \P.
@@ -36,7 +36,7 @@ The fitted \code{G}, \code{S}, and \code{Cp} for the formed species are added to
 }
 
 \seealso{
-\code{logB_to_OBIGT} calls \code{\link{mod.OBIGT}} with \code{zap = TRUE} to clear the parameters of a formed species if it already exists in the OBIGT database.
+\code{logB.to.OBIGT} calls \code{\link{mod.OBIGT}} with \code{zap = TRUE} to clear the parameters of a formed species if it already exists in the OBIGT database.
 If preexisting parameters (e.g. HKF coefficients) weren't cleared, they would interfere with the fitting done here, which uses only three parameters (\code{G}, \code{S}, and \code{Cp}).
 }
 
@@ -47,7 +47,7 @@ species <- c("Co+2", "HS-", "CoHS+")
 coeff <- c(-1, -1, 1)
 T <- c(120, 150, 200, 250, 300)
 P <- "Psat"
-inew <- logB_to_OBIGT(logB, species, coeff, T, P)
+inew <- logB.to.OBIGT(logB, species, coeff, T, P)
 # Print the new database entry
 # (Note: H is calculated from G and S)
 info(inew)
@@ -60,7 +60,7 @@ Tfit <- seq(100, 320, 10)
 sres <- subcrt(species, coeff, T = Tfit)
 lines(sres$out$T, sres$out$logK, col = 4)
 title(describe.reaction(sres$reaction))
-legend <- c("Migdisov et al. (2011)", "logB_to_OBIGT()")
+legend <- c("Migdisov et al. (2011)", "logB.to.OBIGT()")
 legend("topleft", legend, pch = c(19, NA), lty = c(0, 1), col = c(1, 4), pt.cex = 2)
 
 ## ZnCl+ from Mei et al. (2015)
@@ -71,16 +71,16 @@ coeff <- c(-1, -1, 1)
 T <- c(25, 60, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600)
 P <- 5000
 # Note: ZnCl+ is in the default OBIGT database;
-# logB_to_OBIGT() "zaps" the previous parameters before adding the fitted ones
-inew <- logB_to_OBIGT(logB, species, coeff, T, P)
-# Plot MRB and logB_to_OBIGT fitted values
+# logB.to.OBIGT() "zaps" the previous parameters before adding the fitted ones
+inew <- logB.to.OBIGT(logB, species, coeff, T, P)
+# Plot MRB and logB.to.OBIGT fitted values
 plot(T, logB, xlab = axis.label("T"), ylab = axis.label("logB"), pch = 19, cex = 2)
 Tfit <- seq(25, 600, 25)
 sres <- subcrt(species, coeff, T = Tfit, P = P)
 lines(sres$out$T, sres$out$logK, col = 4)
 title(describe.reaction(sres$reaction), line = 3)
 title("5000 bar", font.main = 1, line = 1)
-legend <- c("Mei et al. (2015)", "logB_to_OBIGT()")
+legend <- c("Mei et al. (2015)", "logB.to.OBIGT()")
 legend("topleft", legend, pch = c(19, NA), lty = c(0, 1), col = c(1, 4), pt.cex = 2)
 }
 
