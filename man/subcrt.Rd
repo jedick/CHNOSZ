@@ -62,9 +62,9 @@ If \code{convert} is \code{FALSE}, the user units (\code{\link{T.units}}, \code{
 
 A chemical reaction is defined if \code{coeff} is given.
 In this mode the standard molal properties of species are summed according to the stoichiometric \code{coeff}icients, where negative values denote reactants.
-Reactions that do not conserve elements are permitted; \code{subcrt} prints the missing composition needed to balance the reaction and produces a warning but computes anyway.
+An unbalanced reaction is signalled if the amount of any element on the reactant and product sides differs by more than 1e-7; in this case, \code{subcrt} prints the missing composition needed to balance the reaction and produces a warning but computes a result anyway.
 Alternatively, if \code{autobalance} is \code{TRUE}, the \code{\link{basis}} species of a system were previously defined, and all elements in the reaction are represented by the basis species, an unbalanced reaction given in the arguments to \code{subcrt} will be balanced automatically.
-The auto balancing doesn't change the reaction coefficients of any species that are do not correspond to basis species.
+The auto balancing doesn't change the reaction coefficients of any species in the reaction that are not among the basis species.
 
 If \code{logact} is provided, the chemical affinities of reactions are calculated.
 \code{logact} indicates the logarithms of activities (fugacities for gases) of species in the reaction; if there are fewer values of \code{logact} than number of species those values are repeated as necessary.
@@ -110,7 +110,7 @@ This is not generally advised, since the computed standard molal properties of a
 }
 
 \value{
-For \code{subcrt}, a list of length two or three.
+A list of length two or three.
 If the properties of a reaction were calculated, the first element of the list (named \samp{reaction}) contains a dataframe with the reaction parameters; the second element, named \samp{out}, is a dataframe containing the calculated properties.
 Otherwise, the properties of species (not reactions) are returned: the first element, named \samp{species}, contains a dataframe with the species identification; the second element, named \samp{out}, is itself a list, each element of which is a dataframe of properties for a given species.
 If minerals with phase transitions are present, a third element (a dataframe) in the list indicates for all such minerals the stable phase at each grid point.

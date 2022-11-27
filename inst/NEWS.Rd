@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-47 (2022-11-25)}{
+\section{Changes in CHNOSZ version 1.9.9-48 (2022-11-27)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -202,6 +202,8 @@
       default of NA for \strong{protein} (the protein name).
 
       \item \code{NaCl()} now works with \code{mtot = 0}.
+
+      \item Remove unused \samp{cutoff} value in \code{thermo()$opt}.
 
     }
   }

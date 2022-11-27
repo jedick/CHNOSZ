@@ -45,7 +45,6 @@ These files are used to build the \code{thermo} object, which is described below
     Note that the units of \code{G.tol} and \code{Cp.tol} depend on the \code{E_units} for each species in \code{thermo()$OBIGT}.
     Therefore, species with \code{E_units} of \samp{J} have a lower absolute tolerance for producing messages (because 4.184 J = 1 cal).
     \tabular{lll}{
-      \code{cutoff} \tab numeric \tab Cutoff below which values are taken to be zero [1e-10] (see \code{\link{makeup}})\cr
       \code{E.units} \tab character \tab The user's units of energy ([\samp{J}] or \samp{cal}) (see \code{\link{subcrt}})\cr
       \code{T.units} \tab character \tab The user's units of temperature ([\samp{C}] or \samp{K})\cr
       \code{P.units} \tab character \tab The user's units of pressure ([\samp{bar}] or \samp{MPa})\cr
