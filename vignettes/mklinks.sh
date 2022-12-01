@@ -11,7 +11,6 @@ sed -i 's/<code>?buffer<\/code>/<code><a href="..\/html\/buffer.html" style="bac
 sed -i 's/<code>?solubility<\/code>/<code><a href="..\/html\/solubility.html" style="background-image:none;">?solubility<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?ionize.aa<\/code>/<code><a href="..\/html\/ionize.aa.html" style="background-image:none;">?ionize.aa<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?count.aa<\/code>/<code><a href="..\/html\/util.fasta.html" style="background-image:none;">?count.aa<\/a><\/code>/g' anintro.html
-sed -i 's/<code>?objective<\/code>/<code><a href="..\/html\/objective.html" style="background-image:none;">?objective<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?thermo<\/code>/<code><a href="..\/html\/thermo.html" style="background-image:none;">?thermo<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?hkf<\/code>/<code><a href="..\/html\/eos.html" style="background-image:none;">?hkf<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?cgl<\/code>/<code><a href="..\/html\/eos.html" style="background-image:none;">?cgl<\/a><\/code>/g' anintro.html
@@ -56,7 +55,6 @@ sed -i '120,$s/<code>ionize.aa()<\/code>/<code><a href="..\/html\/ionize.aa.html
 sed -i '120,$s/<code>read.fasta()<\/code>/<code><a href="..\/html\/util.fasta.html" style="background-image:none;">read.fasta()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>protein.basis()<\/code>/<code><a href="..\/html\/protein.info.html" style="background-image:none;">protein.basis()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>unitize()<\/code>/<code><a href="..\/html\/util.misc.html" style="background-image:none;">unitize()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>revisit()<\/code>/<code><a href="..\/html\/revisit.html" style="background-image:none;">revisit()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>axis.label()<\/code>/<code><a href="..\/html\/util.expression.html" style="background-image:none;">axis.label()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>seq2aa()<\/code>/<code><a href="..\/html\/add.protein.html" style="background-image:none;">seq2aa()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>uniprot.aa()<\/code>/<code><a href="..\/html\/util.fasta.html" style="background-image:none;">uniprot.aa()<\/a><\/code>/g' anintro.html

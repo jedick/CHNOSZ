@@ -14,8 +14,7 @@ examples <- function(save.png=FALSE) {
     "solubility", "equilibrate", 
     "diagram", "mosaic", "mix",
     "buffer", "nonideal", "NaCl",
-    "add.protein", "ionize.aa",
-    "objective", "revisit")
+    "add.protein", "ionize.aa")
   plot.it <- FALSE
   if(is.character(save.png))
     png(paste(save.png,"%d.png",sep=""),width=500,height=500,pointsize=12)

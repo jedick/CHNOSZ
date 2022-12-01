@@ -102,7 +102,7 @@ It is a supporting function for \code{label.figure} but is also useful for other
 \code{mtitle} can be used to add a multi-line title to a plot.
 It loops over each element of \code{main} and places it on a separate margin line using \code{\link{mtext}}.
 The spacing of the last (bottom) line from the edge of the plot is specified by \code{line}.
-This function exists to facilitate using \code{\link{expression}}s in multiline titles (see \code{\link{revisit}} for an example.) 
+This function exists to facilitate using \code{\link{expression}}s in multiline titles.
 
 \code{ZC.col} uses \CRANpkg{colorspace}) to generate colors from a diverging palette (red - light grey - blue) corresponding to the values in \code{z}.
 Red is associated with lower values of \code{z}.

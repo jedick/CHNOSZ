@@ -10,7 +10,7 @@ export(
   "aminoacids", "ZC.col",
   "pinfo", "protein.length", "protein.formula",
   "read.fasta", "protein.basis", "add.protein",
-  "unitize", "revisit", "seq2aa",
+  "unitize", "seq2aa",
   "thermo.refs", "mod.OBIGT",
 # examples
   "examples", "demos", "mtitle",
@@ -26,7 +26,6 @@ export(
   "protein.OBIGT", "which.pmax",
   "equil.boltzmann", "equil.reaction", "find.tp",
   "ionize.aa", "MP90.cp", "aasum",
-  "qqr", "RMSD", "CVRMSD", "spearman", "DGmix", "DDGmix", "DGtr",
   "ratlab",
 # demos
   "protein.equil", "palply",
@@ -40,7 +39,6 @@ export(
 # (no other functions are used in the tests)
 # other exported functions that are not used above
   "checkEOS", "checkGHS", "check.OBIGT",
-  "DGinf", "SD", "pearson", "shannon", "CV", "logact",
   "basis.elements", "element.mu", "ibasis",
   "water.SUPCRT92",
   "nonideal", "uniprot.aa",

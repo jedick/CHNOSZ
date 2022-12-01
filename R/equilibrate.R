@@ -274,7 +274,7 @@ equil.reaction <- function(Astar, n.balance, loga.balance, tol=.Machine$double.e
       Abar.range <- Abar.range - logadiff.mean / dlogadiff.dAbar
       # one iteration is enough for the examples in the package
       # but there might be a case where the range of logadiff doesn't cross zero
-      # (e.g. for the carboxylic acid example in revisit.Rd)
+      # (e.g. for the carboxylic acid example previously in revisit.Rd)
       logadiff.min <- logadiff(Abar.range[1], i)
       logadiff.max <- logadiff(Abar.range[2], i)
       iter <- 1

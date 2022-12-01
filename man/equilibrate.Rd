@@ -102,7 +102,7 @@ Use \code{solubility} to find complete equilibrium, where the affinities of the 
 }
 
 \seealso{
-\code{\link{diagram}} has examples of using \code{equilibrate} to make equilibrium activity diagrams. \code{\link{revisit}} can be used to perform further analysis of the equilibrium activities.
+\code{\link{diagram}} has examples of using \code{equilibrate} to make equilibrium activity diagrams. 
 \code{\link{palply}} is used by both \code{equil.reaction} and \code{equil.boltzmann} to parallelize intensive parts of the calculations.
 
 See the vignette \viglink{multi-metal} for an example of balancing on two elements (N in the basis species, C in the formed species).

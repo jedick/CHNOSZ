@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-49 (2022-12-01)}{
+\section{Changes in CHNOSZ version 1.9.9-50 (2022-12-01)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -141,8 +141,8 @@
       \item Remove parallel calculations in \code{read.fasta()} and
       \code{count.aa()} (they just made things slower in my tests).
 
-      \item Remove \code{findit()} (functions for \dQuote{computations on
-        chemical activities} in the extended workflow).
+      \item Remove \code{revisit()} and \code{findit()} (functions for
+      \dQuote{computations on chemical activities} in the extended workflow).
 
     }
   }

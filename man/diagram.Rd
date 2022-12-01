@@ -210,7 +210,7 @@ It can be used with the output from \code{diagram} for calculations in 2 dimensi
 }
 
 \seealso{ 
-\code{\link{Berman}}, \code{\link{mix}}, \code{\link{mosaic}}, \code{\link{nonideal}}, \code{\link{revisit}}, \code{\link{solubility}}, and \code{\link{util.plot}} are other help topics that use \code{diagram} in their examples.
+\code{\link{Berman}}, \code{\link{mix}}, \code{\link{mosaic}}, \code{\link{nonideal}}, \code{\link{solubility}}, and \code{\link{util.plot}} are other help topics that use \code{diagram} in their examples.
 See the \code{\link{demos}} for even more examples.
 }
 
