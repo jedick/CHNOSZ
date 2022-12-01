@@ -83,7 +83,6 @@ For calculations in more than two dimensions, the output contains \code{iopt}, a
 
 \seealso{
 \code{demo("revisit")} shows calculations for a system of proteins.
-\code{\link{findit}} is a related function implementing a gridded search of chemical activities, temperature and/or pressure that optimize the objective function.
 }
 
 \examples{\dontshow{reset()}

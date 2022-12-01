@@ -14,7 +14,7 @@
 \usage{
   examples(save.png = FALSE)
   demos(which = c("sources", "protein.equil", "affinity", "NaCl",
-    "density", "ORP", "findit", "ionize", "buffer", "protbuff",
+    "density", "ORP", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "minsol", "Shh", "saturation",
     "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
@@ -37,7 +37,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{NaCl}{Equilibrium constant for aqueous NaCl dissociation (Shock et al., 1992)}
     \item{density}{Density of \H2O, inverted from IAPWS-95 equations (\code{\link{rho.IAPWS95}})}
     \item{ORP}{Temperature dependence of oxidation-reduction potential for redox standards}
-    \item{findit}{Minimize the standard deviation of logarithms of activities of sulfur species}
     \item{ionize}{ionize.aa(): contour plots of net charge and ionization properties of LYSC_CHICK}
     \item{buffer}{Minerals and aqueous species as buffers of hydrogen fugacity (Schulte and Shock, 1995)}
     \item{protbuff}{Chemical activities buffered by thiol peroxidases or sigma factors}

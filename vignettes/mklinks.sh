@@ -62,7 +62,6 @@ sed -i '120,$s/<code>seq2aa()<\/code>/<code><a href="..\/html\/add.protein.html"
 sed -i '120,$s/<code>uniprot.aa()<\/code>/<code><a href="..\/html\/util.fasta.html" style="background-image:none;">uniprot.aa()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>add.protein()<\/code>/<code><a href="..\/html\/add.protein.html" style="background-image:none;">add.protein()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>aminoacids()<\/code>/<code><a href="..\/html\/util.seq.html" style="background-image:none;">aminoacids()<\/a><\/code>/g' anintro.html
-sed -i '120,$s/<code>findit()<\/code>/<code><a href="..\/html\/findit.html" style="background-image:none;">findit()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>add.OBIGT()<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="background-image:none;">add.OBIGT()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>mod.OBIGT()<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="background-image:none;">mod.OBIGT()<\/a><\/code>/g' anintro.html
 sed -i '120,$s/<code>checkGHS()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">checkGHS()<\/a><\/code>/g' anintro.html

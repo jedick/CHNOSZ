@@ -10,7 +10,7 @@ export(
   "aminoacids", "ZC.col",
   "pinfo", "protein.length", "protein.formula",
   "read.fasta", "protein.basis", "add.protein",
-  "unitize", "revisit", "seq2aa", "findit",
+  "unitize", "revisit", "seq2aa",
   "thermo.refs", "mod.OBIGT",
 # examples
   "examples", "demos", "mtitle",
@@ -42,7 +42,7 @@ export(
   "checkEOS", "checkGHS", "check.OBIGT",
   "DGinf", "SD", "pearson", "shannon", "CV", "logact",
   "basis.elements", "element.mu", "ibasis",
-  "water.SUPCRT92", "plot_findit",
+  "water.SUPCRT92",
   "nonideal", "uniprot.aa",
 # added 20170301 or later
   "GHS_Tr", "calculateDensity", "calculateGibbsOfWater",

@@ -31,7 +31,7 @@ examples <- function(save.png=FALSE) {
 }
 
 demos <- function(which=c("sources", "protein.equil", "affinity", "NaCl", "density", 
-  "ORP", "findit", "ionize", "buffer", "protbuff", "glycinate",
+  "ORP", "ionize", "buffer", "protbuff", "glycinate",
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "minsol",
   "Shh", "saturation", "DEW", "lambda", "potassium", "TCA", "aluminum",
   "AD", "comproportionation", "Pourbaix", "E_coli"), save.png=FALSE) {

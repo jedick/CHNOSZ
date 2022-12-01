@@ -4,7 +4,6 @@ affinity        Affinities of metabolic reactions and amino acid synthesis
 NaCl            Equilibrium constant for aqueous NaCl dissociation
 density         Density of H2O, inverted from IAPWS-95 equations
 ORP             Temperature dependence of oxidation-reduction potential for redox standards
-findit          Minimize the standard deviation of logarithms of activities of sulfur species
 ionize          ionize.aa(): contour plots of net charge and ionization properties of LYSC_CHICK
 buffer          Minerals and aqueous species as buffers of hydrogen fugacity
 protbuff        Chemical activities buffered by thiol peroxidases or sigma factors

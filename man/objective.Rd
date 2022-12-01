@@ -17,7 +17,7 @@
 \title{Objective Functions}
 \description{
 Calculate statistical and thermodynamic quantities for activities of species.
-These functions can be specified as objectives in \code{\link{revisit}} and \code{\link{findit}} in order to identify optimal chemical conditions.
+These functions can be specified as objectives in \code{\link{revisit}} in order to identify optimal chemical conditions.
 }
 
 \usage{
@@ -74,7 +74,7 @@ The equation used arises from integrating dG = -A/dxi = -A/dn where xi is the re
 Each objective function has an attribute (see \code{\link{attributes}} and \code{\link{structure}}) named \samp{optimum} that takes the value of \samp{minimal} (\code{SD}, \code{CV}, \code{RMSD}, \code{CVRMSD}, \code{DGmix}, \code{DDGmix}, \code{DGtr}) or \samp{maximal} (\code{logact}, \code{shannon}, \code{qqr}, \code{spearman}, \code{pearson}).
 }
 
-\seealso{ \code{\link{revisit}}, \code{\link{findit}} }
+\seealso{ \code{\link{revisit}}}
 
 \examples{
 \dontshow{reset()}
