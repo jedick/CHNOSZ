@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-50 (2022-12-01)}{
+\section{Changes in CHNOSZ version 1.9.9-51 (2022-12-08)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -73,9 +73,10 @@
   \subsection{NEW FEATURES: THERMODYNAMIC DATA}{
     \itemize{
 
-      \item Add \code{logB.to.OBIGT()} to fit three thermodynamic parameters
-      (\samp{G}, \samp{S}, and \samp{Cp} at 25 \degC) to formation constants of
-      aqueous species as a function of temperature.
+      \item Add \code{logB.to.OBIGT()} to fit selected thermodynamic parameters
+      (\samp{G} and \samp{S} at 25 \degC and \samp{c1}, \samp{c2}, and
+      \samp{omega} HKF coefficients) to formation constants of aqueous species
+      as a function of temperature.
 
       \item Add vignette \viglink{customizing} with description of database
       format, data-entry conventions, and examples of customizing the

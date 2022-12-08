@@ -27,15 +27,6 @@ i2 <- mod.OBIGT(i1, name = "methane")
 expect_identical(i1, i2, info = info)
 expect_identical(info(i2)$name, "methane", info = info)
 
-# Test added 20220325
-info <- "logK_to_OBIGT() errors for < 3 temperature values"
-logB <- c(6.24, 6.02, 5.84, 5.97, 6.52)
-species <- c("Co+2", "HS-", "CoHS+")
-coeff <- c(-1, -1, 1)
-T <- c(120, 150, 200, 250, 300)
-P <- "Psat"
-expect_error(logB.to.OBIGT(logB[1:2], species, coeff, T[1:2], P))
-
 # Test added 20220920
 info <- "Can add > 1 species; different states get different default models; info() works after mod.OBIGT"
 iC12C13 <- mod.OBIGT(c("X", "Y"), formula = c("C12", "C13"), state = c("aq", "cr"))
