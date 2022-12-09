@@ -3,11 +3,16 @@
 # 20220324 v1 Regress three parameters (G, S, and Cp)
 # 20221202 v2 Regress HKF parameters (assume constant pressure and optimize omega parameter for charged species)
 
-logB.to.OBIGT <- function(logB, species, coeffs, T, P, optimize.omega = TRUE, tolerance = 0.05) {
+logB.to.OBIGT <- function(logB, species, coeffs, T, P, npar = 3, optimize.omega = FALSE, tolerance = 0.05) {
 
   # We need at least five temperature values to optimize omega
   if(optimize.omega & length(unique(T)) < 5) {
     message("logB.to.OBIGT: forcing optimize.omega = FALSE because there are < 5 T values")
+    optimize.omega <- FALSE
+  }
+  # We need five parameters to optimize omega 20221209
+  if(optimize.omega & npar != 5) {
+    message("logB.to.OBIGT: forcing optimize.omega = FALSE because npar != 5")
     optimize.omega <- FALSE
   }
 
@@ -52,9 +57,38 @@ logB.to.OBIGT <- function(logB, species, coeffs, T, P, optimize.omega = TRUE, to
 
   if(!optimize.omega) {
 
-    # Perform linear regression (constant initial omega)
-    Glm <- lm(Gf ~ S_var + c1_var + c2_var + omega_var)
-    omega <- Glm$coefficients["omega_var"]
+    # Default values
+    omega <- NA
+    c2 <- NA
+    c1 <- NA
+    S <- NA
+    if(npar == 5) {
+      # Perform linear regression with constant omega
+      Glm <- lm(Gf ~ S_var + c1_var + c2_var + omega_var)
+      omega <- Glm$coefficients["omega_var"]
+      c2 <- Glm$coefficients["c2_var"]
+      c1 <- Glm$coefficients["c1_var"]
+      S <- Glm$coefficients["S_var"]
+      G <- Glm$coefficients["(Intercept)"]
+    } else if(npar == 4) {
+      # Now with fewer parameters
+      Glm <- lm(Gf ~ S_var + c1_var + c2_var)
+      c2 <- Glm$coefficients["c2_var"]
+      c1 <- Glm$coefficients["c1_var"]
+      S <- Glm$coefficients["S_var"]
+      G <- Glm$coefficients["(Intercept)"]
+    } else if(npar == 3) {
+      Glm <- lm(Gf ~ S_var + c1_var)
+      c1 <- Glm$coefficients["c1_var"]
+      S <- Glm$coefficients["S_var"]
+      G <- Glm$coefficients["(Intercept)"]
+    } else if(npar == 2) {
+      Glm <- lm(Gf ~ S_var)
+      S <- Glm$coefficients["S_var"]
+      G <- Glm$coefficients["(Intercept)"]
+    } else if(npar == 1) {
+      G <- mean(Gf)
+    } else stop("invalid value for npar (should be from 1 to 5)")
 
   } else {
 
@@ -73,15 +107,15 @@ logB.to.OBIGT <- function(logB, species, coeffs, T, P, optimize.omega = TRUE, to
     omega <- optimize(Sqfun, c(-1e10, 1e10))$minimum
     # Construct the linear model with this omega
     Glm <- Gfun(omega)
+    # Get coefficients other than omega
+    G <- Glm$coefficients["(Intercept)"]
+    S <- Glm$coefficients["S_var"]
+    c1 <- Glm$coefficients["c1_var"]
+    c2 <- Glm$coefficients["c2_var"]
 
   }
 
-  # Get coefficients
-  G <- Glm$coefficients["(Intercept)"]
-  S <- Glm$coefficients["S_var"]
-  c1 <- Glm$coefficients["c1_var"]
-  c2 <- Glm$coefficients["c2_var"]
-  # NAs propagate as zero in the EOS
+  # NAs propagate as zero in the HKF equations
   if(is.na(S)) S <- 0
   if(is.na(c1)) c1 <- 0
   if(is.na(c2)) c2 <- 0

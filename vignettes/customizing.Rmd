@@ -435,7 +435,6 @@ P <- "Psat"
 ```
 
 Add first species: `r HWO4_` [@WTW_19].
-The fit to 3 temperature values involves only 3 parameters (`r G_`, `r S_`, and `r c1`), not including `r omega`.
 ```{r HWO4_}
 T <- c(250, 300, 350)
 logB <- c(5.58, 6.51, 7.99)
@@ -445,23 +444,22 @@ logB.to.OBIGT(logB, species, coeff, T, P)
 ```
 
 Add second species: `r H3WO4F2_` [@WWH_21].
-We get a better fit by setting `optimize.omega` to FALSE (although this is a charged species, it is treated as having a constant $\omega$).
 ```{r H3WO4F2-}
 T <- seq(100, 250, 25)
 logB <- c(17.00, 17.11, 17.46, 17.75, 18.17, 18.71, 19.23)
 # Species and coefficients in the formation reaction
 species <- c("H+", "WO4-2", "F-", "H3WO4F2-")
 coeff <- c(-3, -1, -2, 1)
-logB.to.OBIGT(logB, species, coeff, T, P, optimize.omega = FALSE)
+logB.to.OBIGT(logB, species, coeff, T, P)
 ```
 
 Add third species: `r H2WO4` [@WWH_21].
-We increase the tolerance because there is considerable scatter in the experimental values.
+Here we increase the tolerance because there is considerable scatter in the experimental values.
 ```{r H2WO4}
 logB <- c(7.12, 7.82, 7.07, 7.76, 7.59, 7.98, 8.28)
 species <- c("H+", "WO4-2", "H2WO4")
 coeff <- c(-2, -1, 1)
-logB.to.OBIGT(logB, species, coeff, T, P, tolerance = 0.2)
+logB.to.OBIGT(logB, species, coeff, T, P, tolerance = 0.3)
 ```
 
 After running, `r logB.to.OBIGT_` returns just the species indices; the low values for `r HWO4_` (`r info("HWO4-")`) and `r H2WO4` (`r info("H2WO4")`) indicate that the function replaced parameters for these species that were already present in OBIGT.
