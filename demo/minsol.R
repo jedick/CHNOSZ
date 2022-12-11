@@ -26,7 +26,7 @@ basis("H2S", log10(Stot))
 # Molality of NaCl
 mNaCl <- 1000 * wNaCl / (mass("NaCl") * (1 - wNaCl))
 # Estimate ionic strength and molality of Cl-
-sat <- NaCl(T = T, m_tot = mNaCl)
+sat <- NaCl(m_tot = mNaCl, T = T)
 basis("Cl-", log10(sat$m_Cl))
 
 # Add minerals and aqueous species

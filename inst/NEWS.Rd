@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-51 (2022-12-08)}{
+\section{Changes in CHNOSZ version 1.9.9-53 (2022-12-11)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -205,7 +205,9 @@
       \item \code{seq2aa()} now has the \strong{sequence} argument first and a
       default of NA for \strong{protein} (the protein name).
 
-      \item \code{NaCl()} now works with \code{mtot = 0}.
+      \item \code{NaCl()} has been rewritten to include pH dependence (i.e.
+      formation of HCl as well as NaCl) by using \code{affinity()} and
+      \code{equilibrate()} instead of algebraic equations.
 
       \item Remove unused \samp{cutoff} value in \code{thermo()$opt}.
 

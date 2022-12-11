@@ -7,66 +7,66 @@ Calculate speciation and ionic strength of aqueous solutions with a given molali
 }
 
 \usage{
-  NaCl(T = seq(100, 500, 100), P = 1000, m_tot = 2, ...)
+  NaCl(m_tot = 1, T = 25, P = "Psat", pH = NA, attenuate = FALSE)
 }
 
 \arguments{
-  \item{T}{numeric, temperature in \degC}
-  \item{P}{numeric, pressure in bar (single value)}
   \item{m_tot}{numeric, total molality of NaCl (single value)}
-  \item{...}{additional arguments for \code{\link{subcrt}}}
+  \item{T}{numeric, temperature in \degC}
+  \item{P}{numeric, pressure in bar}
+  \item{pH}{numeric, pH}
+  \item{attenuate}{logical, halve changes of variables in each step?}
 }
 
 \details{
-This function calculates speciation (ion activities) and ionic strength in aqueous solutions given a total amount (\code{m_tot}, in mol/kg) of NaCl.
-The function is written for quick calculations along a temperature range (\code{T}) at constant pressure (\code{P}).
-The only reaction considered is Na\S{+} + Cl\S{-} = NaCl(aq).
-The algorithm starts by calculating the equilibrium constant (\emph{K}) of the reaction and assuming complete dissociation of NaCl(aq).
-This also permits calculating the ionic strength from the molalities of Na\S{+} and Cl\S{-}.
-Then, \code{\link{uniroot}} is used to find the equilibrium molality of Cl\S{-}; that is, where the affinity of the reaction (log(\emph{K}/\emph{Q})) becomes zero.
-The activity quotient (\emph{Q}) is evaluated taking account of activity coefficients of Na\S{+}, Cl\S{-}, and NaCl(aq) calculated for the nominal ionic strength (see \code{\link{nonideal}}).
-The calculated molality of Cl\S{-} yields a new estimate of the ionic strength of the system.
-The calculations are iterated until the deviation in ionic strength at all temperatures is less than 0.01.
+Thermodynamic models for metal solubility and speciation involving chloride complexes are commonly specified in terms of amount of NaCl rather than activity (or molality) of Cl\S{-} as an independent variable.
+This function calculates distribution of species and ionic strength in a simple aqueous solution given a total amount (\code{m_tot}, in mol/kg) of NaCl.
+The aqueous Cl-bearing species considered in the system are Cl\S{-}, NaCl, and optionally HCl, and Na\S{+} is present as a basis species; other Na-bearing species such as NaOH are not considered.
+The activity coefficients of charged species are calculated using the Debye-Hückel equation (see \code{\link{nonideal}}) via the \code{IS} argument of \code{\link{affinity}}.
+The function first sets the molality of Na\S{+} and ionic strength equal to \code{m_tot}, then calculates the distribution of Cl-bearing species.
+Based on mass balance of Na atoms, the molality of NaCl is then used to recalculate the molality of Na\S{+}, followed by ionic strength.
+To find a solution, the function iterates until the change of molality of Na\S{+} and ionic strength are both less than \code{m_tot} / 100.
+
+In some cases, the iteration may oscillate around the true values without converging.
+Setting \code{attenuate} to TRUE, which halves the amount of change of these values in each step, may help with convergence.
+If a solution is not found after 100 iterations, the function stops with an error.
+
+If \code{pH} is NA (the default), then HCl is not included in the calculation and its molality in the output is also assigned NA.
+Note that only a single value is accepted for \code{m_tot}, but the other numeric arguments can have length > 1, allowing multiple combinations \code{T}, \code{P}, and \code{pH} in a single function call.
+However, due to limitations in \code{\link{affinity}}, only one of \code{T} and \code{P} can have length > 1.
 }
 
 \section{Warning}{
-This function provides only a first-order estimate of the solution composition, and is intended for solubility calculations of relatively insoluble metals in NaCl-dominated solutions.
-The formation of other species such as HCl or NaOH is not accounted for.
+It is important to keep in mind the ionic strength limits of the Debye-Hückel equation, but this function doesn't enforce them.
+Furthermore, metal-ligand complexing is not calculated by this function, so metal solubility and speciation calculations will be accurate only for relatively insoluble metals in NaCl-dominated solutions.
 }
 
 \value{
-A list with components \samp{IS} (\dQuote{true} ionic strength from concentrations of unpaired ions), \samp{m_Cl} (molality of Cl\S{-}), \samp{gam_Na}, and \samp{gam_Cl} (activity coefficients of Na\S{+} and Cl\S{-}).
+A list with components \samp{IS} (ionic strength calculated from molalities of Na\S{+} and Cl\S{-}), \samp{m_Cl}, \samp{m_Cl}, \samp{m_NaCl}, and \samp{m_HCl} (molalities of Na\S{+}, Cl\S{-}, NaCl, and HCl).
 }
 
 \seealso{
-\code{demo("gold")} for an application of this function.
+This function is used in a few demos (\code{demo("contour")}, \code{demo("gold")}, \code{demo("minsol")}, \code{demo("sphalerite")}).
 }
 
 \examples{\dontshow{reset()}
-# ionic strength of solution and activity coefficient of Cl-
-# from HCh version 3.7 (Shvarov and Bastrakov, 1999) at 1000 bar,
-# 100, 200, and 300 degress C, and 1 to 6 molal NaCl
+# Ionic strength calculated with HCh version 3.7 (Shvarov and Bastrakov, 1999)
+# at 1000 bar, 100, 200, and 300 degress C, and 1 to 6 molal NaCl
 m.HCh <- 1:6
 IS.HCh <- list(`100`=c(0.992, 1.969, 2.926, 3.858, 4.758, 5.619),
                `300`=c(0.807, 1.499, 2.136, 2.739, 3.317, 3.875),
                `500`=c(0.311, 0.590, 0.861, 1.125, 1.385, 1.642))
-gam_Cl.HCh <- list(`100`=c(0.565, 0.545, 0.551, 0.567, 0.589, 0.615),
-                  `300`=c(0.366, 0.307, 0.275, 0.254, 0.238, 0.224),
-                  `500`=c(0.19, 0.137, 0.111, 0.096, 0.085, 0.077))
-# total molality in the calculation with NaCl()
+# Total molality in the calculation with NaCl()
 m_tot <- seq(1, 6, 0.5)
 N <- length(m_tot)
-# where we'll put the calculated values
+# Where we'll put the calculated values
 IS.calc <- data.frame(`100`=numeric(N), `300`=numeric(N), `500`=numeric(N))
-gam_Cl.calc <- data.frame(`100`=numeric(N), `300`=numeric(N), `500`=numeric(N))
 # NaCl() is *not* vectorized over m_tot, so we use a loop here
 for(i in 1:length(m_tot)) {
-  NaCl.out <- NaCl(c(100, 300, 500), P=1000, m_tot=m_tot[i])
+  NaCl.out <- NaCl(m_tot[i], c(100, 300, 500), P = 1000)
   IS.calc[i, ] <- NaCl.out$IS
-  gam_Cl.calc[i, ] <- NaCl.out$gam_Cl
 }
-# plot ionic strength from HCh and NaCl() as points and lines
-opar <- par(mfrow=c(2, 1))
+# Plot ionic strength from HCh and NaCl() as points and lines
 col <- c("black", "red", "orange")
 plot(c(1,6), c(0,6), xlab="NaCl (mol/kg)", ylab=axis.label("IS"), type="n")
 for(i in 1:3) {
@@ -76,21 +76,10 @@ for(i in 1:3) {
   points(m.HCh, IS.HCh[[i]], col=col[i])
   lines(m_tot, IS.calc[, i], col=col[i])
 }
-# add 1:1 line, legend, and title
-abline(0, 1, lty=3)
+# Add legend and title
 dprop <- describe.property(rep("T", 3), c(100, 300, 500))
 legend("topleft", dprop, lty=1, pch=1, col=col)
 title(main="H2O + NaCl; HCh (points) and 'NaCl()' (lines)")
-# plot activity coefficient (gamma)
-plot(c(1,6), c(0,0.8), xlab="NaCl (mol/kg)", ylab=expression(gamma[Cl^"-"]), type="n")
-for(i in 1:3) {
-  points(m.HCh, gam_Cl.HCh[[i]], col=col[i])
-  lines(m_tot, gam_Cl.calc[, i], col=col[i])
-}
-# we should be fairly close
-maxdiff <- function(x, y) max(abs(y - x))
-stopifnot(maxdiff(unlist(gam_Cl.calc[seq(1,11,2), ]), unlist(gam_Cl.HCh)) < 0.033)
-par(opar)
 }
 
 \references{

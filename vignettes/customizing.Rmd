@@ -467,9 +467,9 @@ After running, `r logB.to.OBIGT_` returns just the species indices; the low valu
 ### Diagram 1: Constant molality of `r F_`
 
 Now we're ready to make a speciation diagram.
-Our target is to reproduce Fig. 7b of @WWH_21, which is made for 300 °C.
+Our aim is to reproduce Fig. 7b of @WWH_21, which is made for 300 °C.
 A constant molality of `r F_` is based on the assumption of complete dissociation of 0.1 m NaF (we'll change this later).
-An ionic strength of 1.2 mol/kg is estimated for a solution with 1.8 m NaCl (use `NaCl(300, m_tot = 1.8)`).
+An ionic strength of 0.9 mol/kg is estimated for a solution with 1.8 m NaCl (use `NaCl(1.8, T = 300)`).
 `r NOTE`: because the ionic strength is non-zero, the calculations here refer to molality instead of activity of species (see [An Introduction to CHNOSZ](anintro.html#from-activity-to-molality)).
 
 ```{r diagram1, message = FALSE, results = "hide", fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
@@ -477,7 +477,7 @@ basis(c("H+", "WO4-2", "F-", "H2O", "O2"))
 basis("F-", log10(0.1))
 iaq <- retrieve("W", c("O", "H", "F"), "aq")
 species(iaq)
-a <- affinity(pH = c(2, 7), T = 300, IS = 1.2)
+a <- affinity(pH = c(2, 7), T = 300, IS = 0.9)
 e <- equilibrate(a)
 col <- c(1, 4, 5, 2)
 diagram(e, alpha = TRUE, col = col, lty = 1, lwd = 2, ylab = "Fraction total W")
@@ -495,7 +495,7 @@ With a little algebra, we can calculate the molality of `r F_` (`a_F` in the cod
 ```{r a_F}
 T <- 300
 pH <- seq(2, 7, 0.1)
-logK_HF <- subcrt(c("H+", "F-", "HF"), c(-1, -1, 1), T = T, IS = 1.2)$out$logK
+logK_HF <- subcrt(c("H+", "F-", "HF"), c(-1, -1, 1), T = T, IS = 0.9)$out$logK
 F_tot <- 0.1
 a_F <- F_tot / (1 + 10^(logK_HF - pH))
 ```
@@ -505,7 +505,7 @@ Now that we have the molality of `r F_` as a function of pH, we can provide it i
 basis(c("H+", "WO4-2", "F-", "H2O", "O2"))
 iaq <- retrieve("W", c("O", "H", "F"), "aq")
 species(iaq)
-a <- affinity(pH = pH, "F-" = log10(a_F), T = T, IS = 1.2)
+a <- affinity(pH = pH, "F-" = log10(a_F), T = T, IS = 0.9)
 e <- equilibrate(a)
 diagram(e, alpha = TRUE, col = col, lty = 1, lwd = 2, ylab = "Fraction total W")
 ```

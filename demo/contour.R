@@ -20,7 +20,7 @@ species(iaq)
 # This gets us close to total S = 0.01 m
 basis("H2S", -2)
 # Calculate solution composition for 1 mol/kg NaCl
-NaCl <- NaCl(T = T, P = P, m_tot=1)
+NaCl <- NaCl(m_tot = 1, T = T, P = P)
 basis("Cl-", log10(NaCl$m_Cl))
 # Calculate affinity with changing basis species
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")

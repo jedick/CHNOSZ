@@ -12,7 +12,7 @@ iaq <- retrieve("Zn", c("O", "H", "Cl", "S"), "aq")
 # a function to make a single plot
 plotfun <- function(T = 400, P = 500, m_tot = 0.1, pHmin = 4, logppmmax = 3) {
   # Calculate NaCl speciation from simplified model
-  NaCl <- NaCl(T = T, P = P, m_tot = m_tot)
+  NaCl <- NaCl(m_tot = m_tot, T = T, P = P)
   basis("Cl-", log10(NaCl$m_Cl))
   basis("H2S", log10(0.05))
 

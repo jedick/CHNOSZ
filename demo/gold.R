@@ -102,7 +102,7 @@ Au_pH2 <- function() {
 # NaCl solution with total chloride equal to specified NaCl + KCl solution,
 # then estimate the molality of K+ in that solution 20181109
 chloride <- function(T, P, m_NaCl, m_KCl) {
-  NaCl <- NaCl(T = T, P = P, m_tot = m_NaCl + m_KCl)
+  NaCl <- NaCl(m_tot = m_NaCl + m_KCl, T = T, P = P)
   # Calculate logK of K+ + Cl- = KCl, adjusted for ionic strength
   logKadj <- subcrt(c("K+", "Cl-", "KCl"), c(-1, -1, 1), T = T, P = P, IS = NaCl$IS)$out$logK
   # What is the molality of K+ from 0.5 mol KCl in solution with 2 mol total Cl

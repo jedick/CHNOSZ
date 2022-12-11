@@ -555,7 +555,7 @@ aqexpr <- as.expression(bquote("("*aq*")"[italic(i)] == 10^.(logm_aq)*m))
 # Setup basis species
 basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+", "Cl-"))
 basis("H2S", logmS)
-nacl <- NaCl(T = T, P = "Psat", m_tot = m_NaCl)
+nacl <- NaCl(m_tot = m_NaCl, T = T, P = "Psat")
 basis("Cl-", log10(nacl$m_Cl))
 # Fe-bearing minerals
 species(Fe.cr)
