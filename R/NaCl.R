@@ -11,7 +11,7 @@ NaCl <- function(m_tot = 1, T = 25, P = "Psat", pH = NA, attenuate = FALSE) {
   # Store existing thermo data frame
   thermo <- get("thermo", CHNOSZ)
   # Get length of longest variable
-  nTP <- max(length(T), length(P))
+  nTP <- max(length(T), length(P), length(pH))
   pH.arg <- pH
   pH <- rep(pH, length.out = nTP)
 

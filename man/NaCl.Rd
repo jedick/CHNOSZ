@@ -47,20 +47,21 @@ A list with components \samp{IS} (ionic strength calculated from molalities of N
 
 \seealso{
 This function is used in a few demos (\code{demo("contour")}, \code{demo("gold")}, \code{demo("minsol")}, \code{demo("sphalerite")}).
+\code{demo("yttrium")} uses the \code{pH} argument.
 }
 
 \examples{\dontshow{reset()}
 # Ionic strength calculated with HCh version 3.7 (Shvarov and Bastrakov, 1999)
 # at 1000 bar, 100, 200, and 300 degress C, and 1 to 6 molal NaCl
 m.HCh <- 1:6
-IS.HCh <- list(`100`=c(0.992, 1.969, 2.926, 3.858, 4.758, 5.619),
-               `300`=c(0.807, 1.499, 2.136, 2.739, 3.317, 3.875),
-               `500`=c(0.311, 0.590, 0.861, 1.125, 1.385, 1.642))
+IS.HCh <- list(`100` = c(0.992, 1.969, 2.926, 3.858, 4.758, 5.619),
+               `300` = c(0.807, 1.499, 2.136, 2.739, 3.317, 3.875),
+               `500` = c(0.311, 0.590, 0.861, 1.125, 1.385, 1.642))
 # Total molality in the calculation with NaCl()
 m_tot <- seq(1, 6, 0.5)
 N <- length(m_tot)
 # Where we'll put the calculated values
-IS.calc <- data.frame(`100`=numeric(N), `300`=numeric(N), `500`=numeric(N))
+IS.calc <- data.frame(`100` = numeric(N), `300` = numeric(N), `500` = numeric(N))
 # NaCl() is *not* vectorized over m_tot, so we use a loop here
 for(i in 1:length(m_tot)) {
   NaCl.out <- NaCl(m_tot[i], c(100, 300, 500), P = 1000)
@@ -68,17 +69,17 @@ for(i in 1:length(m_tot)) {
 }
 # Plot ionic strength from HCh and NaCl() as points and lines
 col <- c("black", "red", "orange")
-plot(c(1,6), c(0,6), xlab="NaCl (mol/kg)", ylab=axis.label("IS"), type="n")
+plot(c(1,6), c(0,6), xlab = "NaCl (mol/kg)", ylab = axis.label("IS"), type = "n")
 for(i in 1:3) {
   # NOTE: the differences are probably mostly due to different models
   # for the properties of NaCl(aq) (HCh: B.Ryhzenko model;
   # CHONSZ: revised HKF with parameters from Shock et al., 1997)
-  points(m.HCh, IS.HCh[[i]], col=col[i])
-  lines(m_tot, IS.calc[, i], col=col[i])
+  points(m.HCh, IS.HCh[[i]], col = col[i])
+  lines(m_tot, IS.calc[, i], col = col[i])
 }
 # Add legend and title
 dprop <- describe.property(rep("T", 3), c(100, 300, 500))
-legend("topleft", dprop, lty=1, pch=1, col=col)
+legend("topleft", dprop, lty = 1, pch = 1, col = col)
 title(main="H2O + NaCl; HCh (points) and 'NaCl()' (lines)")
 }
 

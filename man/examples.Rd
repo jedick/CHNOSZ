@@ -62,6 +62,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{comproportionation}{Gibbs energy of sulfur comproportionation (Amend et al., 2020)}
     \item{Pourbaix}{Eh-pH diagram for Fe-O-H with equisolubility lines (Pourbaix, 1974)}
     \item{E_coli}{Gibbs energy of biomass synthesis in \emph{E. coli} (LaRowe and Amend, 2016)}
+    \item{yttrium}{\code{\link{logB.to.OBIGT}} fits at 800 and 1000 bar and Y speciation in \code{\link{NaCl}} solution at varying pH (Guan et al., 2020)}
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
@@ -112,6 +113,8 @@ Dick, J. M. and Shock, E. L. (2011) Calculation of the relative chemical stabili
 Dick, J. M. (2015) Chemical integration of proteins in signaling and development. \emph{bioRxiv}. \doi{10.1101/015826}
 
 Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibria}, Harper & Row, New York, 450 p. \url{https://www.worldcat.org/oclc/517586}
+
+Guan, Q., Mei, Y., Etschmann, B., Testemale, D., Louvel, M. and Brugger, J. (2020) Yttrium complexation and hydration in chloride-rich hydrothermal fluids: A combined \emph{ab initio} molecular dynamics and \emph{in situ} X-ray absorption spectroscopy study. \emph{Geochim. Cosmochim. Acta} \bold{281}, 168--189. \doi{10.1016/j.gca.2020.04.015}
 
 Johnson, J. W., Oelkers, E. H. and Helgeson, H. C. (1992) SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000\degC. \emph{Comp. Geosci.} \bold{18}, 899--947. \doi{10.1016/0098-3004(92)90029-Q}
 

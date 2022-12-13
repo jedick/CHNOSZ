@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-53 (2022-12-11)}{
+\section{Changes in CHNOSZ version 1.9.9-54 (2022-12-13)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -129,6 +129,21 @@
     }
   }
 
+  \subsection{NEW FEATURES: OTHER}{
+    \itemize{
+
+      \item \code{NaCl()} has been rewritten to include pH dependence (i.e.
+      formation of HCl as well as NaCl) by using \code{affinity()} and
+      \code{equilibrate()} instead of algebraic equations.
+
+      \item Add demo \code{yttrium.R} to show speciation of Y-Cl complexes as a
+      function of NaCl concentration, pH, \emph{T}, and \emph{P}, after
+      \href{https://doi.org/10.1016/j.gca.2020.04.015}{Guan et al. (2020)}.
+
+    }
+  }
+
+
   \subsection{REMOVED FEATURES}{
     \itemize{
 
@@ -204,10 +219,6 @@
 
       \item \code{seq2aa()} now has the \strong{sequence} argument first and a
       default of NA for \strong{protein} (the protein name).
-
-      \item \code{NaCl()} has been rewritten to include pH dependence (i.e.
-      formation of HCl as well as NaCl) by using \code{affinity()} and
-      \code{equilibrate()} instead of algebraic equations.
 
       \item Remove unused \samp{cutoff} value in \code{thermo()$opt}.
 
