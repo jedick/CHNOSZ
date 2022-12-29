@@ -21,14 +21,15 @@ Calculate speciation and ionic strength of aqueous solutions with a given molali
 \details{
 Thermodynamic models for metal solubility and speciation involving chloride complexes are commonly specified in terms of amount of NaCl rather than activity (or molality) of Cl\S{-} as an independent variable.
 This function calculates distribution of species and ionic strength in a simple aqueous solution given a total amount (\code{m_tot}, in mol/kg) of NaCl.
-The aqueous Cl-bearing species considered in the system are Cl\S{-}, NaCl, and optionally HCl, and Na\S{+} is present as a basis species; other Na-bearing species such as NaOH are not considered.
-The activity coefficients of charged species are calculated using the Debye-Hückel equation (see \code{\link{nonideal}}) via the \code{IS} argument of \code{\link{affinity}}.
+The aqueous Cl-bearing species considered in the system are Cl\S{-}, NaCl, and optionally HCl.
+Na\S{+} is present as a basis species, but the formation of Na-bearing species such as NaOH is not considered.
+The activity coefficients of charged species are calculated using the extended Debye-Hückel equation (see \code{\link{nonideal}}) via the \code{IS} argument of \code{\link{affinity}}.
 The function first sets the molality of Na\S{+} and ionic strength equal to \code{m_tot}, then calculates the distribution of Cl-bearing species.
 Based on mass balance of Na atoms, the molality of NaCl is then used to recalculate the molality of Na\S{+}, followed by ionic strength.
 To find a solution, the function iterates until the change of molality of Na\S{+} and ionic strength are both less than \code{m_tot} / 100.
 
-In some cases, the iteration may oscillate around the true values without converging.
-Setting \code{attenuate} to TRUE, which halves the amount of change of these values in each step, may help with convergence.
+At very high NaCl concentrations, which are beyond the applicability limits of the extended Debye-Hückel model and therefore not recommended for normal use, the iterations tend to oscillate without converging.
+Setting \code{attenuate} to TRUE, which halves the amount of change in each step, may help with convergence.
 If a solution is not found after 100 iterations, the function stops with an error.
 
 If \code{pH} is NA (the default), then HCl is not included in the calculation and its molality in the output is also assigned NA.

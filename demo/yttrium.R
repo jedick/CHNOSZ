@@ -125,7 +125,7 @@ Y_Cl <- function() {
   }
 }
 
-# Run the functions to amke plots for the demo
+# Run the functions to make plots for the demo
 opar <- par(no.readonly = TRUE)
 add.Y.species(800, plot.it = TRUE)
 add.Y.species(1000, plot.it = TRUE)

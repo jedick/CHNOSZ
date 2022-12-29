@@ -8,7 +8,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
   # number of species, same length as speciesprops list
   # T in Kelvin, same length as nrows of speciespropss
   # arguments A_DH and B_DH are needed for all methods other than "Alberty", and P is needed for "bgamma"
-  # m_start is the total molality of all dissolved species; if not given, it is taken to be equal to ionic strength
+  # m_star is the total molality of all dissolved species; if not given, it is taken to be equal to ionic strength
 
   mettext <- function(method) {
     mettext <- paste(method, "equation")
