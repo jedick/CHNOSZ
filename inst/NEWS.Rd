@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-54 (2022-12-13)}{
+\section{Changes in CHNOSZ version 1.9.9-56 (2023-02-10)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -63,6 +63,17 @@
       \item \samp{OBIGT/inorganic_cr.csv}: Add cobalt monoxide (CoO), guite
       (Co\s{3}O\s{4}), and zinc from \href{https://doi.org/10.3133/b2131}{Robie
         and Hemingway (1995)}.
+
+      \item \samp{OBIGT/inorganic_cr.csv}: Modify linnaeite (Co\s{3}S\s{4}) to
+      use 25 \degC parameters from \href{https://doi.org/10.3133/b2131}{Robie
+        and Hemingway (1995)} and heat capacity coefficients from
+      \href{https://www.worldcat.org/oclc/16131757}{Pankratz et al. (1987)}.
+
+      \item \samp{OBIGT/inorganic_cr.csv}: Modify Co-pentlandite
+      (Co\s{9}S\s{8}) to use parameters from
+      \href{https://www.worldcat.org/oclc/16131757}{Pankratz et al. (1987)} as
+      listed by \href{https://doi.org/10.5382/econgeo.4895}{Williams-Jones and
+        Vasyukova (2022)}.
 
       \item \samp{OBIGT/organic_aq.csv}: Correct formulas of Na(Mal)-, K(Mal)-,
       and Dy(Mal)+. Thanks to Grayson Boyer.

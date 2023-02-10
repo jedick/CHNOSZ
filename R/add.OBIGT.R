@@ -91,11 +91,15 @@ mod.OBIGT <- function(..., zap = FALSE) {
         thermo$OBIGT$state[ispecies[iold[i]]] <- state
         thermo$OBIGT$model[ispecies[iold[i]]] <- model
       }
-      # Tell user if they're the same, otherwise update the data entry
-      if(isTRUE(all.equal(oldprop, args[iold[i], ], check.attributes = FALSE))) 
+      # Convert NA to NA_real_ so no change is detected 20230210
+      newprop <- args[iold[i], ]
+      newprop[is.na(newprop)] <- NA_real_
+      if(isTRUE(all.equal(oldprop, newprop, check.attributes = FALSE))) {
+        # No change to OBIGT; tell the user about it
         message("mod.OBIGT: no change for ", speciesname[iold[i]], "(", state, ")")
-      else {
-        thermo$OBIGT[ispecies[iold[i]], icol] <- args[iold[i], ]
+      } else {
+        # Update the data in OBIGT
+        thermo$OBIGT[ispecies[iold[i]], icol] <- newprop
         assign("thermo", thermo, CHNOSZ)
         message("mod.OBIGT: updated ", speciesname[iold[i]], "(", state, ")")
       }
