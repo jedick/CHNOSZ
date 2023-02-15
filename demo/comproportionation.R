@@ -50,7 +50,7 @@ filled.contour(T, pH, G.kJ.4, xlab = axis.label("T"), ylab = axis.label("pH"),
   plot.axes = {
     contour(T, pH, G.kJ.4, levels = c(-10, -30, -50), add = TRUE, col = "white", lwd = 2, labcex = 0.8)
     legend("topleft", legend = rxntext, bty = "n", inset = c(0, 0.03))
-    legend("topleft", describe.basis(ibasis = 1:2), bty = "n", inset = c(0, 0.08))
+    legend("topleft", describe.basis(1:2), bty = "n", inset = c(0, 0.08))
     lines(T, pK_H2S, lty = 2)
     text(85, 6.7, expr.species("HS-"))
     text(85, 6.3, expr.species("H2S"))

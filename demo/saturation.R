@@ -33,5 +33,5 @@ diagram(a, type = "saturation", add = TRUE, contour.method = c("edge", "edge", "
 # add title and legend
 title(main = syslab(c("H2O", "CO2", "CaO", "MgO", "SiO2")))
 dprop <- describe.property(c("T", "P"), c(300, 1000))
-dbasis <- describe.basis(ibasis = 4)
+dbasis <- describe.basis(4)
 legend("bottomright", c(dprop, dbasis), bty = "n", cex = 0.9)

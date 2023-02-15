@@ -20,7 +20,7 @@
   expr.units(property, prefix = "", per = "mol")
   axis.label(label, units = NULL, basis = thermo()$basis, prefix = "",
     molality = FALSE)
-  describe.basis(basis = thermo()$basis, ibasis = 1:nrow(basis),
+  describe.basis(ibasis = 1:nrow(basis), basis = thermo()$basis,
     digits = 1, oneline = FALSE, molality = FALSE, use.pH = TRUE)
   describe.property(property, value, digits = 0, oneline = FALSE,
     ret.val = FALSE)
@@ -43,8 +43,8 @@
   \item{per}{character, denominator in units}
   \item{label}{character, description of species, condition or property}
   \item{units}{character, description of units}
-  \item{basis}{data frame, definition of basis species}
   \item{ibasis}{numeric, which basis species to include}
+  \item{basis}{data frame, definition of basis species}
   \item{digits}{numeric, number of digits to show after decimal point}
   \item{oneline}{logical, make descriptions occupy a single line?}
   \item{ret.val}{logical, return only the value with the units?}
@@ -109,9 +109,9 @@ Otherwise, the expression is built by combining the output of \code{expr.propert
 This function is used extensively in \code{\link{diagram}} and also appears in many of the examples.
 Note that \code{\link{diagram}} sets \code{molality} to TRUE if \code{IS} was supplied as an argument to \code{\link{affinity}}.
 
-  \code{describe.basis} makes an expression summarizing the basis species definition (logarithms of activity or fugacity of the basis species) provided in \code{basis}; only the basis species identified by \code{ibasis} are included. 
+\code{describe.basis} makes an expression summarizing the basis species definition (logarithms of activity or fugacity of the basis species) provided in \code{basis}; only the basis species identified by \code{ibasis} are included. 
 
-  \code{describe.property} makes an expression summarizing the properties supplied in \code{property}, along with their \code{value}s. The expressions returned by both functions consist of a property, an equals sign, and a value (with units where appropriate); the expressions have a length equal to the number of property/value pairs. If \code{oneline} is TRUE, the property/value pairs are combined into a single line, separated by commas. The number of digits shown after the decimal point in the values is controlled by \code{digits}. If \code{ret.val} is TRUE, only the values and their units are returned; this is useful for labeling plots with values of temperature.
+\code{describe.property} makes an expression summarizing the properties supplied in \code{property}, along with their \code{value}s. The expressions returned by both functions consist of a property, an equals sign, and a value (with units where appropriate); the expressions have a length equal to the number of property/value pairs. If \code{oneline} is TRUE, the property/value pairs are combined into a single line, separated by commas. The number of digits shown after the decimal point in the values is controlled by \code{digits}. If \code{ret.val} is TRUE, only the values and their units are returned; this is useful for labeling plots with values of temperature.
 
 \code{describe.reaction} makes an expression summarizing a chemical reaction.
 The \code{reaction} data frame can be generated using \code{\link{subcrt}}.
@@ -168,7 +168,7 @@ value <- c(1, 42.42, -1, 7, 0.1)
 dprop <- describe.property(property, value, oneline=TRUE)
 text(3, 1.5, dbasis)
 text(3, 2.5, dprop)
-dbasis <- describe.basis(ibasis=c(1, 5))
+dbasis <- describe.basis(c(1, 5))
 dprop <- describe.property(property[1:2], value[1:2])
 legend(2.4, 3.9, legend=c(dbasis, dprop), bty="n")
 # describe.reaction

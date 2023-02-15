@@ -102,7 +102,7 @@ stack_mosaic(bases, species1, species2, species12, names = names,
   pH = pH, O2 = O2, T = T, P = P, IS = NaCl$IS)
 # Add legend and title
 lTP <- lex(lTP(T, P))
-db <- describe.basis(ibasis = c(3:4))
+db <- describe.basis(c(3:4))
 legend("topright", c(lTP, db), bg = "white")
 title("Fe-Cu-S-O-H-Cl", font.main = 1)
 }

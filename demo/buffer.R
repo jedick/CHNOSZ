@@ -35,7 +35,7 @@ for(logact in c(-6, -10, -15)) {
 legend("topright", legend = c("minerals", "formaldehyde", "HCN"),
   lty = c(1, 3, 2), lwd = c(2, 1, 1), col = c(3, 1, 1), bg = "white", cex = 0.9)
 legend("bottomright", legend = c(describe.property("P", 300),
-  describe.basis(ibasis=c(2,4))), bg="white", cex=0.9)
+  describe.basis(c(2,4))), bg="white", cex=0.9)
 title(main=paste("Mineral buffers and activities of aqueous species",
                  "(Schulte and Shock, 1995)", sep="\n"), cex.main=0.9)
 

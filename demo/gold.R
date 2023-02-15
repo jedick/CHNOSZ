@@ -68,7 +68,7 @@ Au_pH1 <- function() {
   # Make legend and title
   dprop <- describe.property(c("T", "P", "IS"), c(300, 1000, 0))
   legend("topleft", dprop, bty = "n")
-  dbasis <- describe.basis(ibasis = c(9, 7))
+  dbasis <- describe.basis(c(9, 7))
   legend("bottomright", dbasis, bty = "n")
   title(main=("After Akinfiev and Zotov, 2001, Fig. 7"), font.main = 1)
 }
@@ -93,7 +93,7 @@ Au_pH2 <- function() {
   # Make legend and title
   dprop <- describe.property(c("T", "P", "IS"), c(450, 1000, 0))
   legend("topleft", dprop, bty = "n")
-  dbasis <- describe.basis(ibasis = c(6, 9, 7))
+  dbasis <- describe.basis(c(6, 9, 7))
   legend("topright", dbasis, bty = "n")
   title(main=("After Stef\u00e1nsson and Seward, 2004, Fig. 12b"), font.main = 1, cex.main = 1.1)
 }
@@ -132,9 +132,9 @@ Au_T1 <- function() {
   dNaCl <- expression(italic(m)[NaCl] == 1.5)
   dKCl <- expression(italic(m)[KCl] == 0.5)
   legend("topleft", c(dP, dNaCl, dKCl), bty = "n")
-  dH2S <- describe.basis(ibasis = 7, molality=TRUE)
-  dO2 <- describe.basis(ibasis = 9)
-  dpH <- describe.basis(ibasis = 10)
+  dH2S <- describe.basis(7, molality=TRUE)
+  dO2 <- describe.basis(9)
+  dpH <- describe.basis(10)
   legend(300, -3, c(dH2S, dO2, dpH), bty = "n")
   title(main=("After Williams-Jones et al., 2009, Fig. 2B"), font.main = 1)
 }
@@ -167,8 +167,8 @@ Au_T2 <- function() {
   dKCl <- expression(italic(m)[KCl] == 0.5)
   legend("topleft", c(dP, dNaCl, dKCl), bty = "n")
   dH2S <- expr.species("H2S", value = 0.01, molality = TRUE)
-  dO2 <- describe.basis(ibasis = 9)
-  dpH <- describe.basis(ibasis = 10)
+  dO2 <- describe.basis(9)
+  dpH <- describe.basis(10)
   legend(300, -3, c(dH2S, dO2, dpH), bty = "n")
   title(main=("After Williams-Jones et al., 2009, Fig. 2A"), font.main = 1)
 }

@@ -180,7 +180,7 @@ axis.label <- function(label, units = NULL, basis = thermo()$basis, prefix = "",
   return(desc)
 }
 
-describe.basis <- function(basis = thermo()$basis, ibasis = 1:nrow(basis),
+describe.basis <- function(ibasis = 1:nrow(basis), basis = thermo()$basis,
   digits = 1, oneline = FALSE, molality = FALSE, use.pH = TRUE) {
   # Make expressions for the chemical activities/fugacities of the basis species
   propexpr <- valexpr <- character()

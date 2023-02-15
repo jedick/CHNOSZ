@@ -8,7 +8,7 @@
 \alias{lTP}
 \alias{lex}
 \title{Functions to Make Legend Text}
-\description{Generate expressions suitable plot legends describing system conditions.}
+\description{Generate expressions describing system conditions that can be added to legends of plots.}
 
 \usage{
   lNaCl(x, digits = 2)

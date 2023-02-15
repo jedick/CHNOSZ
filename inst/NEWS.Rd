@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-56 (2023-02-10)}{
+\section{Changes in CHNOSZ version 1.9.9-57 (2023-02-15)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -232,6 +232,9 @@
       default of NA for \strong{protein} (the protein name).
 
       \item Remove unused \samp{cutoff} value in \code{thermo()$opt}.
+
+      \item Move \strong{ibasis} argument to first position in
+      \code{describe.basis()}.
 
     }
   }

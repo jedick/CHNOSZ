@@ -87,7 +87,7 @@ diagram(ac, xlab = xlab, main = "Cu-Fe-S-O-H with mash()")
 ### rebalance() diagram
 ad <- rebalance(dFe, dCu)
 diagram(ad, xlab = xlab, balance = 1, main = "Cu-Fe-S-O-H with rebalance()")
-db <- describe.basis(ibasis = 3)
+db <- describe.basis(3)
 leg <- lex(lTP(400, 2000), db)
 legend("bottomleft", legend = leg, bty = "n")
 \dontshow{par(opar)}}
