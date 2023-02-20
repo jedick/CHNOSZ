@@ -2,17 +2,17 @@
 reset()
 
 info <- "NAs in thermo()$OBIGT propagate to subcrt()"
-# first of all, water is in thermo()$OBIGT but its properties
+# First of all, water is in thermo()$OBIGT but its properties
 # are actually calculated using water() so it has NAs for some parameters
 expect_equal(info(1)$a, as.numeric(NA), info = info)
-# get the existing value of c for [Ala](cr) (it's 0)
+# Get the existing value of c for [Ala](cr) (it's 0)
 expect_equal(c.Ala <- info(info("[Ala]", "cr"))$c, 0, info = info)
-# when we make a protein, its G depends on temperature
+# When we make a protein, its G depends on temperature
 expect_true(all(diff(subcrt("LYSC_CHICK", "cr")$out[[1]]$G) < 0), info = info)
-# turn the values of G and S for [Ala](cr) into NA
+# Turn the values of G and S for [Ala](cr) into NA
 mod.OBIGT(name = "[Ala]", state = "cr", G = NA, S = NA)
-# now when we make a protein(cr), its G is NA
+# Now when we make a protein(cr), its G is NA
 expect_true(all(is.na(subcrt("RNAS1_BOVIN", "cr")$out[[1]]$G)), info = info)
-# also check propagation of NA for aqueous species
+# Also check propagation of NA for aqueous species
 mod.OBIGT(name = "[Ala]", state = "aq", G = NA, S = NA)
 expect_true(all(is.na(subcrt("[Ala]", "aq")$out[[1]]$G)), info = info)

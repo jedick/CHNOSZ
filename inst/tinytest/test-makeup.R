@@ -15,7 +15,7 @@ info <- "Numeric species indices, and coefficients indicating charge can be pars
 expect_equal(makeup("-1"), makeup("Z0-1"), info = info)
 expect_equal(makeup("-1"), makeup("(Z-1)"), info = info)
 expect_equal(makeup("-1"), makeup("Z-1+0"), info = info)
-# the species index of the electron in thermo()$OBIGT
+# The species index of the electron in thermo()$OBIGT
 ie <- info("e-")
 expect_equal(makeup("-1"), makeup(ie), info = info)
 
@@ -29,24 +29,24 @@ expect_equal(makeup("(H)2O"), makeup("H2O"), info = info)
 
 info <- "Summing and multiply formulas works as expected"
 ispecies <- info(c("B(OH)3", "gypsum", "lysine:HCl"))
-# the elemental composition all of those, added together
+# The elemental composition all of those, added together
 msaved <- as.array(c(B = 1, C = 6, Ca = 1, Cl = 1, H = 22, N = 2, O = 11, S = 1))
 expect_equal(makeup(ispecies, sum = TRUE), msaved, info = info)
-# the elemental composition in a 1:2:-1 ratio
+# The elemental composition in a 1:2:-1 ratio
 msaved121 <- as.array(c(B = 1, C = -6, Ca = 2, Cl = -1, H = -4, N = -2, O = 13, S = 2))
 expect_equal(makeup(ispecies, c(1,2,-1), sum = TRUE), msaved121, info = info)
 expect_error(makeup(ispecies, c(1,2), sum = TRUE), "multiplier does not have .* length = number of formulas", info = info)
 
 info <- "makeup() has a fall-through mechanism for matrices and named objects"
-# this series of tests mimics situations encountered in residue.info() via species.basis()
-# ultimately we want to be able to use species.basis() for species indices, formulas or makeups
+# This series of tests mimics situations encountered in residue.info() via species.basis()
+# Ultimately we want to be able to use species.basis() for species indices, formulas or makeups
 expect_equal(makeup(makeup("CH4")), makeup("CH4"), info = info)
 expect_equal(makeup(list(makeup("CH4"))), list(makeup("CH4")), info = info)
 basis("CHNOS")
-# we turn the result into a vector using [1, ] so as to drop row names conditionally placed by species.basis
+# We turn the result into a vector using [1, ] so as to drop row names conditionally placed by species.basis
 expect_equal(CHNOSZ:::species.basis("CH4")[1, ], CHNOSZ:::species.basis(info("CH4"))[1, ], info = info)
 expect_equal(CHNOSZ:::species.basis(makeup("CH4"))[1, ], CHNOSZ:::species.basis("CH4")[1, ], info = info)
-# a matrix should be turned into a list
+# A matrix should be turned into a list
 protein <- c("LYSC_CHICK", "RNAS1_BOVIN", "CYC_BOVIN", "MYG_PHYCA", "MYG_HORSE")
 pf <- protein.formula(protein)  # a matrix with elements on the columns
 basis(protein)          # yup, a basis set made of proteins, just for fun
@@ -58,7 +58,7 @@ info <- "as.chemical.formula() moves charge to the end"
 mkp <- makeup("Z-1HCO3")
 expect_equal(as.chemical.formula(mkp), "HCO3-1", info = info)  # i.e. not -1HCO3
 
-# Commented this test because detaching the package isn't always possible 20220131
+# TODO: Commented this test because detaching the package isn't always possible 20220131
 #info <- "makeup() can process formulas if the package is not attached"
 ## test added 20200727
 #CHNOSZattached <- "CHNOSZ" %in% (.packages())

@@ -29,7 +29,7 @@ OBIGT.ref <- thermo()$OBIGT[ispecies, ]
 OBIGT.calc <- RH2OBIGT(file = file)
 # The maximum absolute pairwise difference between x and y
 maxdiff <- function(x, y) max(abs(y - x))
-# calculated values of H are spot on; to pass tests, tolerance on
+# Calculated values of H are spot on; to pass tests, tolerance on
 # G is set higher; is there an incorrect group value somewhere?
 expect_true(maxdiff(OBIGT.calc$G, OBIGT.ref$G) < 31, info = info)
 expect_true(maxdiff(OBIGT.calc$H, OBIGT.ref$H) == 0, info = info)
@@ -41,37 +41,37 @@ expect_true(maxdiff(OBIGT.calc$a2.b, OBIGT.ref$a2.b) < 1e-13, info = info)
 expect_true(maxdiff(OBIGT.calc$a3.c, OBIGT.ref$a3.c) < 1e-14, info = info)
 
 info <- "add.OBIGT() replaces existing entries without changing species index"
-# store the original species index of CdCl2
+# Store the original species index of CdCl2
 iCdCl2 <- info("CdCl2", "aq")
-# add supplemental database - includes CdCl2
+# Add supplemental database - includes CdCl2
 file <- system.file("extdata/adds/BZA10.csv", package = "CHNOSZ")
 isp <- add.OBIGT(file)
-# species index of CdCl2 should not have changed
+# Species index of CdCl2 should not have changed
 expect_equal(info("CdCl2", "aq"), iCdCl2, info = info)
-# check that names of species modified are same as in file
+# Check that names of species modified are same as in file
 newdat <- read.csv(file, stringsAsFactors = FALSE)
-# the order isn't guaranteed ... just make sure they're all there
+# The order isn't guaranteed ... just make sure they're all there
 expect_true(all(newdat$name %in% thermo()$OBIGT$name[isp]), info = info)
 
 info <- "add.OBIGT() gives an error for an incompatible file"
-# test added 20191210
+# Test added 20191210
 file <- system.file("extdata/Berman/Ber88_1988.csv", package = "CHNOSZ")
 expect_error(add.OBIGT(file), info = info)
 
 info <- "info() gives consistent messages for cal and J"
-# test added 20190529
-# add data for dimethylamine and trimethylamine in different units (cal or J)
+# Test added 20190529
+# Add data for dimethylamine and trimethylamine in different units (cal or J)
 expect_message(add.OBIGT(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ")), "energy units: J and cal", info = info)
 expect_message(info(info("DMA_cal")), "-1.92 cal", info = info)
 expect_message(info(info("DMA_J")), "-8.02 J", info = info)
-# for TMA, only a checkGHS message for the entry in J is produced,
+# For TMA, only a checkGHS message for the entry in J is produced,
 # because it's above the threshold of 100 set in thermo()$opt$G.tol
 expect_silent(info(info("TMA_cal")), info = info)
 expect_message(info(info("TMA_J")), "-102 J", info = info)
 
 info <- "Missing values for G, Cp, and V are correct in cal and J"
-# test added 20190530
-# add data for dimethylamine and trimethylamine in different units (cal or J)
+# Test added 20190530
+# Add data for dimethylamine and trimethylamine in different units (cal or J)
 add.OBIGT(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ"))
 calccal <- info(info("DMA_cal_NA"))
 expect_equal(round(calccal$G), 13934, info = info)
@@ -83,8 +83,8 @@ expect_equal(round(calcJ$Cp, 1), 252.4, info = info)
 expect_equal(round(calcJ$V, 1), 58.2, info = info)
 
 info <- "subcrt() gives same results for data entered in cal and J"
-# test added 20190530
-# add data for dimethylamine and trimethylamine in different units (cal or J)
+# Test added 20190530
+# Add data for dimethylamine and trimethylamine in different units (cal or J)
 add.OBIGT(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ"))
 E.units("cal")
 scal <- subcrt("DMA_cal")
@@ -99,19 +99,19 @@ E.units("J")
 calcJ25 <- subcrt("DMA_J", T = 25)$out[[1]]
 infoJ25 <- info(info("DMA_J"))
 expect_equivalent(calcJ25[, c("G", "H", "S")], calcJ25[, c("G", "H", "S")], info = info)
-# in the case of Cp and V, there are bigger difference because they are calculated from the HKF parameters
+# In the case of Cp and V, there are bigger difference because they are calculated from the HKF parameters
 expect_true(maxdiff(calcJ25$Cp, infoJ25$Cp) < 8.1, info = info)
 expect_true(maxdiff(calcJ25$V, infoJ25$V) < 0.55, info = info)
 
 info <- "OBIGT2eos() doesn't convert lambda for cr species"
-## bug visible with change of ferberite data to J:
+## Bug visible with change of ferberite data to J:
 ## lambda (exponent on heat capacity term)
 ## was incorrectly going through a units conversion  20190903
-# this was working
+# This was working
 mod.OBIGT("test_cal", formula = "C0", state = "cr", E_units = "cal", a = 10, b = 100, f = 1, lambda = 0)
 mod.OBIGT("test_J", formula = "C0", state = "cr", E_units = "J", a = 41.84, b = 418.4, f = 4.184, lambda = 0)
 expect_equal(subcrt("test_cal", T = 25)$out[[1]]$Cp, subcrt("test_J", T = 25)$out[[1]]$Cp, info = info)
-# this wasn't working
+# This wasn't working
 mod.OBIGT("test_cal2", formula = "C0", state = "cr", E_units = "cal", a = 10, b = 100, f = 1, lambda = -1)
 mod.OBIGT("test_J2", formula = "C0", state = "cr", E_units = "J", a = 41.84, b = 418.4, f = 4.184, lambda = -1)
 expect_equal(subcrt("test_cal2", T = 25)$out[[1]]$Cp, subcrt("test_J2", T = 25)$out[[1]]$Cp, info = info)
@@ -124,7 +124,7 @@ iaq <- mod.OBIGT("fake_aq", formula = "Na2Cl2", state = "aq", model = "CGL", G =
 expect_message(info(iaq), "differs", info = info)
 expect_silent(info(iaq), info = info)
 # Make sure subcrt() runs
-expect_equal(subcrt(iaq)$G, subcrt(icr)$G)
+expect_equal(subcrt(iaq)$G, subcrt(icr)$G, info = info)
 
 # Reference
 

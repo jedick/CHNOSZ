@@ -13,7 +13,7 @@ DLH06.pK <- list(`[Cys-]` = c(8.82, 7.44, 7.14, 7.90),
                  `[AABB+]`= c(2.34, 2.36, 2.62, 2.81),
                  `[AABB-]`= c(10.16,7.85, 6.51, 6.28))
 this.pK <- ionize.aa(T = c(0, 100, 200, 300), ret.val = "pK")
-# ionization of [Cys] and [His] is off more than the others
+# Ionization of [Cys] and [His] is off more than the others
 expect_equal(this.pK[, 1], DLH06.pK$`[Cys-]`, tolerance = 1e-1, check.attributes = FALSE, info = info)
 expect_equal(this.pK[, 2], DLH06.pK$`[Asp-]`, tolerance = 1e-2, check.attributes = FALSE, info = info)
 expect_equal(this.pK[, 3], DLH06.pK$`[Glu-]`, tolerance = 1e-2, check.attributes = FALSE, info = info)
@@ -31,7 +31,7 @@ val <- expand.grid(pH = pH, T = T)
 Z <- ionize.aa(pH = val$pH, T = val$T, ret.val = "pK")
 expect_equal(length(unique(Z)), 99, info = info)
 
-# references
+# Reference
 
 # Dick, J. M., LaRowe, D. E. and Helgeson, H. C. (2006) 
 #   Temperature, pressure, and electrochemical constraints on protein speciation: 

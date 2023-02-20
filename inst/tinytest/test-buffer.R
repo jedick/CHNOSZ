@@ -4,15 +4,15 @@ reset()
 info <- "Simple buffer works in 0, 1, and 2 dimensions"
 
 add.OBIGT("SUPCRT92")
-# define 4 temperatures
+# Define 4 temperatures
 T <- c(200, 300, 400, 500)
 # calculate SiO2 activity buffered by quartz at 1000 bar
 logaSiO2 <- subcrt(c("quartz", "SiO2"), c(-1, 1), T = T, P = 1000)$out$logK
 
-# set up system
+# Set up system
 basis(c("Al+3", "SiO2", "Na+", "K+", "H2O", "O2", "H+"))
 species(c("K-feldspar", "albite", "paragonite", "dickite", "muscovite"))
-# calculate logact(SiO2) with quartz buffer
+# Calculate logact(SiO2) with quartz buffer
 basis("SiO2", "quartz")
 
 # 0 dimensions: constant T

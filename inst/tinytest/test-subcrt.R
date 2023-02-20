@@ -12,13 +12,13 @@ expect_equal(s$reaction$coeff, c(-1, 1, -2, -1, 1.5), info = info)
 expect_equal(s$reaction$name, c("malic acid", "citric acid", "CO2", "water", "oxygen"), info = info)
 
 info <- "Standard Gibbs energies (kJ/mol) of reactions involving aqueous species are consistent with the literature"
-# from Amend and Shock, 2001 [AS01] Table 3
+# From Amend and Shock, 2001 [AS01] Table 3
 T <- c(2, 18, 25, 37, 45, 55, 70, 85, 100, 115, 150, 200)
 
 # H2O(l) = H+ + OH-
 AS01.H2O <- c(78.25, 79.34, 79.89, 80.90, 81.63, 82.59, 84.13, 85.78, 87.55, 89.42, 94.22, 102.21)
 sout.H2O <- subcrt(c("H2O", "H+", "OH-"), c(-1, 1, 1), T = T)$out
-# tolerances set to lowest order of magnitute to pass
+# Tolerances set to lowest order of magnitute to pass
 expect_true(maxdiff(sout.H2O$G/1000, AS01.H2O) < 0.01, info = info)
 
 # AS01 Table 4.3 Reaction A1: H2(aq) + 0.5O2(aq) = H2O(l)
@@ -31,41 +31,41 @@ AS01.C7 <- c(-1695.30, -1686.90, -1682.80, -1675.30, -1670.00, -1663.10, -1652.0
 s.C7 <- subcrt(c("S2O3-2", "H2O", "O2", "SO4-2", "H+", "S"), c("aq", "liq", "aq", "aq", "aq", "cr"), c(-5, -1, -4, 6, 2, 4), T = T)
 sout.C7 <- s.C7$out
 expect_true(maxdiff(sout.C7$G/1000, AS01.C7) < 0.06, info = info)
-# we can also check that sulfur has expected phase transitions
+# We can also check that sulfur has expected phase transitions
 expect_equal(s.C7$polymorphs$sulfur, c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3), info = info)
 
 info <- "Subzero degree C calculations are possible"
-## start with H2O
+## Start with H2O
 s.H2O <- subcrt("H2O", T = c(-20.1, seq(-20, 0)), P = 1)$out$water
-# we shouldn't get anything at -20.1 deg C
+# We shouldn't get anything at -20.1 deg C
 expect_true(is.na(s.H2O$G[1]), info = info)
-# we should get something at -20 deg C
+# We should get something at -20 deg C
 expect_equal(s.H2O$G[2], convert(-56001, "J"), tolerance = 1, scale = 1, info = info)
-# following SUPCRT92, an input temperature of 0 is converted to 0.01
+# Following SUPCRT92, an input temperature of 0 is converted to 0.01
 expect_equal(s.H2O$T[22], 0.01, info = info)
 
 info <- "Calculations using IAPWS-95 are possible"
 oldwat <- water("IAPWS95")
-sb <- subcrt(c("H2O", "Na+"), T = c(-30, -20, 0, 10), P = 1)$out
-# the test is not a demanding numerical comparison, more that we got numbers and no error
+# The tests pass if we get numeric values and no error
+expect_silent(sb <- subcrt(c("H2O", "Na+"), T = c(-30, -20, 0, 10), P = 1)$out)
 expect_true(all(sb$`Na+`$G < sb$water$G), info = info)
-# clean up
+# Clean up
 water(oldwat)
 
 info <- "Phase transitions of minerals give expected messages and results"
 iacanthite <- info("acanthite", "cr2")
 expect_message(subcrt(iacanthite), "subcrt: temperature\\(s\\) of 623.15 K and above exceed limit for acanthite cr2 \\(using NA for G\\)", info = info)
 expect_equal(subcrt("acanthite")$out$acanthite$polymorph, c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3), info = info)
-# the reaction coefficients in the output should be unchanged 20171214
+# The reaction coefficients in the output should be unchanged 20171214
 expect_equal(subcrt(c("bunsenite", "nickel", "oxygen"), c(-1, 1, 0.5))$reaction$coeff, c(-1, 1, 0.5), info = info) 
-# properties are NA only above (not at) the transition temperature 20191111
+# Properties are NA only above (not at) the transition temperature 20191111
 expect_equal(is.na(subcrt("rhodochrosite", T = c(699:701), P = 1, convert = FALSE)$out[[1]]$G), c(FALSE, FALSE, TRUE), info = info)
 
 # Use calories for comparisons with SUPCRT92
 E.units("cal")
 
 info <- "Calculations for K-feldspar are consistent with SUPCRT92"
-# use the superseded Helgeson et al., 1978 data
+# Use the superseded Helgeson et al., 1978 data
 add.OBIGT("SUPCRT92", "K-feldspar")
 T <- c(100, 100, 1000, 1000)
 P <- c(5000, 50000, 5000, 50000)
@@ -87,7 +87,7 @@ if(FALSE) {
 
 info <- "Calculations for quartz are nearly consistent with SUPCRT92"
 add.OBIGT("SUPCRT92")
-# using SUPCRT's equations, the alpha-beta transition occurs at
+# Using SUPCRT's equations, the alpha-beta transition occurs at
 # 705 degC at 5000 bar and 1874 degC at 50000 bar,
 # so here beta-quartz is stable only at T = 1000, P = 5000
 T <- c(100, 100, 1000, 1000)
@@ -114,7 +114,7 @@ OBIGT()
 
 info <- "More calculations for quartz are nearly consistent with SUPCRT92"
 add.OBIGT("SUPCRT92")
-# output from SUPCRT92 for reaction specified as "1 QUARTZ" run at 1 bar
+# Output from SUPCRT92 for reaction specified as "1 QUARTZ" run at 1 bar
 # (SUPCRT shows phase transition at 574.850 deg C, and does not give Cp values around the transition)
 S92_1bar <- read.table(header = TRUE, text = "
     T       G       H    S       V
@@ -155,24 +155,24 @@ s1 <- subcrt("chalcocite", T = c(100, 1000), P = 1000)
 s2 <- subcrt(rep("chalcocite", 2), T = c(100, 1000), P = 1000)
 expect_equal(s1$out[[1]]$logK, s2$out[[1]]$logK, info = info)
 expect_equal(s1$out[[1]]$logK, s2$out[[2]]$logK, info = info)
-## another way to test it ...
+## Another way to test it ...
 basis(c("copper", "chalcocite"))
 species("chalcocite")
 a <- affinity(T = c(0, 1000, 2), P = 1)
 expect_equal(as.numeric(a$values[[1]]), c(0, 0), info = info)
 
 info <- "Reaction coefficients for repeated species are handled correctly"
-# these were failing in version 1.1.3
+# These were failing in version 1.1.3
 s1 <- subcrt(c("quartz", "SiO2"), c(-1, 1))            
 expect_equal(s1$reaction$coeff, c(-1, 1), info = info)
 s2 <- subcrt(c("pyrrhotite", "pyrrhotite"), c(-1, 1))            
 expect_equal(s2$reaction$coeff, c(-1, 1), info = info)
-# these were failing in version 1.1.3-28
+# These were failing in version 1.1.3-28
 s3 <- subcrt(c("SiO2", "SiO2"), c(-1, 1))
 expect_equal(s3$reaction$coeff, c(-1, 1), info = info)
 s4 <- subcrt(c("H2O", "H2O", "H2O", "H2O", "H2O"), c(-2, 1, -3, 1, 3))
 expect_equal(s4$reaction$coeff, c(-2, 1, -3, 1, 3), info = info)
-# the reaction properties here should add up to zero
+# The reaction properties here should add up to zero
 expect_equal(unique(s4$out$logK), 0, info = info)
 
 info <- "Properties of HKF species below 0.35 g/cm3 are NA and give a warning"
@@ -180,7 +180,7 @@ wtext <- "below minimum density for applicability of revised HKF equations \\(2 
 expect_warning(s1 <- subcrt(c("Na+", "quartz"), T = 450, P = c(400, 450, 500)), wtext, info = info) 
 expect_equal(sum(is.na(s1$out$`Na+`$logK)), 2, info = info)
 expect_equal(sum(is.na(s1$out$quartz$logK)), 0, info = info)
-# use exceed.rhomin to go below the minimum density
+# Use exceed.rhomin to go below the minimum density
 s2 <- subcrt(c("Na+", "quartz"), T = 450, P = c(400, 450, 500), exceed.rhomin = TRUE)
 expect_equal(sum(is.na(s2$out$`Na+`$logK)), 0, info = info)
 
@@ -193,16 +193,16 @@ expect_true(identical(colnames(s1$out[[1]]), c("T", "P", "rho", "logK", "G", "H"
 expect_true(identical(colnames(s2$out[[2]]), c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "polymorph")), info = info)
 expect_true(identical(colnames(s1$out[[2]]), c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "loggam", "IS")), info = info)
 expect_true(identical(colnames(s2$out[[1]]), c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "loggam", "IS")), info = info)
-# another one ... pyrrhotite was getting a loggam
+# Another one ... pyrrhotite was getting a loggam
 expect_true(identical(colnames(subcrt(c("iron", "Na+", "Cl-", "OH-", "pyrrhotite"), T = 25, IS = 1)$out$pyrrhotite),
   c("T", "P", "rho", "logK", "G", "H", "S", "V", "Cp", "polymorph")), info = info)
 
 info <- "Argument checking handles some types of invalid input"
 expect_error(subcrt("H2O", -1, "liq", "xxx"), "invalid property name: xxx", info = info)
-# before version 1.1.3-63, having more than one invalid property gave a mangled error message
+# Before version 1.1.3-63, having more than one invalid property gave a mangled error message
 expect_error(subcrt("H2O", -1, "liq", c(1, 2)), "invalid property names: 1 2", info = info)
 
-# references
+# References
 
 # Amend, J. P. and Shock, E. L. (2001) 
 #   Energetics of overall metabolic reactions of thermophilic and hyperthermophilic Archaea and Bacteria. 
@@ -211,4 +211,3 @@ expect_error(subcrt("H2O", -1, "liq", c(1, 2)), "invalid property names: 1 2", i
 # Helgeson, H. C., Delany, J. M., Nesbitt, H. W. and Bird, D. K. (1978) 
 #   Summary and critique of the thermodynamic properties of rock-forming minerals. 
 #   Am. J. Sci. 278-A, 1--229. http://www.worldcat.org/oclc/13594862
-

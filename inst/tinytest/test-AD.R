@@ -48,7 +48,7 @@ expect_equal(sout2$V, V_ref2, tolerance = 0.4, scale = 1, info = info)
 info <- "AD gives consistent values of G, H, and S"
 T_in_Kelvin <- convert(T, "K")
 S_of_elements_in_Joules <- entropy("CO2")
-expect_equal(sout2$H - T_in_Kelvin * sout2$S + 298.15 * S_of_elements_in_Joules, sout2$G)
+expect_equal(sout2$H - T_in_Kelvin * sout2$S + 298.15 * S_of_elements_in_Joules, sout2$G, info = info)
 
 # 20220206
 info <- "Fugacity, density, and density derivatives of H2O are close to values in Akinfiev and Diamond (2003)"

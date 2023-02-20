@@ -112,13 +112,13 @@ a2 <- affinity(iprotein = 1)
 expect_equal(a1$values, a2$values, info = info)
 
 # Test added 20220621
-info <- "Message indicates status of ionization calculations"
+info <- "Messages indicate status of ionization calculations"
 basis("CHNOS+")
-expect_message(a <- affinity(iprotein = 1), "affinity: ionizing proteins ...")
+expect_message(a <- affinity(iprotein = 1), "affinity: ionizing proteins ...", info = info)
 thermo("opt$ionize.aa" = FALSE)
-expect_message(a <- affinity(iprotein = 1), "affinity: NOT ionizing proteins because thermo()$opt$ionize.aa is FALSE", fixed = TRUE)
+expect_message(a <- affinity(iprotein = 1), "affinity: NOT ionizing proteins because thermo()$opt$ionize.aa is FALSE", fixed = TRUE, info = info)
 
-# References
+# Reference
 
 # Dick, J. M., LaRowe, D. E. and Helgeson, H. C. (2006) 
 #   Temperature, pressure, and electrochemical constraints on protein speciation: 

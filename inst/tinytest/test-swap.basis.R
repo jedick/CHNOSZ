@@ -11,38 +11,38 @@ expect_error(swap.basis("CO2", "C60"), "is not available", info = info)
 expect_error(swap.basis("CO2", "H2"), "the number of basis species is greater than the number of elements and charge", info = info)
 
 info <- "basis.logact only accepts defined elements"
-# setup basis species with two elements: C and H
+# Setup basis species with two elements: C and H
 basis(c("graphite", "H2"), c("cr", "gas"))
-# we can't get basis activities with one element
+# We can't get basis activities with one element
 expect_error(basis.logact(c(C = 1)), "number of elements in 'emu' is less than those in basis", info = info)
 
 # 20181111
 info <- "Swapping works with a buffer (no recalculation of activities)"
 basis("FeCHNOS+")
 oldb <- basis("O2", "PPM")
-# before version 1.1.3-57, this gave Error in value * (-log(10) * R * T) : non-numeric argument to binary operator
+# Before version 1.1.3-57, this gave Error in value * (-log(10) * R * T) : non-numeric argument to binary operator
 newb <- swap.basis("O2", "hydrogen")
-# note: logact includes "PPM" for O2 (old) and H2 (new)
+# NOTE: logact includes "PPM" for O2 (old) and H2 (new)
 expect_identical(oldb$logact, newb$logact, info = info)
 
 # 20200728 moved from swap-basis.Rd
 info <- "Swapping doesn't affect affinities of formation reactions of species"
-## swapping basis species while species are defined
+## Swapping basis species while species are defined
 ## and using numeric species indices
 basis("MgCHNOPS+") 
-# load some Mg-ATP species
+# Load some Mg-ATP species
 species(c("MgATP-2", "MgHATP-", "MgH2ATP", "Mg2ATP"))
-# swap in CO2(g) for CO2(aq)
+# Swap in CO2(g) for CO2(aq)
 swap.basis("CO2", "carbon dioxide")
 a1 <- affinity()
-# swap in CH4(g) for CO2(g)
+# Swap in CH4(g) for CO2(g)
 swap.basis("carbon dioxide", "methane")
 a2 <- affinity()
-# the equilibrium fugacity of CH4 is *very* low
-# swap in CO2(aq) for CH4(g)
+# The equilibrium fugacity of CH4 is *very* low
+# Swap in CO2(aq) for CH4(g)
 swap.basis("methane", "CO2")
 a3 <- affinity()
-# swapping the basis species didn't affect the affinities
+# Swapping the basis species didn't affect the affinities
 # of the formation reactions of the species, since
 # the chemical potentials of the elements were unchanged
 expect_equal(a1$values, a2$values, info = info)

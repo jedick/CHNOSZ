@@ -62,9 +62,9 @@ expect_equal(round(signif(liquid.calc$p, 5), 6), P.ref, tolerance = 1e-3, info =
 expect_equal(round(signif(vapor.calc$p, 5), 6), P.ref, tolerance = 1e-4, info = info)
 # Take H to 6 significant digits but not more than 3 decimals
 expect_equal(round(signif(liquid.calc$h, 6), 3), H.liquid.ref, tolerance = 1e-5, info = info)
-expect_equal(round(signif(vapor.calc$h, 6), 3), H.vapor.ref)  # spot on!
+expect_equal(round(signif(vapor.calc$h, 6), 3), H.vapor.ref, info = info)  # spot on!
 # Round S to 4 decimals
-expect_equal(round(liquid.calc$s, 4), S.liquid.ref)  # spot on!
+expect_equal(round(liquid.calc$s, 4), S.liquid.ref, info = info)  # spot on!
 expect_equal(round(vapor.calc$s, 4), S.vapor.ref, tolerance = 1e-4, info = info)
 # Round cv to 4 decimals
 expect_equal(round(liquid.calc$cv, 4), cv.liquid.ref, tolerance = 1e-4, info = info)

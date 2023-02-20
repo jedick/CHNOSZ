@@ -110,7 +110,7 @@ DEW_DV <- c(-45.26925983499276, -14.640599169742725,
 # (at P=5000 bar this depends on calculating drhodP -> beta -> dgdP -> dwdP -> V correctly, which is not tested above)
 expect_equal(c(R1$V, R2$V, R3$V), DEW_DV[1:6], tolerance = 1e-15, info = info)
 # TODO: why does DEW spreadsheet use V (O2,g) == 24.465?
-#expect_equal(c(R4$V, R5$V), DEW_DV[7:10])
+#expect_equal(c(R4$V, R5$V), DEW_DV[7:10], info = info)
 
 info <- "Calculated logK values are consistent with Extended Deep Earth Water paper"
 # Reference logK values are from Appendix D of Huang and Sverjensky, 2019 (doi:10.1016/j.gca.2019.03.027)

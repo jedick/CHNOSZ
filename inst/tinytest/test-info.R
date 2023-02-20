@@ -21,9 +21,9 @@ expect_message(CHNOSZ:::info.numeric(iMgSO4), "V of MgSO4\\(aq\\) is NA; set by 
 info <- "info.approx() produces expected messages"
 expect_message(CHNOSZ:::info.approx("lactic"), "is similar to lactic acid", info = info)
 expect_message(CHNOSZ:::info.approx("lactic acid"), "is ambiguous", info = info)
-# note though that info("lactic acid") finds a match because info.character is used first...
+# Note though that info("lactic acid") finds a match because info.character is used first...
 expect_equal(info("lactic acid"), grep("lactic acid", thermo()$OBIGT$name), info = info)
-# looking in optional databases 20190127
+# Looking in optional databases 20190127
 expect_message(info("dickite"), "is in an optional database", info = info)
 
 info <- "info() can be used for cr and aq descriptions of the same species and proteins"
@@ -32,7 +32,7 @@ expect_equal(thermo()$OBIGT$state[i2], c("cr", "aq"), info = info)
 expect_equal(info(i2)[1, ], info(i2[1]), check.attributes = FALSE, info = info)
 
 info <- "info() gives correct column names for species using the AD model"
-# add an aqueous species conforming to the AD model
+# Add an aqueous species conforming to the AD model
 iCO2 <- mod.OBIGT("CO2", model = "AD", a = -8.8321, b = 11.2684, c = -0.0850)
 params <- info(iCO2)
 expect_equal(params$a, -8.8321, info = info)

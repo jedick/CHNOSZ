@@ -4,14 +4,14 @@ if(!at_home()) exit_file("Skipping long test")
 # Load default settings for CHNOSZ
 reset()
 
-# testing revised water.lines 2017-06-04
+# Testing revised water.lines 2017-06-04
 
-# change to TRUE to show plots (for additional testing)
+# Change to TRUE to show plots (for additional testing)
 plot.it <- FALSE
-# change to FALSE to make base plots (for additional testing)
+# Change to FALSE to make base plots (for additional testing)
 limit.water <- TRUE
 
-# function to count the number of species on a diagram (not including NA fields)
+# Function to count the number of species on a diagram (not including NA fields)
 nspecies <- function(a) length(na.omit(unique(as.numeric(diagram(a, limit.water = limit.water, plot.it = plot.it, balance = 1)$predominant))))
 
 res <- 25

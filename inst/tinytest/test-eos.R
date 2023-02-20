@@ -100,7 +100,7 @@ for(i in 1:length(species)) {
   mod.OBIGT(species[i], omega = 0)
   Vn2 <- c(Vn2, subcrt(species[i], T = 25)$out[[1]]$V)
 }
-expect_equal(Vn1, Vn2)
+expect_equal(Vn1, Vn2, info = info)
 
 # Reference
 
