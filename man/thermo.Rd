@@ -109,13 +109,13 @@ The identifying characteristics of species and their standard molal thermodynami
       \code{ref2}  \tab character \tab Secondary source\cr
       \code{date}     \tab character \tab Date of data entry (\href{https://en.wikipedia.org/wiki/ISO_8601}{ISO 8601} extended format)\cr
       \code{model}    \tab character \tab Model for thermodynamic properties of the species\cr
-      \code{E_units}     \tab character \tab Units of energy: cal or J\cr
+      \code{E_units}     \tab character \tab Units of energy: \samp{J} for Joules or \samp{cal} for calories\cr
       \code{G}        \tab numeric   \tab Standard molal Gibbs energy of formation\cr
-      \tab \tab from the elements (cal mol\S{-1})\cr
+      \tab \tab from the elements (J|cal mol\S{-1})\cr
       \code{H}        \tab numeric   \tab Standard molal enthalpy of formation\cr
-      \tab \tab from the elements (cal mol\S{-1})\cr
-      \code{S}        \tab numeric   \tab Standard molal entropy (cal mol\S{-1} K\S{-1})\cr
-      \code{Cp}       \tab numeric   \tab Standard molal isobaric heat capacity (cal mol\S{-1} K\S{-1})\cr
+      \tab \tab from the elements (J|cal mol\S{-1})\cr
+      \code{S}        \tab numeric   \tab Standard molal entropy (J|cal mol\S{-1} K\S{-1})\cr
+      \code{Cp}       \tab numeric   \tab Standard molal isobaric heat capacity (J|cal mol\S{-1} K\S{-1})\cr
       \code{V}	      \tab numeric   \tab Standard molal volume (cm\S{3} mol\S{-1})
     }
 
@@ -131,7 +131,8 @@ The meanings of the remaining columns depend on the model for each species.
 The names of these columns are compounded from those of the parameters in the HKF equations of state and general heat capacity equation; for example, column 13 is named \code{a1.a}.
 Scaling of the values by integral powers of ten (i.e., orders of magnitude; OOM) for the HKF parameters (this also includes the DEW model) is based on the usual (but by no means universal) convention in the literature.
 
-Columns 15-22 for aqueous species (parameters in the revised HKF equations of state):
+Columns 15-22 for aqueous species (parameters in the revised HKF equations of state).
+NOTE: Most older papers use units of calories for these parameters, so \samp{cal} is listed here; the actual units for each species are set in the \code{E_units} column.
 
     \tabular{lll}{
       \code{a1} \tab numeric \tab \a1 * 10 (cal mol\S{-1} bar\S{-1})\cr
@@ -145,15 +146,15 @@ Columns 15-22 for aqueous species (parameters in the revised HKF equations of st
     }
 
 Columns 15-22 for crystalline, gas and liquid species (\eqn{Cp} = \eqn{a} + \eqn{bT} + \eqn{cT}\S{-2} + \eqn{dT}\S{-0.5} + \eqn{eT}\S{2} + \eqn{fT}\S{lambda}).
-NOTE: OOM scaling for heat capacity coefficients of CGL species has been removed as of CHNOSZ version 2.0.0.
+NOTE: As of CHNOSZ 2.0.0, OOM scaling for heat capacity coefficients has been removed, and new entries use units of Joules unless indicated by setting \code{E_units} to \samp{cal}.
 
     \tabular{lll}{
-      \code{a} \tab numeric \tab \eqn{a} (cal K\S{-1} mol\S{-1})\cr
-      \code{b} \tab numeric \tab \eqn{b} (cal K\S{-2} mol\S{-1})\cr
-      \code{c} \tab numeric \tab \eqn{c} (cal K mol\S{-1})\cr
-      \code{d} \tab numeric \tab \eqn{d} (cal K\S{-0.5} mol\S{-1})\cr
-      \code{e} \tab numeric \tab \eqn{e} (cal K\S{-3} mol\S{-1})\cr
-      \code{f} \tab numeric \tab \eqn{f} (cal K\S{-lambda-1} mol\S{-1})\cr
+      \code{a} \tab numeric \tab \eqn{a} (J K\S{-1} mol\S{-1})\cr
+      \code{b} \tab numeric \tab \eqn{b} (J K\S{-2} mol\S{-1})\cr
+      \code{c} \tab numeric \tab \eqn{c} (J K mol\S{-1})\cr
+      \code{d} \tab numeric \tab \eqn{d} (J K\S{-0.5} mol\S{-1})\cr
+      \code{e} \tab numeric \tab \eqn{e} (J K\S{-3} mol\S{-1})\cr
+      \code{f} \tab numeric \tab \eqn{f} (J K\S{-lambda-1} mol\S{-1})\cr
       \code{lambda} \tab numeric \tab \lambda (exponent on the \eqn{f} term)\cr
       \code{T} \tab numeric \tab Temperature of phase transition or upper\cr
       \tab \tab temperature limit of validity of extrapolation (K)

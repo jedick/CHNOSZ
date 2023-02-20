@@ -1,13 +1,13 @@
 # CHNOSZ/util.data.R
-# check entries in the thermodynamic database
+# Check entries in the thermodynamic database
 
-## if this file is interactively sourced, the following are also needed to provide unexported functions:
+## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("util.formula.R")
 #source("util.data.R")
 #source("util.character.R")
 
 thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
-  ## return references for thermodynamic data.
+  ## Return references for thermodynamic data.
   ## 20110615 browse.refs() first version
   ## 20170212 thermo.refs() remove browsing (except for table of all sources)
   # 'key' can be
@@ -15,36 +15,36 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
   # character: return data for each listed source key
   # numeric: open one or two web pages for each listed species
   # list: the output of subcrt()
-  ## first retrieve the sources table
+  ## First retrieve the sources table
   thermo <- get("thermo", CHNOSZ)
   x <- thermo$refs[order(thermo$refs$note), ]
-  ## show a table in the browser if 'key' is NULL 
+  ## Show a table in the browser if 'key' is NULL 
   if(is.null(key)) {
-    # create the html links
+    # Create the html links
     cite <- x$citation
     x$citation <- sprintf("<a href='%s' target='_blank'>%s</a>", x$URL, cite)
     notlinked <- x$URL=="" | is.na(x$URL)
     x$citation[notlinked] <- cite[notlinked]
-    # remove the last (URL) component
+    # Remove the last (URL) component
     #x$URL <- NULL
     x <- x[1:5]
-    # count the number of times each source is cited in thermo()$OBIGT
+    # Count the number of times each source is cited in thermo()$OBIGT
     # e.g. if key is "Kel60" we match "Kel60 [S92]" but not "Kel60.1 [S92]"
     # http://stackoverflow.com/questions/6713310/how-to-specify-space-or-end-of-string-and-space-or-start-of-string
-    # we also have to escape keys with "+" signs
+    # We also have to escape keys with "+" signs
     ns1 <- sapply(x$key, function(x) sum(grepl(gsub("+", "\\+", paste0(x, "($|\\s)"), fixed=TRUE), thermo$OBIGT$ref1)) )
     ns2 <- sapply(x$key, function(x) sum(grepl(gsub("+", "\\+", paste0(x, "($|\\s)"), fixed=TRUE), thermo$OBIGT$ref2)) )
     number <- ns1 + ns2
     number[number==0] <- ""
-    # now that we're using the sortTable() from w3schools.com, numbers are sorted like text
-    # add leading zeros to make the numbers sortable 20170317
+    # Now that we're using the sortTable() from w3schools.com, numbers are sorted like text
+    # Add leading zeros to make the numbers sortable 20170317
     # (the zeros disappear somewhere in the rendering of the page)
     number <- formatC(number, width = 3, format = "d", flag = "0")
     # append the counts to the table to be shown
     x <- c(list(number=number), x)
-    # title to display for web page
+    # Title to display for web page
     title <- "References for thermodynamic data in CHNOSZ"
-    ### the following is adapted from print.findFn in package 'sos'
+    ### The following is adapted from print.findFn in package 'sos'
     f0 <- tempfile()
     File <- paste(f0, ".html", sep="")
     #Dir <- dirname(File)
@@ -55,7 +55,7 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
     on.exit(close(con))
     .cat <- function(...)
       cat(..., "\n", sep = "", file = con, append = TRUE)
-    ## start
+    ## Start
     cat('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
                 "http://www.w3.org/TR/html4/strict.dtd">\n', file = con)
     .cat("<html>")
@@ -103,35 +103,35 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
 	  }
 </script>')
     .cat("</head>")
-    ### boilerplate text
+    ### Boilerplate text
     .cat("<body>")
     .cat(paste0('<h1>References for thermodynamic data in <a href="http://chnosz.net"><font color="red">CHNOSZ</font></a> ',
                packageDescription("CHNOSZ")$Version), " (", packageDescription("CHNOSZ")$Date, ')</h1>')
     .cat("<h3>Click on a column header to sort, or on a citation to open the URL in new window.</h3>")
     .cat("<h4>Column 'number' gives the number of times each reference appears in thermo()$OBIGT.</h4>")
     .cat('<p>See also the vignette <a href="http://chnosz.net/vignettes/OBIGT.html">OBIGT thermodynamic database</a>.</p>')
-    ### start table and headers
+    ### Start table and headers
     .cat("<table id='thermorefs' border='1'>")
     .cat("<tr>")
     #.cat(sprintf("  <th>%s</th>\n</tr>",
     #             paste(names(x), collapse = "</th>\n  <th>")))
     for(i in 1:length(x)) .cat(sprintf('  <th onclick="sortTable(%s)">%s</th>', i-1, names(x)[i]))
     .cat("</tr>")
-    ### now preparing the body of the table
+    ### Now preparing the body of the table
     paste.list <- c(lapply(x, as.character), sep = "</td>\n  <td>")
     tbody.list <- do.call("paste", paste.list)
     tbody <- sprintf("<tr>\n  <td>%s</td>\n</tr>", tbody.list)
     tbody <- sub("<td><a", "<td class=link><a", tbody, useBytes = TRUE)
     .cat(tbody)
-    ### finish it!
+    ### Finish it!
     .cat("</table></body></html>")
-    ### end adaptation from print.findFn
-    # show table in browser
+    ### End adaptation from print.findFn
+    # Show table in browser
     browseURL(File)
     cat("thermo.refs: table of references is shown in browser\n")
   } else if(is.character(key)) {
-    # return citation information for the given source(s)
-    # we omit the [S92] in "HDNB78 [S92]" etc.
+    # Return citation information for the given source(s)
+    # We omit the [S92] in "HDNB78 [S92]" etc.
     key <- gsub("\ .*", "", key)
     ix <- match(key, x$key)
     ina <- is.na(ix)
@@ -139,10 +139,10 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
       paste(key[ina], collapse = ","), "not found"))
     return(x[ix, ])
   } else if(is.numeric(key)) {
-    # get the source keys for the indicated species
+    # Get the source keys for the indicated species
     sinfo <- suppressMessages(info(key, check.it = FALSE))
     if(keep.duplicates) {
-      # output a single reference for each species 20180927
+      # Output a single reference for each species 20180927
       # (including duplicated references, and not including ref2)
       mysources <- sinfo$ref1
     } else {
@@ -165,22 +165,22 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
   # or NA if the difference is within the tolerance.
   # 20110808 jmd
   thermo <- get("thermo", CHNOSZ)
-  # get calculated value based on EOS
+  # Get calculated value based on EOS
   Theta <- 228  # K
   if(identical(state, "aq")) {
     if(prop=="Cp") {
-      ## value of X consistent with IAPWS95
+      ## Value of X consistent with IAPWS95
       #X <- -2.773788E-7
-      # we use the value of X consistent with SUPCRT
+      # We use the value of X consistent with SUPCRT
       X <- -3.055586E-7
       refval <- eos$Cp
       calcval <- eos$c1 + eos$c2/(298.15-Theta)^2 + eos$omega*298.15*X
       tol <- thermo$opt$Cp.tol
       units <- paste(eos$E_units, "K-1 mol-1")
     } else if(prop=="V") {
-      ## value of Q consistent with IAPWS95
+      ## Value of Q consistent with IAPWS95
       #Q <- 0.00002483137
-      # value of Q consistent with SUPCRT92
+      # Value of Q consistent with SUPCRT92
       Q <- 0.00002775729
       refval <- eos$V
       calcval <- 41.84*eos$a1 + 41.84*eos$a2/2601 + 
@@ -191,7 +191,7 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
       units <- "cm3 mol-1"
     }
   } else {
-    # all other states
+    # All other states
     if(prop=="Cp") {
       refval <- eos$Cp
       Tr <- 298.15
@@ -200,12 +200,11 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
       units <- paste(eos$E_units, "K-1 mol-1")
     }
   }
-  # calculate the difference
+  # Calculate the difference
   diff <- calcval - refval
   if(ret.diff) return(diff)
   else {
-    # return the calculated value
-    # if the difference is higher than tol
+    # Return the calculated value if the difference is greater than tol
     if(!is.na(calcval)) {
       if(!is.na(refval)) {
         if(abs(diff) > tol) {
@@ -216,17 +215,17 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
       } else return(calcval)
     }
   }
-  # return NA in most cases
+  # Return NA in most cases
   return(NA)
 }
 
 checkGHS <- function(ghs, ret.diff=FALSE) {
-  # compare calculated G from H and S with reference (tabulated) values
-  # print message and return the calculated value if tolerance is exceeded
+  # Compare calculated G from H and S with reference (tabulated) values
+  # Print message and return the calculated value if tolerance is exceeded
   # or NA if the difference is within the tolerance
   # 20110808 jmd
   thermo <- get("thermo", CHNOSZ)
-  # get calculated value based on H and S
+  # Get calculated value based on H and S
   Se <- entropy(as.character(ghs$formula))
   iscalories <- ghs$E_units == "cal"
   if(any(iscalories)) Se[iscalories] <- convert(Se[iscalories], "cal")
@@ -235,8 +234,8 @@ checkGHS <- function(ghs, ret.diff=FALSE) {
   S <- ghs$S
   Tr <- 298.15
   calcval <- DH - Tr * (S - Se)
-  # now on to the comparison
-  # calculate the difference
+  # Now on to the comparison
+  # Calculate the difference
   diff <- calcval - refval
   if(ret.diff) return(diff)
   else if(!is.na(calcval)) {
@@ -249,21 +248,21 @@ checkGHS <- function(ghs, ret.diff=FALSE) {
       }
     } else return(calcval)
   } else {
-    # calculating a value of G failed, perhaps because of missing elements
+    # Calculating a value of G failed, perhaps because of missing elements
     return(NULL)
   }
-  # return NA in most cases
+  # Return NA in most cases
   return(NA)
 }
 
 check.OBIGT <- function() {
-  # function to check self-consistency between
+  # Function to check self-consistency between
   # values of Cp and V vs. EOS parameters
   # and among G, H, S values
   # 20110808 jmd replaces 'check=TRUE' argument of info()
   checkfun <- function(what) {
     message(paste("check.OBIGT: checking", what))
-    # looking at thermo$OBIGT
+    # Looking at thermo$OBIGT
     if(what=="OBIGT") tdata <- get("thermo", CHNOSZ)$OBIGT
     else if(what=="DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW.csv", package = "CHNOSZ"), as.is = TRUE)
     else if(what=="SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package = "CHNOSZ"), as.is = TRUE)
@@ -272,9 +271,9 @@ check.OBIGT <- function() {
     else if(what=="AD") tdata <- read.csv(system.file("extdata/OBIGT/AD.csv", package = "CHNOSZ"), as.is = TRUE)
     else if(what=="GEMSFIT") tdata <- read.csv(system.file("extdata/OBIGT/GEMSFIT.csv", package = "CHNOSZ"), as.is = TRUE)
     ntot <- nrow(tdata)
-    # where to keep the results
+    # Where to keep the results
     DCp <- DV <- DG <- rep(NA,ntot)
-    # first get the aqueous species
+    # First get the aqueous species
     isaq <- tdata$state=="aq"
     if(any(isaq)) {
       eos.aq <- OBIGT2eos(tdata[isaq,], "aq")
@@ -282,12 +281,12 @@ check.OBIGT <- function() {
       DV.aq <- checkEOS(eos.aq, "aq", "V", ret.diff = TRUE)
       cat(paste("check.OBIGT: GHS for", sum(isaq), "aq species in", what, "\n"))
       DG.aq <- checkGHS(eos.aq, ret.diff = TRUE)
-      # store the results
+      # Store the results
       DCp[isaq] <- DCp.aq
       DV[isaq] <- DV.aq
       DG[isaq] <- DG.aq
     }
-    # then other species, if they are present
+    # Then other species, if they are present
     if(sum(!isaq) > 0) {
       eos.cgl <- OBIGT2eos(tdata[!isaq,], "cgl")
       DCp.cgl <- checkEOS(eos.cgl, "cgl", "Cp", ret.diff = TRUE)
@@ -296,30 +295,30 @@ check.OBIGT <- function() {
       DCp[!isaq] <- DCp.cgl
       DG[!isaq] <- DG.cgl
     }
-    # put it all together
+    # Put it all together
     out <- data.frame(table = what, ispecies = 1:ntot, name = tdata$name, state = tdata$state, E_units = tdata$E_units, DCp = DCp, DV = DV, DG = DG)
     return(out)
   }
-  # check default database (OBIGT)
+  # Check default database (OBIGT)
   out <- checkfun("OBIGT")
-  # check optional data
+  # Check optional data
   out <- rbind(out, checkfun("DEW"))
   out <- rbind(out, checkfun("SLOP98"))
   out <- rbind(out, checkfun("SUPCRT92"))
   out <- rbind(out, checkfun("AS04"))
   out <- rbind(out, checkfun("GEMSFIT"))
-  # set differences within a tolerance to NA
+  # Set differences within a tolerance to NA
   out$DCp[abs(out$DCp) < 1] <- NA
   out$DV[abs(out$DV) < 1] <- NA
   out$DG[abs(out$DG) < 500] <- NA
-  # take out species where all reported differences are NA
+  # Take out species where all reported differences are NA
   ina <- is.na(out$DCp) & is.na(out$DV) & is.na(out$DG)
   out <- out[!ina,]
-  # round the values
+  # Round the values
   out$DCp <- round(out$DCp,2)
   out$DV <- round(out$DV,2)
   out$DG <- round(out$DG)
-  # return the results
+  # Return the results
   return(out)
 }
 
