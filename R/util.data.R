@@ -159,15 +159,16 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
   }
 }
 
-checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
-  # Compare calculated properties from equation-of-state parameters with reference (tabulated) values.
+checkEOS <- function(eos, model, prop, ret.diff = FALSE) {
+  # Compare calculated properties from thermodynamic parameters with reference (tabulated) values.
   # Print message and return the calculated value if tolerance is exceeded
   # or NA if the difference is within the tolerance.
   # 20110808 jmd
   thermo <- get("thermo", CHNOSZ)
   # Get calculated value based on EOS
   Theta <- 228  # K
-  if(identical(state, "aq")) {
+  if(model %in% c("HKF", "DEW")) {
+    # Run checks for aqueous species
     if(prop=="Cp") {
       ## Value of X consistent with IAPWS95
       #X <- -2.773788E-7
@@ -191,7 +192,7 @@ checkEOS <- function(eos, state, prop, ret.diff=FALSE) {
       units <- "cm3 mol-1"
     }
   } else {
-    # All other states
+    # Run checks for non-aqueous species (i.e., CGL)
     if(prop=="Cp") {
       refval <- eos$Cp
       Tr <- 298.15
@@ -273,27 +274,27 @@ check.OBIGT <- function() {
     ntot <- nrow(tdata)
     # Where to keep the results
     DCp <- DV <- DG <- rep(NA,ntot)
-    # First get the aqueous species
-    isaq <- tdata$state=="aq"
-    if(any(isaq)) {
-      eos.aq <- OBIGT2eos(tdata[isaq,], "aq")
-      DCp.aq <- checkEOS(eos.aq, "aq", "Cp", ret.diff = TRUE)
-      DV.aq <- checkEOS(eos.aq, "aq", "V", ret.diff = TRUE)
-      cat(paste("check.OBIGT: GHS for", sum(isaq), "aq species in", what, "\n"))
-      DG.aq <- checkGHS(eos.aq, ret.diff = TRUE)
+    # First get the species that use HKF equations
+    isHKF <- tdata$model %in% c("HKF", "DEW")
+    if(any(isHKF)) {
+      eos.HKF <- OBIGT2eos(tdata[isHKF,], "HKF")
+      DCp.HKF <- checkEOS(eos.HKF, "HKF", "Cp", ret.diff = TRUE)
+      DV.HKF <- checkEOS(eos.HKF, "HKF", "V", ret.diff = TRUE)
+      cat(paste("check.OBIGT: GHS for", sum(isHKF), "species with HKF model in", what, "\n"))
+      DG.HKF <- checkGHS(eos.HKF, ret.diff = TRUE)
       # Store the results
-      DCp[isaq] <- DCp.aq
-      DV[isaq] <- DV.aq
-      DG[isaq] <- DG.aq
+      DCp[isHKF] <- DCp.HKF
+      DV[isHKF] <- DV.HKF
+      DG[isHKF] <- DG.HKF
     }
     # Then other species, if they are present
-    if(sum(!isaq) > 0) {
-      eos.cgl <- OBIGT2eos(tdata[!isaq,], "cgl")
-      DCp.cgl <- checkEOS(eos.cgl, "cgl", "Cp", ret.diff = TRUE)
-      cat(paste("check.OBIGT: GHS for", sum(!isaq), "cr,gas,liq species in", what, "\n"))
+    if(sum(!isHKF) > 0) {
+      eos.cgl <- OBIGT2eos(tdata[!isHKF,], "cgl")
+      DCp.cgl <- checkEOS(eos.cgl, "CGL", "Cp", ret.diff = TRUE)
+      cat(paste("check.OBIGT: GHS for", sum(!isHKF), "cr,gas,liq species in", what, "\n"))
       DG.cgl <- checkGHS(eos.cgl, ret.diff = TRUE)
-      DCp[!isaq] <- DCp.cgl
-      DG[!isaq] <- DG.cgl
+      DCp[!isHKF] <- DCp.cgl
+      DG[!isHKF] <- DG.cgl
     }
     # Put it all together
     out <- data.frame(table = what, ispecies = 1:ntot, name = tdata$name, state = tdata$state, E_units = tdata$E_units, DCp = DCp, DV = DV, DG = DG)

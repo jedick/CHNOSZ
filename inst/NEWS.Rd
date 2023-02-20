@@ -25,22 +25,21 @@
 
       \item A \code{model} column has been added to the OBIGT thermodynamic
       database. This specifies the model for calculating standard thermodynamic
-      properties and will eventually supersede the heuristics for determining
-      the model based on values in other columns. Currently used models are
-      \samp{H2O} (water), \samp{HKF} (revised Helgeson-Kirkham-Flowers),
-      \samp{CGL} (heat capacity equation for crystalline, gas, and liquid
-      species), \samp{Berman} (Berman equations), \samp{AD} (Akinfiev-Diamond),
-      and \samp{DEW} (Deep Earth Water model, a variation of HKF). All OBIGT
-      data files that can be read using \code{add.OBIGT()} must have this
-      column; there is no back-compatibility support for data files in the old
-      format.
+      properties. Currently available models are \samp{H2O} (water), \samp{HKF}
+      (revised Helgeson-Kirkham-Flowers model for aqueous species), \samp{CGL}
+      (heat capacity equation for crystalline, gas, and liquid species),
+      \samp{Berman} (Berman model for minerals), \samp{AD} (Akinfiev-Diamond
+      model for aqueous species), and \samp{DEW} (Deep Earth Water model, a
+      variation of HKF). All OBIGT data files that can be read using
+      \code{add.OBIGT()} must have this column; there is no back-compatibility
+      support for data files in the old format.
 
       \item Backward compatibility for OBIGT data files without an
       \code{E_units} column has been removed.
 
       \item Order-of-magnitude (OOM) scaling of heat capacity coefficients for
       the CGL model in OBIGT data files has been removed. OOM scaling of HKF
-      (including DEW) model parameters is still in effect.
+      and DEW model parameters is still in place.
 
       \item Change license from GPL (>= 2) to GPL-3.
 

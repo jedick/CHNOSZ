@@ -116,7 +116,17 @@ mod.OBIGT("test_cal2", formula = "C0", state = "cr", E_units = "cal", a = 10, b 
 mod.OBIGT("test_J2", formula = "C0", state = "cr", E_units = "J", a = 41.84, b = 418.4, f = 4.184, lambda = -1)
 expect_equal(subcrt("test_cal2", T = 25)$out[[1]]$Cp, subcrt("test_J2", T = 25)$out[[1]]$Cp, info = info)
 
-# reference
+info <- "We can define an aqueous species with CGL model"
+# Test added 20230220
+icr <- mod.OBIGT("fake_cr", formula = "Na2Cl2", state = "cr", model = "CGL", G = -1000, H = -1000, S = 10, Cp = 10, V = 10)
+iaq <- mod.OBIGT("fake_aq", formula = "Na2Cl2", state = "aq", model = "CGL", G = -1000, H = -1000, S = 10, Cp = 10, V = 10)
+# Make sure info() runs (message is from checkEOS())
+expect_message(info(iaq), "differs", info = info)
+expect_silent(info(iaq), info = info)
+# Make sure subcrt() runs
+expect_equal(subcrt(iaq)$G, subcrt(icr)$G)
+
+# Reference
 
 # Richard, L. and Helgeson, H. C. (1998) Calculation of the thermodynamic properties at elevated 
 #   temperatures and pressures of saturated and aromatic high molecular weight solid and liquid 

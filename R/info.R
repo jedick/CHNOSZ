@@ -229,11 +229,11 @@ info.numeric <- function(ispecies, check.it=TRUE) {
 
   # Perform consistency checks for GHS and EOS parameters if check.it = TRUE
   # Don't do it for the AD species 20190219
-  if(check.it & !"xi" %in% colnames(this)) {
+  if(check.it & this$model != "AD") {
     # Check GHS if they are all present
     if(sum(naGHS)==0) calcG <- checkGHS(this)
     # Check tabulated heat capacities against EOS parameters
-    calcCp <- checkEOS(this, this$state, "Cp")
+    calcCp <- checkEOS(this, this$model, "Cp")
     # fill in NA heat capacity
     if(!is.na(calcCp) & is.na(this$Cp)) {
       message("info.numeric: Cp of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcCp, 2), " ", this$E_units, " K-1 mol-1")
@@ -243,9 +243,9 @@ info.numeric <- function(ispecies, check.it=TRUE) {
       calcCp <- Berman(this$name)$Cp
       this$Cp <- calcCp
     }
-    # check tabulated volumes - only for aq (HKF equation)
-    if(identical(this$state, "aq")) {
-      calcV <- checkEOS(this, this$state, "V")
+    # check tabulated volumes - only for HKF model (aq species)
+    if(this$model %in% c("HKF", "DEW")) {
+      calcV <- checkEOS(this, this$model, "V")
       # fill in NA volume
       if(!is.na(calcV) & is.na(this$V)) {
         message("info.numeric: V of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcV, 2), " cm3 mol-1")

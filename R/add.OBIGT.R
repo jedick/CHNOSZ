@@ -130,9 +130,8 @@ add.OBIGT <- function(file, species=NULL, force=TRUE) {
     else stop(paste("file", file, "doesn't have", paste(species[ina], collapse=", ")))
   }
   id2 <- paste(to2$name,to2$state)
-  # Check if the data is compatible with thermo$OBIGT
-  tr <- tryCatch(rbind(to1, to2), error = identity)
-  if(inherits(tr, "error")) stop(paste(file, "is not compatible with thermo$OBIGT data frame."))
+  # Check if the data table is compatible with thermo$OBIGT
+  if(!identical(colnames(to1), colnames(to2))) stop(paste(file, "does not have same column names as thermo$OBIGT data frame."))
   # Match the new species to existing ones
   does.exist <- id2 %in% id1
   ispecies.exist <- na.omit(match(id2, id1))

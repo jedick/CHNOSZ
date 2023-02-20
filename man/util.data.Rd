@@ -14,8 +14,8 @@ Check self consistency of individual entries in database.
 }
 
 \usage{
-  thermo.refs(key=NULL, keep.duplicates=FALSE)
-  checkEOS(eos, state, prop, ret.diff = FALSE)
+  thermo.refs(key = NULL, keep.duplicates = FALSE)
+  checkEOS(eos, model, prop, ret.diff = FALSE)
   checkGHS(ghs, ret.diff = FALSE)
   check.OBIGT()
   dumpdata(file)
@@ -27,12 +27,13 @@ Check self consistency of individual entries in database.
   \item{key}{character, numeric, or list; bibliographic reference key(s)}
   \item{keep.duplicates}{logical, keep duplicated references?}
   \item{eos}{dataframe, equations-of-state parameters in the format of \code{thermo()$OBIGT}}
-  \item{state}{character, physical state of species}
+  \item{model}{character, thermodynamic model (see \code{\link{thermo}})}
   \item{prop}{character, property of interest (\samp{Cp} or \samp{V})}
   \item{ret.diff}{logical, return the difference between calculated and tabulated values?}
   \item{ghs}{dataframe, containing G, H and S, in the format of \code{thermo()$OBIGT}}
   \item{file}{character, path to a file}
   \item{compound}{character, name of compound(s) in group additivity calculation}
+  \item{state}{character, physical state of species}
 }
 
 \details{
@@ -45,10 +46,9 @@ Only unique references are returned, unless \code{keep.duplicates} is TRUE.
 In that case, a single reference for each species is returned, ignoring anything in \code{thermo()$OBIGT$ref2}.
 
 \code{checkEOS} compares heat capacity and volume calculated from equation-of-state parameters with reference (tabulated) values at 25 \degC and 1 bar and prints a message and returns the calculated value if tolerance is exceeded.
-The Helgeson-Kirkham-Flowers equations of state parameters are in \code{eos}, which is a data frame with columns (and column names) in the same format as \code{\link{thermo}$OBIGT}.
-The \code{prop}erty can be one of \samp{Cp} or \code{V}.
-The code only distinguishes between \code{state}s of \samp{aq} and all others.
-The default tolerances, given in \code{thermo()$opt$Cp.tol} and \code{thermo()$opt$V.tol}, are 1 cal/K.mol for Cp and 1 cm3/mol for V.
+The thermodynamic parameters should be provided in \code{eos}, which is a data frame with columns (and column names) in the same format as \code{\link{thermo}$OBIGT}.
+The \code{prop}erty can be one of \samp{Cp} or \samp{V}.
+The default tolerances, given in \code{thermo()$opt$Cp.tol} and \code{thermo()$opt$V.tol}, are 1 J/K.mol or 1 cal/K.mol for Cp and 1 cm3/mol for V.
 If \code{ret.diff} is TRUE, the differences are returned irrespective of their values, and no messages are printed.
 
 \code{checkGHS} compares G (standard molal Gibbs energy of formation from the elements) calculated from H (standard molal enthalpy of formation) and S (standard molal entropy) with reference (tabulated) values of G at 25 \degC and 1 bar.

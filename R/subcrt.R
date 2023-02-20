@@ -195,11 +195,10 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     ispecies = iphases, model = model, stringsAsFactors = FALSE)
   # Make the rownames readable ... but they have to be unique
   if(length(unique(iphases))==length(iphases)) rownames(reaction) <- as.character(iphases)
-  # Which are aqueous species
-  isaq <- reaction$state == "aq"
-  # Save this test for debugging 20220920
-  isaq.model <- toupper(reaction$model) %in% c("HKF", "AD", "DEW")
-  stopifnot(all(isaq == isaq.model))
+  # Which species use models for aqueous species
+  # This breaks things if we have state = "aq" and model = "CGL" 20230220
+  #isaq <- reaction$state == "aq"
+  isaq <- toupper(reaction$model) %in% c("HKF", "AD", "DEW")
 
   # Produce message about conditions
   if(length(species)==1 & convert==FALSE) {
@@ -337,9 +336,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     H2O.PT <- water(c("rho", eosprop), T = T, P = P)
   }
 
-  # Crystalline, gas, liquid (except water) species
-  cglstates <- c("liq", "cr", "gas", "cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9")
-  iscgl <- reaction$state %in% cglstates & reaction$name != "water"
+  # Crystalline, gas, or liquid (except water) species
+  iscgl <- reaction$model %in% c("CGL", "Berman")
 
   if(TRUE %in% iscgl) {
     param <- OBIGT2eos(thermo$OBIGT[iphases[iscgl],], "cgl", fixGHS = TRUE, toJoules = TRUE)
