@@ -1,5 +1,5 @@
 # CHNOSZ/subcrt.R
-# calculate standard molal thermodynamic propertes
+# Calculate standard molal thermodynamic propertes
 # 20060817 jmd
 
 ## If this file is interactively sourced, the following are also needed to provide unexported functions:

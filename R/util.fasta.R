@@ -1,10 +1,10 @@
 # CHNOSZ/util.fasta.R
-# read and manipulate FASTA sequence files
+# Read and manipulate FASTA sequence files
 
 read.fasta <- function(file, iseq=NULL, ret="count", lines=NULL, ihead=NULL,
   start=NULL, stop=NULL, type="protein", id=NULL) {
-  # read sequences from a fasta file
-  # some of the following code was adapted from 
+  # Read sequences from a fasta file
+  # Some of the following code was adapted from 
   # read.fasta in package seqinR
   # value of 'iseq' is what sequences to read (default is all)
   # value of 'ret' determines format of return value:
@@ -15,7 +15,7 @@ read.fasta <- function(file, iseq=NULL, ret="count", lines=NULL, ihead=NULL,
   # value of 'id' is used for 'protein' in output table,
   #   otherwise ID is parsed from FASTA header (can take a while)
   
-  # check if the file is in an archive (https://github.com/jimhester/archive)
+  # Check if the file is in an archive (https://github.com/jimhester/archive)
   if(inherits(file, "archive_read")) {
     is.archive <- TRUE
     filebase <- gsub("]", "", basename(summary(file)$description))
@@ -27,11 +27,11 @@ read.fasta <- function(file, iseq=NULL, ret="count", lines=NULL, ihead=NULL,
     message("read.fasta: reading ", filebase, " ... ", appendLF=FALSE)
     is.nix <- Sys.info()[[1]]=="Linux"
     if(is.archive) {
-      # we can't use scan here?
+      # We can't use scan here?
       lines <- readLines(file)
     } else if(is.nix) {
-      # retrieve contents using system command (seems slightly faster even than scan())
-      # figure out whether to use 'cat', 'zcat' or 'xzcat'
+      # Retrieve contents using system command (seems slightly faster even than scan())
+      # Figure out whether to use 'cat', 'zcat' or 'xzcat'
       suffix <- substr(file,nchar(file)-2,nchar(file))
       if(suffix==".gz") mycat <- "zcat"
       else if(suffix==".xz") mycat <- "xzcat"
@@ -44,38 +44,38 @@ read.fasta <- function(file, iseq=NULL, ret="count", lines=NULL, ihead=NULL,
   if(is.null(ihead)) ihead <- which(substr(lines,1,1)==">")
   message(length(ihead), " sequences")
   linefun <- function(i1,i2) lines[i1:i2]
-  # identify the lines that begin and end each sequence
+  # Identify the lines that begin and end each sequence
   begin <- ihead + 1
   end <- ihead - 1
   end <- c(end[-1], nlines)
-  # use all or selected sequences
+  # Use all or selected sequences
   if(is.null(iseq)) iseq <- seq_along(begin)
-  # just return the lines from the file
+  # Just return the lines from the file
   if(ret=="fas") {
     iline <- numeric()
     for(i in iseq) iline <- c(iline,(begin[i]-1):end[i])
     return(lines[iline])
   }
-  # get each sequence from the begin to end lines
+  # Get each sequence from the begin to end lines
   seqfun <- function(i) paste(linefun(begin[i],end[i]),collapse="")
   sequences <- lapply(iseq, seqfun)
-  # organism name is from file name
+  # Organism name is from file name
   # (basename minus extension)
   bnf <- strsplit(filebase,split=".",fixed=TRUE)[[1]][1]
   organism <- bnf
-  # protein/gene name is from header line for entry
+  # Protein/gene name is from header line for entry
   # (strip the ">" and go to the first space)
   missid <- missing(id)
   if(is.null(id)) id <- as.character(lapply(iseq, function(j) {
-    # get the text of the line
+    # Get the text of the line
     f1 <- linefun(ihead[j],ihead[j])
-    # stop if the first character is not ">"
+    # Stop if the first character is not ">"
     # or the first two charaters are "> "
     if(substr(f1,1,1)!=">" | length(grep("^> ",f1)>0))
       stop(paste("file",filebase,"line",j,"doesn't begin with FASTA header '>'."))
-    # discard the leading '>'
+    # Discard the leading '>'
     f2 <- substr(f1, 2, nchar(f1))
-    # keep everything before the first space
+    # Keep everything before the first space
     return(strsplit(f2," ")[[1]][1])
   } ))
   if(ret=="count") {
@@ -84,10 +84,10 @@ read.fasta <- function(file, iseq=NULL, ret="count", lines=NULL, ihead=NULL,
     chains <- 1
     if(type=="protein") {
       colnames(counts) <- aminoacids(3)
-      # 20090507 made stringsAsFactors FALSE
+      # 20090507 Made stringsAsFactors FALSE
       out <- cbind(data.frame(protein=id, organism=organism,
         ref=ref, abbrv=abbrv, chains=chains, stringsAsFactors=FALSE), counts)
-      # 20170117 extra processing for files from UniProt
+      # 20170117 Extra processing for files from UniProt
       isUniProt <- grepl("\\|......\\|.*_", out$protein[1])
       if(isUniProt & missid) {
         p1 <- sapply(strsplit(out$protein, "\\|"), "[", 1)
@@ -106,12 +106,12 @@ read.fasta <- function(file, iseq=NULL, ret="count", lines=NULL, ihead=NULL,
 }
 
 uniprot.aa <- function(protein, start=NULL, stop=NULL) {
-  # download protein sequence information from UniProt
+  # Download protein sequence information from UniProt
   iprotein <- numeric()
-  # construct the initial URL
+  # Construct the initial URL
   proteinURL <- paste("https://www.uniprot.org/uniprot/", protein, sep="")
   message("uniprot.aa: trying ", proteinURL, " ...", appendLF=FALSE)
-  # try loading the URL, hiding any warnings
+  # Try loading the URL, hiding any warnings
   oldopt <- options(warn=-1)
   URLstuff <- try(readLines(proteinURL),TRUE)
   options(oldopt)
@@ -119,21 +119,21 @@ uniprot.aa <- function(protein, start=NULL, stop=NULL) {
     message(" ::: FAILED :::")
     return(NA)
   }
-  # 20091102: look for a link to a fasta file
+  # 20091102: Look for a link to a fasta file
   link <- grep("/uniprot/.*fasta", URLstuff)
   if(length(link) > 0) linkline <- URLstuff[[link[1]]]
   else {
     message(" ::: FAILED :::")
     return(NA)
   }
-  # extract accession number from the link
+  # Extract accession number from the link
   linkhead <- strsplit(linkline, ".fasta", fixed=TRUE)[[1]][1]
   accession.number <- tail(strsplit(linkhead, "/uniprot/", fixed=TRUE)[[1]], 1)
   message(" accession ", accession.number, " ...")
-  # now download the fasta file
+  # Now download the fasta file
   fastaURL <- paste("https://www.uniprot.org/uniprot/", accession.number, ".fasta", sep="")
   URLstuff <- readLines(fastaURL)
-  # get the header information / show  the user
+  # Get the header information / show  the user
   header <- URLstuff[[1]]
   header3 <- strsplit(header, "|", fixed=TRUE)[[1]][3]
   headerP_O <- strsplit(header3, " ")[[1]][1]
@@ -141,7 +141,7 @@ uniprot.aa <- function(protein, start=NULL, stop=NULL) {
   header.id <- substr(header.id, 2, nchar(header.id)-1)
   header.organism <- strsplit(headerP_O, "_")[[1]][2]
   message(paste0(header), appendLF=FALSE)
-  # 20130206 use read.fasta with lines, start, stop arguments
+  # 20130206 Use read.fasta with lines, start, stop arguments
   aa <- read.fasta(file="", lines=URLstuff, start=start, stop=stop)
   message(" (length ", sum(aa[1, 6:25]), ")", sep="")
   aa$protein <- header.id
@@ -150,44 +150,44 @@ uniprot.aa <- function(protein, start=NULL, stop=NULL) {
 }
 
 count.aa <- function(seq, start=NULL, stop=NULL, type="protein") {
-  # count amino acids or DNA bases in one or more sequences given as elements of the list seq
+  # Count amino acids or DNA bases in one or more sequences given as elements of the list seq
   if(type=="protein") letts <- aminoacids(1)
   else if(type=="DNA") letts <- c("A", "C", "G", "T")
   else if(type=="RNA") letts <- c("A", "C", "G", "U")
   else stop(paste("unknown sequence type", type))
-  # the numerical positions of the letters in alphabetical order (i.e. for amino acids, same order as in thermo()$protein)
+  # The numerical positions of the letters in alphabetical order (i.e. for amino acids, same order as in thermo()$protein)
   ilett <- match(letts, LETTERS)
-  # the letters A-Z represented by raw values
+  # The letters A-Z represented by raw values
   rawAZ <- charToRaw("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-  # to count the letters in each sequence
+  # To count the letters in each sequence
   countfun <- function(seq, start, stop) {
-    # get a substring if one or both of start or stop are given
-    # if only one of start or stop is given, get a default value for the other
+    # Get a substring if one or both of start or stop are given
+    # If only one of start or stop is given, get a default value for the other
     if(!is.null(start)) {
       if(is.null(stop)) stop <- nchar(seq)
       seq <- substr(seq, start, stop)
     } else if(!is.null(stop)) {
       seq <- substr(seq, 1, stop)
     }
-    ## the actual counting ...
+    ## The actual counting ...
     #nnn <- table(strsplit(toupper(seq), "")[[1]])
-    # ... replaced with C version 20180217
+    # ... Replaced with C version 20180217
     counts <- .C(C_count_letters, seq, integer(26))[[2]]
     # which is equivalent to this R code:
     #rawseq <- charToRaw(toupper(seq))
     #counts <- sapply(rawAZ, function(x) sum(rawseq == x))
     return(counts)
   }
-  # counts for each sequence
+  # Counts for each sequence
   counts <- lapply(seq, countfun, start, stop)
   counts <- do.call(rbind, counts)
-  # check for letters that aren't in our alphabet
+  # Check for letters that aren't in our alphabet
   ina <- colSums(counts[, -ilett, drop=FALSE]) > 0
   if(any(ina)) {
     message(paste("count.aa: unrecognized letter(s) in", type, "sequence:", paste(LETTERS[-ilett][ina], collapse=" ")))
   }
   counts <- counts[, ilett, drop=FALSE]
-  # clean up row/column names
+  # Clean up row/column names
   colnames(counts) <- letts
   rownames(counts) <- 1:nrow(counts)
   return(counts)

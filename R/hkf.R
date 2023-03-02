@@ -185,8 +185,8 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
 
 gfun <- function(rhohat, Tc, P, alpha, daldT, beta) {
   ## g and f functions for describing effective electrostatic radii of ions
-  ## split from hkf() 20120123 jmd      
-  ## based on equations in
+  ## Split from hkf() 20120123 jmd      
+  ## Based on equations in
   ## Shock EL, Oelkers EH, Johnson JW, Sverjensky DA, Helgeson HC, 1992
   ## Calculation of the Thermodynamic Properties of Aqueous Species at High Pressures 
   ## and Temperatures: Effective Electrostatic Radii, Dissociation Constants and 
@@ -195,10 +195,10 @@ gfun <- function(rhohat, Tc, P, alpha, daldT, beta) {
   # rhohat - density of water in g/cm3
   # Tc - temperature in degrees Celsius
   # P - pressure in bars
-  # start with an output list of zeros
+  # Start with an output list of zeros
   out0 <- numeric(length(rhohat))
   out <- list(g=out0, dgdT=out0, d2gdT2=out0, dgdP=out0)
-  # only rhohat less than 1 will give results other than zero
+  # Only rhohat less than 1 will give results other than zero
   idoit <- rhohat < 1 & !is.na(rhohat)
   rhohat <- rhohat[idoit]
   Tc <- Tc[idoit]
@@ -229,23 +229,23 @@ gfun <- function(rhohat, Tc, P, alpha, daldT, beta) {
   f <- 
     ( ((Tc - 155) / 300) ^ 4.8 + af1 * ((Tc - 155) / 300) ^ 16 ) *
     ( af2 * (1000 - P) ^ 3 + af3 * (1000 - P) ^ 4 ) 
-  # limits of the f function (region II of Fig. 6)
+  # Limits of the f function (region II of Fig. 6)
   ifg <- Tc > 155 & P < 1000 & Tc < 355
-  # in case any T or P are NA
+  # In case any T or P are NA
   ifg <- ifg & !is.na(ifg)
   # Eq. 32
   g[ifg] <- g[ifg] - f[ifg]
-  # at P > 6000 bar (in DEW calculations), g is zero 20170926
+  # At P > 6000 bar (in DEW calculations), g is zero 20170926
   g[P > 6000] <- 0
-  ## now we have g at P, T
-  # put the results in their right place (where rhohat < 1)
+  ## Now we have g at P, T
+  # Put the results in their right place (where rhohat < 1)
   out$g[idoit] <- g
-  ## the rest is to get its partial derivatives with pressure and temperature
-  ## after Johnson et al., 1992
+  ## The rest is to get its partial derivatives with pressure and temperature
+  ## After Johnson et al., 1992
   # alpha - coefficient of isobaric expansivity (K^-1)
   # daldT - temperature derivative of coefficient of isobaric expansivity (K^-2)
   # beta - coefficient of isothermal compressibility (bar^-1)
-  # if these are NULL or NA (for IAPWS-95 and DEW), we skip the calculation
+  # If these are NULL or NA (for IAPWS-95 and DEW), we skip the calculation
   if(is.null(alpha)) alpha <- NA
   if(is.null(daldT)) daldT <- NA
   if(is.null(beta)) beta <- NA
@@ -263,7 +263,7 @@ gfun <- function(rhohat, Tc, P, alpha, daldT, beta) {
     # Eqn. 69
     dgadT <- bg*rhohat*alpha*(1-rhohat)^(bg-1) + log(1-rhohat)*g/ag*dbdT  
     D <- rhohat
-    # transcribed from SUPCRT92/reac92.f
+    # Transcribed from SUPCRT92/reac92.f
     dDdT <- -D * alpha
     #dDdP <- D * beta
     dDdTT <- -D * (daldT - alpha^2)

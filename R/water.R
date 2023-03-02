@@ -1,9 +1,9 @@
 # CHNOSZ/water.R
-# calculate thermodynamic and electrostatic properties of H2O
+# Calculate thermodynamic and electrostatic properties of H2O
 # 20061016 jmd
 
 water <- function(property = NULL, T = 298.15, P = "Psat", P1 = TRUE) {
-  # calculate the properties of liquid H2O as a function of T and P
+  # Calculate the properties of liquid H2O as a function of T and P
   # T in Kelvin, P in bar
   if(is.null(property)) return(get("thermo", CHNOSZ)$opt$water)
   # Set water option
@@ -195,7 +195,7 @@ water.IAPWS95 <- function(property = NULL, T = 298.15, P = 1) {
     return(IAPWS95("s", T = T, rho = my.rho)$s*M + dS) 
   # u (internal energy) is not here because the letter
   # is used to denote one of the Born functions
-  # scratch that! let"s put u here and call the other one uborn
+  # Scratch that! let's put u here and call the other one uborn
   U <- function()
     return(IAPWS95("u", T = T, rho = my.rho)$u*M + dU)
   A <- function()
@@ -303,18 +303,18 @@ water.IAPWS95 <- function(property = NULL, T = 298.15, P = 1) {
     }
     return(p)
   }
-  ### main loop; init dataframe output and density holders
+  ### Main loop; init dataframe output and density holders
   w.out <- data.frame(matrix(nrow = length(T), ncol = length(property)))
   my.rho <- NULL
-  # get densities unless only Psat is requested
+  # Get densities unless only Psat is requested
   if(!identical(property, "Psat")) {
-    # calculate values of P for Psat
+    # Calculate values of P for Psat
     if(identical(P, "Psat")) P <- Psat()
     message(" rho", appendLF = FALSE)
     my.rho <- rho.IAPWS95(T, P, get("thermo", CHNOSZ)$opt$IAPWS.sat)
     rho <- function() my.rho
   }
-  # get epsilon and A_DH, B_DH (so we calculate epsilon only once)
+  # Get epsilon and A_DH, B_DH (so we calculate epsilon only once)
   if(any(property %in% c("epsilon", "A_DH", "B_DH"))) {
     my.epsilon <- epsilon()
     epsilon <- function() my.epsilon
@@ -324,7 +324,7 @@ water.IAPWS95 <- function(property = NULL, T = 298.15, P = 1) {
   for(i in 1:length(property)) {
     if(property[i] %in% c("E", "kT", "alpha", "daldT", "beta")) {
       # E and kT aren't here yet... set them to NA
-      # also set alpha, daldT, and beta (for derivatives of g function) to NA 20170926 
+      # Also set alpha, daldT, and beta (for derivatives of g function) to NA 20170926 
       warning("water.IAPWS95: values of ", property[i], " are NA", call. = FALSE)
       wnew <- rep(NA, length(T))
     } else {
@@ -334,7 +334,7 @@ water.IAPWS95 <- function(property = NULL, T = 298.15, P = 1) {
     w.out[, i] <- wnew
   }  
   message("")
-  # include properties available in SUPCRT that might be NA here
+  # Include properties available in SUPCRT that might be NA here
   wprop <- unique(c(water.SUPCRT92(), available_properties))
   iprop <- match(property, wprop)
   property[!is.na(iprop)] <- wprop[na.omit(iprop)]
@@ -342,38 +342,38 @@ water.IAPWS95 <- function(property = NULL, T = 298.15, P = 1) {
   return(w.out)
 }
 
-# get water properties from DEW model for use by subcrt() 20170925
+# Get water properties from DEW model for use by subcrt() 20170925
 water.DEW <- function(property = NULL, T = 373.15, P = 1000) {
   available_properties <- c("G", "epsilon", "QBorn", "V", "rho", "beta", "A_DH", "B_DH")
   if(is.null(property)) return(available_properties)
-  # we can't use Psat here
+  # We can't use Psat here
   if(identical(P, "Psat")) stop("Psat isn't supported in this implementation of the DEW model. Try setting P to at least 1000 bar.")
-  # use uppercase property names (including H, S, etc., so we get them from the SUPCRT properties)
+  # Use uppercase property names (including H, S, etc., so we get them from the SUPCRT properties)
   wprop <- water.SUPCRT92()
   iprop <- match(property, wprop)
   property[!is.na(iprop)] <- wprop[na.omit(iprop)]
-  # convert temperature units
+  # Convert temperature units
   pressure <- P
   temperature <- convert(T, "C")
-  # initialize output data frame with NA for all properties and conditions
+  # Initialize output data frame with NA for all properties and conditions
   ncond <- max(length(T), length(P))
   out <- matrix(NA, ncol = length(property), nrow = ncond)
   out <- as.data.frame(out)
   colnames(out) <- property
-  # calculate rho and epsilon if they're needed for any other properties
+  # Calculate rho and epsilon if they're needed for any other properties
   if(any(c("rho", "V", "QBorn", "epsilon", "beta", "A_DH", "B_DH") %in% property)) rho <- calculateDensity(pressure, temperature)
   if(any(c("epsilon", "A_DH", "B_DH") %in% property)) epsilon <- calculateEpsilon(rho, temperature)
-  # fill in columns with values
+  # Fill in columns with values
   if("rho" %in% property) out$rho <- rho*1000 # use kg/m^3 (like SUPCRT)
   if("V" %in% property) out$V <- 18.01528/rho
   if("G" %in% property) out$G <- calculateGibbsOfWater(pressure, temperature)
   if("QBorn" %in% property) out$QBorn <- calculateQ(rho, temperature)
   if("epsilon" %in% property) out$epsilon <- epsilon
-  # divide drhodP by rho to get units of bar^-1
+  # Divide drhodP by rho to get units of bar^-1
   if("beta" %in% property) out$beta <- calculate_drhodP(rho, temperature) / rho
   if("A_DH" %in% property) out$A_DH <- 1.8246e6 * rho^0.5 / (epsilon * T)^1.5
   if("B_DH" %in% property) out$B_DH <- 50.29e8 * rho^0.5 / (epsilon * T)^0.5
-  # use SUPCRT-calculated values below 100 degC and/or below 1000 bar
+  # Use SUPCRT-calculated values below 100 degC and/or below 1000 bar
   ilow <- T < 373.15 | P < 1000
   if(any(ilow)) {
     out[ilow, ] <- water.SUPCRT92(property, T = T[ilow], P = P[ilow])
@@ -381,7 +381,7 @@ water.DEW <- function(property = NULL, T = 373.15, P = 1000) {
     if(sum(iPrTr)==sum(ilow)) message(paste("water.DEW: using SUPCRT calculations for Pr,Tr"))
     if(sum(iPrTr)==0) message(paste("water.DEW: using SUPCRT calculations for", sum(ilow), "low-T or low-P condition(s)"))
     if(sum(iPrTr)==1 & sum(ilow) > sum(iPrTr)) message(paste("water.DEW: using SUPCRT calculations for Pr,Tr and", sum(ilow)-1, "other low-T or low-P condition(s)"))
-    # however, we also have this:
+    # However, we also have this:
     # epsilon(Pr,Tr) from SUPCRT: 78.24514
     # epsilon(Pr,Tr) in DEW spreadsheet: 78.47
     if("epsilon" %in% property) out$epsilon[iPrTr] <- 78.47

@@ -1,9 +1,9 @@
 # CHNOSZ/info.R
-# search database for species names or formulas
+# Search database for species names or formulas
 # and retrieve thermodynamic properties of species
-# 20061024 extracted from species.R jmd
-# 20120507 code rewrite and split into info.[character,approx,numeric];
-#   these functions expect arguments of length 1; 
+# 20061024 Extracted from species.R jmd
+# 20120507 Code rewrite and split into info.[character,approx,numeric];
+#   These functions expect arguments of length 1; 
 #   info() handles longer arguments
 
 ## If this file is interactively sourced, the following are also needed to provide unexported functions:
@@ -86,33 +86,33 @@ info.text <- function(ispecies, withsource = TRUE) {
 }
 
 info.character <- function(species, state=NULL, check.protein=TRUE) {
-  # returns the rownumbers of thermo()$OBIGT having an exact match of 'species' to
+  # Return the rownumbers of thermo()$OBIGT having an exact match of 'species' to
   # thermo()$OBIGT$[species|abbrv|formula] or NA otherwise
-  # a match to thermo()$OBIGT$state is also required if 'state' is not NULL
-
+  # A match to thermo()$OBIGT$state is also required if 'state' is not NULL
   # (first occurence of a match to species is returned otherwise)
+
   thermo <- get("thermo", CHNOSZ)
-  # find matches for species name, abbreviation or formula
+  # Find matches for species name, abbreviation or formula
   matches.species <- thermo$OBIGT$name==species | thermo$OBIGT$abbrv==species | thermo$OBIGT$formula==species
-  # since thermo()$OBIGT$abbrv contains NAs, convert NA results to FALSE
+  # Since thermo()$OBIGT$abbrv contains NAs, convert NA results to FALSE
   matches.species[is.na(matches.species)] <- FALSE
-  # turn it in to no match if it's a protein in the wrong state
+  # Turn it in to no match if it's a protein in the wrong state
   ip <- pinfo(species)
   if(any(matches.species) & !is.na(ip) & !is.null(state)) {
     matches.state <- matches.species & grepl(state, thermo$OBIGT$state)
     if(!any(matches.state)) matches.species <- FALSE
   }
-  # no match, not available
+  # No match, not available
   if(!any(matches.species)) {
-    # unless it's a protein
+    # Unless it's a protein
     if(check.protein) {
-      # did we find a protein? add its properties to OBIGT
+      # Did we find a protein? add its properties to OBIGT
       if(!is.na(ip)) {
-        # here we use a default state from thermo()$opt$state
+        # Here we use a default state from thermo()$opt$state
         if(is.null(state)) state <- thermo$opt$state
-        # add up protein properties
+        # Add up protein properties
         eos <- protein.OBIGT(ip, state=state)
-        # the real assignment work 
+        # The real assignment work 
         nrows <- suppressMessages(mod.OBIGT(eos))
         thermo <- get("thermo", CHNOSZ)
         matches.species <- rep(FALSE, nrows)
@@ -120,20 +120,20 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
       } else return(NA)
     } else return(NA)
   }
-  # do we demand a particular state
+  # Do we demand a particular state
   if(!is.null(state)) {
-    # special treatment for H2O: aq retrieves the liq
+    # Special treatment for H2O: aq retrieves the liq
     if(species %in% c("H2O", "water") & state=="aq") state <- "liq"
-    # the matches for both species and state
+    # The matches for both species and state
     matches.state <- matches.species & state == thermo$OBIGT$state
     if(!any(matches.state)) {
-      # the requested state is not available for this species
+      # The requested state is not available for this species
       available.states <- thermo$OBIGT$state[matches.species]
       if(length(available.states)==1) a.s.verb <- "is" else a.s.verb <- "are"
       a.s.text <- paste("'", available.states, "'", sep="", collapse=" ")
       message("info.character: requested state '", state, "' for ", species, 
         " but only ", a.s.text, " ", a.s.verb, " available")
-      # warn about looking for aqueous methane (changed to CH4) 20200707
+      # Warn about looking for aqueous methane (changed to CH4) 20200707
       if(identical(species, "methane") & identical(state, "aq")) {
         warning("'methane' is not an aqueous species; use 'CH4' instead\nTo revert to the old behavior, run mod.OBIGT(info('CH4'), name = 'methane')")
       }
@@ -141,15 +141,15 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
     }
     matches.species <- matches.state
   }
-  # all of the species that match
+  # All of the species that match
   ispecies.out <- ispecies <- which(matches.species)
-  # processing for more than one match
+  # Processing for more than one match
   if(length(ispecies) > 1) {
-    # if a single name matches, use that one (useful for distinguishing pseudo-H4SiO4 and H4SiO4) 20171020
+    # If a single name matches, use that one (useful for distinguishing pseudo-H4SiO4 and H4SiO4) 20171020
     matches.name <- matches.species & thermo$OBIGT$name==species
     if(sum(matches.name)==1) ispecies.out <- which(matches.name)
     else ispecies.out <- ispecies[1]  # otherwise, return only the first species that matches
-    # let user know if there is more than one state for this species
+    # Let user know if there is more than one state for this species
     mystate <- thermo$OBIGT$state[ispecies.out]
     ispecies.other <- ispecies[!ispecies %in% ispecies.out]
     otherstates <- thermo$OBIGT$state[ispecies.other]
@@ -158,10 +158,10 @@ info.character <- function(species, state=NULL, check.protein=TRUE) {
       otherstates[otherstates==mystate] <- thermo$OBIGT$name[ispecies.other[otherstates==mystate]]
     }
     transtext <- othertext <- ""
-    # we count, but don't show the states for phase transitions (cr2, cr3, etc)
+    # We count, but don't show the states for phase transitions (cr2, cr3, etc)
     istrans <- otherstates %in% c("cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9")
     if(mystate=="cr") {
-      # if we are "cr" we show the number of phase transitions
+      # If we are "cr" we show the number of phase transitions
       ntrans <- sum(istrans)
       if(ntrans == 1) transtext <- paste(" with", ntrans, "phase transition")
       else if(ntrans > 1) transtext <- paste(" with", ntrans, "phase transitions")
@@ -234,7 +234,7 @@ info.numeric <- function(ispecies, check.it=TRUE) {
     if(sum(naGHS)==0) calcG <- checkGHS(this)
     # Check tabulated heat capacities against EOS parameters
     calcCp <- checkEOS(this, this$model, "Cp")
-    # fill in NA heat capacity
+    # Fill in NA heat capacity
     if(!is.na(calcCp) & is.na(this$Cp)) {
       message("info.numeric: Cp of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcCp, 2), " ", this$E_units, " K-1 mol-1")
       this$Cp <- as.numeric(calcCp)
@@ -243,35 +243,34 @@ info.numeric <- function(ispecies, check.it=TRUE) {
       calcCp <- Berman(this$name)$Cp
       this$Cp <- calcCp
     }
-    # check tabulated volumes - only for HKF model (aq species)
+    # Check tabulated volumes - only for HKF model (aq species)
     if(this$model %in% c("HKF", "DEW")) {
       calcV <- checkEOS(this, this$model, "V")
-      # fill in NA volume
+      # Fill in NA volume
       if(!is.na(calcV) & is.na(this$V)) {
         message("info.numeric: V of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcV, 2), " cm3 mol-1")
         this$V <- as.numeric(calcV)
       }
     }
-  } # done checking
-  # all done!
+  } # Done checking
+  # All done!
   return(this)
 }
 
 info.approx <- function(species, state=NULL) {
-  # returns species indices that have an approximate match of 'species'
-  # to thermo$OBIGT$[name|abbrv|formula], 
-  # possibly restricted to a given state
+  # Returns species indices that have an approximate match of 'species'
+  # to thermo$OBIGT$[name|abbrv|formula], possibly restricted to a given state
   thermo <- get("thermo", CHNOSZ)
   if(!is.null(state)) this <- thermo$OBIGT[thermo$OBIGT$state==state, ]
   else this <- thermo$OBIGT
-  # only look for fairly close matches
+  # Only look for fairly close matches
   max.distance <- 0.1
   approx.name <- agrep(species, this$name, max.distance)
   approx.abbrv <- agrep(species, this$abbrv, max.distance)
   approx.formula <- agrep(species, this$formula, max.distance)
   approx.species <- unique(c(approx.name, approx.abbrv, approx.formula))
   if(!is.na(approx.species[1])) {
-    # show the names of the species
+    # Show the names of the species
     if(length(approx.species)==1) {
       message("info.approx: '", species, "' is similar to ", info.text(approx.species))
     } else {
@@ -285,7 +284,7 @@ info.approx <- function(species, state=NULL) {
     }
     return(approx.species)
   }
-  # if we got here there were no approximate matches
+  # If we got here there were no approximate matches
   # 20190127 look for the species in optional data files 
   for(opt in c("SLOP98", "SUPCRT92", "AD")) {
     optdat <- read.csv(system.file(paste0("extdata/OBIGT/", opt, ".csv"), package="CHNOSZ"), as.is=TRUE)

@@ -1,45 +1,45 @@
 # CHNOSZ/diagram.R
-# plot equilibrium chemical activity and predominance diagrams 
+# Plot equilibrium chemical activity and predominance diagrams 
 # 20061023 jmd v1
 # 20120927 work with output from either equil() or affinity(), 
 #   gather plotvals independently of plot parameters (including nd),
 #   single return statement
 
-## if this file is interactively sourced, the following are also needed to provide unexported functions:
+## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("equilibrate.R")
 #source("util.plot.R")
 #source("util.character.R")
 #source("util.misc.R")
 
 diagram <- function(
-  # species affinities or activities
+  # Species affinities or activities
   eout, 
-  # type of plot
+  # Type of plot
   type="auto", alpha=FALSE, normalize=FALSE, as.residue=FALSE, balance=NULL,
   groups=as.list(1:length(eout$values)), xrange=NULL,
-  # figure size and sides for axis tick marks
+  # Figure size and sides for axis tick marks
   mar=NULL, yline=par("mgp")[1]+0.3, side=1:4,
-  # axis limits and labels
+  # Axis limits and labels
   ylog=TRUE, xlim=NULL, ylim=NULL, xlab=NULL, ylab=NULL, 
-  # sizes
+  # Sizes
   cex=par("cex"), cex.names=1, cex.axis=par("cex"),
-  # line styles
+  # Line styles
   lty=NULL, lty.cr=NULL, lty.aq=NULL, lwd=par("lwd"), dotted=NULL,
   spline.method=NULL, contour.method="edge", levels=NULL,
-  # colors
+  # Colors
   col=par("col"), col.names=par("col"), fill=NULL,
   fill.NA="gray80", limit.water=NULL,
-  # field and line labels
+  # Field and line labels
   names=NULL, format.names=TRUE, bold=FALSE, italic=FALSE,
   font=par("font"), family=par("family"), adj=0.5, dx=0, dy=0, srt=0,
   min.area=0,
-  # title and legend
+  # Title and legend
   main=NULL, legend.x=NA,
-  # plotting controls
+  # Plotting controls
   add=FALSE, plot.it=TRUE, tplot=TRUE, ...
 ) {
 
-  ### argument handling ###
+  ### Argument handling ###
 
   ## Check that eout is a valid object
   efun <- eout$fun
@@ -68,7 +68,7 @@ diagram <- function(
   if(type %in% c("auto", "saturation")) {
     if(!"loga.equil" %in% names(eout)) {
       eout.is.aout <- TRUE
-      # get the balancing coefficients
+      # Get the balancing coefficients
       if(type=="auto") {
         bal <- balance(eout, balance)
         n.balance <- bal$n.balance
@@ -237,7 +237,7 @@ diagram <- function(
           if(!wl$swapped) {
             # The actual calculation
             iNA <- eout$vals[[2]] < ymin | eout$vals[[2]] > ymax
-            # assign NA to the predominance matrix
+            # Assign NA to the predominance matrix
             H2O.predominant[i, iNA] <- NA
           } else {
             # As above, but x- and y-axes are swapped

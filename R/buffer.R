@@ -56,14 +56,14 @@ mod.buffer <- function(name, species = NULL, state = "cr", logact = 0) {
   return(invisible(thermo$buffer[thermo$buffer$name %in% name,]))
 }
 
-### unexported functions ###
+### Unexported functions ###
 
 buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balance='PBB') {
   thermo <- get("thermo", CHNOSZ)
-  # if logK is NULL load the buffer species
-  # otherwise perform buffer calculations.
+  # If logK is NULL load the buffer species,
+  # otherwise perform buffer calculations
   if(is.null(logK)) {
-    # load the buffer species
+    # Load the buffer species
     buffers <- unique(as.character(thermo$basis$logact)[!can.be.numeric(as.character(thermo$basis$logact))])
     ispecies.new <- list()
     for(k in 1:length(buffers)) {
@@ -77,16 +77,16 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
         ispecies <- c(ispecies, species(species, state, index.return=TRUE, add = TRUE))
       }
       ispecies.new <- c(ispecies.new,list(ispecies))
-      # make sure to set the activities
+      # Make sure to set the activities
       species(ispecies,thermo$buffer$logact[ib])
     }
     names(ispecies.new) <- buffers
     return(ispecies.new)
   }
 
-  # sometimes (e.g. PPM) the buffer species are identified multiple
-  # times, causing problems for square matrices and such.
-  # make them appear singly.
+  # Sometimes (e.g. PPM) the buffer species are identified multiple
+  # times, causing problems for square matrices
+  # Make the species appear singly
   is.buffer <- unique(is.buffer)
   bufbasis <- species.basis(thermo$species$ispecies[is.buffer])
   bufname <- thermo$basis$logact[ibasis[1]]
@@ -99,29 +99,29 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
       bufbasis <- cbind(data.frame(product=nb),bufbasis)
     } else {
       basisnames <- c('PBB',basisnames)
-      # prepend a PBB column to bufbasis and inc. ibasis by 1
+      # Prepend a PBB column to bufbasis and increment ibasis by 1
       nb <- as.numeric(protein.length(thermo$species$name[is.buffer]))
       bufbasis <- cbind(data.frame(PBB=nb),bufbasis)
     }
     ibasis <- ibasis + 1
-    # make logact.basis long enough
+    # Make logact.basis long enough
     tl <- length(logact.basis)
     logact.basis[[tl+1]] <- logact.basis[[tl]]
-    # rotate the entries so that the new one is first
+    # Rotate the entries so that the new one is first
     ilb <- c(tl+1,1:tl)
     logact.basis <- logact.basis[ilb]
   }
-  #  say hello
-  #cat(paste("buffer: '",bufname,"', of ",length(is.buffer),' species, ',length(ibasis),' activity(s) requested.\n',sep=''))
+  # Say hello
+  #message(paste("buffer: '",bufname,"', of ",length(is.buffer),' species, ',length(ibasis),' activity(s) requested.',sep=''))
   ibasisrequested <- ibasis
-  # check and maybe add to the number of buffered activities
+  # Check and maybe add to the number of buffered activities
   ibasisadded <- numeric()
   if( (length(ibasis)+1) != length(is.buffer) & length(is.buffer) > 1) {
-    # try to add buffered activities the user didn't specify
+    # Try to add buffered activities the user didn't specify
     # (e.g. H2S in PPM buffer if only H2 was requested)
     for(i in 1:(length(is.buffer)-(length(ibasis)+1))) {
       newbasis <- NULL
-      # we want to avoid any basis species that might be used as the conservant
+      # We want to avoid any basis species that might be used as the conservant
       # look for additional activities to buffer ... do columns in reverse 
       for(j in ncol(bufbasis):1) {
         if(j %in% ibasis) next
@@ -138,24 +138,24 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
       }
     }
   } 
-  # and the leftovers
+  # And the leftovers
   #xx <- as.data.frame(bufbasis[,-ibasis])
-  # the final buffered activity: the would-be conserved component
+  # The final buffered activity: the would-be conserved component
   newbasis <- NULL
   if(length(is.buffer) > 1) {
-    # first try to get one that is present in all species
+    # First try to get one that is present in all species
     for(i in ncol(bufbasis):1) {
       if(i %in% ibasis) next
       if(!TRUE %in% (bufbasis[,i]==0)) newbasis <- i
     }
-    # or look for one that is present at all
+    # Or look for one that is present at all
     if(is.null(newbasis)) for(i in ncol(bufbasis):1) {
       if(i %in% ibasis) next
       if(FALSE %in% (bufbasis[,i]==0)) newbasis <- i
     }
     if(!is.null(newbasis)) {
       ibasis <- c(ibasis,newbasis)
-      #cat(paste('buffer: the conserved activity is ',basisnames[newbasis],'.\n',sep=''))
+      #message(paste('buffer: the conserved activity is ',basisnames[newbasis],'.',sep=''))
       #thermo$basis$logact[newbasis] <<- thermo$basis$logact[ibasis[1]]
     }
     else stop('no conserved activity found in your buffer (not enough basis species?)!')
@@ -164,22 +164,21 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
   reqtext <- paste(c2s(basisnames[ibasisrequested]),' (active)',sep='')
   if(length(ibasisadded)==0) addtext <- '' else addtext <- paste(', ',c2s(basisnames[ibasisadded]),sep='')
   message(paste("buffer: '", bufname, "' for activity of ", reqtext, addtext, context, sep = ""))
-  #print(bufbasis)
-  # there could still be stuff here (over-defined system?)
+  # There could still be stuff here (over-defined system?)
   xx <- bufbasis[,-ibasis,drop=FALSE]
-  # for the case when all activities are buffered
+  # For the case when all activities are buffered
   if(ncol(xx)==0) xx <- data.frame(xx=0)
-  # our stoichiometric matrix - should be square
+  # Our stoichiometric matrix - should be square
   A <- as.data.frame(bufbasis[,ibasis])
-  # determine conservation coefficients
-  # values for the known vector
+  # Determine conservation coefficients
+  # Values for the known vector
   B <- list()
   for(i in 1:length(is.buffer)) {
     b <- -logK[[is.buffer[i]]] + thermo$species$logact[is.buffer[i]]
     if(ncol(xx) > 0) {
       if(is.list(xx)) xxx <- xx[[1]] else xxx <- xx
       if(ncol(xx)==1 & identical(as.numeric(xxx),0)) {
-        # do nothing
+        # Do nothing
       } else {
         for(j in 1:ncol(xx)) {
           bs <- xx[i,j] * logact.basis[[match(colnames(xx)[j],basisnames)]]
@@ -192,7 +191,7 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
     # Force this to be matrix so indexing works at a single point (no variables defined in affinity()) 20201102
     B[[i]] <- as.matrix(b)
   }
-  # a place to put the results
+  # A place to put the results
   X <- rep(B[1],length(ibasis))
   for(i in 1:nrow(B[[1]])) {
     for(j in 1:ncol(B[[1]])) {
@@ -205,7 +204,7 @@ buffer <- function(logK=NULL,ibasis=NULL,logact.basis=NULL,is.buffer=NULL,balanc
         X[[k]][i,j] <- t[k]
     }
   }
-  # store results
+  # Store results
   for(i in 1:length(ibasis)) {
     if(ncol(X[[i]])==1) X[[i]] <- as.numeric(X[[i]])
     else if(nrow(X[[i]])==1) X[[i]] <- as.matrix(X[[i]],nrow=1)

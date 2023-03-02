@@ -1,5 +1,5 @@
 # CHNOSZ/ionize.aa.R
-# rewritten ionization function 20120526 jmd
+# Rewritten ionization function 20120526 jmd
 
 ionize.aa <- function(aa, property="Z", T=25, P="Psat", pH=7, ret.val=NULL, suppress.Cys=FALSE) {
   # Calculate the additive ionization property of proteins with amino acid 

@@ -4,7 +4,7 @@
 
 # Count numbers of amino acids in a sequence
 seq2aa <- function(sequence, protein = NA) {
-  # $emove newlines and whitespace
+  # Remove newlines and whitespace
   sequence <- gsub("\\s", "", gsub("[\r\n]", "", sequence))
   # Make a data frame from counting the amino acids in the sequence
   caa <- count.aa(sequence)

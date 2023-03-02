@@ -1,32 +1,29 @@
-# functions for properties of water using
-# the IAPWS-95 formulation (Wagner and Pruss, 2002)
+# Calculate properties of water using the IAPWS-95 formulation (Wagner and Pruss, 2002)
 
 IAPWS95 <- function(property,T=298.15,rho=1000) {
-  ## the IAPWS-95 formulation for ordinary water substance
-  ## Wagner and Pruss, 2002
   property <- tolower(property)
-  # triple point
+  # Triple point
   T.triple <- 273.16 # K
   P.triple <- 611.657 # Pa
   rho.triple.liquid <- 999.793
   rho.triple.vapor <- 0.00485458
-  # normal boiling point
+  # Normal boiling point
   T.boiling <- 373.124
   P.boiling <- 0.101325
   rho.boiling.liquid <- 958.367
   rho.boiling.vapor <- 0.597657
-  # critical point constants
+  # Critical point constants
   T.critical <- 647.096 # K
   rho.critical <- 322 # kg m-3
-  # specific and molar gas constants
+  # Specific and molar gas constants
   R <- 0.46151805 # kJ kg-1 K-1
   # R.M <- 8.314472 # J mol-1 K-1
-  # molar mass
+  # Molar mass
   M <- 18.015268 # g mol-1
-  ## define functions idealgas and residual, supplying arguments delta and tau
+  ## Define functions idealgas and residual, supplying arguments delta and tau
   idealgas <- function(p) IAPWS95.idealgas(p, delta, tau)
   residual <- function(p) IAPWS95.residual(p, delta, tau)
-  ## relation of thermodynamic properties to Helmholtz free energy
+  ## Relation of thermodynamic properties to Helmholtz free energy
   a <- function() {
     x <- idealgas('phi')+residual('phi')
     return(x*R*T)
@@ -62,7 +59,7 @@ IAPWS95 <- function(property,T=298.15,rho=1000) {
          (1+2*delta*residual('phi.delta')+delta^2*residual('phi.delta.delta'))
     return(x*R)
   }
-# 20090420 speed of sound calculation is incomplete
+# 20090420 Speed of sound calculation is incomplete
 # (delta.liquid and drhos.dT not visible)
 #  cs <- function() {
 #    x <- -tau^2*(idealgas('phi.tau.tau')+residual('phi.tau.tau')) +
@@ -83,7 +80,7 @@ IAPWS95 <- function(property,T=298.15,rho=1000) {
           (idealgas('phi.tau.tau')+residual('phi.tau.tau'))*(1+2*delta*residual('phi.delta')+delta^2*residual('phi.delta.delta')) ) 
     return(x/(R*rho))
   }
-  ## run the calculations
+  ## Run the calculations
   ww <- NULL
   my.T <- T
   my.rho <- rho
@@ -104,7 +101,7 @@ IAPWS95 <- function(property,T=298.15,rho=1000) {
   return(ww)
 }
 
-### unexported functions ###
+### Unexported functions ###
 
 # IAPWS95.idealgas and IAPWS95.residual are supporting functions to IAPWS95 for calculating
 #   the ideal-gas and residual parts in the IAPWS-95 formulation.
@@ -112,8 +109,8 @@ IAPWS95 <- function(property,T=298.15,rho=1000) {
 #   to calculate the specific dimensionless Helmholtz free energy (phi) or one of its derivatives.
 
 IAPWS95.idealgas <- function(p, delta, tau) {
-  ## the ideal gas part in the IAPWS-95 formulation
-  # from Table 6.1 of Wagner and Pruss, 2002
+  ## The ideal gas part in the IAPWS-95 formulation
+  # From Table 6.1 of Wagner and Pruss, 2002
   n <- c( -8.32044648201, 6.6832105268, 3.00632, 0.012436,
            0.97315, 1.27950, 0.96956, 0.24873 )
   gamma <- c( NA, NA, NA, 1.28728967, 
@@ -121,7 +118,7 @@ IAPWS95.idealgas <- function(p, delta, tau) {
   # Equation 6.5
   phi <- function() log(delta) + n[1] + n[2]*tau + n[3]*log(tau) +
     sum( n[4:8] * log(1-exp(-gamma[4:8]*tau)) )
-  # derivatives from Table 6.4
+  # Derivatives from Table 6.4
   phi.delta <- function() 1/delta+0+0+0+0
   phi.delta.delta <- function() -1/delta^2+0+0+0+0
   phi.tau <- function() 0+0+n[2]+n[3]/tau+sum(n[4:8]*gamma[4:8]*((1-exp(-gamma[4:8]*tau))^-1-1))
@@ -132,8 +129,8 @@ IAPWS95.idealgas <- function(p, delta, tau) {
 }
 
 IAPWS95.residual <- function(p, delta, tau) {
-  ## the residual part in the IAPWS-95 formulation
-  # from Table 6.2 of Wagner and Pruss, 2002
+  ## The residual part in the IAPWS-95 formulation
+  # From Table 6.2 of Wagner and Pruss, 2002
   c <- c(rep(NA,7),rep(1,15),rep(2,20),rep(3,4),4,rep(6,4),rep(NA,5))
   d <- c(1,1,1,2,2,3,4,1,1,1,2,2,3,4,
          4,5,7,9,10,11,13,15,1,2,2,2,3,4,
@@ -177,7 +174,7 @@ IAPWS95.residual <- function(p, delta, tau) {
   i2 <- 8:51
   i3 <- 52:54
   i4 <- 55:56
-  # deriviatives of distance function
+  # Deriviatives of distance function
   Delta <- function(i) { Theta(i)^2 + B[i] * ((delta-1)^2)^a[i] }
   Theta <- function(i) { (1-tau) + A[i] * ((delta-1)^2)^(1/(2*beta[i])) }
   Psi <- function(i) { exp ( -C[i]*(delta-1)^2 - D[i]*(tau-1)^2 ) }
@@ -194,13 +191,13 @@ IAPWS95.residual <- function(p, delta, tau) {
     4*B[i]*a[i]*(a[i]-1)*((delta-1)^2)^(a[i]-2) + 2*A[i]^2*(1/beta[i])^2 *
       (((delta-1)^2)^(1/(2*B[i])-1))^2 + A[i]*Theta(i)*4/beta[i]*(1/(2*B[i])-1) *
         ((delta-1)^2)^(1/(2*beta[i])-2) ) }
-  # derivatives of exponential function
+  # Derivatives of exponential function
   dPsi.ddelta <- function(i) { -2*C[i]*(delta-1)*Psi(i) }
   d2Psi.ddelta2 <- function(i) { ( 2*C[i]*(delta-1)^2 - 1 ) * 2*C[i]*Psi(i) }
   dPsi.dtau <- function(i) { -2*D[i]*(tau-1)*Psi(i) }
   d2Psi.dtau2 <- function(i) { (2*D[i]*(tau-1)^2 - 1) * 2*D[i]*Psi(i) }
   d2Psi.ddelta.dtau <- function(i) { 4*C[i]*D[i]*(delta-1)*(tau-1)*Psi(i) }
-  # dimensionless Helmholtz free energy and derivatives
+  # Dimensionless Helmholtz free energy and derivatives
   phi <- function() {
     sum(n[i1]*delta^d[i1]*tau^t[i1]) +
     sum(n[i2]*delta^d[i2]*tau^t[i2]*exp(-delta^c[i2])) +

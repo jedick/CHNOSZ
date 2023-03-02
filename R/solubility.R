@@ -116,9 +116,9 @@ solubility_calc <- function(aout, dissociate = NULL, find.IS = FALSE, in.terms.o
   bout <- balance(aout)
   n.balance <- bout$n.balance
   balance <- bout$balance
-  # get logarithm of total activity of the conserved basis species
+  # Get logarithm of total activity of the conserved basis species
   logabfun <- function(loga.equil, n.balance) {
-    # exponentiate, multiply by n.balance, sum, logarithm
+    # Exponentiate, multiply by n.balance, sum, logarithm
     a.equil <- mapply("^", 10, loga.equil, SIMPLIFY = FALSE)
     a.balance <- mapply("*", a.equil, n.balance, SIMPLIFY = FALSE)
     a.balance <- Reduce("+", a.balance)

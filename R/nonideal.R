@@ -1,7 +1,7 @@
 # CHNOSZ/nonideal.R
-# first version of function: 20080308 jmd
-# moved to nonideal.R from util.misc.R 20151107
-# added Helgeson method 20171012
+# First version of function: 20080308 jmd
+# Moved to nonideal.R from util.misc.R 20151107
+# Added Helgeson method 20171012
 
 nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, method=thermo()$opt$nonideal) {
   # Generate nonideal contributions to thermodynamic properties

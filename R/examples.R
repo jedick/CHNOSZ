@@ -1,9 +1,8 @@
 # CHNOSZ/examples.R
-# run examples from the help files, 
-# and a function containing extra examples
+# Functions to run all examples and demos in the package
 
 examples <- function(save.png=FALSE) {
-  # run all the examples in CHNOSZ documentation
+  # Run all the examples in CHNOSZ documentation
   .ptime <- proc.time()
   topics <- c("thermo", "examples",
     "util.array", "util.data", "util.expression", "util.legend", "util.plot",
@@ -34,9 +33,9 @@ demos <- function(which=c("sources", "protein.equil", "affinity", "NaCl", "densi
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "minsol",
   "Shh", "saturation", "DEW", "lambda", "potassium", "TCA", "aluminum",
   "AD", "comproportionation", "Pourbaix", "E_coli"), save.png=FALSE) {
-  # run one or more demos from CHNOSZ with ask=FALSE, and return the value of the last one
+  # Run one or more demos from CHNOSZ with ask=FALSE, and return the value of the last one
   for(i in 1:length(which)) {
-    # say something so the user sees where we are
+    # A message so the user knows where we are
     message("------------")
     if(which[i]=="dehydration" & !save.png) {
       message("demos: skipping dehydration demo as save.png is FALSE")

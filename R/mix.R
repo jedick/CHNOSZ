@@ -2,7 +2,7 @@
 # Combine diagrams for two metals
 # 20200713 first version jmd
 
-## if this file is interactively sourced, the following are also needed to provide unexported functions:
+## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("equilibrate.R")
 
 # Function to combine two diagrams (simple overlay, no interaction) 20200717
@@ -12,7 +12,7 @@ mash <- function(d1, d2) {
   mix(d1, d2)
 }
 
-# mix the systems to include bimetal species 20200721
+# Mix the systems to include bimetal species 20200721
 # 'parts' gives number of moles of each metal in 1 mole of the mixture
 mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
   if(is.null(.balance)) check_d1_d2(d1, d2)
@@ -270,7 +270,7 @@ rebalance <- function(d1, d2, balance = NULL) {
 }
 
 
-### unexported functions ###
+### Unexported functions ###
 
 # Check that d1 and d2 can be combined
 # Extracted from duplex() (now rebalance()) 20200717

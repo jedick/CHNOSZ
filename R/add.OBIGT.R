@@ -1,5 +1,5 @@
 # CHNOSZ/add.OBIGT.R
-# add or change entries in the thermodynamic database
+# Add or change entries in the thermodynamic database
 
 ## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("info.R")

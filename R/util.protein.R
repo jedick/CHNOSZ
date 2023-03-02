@@ -3,8 +3,8 @@
 
 MP90.cp <- function(protein, T) {
   # T (temperature, degrees C), protein (name of protein)
-  # returns heat capacity of protein (kj/mol)
-  # using algorithm of makhatadze and privalov, 1990.
+  # Returns heat capacity of protein (kJ/mol)
+  # using algorithm of Makhatadze and Privalov, 1990.
   TMP <- c(5,25,50,75,100,125)
   A.cp <- splinefun(TMP,c(175.7,166.7,156.2,144.7,134.6,124.1))
   C.cp <- splinefun(TMP,c(225.4,237.6,250.8,260.7,268.2,276.1))
@@ -35,23 +35,23 @@ MP90.cp <- function(protein, T) {
             G.cp(Ti),H.cp(Ti),I.cp(Ti),K.cp(Ti),L.cp(Ti),
             M.cp(Ti),N.cp(Ti),P.cp(Ti),Q.cp(Ti),R.cp(Ti),
             S.cp(Ti),T.cp(Ti),V.cp(Ti),W.cp(Ti),Y.cp(Ti))
-    # get the protein composition
+    # Get the protein composition
     tt <- pinfo(pinfo(protein))[,6:25]
     cnew <- c(cnew, sum(cp * as.numeric(tt)) + sum(as.numeric(tt)) * UPBB.cp(Ti))
   }
   return(cnew)
 }
 
-### unexported functions ###
+### Unexported functions ###
 
 group.formulas <- function() {
-  # return a matrix with chemical formulas of residues
-  # memoize this 20200509
-  ## names of the sidechain groups
+  # Return a matrix with chemical formulas of residues
+  # Memoize this 20200509
+  ## Names of the sidechain groups
   #groups <- paste("[", aminoacids(3), "]", sep="")
-  ## the indices of H2O, sidechain groups, and [UPBB]
+  ## The indices of H2O, sidechain groups, and [UPBB]
   #ig <- suppressMessages(info(c("H2O", groups, "[UPBB]")))
-  ## their formulas
+  ## Their formulas
   #A <- i2A(ig)
   A <- structure(c(0, 1, 1, 2, 3, 7, 0, 4, 4, 4, 4, 3, 2, 3, 3, 4, 1, 
                    2, 3, 9, 7, 2, 2, 3, 3, 3, 5, 7, 1, 5, 9, 10, 9, 7, 4, 5, 6, 
@@ -63,10 +63,10 @@ group.formulas <- function() {
                        "[His]", "[Ile]", "[Lys]", "[Leu]", "[Met]", "[Asn]", "[Pro]", 
                        "[Gln]", "[Arg]", "[Ser]", "[Thr]", "[Val]", "[Trp]", "[Tyr]", 
                        "[UPBB]"), c("C", "H", "N", "O", "S")))
-  # add [UPBB] to the sidechain groups to get residues
+  # Add [UPBB] to the sidechain groups to get residues
   out <- A[1:21,]
   out[2:21,] <- t(t(A) + A[22,])[2:21,]
-  # make "H2O" not "water"
+  # Make "H2O" not "water"
   rownames(out)[1] <- "H2O"
   return(out)
 }

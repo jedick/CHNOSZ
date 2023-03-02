@@ -1,5 +1,5 @@
 # CHNOSZ/mosaic.R
-# calculate affinities with changing basis species
+# Calculate affinities with changing basis species
 # 20141220 jmd initial version
 # 20190129 complete rewrite to use any number of groups of changing basis species
 #   and improve speed by pre-calculating subcrt values (sout)
@@ -14,12 +14,12 @@
 mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
 
   # Argument recall 20190120
-  # if the first argument is the result from a previous mosaic() calculation,
+  # If the first argument is the result from a previous mosaic() calculation,
   # just update the remaining arguments
   if(is.list(bases)) {
     if(identical(bases[1], list(fun = "mosaic"))) {
       aargs <- bases$args
-      # we can only update arguments given in ...
+      # We can only update arguments given in ...
       ddd <- list(...)
       if(length(ddd) > 0) {
         for(i in 1:length(ddd)) {

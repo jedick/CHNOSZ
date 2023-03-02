@@ -1,15 +1,15 @@
 # CHNOSZ/data/thermo.R
-# create or restore, and access the 'thermo' data object
+# Create or restore, and access the 'thermo' data object
 
-# 20190213: move from data/thermo.R to R/thermo.R
+# 20190213: Move from data/thermo.R to R/thermo.R
 # --> invocation changes from data(thermo) to reset()
 # --> invocation changes from data(OBIGT) to OBIGT()
 
 reset <- function() {
-  # create thermo list
+  # Create thermo list
   thermodir <- system.file("extdata/thermo/", package="CHNOSZ")
   thermo <- list(
-    # as.is: keep character values as character and not factor
+    # Use as.is = TRUE to keep character values as character and not factor
     opt = as.list(read.csv(file.path(thermodir, "opt.csv"), as.is=TRUE)),
     element = read.csv(file.path(thermodir, "element.csv"), as.is=1:3),
     OBIGT = NULL,
@@ -24,7 +24,7 @@ reset <- function() {
     opar = NULL
   )
 
-  # store stoich as matrix (with non-unique row names), not data frame
+  # Store stoich as matrix (with non-unique row names), not data frame
   formula <- thermo$stoich[, 1]
   thermo$stoich <- as.matrix(thermo$stoich[, 2:ncol(thermo$stoich)])
   rownames(thermo$stoich) <- formula
@@ -40,12 +40,12 @@ reset <- function() {
   # Assemble the parameters in a single data frame
   thermo$Berman <- do.call(rbind, Berman)
 
-  # give a summary of what we are doing
+  # Message about what we are doing
   if(!"thermo" %in% ls(CHNOSZ)) packageStartupMessage("reset: creating \"thermo\" object")
   else packageStartupMessage("reset: resetting \"thermo\" object")
-  # place thermo in CHNOSZ environment
+  # Place thermo in CHNOSZ environment
   assign("thermo", thermo, CHNOSZ)
-  # run OBIGT() to add the thermodynamic data
+  # Run OBIGT() to add the thermodynamic data
   OBIGT()
 }
 
@@ -80,7 +80,7 @@ OBIGT <- function(no.organics = FALSE) {
   thermo$refs <- refs
   # Place modified thermo in CHNOSZ environment
   assign("thermo", thermo, CHNOSZ)
-  # Give a summary of some of the data
+  # Message with brief summary of the data
   packageStartupMessage(paste("OBIGT: loading", ifelse(no.organics, "inorganic", "default"), "database with",
     nrow(thermo$OBIGT[thermo$OBIGT$state == "aq",]),
     "aqueous,", nrow(thermo$OBIGT), "total species"))

@@ -95,29 +95,29 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
 
 ### Unexported function ###
 
-# calculate GHS and V corrections for quartz and coesite 20170929
+# Calculate GHS and V corrections for quartz and coesite 20170929
 # (these are the only mineral phases for which SUPCRT92 uses an inconstant volume)
 quartz_coesite <- function(PAR, T, P) {
-  # the corrections are 0 for anything other than quartz and coesite
+  # The corrections are 0 for anything other than quartz and coesite
   if(!PAR$name %in% c("quartz", "coesite")) return(list(G=0, H=0, S=0, V=0))
   ncond <- max(c(length(T), length(P)))
   # Tr, Pr and TtPr (transition temperature at Pr)
   Pr <- 1      # bar
   Tr <- 298.15 # K
   TtPr <- 848  # K
-  # constants from SUP92D.f
+  # Constants from SUP92D.f
   aa <- 549.824
   ba <- 0.65995
   ca <- -0.4973e-4
   VPtTta <- 23.348
   VPrTtb <- 23.72
   Stran <- convert(0.342, "J")
-  # constants from REAC92D.f
+  # Constants from REAC92D.f
   VPrTra <- 22.688 # VPrTr(a-quartz)
   Vdiff <- 2.047   # VPrTr(a-quartz) - VPrTr(coesite)
   k <- 38.5       # dPdTtr(a/b-quartz)
   #k <- 38.45834    # calculated in CHNOSZ: dPdTtr(info("quartz"))
-  # code adapted from REAC92D.f
+  # Code adapted from REAC92D.f
   qphase <- gsub("cr", "", PAR$state)
   if(qphase == 2) {
     Pstar <- P
@@ -143,7 +143,6 @@ quartz_coesite <- function(PAR, T, P) {
     k * (ba + aa * ca * k) * (T - Tr) * log((aa + P/k) / (aa + Pstar/k)))
   SVterm <- cm3bar_to_J * (-k * (ba + aa * ca * k) *
     log((aa + P/k) / (aa + Pstar/k)) + ca * k * (P - Pstar)) - Sstar
-  # note the minus sign on "SVterm" in order that intdVdTdP has the correct sign
+  # Note the minus sign on "SVterm" in order that intdVdTdP has the correct sign
   list(intVdP=GVterm, intdVdTdP=-SVterm, V=V)
 }
-

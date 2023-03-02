@@ -15,7 +15,7 @@
 # 'pressure       - The pressure to calculate the density of water at, in bars
 # 'temperature    - The temperature to calculate the density of water at, in Celsius
 # 'error          - The density returned will calculate a pressure which differs from the input pressure by the value of "error" or less.
-# the default value of error is taken from equations in DEW spreadsheet (table "Calculations")
+# The default value of error is taken from equations in DEW spreadsheet (table "Calculations")
 calculateDensity <- function(pressure, temperature, error = 0.01) {
   myfunction <- function(pressure, temperature) {
     minGuess <- 1E-05
@@ -46,10 +46,10 @@ calculateDensity <- function(pressure, temperature, error = 0.01) {
     }
     calculateDensity
   }
-  # make input pressure and temperature the same length
+  # Make input pressure and temperature the same length
   if(length(pressure) < length(temperature)) pressure <- rep(pressure, length.out=length(temperature))
   if(length(temperature) < length(pressure)) temperature <- rep(temperature, length.out=length(pressure))
-  # use a loop to process vectorized input
+  # Use a loop to process vectorized input
   sapply(1:length(pressure), function(i) myfunction(pressure[i], temperature[i]))
 }
 
@@ -87,10 +87,10 @@ calculateGibbsOfWater <- function(pressure, temperature) {
     }
     GAtOneKb + integral
   }
-  # make input pressure and temperature the same length
+  # Make input pressure and temperature the same length
   if(length(pressure) < length(temperature)) pressure <- rep(pressure, length.out=length(temperature))
   if(length(temperature) < length(pressure)) temperature <- rep(temperature, length.out=length(pressure))
-  # use a loop to process vectorized input
+  # Use a loop to process vectorized input
   sapply(1:length(pressure), function(i) myfunction(pressure[i], temperature[i]))
 }
 
@@ -125,7 +125,7 @@ calculateQ <- function(density, temperature) {
   depsdrho * drhodP / eps ^2
 }
 
-### unexported functions ###
+### Unexported functions ###
 
 # 'Returns the pressure of water corresponding to the input density and temperature, in units of bars.
 # 'density        - The density to use in finding a pressure, in g/cm^3
@@ -200,7 +200,7 @@ calculate_depsdrho <- function(density, temperature) {
   A * exp(B) * density ^ (A - 1)
 }
 
-### testing functions ###
+### Testing functions ###
 # These unexported functions are included for testing purposes only.
 # In CHNOSZ, the g function and omega(P,T) are calculated via hkf().
 
@@ -241,7 +241,7 @@ calculateG <- function(pressure, temperature, density) {
       (-1.504956E-10 * (1000 - P)^3 + 5.017997E-14 * (1000 - P)^4)
   f[P > 1000 | T < 155 | T > 355] <- 0
   g <- a_g * (1 - density)^b_g - f
-  # use g = 0 for density >= 1
+  # Use g = 0 for density >= 1
   g[density >= 1] <- 0
   g
 }

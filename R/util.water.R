@@ -1,15 +1,15 @@
 # CHNOSZ/util.water.R
 
 WP02.auxiliary <- function(property='rho.liquid',T=298.15) {
-  # auxiliary equations for liquid-vapor phase boundary
-  # from Wagner and Pruss, 2002
-  # critical point
+  # Auxiliary equations for liquid-vapor phase boundary
+  # From Wagner and Pruss, 2002
+  # Critical point
   T.critical <- 647.096 # K
   P.critical <- 22.064 # MPa
   rho.critical <- 322 # kg m-3
 
   if(property %in% c("P.sigma","dP.sigma.dT")) {
-    # vapor pressure
+    # Vapor pressure
     V <- 1 - T / T.critical # theta (dimensionless)
     a1 <- -7.85951783
     a2 <- 1.84408259
@@ -24,7 +24,7 @@ WP02.auxiliary <- function(property='rho.liquid',T=298.15) {
       a1 + 1.5*a2*V^0.5 + 3*a3*V^2 + 3.5*a4*V^2.5 + 4*a5*V^3 + 7.5*a6*V^6.5 )
     else out <- P.sigma
   } else if(property=="rho.liquid") {
-    # saturated liquid density
+    # Saturated liquid density
     V <- 1 - T / T.critical
     b1 <- 1.99274064
     b2 <- 1.09965342
@@ -36,7 +36,7 @@ WP02.auxiliary <- function(property='rho.liquid',T=298.15) {
       1 + b1*V^(1/3) + b2*V^(2/3) + b3*V^(5/3) + b4*V^(16/3) + b5*V^(43/3) + b6*V^(110/3) )
     out <- rho.liquid
   } else if(property=="rho.vapor") {
-  # saturated vapor density
+  # Saturated vapor density
     V <- 1 - T / T.critical
     c1 <- -2.03150240
     c2 <- -2.68302940
@@ -51,12 +51,12 @@ WP02.auxiliary <- function(property='rho.liquid',T=298.15) {
   return(out)
 }
 
-# return a density in kg m-3
+# Return a density in kg m-3
 # corresponding to the given pressure (bar) and temperature (K)
 rho.IAPWS95 <- function(T=298.15, P=1, state="", trace=0) {
-  # function for which to find a zero
+  # Function for which to find a zero
   dP <- function(rho, T, P.MPa) IAPWS95("P", rho=rho, T=T)[, 1] - P.MPa
-  # convert bar to MPa
+  # Convert bar to MPa
   P.MPa <- convert(P, "MPa")
   rho <- numeric()
   T.critical <- 647.096 # K
@@ -64,31 +64,31 @@ rho.IAPWS95 <- function(T=298.15, P=1, state="", trace=0) {
   for(i in 1:length(T)) {
     Psat <- WP02.auxiliary("P.sigma", T[i])
     if(T[i] > T.critical) {
-      # above critical temperature
+      # Above critical temperature
       interval <- c(0.1, 1)
       extendInt <- "upX"
       if(trace > 0) message("supercritical (T) ", appendLF=FALSE)
     } else if(P.MPa[i] > P.critical) {
-      # above critical pressure
+      # Above critical pressure
       rho.sat <- WP02.auxiliary("rho.liquid", T=T[i])
       interval <- c(rho.sat, rho.sat + 1)
       extendInt <- "upX"
       if(trace > 0) message("supercritical (P) ", appendLF=FALSE)
     } else if(P.MPa[i] <= 0.9999*Psat) {
-      # steam
+      # Steam
       rho.sat <- WP02.auxiliary("rho.vapor", T=T[i])
       interval <- c(rho.sat*0.1, rho.sat)
       extendInt <- "upX"
       if(trace > 0) message("steam ", appendLF=FALSE)
     } else if(P.MPa[i] >= 1.00005*Psat) {
-      # water
+      # Water
       rho.sat <- WP02.auxiliary("rho.liquid", T=T[i])
       interval <- c(rho.sat, rho.sat + 1)
       extendInt <- "upX"
       if(trace > 0) message("water ", appendLF=FALSE)
     } else if(!state %in% c("liquid", "vapor")) {
-      # we're close to the saturation curve;
-      # calculate rho and G for liquid and vapor and return rho for stable phase
+      # We're close to the saturation curve;
+      # Calculate rho and G for liquid and vapor and return rho for stable phase
       if(trace > 0) message("close to saturation; trying liquid and vapor")
       rho.liquid <- rho.IAPWS95(T[i], P[i], state="liquid", trace=trace)
       rho.vapor <- rho.IAPWS95(T[i], P[i], state="vapor", trace=trace)
@@ -104,14 +104,14 @@ rho.IAPWS95 <- function(T=298.15, P=1, state="", trace=0) {
       rho <- c(rho, this.rho)
       next
     } else {
-      # we are looking at a specific state
+      # We are looking at a specific state
       if(trace > 0) message(paste("specified state:", state, " "), appendLF=FALSE)
       if(state=="vapor") rho0 <- WP02.auxiliary("rho.vapor", T[i])
       else if(state=="liquid") rho0 <- WP02.auxiliary("rho.liquid", T[i])
-      # a too-big range may cause problems e.g.
+      # A too-big range may cause problems e.g.
       # interval <- c(rho0*0.9, rho0*1.1) fails for T=253.15, P=1
       interval <- c(rho0*0.95, rho0*1.05)
-      # if P on the initial interval are both higher or lower than target P,
+      # If P on the initial interval are both higher or lower than target P,
       # set the direction of interval extension
       P.init <- IAPWS95("P", rho=interval, T=c(T[i], T[i]))[, 1]
       if(all(P.init < P.MPa[i])) extendInt <- "downX"
@@ -148,7 +148,7 @@ water.AW90 <- function(T=298.15,rho=1000,P=0.1) {
   M <- 0.0180153 # kg mol-1
   rho.0 <- 1000 # kg m-3
   # Equation 1
-  epsilon.0 <- 8.8541878E-12 # permittivity of vacuum, C^2 J-1 m-1
+  epsilon.0 <- 8.8541878E-12 # Permittivity of vacuum, C^2 J-1 m-1
   #epsfun.lhs <- function(e) (e-1)*(2*e+1)/(9*e)
   epsfun.rhs <- function(T,V.m) N.A*(alpha+mufun()/(3*epsilon.0*k*T))/(3*V.m)
   #epsfun <- function(e,T,V.m) epsfun.lhs(e) - epsfun.rhs(T,V.m)
@@ -168,7 +168,7 @@ water.AW90 <- function(T=298.15,rho=1000,P=0.1) {
     }
     return(tu)
   }
-  # get things the right length
+  # Get things into the right length
   our.T <- T; our.rho <- rho; our.P <- P
   t <- numeric()
   for(i in 1:length(our.T)) {

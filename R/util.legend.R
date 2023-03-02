@@ -1,5 +1,5 @@
 # CHNOSZ/util.legend.R
-# functions for making legend text
+# Functions for making legend text
 # 20190530 jmd first version
 
 lNaCl <- function(x, digits = 2) substitute(italic(m)[NaCl] == x~mol~kg^-1, list(x = round(x, digits)))
