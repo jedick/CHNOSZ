@@ -41,8 +41,8 @@ reset <- function() {
   thermo$Berman <- do.call(rbind, Berman)
 
   # give a summary of what we are doing
-  if(!"thermo" %in% ls(CHNOSZ)) message("reset: creating \"thermo\" object")
-  else message("reset: resetting \"thermo\" object")
+  if(!"thermo" %in% ls(CHNOSZ)) packageStartupMessage("reset: creating \"thermo\" object")
+  else packageStartupMessage("reset: resetting \"thermo\" object")
   # place thermo in CHNOSZ environment
   assign("thermo", thermo, CHNOSZ)
   # run OBIGT() to add the thermodynamic data
@@ -81,7 +81,7 @@ OBIGT <- function(no.organics = FALSE) {
   # Place modified thermo in CHNOSZ environment
   assign("thermo", thermo, CHNOSZ)
   # Give a summary of some of the data
-  message(paste("OBIGT: loading", ifelse(no.organics, "inorganic", "default"), "database with",
+  packageStartupMessage(paste("OBIGT: loading", ifelse(no.organics, "inorganic", "default"), "database with",
     nrow(thermo$OBIGT[thermo$OBIGT$state == "aq",]),
     "aqueous,", nrow(thermo$OBIGT), "total species"))
   # Warn if there are duplicated species
