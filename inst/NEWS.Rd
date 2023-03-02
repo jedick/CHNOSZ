@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-57 (2023-02-15)}{
+\section{Changes in CHNOSZ version 1.9.9-63 (2023-03-02)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -161,14 +161,12 @@
       \code{subcrt()} should be used for all calculations of thermodynamic
       properties.
 
-      \item \code{EOSregress()} and the associated demo and vignette have been
-      removed.
+      \item Remove \code{EOSregress()} and the associated demo and vignette.
 
-      \item Remove parallel calculations in \code{read.fasta()} and
-      \code{count.aa()} (they just made things slower in my tests).
+      \item Remove parallel calculations in \code{read.fasta()} and \code{count.aa()}.
 
-      \item Remove \code{revisit()} and \code{findit()} (functions for
-      \dQuote{computations on chemical activities} in the extended workflow).
+      \item Remove \code{revisit()}, \code{findit()}, \code{uniprot.aa()},
+      \code{nucleic.formula()}, and \code{nucleic.complement()}.
 
     }
   }

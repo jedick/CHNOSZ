@@ -2,7 +2,6 @@
 \name{util.fasta}
 \alias{util.fasta}
 \alias{read.fasta}
-\alias{uniprot.aa}
 \alias{count.aa}
 \title{Functions for Reading FASTA Files and Downloading from UniProt}
 
@@ -14,7 +13,6 @@
   read.fasta(file, iseq = NULL, ret = "count", lines = NULL, 
     ihead = NULL, start=NULL, stop=NULL, type="protein", id = NULL)
   count.aa(seq, start=NULL, stop=NULL, type="protein")
-  uniprot.aa(protein, start=NULL, stop=NULL)
 }
 
 \arguments{
@@ -28,7 +26,6 @@
   \item{type}{character, sequence type (protein or DNA)}
   \item{id}{character, value to be used for \code{protein} in output table}
   \item{seq}{character, amino acid sequence of a protein}
-  \item{protein}{character, entry name for protein in UniProt}
 }
 
 \details{
@@ -47,10 +44,6 @@ The matching of letters is case-insensitive.
 A warning is generated if any character in \code{seq}, excluding spaces, is not one of the single-letter amino acid or nucleobase abbreviations.
 \code{start} and/or \code{stop} can be provided to count a fragment of the sequence (extracted using \code{\link{substr}}).
 If only one of \code{start} or \code{stop} is present, the other defaults to 1 (\code{start}) or the length of the sequence (\code{stop}).
-
-\code{uniprot.aa} returns a data frame of amino acid composition, in the format of \code{thermo()$protein}, retrieved from the protein sequence if it is available from UniProt (\url{https://www.uniprot.org/}).
-The \code{protein} argument corresponds to the \samp{Entry name} on the UniProt search pages.
-
 }
 
 \value{
@@ -59,7 +52,6 @@ The \code{protein} argument corresponds to the \samp{Entry name} on the UniProt 
 
 \seealso{
 \code{\link{seq2aa}}, like \code{count.aa}, counts amino acids in a user-input sequence, but returns a data frame in the format of \code{thermo()$protein}.
-\code{\link{nucleic.formula}} for an example of counting nucleobases in a DNA sequence.
 }
 
 \examples{\dontshow{reset()}
@@ -74,23 +66,6 @@ aa <- read.fasta(file)
 protein.length(aa)
 
 \dontrun{
-# download amino acid composition of a protein
-# start at position 2 to remove the initiator methionine
-aa <- uniprot.aa("ALAT1_HUMAN", start=2)
-# change the name from "sp|P24298" to "ALAT1" 20201110
-aa$protein <- "ALAT1"
-# add it to thermo()$protein
-ip <- add.protein(aa)
-# now it's possible to calculate some properties
-protein.length(ip)
-protein.formula(ip)
-subcrt("ALAT1_HUMAN", c("cr", "aq"), c(-1, 1))
-# the amino acid composition can be saved for future use
-write.csv(aa, "saved.aa.csv", row.names=FALSE)
-# in another R session, the protein can be loaded without using uniprot.aa()
-aa <- read.csv("saved.aa.csv", as.is=TRUE)
-add.protein(aa)
-
 ## count amino acids in a sequence
 count.aa("GGSGG")
 # warnings are issued for unrecognized characters

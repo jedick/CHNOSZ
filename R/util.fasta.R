@@ -105,50 +105,6 @@ read.fasta <- function(file, iseq=NULL, ret="count", lines=NULL, ihead=NULL,
   } else return(sequences)
 }
 
-uniprot.aa <- function(protein, start=NULL, stop=NULL) {
-  # Download protein sequence information from UniProt
-  iprotein <- numeric()
-  # Construct the initial URL
-  proteinURL <- paste("https://www.uniprot.org/uniprot/", protein, sep="")
-  message("uniprot.aa: trying ", proteinURL, " ...", appendLF=FALSE)
-  # Try loading the URL, hiding any warnings
-  oldopt <- options(warn=-1)
-  URLstuff <- try(readLines(proteinURL),TRUE)
-  options(oldopt)
-  if(inherits(URLstuff, "try-error")) {
-    message(" ::: FAILED :::")
-    return(NA)
-  }
-  # 20091102: Look for a link to a fasta file
-  link <- grep("/uniprot/.*fasta", URLstuff)
-  if(length(link) > 0) linkline <- URLstuff[[link[1]]]
-  else {
-    message(" ::: FAILED :::")
-    return(NA)
-  }
-  # Extract accession number from the link
-  linkhead <- strsplit(linkline, ".fasta", fixed=TRUE)[[1]][1]
-  accession.number <- tail(strsplit(linkhead, "/uniprot/", fixed=TRUE)[[1]], 1)
-  message(" accession ", accession.number, " ...")
-  # Now download the fasta file
-  fastaURL <- paste("https://www.uniprot.org/uniprot/", accession.number, ".fasta", sep="")
-  URLstuff <- readLines(fastaURL)
-  # Get the header information / show  the user
-  header <- URLstuff[[1]]
-  header3 <- strsplit(header, "|", fixed=TRUE)[[1]][3]
-  headerP_O <- strsplit(header3, " ")[[1]][1]
-  header.id <- strsplit(header, headerP_O)[[1]][1]
-  header.id <- substr(header.id, 2, nchar(header.id)-1)
-  header.organism <- strsplit(headerP_O, "_")[[1]][2]
-  message(paste0(header), appendLF=FALSE)
-  # 20130206 Use read.fasta with lines, start, stop arguments
-  aa <- read.fasta(file="", lines=URLstuff, start=start, stop=stop)
-  message(" (length ", sum(aa[1, 6:25]), ")", sep="")
-  aa$protein <- header.id
-  aa$organism <- header.organism
-  return(aa)
-}
-
 count.aa <- function(seq, start=NULL, stop=NULL, type="protein") {
   # Count amino acids or DNA bases in one or more sequences given as elements of the list seq
   if(type=="protein") letts <- aminoacids(1)

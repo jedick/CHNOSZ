@@ -73,7 +73,7 @@ aasum(aa, protein = "POLG_sum")
 }
 
 \seealso{
-\code{\link{read.fasta}} and \code{\link{uniprot.aa}} for other ways of getting amino acid compositions that can be used with \code{add.protein}.
+\code{\link{read.fasta}} for another way of getting amino acid compositions that can be used with \code{add.protein}.
 
 \code{\link{pinfo}} for protein-level functions (length, chemical formulas, reaction coefficients of basis species).
 }

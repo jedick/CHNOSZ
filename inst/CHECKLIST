@@ -1,14 +1,12 @@
 ****************************
 Release checklist for CHNOSZ
-    (updated 2022-02-08)
+    (updated 2023-03-02)
 ****************************
 
 - Run examples() and demos() and inspect their output (especially plots)
 
 - Run the package tests with:
   suppressMessages(tinytest::test_package("CHNOSZ", at_home = TRUE))
-
-- Check that uniprot.aa() works with current UniProt web pages
 
 - Check reverse dependencies on CRAN: canprot, accucor, ecipex, iemisc, LipidMS as of 2019-08-02
 

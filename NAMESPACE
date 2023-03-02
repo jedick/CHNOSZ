@@ -20,7 +20,7 @@ export(
   "mass", "entropy", "GHS", "water",
   "i2A",
   "dPdTtr", "Ttr",
-  "count.aa", "nucleic.complement", "nucleic.formula",
+  "count.aa",
   "rho.IAPWS95", "IAPWS95", "water.AW90", "WP02.auxiliary", "water.IAPWS95",
   "getrank", "parent", "sciname", "allparents", "getnodes", "getnames",
   "protein.OBIGT", "which.pmax",
@@ -41,7 +41,7 @@ export(
   "checkEOS", "checkGHS", "check.OBIGT",
   "basis.elements", "element.mu", "ibasis",
   "water.SUPCRT92",
-  "nonideal", "uniprot.aa",
+  "nonideal",
 # added 20170301 or later
   "GHS_Tr", "calculateDensity", "calculateGibbsOfWater",
   "calculateEpsilon", "calculateQ", "water.DEW", "Berman",
