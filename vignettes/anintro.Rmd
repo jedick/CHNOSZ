@@ -1467,7 +1467,7 @@ Besides this vignette, here's where to look for more information about the datab
 
 - Be sure to read the help page at <span style="color:blue">`?thermo`</span> for information about the format of the OBIGT data frame.
 - See the vignette [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) for a summary of all sources for the default database and optional data files.
-- See the vignette [<span style="color:blue">*Customizing the thermodynamic database*</span>](customizing.html) for a broader description of the structure of OBIGT, data entry conventions, and examples of adding species to the database.
+- See the vignette [<span style="color:blue">*Customizing the thermodynamic database*</span>](custom_data.html) for a broader description of the structure of OBIGT, data entry conventions, and examples of adding species to the database.
 
 ## Viewing data sources: <span style="color:green">`thermo.refs()`</span>
 

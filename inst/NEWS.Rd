@@ -88,7 +88,7 @@
       \samp{omega} HKF coefficients) to formation constants of aqueous species
       as a function of temperature.
 
-      \item Add vignette \viglink{customizing} with description of database
+      \item Add vignette \viglink{custom_data} with description of database
       format, data-entry conventions, and examples of customizing the
       thermodynamic database using \code{add.OBIGT()}, \code{mod.OBIGT()}, and
       \code{logB.to.OBIGT()}.

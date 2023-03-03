@@ -64,6 +64,8 @@ subcrt_ <- '<code style="color: green;">subcrt()</code>'
 affinity_ <- '<code style="color: green;">affinity()</code>'
 thermo.refs_ <- '<code style="color: green;">thermo.refs()</code>'
 thermo_ <- '<code style="color: green;">thermo()</code>'
+checkGHS_ <- '<code style="color: green;">checkGHS()</code>'
+checkEOS_ <- '<code style="color: green;">checkEOS()</code>'
 # Math stuff
 logK <- "log&thinsp;<i>K</i>"
 logB <- "log&thinsp;&beta;"
@@ -82,46 +84,47 @@ A third function, `r logB.to.OBIGT_`, is provided to fit thermodynamic parameter
 
 Before describing the methods to add or modify data, some notes on the basic structure of the database and data entry conventions are given.
 Column names (or parts thereof) are formatted in blue (e.g. `r formula`), and important notes are highlighted in yellow (`r NOTE`).
-Function names in CHNOSZ are colored red for functions that have side effects (including those that modify the database; e.g. `r add.OBIGT_`) and green for functions that don't have side effects (e.g. `r subcrt_`).
+Function names in CHNOSZ are colored red for functions that have side effects (including those that modify the database; e.g. `r add.OBIGT_`) and green for functions that don't have side effects.
+Note that `r info_` is used for querying the OBIGT thermodynamic database, and `r subcrt_` is the main function in CHNOSZ for calculating standard thermodynamic properties as a function of temperature and pressure from the parameters in the database.
 
 <!-- ######## SECTION MARKER ######## -->
 ## Basic structure of OBIGT
 
 OBIGT is the name of the thermodynamic database in CHNOSZ.
-The data are distributed in CSV files files in the `inst/extdata/OBIGT` directory of the CHNOSZ package.
+The data are distributed in CSV files in the `inst/extdata/OBIGT` directory of the CHNOSZ package.
 When the package is installed, the files are copied to the `exdata/OBIGT` directory of the installed package location.
-To see where this is on your computer, run the following command.
+To find out where this is on your computer, run the following command.
 
 ```{r system.file}
 system.file("extdata/OBIGT", package = "CHNOSZ")
 ```
 
 The directory path on your computer will be different.
-Although possible, it is recommended **NOT** to edit the data files at that location.
-This is because they will be overwritten by any package updates; also, it is good practice to keep all the files needed for your project in a project directory.
+Although possible, it is **NOT** recommended to edit the data files at that location.
+This is because they will be overwritten by package updates; moreover, it is good practice to keep all the files needed for your project in a project directory.
 
-This lists the files in that directory:
+This lists the files in the installation directory:
 
 ```{r dir.system.file}
 dir(system.file("extdata/OBIGT", package = "CHNOSZ"))
 ```
 
 Some of these files are used to build the default OBIGT database that is created when CHNOSZ starts up.
-There are also a number of optional data files that have additional non-default datasets.
-The OBIGT vignette summarizes the contents of the default and optional data files.
+There are also a number of additional data files that have optional datasets.
+The [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) vignette summarizes the contents of the default and optional data files.
 The files can also be opened by a spreadsheet program and used as templates for adding data yourself.
 
-OBIGT is a data frame that is populated with default CSV data files when CHNOSZ starts up or by using the `r reset_` or `r OBIGT_` functions.
+`thermo()$OBIGT` (hereafter, just OBIGT) is the "live" version of the database that is assembled from the CSV data files when CHNOSZ starts up or by using the `r reset_` or `r OBIGT_` functions.
 The OBIGT data frame is stored in an environment named `CHNOSZ` that is part of the namespace of the CHNOSZ package.
 More specifically, it is part of a list named `thermo`, which has the OBIGT database and other parameters and settings used by CHNOSZ.
 `r reset_` restores the entire `thermo` object to default values; `r OBIGT_` restores just the OBIGT data frame.
-The latter is useful for situations where you are calculating chemical affinities (with `r affinity_`) and want to see the effects of changing the thermodynamic database.
+The latter is useful for seeing the effects of changing the thermodynamic database on on chemical affinities calculated with `r affinity_`, without changing the chemical species.
 
-OBIGT can be changed during an R session; if it couldn't, this vignette would not be possible!
-R has the capability of saving your workspace when quitting R and loading it when R is restarted.
-(This is not a feature I use; my preference is to load data into a fresh session every time I start R.)
-This "load saved workspace" feature means that the content of OBIGT might not be the default database, even if R has just been started.
-To ensure that this vignette is run using the default database, we will use `r reset_` to reset OBIGT and the other settings used by CHNOSZ.
+OBIGT can be modified during an R session; if it couldn't, some of the examples in this vignette would not be possible!
+When you quit R, it offers the option of saving your workspace so it can be reloaded it when R is restarted.
+I always say "no" here; my preference is to load data into a fresh session every time I start R.
+This "load saved workspace" feature means that OBIGT might not be the default database in any given R session.
+To ensure that this vignette is run using the default database, we start by running `r reset_` to reset OBIGT and the other settings used by CHNOSZ.
 
 ```{r reset_}
 reset()
@@ -136,26 +139,27 @@ head(thermo()$OBIGT)
 
 <!-- ######## SECTION MARKER ######## -->
 ## Conventions for data entry in OBIGT
-Types of data, required and optional data, order-of-magnitude scaling and `r info_`.
 
-The format of OBIGT is described in the CHNOSZ manual: see `?thermo`.
-Next, we point out some special conventions.
+The format of OBIGT is described in the CHNOSZ manual: see `r thermo_`.
+Next, we point out some particular conventions including types of data, required and optional data, order-of-magnitude scaling.
 Here are the numbered column names for reference:
 
 ```{r colnames.OBIGT, echo = FALSE}
-paste(1:21, colnames(thermo()$OBIGT))
+paste(1:22, colnames(thermo()$OBIGT))
 ```
 
 ### Types of data
 
-- Columns 1-8 have character data.
-- Columns 9-21 have numeric data.
-  - Columns 9-13 have standard-state thermodynamic properties at 25 °C and 1 bar.
-  - Columns 14-20 have parameters for calculating thermodynamic properties at other temperatures and pressures. There are two main `r model`s:
-    - Revised Helgeson-Kirkham-Flowers "equation-of-state" parameters for aqueous species (HKF)
-    - Heat capacity coefficients for crystalline, gaseous, and liquid species (CGL).
+- Columns 1--9 have character data.
+  - Column 8 is named `r model`; here are the two models that are most frequent in the default database:
+    - `HKF`: Revised Helgeson-Kirkham-Flowers "equation-of-state" parameters for aqueous species
+    - `CGL`: Heat capacity coefficients for crystalline, gaseous, and liquid species. The first three terms in the CGL heat capacity equation correspond to the Maier-Kelley equation for heat capacity [@MK32]; the additional terms are useful for representing heat capacities of minerals [@RH95] and organic gases and liquids [@HOKR98].
+- Columns 10--22 have numeric data.
+  - Columns 10--14 have standard-state thermodynamic properties at 25 °C and 1 bar.
+  - Columns 15--21 have parameters for calculating thermodynamic properties at other temperatures and pressures.
     - The columns are named by combining the the names of the HKF and CGL coefficients, separated by a dot.
-  - Column 21 has the charge used in the HKF EOS or the maximum temperature for CGL species. The HKF EOS parameter for charge (*Z*), which appears in the *g* function for the temperature derivatives of the &omega; parameter [@SOJSH92], is taken from this column and not from the chemical formula of the species.
+  - Column 22 has the charge used in the HKF EOS or the maximum temperature for CGL species.
+    - `r NOTE`: The value of charge used in the HKF EOS (in particular, the *g* function for the temperature derivatives of the &omega; parameter [@SOJSH92]) is taken from this column and not from the chemical formula of the species.
 
 ### Ranges of HKF and CGL models
 
@@ -166,7 +170,6 @@ There are two ways in which these limits are enforced in CHNOSZ:
   Note that the Deep Earth Water (DEW) model is available to extend the applicable range to pressures of up to 60 kbar (6 GPa) [@SHA14].
 - `r subcrt_` generates NA values beyond the density limit; the `exceed.rhomin` argument can be used to enable calculations at lower density in the supercritical region.
 
-The first three terms in the CGL heat capacity equation correspond to the Maier-Kelley equation for heat capacity [@MK32]; the additional terms are useful for representing heat capacities of minerals [@RH95] and organic gases and liquids [@HOKR98].
 The upper temperature limit for applicability of the CGL heat-capacity equation corresponds to the temperature of phase transition or to a temperature beyond which extrapolations from experimental data becomes highly uncertain.
 A maximum temperature can be stored in the final column of OBIGT, and is used by `r subcrt_` to replace computed values with NA above the maximum.
 
@@ -175,11 +178,15 @@ A maximum temperature can be stored in the final column of OBIGT, and is used by
 REQUIRED: 
 
 - All species need a `r name` and a `r state`.
-  The state can be one of `aq`, `gas`, or `cr`.
-  For minerals with higher-temperature polymorphs, they are named `cr2`, `cr3`, etc.
-  `r NOTE`: `cr` stands for "crystalline"; this naming convention (which was inherited from SUPCRT92 data files) refers to any solid phases including amorphous SiO<sub>2</sub> and other minerals.
-- A chemical `r formula` is required to do almost anything useful in CHNOSZ (e.g. check reaction balancing with `r subcrt_` and add species with `r basis_` or `r species_`). `r NOTE`: The `r name` of *inorganic* aqueous species *and CH<sub>4</sub>* in OBIGT is the same as the chemical formula. Most minerals, gases, liquids, and organic aqueous species have a `r name` that is a common name. This permits a shortcut to identify commonly used species in `r subcrt_`: `O2` without a state refers to dissolved oxygen, while `oxygen` refer to the gas.
-- Likewise, `E_units` needs to be specified to perform any calculations of thermodynamic properties. The value can be `J` for Joules or `cal` for calories.
+  - The state can be one of `aq`, `gas`, or `cr`.
+  - For minerals with higher-temperature polymorphs, they are named `cr2`, `cr3`, etc.
+  - `r NOTE`: `cr` stands for "crystalline"; this naming convention (which was inherited from SUPCRT92 data files) refers to any solid phases including amorphous SiO<sub>2</sub> and other minerals.
+- A chemical `r formula` is required to do almost anything useful in CHNOSZ (e.g. check reaction balancing with `r subcrt_` and add species with `r basis_` or `r species_`).
+  - `r NOTE`: The `r name` of *inorganic* aqueous species *and CH<sub>4</sub>* in OBIGT is the same as the chemical formula.
+  - Most minerals, gases, liquids, and organic aqueous species have a `r name` that is a common name. This permits a shortcut to identify commonly used species in `r subcrt_`.
+  - For example, `info("O2")` refers to dissolved oxygen, while `info("oxygen")` or `info("O2", "gas")` refers to the gas.
+- `E_units` needs to be defined to perform any calculations of thermodynamic properties.
+  - The value can be `J` for Joules or `cal` for calories.
 
 OPTIONAL: Everything else.
 Really, it depends on what you need.
@@ -187,37 +194,38 @@ For instance, if you just want to use `r subcrt_` to calculate `r logK` of a rea
 
 OPTIONAL but useful:
 
-- `r abbrv` *can be* an abbreviation (e.g. Qtz for quartz). It is used by `r info_` (together with `r name` and `r formula`) to look up species in the database.
+- `r abbrv` *may be* an abbreviation (e.g. Qtz for quartz). It is used by `r info_` (together with `r name` and `r formula`) to look up species in the database.
 - `r date` is a timestamp for the data entry (YYYY-MM-DD format in the default OBIGT database).
-- `r ref1` and `r ref2` are bibliographic reference keys. They have matching entries in `extdata/OBIGT/refs.csv`, which is used by `r thermo.refs_` to display references, and in `vignettes/OBIGT.bib`, which is used in the OBIGT.Rmd vignette to produce a reference list. 
+- `r ref1` and `r ref2` are bibliographic reference keys. They have matching entries in `extdata/OBIGT/refs.csv`, which is used by `r thermo.refs_` to display references, and in `vignettes/OBIGT.bib`, which is used in the [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) vignette to produce a reference list. 
   
 `r NOTE`: Other functions in CHNOSZ do not depend on `r date`, `r ref1`, and `r ref2`, so you can put anything there that is convenient for you.
 
 ### NA or 0?
 
-If a character value or thermodynamic parameter (Columns 1-13) is unknown, use `NA`.
+If a character value (in Columns 1--9) or thermodynamic parameter (in Columns 10--14) is unknown, use `NA`.
 Note that a missing (blank) value in the file is treated as NA.
 
-- Unknown values for character values (Columns 1-8) should be NA.
-- If you have only two of G, H, and S, then the missing one should be NA (definitely not 0). `r NOTE`: `r info_` and dependent functions (particularly `r subcrt_`) "know" the equation DG = DGH - TDS; together with the entropies of the elements, this equation is used to compute a single missing one of `r G_`, `r H_`, or `r S_` from the other two.
+- Unknown values for character values (usually `r abbrv`, `r date`, `r ref1`, or `r ref2`) should be NA.
+- If you have only two of `r G_`, `r H_`, and `r S_`, then the missing one should be NA.
+  - Do **NOT** set a missing value of `r G_`, `r H_`, or `r S_` to 0. Zero is a numeric value that is incorrect except for very special cases.
+  - `r NOTE`: `r info_` -- and, by extension, `r subcrt_` -- "know" about the equation &Delta;<i>G</i>&deg;<sub><i>f</i></sub> = &Delta;<i>H</i>&deg;<sub><i>f</i></sub> - <i>T</i>&Delta;<i>S</i>&deg;<sub><i>f</i></sub> and the entropies of the elements needed to calculate &Delta;<i>S</i>&deg;<sub><i>f</i></sub> from values of `r S_` in OBIGT. This equation is used to compute a missing value of `r G_`, `r H_`, or `r S_` from the other two, or to cross-check the values if all three are present for any species.
 - If you don't have `r Cp_` or `r V_`, then set it to NA.
-  - If HKF or CGL parameters are present: they will be used to calculate `r Cp_`, so thermodynamic properties *can* be calculated at T > 25 °C.
-  - If HKF or CGL parameters aren't present: thermodynamic properties *can't* be calculated at T > 25 °C (NAs will propagate to higher T).
+  - If HKF or CGL parameters are present, they will be used to calculate `r Cp_`, so thermodynamic properties *can* be calculated at T > 25 °C.
+  - If HKF or CGL parameters aren't present, thermodynamic properties *can't* be calculated at T > 25 °C (NAs will propagate to higher T).
 
-If an "equation-of-state" or heat capacity coefficient (Columns 14-20) is unknown, use 0.
+If an "equation-of-state" parameter or heat capacity coefficient (Columns 15-21) is unknown, use 0.
 
 - Furthermore, if you would like to assume that `r Cp_` or `r V_` is 0, then set it to 0.
-  - Thermodynamic properties will be extrapolated to T > 25 °C and P > 1 bar assuming that `r Cp_` and `r V_` are 0.
+  - Then, thermodynamic properties will be extrapolated to T > 25 °C and P > 1 bar assuming that `r Cp_` and `r V_` are 0.
 
 More detail on the inner working of the functions: For both HKF and CGL, if at least one parameter for a species is provided, any NA values of the other parameters are taken to be zero.
 If all EOS parameters are NA, but values of `r Cp_` and/or `r V_` are present, they are assumed to be constants for extrapolating thermodynamic properties (e.g. `r DG_0`) as a function of temperature and pressure.
 
 ### OOM scaling and `r info_`
 
-To make data entry easier, some values in the the CSV files and OBIGT data frame are scaled by order-of-magnitude (OOM) factors.
-This is particularly applicable to HKF parameters, for which OOM scaling is nearly always used in published data tables.
-OOM scaling is also applied to the CGL parameters.
-See `?thermo` for details of the OOM scaling.
+HKF parameters in the the CSV files and OBIGT data frame are scaled by order-of-magnitude (OOM) factors.
+For these parameters, OOM scaling is nearly always used in published data tables.
+See `r thermo_` for details of the OOM scaling.
 
 `r info_` provides a simple user interface to the OBIGT database and is called by other functions in CHNOSZ to retrieve unscaled values from the database.
 This is a summary of its main features:
@@ -225,9 +233,9 @@ This is a summary of its main features:
 - Remove OOM scaling. This is used primarily by other functions in CHNOSZ to get a set of unscaled `r model` parameters for calculating thermodynamic properties as a function of T and P.
 - Extract the HKF or CGL parts of column names (only if all matching species have the same `r model`).
 - Calculate a missing one of `r G_`, `r H_`, or `r S_` if two of them are present.
-- Cross-check `r G_`, `r H_`, and `r S_` if all of them are present, and print a message if the difference is above a threshold (see `?checkGHS`).
+- Cross-check `r G_`, `r H_`, and `r S_` if all of them are present, and print a message if the difference is above a threshold (see `r checkGHS_`).
 - Calculate a missing `r Cp_` or `r V_` from the `r model` parameters, if possible.
-- Cross-check `r Cp_` or `r V_` (if present) against the `r model` parameters, if possible, and print a message if the difference is above a threshold (see `?checkEOS`).
+- Cross-check `r Cp_` or `r V_` (if present) against the `r model` parameters, if possible, and print a message if the difference is above a threshold (see `r checkEOS_`).
 
 `r NOTE`: `r info_` does **NOT** change the units of energy; the values it displays (including possibly calculated ones) correspond to the `r E_units` for that species in OBIGT.
 On the other hand, `r subcrt_` outputs values in the units previously selected with the function `r E.units_`.
@@ -238,7 +246,7 @@ On the other hand, `r subcrt_` outputs values in the units previously selected w
 Use the `r info_` function to look at the database and `r subcrt_` to calculate thermodynamic properties.
 
 Let's look at some minerals first.
-First use `r info_` to get the species indices (i.e. rownumbers) in OBIGT, then pull out the "raw" data (including OOM scaling and any NA values).
+First use `r info_` to get the species indices (i.e. rownumbers) in OBIGT, then pull out the "raw" data (including any NA values).
 ```{r icr, message = FALSE}
 icr <- info(c("orpiment,amorphous", "arsenic,alpha", "tin"))
 thermo()$OBIGT[icr, ]
@@ -261,8 +269,8 @@ subcrt("arsenic,alpha", T = c(25, 50, 75))$out[[1]]
 
 What happened here?
 Even though there are no heat capacity coefficients (see above), there is a non-NA value of `r Cp_`, and that value is used together with the entropy for calculating Gibbs energy at T > 25 °C.
-Note that zero for the 25 °C values of G and H is not a mistake or a placeholder for unknown values (unknown values should be represented by NA).
-This is the reference state for the element, for which G and H are by convention equal to zero.
+Note that zero for the 25 °C values of G and H in this case is not a placeholder for unknown values (as noted above, unknown values should be represented by NA).
+Instaed, this is the reference state for the element, for which G and H are by convention equal to zero.
 
 Let's look at another element in its reference state, tin:
 
@@ -273,7 +281,7 @@ subcrt("tin", T = c(25, 50, 75))$out[[1]]
 Are you surprised?
 You might be if you only noticed the NA value for `r Cp_` in OBIGT.
 However, there are non-NA values for the heat capacity coefficients, which are used to calculate `r Cp_0` as a function of temperature.
-When supplied with a numeric argument (species index), `r info_` actually does this to fill in missing 25 °C values of `r Cp_`, `r V_`, and `r G_`, `r H_`, or `r S_` if possible, in addition to removing OOM scaling and simplifying column names:
+When supplied with a numeric argument (a species index), `r info_` actually does this to fill in missing 25 °C values of `r Cp_`, `r V_`, and `r G_`, `r H_`, or `r S_` if possible, in addition to simplifying column names:
 
 ```{r info_.tin}
 info(info("tin"))
@@ -284,12 +292,31 @@ Using `r add.OBIGT_` to add data from optional data files for OBIGT or CSV files
 
 ### `r add.OBIGT_` with optional data files
 
-TODO
+The default database has parameters for many minerals from @Ber88; a notable exception is sulfide minerals, which are from @HDNB78.
+Besides the different literature sources in `r ref1`, the `r model` column indicates that a different model is used for these minerals (Berman equations or CGL).
+```{r Berman}
+info(info(c("quartz", "pyrite")))
+```
+
+Sometimes it is useful to load mineral data from the SUPCRT92 database, corresponding largely to the compilation by @HDNB78.
+This can be done with `r add.OBIGT_`.
+In this example we load SUPCRT92 data for just one mineral, quartz.
+```{r add.OBIGT_quartz}
+add.OBIGT("SUPCRT92", "quartz")
+info(info("quartz"))
+```
+
+Here we load all minerals available in the optional SUPCRT92 data file and then list the names.
+`r NOTE`: `suppressMessages()` is used to suppress messages from `r info_` about missing parameters, and `unique()` is used to list each mineral only once (because each polymorph has a separate entry).
+```{r add.OBIGT_SUPCRT92}
+iSUPCRT92 <- add.OBIGT("SUPCRT92")
+unique(suppressMessages(info(iSUPCRT92))$name)
+```
 
 ### `r add.OBIGT_` with other CSV files
 
 `r add.OBIGT_` can also be used to add data from a user-specified file to the OBIGT database.
-The file must be a CSV (comma separated value) file with column headers that match those in the main database.
+The file must be a CSV (comma separated value) file with column headers that match those in the default database (i.e., `thermo()$OBIGT`).
 As an example, here are the contents of `BZA10.csv`, which has parameters taken from @BZA10.
 Missing values are indicated by `NA`:
 ```{r BZA10}
@@ -306,7 +333,7 @@ subcrt(c("CdCl+", "Cl-", "CdCl2"), c(-1, -1, 1), T = 25, P = c(1, 2000))
 ```
 
 After running `r reset_` we can look up the source of data in the default OBIGT database [@SSH97].
-Running the reaction now with the default values, we see that the equilibrium constant is not as sensitive to pressure:
+Running the reaction with thermodynamic parameters from the default database, we now see that the equilibrium constant is not as sensitive to pressure:
 ```{r SSH97_subcrt}
 reset()
 thermo.refs(iCd)[, 1:3]
@@ -321,14 +348,14 @@ The function requires the name of a species and one or more properties to change
 ### `r mod.OBIGT_` for aqueous species
 
 Let's add data for CoCl<sub>4</sub><sup>-2</sup> from @LBT_11.
-The values are taken from Table 5 of that paper; as is common for parameters in the HKF model, they are reported in caloric units.
+The values are taken from Table 5 of that paper; note that they are reported in caloric units, which is rather common for the HKF model.
 The entry includes the date in ISO 8601 extended format (e.g. 2020-08-16); `Sys.Date()` is used in this example to get the current date.
 ```{r mod.OBIGT__CoCl4_ghs}
 mod.OBIGT("CoCl4-2", formula = "CoCl4-2", state = "aq", ref1 = "LBT+11", E_units = "cal",
   date = as.character(Sys.Date()), G = -134150, H = -171558, S = 19.55, Cp = 72.09, V = 27.74)
 ```
 
-The function prints a message saying that the species was added, and returns the species index of the new species.
+The function prints a message saying that the species was added and returns the species index of the new species.
 Now let's modify the new species by adding the HKF coefficients including the OOM multipliers, as they are usually given in publications.
 The `z` at the end refers to the charge of the species, and is used only for calculating the "*g* function" in the revised HKF model, not for balancing reactions.
 ```{r mod.OBIGT__CoCl4_eos}
@@ -367,28 +394,35 @@ mod.OBIGT("magnesiochromite", formula = "MgCr2O4", state = "cr", ref1 = "KOSG00"
           date = as.character(Sys.Date()), E_units = "J", H = H, S = S, V = V)
 ```
 
-Here are the heat capacity parameters for the "Haas-Fisher" polynomial equation ($Cp = a + bT + cT^{-2} + dT^{-0.5} + eT^2$).
-Order-of-magnitude multipliers are required for the values of `r b` and `r c` (and also `r e` if it is present; see the description for columns 14-21 of the `OBIGT` data frame in `?thermo`).
-Note that an additional `r f` term is available, which can have any exponent given by `r lambda`, but it is not needed here.
+Here are the heat capacity parameters for the Haas-Fisher polynomial equation ($Cp = a + bT + cT^{-2} + dT^{-0.5} + eT^2$).
+As of CHNOSZ 2.0.0, OOM multipliers are not used for these coefficients.
 1500 K is a generic value for the high-temperature limit; experimental heat capacities were only reported up to 340 K [@KOSG00].
 ```{r mod.OBIGT__magnesiochromite_eos}
 a <- 221.4
-b <- -0.00102030 * 1e3
-c <- -1757210 * 1e-5
+b <- -0.00102030
+c <- -1757210
 d <- -1247.9
 mod.OBIGT("magnesiochromite", E_units = "J", a = a, b = b, c = c, d = d,
           e = 0, f = 0, lambda = 0, T = 1500)
 ```
 
+`r NOTE`: An additional `r f` term is available, which can have any exponent given in `r lambda`.
+This offers some flexibility for using heat capacity equations that are different from the Haas-Fisher polynomial.
+
 Now we can use `r subcrt_` to calculate the heat capacity of magnesiochromite.
 For this calculation, we set the temperature units to Kelvin.
-We also specify a pressure of 1 bar to prevent an error in the calculation of *P*<sub>sat</sub> below the freezing temperature of water.
+We also specify a pressure of 1 bar because the default setting of *P*<sub>sat</sub> (liquid-vapor saturation) causes an error below the freezing temperature of water.
 ```{r subcrt__magnesiochromite}
 T.units("K")
-subcrt("magnesiochromite", property = "Cp", T = c(250, 300, 340), P = 1)
+Tref <- c(250, 300, 340)
+(sres <- subcrt("magnesiochromite", property = "Cp", T = Tref, P = 1))
 ```
 
-The calculated values are with 0.1 J K<sup>-1</sup> mol<sup>-1</sup> of those shown in Fig. 1 of @KOSG00.
+Next we check that the calculated values are within 0.3 J K<sup>-1</sup> mol<sup>-1</sup> of reference values taken from Fig. 1 of @KOSG00.
+```{r magnesiochromite_check_Cp}
+Cpref <- c(114.3, 129.8, 138.4)
+stopifnot(max(abs(sres$out[[1]]$Cp - Cpref)) < 0.3)
+```
 
 Finally, let's restore the units setting for later calculations with `r subcrt_`.
 (Another way would be to run `r reset_`, which also resets the OBIGT database.)
@@ -396,7 +430,7 @@ Finally, let's restore the units setting for later calculations with `r subcrt_`
 T.units("C")
 ```
 
-<!-- ######## SECTION MARKER ######## -->
+<!-- ######## SECTION MARKER ########
 ## Other models
 
 Here we'll look at how to add minerals that use the Berman equations and aqueous nonelectrolytes that use the Akinfiev-Diamond model.
@@ -404,11 +438,12 @@ Here we'll look at how to add minerals that use the Berman equations and aqueous
 ### Akinfiev-Diamond model
 
 The Akinfiev-Diamond model for aqueous species [@AD03] is activated by setting \code{abbrv = "AD"} in `r thermo_` for a given aqueous species.
-The database must also include a corresponding gasesous species with the same name or chemical formula.
+The database must also include a corresponding gaseous species with the same name or chemical formula.
 
 TODO
 
 TODO: Add van't Hoff example?
+-->
 
 <!-- ######## SECTION MARKER ######## -->
 ## Case study: Formation constants for aqueous tungsten species
@@ -462,7 +497,7 @@ coeff <- c(-2, -1, 1)
 logB.to.OBIGT(logB, species, coeff, T, P, tolerance = 0.3)
 ```
 
-After running, `r logB.to.OBIGT_` returns just the species indices; the low values for `r HWO4_` (`r info("HWO4-")`) and `r H2WO4` (`r info("H2WO4")`) indicate that the function replaced parameters for these species that were already present in OBIGT.
+After running, `r logB.to.OBIGT_` returns the species indices; the low values for `r HWO4_` (`r info("HWO4-")`) and `r H2WO4` (`r info("H2WO4")`) indicate that the function replaced parameters for these species that were already present in OBIGT.
 
 ### Diagram 1: Constant molality of `r F_`
 
@@ -490,7 +525,7 @@ The published diagram shows a broad region of coexistence of `r H3WO4F2_` and `r
 
 In reality, the molality of `r F_` depends strongly on pH according to the reaction `r Hplus` + `r F_` = HF.
 With a little algebra, we can calculate the molality of `r F_` (`a_F` in the code below) from the equilbrium constant of this reaction for a given total F concentration (`F_tot`).
-`r NOTE`: It is important to call `r subcrt_` with a non-zero `IS` so that it returns effective equilibrium constants corrected for ionic strength (see what hapens to the diagram if you set `IS = 0`).
+`r NOTE`: It is important to call `r subcrt_` with a non-zero `IS` so that it returns effective equilibrium constants corrected for ionic strength (try setting `IS = 0` yourself and look at what happens to the diagram).
 
 ```{r a_F}
 T <- 300
@@ -519,6 +554,6 @@ The highest experimental temperature for the formation constants of `r H2WO4` an
 In contrast, we used a different model but obtained quite similar results.
 
 `r NOTE`: The coefficients in the model used by `r logB.to.OBIGT_` include 25 °C values of `r G_` and `r S_`.
-In a conservative interpretation, these should be regarded only as *fitting parameters*, and should not be used to compute thermodynamic properties close to 25 °C unless they were fit to experimental data in that temperature range.
+These should be conservatively treated only as *fitting parameters* and should not be used to compute thermodynamic properties close to 25 °C unless they were fit to experimental data in that temperature range.
 
 ## References
