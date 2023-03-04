@@ -83,28 +83,28 @@ Dick, J. M. (2017) Chemical composition and the potential for proteomic transfor
 
 \examples{
 \dontshow{reset()}
-## define basis species
-# one, two and three element examples
+## Define basis species
+# with one, two or three elements
 basis("O2")
 basis(c("H2O", "O2"))
 basis(c("H2O", "O2", "H+"))
-## clear the basis species
+## Clear the basis species
 basis("")
 
 \dontrun{
-## marked dontrun because they produce errors
-# fewer species than elements
+## Marked dontrun because they produce errors
+# Fewer species than elements
 basis(c("H2O", "H+"))
-# more species than elements
+# More species than elements
 basis(c("H2O", "O2", "H2", "H+"))
-# non-independent species
+# Non-independent species
 basis(c("CO2", "H2O", "HCl", "Cl-", "H+"))}
 
-## specify activities and states
+## Specify activities and states
 basis(c("H2O", "O2", "CO2"), c(-2, -78, -3), c("liq", "aq", "aq"))
-# change logarithms of activities/fugacities	
+# Change logarithms of activities/fugacities	
 basis(c("H2O", "O2"), c(0, -80))	
-# change state of CO2
+# Change state of CO2
 basis("CO2", "gas")
 }
 

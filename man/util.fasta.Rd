@@ -55,22 +55,22 @@ If only one of \code{start} or \code{stop} is present, the other defaults to 1 (
 }
 
 \examples{\dontshow{reset()}
-## reading a protein FASTA file
-# the path to the file
-file <- system.file("extdata/protein/EF-Tu.aln", package="CHNOSZ")
-# read the sequences, and print the first one
-read.fasta(file, ret="seq")[[1]]
-# count the amino acids in the sequences
+## Reading a protein FASTA file
+# The path to the file
+file <- system.file("extdata/protein/EF-Tu.aln", package = "CHNOSZ")
+# Read the sequences, and print the first one
+read.fasta(file, ret = "seq")[[1]]
+# Count the amino acids in the sequences
 aa <- read.fasta(file)
-# compute lengths (number of amino acids)
+# Compute lengths (number of amino acids)
 protein.length(aa)
 
 \dontrun{
-## count amino acids in a sequence
+## Count amino acids in a sequence
 count.aa("GGSGG")
-# warnings are issued for unrecognized characters
+# Warnings are issued for unrecognized characters
 atest <- count.aa("WhatAmIMadeOf?")
-# there are 3 "A" (alanine)
+# There are 3 "A" (alanine)
 atest[, "A"]
 }
 }

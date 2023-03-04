@@ -28,7 +28,7 @@ The output includes 20 amino acids in alphabetic order by 1-letter abbreviation 
 \seealso{\code{\link{count.aa}} for counting amino acids or nucleic-acid bases in a sequence; \code{\link{protein.formula}} for calculating the chemical formulas of proteins.}
 
 \examples{\dontshow{reset()}
-## count nucleobases in a sequence
+## Count nucleobases in a sequence
 bases <- count.aa("ACCGGGTTT", type = "DNA")
 }
 

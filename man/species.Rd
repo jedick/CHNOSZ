@@ -69,7 +69,7 @@ species(c("glycine", "alanine"))
 # Delete all the species
 species(delete = TRUE)
 
-# changing the elements in the basis definition
+# Changing the elements in the basis definition
 # causes species to be deleted
 basis(c("CaO", "CO2", "H2O", "SiO2", "MgO", "O2"))
 species(c("dolomite", "quartz", "calcite", "forsterite"))

@@ -259,7 +259,7 @@ Other data files, including those supporting the examples and vignettes, are doc
 
 \examples{
 ## Where are the data files in CHNOSZ?
-system.file("extdata", package="CHNOSZ")
+system.file("extdata", package = "CHNOSZ")
 # What files make up OBIGT?
 # Note: file names with _aq, _cr, _gas, or _liq
 # are used in the default database

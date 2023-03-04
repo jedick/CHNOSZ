@@ -88,68 +88,68 @@ This is a basic method of interpolating the data without adding any external dep
 }
 
 \examples{\dontshow{reset()}
-## each of the available methods
+## Each of the available methods
 nonideal("Alberty")
 nonideal("bgamma0")
 nonideal("bgamma")
 nonideal("Bdot0")
 nonideal("Bdot") # the default
 
-## what's the activity coefficient of Na+ at
+## What's the activity coefficient of Na+ at
 ## 25 degC and 1 bar and an ionic strength of 0.7?
 sres <- subcrt("Na+", T = 25, IS = 0.7)
-# exponentiate to convert log10(gamma) to gamma
+# Exponentiate to convert log10(gamma) to gamma
 10^sres$out[[1]]$loggam
-# now use a different method
+# Now use a different method
 nonideal("bgamma")
 sres <- subcrt("Na+", T = 25, IS = 0.7)
 10^sres$out[[1]]$loggam
 
-## what are activity coefficients of -3, -2, -1, 0, +1, +2, +3 charged species
+## What are activity coefficients of -3, -2, -1, 0, +1, +2, +3 charged species
 ## as a function of ionic strength and temperature?
-# first choose the method
+# First choose the method
 nonideal("Bdot")
-# define the ionic strength and temperature increments
+# Define the ionic strength and temperature increments
 IS <- c(0.001, 0.01, 0.1, 0.7)
 T <- seq(0, 100, 25)
-# use species charged -3, -2, -1, 0, +1, +2, +3
+# Use species with charges -3, -2, -1, 0, +1, +2, +3
 species <- c("PO4-3", "HPO4-2", "H2PO4-", "H3PO4", "Na+", "Ca+2", "Al+3")
-# initialize empty output table for T (rows) and charge (columns)
+# Initialize empty output table for T (rows) and charge (columns)
 gamtab <- matrix(nrow = length(T), ncol = length(species))
 rownames(gamtab) <- T
 colnames(gamtab) <- -3:3
-# make a list of tables to hold the activity coefficients, one for each IS
+# Make a list of tables to hold the activity coefficients, one for each IS
 gamma <- rep(list(gamtab), length(IS))
 names(gamma) <- IS
-# loop over the values of ionic strength
+# Loop over the values of ionic strength
 for(i in seq_along(IS)) {
-  # calculate properties of species, including logarithm of activity coefficient
+  # Calculate properties of species, including logarithm of activity coefficient
   sres <- subcrt(species, T = T, IS = IS[i])
-  # exponentiate to convert log10(gamma) to gamma, and put the values into the tables
+  # Exponentiate to convert log10(gamma) to gamma, and put the values into the tables
   for(j in seq_along(species)) gamma[[i]][, j] <- 10^sres$out[[j]]$loggam
 }
-# print the output and make a plot
+# Print the output and make a plot
 print(gamma)
 matplot(T, gamma$`0.001`, type = "l")
 title(main = "activity coefficients of -3, -2, -1, 0, +1, +2, +3 charged species")
 
 ## Alberty, 2003 p. 16 Table 1.3: adjusted pKa of acetic acid
-## we use the 'IS' argument in subcrt() to calculate adjusted thermodynamic properties
-# set ideal.H to FALSE to calculate activity coefficients for the proton
+## We use the 'IS' argument in subcrt() to calculate adjusted thermodynamic properties
+# Set ideal.H to FALSE to calculate activity coefficients for the proton
 # (needed for replication of the values in Alberty's book)
 nonideal("Alberty")
 thermo("opt$ideal.H" = FALSE)
 sres <- subcrt(c("acetate", "H+", "acetic acid"), c(-1, -1, 1),
   IS=c(0, 0.1, 0.25), T=25, property="logK")
-# we're within 0.01 of Alberty's pK values
+# We're within 0.01 of Alberty's pK values
 Alberty_logK <- c(4.75, 4.54, 4.47)
 # The maximum (absolute) pairwise difference between x and y
 max(abs(Alberty_logK - sres$out$logK)) # 0.0072
-# reset option to default
+# Reset option to default
 thermo("opt$ideal.H" = TRUE)
 
 ## An example using IS with affinity():
-## speciation of phosphate as a function of ionic strength
+## Speciation of phosphate as a function of ionic strength
 opar <- par(mfrow = c(2, 1))
 basis("CHNOPS+")
 Ts <- c(25, 100)
@@ -165,23 +165,23 @@ dp <- describe.property(c("pH", "T", "T"), c(7, Ts))
 legend("topright", lty = c(NA, 1, 1), col = c(NA, "black", "red"), legend = dp)
 text(0.07, -2.76, expr.species("HPO4-2"))
 text(0.07, -2.90, expr.species("H2PO4-"))
-## phosphate predominance f(IS,pH)
+## Phosphate predominance f(IS,pH)
 a <- affinity(IS = c(0, 0.14), pH = c(6, 13), T = Ts[1])
 d <- diagram(a, fill = NULL)
 a <- affinity(IS = c(0, 0.14), pH = c(6, 13), T = Ts[2])
 d <- diagram(a, add = TRUE, names = FALSE, col = "red")
 par(opar)
 
-## activity coefficients for monovalent ions at 700 degC, 10 kbar
-# after Manning, 2013, Fig. 7
-# here we use the b_gamma equation
+## Activity coefficients for monovalent ions at 700 degC, 10 kbar
+# After Manning, 2013, Fig. 7
+# Here we use the b_gamma equation
 nonideal("bgamma")
 IS <- c(0.001, 0.01, 0.1, 1, 2, 2.79)
-# we're above 5000 bar, so need to use IAPWS-95 or DEW
+# We're above 5000 bar, so need to use IAPWS-95 or DEW
 oldwat <- water("DEW")
 sres <- subcrt("Na+", T = 700, P = 10000, IS = IS)
 water(oldwat)
-# compare the calculated activity coefficient to values from Manning's figure
+# Compare the calculated activity coefficient to values from Manning's figure
 gamma <- 10^sres$out[[1]]$loggam
 Manning_gamma <- c(0.93, 0.82, 0.65, 0.76, 1.28, 2)
 gamma - Manning_gamma
@@ -191,7 +191,7 @@ gamma - Manning_gamma
 bgamma(showsplines = "T")
 bgamma(showsplines = "P")
 
-## a longer example, using nonideal() directly
+## A longer example, using nonideal() directly
 # Alberty, 2003 p. 273-276: activity coefficient (gamma)
 # as a function of ionic strength and temperature
 nonideal("Alberty")
@@ -203,9 +203,9 @@ col <- rainbow(4)
 thermo.plot.new(xlim = range(IS), ylim = c(0, 1),
   xlab = axis.label("IS"), ylab = "gamma")
 for(j in 1:3) {
-  # use subcrt to generate speciesprops
+  # Use subcrt to generate speciesprops
   speciesprops <- subcrt(species, T = rep(T[j], length(IS)))$out
-  # use nonideal to calculate loggamma; this also adjusts G, H, S, Cp,
+  # Use nonideal to calculate loggamma; this also adjusts G, H, S, Cp,
   # but we don't use them here
   nonidealprops <- nonideal(species, speciesprops, IS = IS, T = convert(T[j], "K"))
   for(i in 1:4) lines(IS, 10^(nonidealprops[[i]]$loggam), lty=lty[j], col=col[i])
@@ -218,7 +218,7 @@ legend("topright", lty=c(NA, 1:3), bty="n",
 legend("top", lty=1, col=col, bty="n",
   legend = as.expression(lapply(species, expr.species)))
 
-## reset method to default
+## Reset method to default
 nonideal("Bdot")  # or reset()
 }
 

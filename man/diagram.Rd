@@ -216,13 +216,13 @@ See the \code{\link{demos}} for even more examples.
 
 \examples{
 \dontshow{reset()}
-## calculate the equilibrium logarithm of activity of a 
+## Calculate the equilibrium logarithm of activity of a 
 ## basis species in different reactions
 basis("CHNOS")
 species(c("ethanol", "lactic acid", "deoxyribose", "ribose"))
-a <- affinity(T=c(0, 150))
-diagram(a, type="O2", legend.x="topleft", col=rev(rainbow(4)), lwd=2)
-title(main="Equilibrium logfO2 for 1e-3 mol/kg of CO2 and ... ")
+a <- affinity(T = c(0, 150))
+diagram(a, type = "O2", legend.x = "topleft", col = rev(rainbow(4)), lwd = 2)
+title(main = "Equilibrium logfO2 for 1e-3 mol/kg of CO2 and ... ")
 
 ### 1-D diagrams: logarithms of activities
 
@@ -230,10 +230,10 @@ title(main="Equilibrium logfO2 for 1e-3 mol/kg of CO2 and ... ")
 ## After Fig. 1 of Aksu and Doyle, 2001 
 basis("CHNOS+")
 species(ispecies <- info(c("glycinium", "glycine", "glycinate")))
-a <- affinity(pH=c(0, 14))
+a <- affinity(pH = c(0, 14))
 e <- equilibrate(a)
-diagram(e, alpha=TRUE, lwd=1)
-title(main=paste("Degrees of formation of aqueous glycine species\n",
+diagram(e, alpha = TRUE, lwd = 1)
+title(main = paste("Degrees of formation of aqueous glycine species\n",
   "after Aksu and Doyle, 2001"))
 
 ## Degrees of formation of ATP species as a function of 
@@ -243,26 +243,26 @@ title(main=paste("Degrees of formation of aqueous glycine species\n",
 basis(c("CO2", "NH3", "H2O", "H3PO4", "O2", "H+", "Mg+2"),
   c(999, 999, 999, 999, 999, -5, -4))
 species(c("HATP-3", "H2ATP-2", "MgATP-2", "MgHATP-"))
-a <- affinity(T=c(0, 120, 25))
+a <- affinity(T = c(0, 120, 25))
 e <- equilibrate(a)
-diagram(e, alpha=TRUE)  
-title(main=paste("Degrees of formation of ATP species,\n",
+diagram(e, alpha = TRUE)  
+title(main = paste("Degrees of formation of ATP species,\n",
   "pH=5, log(aMg+2)=-3. After LaRowe and Helgeson, 2007"),
-  cex.main=0.9)
+  cex.main = 0.9)
 
 ### 2-D diagrams: predominance diagrams
-### these use the maximum affinity method
+### These use the maximum affinity method
 
 ## Fe-S-O at 200 deg C, after Helgeson, 1970
 basis(c("Fe", "oxygen", "S2"))
 species(c("iron", "ferrous-oxide", "magnetite",
   "hematite", "pyrite", "pyrrhotite"))
-# the calculations include the phase transitions of
+# The calculations include the phase transitions of
 # pyrrhotite; no additional step is needed
-a <- affinity(S2=c(-50, 0), O2=c(-90, -10), T=200)
-diagram(a, fill="heat")
-title(main=paste("Fe-S-O, 200 degrees C, 1 bar",
-  "After Helgeson, 1970", sep="\n"))
+a <- affinity(S2 = c(-50, 0), O2 = c(-90, -10), T=200)
+diagram(a, fill = "heat")
+title(main = paste("Fe-S-O, 200 degrees C, 1 bar",
+  "After Helgeson, 1970", sep = "\n"))
 
 ## pe-pH diagram for hydrated iron sulfides,
 ## goethite and pyrite, after Majzlan et al., 2006
@@ -270,13 +270,13 @@ basis(c("Fe+2", "SO4-2", "H2O", "H+", "e-"),
   c(0, log10(3), log10(0.75), 999, 999))
 species(c("rhomboclase", "ferricopiapite", "hydronium jarosite",
   "goethite", "melanterite", "pyrite"))
-a <- affinity(pH=c(-1, 4, 256), pe=c(-5, 23, 256))
-d <- diagram(a, main="Fe-S-O-H, after Majzlan et al., 2006")
-water.lines(d, lwd=2)
-text(3, 22, describe.basis(2:3, digits=2, oneline=TRUE))
-text(3, 21, describe.property(c("T", "P"), c(25, 1), oneline=TRUE))
+a <- affinity(pH = c(-1, 4, 256), pe = c(-5, 23, 256))
+d <- diagram(a, main = "Fe-S-O-H, after Majzlan et al., 2006")
+water.lines(d, lwd = 2)
+text(3, 22, describe.basis(2:3, digits = 2, oneline = TRUE))
+text(3, 21, describe.property(c("T", "P"), c(25, 1), oneline = TRUE))
 
-## aqueous Al species, after Tagirov and Schott, 2001
+## Aqueous Al species, after Tagirov and Schott, 2001
 basis(c("Al+3", "F-", "H+", "O2", "H2O"))
 AlOH <- c("Al(OH)4-", "Al(OH)3", "Al(OH)2+", "AlOH+2")
 Al <- "Al+3"
@@ -299,17 +299,17 @@ mtitle(c("Aqueous aluminum species",
 #     T/P limits of the water() calculations;
 basis(c("corundum", "quartz", "oxygen"))
 species(c("kyanite", "sillimanite", "andalusite"))
-# database has transition temperatures of kyanite and andalusite
+# Database has transition temperatures of kyanite and andalusite
 # at 1 bar only, so we permit calculation at higher temperatures
-a <- affinity(T=c(200, 900, 99), P=c(0, 9000, 101), exceed.Ttr=TRUE)
-d <- diagram(a, fill=NULL)
+a <- affinity(T = c(200, 900, 99), P = c(0, 9000, 101), exceed.Ttr = TRUE)
+d <- diagram(a, fill = NULL)
 slab <- syslab(c("Al2O3", "SiO2", "H2O"))
 mtitle(c(as.expression(slab), "after Helgeson et al., 1978"))
-# find the approximate position of the triple point
+# Find the approximate position of the triple point
 tp <- find.tp(d$predominant)
 Ttp <- a$vals[[1]][tp[1, 2]]
 Ptp <- rev(a$vals[[2]])[tp[1, 1]]
-points(Ttp, Ptp, pch=10, cex=5)
+points(Ttp, Ptp, pch = 10, cex = 5)
 }
 
 \references{

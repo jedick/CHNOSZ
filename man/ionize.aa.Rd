@@ -38,24 +38,24 @@
 pH <- c(5, 9, 3)
 T <- seq(0, 100)
 # Cp of non-ionized protein
-Cp.nonion <- subcrt("LYSC_CHICK", T=T)$out[[1]]$Cp
-plot(T, Cp.nonion, xlab=axis.label("T"), type="l",
-  ylab=axis.label("Cp"), ylim=c(5000, 8000))
+Cp.nonion <- subcrt("LYSC_CHICK", T = T)$out[[1]]$Cp
+plot(T, Cp.nonion, xlab = axis.label("T"), type = "l",
+  ylab = axis.label("Cp"), ylim = c(5000, 8000))
 # Cp of ionization and ionized protein
 aa <- pinfo(pinfo("LYSC_CHICK"))
 for(pH in c(5, 9, 3)) {
-  Cp.ionized <- Cp.nonion + ionize.aa(aa, "Cp", T=T, pH=pH)[, 1]
-  lines(T, Cp.ionized, lty=2)
-  text(80, Cp.ionized[70], paste("pH =",pH) )
+  Cp.ionized <- Cp.nonion + ionize.aa(aa, "Cp", T = T, pH = pH)[, 1]
+  lines(T, Cp.ionized, lty = 2)
+  text(80, Cp.ionized[70], paste("pH =", pH) )
 }
 # Makhatadze and Privalov's group contributions
 T <- c(5, 25, 50, 75, 100, 125)
 points(T, convert(MP90.cp("LYSC_CHICK", T), "cal"))
 # Privalov and Makhatadze's experimental values
-e <- read.csv(system.file("extdata/cpetc/PM90.csv", package="CHNOSZ"))
-points(e$T, convert(e$LYSC_CHICK, "cal"), pch=16)
-legend("bottomright", pch=c(16, 1, NA, NA), lty=c(NA, NA, 1, 2),
-  legend=c("PM90 experiment", "MP90 groups", 
+e <- read.csv(system.file("extdata/cpetc/PM90.csv", package = "CHNOSZ"))
+points(e$T, convert(e$LYSC_CHICK, "cal"), pch = 16)
+legend("bottomright", pch = c(16, 1, NA, NA), lty = c(NA, NA, 1, 2),
+  legend = c("PM90 experiment", "MP90 groups", 
   "DLH06 groups no ion", "DLH06 groups ionized"))
 title("Heat capacity of unfolded LYSC_CHICK")
 }

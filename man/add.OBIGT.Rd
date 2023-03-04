@@ -134,18 +134,18 @@ OBIGT()
 
 # Another use of add.OBIGT(): calculate Delta G of
 # H4SiO4 = SiO2 + 2H2O using different data for SiO2.
-# first, get H4SiO4 from Stefansson, 2001
+# First, get H4SiO4 from Stefansson, 2001
 add.OBIGT("AS04", "H4SiO4")
 T <- seq(0, 350, 10)
 s1 <- subcrt(c("H4SiO4", "SiO2", "H2O"), c(-1, 1, 2), T = T)
-# now, get SiO2 from Apps and Spycher, 2004
+# Now, get SiO2 from Apps and Spycher, 2004
 add.OBIGT("AS04", "SiO2")
 s2 <- subcrt(c("H4SiO4", "SiO2", "H2O"), c(-1, 1, 2), T = T)
-# plot logK from the first and second calculations
+# Plot logK from the first and second calculations
 plot(T, s1$out$G, type = "l", xlab = axis.label("T"),
   ylab = axis.label("DG"), ylim = c(-500, 2500))
 lines(T, s2$out$G, lty = 2)
-# add title and legend
+# Add title and legend
 title(main = describe.reaction(s1$reaction))
 stxt <- lapply(c("H4SiO4", "SiO2", "SiO2"), expr.species)
 legend("top", legend = as.expression(stxt), bty = "n")

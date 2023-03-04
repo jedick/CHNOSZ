@@ -46,38 +46,38 @@ If \code{check.it} is TRUE, several checks of self consistency among the thermod
 
 \examples{
 \dontshow{reset()}
-## summary of available data
+## Summary of available data
 info()
 
-## species information
-# search for something named (or whose formula is) "Fe"
+## Species information
+# Search for something named (or whose formula is) "Fe"
 si <- info("Fe")
-# use the number to get the full entry
+# Use the number to get the full entry
 info(si)
-# show data for the higher-temperature phases
+# Show data for the higher-temperature phases
 info(si:(si+3))
 
-## dealing with states
-# standard order of precedence for names:
+## Dealing with states
+# Order of precedence for names:
 # aq > cr > gas > liq
 info(c("ethanol", "adenosine"))  # aq, aq
-# state argument overrides the default
+# State argument overrides the default
 info(c("ethanol", "adenosine"), state = c("gas", "cr"))
-# exceptions: gases have precedence for names of methane and inorganic gases
+# Exceptions: gases have precedence for names of methane and inorganic gases
 info(c("methane", "oxygen")) # gas, gas
 
-# formulas default to aqueous species, if available
+# Formulas default to aqueous species, if available
 i1 <- info(c("CH4", "CO2", "CS2", "MgO"))
 info(i1)$state  # aq, aq, gas, cr
-# state argument overrides the default
+# State argument overrides the default
 i2 <- info(c("CH4", "CO2", "MgO"), "gas") 
 info(i2)$state  # gas, gas, NA
 
-## partial name or formula searches
+## Partial name or formula searches
 info("ATP")
 info("thiol")
 info("MgC")
-# add an extra character to refine a search
+# Add an extra character to refine a search
 # or to search using terms that have exact matches
 info("MgC ")
 info("acetate ")

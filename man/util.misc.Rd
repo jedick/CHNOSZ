@@ -43,9 +43,9 @@ If any of those species are proteins, the function gets their lengths using \cod
 }
 
 \examples{\dontshow{reset()}
-# we need the Helgeson et al., 1978 minerals for this example
+# We need the Helgeson et al., 1978 minerals for this example
 add.OBIGT("SUPCRT92")
-# that replaces the existing enstatite with the first phase;
+# That replaces the existing enstatite with the first phase;
 # the other phases are appended to the end of thermo()$OBIGT
 i1 <- info("enstatite")
 i2 <- info("enstatite", "cr2")
@@ -53,30 +53,30 @@ i3 <- info("enstatite", "cr3")
 # (dP/dT) of transitions
 dPdTtr(i1, i2)  # first transition
 dPdTtr(i2, i3)  # second transition
-# temperature of transitions (Ttr) as a function of P
-Ttr(i1, i2, P=c(1,10,100,1000))
-Ttr(i2, i3, P=c(1,10,100,1000))
-# restore default database
+# Temperature of transitions (Ttr) as a function of P
+Ttr(i1, i2, P = c(1,10,100,1000))
+Ttr(i2, i3, P = c(1,10,100,1000))
+# Restore default database
 OBIGT()
 
-# calculate the GHS at Tr for the high-temperature phases of iron
+# Calculate the GHS at Tr for the high-temperature phases of iron
 # using transition enthalpies from the SUPCRT92 database (sprons92.dat)
 Htr <- c(326.0, 215.0, 165.0)
 iiron <- info("iron")
 GHS_Tr(iiron, Htr)
-# the results calculated above are stored in the database ...
+# The results calculated above are stored in the database ...
 info(1:3 + iiron)[, c("G", "H", "S")]
 # ... meaning that we can recalculate the transition enthalpies using subcrt()
 sapply(info(0:2 + iiron)$T, function(T) {
-  # a very small T increment around the transition temperature
+  # A very small T increment around the transition temperature
   T <- convert(c(T-0.01, T), "C")
-  # use suppressMessages to make the output less crowded
-  substuff <- suppressMessages(subcrt("iron", T=T, P=1))
+  # Use suppressMessages to make the output less crowded
+  substuff <- suppressMessages(subcrt("iron", T = T, P = 1))
   diff(substuff$out$iron$H)
 })
 
 ## Scale logarithms of activity
-# suppose we have two proteins whose lengths are 100 and 
+# Suppose we have two proteins whose lengths are 100 and 
 # 200; what are the logarithms of activity of the proteins 
 # that are equal to each other and that give a total 
 # activity of residues equal to unity?

@@ -75,21 +75,21 @@ The result is \code{NaN} for any formula that does not contain carbon. Elements 
 }
 
 \examples{\dontshow{reset()}
-## mass and entropy from chemical formulas
+## Mass and entropy from chemical formulas
 mass("H2O")
 entropy("H2O")
 mass("-1")  # electron
 entropy("-1")
 
-## different ways to get the formula of alanine
+## Different ways to get the formula of alanine
 iA <- info("alanine")
 info(iA)$formula
 as.chemical.formula(makeup(iA))
 
-## converting among Gibbs energy, enthalpy, entropy
-# calculate the value of G from H and S
-GHS("H2O", H=water("H"), S=water("S"))[1, ]
-# that not quite equal to the value from water("G");
+## Converting among Gibbs energy, enthalpy, entropy
+# Calculate the value of G from H and S
+GHS("H2O", H = water("H"), S = water("S"))[1, ]
+# That's not quite equal to the value from water("G");
 # probably using different entropies of the elements
 
 ## Average oxidation states of carbon
@@ -99,12 +99,12 @@ si <- info("LYSC_CHICK")
 ZC(si)
 ZC(info(si)$formula)
 
-## calculate the chemical formulas, then
-## ZC of all of the proteins in CHNOSZ' database
+## Calculate the chemical formulas, then
+## ZC of all of the proteins in CHNOSZ's database
 pf <- protein.formula(thermo()$protein)
 range(mass(pf))
-# use na.rm=TRUE because we have a "protein" with a formula of H2O
-range(ZC(pf), na.rm=TRUE)
+# Use na.rm = TRUE because we have a "protein" with a formula of H2O
+range(ZC(pf), na.rm = TRUE)
 }
 
 \references{

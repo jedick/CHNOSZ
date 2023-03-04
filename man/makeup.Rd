@@ -78,7 +78,7 @@ makeup("C-4O-2-2")   # -4 carbon, -2 oxygen, -2 charge
 # balance in a chemical reaction
 formula <- c("H2O", "H+", "(Z-1)", "O2")
 mf <- makeup(formula, c(-1, 2, 2, 0.5), sum = TRUE)
-all(mf==0)  # TRUE
+all(mf == 0)  # TRUE
 }
 
 \seealso{ \code{\link{mass}}, \code{\link{entropy}}, \code{\link{basis}}, \code{\link{i2A}} }

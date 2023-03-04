@@ -48,25 +48,25 @@ If the function detects a change to any chemical formulas in the database, it up
 }
 
 \examples{
-# species index of Ti-bearing minerals
+# Species index of Ti-bearing minerals
 retrieve("Ti")
-# thermodynamic data for those minerals
+# Thermodynamic data for those minerals
 info(retrieve("Ti"))
 
-# all species that have Au
+# All species that have Au
 retrieve("Au")
-# all species that have both Au and Cl
+# All species that have both Au and Cl
 retrieve(c("Au", "Cl"))
 # Au-Cl system: species that have Au and/or Cl,
 # including charged species, but no other elements
 retrieve(list("Au", "Cl"))
-# all Au-bearing species in the Au-Cl system
+# All Au-bearing species in the Au-Cl system
 retrieve("Au", "Cl")
-# all uncharged Au-bearing species in the Au-Cl system
+# All uncharged Au-bearing species in the Au-Cl system
 retrieve("Au", "Cl", add.charge = FALSE)
 
-# minerals in the system SiO2-MgO-CaO-CO2
-retrieve(list("Si", "Mg", "Ca", "C", "O"), state="cr")
+# Minerals in the system SiO2-MgO-CaO-CO2
+retrieve(list("Si", "Mg", "Ca", "C", "O"), state = "cr")
 \dontshow{par(thermo()$opar)}
 }
 

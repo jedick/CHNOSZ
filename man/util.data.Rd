@@ -74,20 +74,20 @@ The values returned (\code{\link{invisible}}-y) by \code{mod.OBIGT} are the rown
 \seealso{ \code{\link{thermo}}, \code{\link{add.OBIGT}}, \code{\link{mod.buffer}} }
 
 \examples{\dontshow{reset()}
-# citation information for Helgeson et al., 1998
+# Citation information for Helgeson et al., 1998
 thermo.refs("HOK+98")
-# two references for alanine
+# Two references for alanine
 thermo.refs(info("alanine"))
-# three references for species in the reaction
+# Three references for species in the reaction
 s <- subcrt(c("O2","O2"),c("gas","aq"),c(-1,1))
 thermo.refs(s) 
 \dontrun{
-## marked dontrun because it opens a browser
-# show the contents of thermo()$refs
+## Marked dontrun because it opens a browser
+# Show the contents of thermo()$refs
 thermo.refs()
 } 
 
-## calculate thermodynamic properties of organic compounds
+## Calculate thermodynamic properties of organic compounds
 ## using group additivity, after Richard and Helgeson, 1998
 RH2OBIGT()
 }

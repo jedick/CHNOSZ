@@ -37,23 +37,23 @@
 }
 
 \examples{
-# start with a matrix
+# Start with a matrix
 mat <- matrix(1:12, ncol = 3)
-# pay attention to the following when
+# Pay attention to the following when
 # writing examples that test for identity!
 identical(1 * mat, mat)   # FALSE
-# create two matrices that are multiples of the first
+# Create two matrices that are multiples of the first
 a <- 1 * mat
 b <- 2 * mat
-# these both have two dimensions of lengths 4 and 3
+# These both have two dimensions of lengths 4 and 3
 dim(a)  # 4 3
-# combine them to make an array with three dimensions
+# Combine them to make an array with three dimensions
 x <- list2array(list(a, b))
-# the third dimension has length 2
+# The third dimension has length 2
 dim(x)  # 4 3 2
-# the first slice of the third dimension
+# The first slice of the third dimension
 slice(x, 3)    # a
-# the second slice of the third dimension
+# The second slice of the third dimension
 slice(x, 3, 2) # b
 # 'slice' works just like the bracket operator
 slice(x, 1)        # x[1, , ]
@@ -61,25 +61,25 @@ slice(x, 1, 2)     # x[2, , ]
 slice(x, 2, 1)     # x[, 1, ]
 slice(x, 2, 1:2)   # x[, 1:2, ]
 
-# let us replace part of the array
+# Replace part of the array
 y <- slice(x, 3, 2, value = a)
-# now the second slice of the third dimension == a
+# Now the second slice of the third dimension == a
 slice(y, 3, 2)  # a
 # and the sum across the third dimension == b
 dimSums(y, 3)   # b
-# taking the sum removes that dimension
+# Taking the sum removes that dimension
 dim(y)              # 4 3 2
 dim(dimSums(y, 1))  # 3 2
 dim(dimSums(y, 2))  # 4 2
 dim(dimSums(y, 3))  # 4 3
 
-# working with an 'affinity' object
+# Working with an 'affinity' object
 \dontshow{reset()}
 basis("CHNOS+")
 species("alanine")
-a1 <- affinity(O2 = c(-80, -60)) # i.e. pH=7
+a1 <- affinity(O2 = c(-80, -60)) # i.e. pH = 7
 a2 <- affinity(O2 = c(-80, -60), pH = c(0, 14, 7))
-# in the 2nd dimension (pH) get the 4th slice (pH=7)
+# In the 2nd dimension (pH) get the 4th slice (pH = 7)
 a3 <- slice.affinity(a2, 2, 4)
 all.equal(a1$values, a3$values)  # TRUE
 }
