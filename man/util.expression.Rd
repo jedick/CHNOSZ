@@ -172,7 +172,7 @@ dbasis <- describe.basis(c(1, 5))
 dprop <- describe.property(property[1:2], value[1:2])
 legend(2.4, 3.9, legend=c(dbasis, dprop), bty = "n")
 # describe.reaction
-# Reaction is automatically balanced since basis species are defined
+# Reaction is automatically balanced because basis species are defined
 reaction <- subcrt("glucose", -1)$reaction
 text(3, 4.25, describe.reaction(reaction))
 text(3, 4.5, describe.reaction(reaction, states = "all"))

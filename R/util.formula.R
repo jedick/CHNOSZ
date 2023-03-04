@@ -93,10 +93,10 @@ entropy <- function(formula) {
   convert(entropy, "J")
 }
 
-GHS <- function(formula, G=NA, H=NA, S=NA, T=298.15, E_units = "cal") {
-  # for all NA in G, H and S, do nothing
-  # for no  NA in G, H and S, do nothing
-  # for one NA in G, H and S, calculate its value from the other two:
+GHS <- function(formula, G = NA, H = NA, S = NA, T = 298.15, E_units = "J") {
+  # For all NA in G, H and S, do nothing
+  # For no  NA in G, H and S, do nothing
+  # For one NA in G, H and S, calculate its value from the other two:
   # G - standard molal Gibbs energy of formation from the elements
   # H - standard molal enthalpy of formation from the elements
   # S - standard molal entropy
@@ -115,13 +115,13 @@ GHS <- function(formula, G=NA, H=NA, S=NA, T=298.15, E_units = "cal") {
     if(is.na(G)) G <- H - T * (S - Se)
     else if(is.na(H)) H <- G + T * (S - Se)
     else if(is.na(S)) S <- (H - G) / T + Se
-    return(list(G, H, S))
+    list(G, H, S)
   })
   # Turn the list into a matrix and add labels
   GHS <- t(sapply(GHS, c))
   colnames(GHS) <- c("G", "H", "S")
   rownames(GHS) <- formula
-  return(GHS)
+  GHS
 }
 
 ZC <- function(formula) {

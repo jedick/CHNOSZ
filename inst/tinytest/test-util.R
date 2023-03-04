@@ -25,14 +25,14 @@ coe <- CHNOSZ:::OBIGT2eos(thermo()$OBIGT[ic,], "aq", fixGHS = TRUE)
 expect_equal(coe$S, GHS[[3]], info = info)
 ## Mass and entropy of elements in chemical formulas
 # The "-1" is a single negative charge, the electron
-testform <- c("CH4", "H2O", "-1")
-testmass <- mass(testform)
-testent <- convert(entropy(testform), "cal")
-expect_equal(testmass, c(16.04276, 18.01528, 0), info = info)
-expect_equal(testent, c(63.83843212237, 55.74952198853, 15.61663479924), info = info)
+formula <- c("CH4", "H2O", "-1")
+calcmass <- mass(formula)
+calcS <- convert(entropy(formula), "cal")
+expect_equal(calcmass, c(16.04276, 18.01528, 0), info = info)
+expect_equal(calcS, c(63.83843212237, 55.74952198853, 15.61663479924), info = info)
 # Another way to calculate the entropy of the elements in H2O
-testGHS <- GHS("H2O", G = 0, H = 0)
-expect_equal(as.numeric(testGHS[1, 3]), testent[2], info = info)
+calcGHS <- GHS("H2O", G = 0, H = 0, E_units = "cal")
+expect_equal(as.numeric(calcGHS[1, 3]), calcS[2], info = info)
   
 info <- "[P|T|E].units() do not accept invalid units"
 expect_error(P.units("X"), "units of pressure must be either bar or MPa", info = info)

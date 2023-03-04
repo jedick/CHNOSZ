@@ -82,7 +82,7 @@ protein.OBIGT <- function(protein, organism=NULL, state=thermo()$opt$state) {
   OBIGT <- get("thermo", CHNOSZ)$OBIGT
   OBIGT_state <- paste(OBIGT$name, OBIGT$state)
   igroup <- match(groups_state, OBIGT_state)
-  # The properties are in columns 9-21 of thermo()$OBIGT
+  # The properties are in columns 10-22 of thermo()$OBIGT
   groupprops <- OBIGT[igroup, 10:22]
   # The elements in each of the groups
   groupelements <- i2A(igroup)

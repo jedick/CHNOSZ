@@ -17,7 +17,7 @@ Calculate the standard molal entropy of elements in a compound; calculate the st
   as.chemical.formula(makeup, drop.zero = TRUE)
   mass(formula)
   entropy(formula)
-  GHS(formula, G = NA, H = NA, S = NA, T = 298.15, E_units = "cal")
+  GHS(formula, G = NA, H = NA, S = NA, T = 298.15, E_units = "J")
   ZC(formula)
   i2A(formula)
 }
@@ -30,7 +30,7 @@ Calculate the standard molal entropy of elements in a compound; calculate the st
   \item{H}{numeric, standard molal enthalpy of formation from the elements}
   \item{S}{numeric, standard molal molal entropy}
   \item{T}{numeric, temperature in Kelvin}
-  \item{E_units}{character, energy units (cal or J)}
+  \item{E_units}{character, energy units (J or cal)}
 }
 
 \details{
@@ -53,7 +53,7 @@ The properties of the elements used by this function are taken from \code{\link{
 \code{GHS} computes one of the standard molal Gibbs energy or enthalpy of formation from the elements, or standard molal entropy, from values of the other two.
 The \code{formula}, \code{G}, \code{H} and \code{S} arguments must all have the same length.
 The entropies of the elements (\code{Se}) in each \code{formula} are calculated using \code{\link{entropy}}, which gives values in Joules.
-If \code{E_units} is \samp{J}, the values are converted to Joules.
+If \code{E_units} is \samp{cal}, the values are converted to calories.
 The equation in effect can be written as \eqn{{\Delta}G^{\circ}={\Delta}H^{\circ}-T{\Delta}S^{\circ}}{delta_G = delta_H - T * delta_S}, where \eqn{{\Delta}S^{\circ}=S-S_e}{delta_S = S - Se} and \eqn{T}{T} is the temperature given in \code{T} (defaults to 298.15 K) (note that \code{G} and \code{H} in the arguments correspond respectively to \eqn{{\Delta}G^{\circ}}{delta_G} and \eqn{{\Delta}H^{\circ}}{delta_H} in the equation).
 For each formula, if one of \code{G}, \code{H}, or \code{S} is NA, its value is calculated from the other two.
 Otherwise, the values are returned unchanged.
@@ -88,9 +88,9 @@ as.chemical.formula(makeup(iA))
 
 ## Converting among Gibbs energy, enthalpy, entropy
 # Calculate the value of G from H and S
-GHS("H2O", H = water("H"), S = water("S"))[1, ]
-# That's not quite equal to the value from water("G");
-# probably using different entropies of the elements
+GHS("H2O", H = water("H")$H, S = water("S")$S)
+# The result is not exactly equal to the value from water("G"),
+# probably because of different entropies of the elements
 
 ## Average oxidation states of carbon
 ZC(c("CO2", "CH4", "CHNOSZ"))  # 4, -4, 7

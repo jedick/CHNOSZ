@@ -71,8 +71,8 @@ sapply(info(0:2 + iiron)$T, function(T) {
   # A very small T increment around the transition temperature
   T <- convert(c(T-0.01, T), "C")
   # Use suppressMessages to make the output less crowded
-  substuff <- suppressMessages(subcrt("iron", T = T, P = 1))
-  diff(substuff$out$iron$H)
+  sres <- suppressMessages(subcrt("iron", T = T, P = 1))
+  diff(sres$out$iron$H)
 })
 
 ## Scale logarithms of activity

@@ -105,7 +105,7 @@ Minerals with polymorphic transitions (denoted by having states \samp{cr} (lowes
 \code{subcrt} in this case simultaneously calculates the requested properties of all the phases of each such mineral (phase species) and, using the values of the transition temperatures calculated from those at P = 1 bar given in the thermodynamic database together with functions of the entropies and volumes of transitions (see \code{\link{dPdTtr}}), determines the stable phase of the mineral at any grid point and substitutes the properties of this phase at that point for further calculations.
 If individual phase species of minerals are specified (by \samp{cr}, \samp{cr2} etc. in \code{state}), and \code{exceed.Ttr} is \code{FALSE} (the default), the Gibbs energies of these minerals are assigned values of NA at conditions beyond their transition temperature, where another of the phases is stable.
 If you set \code{exceed.Ttr} to \code{TRUE} to calculate the properties of mineral polymorphs (i.e., using \samp{cr}) the function will identify the stable polymorph using the calculated Gibbs energies of the phase species instead of the tabulated transition temperatures.
-This is not generally advised, since the computed standard molal properties of a phase species lose their physical meaning beyond the transition temperatures of the phase.
+This is not generally advised, as the computed standard molal properties of a phase species lose their physical meaning beyond the transition temperatures of the phase.
 
 }
 
