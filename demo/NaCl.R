@@ -6,22 +6,22 @@
 ##  J. Chem. Soc. Faraday Trans. 88, 803-826. https://doi.org/10.1039/FT9928800803 )
 library(CHNOSZ)
 
-## uncomment these lines to make the plot with the g-function disabled
+## Uncomment these lines to make the plot with the g-function disabled
 #mod.OBIGT("Cl-", z=0)
 #mod.OBIGT("Na+", z=0)
 
-# start a new plot and show the experimental logK
+# Start a new plot and show the experimental logK
 thermo.plot.new(xlim=c(0, 1000), ylim=c(-5.5, 1),
   xlab=axis.label("T"), ylab=axis.label("logK"))
 expt <- read.csv(system.file("extdata/cpetc/SOJSH.csv", 
   package="CHNOSZ"), as.is=TRUE)
 points(expt$T,expt$logK, pch=expt$pch)
 
-# we'll be at 9 distinct pressure conditions, including Psat
+# We'll be at 9 distinct pressure conditions, including Psat
 # Psat is repeated to show "not considered" region
 # (T >= 355 degC; Fig. 6 of Shock et al., 1992)
 P <- c(list("Psat", "Psat"), as.list(seq(500, 4000, by=500)))
-# for each of those what's the range of temperature
+# For each of those what's the range of temperature
 T <- list()
 T[[1]] <- seq(0, 354, 1)
 T[[2]] <- seq(354, 370, 1)
@@ -30,7 +30,7 @@ T[[4]] <- seq(285, 760, 1)
 T[[5]] <- seq(395, 920, 1)
 T[[6]] <- T[[7]] <- T[[8]] <- T[[9]] <- T[[10]] <- seq(400, 1000, 1)
 
-# calculate and plot the logK
+# Calculate and plot the logK
 species <- c("NaCl", "Na+", "Cl-")
 coeffs <- c(-1, 1, 1)
 logK <- numeric()
@@ -44,7 +44,7 @@ for(i in 1:length(T)) {
   if(i > 2) logK <- c(logK, splinefun(s$out$T, s$out$logK)(Texpt))
 }
 
-# add title, labels, and legends
+# Add title, labels, and legends
 title(describe.reaction(s$reaction, states = 1))
 text(150, -0.1, quote(italic(P)[sat]), cex=1.2)
 text(462, -4, "500 bar")
@@ -58,6 +58,6 @@ l1 <- quote("Revised HKF model with " * italic(g) * " function (Shock et al., 19
 l2 <- "Non-recommended region (Shock et al., 1992, Fig. 6)"
 legend("topright", as.expression(c(l1, l2)), lty=c(1, 3), bty="n")
 
-# test for average divergence (excluding Psat)
+# Test for average divergence (excluding Psat)
 expt <- expt[!expt$P %in% "Psat", ]
 stopifnot(mean(abs(logK - expt$logK)) < 0.09)

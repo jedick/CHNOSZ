@@ -18,8 +18,8 @@
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "minsol", "Shh", "saturation",
     "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
-    "comproportionation", "Pourbaix", "E_coli"),
-    save.png=FALSE)
+    "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity"),
+    save.png = FALSE)
 }
 
 \details{

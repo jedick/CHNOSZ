@@ -19,18 +19,18 @@ par(cex = 1.4)
 basis(c("SiO2", "Ca+2", "Mg+2", "carbon dioxide", "H2O", "O2", "H+"))
 species(c("quartz", "talc", "chrysotile", "forsterite", "tremolite",
           "diopside", "wollastonite", "monticellite", "merwinite"))
-# calculate the chemical affinities of formation reactions
+# Calculate the chemical affinities of formation reactions
 a <- affinity("Mg+2" = c(4, 10, 500), "Ca+2" = c(5, 15, 500), T = 300, P = 1000)
 diagram(a, xlab = ratlab("Mg+2"), ylab = ratlab("Ca+2"), fill = "terrain", yline = 1.7)
 
-# add saturation limits for specified CO2 fugacity
+# Add saturation limits for specified CO2 fugacity
 basis("CO2", -1)
 species(c("calcite", "dolomite", "magnesite", "brucite"))
-# use argument recall feature to rerun affinity over the same range of conditions
+# Use argument recall feature to rerun affinity over the same range of conditions
 a <- affinity(a)
 diagram(a, type = "saturation", add = TRUE, contour.method = c("edge", "edge", "flattest", "flattest"), lty = 2, cex = 1.4, col = "blue3")
 
-# add title and legend
+# Add title and legend
 title(main = syslab(c("H2O", "CO2", "CaO", "MgO", "SiO2")))
 dprop <- describe.property(c("T", "P"), c(300, 1000))
 dbasis <- describe.basis(4)
