@@ -125,9 +125,18 @@ Y_Cl <- function() {
   }
 }
 
+# Use non-default ion size parameters 20230309
+Bdot_acirc <- thermo()$Bdot_acirc
+# Cl- and Y+3 override the defaults, and YCl+2 is a new species
+Bdot_acirc <- c("Cl-" = 4, "Y+3" = 5, "YCl+2" = 4, Bdot_acirc)
+thermo("Bdot_acirc" = Bdot_acirc)
+
 # Run the functions to make plots for the demo
 opar <- par(no.readonly = TRUE)
 add.Y.species(800, plot.it = TRUE)
 add.Y.species(1000, plot.it = TRUE)
 Y_Cl()
+
+# Restore plot settings and CHNOSZ settings
 par(opar)
+reset()

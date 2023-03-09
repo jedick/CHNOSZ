@@ -69,28 +69,30 @@ P <- "Psat"
 species <- c("Co+2", "HS-", "CoHS+")
 coeffs <- c(-1, -1, 1)
 opar <- par(mfrow = c(2, 1))
-for(optimize.omega in c(TRUE, FALSE)) { 
+for(o.o in c(TRUE, FALSE)) { 
   # Fit the parameters with or without variable omega
-  inew <- logB.to.OBIGT(logB, species, coeffs, T, P, npar = 5, optimize.omega = optimize.omega)
+  inew <- logB.to.OBIGT(logB, species, coeffs, T, P, npar = 5, optimize.omega = o.o)
   # Print the new database entry
   info(inew)
   # Plot experimental logB
-  plot(T, logB, "n", c(100, 320), c(5.8, 6.8), xlab = axis.label("T"), ylab = quote(log~beta))
+  plot(T, logB, "n", c(100, 320), c(5.8, 6.8),
+    xlab = axis.label("T"), ylab = quote(log~beta))
   points(T, logB, pch = 19, cex = 2)
   # Plot calculated values
   Tfit <- seq(100, 320, 10)
   sres <- subcrt(species, coeffs, T = Tfit)
   lines(sres$out$T, sres$out$logK, col = 4)
   title(describe.reaction(sres$reaction))
-  legend <- c("Migdisov et al. (2011)",paste0("logB.to.OBIGT(optimize.omega = ",optimize.omega,")"))
-  legend("top", legend, pch = c(19, NA), lty = c(0, 1), col = c(1, 4), pt.cex = 2, bg = "#FFFFFFB0")
+  legend <- c("Migdisov et al. (2011)",paste0("logB.to.OBIGT(optimize.omega = ",o.o,")"))
+  legend("top", legend, pch = c(19, NA), lty = c(0, 1), col = c(1, 4),
+    pt.cex = 2, bg = "#FFFFFFB0")
 }
 par(opar)
 # NB. Optimizing omega leads to unphysical oscillations in the logK (first plot)
 
 ## ZnCl+ from Mei et al. (2015)
-# These are values for 5000 bar calculated from the modified Ryzhenko-Bryzgalin (RB) model
-logB <- c(-1.93, -1.16, -0.38, 0.45, 1.15, 1.76, 2.30, 2.80, 3.26, 3.70, 4.12, 4.53, 4.92)
+# Values for 5000 bar calculated with the modified Ryzhenko-Bryzgalin (RB) model
+logB <- c(-1.93,-1.16,-0.38,0.45,1.15,1.76,2.30,2.80,3.26,3.70,4.12,4.53,4.92)
 species <- c("Zn+2", "Cl-", "ZnCl+")
 coeffs <- c(-1, -1, 1)
 T <- c(25, 60, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600)

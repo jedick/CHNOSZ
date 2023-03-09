@@ -9,7 +9,7 @@ Calculate activity coefficients and adjusted molal properties of aqueous species
 
 \usage{
   nonideal(species, speciesprops, IS, T, P, A_DH, B_DH,
-           m_star=NULL, method=thermo()$opt$nonideal)
+           m_star = NULL, method = thermo()$opt$nonideal)
   bgamma(TC, P, showsplines = "")
 }
 
@@ -44,7 +44,7 @@ The calculations use the equation for the Debye-Hückel constant given by Clarke
 
 For the \samp{Bdot} method (the default), the \dQuote{B-dot} form of the extended Debye-Hückel equation is used.
 This equation is valid at ionic strengths up to approximately 3 mol / kg (Hörbrand et al., 2018).
-The distance of closest approach for different ions (the \dQuote{ion size parameter}) is taken from the UT_SIZES.REF file of the HCh package (Shvarov and Bastrakov, 1992), which is based on Table 2.7 of Garrels and Christ, 1965.
+The distance of closest approach for different ions (the \dQuote{ion size parameter}) is taken from \code{\link{thermo}()$Bdot_acirc}; any species not listed in this file is assigned a value of 4.5 \AA.
 The extended term parameter for NaCl-dominated solutions, known as \dQuote{B-dot}, is calculated as a function only of temperature (Helgeson, 1969).
 To set the extended term parameter to zero, use the \samp{Bdot0} method.
 
@@ -228,8 +228,6 @@ Alberty, R. A. (2001) Effect of temperature on standard transformed Gibbs energi
 Alberty, R. A. (2003) \emph{Thermodynamics of Biochemical Reactions}, John Wiley & Sons, Hoboken, New Jersey, 397 p. \url{https://www.worldcat.org/oclc/51242181}
 
 Clarke, E. C. W. and Glew, D. N. (1980) Evaluation of Debye-Hückel limiting slopes for water between 0 and 150 °C. \emph{J. Chem. Soc. Faraday Trans.} \bold{76}, 1911--1916. \doi{10.1039/f19807601911}
-
-Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibria}, Harper & Row, New York, 450 p. \url{https://www.worldcat.org/oclc/517586}
 
 Helgeson, H. C. (1969) Thermodynamics of hydrothermal systems at elevated temperatures and pressures. \emph{Am. J. Sci.} \bold{267}, 729--804. \doi{10.2475/ajs.267.7.729}
 

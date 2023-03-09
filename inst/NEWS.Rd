@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-63 (2023-03-02)}{
+\section{Changes in CHNOSZ version 1.9.9-68 (2023-03-09)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -146,8 +146,14 @@
       formation of HCl as well as NaCl) by using \code{affinity()} and
       \code{equilibrate()} instead of algebraic equations.
 
-      \item Add demo \code{yttrium.R} to show speciation of Y-Cl complexes as a
-      function of NaCl concentration, pH, \emph{T}, and \emph{P}, after
+      \item Ion size parameters used in the \samp{Bdot} equation have been
+      moved from the code for \code{nonideal()} to
+      \file{extdata/thermo/Bdot_acirc.csv}, which is read into
+      \code{thermo()$Bdot_acirc} and can be changed by the user.
+
+      \item The two preceding features are used in a new demo \code{yttrium.R}
+      to show speciation of Y-Cl complexes as a function of NaCl concentration,
+      pH, \emph{T}, and \emph{P}, after
       \href{https://doi.org/10.1016/j.gca.2020.04.015}{Guan et al. (2020)}.
 
     }
@@ -193,8 +199,8 @@
       with bornite.
 
       \item Improve handling of non-integer coefficients in
-      \code{expr.species()}. The result for FeS1.33 was previously shown as
-      FeS[.33] but is now shown correctly as FeS[1.33].
+      \code{expr.species()}. The result for FeS1.33 was previously incorrectly
+      formatted as FeS\s{.33} but is now correctly formatted as FeS\s{1.33}.
 
     }
   }

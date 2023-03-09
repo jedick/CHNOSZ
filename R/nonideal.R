@@ -94,28 +94,19 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     if(thisZ==0) next
     Z[i] <- thisZ
   }
-  # get species formulas to assign acirc 20181105
+  # Use formulas of species to get acirc 20181105
   formula <- get("thermo", CHNOSZ)$OBIGT$formula[species]
   if(grepl("Bdot", method)) {
     # "ion size paramter" taken from UT_SIZES.REF of HCh package (Shvarov and Bastrakov, 1999),
     # based on Table 2.7 of Garrels and Christ, 1965
-    acircdat <- c("Rb+"=2.5, "Cs+"=2.5, "NH4+"=2.5, "Tl+"=2.5, "Ag+"=2.5,
-      "K+"=3, "Cl-"=3, "Br-"=3, "I-"=3, "NO3-"=3,
-      "OH-"=3.5, "F-"=3.5, "HS-"=3.5, "BrO3-"=3.5, "IO3-"=3.5, "MnO4-"=3.5,
-      "Na+"=4, "HCO3-"=4, "H2PO4-"=4, "HSO3-"=4, "Hg2+2"=4, "SO4-2"=4, "SeO4-2"=4, "CrO4-2"=4, "HPO4-2"=4, "PO4-3"=4,
-      "Pb+2"=4.5, "CO3-2"=4.5, "SO4-2"=4.5, "MoO4-2"=4.5,
-      "Sr+2"=5, "Ba+2"=5, "Ra+2"=5, "Cd+2"=5, "Hg+2"=5, "S-2"=5, "WO4-2"=5,
-      "Li+"=6, "Ca+2"=6, "Cu+2"=6, "Zn+2"=6, "Sn+2"=6, "Mn+2"=6, "Fe+2"=6, "Ni+2"=6, "Co+2"=6,
-      "Mg+2"=8, "Be+2"=8,
-      "H+"=9, "Al+3"=9, "Cr+3"=9, "La+3"=9, "Ce+3"=9, "Y+3"=9, "Eu+3"=9,
-      "Th+4"=11, "Zr+4"=11, "Ce+4"=11, "Sn+4"=11)
-    acirc <- as.numeric(acircdat[formula])
+    Bdot_acirc <- thermo()$Bdot_acirc
+    acirc <- as.numeric(Bdot_acirc[formula])
     acirc[is.na(acirc)] <- 4.5
     ## Make a message
     #nZ <- sum(Z!=0)
     #if(nZ > 1) message("nonideal: using ", paste(acirc[Z!=0], collapse=" "), " for ion size parameters of ", paste(formula[Z!=0], collapse=" "))
     #else if(nZ==1) message("nonideal: using ", acirc[Z!=0], " for ion size parameter of ", formula[Z!=0])
-    # use correct units (cm) for ion size parameter
+    # Use correct units (cm) for ion size parameter
     acirc <- acirc * 10^-8
   } else if(grepl("bgamma", method)) {
     # "distance of closest approach" of ions in NaCl solutions (HKF81 Table 2)
@@ -189,7 +180,7 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
   # Manning et al., 2013 (doi:10.2138/rmg.2013.75.5)
   # T in degrees C
   T <- TC
-  # are we at a pre-fitted constant pressure?
+  # Are we at a pre-fitted constant pressure?
   uP <- unique(P)
   is1 <- identical(uP, 1) & all(T==25)
   is500 <- identical(uP, 500)
@@ -205,17 +196,17 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
   is50000 <- identical(uP, 50000)
   is60000 <- identical(uP, 60000)
   isoP <- is1 | is500 | is1000 | is2000 | is3000 | is4000 | is5000 | is10000 | is20000 | is30000 | is40000 | is50000 | is60000
-  # values for Bdot x 100 from Helgeson (1969), Figure (P = Psat)
+  # Values for Bdot x 100 from Helgeson (1969), Figure (P = Psat)
   if(!isoP | showsplines != "") {
     T0 <- c(23.8, 49.4, 98.9, 147.6, 172.6, 197.1, 222.7, 248.1, 268.7)
     B0 <- c(4.07, 4.27, 4.30, 4.62, 4.86, 4.73, 4.09, 3.61, 1.56) / 100
-    # we could use the values from Hel69 Table 2 but extrapolation of the
+    # We could use the values from Hel69 Table 2 but extrapolation of the
     # their fitted spline function turns sharply upward above 300 degC
     #T0a <- c(25, 50, 100, 150, 200, 250, 270, 300)
     #B0a <- c(4.1, 4.35, 4.6, 4.75, 4.7, 3.4, 1.5, 0)
     S0 <- splinefun(T0, B0)
   }
-  # values for bgamma x 100 from Helgeson et al., 1981 Table 27 
+  # Values for bgamma x 100 from Helgeson et al., 1981 Table 27 
   if(is500 | !isoP | showsplines != "") {
     T0.5 <- seq(0, 400, 25)
     B0.5 <- c(5.6, 7.1, 7.8, 8.0, 7.8, 7.5, 7.0, 6.4, 5.7, 4.8, 3.8, 2.6, 1.0, -1.2, -4.1, -8.4, -15.2) / 100
@@ -255,7 +246,7 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
     if(is5000) return(S5(T))
   }
   # 10, 20, and 30 kb points from Manning et al., 2013 Fig. 11
-  # here, one control point at 10 degC is added to make the splines curve down at low T
+  # Here, one control point at 10 degC is added to make the splines curve down at low T
   if(is10000 | !isoP | showsplines != "") {
     T10 <- c(25, seq(300, 1000, 50))
     B10 <- c(12, 17.6, 17.8, 18, 18.2, 18.9, 21, 23.3, 26.5, 28.8, 31.4, 34.1, 36.5, 39.2, 41.6, 44.1) / 100
@@ -293,7 +284,7 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
     S60 <- splinefun(T60, B60)
     if(is60000) return(S60(T))
   }
-  # show points and spline(T) curves
+  # Show points and spline(T) curves
   if(showsplines == "T") {
     thermo.plot.new(c(0, 1000), c(-.2, .7), xlab=axis.label("T"), ylab=expression(italic(b)[gamma]))
     points(T0, B0, pch=0)
@@ -335,7 +326,7 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
     title(main=expression("Deybe-H\u00FCckel extended term ("*italic(b)[gamma]*") parameter"))
   } else if(showsplines=="P") {
     thermo.plot.new(c(0, 5), c(-.2, .7), xlab=expression(log~italic(P)*"(bar)"), ylab=expression(italic(b)[gamma]))
-    # pressures that are used to make the isothermal splines (see below)
+    # Pressures that are used to make the isothermal splines (see below)
     P25 <- c(1, 500, 1000, 2000, 3000, 4000, 5000)
     P100 <- c(1, 500, 1000, 2000, 3000, 4000, 5000, 10000, 20000)
     P200 <- c(16, 500, 1000, 2000, 3000, 4000, 5000, 10000, 20000, 30000, 40000)
@@ -347,7 +338,7 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
     P800 <- c(10000, 20000, 30000, 40000, 50000, 60000)
     P900 <- c(10000, 20000, 30000, 40000, 50000, 60000)
     P1000 <- c(10000, 20000, 30000, 40000, 50000, 60000)
-    # plot the pressure and B-dot values used to make the isothermal splines
+    # Plot the pressure and B-dot values used to make the isothermal splines
     points(log10(P25), bgamma(25, P25))
     points(log10(P100), bgamma(100, P100))
     points(log10(P200), bgamma(200, P200))
@@ -359,7 +350,7 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
     points(log10(P800), bgamma(800, P800))
     points(log10(P900), bgamma(900, P900))
     points(log10(P1000), bgamma(1000, P1000))
-    # plot the isothermal spline functions
+    # Plot the isothermal spline functions
     col <- tail(rev(rainbow(12)), -1)
     P <- c(1, seq(50, 5000, 50)); lines(log10(P), bgamma(25, P), col=col[1])
     P <- c(1, seq(50, 20000, 50)); lines(log10(P), bgamma(100, P), col=col[2])
@@ -376,19 +367,19 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
     legend("bottomright", pch=1, bty = "n", legend="points from iso-P splines")
     title(main=expression("Deybe-H\u00FCckel extended term ("*italic(b)[gamma]*") parameter"))
   } else {
-    # make T and P the same length
+    # Make T and P the same length
     ncond <- max(length(T), length(P))
     T <- rep(T, length.out=ncond)
     P <- rep(P, length.out=ncond)
-    # loop over P, T conditions
+    # Loop over P, T conditions
     bgamma <- numeric()
     lastT <- NULL
     for(i in 1:length(T)) {
-      # make it fast: skip splines at 25 degC and 1 bar
+      # Make it fast: skip splines at 25 degC and 1 bar
       if(T[i]==25 & P[i]==1) bgamma <- c(bgamma, 0.041)
       else {
         if(!identical(T[i], lastT)) {
-          # get the spline fits from particular pressures for each T
+          # Get the spline fits from particular pressures for each T
           if(T[i] >= 700) {
             PT <- c(10000, 20000, 30000, 40000, 50000, 60000)
             B <- c(S10(T[i]), S20(T[i]), S30(T[i]), S40(T[i]), S50(T[i]), S60(T[i]))
@@ -402,11 +393,11 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
             PT <- c(500, 1000, 2000, 3000, 4000, 5000, 10000, 20000, 30000, 40000, 50000, 60000)
             B <- c(S0.5(T[i]), S1(T[i]), S2(T[i]), S3(T[i]), S4(T[i]), S5(T[i]), S10(T[i]), S20(T[i]), S30(T[i]), S40(T[i]), S50(T[i]), S60(T[i]))
           } else if(T[i] >= 300) {
-            # here the lowest P is Psat
+            # Here the lowest P is Psat
             PT <- c(86, 500, 1000, 2000, 3000, 4000, 5000, 10000, 20000, 30000, 40000, 50000, 60000)
             B <- c(S0(T[i]), S0.5(T[i]), S1(T[i]), S2(T[i]), S3(T[i]), S4(T[i]), S5(T[i]), S10(T[i]), S20(T[i]), S30(T[i]), S40(T[i]), S50(T[i]), S60(T[i]))
           } else if(T[i] >= 200) {
-            # drop highest pressures because we get into ice
+            # Drop highest pressures because we get into ice
             PT <- c(16, 500, 1000, 2000, 3000, 4000, 5000, 10000, 20000, 30000, 40000)
             B <- c(S0(T[i]), S0.5(T[i]), S1(T[i]), S2(T[i]), S3(T[i]), S4(T[i]), S5(T[i]), S10(T[i]), S20(T[i]), S30(T[i]), S40(T[i]))
           } else if(T[i] >= 100) {
@@ -416,9 +407,9 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
             PT <- c(1, 500, 1000, 2000, 3000, 4000, 5000)
             B <- c(S0(T[i]), S0.5(T[i]), S1(T[i]), S2(T[i]), S3(T[i]), S4(T[i]), S5(T[i]))
           }
-          # make a new spline as a function of pressure at this T
+          # Make a new spline as a function of pressure at this T
           ST <- splinefun(PT, B)
-          # remember this T; if it's the same as the next one, we won't re-make the spline
+          # Remember this T; if it's the same as the next one, we won't re-make the spline
           lastT <- T[i]
         }
         bgamma <- c(bgamma, ST(P[i]))
@@ -428,7 +419,7 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
   }
 }
 
-### unexported functions ###
+### Unexported function ###
 
 Bdot <- function(TC) {
   Bdot <- splinefun(c(25, 50, 100, 150, 200, 250, 300), c(0.0418, 0.0439, 0.0468, 0.0479, 0.0456, 0.0348, 0))(TC)

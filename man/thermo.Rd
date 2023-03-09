@@ -236,6 +236,12 @@ Columns 15-17 for aqueous species using the Akinfiev-Diamond model. Note that th
        \code{...} \tab numeric \tab Stoichiometry, one column for each element present in any species
     }
 
+    \item \code{thermo()$Bdot_acirc}
+    Values of ion size parameter (\AA) for species, taken from the UT_SIZES.REF file of the HCh package (Shvarov and Bastrakov, 1999), which is based on Table 2.7 of Garrels and Christ, 1965.
+    This is used in \code{\link{nonideal}} with the default \samp{Bdot} method.
+    Custom ion size parameters can be added to this vector; to override a default value for a species, either replace the numeric value for that species or prepend a named numeric value (for duplicated species, the first value is used).
+    See \code{demo("yttrium")} for an example of adding and overriding species.
+
     \item \code{thermo()$Berman}
     A data frame with thermodynamic parameters for minerals in the Berman equations, assembled from files in \samp{extdata/Berman} and used in \code{\link{Berman}}.
 
@@ -288,6 +294,8 @@ reset()
 
 \references{
 Cox, J. D., Wagman, D. D. and Medvedev, V. A., eds. (1989) \emph{CODATA Key Values for Thermodynamics}. Hemisphere Publishing Corporation, New York, 271 p. \url{https://www.worldcat.org/oclc/18559968}
+
+Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibria}, Harper & Row, New York, 450 p. \url{https://www.worldcat.org/oclc/517586}
 
 Thoenen, T., Hummel, W., Berner, U. and Curti, E. (2014) \emph{The PSI/Nagra Chemical Thermodynamic Database 12/07}. Paul Scherrer Institut. \url{https://www.psi.ch/en/les/database}
 

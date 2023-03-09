@@ -7,7 +7,8 @@ Define the basis species of a chemical system.
 }
 
 \usage{
-  basis(species = NULL, state = NULL, logact = NULL, delete = FALSE, add = FALSE)
+  basis(species = NULL, state = NULL, logact = NULL,
+    delete = FALSE, add = FALSE)
 }
 
 \arguments{

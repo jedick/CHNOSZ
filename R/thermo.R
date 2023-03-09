@@ -10,15 +10,16 @@ reset <- function() {
   thermodir <- system.file("extdata/thermo/", package="CHNOSZ")
   thermo <- list(
     # Use as.is = TRUE to keep character values as character and not factor
-    opt = as.list(read.csv(file.path(thermodir, "opt.csv"), as.is=TRUE)),
-    element = read.csv(file.path(thermodir, "element.csv"), as.is=1:3),
+    opt = as.list(read.csv(file.path(thermodir, "opt.csv"), as.is = TRUE)),
+    element = read.csv(file.path(thermodir, "element.csv"), as.is = 1:3),
     OBIGT = NULL,
     refs = NULL,
     Berman = NULL,
-    buffer = read.csv(file.path(thermodir, "buffer.csv"), as.is=1:3),
-    protein = read.csv(file.path(thermodir, "protein.csv"), as.is=1:4),
-    groups = read.csv(file.path(thermodir, "groups.csv"), row.names=1, check.names=FALSE),
-    stoich = read.csv(file.path(thermodir, "stoich.csv.xz"), as.is=TRUE),
+    buffer = read.csv(file.path(thermodir, "buffer.csv"), as.is = 1:3),
+    protein = read.csv(file.path(thermodir, "protein.csv"), as.is = 1:4),
+    groups = read.csv(file.path(thermodir, "groups.csv"), row.names = 1, check.names = FALSE),
+    stoich = read.csv(file.path(thermodir, "stoich.csv.xz"), as.is = TRUE),
+    Bdot_acirc = read.csv(file.path(thermodir, "Bdot_acirc.csv"), as.is = TRUE),
     basis = NULL,
     species = NULL,
     opar = NULL
@@ -28,6 +29,11 @@ reset <- function() {
   formula <- thermo$stoich[, 1]
   thermo$stoich <- as.matrix(thermo$stoich[, 2:ncol(thermo$stoich)])
   rownames(thermo$stoich) <- formula
+  
+  # Make a named numeric vector for Bdot_acirc 20230309
+  Bdot_acirc <- thermo$Bdot_acirc[, "acirc"]
+  names(Bdot_acirc) <- thermo$Bdot_acirc[, "species"]
+  thermo$Bdot_acirc <- Bdot_acirc
 
   # Get parameters in Berman equations from data files 20220203
   path <- system.file("extdata/Berman/", package = "CHNOSZ")
