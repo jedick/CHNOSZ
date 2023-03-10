@@ -128,7 +128,7 @@ Y_Cl <- function() {
 # Use non-default ion size parameters 20230309
 Bdot_acirc <- thermo()$Bdot_acirc
 # Cl- and Y+3 override the defaults, and YCl+2 is a new species
-Bdot_acirc <- c("Cl-" = 4, "Y+3" = 5, "YCl+2" = 4, Bdot_acirc)
+Bdot_acirc <- c("Cl-" = 4, "Y+3" = 5, "YCl+2" = 4, "YCl2+" = 4, "YCl3" = 4, "YCl4-" = 4, Bdot_acirc)
 thermo("Bdot_acirc" = Bdot_acirc)
 
 # Run the functions to make plots for the demo

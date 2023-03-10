@@ -97,22 +97,65 @@ OBIGT <- function(no.organics = FALSE) {
 }
 
 # A function to access or modify the thermo object 20190214
-thermo <- function(...) {
+# Revised for argument handling more like par() 20230310
+thermo <- function (...) {
+
+  # Get the arguments
   args <- list(...)
-  # Get the object
-  thermo <- get("thermo", CHNOSZ)
+
+  # This part is taken from graphics::par()
+  # To handle only names in c(), e.g. thermo(c("basis", "species"))
+  if (all(unlist(lapply(args, is.character))))
+      args <- as.list(unlist(args))
+#  # To handle an argument analogous to old.par in the example for ?par
+#  # ... but it breaks the "Adding an element" example in ?thermo
+#  if (length(args) == 1) {
+#      if (is.list(args[[1L]]) || is.null(args[[1L]])) 
+#          args <- args[[1L]]
+#  }
+
+  # Get the name of the arguments
+  argnames <- names(args)
+  # Use "" for the name of each unnamed argument
+  if(is.null(argnames)) argnames <- character(length(args))
+
+  # Get the current 'thermo' object
+  value <- original <- thermo <- get("thermo", CHNOSZ)
+  # Loop over arguments
   if(length(args) > 0) {
-    # Assign into the object
-    slots <- names(args)
-    for(i in 1:length(slots)) {
-      # Parse the name of the slot
-      names <- strsplit(slots[i], "$", fixed=TRUE)[[1]]
-      if(length(names) == 1) thermo[[names]] <- args[[i]]
-      if(length(names) == 2) thermo[[names[1]]][[names[2]]] <- args[[i]]
+
+    # Start with an empty return value with the right length
+    value <- vector("list", length(args))
+    for(i in 1:length(argnames)) {
+      if(argnames[i] == "") {
+        # For an unnnamed argument, retrieve the parameter from thermo
+        # Parse the argument value to get the slots
+        slots <- strsplit(args[[i]], "$", fixed = TRUE)[[1]]
+        names <- args[[i]]
+      } else {
+        # For a named argument, assign the parameter in thermo
+        # Parse the name of the argument to get the slots
+        slots <- strsplit(argnames[i], "$", fixed = TRUE)[[1]]
+        names <- argnames[i]
+        # Perform the assignment in the local 'thermo' object
+        if(length(slots) == 1) thermo[[slots[1]]] <- args[[i]]
+        if(length(slots) == 2) thermo[[slots[1]]][[slots[2]]] <- args[[i]]
+      }
+      # Get the (original) parameter value
+      if(length(slots) == 1) orig <- original[[slots[1]]]
+      if(length(slots) == 2) orig <- original[[slots[1]]][[slots[2]]]
+      # Put the parameter into the output value
+      if(!is.null(orig)) value[[i]] <- orig
+      names(value)[i] <- names
     }
+    # Finally perform the assignment to 'thermo' in the CHNOSZ environment
     assign("thermo", thermo, CHNOSZ)
-  } else {
-    # Return the object
-    thermo
+
   }
+
+  # Don't encapsulate a single unassigned parameter in a list
+  if(is.null(names(args)) & length(value) == 1) value <- value[[1]]
+  # Return the value
+  value
+
 }
