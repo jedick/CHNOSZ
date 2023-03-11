@@ -133,7 +133,7 @@ title(main = "AABB = UPBB + H2O; after Figure 9 of Kitadai, 2014")
 OBIGT()
 
 # Another use of add.OBIGT(): calculate Delta G of
-# H4SiO4 = SiO2 + 2H2O using different data for SiO2.
+# H4SiO4 = SiO2 + 2H2O using various sources of data for SiO2.
 # First, get H4SiO4 from Stefansson, 2001
 add.OBIGT("AS04", "H4SiO4")
 T <- seq(0, 350, 10)
@@ -148,9 +148,13 @@ lines(T, s2$out$G, lty = 2)
 # Add title and legend
 title(main = describe.reaction(s1$reaction))
 stxt <- lapply(c("H4SiO4", "SiO2", "SiO2"), expr.species)
-legend("top", legend = as.expression(stxt), bty = "n")
-legend("topright", c("Stef\u00e1nsson, 2001", "Shock et al., 1989",
-  "Apps and Spycher, 2004"), lty = c(0, 1, 2), bty = "n")
+legend("top", c("Shock et al., 1989", "Apps and Spycher, 2004"),
+  title = as.expression(expr.species("SiO2")), lty = c(1, 2))
+legend("topright", "Stef\u00e1nsson, 2001",
+  title = as.expression(expr.species("H4SiO4")))
+abline(h = 0, lty = 3, col = 8)
+# Take-home message: SiO2 from Ste01 is compatible with H4SiO4 from Ste01
+# at low T, but SiO2 from Shock et al., 1989 (the default in OBIGT) isn't
 OBIGT()
 }
 

@@ -40,7 +40,7 @@ T <- seq(0, 100)
 # Cp of non-ionized protein
 Cp.nonion <- subcrt("LYSC_CHICK", T = T)$out[[1]]$Cp
 plot(T, Cp.nonion, xlab = axis.label("T"), type = "l",
-  ylab = axis.label("Cp"), ylim = c(5000, 8000))
+  ylab = axis.label("Cp"), ylim = c(20000, 35000))
 # Cp of ionization and ionized protein
 aa <- pinfo(pinfo("LYSC_CHICK"))
 for(pH in c(5, 9, 3)) {
@@ -50,10 +50,10 @@ for(pH in c(5, 9, 3)) {
 }
 # Makhatadze and Privalov's group contributions
 T <- c(5, 25, 50, 75, 100, 125)
-points(T, convert(MP90.cp("LYSC_CHICK", T), "cal"))
+points(T, MP90.cp("LYSC_CHICK", T))
 # Privalov and Makhatadze's experimental values
 e <- read.csv(system.file("extdata/cpetc/PM90.csv", package = "CHNOSZ"))
-points(e$T, convert(e$LYSC_CHICK, "cal"), pch = 16)
+points(e$T, e$LYSC_CHICK, pch = 16)
 legend("bottomright", pch = c(16, 1, NA, NA), lty = c(NA, NA, 1, 2),
   legend = c("PM90 experiment", "MP90 groups", 
   "DLH06 groups no ion", "DLH06 groups ionized"))

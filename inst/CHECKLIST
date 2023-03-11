@@ -1,6 +1,6 @@
 ****************************
 Release checklist for CHNOSZ
-    (updated 2023-03-02)
+    (updated 2023-03-10)
 ****************************
 
 - Run examples() and demos() and inspect their output (especially plots)
@@ -19,7 +19,7 @@ Updating data in OBIGT
 - Add BibTeX references to vignettes/OBIGT.bib
   (used in the OBIGT.Rmd vignette).
 
-- Add references *and notes* to extdata/OBIGT/refs.csv
+- Add references and notes to extdata/OBIGT/refs.csv
   (also used in the OBIGT.Rmd vignette and thermo.refs()).
 
 - Check output of demo/sources.R to make sure all references
@@ -38,16 +38,6 @@ Updating data in OBIGT
   co <- check.OBIGT()
   write.csv(co, "OBIGT_check.csv", row.names = FALSE, na = "")
 
-******************
-Updating vignettes
-******************
-
-- Customize rmarkdown installation (in R local library)
-
-  - To enable page offset from anchor position in OBIGT.Rmd:
-    remove padding-top: 10px; from h2 in
-    rmarkdown/templates/html_vignette/resources/vignette.css
-
 ***************
 R compatibility
 ***************
@@ -59,7 +49,7 @@ R compatibility
   LC_CTYPE=en_US R CMD check CHNOSZ_x.x.x.tar.gz
 
 - Backwards compatibility: build and check the package with the
-  *minimum* R version (from the DESCRIPTION file)
+  minimum R version (from the DESCRIPTION file)
 
 *************
 Documentation 
