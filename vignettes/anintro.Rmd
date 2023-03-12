@@ -343,7 +343,7 @@ The following code shows that the database parameters for CH<sub>4</sub>(aq) are
 convert(CH4dat$G, "J")
 ```
 
-As expected, we find that converting the database value to J/mol gives the same result as running <span style="color:green">`subcrt()`</span> with the default units of J.
+Note that converting the database value to J/mol gives the same result as running `subcrt("CH4", T = 25)` with the default <span style="color:red">`E.units()`</span> setting of J.
 
 Use <span style="color:red">`reset()`</span> to restore the units and all other settings for CHNOSZ to their defaults:
 ```{r reset}
@@ -1154,14 +1154,14 @@ subcrt("LYSC_CHICK")$out[[1]][1:6, ]
 ```
 
 Let's compare experimental values of heat capacity of four proteins, from @PM90, with those calculated using group additivity.
-After dividing Privalov and Makhatadze's experimental values by the lengths of the proteins to get per-residue values, we convert those to calories, then plot them.
+We divide Privalov and Makhatadze's experimental values by the lengths of the proteins to get per-residue values, then plot them.
 
 ```{r protein_Cp, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, dpi=dpi, out.width="100%", echo=FALSE, message=FALSE, fig.cap='The heat capacity calculated by group additivity closely approximates experimental values for aqueous proteins. For a related figure showing the effects of ionization in the calculations, see <span style="color:blue">`?ionize.aa`</span>.', cache=TRUE, pngquant=pngquant, timeit=timeit}
 PM90 <- read.csv(system.file("extdata/cpetc/PM90.csv", package = "CHNOSZ"))
 plength <- protein.length(colnames(PM90)[2:5])
 Cp_expt <- t(t(PM90[, 2:5]) / plength)
-matplot(PM90[, 1], convert(Cp_expt, "cal"), type = "p", pch = 19,
-        xlab = axis.label("T"), ylab = axis.label("Cp0"), ylim = c(28, 65))
+matplot(PM90[, 1], Cp_expt, type = "p", pch = 19,
+        xlab = axis.label("T"), ylab = axis.label("Cp0"), ylim = c(110, 280))
 for(i in 1:4) {
   pname <- colnames(Cp_expt)[i]
   aq <- subcrt(pname, "aq", T = seq(0, 150))$out[[1]]

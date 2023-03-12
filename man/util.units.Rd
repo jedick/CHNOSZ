@@ -69,11 +69,12 @@ convert(-1, "pe", T = 373.15)
 convert(-80, "E0")             
 convert(-80, "E0", pH = 5)
 convert(-80, "E0", pH = 5, logaH2O = -5)
-# Calorie to/from joule
-convert(10, "J")		
-convert(10, "cal")
-# cm3bar to joules
-convert(10, "joules")
+# Convert from calories to Joules
+convert(1, "J")    # 1 cal = 4.184 J
+# Convert from Joules to calories
+convert(1, "cal")  # 1 J = 0.239 cal
+# Convert cm3bar to Joules
+convert(10, "joules") # 10 cm3.bar = 1 J
 
 ## Setting the units
 # Make K the units for temperature arguments to subcrt() and affinity()
