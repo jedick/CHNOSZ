@@ -16,7 +16,10 @@ rank.affinity <- function(aout, groups) {
   })
   # Restore dims
   dims <- dim(aout$values[[1]])
-  glist <- apply(grank, 2, "dim<-", dims, simplify = FALSE)
+  # apply() got 'simplify' argument in R 4.1.0 20230313
+  # Using 'simplify = FALSE' in R < 4.1.0 caused error: 3 arguments passed to 'dim<-' which requires 2
+  if(getRversion() < "4.1.0") glist <- lapply(lapply(apply(grank, 2, list), "[[", 1), "dim<-", dims)
+  else glist <- apply(grank, 2, "dim<-", dims, simplify = FALSE)
   aout$values <- glist
   # Rename species to group names (for use by diagram())
   aout$species <- aout$species[1:length(groups), ]

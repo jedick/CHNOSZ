@@ -1543,7 +1543,7 @@ The next three optional datasets are provided to support newer data or models:
 These data are included to help transition to the "higher solubility of quartz paradigm" [@WJ17], but are not included in the default database in order to maintain compatibility with existing data for minerals that are linked to the older aqueous `r sio2` data.
 See [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.
 
-<span style="color:red">`add.OBIGT("DEW")`</span> -- These are aqueous species, with modified parameters, that are intended for use with the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model [@SHA14].
+<span style="color:red">`add.OBIGT("DEW")`</span> -- These are aqueous species, with modified parameters, that are intended for use with the Deep Earth Water (DEW) model [@SHA14].
 You should also run <span style="color:red">`water("DEW")`</span> to activate the equations in the model; then, they will be used by <span style="color:green">`subcrt()`</span> and <span style="color:green">`affinity()`</span>.
 Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
@@ -1586,7 +1586,7 @@ In part because of intrinsic thermodynamic differences between SUPCRT92 and IAPW
 However, the IAPWS-95 equations are useful for other applications, and may be extrapolated to a greater range of *T* and *P* than SUPCRT.
 See <span style="color:blue">`?water`</span> for more information, as well as the last example in <span style="color:blue">`?subcrt`</span>, where uncommenting the line for the `IAPWS95` option allows extrapolation to lower temperatures for supercooled water.
 
-An implementation of the [Deep Earth Water](http://www.dewcommunity.org/) (DEW) model is also available; see [Optional data](#optional-data) for more information.
+An implementation of the Deep Earth Water (DEW) model is also available; see [Optional data](#optional-data) for more information.
 
 # Functions outside the main workflow
 

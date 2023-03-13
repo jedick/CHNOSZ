@@ -26,7 +26,7 @@ Calculate thermodynamic properties of water using the Deep Earth Water (DEW) mod
 
 \details{
 The Deep Earth Water (DEW) model, described by Sverjensky et al., 2014, extends the applicability of the revised HKF equations of state to 60 kbar.
-This implementation of DEW is based on the VBA macro code in the May, 2017 version of the DEW spreadsheet downloaded from \url{http://www.dewcommunity.org/}.
+This implementation of DEW is based on the VBA macro code in the May, 2017 version of the DEW spreadsheet downloaded from http://www.dewcommunity.org/.
 The spreadsheet provides multiple options for some calculations; here the default equations for density of water (Zhang and Duan, 2005), dielectric constant (Sverjensky et al., 2014) and Gibbs energy of water (integral of volume, equation created by Brandon Harrison) are used.
 
 Comments in the original code indicate that \code{calculateGibbsOfWater} is valid for 100 \le \T \le 1000 \degC and \P \ge 1000 bar.

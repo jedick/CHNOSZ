@@ -170,7 +170,7 @@ if(identical(d_FeCu_new$predominant, d_FeCu_stack$predominant)) T5result <- "(OK
 
 ## Add arrows and text
 plot.new()
-text(0.5, 0.99, "mosaic()\nWITHOUT 'loga_aq'\n(pre-2.0.0)", font = 2, xpd = NA)
+text(0.5, 0.99, "mosaic()\nWITHOUT 'loga_aq'", font = 2, xpd = NA)
 
 arrows(0.35, 0.9, 0.65, 0.9)
 text(0.5, 0.93, paste0("Test 1: Cu mineral reactions unaffected\n", T1result))

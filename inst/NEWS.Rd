@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 1.9.9-68 (2023-03-09)}{
+\section{Changes in CHNOSZ version 2.0.0 (2023-03-13)}{
 
   \subsection{MAJOR USER-VISIBLE CHANGES}{
     \itemize{
@@ -101,8 +101,8 @@
 
       \item Add \code{stack_mosaic()} to create stacked mosaic diagrams, where
       the species formed in the first layer become the basis species for the
-      species formed in the second layer. This function serves as a wrapper for the
-      steps for making mosaic diagrams for bimetallic systems described in
+      species formed in the second layer. This function implements the
+      procedure for making mosaic diagrams for bimetallic systems described in
       \viglink{multi-metal}.
 
       \item Add \code{loga_aq} argument to \code{mosiac()} (also present in new
@@ -199,18 +199,15 @@
       with bornite.
 
       \item Improve handling of non-integer coefficients in
-      \code{expr.species()}. The result for FeS1.33 was previously incorrectly
-      formatted as FeS\s{.33} but is now correctly formatted as FeS\s{1.33}.
+      \code{expr.species()}. For example, the result for FeS1.33 was previously
+      incorrectly formatted as FeS\s{.33} but is now correctly formatted as
+      FeS\s{1.33}.
 
     }
   }
 
   \subsection{OTHER CHANGES}{
     \itemize{
-
-      \item Most functions have been modified to use Joules in internal
-      variables. In particular, the value of the gas constant is expressed in
-      J K\S{-1} mol\S{-1} in \code{convert()} and other functions.
 
       \item The \code{\var{reaction}} component of the output of
       \code{subcrt()} contains the \code{model} for each species.
