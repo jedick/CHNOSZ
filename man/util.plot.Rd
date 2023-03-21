@@ -119,8 +119,18 @@ This function is intended to generate colors for distinguishing average oxidatio
 basis(c("H2S", "H2O", "H+", "e-"))
 species(c("HS-", "H2S", "HSO4-", "SO4-2"))
 a <- affinity(pH = c(0, 12), Eh = c(-1, 1), T = 200)
+opar <- par(mfrow = c(2, 2))
 diagram(a, grid = "both")
 title(main = 'diagram(a, grid = "both")')
+diagram(a, grid = "major")
+title(main = 'diagram(a, grid = "major")')
+diagram(a, grid = "minor")
+title(main = 'diagram(a, grid = "minor")')
+diagram(a, fill = "terrain")
+thermo.axis(grid = "major", col.grid = "slategray")
+title(main = 'thermo.axis(grid = "major")')
+par(thermo()$opar)
+par(opar)
 }
 
 \concept{Utility functions}

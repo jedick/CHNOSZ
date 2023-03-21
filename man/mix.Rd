@@ -68,32 +68,28 @@ A list object with the same structure as the output from \code{\link{affinity}},
 More examples are in the vignette \viglink{multi-metal}.
 }
 
-\examples{
-# Don't make all plots because it takes more than
-# 10 seconds on CRAN checks 20230313
-plot.all <- FALSE
-if(plot.all) opar <- par(no.readonly = TRUE)
-if(plot.all) par(mfrow = c(2, 2))
+\examples{\dontshow{opar <- par(no.readonly = TRUE)}
+par(mfrow = c(2, 2))
 # Define basis species with Fe and Cu
 basis(c("Fe+2", "Cu+", "hydrogen sulfide", "oxygen", "H2O", "H+"))
 xlab <- ratlab("Fe+2", "Cu+")
 # Calculate diagram for only Fe-bearing minerals
 species(c("pyrite", "pyrrhotite", "magnetite", "hematite"))
 aFe <- affinity("Fe+2" = c(0, 12), O2 = c(-40, -16), T = 400, P = 2000)
-dFe <- diagram(aFe, xlab = xlab, main = "Fe-S-O-H", plot.it = plot.all)
+dFe <- diagram(aFe, xlab = xlab, main = "Fe-S-O-H")
 # Calculate diagram for only Cu-bearing minerals
 species(c("covellite", "chalcocite", "tenorite", "cuprite"))
 aCu <- affinity(aFe)  # argument recall
-dCu <- diagram(aCu, xlab = xlab, main = "Cu-S-O-H", plot.it = plot.all)
+dCu <- diagram(aCu, xlab = xlab, main = "Cu-S-O-H")
 ### mash() diagram
 ac <- mash(dFe, dCu)
-diagram(ac, xlab = xlab, main = "Cu-Fe-S-O-H with mash()", plot.it = plot.all)
+diagram(ac, xlab = xlab, main = "Cu-Fe-S-O-H with mash()")
 ### rebalance() diagram
 ad <- rebalance(dFe, dCu)
 diagram(ad, xlab = xlab, balance = 1, main = "Cu-Fe-S-O-H with rebalance()")
 db <- describe.basis(3)
 leg <- lex(lTP(400, 2000), db)
 legend("bottomleft", legend = leg, bty = "n")
-if(plot.all) par(opar)}
+\dontshow{par(opar)}}
 
 \concept{Extended workflow}
