@@ -96,7 +96,7 @@ TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976
 TZA97,"B. R. Tagirov, A. V. Zotov and N. N. Akinfiev",2007,"Geochim. Cosmochim. Acta 61, 4267-4280","aqueous HCl",https://doi.org/10.1016/S0016-7037(97)00274-3
 ST97,"D. Shvedov and P. R. Tremaine",1997,"J. Solution Chem. 26, 1113-1143","dimethylammonium chloride HKF parameters",https://doi.org/10.1023/A:1022977006327
 ST97.1,"D. Shvedov and P. R. Tremaine",1997,"J. Solution Chem. 26, 1113-1143","dimethylamine HKF parameters",https://doi.org/10.1023/A:1022977006327
-proton,OBIGT,1997,"Hydrogen-ion convention","""The conventional standard molal properties of the hydrogen ion are zero at any pressure and temperature"" [@JOH92]",http://chnosz.net
+proton,OBIGT,1997,"Hydrogen-ion convention","""The conventional standard molal properties of the hydrogen ion are zero at any pressure and temperature"" [@JOH92]",https://chnosz.net
 HOKR98,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00219-6
 HOKR98.1,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","amino acids",https://doi.org/10.1016/S0016-7037(97)00219-6
 RH98,"L. Richard and H. C. Helgeson",1998,"Geochim. Cosmochim. Acta 62, 3591-3636","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00345-1
@@ -161,7 +161,7 @@ LEB+06,"W. Liu et al.",2006,"Chem. Geol. 231, 326-349","FeCl<sub>2</sub><sup>+</
 LMR06,"D. Langmuir et al.",2006,"Geochim. Cosmochim. Acta 70, 2942-2956","scorodite and amorphous ferric arsenate: G",https://doi.org/10.1016/j.gca.2006.03.006
 MNM+06,"J. Majzlan, A. Navrotsky et al.",2006,"Eur. J. Mineral. 18, 175-186","coquimbite, ferricopiapite, and rhomboclase",https://doi.org/10.1127/0935-1221/2006/0018-0175
 SGX+06,"A. V. Sharygin et al.",2006,"Geochim. Cosmochim. Acta 70, 5169-5182",KSO<sub>4</sub><sup>-</sup>,https://doi.org/10.1016/j.gca.2006.07.034
-electron,OBIGT,2006,"See CHNOSZ vignette OBIGT.Rmd for more information","Non-zero entropy of the electron based on the hydrogen-ion convention",http://chnosz.net
+electron,OBIGT,2006,"See CHNOSZ vignette OBIGT.Rmd for more information","Non-zero entropy of the electron based on the hydrogen-ion convention",https://chnosz.net
 Dic07,"J. M. Dick",2007,"Ph.D. Dissertation, Univ. of California","glutathione, cystine, and cystine sidechain",
 MA07,"L. Marini and M. Accornero",2007,"Environ. Geol. 52, 1343-1363","metal-arsenate and metal-arsenite complexes; linked to properties of arsenate and arsenite from @SSWS97",https://doi.org/10.1007/s00254-006-0578-5
 SLOP07.1,"E. L. Shock et al.",2007,"slop07.dat computer data file","corrected charge of Pu(Oxal)<sup>+2</sup>",http://geopig.asu.edu/?q=tools
@@ -218,14 +218,14 @@ ZZL+16,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","data listed in sprons
 ZZL+16.1,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","As(&alpha;): V listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.2,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","Cp parameters listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.3,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","dawsonite GHS",https://doi.org/10.1016/j.cageo.2016.02.013
-OBIGT.1,"J. M. Dick",2017,"OBIGT database in CHNOSZ","GHS (T<sub>r</sub>) of the phase that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the phases that are stable at higher temperatures.",http://chnosz.net
-OBIGT.3,"J. M. Dick",2017,"OBIGT database in CHNOSZ","AuCl<sub>4</sub><sup>-</sup> renamed to AuCl<sub>4</sub><sup>-3</sup>",http://chnosz.net
-OBIGT.4,"J. M. Dick",2017,"OBIGT database in CHNOSZ","charge of NpO<sub>2</sub>(Oxal), La(Succ)<sup>+</sup>, NH<sub>4</sub>(Succ)<sup>-</sup>, and NpO<sub>2</sub>(Succ) as listed by @PSK99",http://chnosz.net
-OBIGT.5,"J. M. Dick",2017,"OBIGT database in CHNOSZ","Incorrect values of HKF a<sub>1</sub>--a<sub>4</sub> parameters for [-CH<sub>2</sub>NH<sub>2</sub>] were printed in Table 6 of @DLH06; corrected values are used here.",http://chnosz.net
-OBIGT.6,"J. M. Dick",2019,"OBIGT database in CHNOSZ","recalculated values of Cp (those in @AKAE19 appear to be calculated using wrong sign on &omega;) and enthalpy (using &Delta;G=&Delta;H-T&Delta;S and the entropies of the elements)",http://chnosz.net
-OBIGT.7,"J. M. Dick",2019,"OBIGT database in CHNOSZ","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: change Ti to Tl",http://chnosz.net
-OBIGT.8,"J. M. Dick",2019,"OBIGT database in CHNOSZ","GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",http://chnosz.net
-OBIGT.9,"J. M. Dick",2021,"OBIGT database in CHNOSZ","diaminopimelic acid, putrescine and spermidine: parameters recalculated to account for a missing [-CH2NH2] group in the group additivity equations",http://chnosz.net
+OBIGT.1,"J. M. Dick",2017,"OBIGT database in CHNOSZ","GHS (T<sub>r</sub>) of the phase that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the phases that are stable at higher temperatures.",https://chnosz.net
+OBIGT.3,"J. M. Dick",2017,"OBIGT database in CHNOSZ","AuCl<sub>4</sub><sup>-</sup> renamed to AuCl<sub>4</sub><sup>-3</sup>",https://chnosz.net
+OBIGT.4,"J. M. Dick",2017,"OBIGT database in CHNOSZ","charge of NpO<sub>2</sub>(Oxal), La(Succ)<sup>+</sup>, NH<sub>4</sub>(Succ)<sup>-</sup>, and NpO<sub>2</sub>(Succ) as listed by @PSK99",https://chnosz.net
+OBIGT.5,"J. M. Dick",2017,"OBIGT database in CHNOSZ","Incorrect values of HKF a<sub>1</sub>--a<sub>4</sub> parameters for [-CH<sub>2</sub>NH<sub>2</sub>] were printed in Table 6 of @DLH06; corrected values are used here.",https://chnosz.net
+OBIGT.6,"J. M. Dick",2019,"OBIGT database in CHNOSZ","recalculated values of Cp (those in @AKAE19 appear to be calculated using wrong sign on &omega;) and enthalpy (using &Delta;G=&Delta;H-T&Delta;S and the entropies of the elements)",https://chnosz.net
+OBIGT.7,"J. M. Dick",2019,"OBIGT database in CHNOSZ","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: change Ti to Tl",https://chnosz.net
+OBIGT.8,"J. M. Dick",2019,"OBIGT database in CHNOSZ","GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",https://chnosz.net
+OBIGT.9,"J. M. Dick",2021,"OBIGT database in CHNOSZ","diaminopimelic acid, putrescine and spermidine: parameters recalculated to account for a missing [-CH2NH2] group in the group additivity equations",https://chnosz.net
 LCT17,"A. R. Lowe, J. S. Cox and P. R. Tremaine",2017,"J. Chem. Thermodynamics 112, 129-145","adenine HKF parameters",https://doi.org/10.1016/j.jct.2017.04.005
 DEW17.01,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(acetic acid, glycine, methanol, propanoic acid, propanol: parameters in DEW spreadsheet are the same as in @PS01)",http://www.dewcommunity.org
 DEW17.02,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(ethanol: parameters in DEW spreadsheet are different from @PS01; no comment provided)",http://www.dewcommunity.org

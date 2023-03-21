@@ -62,6 +62,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{comproportionation}{Gibbs energy of sulfur comproportionation (Amend et al., 2020)}
     \item{Pourbaix}{Eh-pH diagram for Fe-O-H with equisolubility lines (Pourbaix, 1974)}
     \item{E_coli}{Gibbs energy of biomass synthesis in \emph{E. coli} (LaRowe and Amend, 2016)}
+    \item{rank.affinity}{Affinity ranking for proteins in yeast nutrient limitation (data from Tai et al., 2005)}
     \item{yttrium}{\code{\link{logB.to.OBIGT}} fits at 800 and 1000 bar and Y speciation in \code{\link{NaCl}} solution at varying pH (Guan et al., 2020)}
   }
 
@@ -141,6 +142,8 @@ Sverjensky, D. A., Harrison, B. and Azzolini, D. (2014a) Water in the deep Earth
 Sverjensky, D. A., Hemley, J. J. and D'Angelo, W. M. (1991) Thermodynamic assessment of hydrothermal alkali feldspar-mica-aluminosilicate equilibria. \emph{Geochim. Cosmochim. Acta} \bold{55}, 989-1004. \doi{10.1016/0016-7037(91)90157-Z}
 
 Sverjensky, D. A., Stagno, V. and Huang, F. (2014b) Important role for organic carbon in subduction-zone fluids in the deep carbon cycle. \emph{Nat. Geosci.} \bold{7}, 909--913. \doi{10.1038/ngeo2291}
+
+Tai, S. L., Boer, V. M., Daran-Lapujade, P., Walsh, M. C., de Winde, J. H., Daran, J.-M. and Pronk, J. T. (2005) Two-dimensional transcriptome analysis in chemostat cultures: Combinatorial effects of oxygen availability and macronutrient limitation in \emph{Saccharomyces cerevisiae}. \emph{J. Biol. Chem.} \bold{280}, 437--447. \doi{10.1074/jbc.M410573200}
 
 Tutolo, B. M., Kong, X.-Z., Seyfried, W. E., Jr. and Saar, M. O. (2014) Internal consistency in aqueous geochemical data revisited: Applications to the aluminum system. \emph{Geochim. Cosmochim. Acta} \bold{133}, 216--234. \doi{10.1016/j.gca.2014.02.036}
 

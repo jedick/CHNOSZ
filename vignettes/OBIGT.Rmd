@@ -361,7 +361,7 @@ Use `add.OBIGT("AS04")` to load the data; see `demo(aluminum)` for an example.
 ## <a id="optional-DEW" class="anchor"></a> `r setfile("DEW.csv")`
 The Deep Earth Water (DEW) model extends the applicability of the revised HKF equations of state to 60 kbar.
 Accuracy of the thermodynamic calculations at these conditions is improved by revised correlations for the <i>a</i><sub>1</sub> HKF parameter, as described by [Sverjensky et al. (2014)](https://doi.org/10.1016/j.gca.2013.12.019).
-The data here were taken from the May 2017 and January 2019 versions of the at http://www.dewcommunity.org/resources.html.
+The thermodynamic parameters for species were taken from the May 2017 and January 2019 versions of the DEW spreadsheet.
 The following species are present in the spreadsheet, but are not used here because the parameters are unchanged from the default database in CHNOSZ: B(OH)<sub>3</sub>, Br<sup>-</sup>, Ca<sup>+2</sup>, Cl<sup>-</sup>, Cs<sup>+</sup>, F<sup>-</sup>, H<sup>+</sup>, H<sub>2</sub>, He, I<sup>-</sup>, K<sup>+</sup>, Kr, Li<sup>+</sup>, Mg<sup>+2</sup>, Na<sup>+</sup>, Ne, O<sub>2</sub>, Rb<sup>+</sup>, Rn, SO<sub>4</sub><sup>-2</sup>.
 
 Besides using `add.OBIGT("DEW")` to load these data, you should also run `water("DEW")` to activate the DEW equations in CHNOSZ.
