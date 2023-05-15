@@ -84,7 +84,7 @@ mod.OBIGT("lorem-ipsum", formula = "C123", state = "cr", G = -12345678)
 # Retrieve the data for this species using either name or formula
 info(info("lorem-ipsum"))
 info(info("C123"))
-# reset database
+# Reset database
 OBIGT()
 
 ## Using add.OBIGT():

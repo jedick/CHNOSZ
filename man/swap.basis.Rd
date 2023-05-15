@@ -40,11 +40,11 @@ The other functions are supporting functions: \code{basis.elements} returns the 
 \examples{
 \dontshow{reset()}
 ## Swapping basis species
-# start with a preset basis definition
+# Start with a preset basis definition
 b1 <- basis("CHNOS+")
-# swap H2(aq) for O2(gas)
+# Swap H2(aq) for O2(gas)
 b2 <- swap.basis("O2", "H2")
-# put oxygen back in
+# Put oxygen back in
 b3 <- swap.basis("H2", "oxygen")
 
 # Interconversion of chemical potentials of elements and

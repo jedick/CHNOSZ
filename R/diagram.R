@@ -137,7 +137,7 @@ diagram <- function(
     } else message(paste("diagram: plotting", plotvar, " / n.balance"))
   }
 
-  ## Use molality instead of activity if the affinity calculation include ionic strength 20171101
+  ## Use molality instead of activity if the affinity calculation includes ionic strength 20171101
   molality <- "IS" %in% names(eout)
 
   ## When can normalize and as.residue be used

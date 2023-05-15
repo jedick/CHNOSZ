@@ -81,7 +81,7 @@ Except for relatively simple systems, even after careful refinement, the results
 \code{demo("solubility")} shows solubilities of CO\s{2} and calcite calculated as a function of pH and T; note that for calcite, the \code{dissociate} argument is set to TRUE.
 \code{demo("gold")} shows solubility calculations for Au in aqueous solutions with hydroxide, chloride, and hydrosulfide complexes.
 
-Solubility calculations for multiple minerals are used for generating isosolubility (aka. equisolubility) lines in \code{demo("Pourbaix")} and \code{demo("zinc")}.
+Solubility calculations for multiple minerals are used for generating isosolubility (aka. equisolubility) lines in \code{demo("Pourbaix")} and \code{demo("minsol")}.
 The latter demo combines the calculation of solubilities with a \code{\link{mosaic}} calculation to account for the speciation of aqueous sulfur.
 
 Whereas \code{solubility} yields a stable equilibrium condition (the affinities of formation reactions of aqueous species are zero), \code{\link{equilibrate}} generates metastable equilibrium (the affinities of formation reactions are equal to each other, but not necessarily zero).
