@@ -27,6 +27,7 @@ export(
   "equil.boltzmann", "equil.reaction", "find.tp",
   "ionize.aa", "MP90.cp", "aasum",
   "ratlab",
+  "EOSregress", "EOScoeffs", "EOSplot", "EOSvar",
 # demos
   "protein.equil", "palply",
   "label.plot",
@@ -39,6 +40,8 @@ export(
 # (no other functions are used in the tests)
 # other exported functions that are not used above
   "checkEOS", "checkGHS", "check.OBIGT",
+  "V_s_var", "Cp_s_var",
+  "EOSlab", "EOScalc",
   "basis.elements", "element.mu", "ibasis",
   "water.SUPCRT92",
   "nonideal",

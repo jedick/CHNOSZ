@@ -13,7 +13,7 @@ examples <- function(save.png = FALSE) {
     "solubility", "equilibrate", 
     "diagram", "mosaic", "mix",
     "buffer", "nonideal", "NaCl",
-    "add.protein", "ionize.aa", "rank.affinity",
+    "add.protein", "ionize.aa", "EOSregress", "rank.affinity",
     "DEW", "logB.to.OBIGT", "stack_mosaic"
   )
   plot.it <- FALSE
@@ -33,7 +33,7 @@ examples <- function(save.png = FALSE) {
 demos <- function(which = c("sources", "protein.equil", "affinity", "NaCl", "density", 
   "ORP", "ionize", "buffer", "protbuff", "glycinate",
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "minsol",
-  "Shh", "saturation", "DEW", "lambda", "potassium", "TCA", "aluminum",
+  "Shh", "saturation", "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum",
   "AD", "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity"), save.png = FALSE) {
   # Run one or more demos from CHNOSZ with ask = FALSE, and return the value of the last one
   out <- NULL

@@ -17,7 +17,7 @@
     "density", "ORP", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "minsol", "Shh", "saturation",
-    "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
+    "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
     "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity"),
     save.png = FALSE)
 }
@@ -52,6 +52,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{dehydration}{\logK of dehydration reactions; SVG file contains tooltips and links}
     \item{Shh}{Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015)}
     \item{saturation}{Equilibrium activity diagram showing activity ratios and mineral saturation limits (Bowers et al., 1984)}
+    \item{adenine}{HKF regression of heat capacity and volume of aqueous adenine (Lowe et al., 2017)}
     \item{DEW}{Deep Earth Water (DEW) model for high pressures (Sverjensky et al., 2014a and 2014b)}
     \item{lambda}{Effects of lambda transition on thermodynamic properties of quartz (Berman, 1988)}
     \item{potassium}{Comparison of thermodynamic datasets for predicting mineral stabilities (Sverjensky et al., 1991)}
@@ -120,6 +121,8 @@ Guan, Q., Mei, Y., Etschmann, B., Testemale, D., Louvel, M. and Brugger, J. (202
 Johnson, J. W., Oelkers, E. H. and Helgeson, H. C. (1992) SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000\degC. \emph{Comp. Geosci.} \bold{18}, 899--947. \doi{10.1016/0098-3004(92)90029-Q}
 
 LaRowe, D. E. and Amend, J. P. (2016) The energetics of anabolism in natural settings. \emph{ISME J.} \bold{10}, 1285--1295. \doi{10.1038/ismej.2015.227}
+
+Lowe, A. R., Cox, J. S. and Tremaine, P. R. (2017) Thermodynamics of aqueous adenine: Standard partial molar volumes and heat capacities of adenine, adeninium chloride, and sodium adeninate from \emph{T} = 278.15 K to 393.15 K. \emph{J. Chem. Thermodyn.} \bold{112}, 129--145. \doi{10.1016/j.jct.2017.04.005}
 
 Lu, P. and Zhu, C. (2011) Arsenic Eh--pH diagrams at 25\degC and 1 bar. \emph{Environ. Earth Sci.} \bold{62}, 1673--1683. \doi{10.1007/s12665-010-0652-x}
   
