@@ -16,6 +16,7 @@ sed -i 's/<code>?hkf<\/code>/<code><a href="..\/html\/eos.html" style="backgroun
 sed -i 's/<code>?cgl<\/code>/<code><a href="..\/html\/eos.html" style="background-image:none;">?cgl<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?water<\/code>/<code><a href="..\/html\/water.html" style="background-image:none;">?water<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?subcrt<\/code>/<code><a href="..\/html\/subcrt.html" style="background-image:none;">?subcrt<\/a><\/code>/g' anintro.html
+sed -i 's/<code>?EOSregress<\/code>/<code><a href="..\/html\/EOSregress.html" style="background-image:none;">?EOSregress<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?taxonomy<\/code>/<code><a href="..\/html\/taxonomy.html" style="background-image:none;">?taxonomy<\/a><\/code>/g' anintro.html
 
 # anintro.html: add links to function names

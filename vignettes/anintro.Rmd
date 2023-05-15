@@ -1594,6 +1594,8 @@ Some functions in CHNOSZ lie outside the main workflow described above.
 
 * <span style="color:green">`RH2OBIGT()`</span> implements a group additivity calculation of standard molal thermodynamic properties and equations of state parameters of crystalline and liquid organic molecules from @RH98.
 
+* <span style="color:green">`EOSregress()`</span> and related functions can be used to regress "equation of state" parameters (e.g. coefficients in the HKF equations) from heat capacity and volumetric data. See <span style="color:blue">`?EOSregress`</span> and the vignette [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html).
+
 * Some functions are available (see <span style="color:blue">`?taxonomy`</span>) to read data from [NCBI taxonomy files](https://www.ncbi.nlm.nih.gov/taxonomy), traverse taxonomic ranks, and get scientific names of taxonomic nodes.
 
 # Citation and contact information

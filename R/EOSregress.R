@@ -4,7 +4,7 @@
 # 20110429 revise and merge with CHNOSZ package
 
 Cp_s_var <- function(T = 298.15, P = 1, omega.PrTr = 0, Z = 0) {
-  # Solvation contribution to heat capacity in the HKF EOS, divided by omega(Pr,Tr) (calories)
+  # Solvation contribution to heat capacity in the HKF EOS, divided by omega(Pr,Tr) (Joules)
   Cp_s <- hkf("Cp", parameters = data.frame(omega = omega.PrTr, Z = Z), T = T, P = P, contrib = "s")$aq
   return(Cp_s[[1]][, 1] / omega.PrTr)
 }

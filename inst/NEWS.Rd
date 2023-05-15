@@ -12,11 +12,11 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 2.0.0-4 (2023-05-15)}{
+\section{Changes in CHNOSZ version 2.0.0-5 (2023-05-15)}{
 
     \itemize{
 
-      \item Restore EOSregress.R and demo/adenine.R.
+      \item Restore EOSregress.R, eos-regress.Rmd, and demo/adenine.R.
 
     }
 
