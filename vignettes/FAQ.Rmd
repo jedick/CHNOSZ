@@ -1,0 +1,154 @@
+---
+title: "CHNOSZ FAQ"
+author: "Jeffrey M. Dick"
+output:
+  html_vignette:
+    mathjax: null
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{CHNOSZ FAQ}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: vig.bib
+csl: elementa.csl
+---
+
+<script>
+function ToggleDiv(ID) {
+  var D = document.getElementById("D-" + ID);
+  var B = document.getElementById("B-" + ID);
+  if (D.style.display === "none") {
+    // open the div and change button text
+    D.style.display = "block";
+    B.innerText = "Hide code";
+  } else {
+    // close the div and change button text
+    D.style.display = "none";
+    B.innerText = "Show code";
+  }
+}
+</script>
+
+```{r setup, include = FALSE}
+library(CHNOSZ)
+options(width = 80)
+## use pngquant to optimize PNG images
+library(knitr)
+knit_hooks$set(pngquant = hook_pngquant)
+pngquant <- "--speed=1 --quality=0-25"
+if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
+```
+
+```{r HTML, include = FALSE}
+NOTE <- '<span style="background-color: yellow;">NOTE</span>'
+# CHNOSZ functions
+equilibrate_ <- '<code>equilibrate()</code>'
+# Math stuff
+logK <- "log&thinsp;<i>K</i>"
+Hplus <- "H<sup>+</sup>"
+HCO2_ <- "HCO<sub>2</sub><sup>−</sup>"
+HCO3_ <- "HCO<sub>3</sub><sup>−</sup>"
+O2 <- "O<sub>2</sub>"
+log <- "log&thinsp;"
+aHCO2_ <- "<i>a</i><sub>HCO<sub>2</sub><sup>−</sup></sub>"
+aHCO3_ <- "<i>a</i><sub>HCO<sub>3</sub><sup>−</sup></sub>"
+logfO2 <- "log&thinsp;<i>f</i><sub>O<sub>2</sub></sub>"
+Ctot <- "C<sub>tot</sub>"
+C3H5O2_ <- "C<sub>3</sub>H<sub>5</sub>O<sub>2</sub><sup>−</sup>"
+a3HCO3_ <- "<i>a</i><sup>3</sup><sub>HCO<sub>3</sub><sup>−</sup></sub>"
+aC3H5O2_ <- "<i>a</i><sub>C<sub>3</sub>H<sub>5</sub>O<sub>2</sub><sup>−</sup></sub>"
+a2HCO3_ <- "<i>a</i><sup>2</sup><sub>HCO<sub>3</sub><sup>−</sup></sub>"
+logCtot <- "log&thinsp;C<sub>tot</sub>"
+CO2 <- "CO<sub>2</sub>"
+H2O <- "H<sub>2</sub>O"
+```
+
+This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
+
+<!-- ######## SECTION MARKER ######## -->
+## When and why do equal-activity boundaries depend on total activity?
+
+Short answer: When the species have the same number of the conserved element (let's take C for example),
+their activities are raised to the same exponent in reaction quotient, so the activity ratio in the law of mass action becomes unity.
+But when the species have different numbers of the conserved element (for example, propanoate with 3 C and bicarbonate with 1 C),
+their activities are raised to different exponents, and the activity ratio does not become unity even when the activities are equal
+(except for the specific case where the activities themselves are equal to 1).
+Therefore, in general, the condition of "equal activity" is not sufficient to define boundaries on a relative stability diagram;
+instead, we need to say "activity of each species equal to *x*" or alternatively "total activity equal to *y*".
+
+Long answer: First, consider a reaction between formate and bicarbonate: `r HCO2_` + 0.5 `r O2` $\rightleftharpoons$ `r HCO3_`.
+The law of mass action (LMA) is <strong>`r logK` $=$ `r log`(`r aHCO3_` / `r aHCO2_`) $-$ 0.5 `r logfO2`</strong>.
+The condition of equal activity is <font color="red">`r aHCO2_` $=$ `r aHCO3_`</font>.
+Then, the LMA simplifies to <strong>`r logK` $=$ $-$ 0.5 `r logfO2`</strong>.
+The total activity of C is given by <font color="blue">`r Ctot` $=$ `r aHCO2_` $+$ `r aHCO3_`</font>.
+According to the LMA, `r logfO2` is a function only of `r logK`, so <font color="green">*d*`r logfO2`/*d*`r logCtot` $=$ 0</font>.
+In other words, the position of the equal-activity boundary is independent of the value of `r Ctot`.
+
+Next, consider a reaction between propanoate and bicarbonate: `r C3H5O2_` + <sup>7</sup>&frasl;<sub>2</sub> `r O2` $\rightleftharpoons$ 3 `r HCO3_` + 2 `r Hplus`.
+The LMA is <strong>`r logK` $=$ `r log`(`r a3HCO3_` / `r aC3H5O2_`) $-$ pH $-$ <sup>7</sup>&frasl;<sub>2</sub> `r logfO2`</strong>.
+The condition of equal activity is <font color="red">`r aC3H5O2_` $=$ `r aHCO3_`</font>.
+Then, the LMA simplifies to <strong>`r logK` $=$ `r log``r a2HCO3_` $-$ pH $-$ <sup>7</sup>&frasl;<sub>2</sub> `r logfO2`</strong>.
+The total activity of C is given by <font color="blue">`r Ctot` $=$ 3 `r aC3H5O2_` $+$ `r aHCO3_`</font>; combined with the condition of equal activity,
+this gives <font color="blue">`r Ctot` $=$ 4 `r aHCO3_`</font>.
+Substituting this into the LMA gives <strong>`r logK` $=$ `r log`(`r Ctot` / 4)<sup>2</sup> $-$ pH $-$ <sup>7</sup>&frasl;<sub>2</sub> `r logfO2`</strong>,
+which can be rearranged to write `r logfO2` $=$ <sup>2</sup>&frasl;<sub>7</sub> (2 `r log``r Ctot` $-$ `r logK` $-$ `r log`16 $-$ pH).
+It follows that <font color="green">*d*`r logfO2`/*d*`r logCtot` $=$ <sup>4</sup>&frasl;<sub>7</sub></font>,
+and the position of the equal-activity boundary depends on `r Ctot`.
+
+According to this analysis, increasing `r Ctot` from 0.03 to 3 molal (a 2 log-unit increase)
+would have no effect on the location of the formate-bicarbonate equal-activity boundary,
+but would raise the propanoate-bicarbonate equal-activity boundary by <sup>8</sup>&frasl;<sub>7</sub> units on the `r logfO2` axis.
+Because the reaction between bicarbonate and `r CO2` does not involve `r O2` (but rather `r H2O` and `r Hplus`),
+the same effect should occur on the propanoate-`r CO2` equal-activity boundary.
+The plots below, which are made using `r equilibrate_` for species in the Deep Earth Water (DEW) model, illustrate this effect.
+
+<button id="B-DEW_Ctot" onclick="ToggleDiv('DEW_Ctot')">Show code</button>
+<div id="D-DEW_Ctot" style="display: none">
+```{r DEW_Ctot, eval = FALSE}
+### Based on demo/DEW.R in CHNOSZ
+
+# Set up subplots
+par(mfrow = c(1, 2), mar = c(3.0, 3.5, 2.5, 1.0), mgp = c(1.7, 0.3, 0), las = 1, tcl = 0.3, xaxs = "i", yaxs = "i")
+
+# Activate DEW model
+oldwat <- water("DEW")
+
+###########
+## logfO2-pH diagram for aqueous inorganic and organic carbon species at high pressure
+## After Figure 1b of Sverjensky et al., 2014b [SSH14]
+## (Nature Geoscience, https://doi.org/10.1038/NGEO2291)
+###########
+
+# Define system
+basis("CHNOS+")
+inorganic <- c("CO2", "HCO3-", "CO3-2", "CH4")
+organic <- c("formic acid", "formate", "acetic acid", "acetate", "propanoic acid", "propanoate")
+species(c(inorganic, organic), 0)
+fill <- c(rep("aliceblue", length(inorganic)), rep("aquamarine", length(organic)))
+
+# A function to make the diagrams
+dfun <- function(T = 600, P = 50000, res = 200, Ctot = 0.03) {
+  a <- affinity(pH = c(0, 10, res), O2 = c(-24, -12, res), T = T, P = P)
+  # Set total C concentration to 0.03 molal
+  # (from EQ3NR model for eclogite [Supporting Information of SSH14])
+  e <- equilibrate(a, loga.balance = log10(Ctot))
+  diagram(e, fill = fill)
+  dp <- describe.property(c("     T", "     P"), c(T, P), digits = 0)
+  legend("bottomleft", legend = dp, bty = "n")
+}
+
+water("DEW")
+add.OBIGT("DEW")
+dfun(Ctot = 0.03)
+mtitle(c("Inorganic and organic species", "C[total] = 0.03 molal"))
+dfun(Ctot = 3)
+mtitle(c("Inorganic and organic species", "C[total] = 3 molal"))
+```
+</div>
+
+```{r DEW_Ctot, echo = FALSE, message = FALSE, results = "hide", fig.width = 8, fig.height = 4, out.width = "100%", fig.align = "center", pngquant = pngquant}
+```
+
+*Answered on 2023-05-17.*
+
+## References

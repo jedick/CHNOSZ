@@ -137,3 +137,6 @@ sed -i '375,$s/thermo.refs(/<a href="..\/html\/util.data.html" style="color:\ gr
 sed -i '375,$s/thermo(/<a href="..\/html\/thermo.html" style="color:\ green;">thermo<\/a>(/g' custom_data.html
 sed -i '375,$s/checkGHS(/<a href="..\/html\/util.data.html" style="color:\ green;">checkGHS<\/a>(/g' custom_data.html
 sed -i '375,$s/checkEOS(/<a href="..\/html\/util.data.html" style="color:\ green;">checkEOS<\/a>(/g' custom_data.html
+
+# Add links to FAQ.html 20230517
+sed -i 's/<code>equilibrate()<\/code>/<code><a href="..\/html\/equilibrate.html" style="color:\ green;">equilibrate()<\/a><\/code>/g' FAQ.html
