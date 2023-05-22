@@ -66,6 +66,14 @@ H2O <- "H<sub>2</sub>O"
 This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
 
 <!-- ######## SECTION MARKER ######## -->
+## How is 'CHNOSZ' pronounced?
+
+As one syllable, starting with an *sh* sound and [rhyming with *Oz*](https://en.wiktionary.org/wiki/Rhymes:English/%C9%92z).
+CHNOSZ and [schnoz](https://en.wiktionary.org/wiki/schnozz) are homophones.
+
+*Answered on 2023-05-22.*
+
+<!-- ######## SECTION MARKER ######## -->
 ## When and why do equal-activity boundaries depend on total activity?
 
 Short answer: When the species have the same number of the conserved element (let's take C for example),
@@ -97,7 +105,7 @@ and the position of the equal-activity boundary depends on `r Ctot`.
 
 According to this analysis, increasing `r Ctot` from 0.03 to 3 molal (a 2 log-unit increase)
 would have no effect on the location of the formate-bicarbonate equal-activity boundary,
-but would raise the propanoate-bicarbonate equal-activity boundary by <sup>8</sup>&frasl;<sub>7</sub> units on the `r logfO2` axis.
+but would raise the propanoate-bicarbonate equal-activity boundary by <sup>8</sup>&frasl;<sub>7</sub> units on the `r logfO2` scale.
 Because the reaction between bicarbonate and `r CO2` does not involve `r O2` (but rather `r H2O` and `r Hplus`),
 the same effect should occur on the propanoate-`r CO2` equal-activity boundary.
 The plots below, which are made using `r equilibrate_` for species in the Deep Earth Water (DEW) model, illustrate this effect.
