@@ -43,6 +43,8 @@ if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
 NOTE <- '<span style="background-color: yellow;">NOTE</span>'
 # CHNOSZ functions
 equilibrate_ <- '<code>equilibrate()</code>'
+info_ <- '<code>info()</code>'
+thermo.refs_ <- '<code>thermo.refs()</code>'
 # Math stuff
 logK <- "log&thinsp;<i>K</i>"
 Hplus <- "H<sup>+</sup>"
@@ -65,7 +67,6 @@ H2O <- "H<sub>2</sub>O"
 
 This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
 
-<!-- ######## SECTION MARKER ######## -->
 ## How is 'CHNOSZ' pronounced?
 
 As one syllable, starting with an *sh* sound and [rhyming with *Oz*](https://en.wiktionary.org/wiki/Rhymes:English/%C9%92z).
@@ -73,7 +74,32 @@ CHNOSZ and [schnoz](https://en.wiktionary.org/wiki/schnozz) are homophones.
 
 *Answered on 2023-05-22.*
 
-<!-- ######## SECTION MARKER ######## -->
+## How can CHNOSZ be cited?
+
+* This paper is the general reference for CHNOSZ: @Dic19.
+* This paper describes the features for making diagrams with multiple metals: @Dic21b.
+* This paper describes the features for calculations involving proteins: @Dic08.
+* The [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) represents the work of many researchers.
+**If you publish results that depend on any of these data, please cite the primary sources.**
+Use `r info_` to show the reference keys for particular species and `r thermo.refs_` to list the bibliographic details:
+```{r alanine, message = FALSE}
+info(info("alanine"))[c("ref1", "ref2")]
+thermo.refs(info("alanine"))
+```
+
+*Answered on 2023-05-27.*
+
+## What thermodynamic models are used in CHNOSZ?
+
+* The thermodynamic properties of liquid water are calculated using Fortran code from SUPCRT92 [@JOH92] or an implementation in R of the IAPWS-95 formulation [@WP02].
+* Thermodynamic properties of other species are taken from a database for minerals and inorganic and organic aqueous species including biomolecules, or from amino acid group additivity for proteins [@DLH06].
+* The corresponding high-temperature properties are calculated using the @BB85 equations for minerals and the revised Helgeson-Kirkham-Flowers [@HKF81] equations for aqueous species.
+* The HKF equations are augmented with the Deep Earth Water (DEW) model [@SHA14] and estimates of parameters in the extended Debye-H&uuml;ckel equation [@MSS13] to calculate standard-state properties and activity coefficients for given ionic strength at high pressure (to 6 GPa).
+* Activity coefficients are implemented via adjusted standard Gibbs energies at specified ionic strength [@Alb96], which converts all activity variables in the workflow to molalities.
+* A related adjustment is available to convert standard Gibbs energies for gases from the 1 bar standard state used in SUPCRT to a variable-pressure standard state [@AC93,Ch.12].
+
+*Answered on 2018-11-13; moved from <https://chnosz.net/> on 2023-05-27.*
+
 ## When and why do equal-activity boundaries depend on total activity?
 
 Short answer: When the species have the same number of the conserved element (let's take C for example),

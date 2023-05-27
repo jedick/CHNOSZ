@@ -140,3 +140,5 @@ sed -i '375,$s/checkEOS(/<a href="..\/html\/util.data.html" style="color:\ green
 
 # Add links to FAQ.html 20230517
 sed -i 's/<code>equilibrate()<\/code>/<code><a href="..\/html\/equilibrate.html" style="color:\ green;">equilibrate()<\/a><\/code>/g' FAQ.html
+sed -i 's/<code>info()<\/code>/<code><a href="..\/html\/info.html" style="color:\ green;">info()<\/a><\/code>/g' FAQ.html
+sed -i 's/<code>thermo.refs()<\/code>/<code><a href="..\/html\/util.data.html" style="color:\ green;">thermo.refs()<\/a><\/code>/g' FAQ.html
