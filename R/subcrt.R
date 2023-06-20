@@ -24,17 +24,17 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     if(is.character(coeff[1])) newstate <- coeff else newstate <- NULL
     if(is.character(coeff[1])) {
       if(missing(T)) {
-        if(identical(newcoeff,1) & !(identical(newcoeff,state))) 
-          return(subcrt(species,state = coeff,property = property,P = P,grid = grid,
-            convert = convert,exceed.Ttr = exceed.Ttr,logact = logact))
-          else return(subcrt(species,coeff = newcoeff,state = coeff,property = property,
-            P = P,grid = grid,convert = convert,exceed.Ttr = exceed.Ttr,logact = logact))
+        if(identical(newcoeff, 1) & !(identical(newcoeff, state))) 
+          return(subcrt(species, state = coeff, property = property, P = P, grid = grid,
+            convert = convert, exceed.Ttr = exceed.Ttr, logact = logact))
+          else return(subcrt(species, coeff = newcoeff, state = coeff, property = property,
+            P = P, grid = grid, convert = convert, exceed.Ttr = exceed.Ttr, logact = logact))
       } else {
-        if(identical(newcoeff,1) & !(identical(newcoeff,state))) 
-          return(subcrt(species,state = coeff,property = property,T = T,P = P,grid = grid,
-            convert = convert,exceed.Ttr = exceed.Ttr,logact = logact))
-          else return(subcrt(species,coeff = newcoeff,state = coeff,property = property,
-            T = T,P = P,grid = grid,convert = convert,exceed.Ttr = exceed.Ttr,logact = logact))
+        if(identical(newcoeff,1) & !(identical(newcoeff, state))) 
+          return(subcrt(species, state = coeff, property = property, T = T, P = P, grid = grid,
+            convert = convert, exceed.Ttr = exceed.Ttr, logact = logact))
+          else return(subcrt(species, coeff = newcoeff, state = coeff, property = property,
+            T = T, P = P, grid = grid, convert = convert, exceed.Ttr = exceed.Ttr, logact = logact))
       }
     }
   }
@@ -44,8 +44,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
 
   # Species and states are made the same length
   if(!is.null(state[1])) {
-    if(length(state) > length(species)) species <- rep(species,length.out = length(state))
-    if(length(species) > length(state)) state <- rep(state,length.out = length(species))
+    if(length(state) > length(species)) species <- rep(species, length.out = length(state))
+    if(length(species) > length(state)) state <- rep(state, length.out = length(species))
     state <- state.args(state)
   }
 
@@ -60,15 +60,15 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   if(do.reaction & length(species)!=length(coeff)) 
     stop("the length of 'coeff' must equal the number of species")
   if(!is.null(logact)) {
-    if(length(logact)!=length(species)) stop("the length of 'logact' must equal the number of species")
+    if(length(logact) != length(species)) stop("the length of 'logact' must equal the number of species")
   }
   # Normalize temperature and pressure units
   if(!missing(T)) {
-    if(convert) T <- envert(T,'K')
-    else if(!missing(convert) & convert) T <- envert(T,'K')
+    if(convert) T <- envert(T, "K")
+    else if(!missing(convert) & convert) T <- envert(T, "K")
   }
   if(is.numeric(P[1])) {
-    if(convert) P <- envert(P,'bar')
+    if(convert) P <- envert(P, "bar")
   }
 
   # Warn for too high temperatures for Psat 20171110
@@ -85,26 +85,26 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   if(!is.null(grid)) if(!is.logical(grid)) do.grid <- TRUE
   newIS <- IS
   if(do.grid) {
-    if(grid=='T') {
+    if(grid == "T") {
       newT <- numeric()
-      for(i in 1:length(T)) newT <- c(newT,rep(T[i],length(P)))
-      newP <- rep(P,length(T))
+      for(i in 1:length(T)) newT <- c(newT, rep(T[i], length(P)))
+      newP <- rep(P, length(T))
       T <- newT; P <- newP
     }
-    if(grid=='P') {
+    if(grid == "P") {
       newP <- numeric()
-      for(i in 1:length(P)) newP <- c(newP,rep(P[i],length(T)))
-      newT <- rep(T,length(P))
+      for(i in 1:length(P)) newP <- c(newP, rep(P[i], length(T)))
+      newT <- rep(T, length(P))
       T <- newT; P <- newP
     }
-    if(grid=='IS') {
+    if(grid == "IS") {
       ll <- length(T)
       if(length(P) > 1) ll <- length(P)
       newIS <- numeric()
-      for(i in 1:length(IS)) newIS <- c(newIS,rep(IS[i],ll))
-      tpargs <- TP.args(T = T,P = P)
-      T <- rep(tpargs$T,length.out = length(newIS))
-      P <- rep(tpargs$P,length.out = length(newIS))
+      for(i in 1:length(IS)) newIS <- c(newIS, rep(IS[i], ll))
+      tpargs <- TP.args(T = T, P = P)
+      T <- rep(tpargs$T, length.out = length(newIS))
+      P <- rep(tpargs$P, length.out = length(newIS))
     }
   } else {
     # For AD, remember if P = "Psat" 20190219
@@ -118,10 +118,9 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
 
   # Get species information
   thermo <- get("thermo", CHNOSZ)
-  # Pre-20110808, we sent numeric species argument through info() to
-  # get species name and state(s)
-  # but why slow things down if we already have a species index?
-  # so now phase species stuff will only work for character species names
+  # Pre-20110808, we sent numeric species argument through info() to get species name and state(s)
+  # But why slow things down if we already have a species index?
+  # ... so now polymorph stuff will only work for character species names
   if(is.numeric(species[1])) {
     ispecies <- species
     species <- as.character(thermo$OBIGT$name[ispecies])
@@ -129,7 +128,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     newstate <- as.character(thermo$OBIGT$state[ispecies])
   } else {
     # From names, get species indices and states and possibly
-    # keep track of phase species (cr,cr2 ...)
+    # keep track of polymorphs (cr,cr2 ...)
     ispecies <- numeric()
     newstate <- character()
     for(i in 1:length(species)) {
@@ -142,14 +141,14 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       }
       # That could have the side-effect of adding a protein; re-read thermo
       thermo <- get("thermo", CHNOSZ)
-      if(is.na(si[1])) stop('no info found for ',species[i],' ',state[i])
-      if(!is.null(state[i])) is.cr <- state[i]=='cr' else is.cr <- FALSE
-      if(thermo$OBIGT$state[si[1]]=='cr' & (is.null(state[i]) | is.cr)) {
-        newstate <- c(newstate,'cr')
-        ispecies <- c(ispecies,si[1])
+      if(is.na(si[1])) stop("no info found for ", species[i], " ",state[i])
+      if(!is.null(state[i])) is.cr <- state[i]=="cr" else is.cr <- FALSE
+      if(thermo$OBIGT$state[si[1]] == "cr" & (is.null(state[i]) | is.cr)) {
+        newstate <- c(newstate, "cr")
+        ispecies <- c(ispecies, si[1])
       } else {
-        newstate <- c(newstate,as.character(thermo$OBIGT$state[si[1]]))
-        ispecies <- c(ispecies,si[1])
+        newstate <- c(newstate, as.character(thermo$OBIGT$state[si[1]]))
+        ispecies <- c(ispecies, si[1])
       }
     }
   }
@@ -157,29 +156,28 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   # Stop if species not found
   noname <- is.na(ispecies)
   if(TRUE %in% noname)
-    stop(paste('species',species[noname],'not found.\n'))
+    stop(paste("species", species[noname], "not found.\n"))
 
   # Take care of mineral phases
   state <- as.character(thermo$OBIGT$state[ispecies])
   name <- as.character(thermo$OBIGT$name[ispecies])
   # A counter of all species considered
   # iphases is longer than ispecies if cr,cr2 ... phases are present
-  # phasespecies shows which of ispecies correspond to iphases
+  # polymorph.species shows which of ispecies correspond to iphases
   # pre-20091114: the success of this depends on there not being duplicated aqueous or other
-  # non-mineral-phase species (i.e., two entries in OBIGT for Cu+ screw this up
-  # when running the skarn example).
+  #   non-mineral-polymorphs (i.e., two entries in OBIGT for Cu+ screw this up when running the skarn example).
   # after 20091114: we can deal with duplicated species (aqueous at least)
-  iphases <- phasespecies <- coeff.new <- numeric()
+  iphases <- polymorph.species <- coeff.new <- numeric()
   for(i in 1:length(ispecies)) {
-     if(newstate[i]=='cr') {
-       searchstates <- c('cr','cr2','cr3','cr4','cr5','cr6','cr7','cr8','cr9') 
-       tghs <- thermo$OBIGT[(thermo$OBIGT$name %in% name[i]) & thermo$OBIGT$state %in% searchstates,]
-       # we only take one if they are in fact duplicated species and not phase species
-       if(all(tghs$state==tghs$state[1])) tghs <- thermo$OBIGT[ispecies[i],]
-     } else tghs <- thermo$OBIGT[ispecies[i],]
-     iphases <- c(iphases,as.numeric(rownames(tghs))) 
-     phasespecies <- c(phasespecies,rep(ispecies[i],nrow(tghs)))
-     coeff.new <- c(coeff.new,rep(coeff[i],nrow(tghs)))
+     if(newstate[i] == "cr") {
+       searchstates <- c("cr", "cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9") 
+       tghs <- thermo$OBIGT[(thermo$OBIGT$name %in% name[i]) & thermo$OBIGT$state %in% searchstates, ]
+       # we only take one if they are in fact duplicated species and not polymorphs
+       if(all(tghs$state == tghs$state[1])) tghs <- thermo$OBIGT[ispecies[i], ]
+     } else tghs <- thermo$OBIGT[ispecies[i], ]
+     iphases <- c(iphases, as.numeric(rownames(tghs))) 
+     polymorph.species <- c(polymorph.species, rep(ispecies[i], nrow(tghs)))
+     coeff.new <- c(coeff.new, rep(coeff[i], nrow(tghs)))
   }
 
   # Where we keep info about the species involved
@@ -206,19 +204,19 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   } else {
     # Include units here 20190530
     uT <- outvert(T, "K")
-    if(identical(grid,'IS')) uT <- unique(uT)
+    if(identical(grid, "IS")) uT <- unique(uT)
     Tunits <- T.units()
-    if(Tunits=="C") Tunits <- "\u00BAC"
-    if(length(uT)==1) T.text <- paste(uT, Tunits) else {
+    if(Tunits == "C") Tunits <- "\u00BAC"
+    if(length(uT) == 1) T.text <- paste(uT, Tunits) else {
       T.text <- paste0(length(uT), " values of T (", Tunits, ")")
     }
     uP <- outvert(P, "bar")
-    if(length(P)==1) {
+    if(length(P) == 1) {
       if(can.be.numeric(P)) P.text <- paste(round(as.numeric(uP),2), P.units())
       else P.text <- paste0("P (", P.units(), ")")
     } else P.text <- paste0("P (", P.units(), ")")
-    if(identical(P[[1]],'Psat')) P.text <- P
-    if(any(c(isH2O,isaq))) P.text <- paste(P.text,' (wet)',sep = '')
+    if(identical(P[[1]], "Psat")) P.text <- P
+    if(any(c(isH2O, isaq))) P.text <- paste(P.text, " (wet)", sep = "")
     E.text <- paste0("[energy units: ", E.units(), "]")
     message(paste("subcrt:", length(species), "species at", T.text, "and", P.text, E.text))
   }
@@ -245,54 +243,54 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
           # The missing composition in terms of the basis species
           bc <- species.basis(species = NULL, mkp = as.matrix(miss))
           # Drop zeroes
-          bc.new <- bc[,(bc[1,] != 0),drop = FALSE]
+          bc.new <- bc[, (bc[1, ] != 0), drop = FALSE]
           # and get the states
-          b.state <- as.character(thermo$basis$state)[bc[1,] != 0]
+          b.state <- as.character(thermo$basis$state)[bc[1, ] != 0]
           bc <- bc.new
           # Special thing for Psat
           if(identical(P[[1]], "Psat")) P <- "Psat"
-          else P <- outvert(P,"bar")
+          else P <- outvert(P, "bar")
           # Add to logact values if present
           if(!is.null(logact)) {
-            ila <- match(colnames(bc),rownames(thermo$basis))
+            ila <- match(colnames(bc), rownames(thermo$basis))
             nla <- !(can.be.numeric(thermo$basis$logact[ila]))
-            if(any(nla)) warning('subcrt: logact values of basis species',
-              c2s(rownames(thermo$basis)[ila]),'are NA.')
-            logact <- c(logact,thermo$basis$logact[ila])
+            if(any(nla)) warning("subcrt: logact values of basis species",
+              c2s(rownames(thermo$basis)[ila]), "are NA.")
+            logact <- c(logact, thermo$basis$logact[ila])
           }
           # Warn user and do it!
           ispecies.new <- tb$ispecies[match(colnames(bc),rownames(tb))]
           b.species <- thermo$OBIGT$formula[ispecies.new]
           if(identical(species,b.species) & identical(state,b.state))
             message("subcrt: balanced reaction, but it is a non-reaction; restarting...")
-          else message('subcrt: adding missing composition from basis definition and restarting...')
+          else message("subcrt: adding missing composition from basis definition and restarting...")
           newspecies <- c(species, tb$ispecies[match(colnames(bc), rownames(tb))])
           newcoeff <- c(coeff, as.numeric(bc[1, ]))
           newstate <- c(state, b.state)
           return(subcrt(species = newspecies, coeff = newcoeff, state = newstate,
             property = property, T = outvert(T, "K"), P = P, grid = grid, convert = convert, logact = logact, exceed.Ttr = FALSE))
-        } else warnings <- c(warnings, paste('reaction among', paste(species, collapse = ","), 'was unbalanced, missing', as.chemical.formula(miss)))
-      } else warnings <- c(warnings, paste('reaction among', paste(species, collapse = ","), 'was unbalanced, missing', as.chemical.formula(miss)))
+        } else warnings <- c(warnings, paste("reaction among", paste(species, collapse = ","), "was unbalanced, missing", as.chemical.formula(miss)))
+      } else warnings <- c(warnings, paste("reaction among", paste(species, collapse = ","), "was unbalanced, missing", as.chemical.formula(miss)))
     }
   }
 
   # Calculate the properties
   # If we want affinities we must have logK; include it in the ouput
-  if(!is.null(logact)) if(!'logK' %in% calcprop) calcprop <- c('logK', calcprop)
+  if(!is.null(logact)) if(!"logK" %in% calcprop) calcprop <- c("logK", calcprop)
   # If logK but not G was requested, we need to calculate G
   eosprop <- calcprop
-  if('logK' %in% calcprop & ! 'G' %in% calcprop) eosprop <- c(eosprop, 'G')
+  if("logK" %in% calcprop & ! "G" %in% calcprop) eosprop <- c(eosprop, "G")
   # Also get G if we are dealing with mineral phases
-  if(!'G' %in% eosprop & length(iphases) > length(ispecies)) eosprop <- c(eosprop, 'G')
+  if(!"G" %in% eosprop & length(iphases) > length(ispecies)) eosprop <- c(eosprop, "G")
   # Don't request logK or rho from the eos ...
-  eosprop <- eosprop[!eosprop %in% c('logK','rho')]
+  eosprop <- eosprop[!eosprop %in% c("logK", "rho")]
   # The reaction result will go here
   outprops <- list()
   # Aqueous species and H2O properties
   if(TRUE %in% isaq) {
     # 20110808 get species parameters using OBIGT2eos()
     # (this is faster than using info() and is how we get everything in the same units)
-    param <- OBIGT2eos(thermo$OBIGT[iphases[isaq],], "aq", fixGHS = TRUE, toJoules = TRUE)
+    param <- OBIGT2eos(thermo$OBIGT[iphases[isaq], ], "aq", fixGHS = TRUE, toJoules = TRUE)
     # Aqueous species with model = "AD" use the AD model 20210407
     model <- thermo$OBIGT$model[iphases[isaq]]
     model[is.na(model)] <- ""
@@ -315,7 +313,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       ilowrho[is.na(ilowrho)] <- FALSE
       if(any(ilowrho)) {
         for(i in 1:length(p.aq)) p.aq[[i]][ilowrho, ] <- NA
-        if(sum(ilowrho)==1) ptext <- "pair" else ptext <- "pairs"
+        if(sum(ilowrho) == 1) ptext <- "pair" else ptext <- "pairs"
         warnings <- c(warnings, paste0("below minimum density for applicability of revised HKF equations (", sum(ilowrho), " T,P ", ptext, ")"))
       }
     }
@@ -332,7 +330,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     }
     outprops <- c(outprops, p.aq)
   } else if(any(isH2O)) {
-    # we're not using the HKF, but still want water
+    # We're not using the HKF, but still want water
     H2O.PT <- water(c("rho", eosprop), T = T, P = P)
   }
 
@@ -344,7 +342,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     p.cgl <- cgl(eosprop, parameters = param, T = T, P = P)
     # Replace Gibbs energies with NA where the
     # phases are beyond their temperature range
-    if('G' %in% eosprop) {
+    if("G" %in% eosprop) {
       # 20080304 This code is weird and hard to read - needs a lot of cleanup!
       # 20120219 Cleaned up somewhat; using exceed.Ttr and NA instead of do.phases and 999999
       # the numbers of the cgl species (becomes 0 for any that aren't cgl)
@@ -358,7 +356,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         mystate <- reaction$state[i]
         # If we are considering multiple phases, and if this phase is cr2 or higher, check if we're below the transition temperature
         if(length(iphases) > length(ispecies) & i > 1) {
-          if(!(reaction$state[i] %in% c('liq','cr','gas')) & reaction$name[i-1] == reaction$name[i]) {
+          if(!(reaction$state[i] %in% c("liq", "cr", "gas")) & reaction$name[i-1] == reaction$name[i]) {
             # After add.OBIGT("SUPCRT92"), quartz cr and cr2 are not next to each other in thermo()$OBIGT,
             # so use iphases[i-1] here, not iphases[i]-1  20181107
             Ttr <- Ttr(iphases[i-1], iphases[i], P=P, dPdT = dPdTtr(iphases[i-1], iphases[i]))
@@ -370,7 +368,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
                 p.cgl[[ncgl[i]]]$G[T <= Ttr] <- NA
                 status.Ttr <- "(using NA for G)"
               } 
-              #message(paste('subcrt: some points below transition temperature for',myname, mystate, status.Ttr))
+              #message(paste("subcrt: some points below transition temperature for", myname, mystate, status.Ttr))
             }
           }
         }
@@ -380,10 +378,10 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         Ttr <- thermo$OBIGT$z.T[iphases[i]]
         # Calculate Ttr at higher P if a phase transition is present
         if(i < nrow(reaction)) {
-          # if the next one is cr2, cr3, etc we have a transition
+          # If the next one is cr2, cr3, etc we have a transition
           if(reaction$state[i+1] %in% c("cr1", "cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9") & reaction$name[i+1] == reaction$name[i]) {
             Ttr <- Ttr(iphases[i], iphases[i+1], P = P, dPdT = dPdTtr(iphases[i], iphases[i+1]))
-            # we don't warn here about the transition
+            # We don't warn here about the transition
             warn.above <- FALSE
           }
         }
@@ -412,10 +410,10 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   }
 
   # logK
-  if('logK' %in% calcprop) {
+  if("logK" %in% calcprop) {
     for(i in 1:length(outprops)) {
       outprops[[i]] <- cbind(outprops[[i]],data.frame(logK = convert(outprops[[i]]$G, "logK", T = T)))
-      colnames(outprops[[i]][ncol(outprops[[i]])]) <- 'logK'
+      colnames(outprops[[i]][ncol(outprops[[i]])]) <- "logK"
     }
   }
 
@@ -423,12 +421,12 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   # The indices of the species in outprops thus far
   ns <- 1:nrow(reaction)
   is <- c(ns[isaq],ns[iscgl],ns[isH2O])
-  if(length(ns) != length(is)) stop('subcrt: not all species are accounted for.')
+  if(length(ns) != length(is)) stop("subcrt: not all species are accounted for.")
   v <- list()
-  for(i in 1:length(is))  v[[i]] <- outprops[[match(ns[i],is)]]
+  for(i in 1:length(is)) v[[i]] <- outprops[[match(ns[i], is)]]
   outprops <- v
 
-  # Deal with phases (cr,cr2) here:
+  # Deal with polymorphs (cr,cr2) here:
   # We have to eliminate rows from outprops, 
   # reaction and values from isaq, iscgl, isH2O
   out.new <- list()
@@ -437,70 +435,70 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   iscgl.new <- logical()
   isH2O.new <- logical()
   for(i in 1:length(ispecies)) {
-    arephases <- which(ispecies[i]==phasespecies)
+    are.polymorphs <- which(ispecies[i]==polymorph.species)
     # Deal with repeated species here
-    if(TRUE %in% duplicated(iphases[arephases])) {
+    if(TRUE %in% duplicated(iphases[are.polymorphs])) {
       # Only take the first, not the duplicates
       ndups <- sum(ispecies==ispecies[i])
-      nphases <- length(arephases) / ndups
-      arephases <- arephases[1:nphases]
+      npolymorphs <- length(are.polymorphs) / ndups
+      are.polymorphs <- are.polymorphs[1:npolymorphs]
     }
-    if(length(arephases)>1) {
-      message(paste('subcrt:',length(arephases),'phases for',thermo$OBIGT$name[ispecies[i]],'... '), appendLF = FALSE)
+    if(length(are.polymorphs)>1) {
+      message(paste("subcrt:", length(are.polymorphs), "phases for", thermo$OBIGT$name[ispecies[i]], "... "), appendLF = FALSE)
       # Assemble the Gibbs energies for each species
-      for(j in 1:length(arephases)) {
-        G.this <- outprops[[arephases[j]]]$G
-        if(sum(is.na(G.this)) > 0 & exceed.Ttr) warning(paste('subcrt: NAs found for G of ',
-          reaction$name[arephases[j]],' ',reaction$state[arephases[j]],' at T-P point(s) ',
-          c2s(which(is.na(G.this)),sep = ' '),sep = ''),call. = FALSE)
+      for(j in 1:length(are.polymorphs)) {
+        G.this <- outprops[[are.polymorphs[j]]]$G
+        if(sum(is.na(G.this)) > 0 & exceed.Ttr) warning(paste("subcrt: NAs found for G of ",
+          reaction$name[are.polymorphs[j]], " ", reaction$state[are.polymorphs[j]], " at T-P point(s) ", 
+          c2s(which(is.na(G.this)), sep = " "), sep = ""), call. = FALSE)
         if(j==1) G <- as.data.frame(G.this)
-        else G <- cbind(G,as.data.frame(G.this))
+        else G <- cbind(G, as.data.frame(G.this))
       }
-      # Find the minimum-energy phase at each T-P point
-      phasestate <- numeric()
-      out.new.entry <- outprops[[arephases[1]]]
+      # Find the minimum-energy polymorph at each T-P point
+      stable.polymorph <- numeric()
+      out.new.entry <- outprops[[are.polymorphs[1]]]
       for(j in 1:nrow(G)) {
-        ps <- which.min(as.numeric(G[j,]))
+        ps <- which.min(as.numeric(G[j, ]))
         if(length(ps)==0) {
           # minimum not found (we have NAs)
           # - no non-NA value of G to begin with, e.g. aegerine) --> probably should use lowest-T phase
           #ps <- 1
           # - above temperature limit for the highest-T phase (subcrt.Rd skarn example) --> use highest-T phase 20171110
           ps <- ncol(G)
-          if(exceed.Ttr) warning('subcrt: stable phase for ',reaction$name[arephases[ps]],' at T-P point ',j,
-          ' undetermined (using ',reaction$state[arephases[ps]],')',call. = FALSE)
+          if(exceed.Ttr) warning("subcrt: stable phase for ", reaction$name[are.polymorphs[ps]], " at T-P point ", j, 
+          " undetermined (using ", reaction$state[are.polymorphs[ps]], ")", call. = FALSE)
         } 
-        phasestate <- c(phasestate,ps)
-        out.new.entry[j,] <- outprops[[ arephases[ps] ]][j,]
+        stable.polymorph <- c(stable.polymorph, ps)
+        out.new.entry[j, ] <- outprops[[ are.polymorphs[ps] ]][j, ]
       }
 
       # Update our objects
-      out.new[[i]] <- cbind(out.new.entry,data.frame(polymorph = phasestate))
-      reaction.new[i,] <- reaction[arephases[phasestate[1]],]
-      # Mark the minerals with multiple phases
+      out.new[[i]] <- cbind(out.new.entry, data.frame(polymorph = stable.polymorph))
+      reaction.new[i, ] <- reaction[are.polymorphs[stable.polymorph[1]], ]
+      # Mark the minerals with multiple polymorphs
       reaction.new$state[i] <- "cr*"
-      isaq.new <- c(isaq.new,isaq[arephases[phasestate[1]]])
-      iscgl.new <- c(iscgl.new,iscgl[arephases[phasestate[1]]])
-      isH2O.new <- c(isH2O.new,isH2O[arephases[phasestate[1]]])
+      isaq.new <- c(isaq.new, isaq[are.polymorphs[stable.polymorph[1]]])
+      iscgl.new <- c(iscgl.new, iscgl[are.polymorphs[stable.polymorph[1]]])
+      isH2O.new <- c(isH2O.new, isH2O[are.polymorphs[stable.polymorph[1]]])
       # Info for the user
-      up <- unique(phasestate)
-      if(length(up)>1) { word <- 'are'; p.word <- 'phases' }
-      else { word <- 'is'; p.word <- 'phase' }
-      message(paste(p.word,paste(unique(phasestate), collapse = ","),word,'stable'))
+      up <- unique(stable.polymorph)
+      if(length(up) > 1) { word <- "are"; p.word <- "polymorphs" }
+      else { word <- "is"; p.word <- "polymorph" }
+      message(paste(p.word, paste(unique(stable.polymorph), collapse = ","), word, "stable"))
     } else {
-      # Multiple phases aren't involved ... things stay the same
-      out.new[[i]] <- outprops[[arephases]]
-      reaction.new[i, ] <- reaction[arephases, ]
-      reaction.new$state[i] <- reaction$state[arephases]
-      isaq.new <- c(isaq.new,isaq[arephases])
-      iscgl.new <- c(iscgl.new,iscgl[arephases])
-      isH2O.new <- c(isH2O.new,isH2O[arephases])
+      # Multiple polymorphs aren't involved ... things stay the same
+      out.new[[i]] <- outprops[[are.polymorphs]]
+      reaction.new[i, ] <- reaction[are.polymorphs, ]
+      reaction.new$state[i] <- reaction$state[are.polymorphs]
+      isaq.new <- c(isaq.new, isaq[are.polymorphs])
+      iscgl.new <- c(iscgl.new, iscgl[are.polymorphs])
+      isH2O.new <- c(isH2O.new, isH2O[are.polymorphs])
     }
   }
 
   outprops <- out.new
   # Remove the rows that were added to keep track of phase transitions
-  reaction <- reaction.new[1:length(ispecies),]
+  reaction <- reaction.new[1:length(ispecies), ]
   # The manipulations above should get the correct species indices and state labels,
   # but if species are (intentionally) repeated, include only the first
   # (and possibly incorrect) reaction coefficients, so use the originals here 20180822
@@ -514,9 +512,9 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     # the calculated properties are first
     ipp <- match(calcprop, colnames(outprops[[i]]))
     # move polymorph/loggam columns to end
-    if('polymorph' %in% colnames(outprops[[i]])) ipp <- c(ipp,match('polymorph',colnames(outprops[[i]]))) 
-    if('loggam' %in% colnames(outprops[[i]])) ipp <- c(ipp,match('loggam',colnames(outprops[[i]]))) 
-    outprops[[i]] <- outprops[[i]][,ipp,drop = FALSE]
+    if("polymorph" %in% colnames(outprops[[i]])) ipp <- c(ipp, match("polymorph", colnames(outprops[[i]]))) 
+    if("loggam" %in% colnames(outprops[[i]])) ipp <- c(ipp, match("loggam", colnames(outprops[[i]]))) 
+    outprops[[i]] <- outprops[[i]][, ipp, drop = FALSE]
   }
 
   # Add up reaction properties
@@ -525,12 +523,12 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     morphcols <- NULL
     # do our affinity calculations here
     if(!is.null(logact)) {
-      logQ <- logK <- rep(0,length(T))
+      logQ <- logK <- rep(0, length(T))
       for(i in 1:length(coeff)) {
         logK <- logK + outprops[[i]]$logK * coeff[i]
         logQ <- logQ + logact[i] * coeff[i]
       }
-      reaction <- cbind(reaction,logact)
+      reaction <- cbind(reaction, logact)
       A <- logK - logQ
       # convert A/2.303RT (dimensionless) to J mol-1
       # then outvert to the user's units from J mol-1
@@ -539,19 +537,19 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     # Loop over reaction coefficients
     for(i in 1:length(coeff)) {
       # Assemble polymorph columns separately
-      if('polymorph' %in% colnames(outprops[[i]])) {
+      if("polymorph" %in% colnames(outprops[[i]])) {
          sc <- as.data.frame(outprops[[i]]$polymorph)
-         outprops[[i]] <- outprops[[i]][,-match('polymorph',colnames(outprops[[i]]))]
+         outprops[[i]] <- outprops[[i]][, -match("polymorph", colnames(outprops[[i]]))]
          colnames(sc) <- as.character(reaction$name[i])
          if(is.null(morphcols)) morphcols <- sc
-         else morphcols <- cbind(morphcols,sc)
+         else morphcols <- cbind(morphcols, sc)
       }
       # Include a zero loggam column if needed (for those species that are ideal)
       o.i <- outprops[[i]]
-      if('loggam' %in% colnames(o.i)) if(!'loggam' %in% colnames(o))
-        o <- cbind(o,loggam = 0)
-      if('loggam' %in% colnames(o)) if(!'loggam' %in% colnames(o.i))
-        o.i <- cbind(o.i,loggam = 0)
+      if("loggam" %in% colnames(o.i)) if(!"loggam" %in% colnames(o))
+        o <- cbind(o, loggam = 0)
+      if("loggam" %in% colnames(o)) if(!"loggam" %in% colnames(o.i))
+        o.i <- cbind(o.i, loggam = 0)
       # the real addition of properties
       o <- o + o.i * coeff[i]
     }
@@ -560,7 +558,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     else OUT <- list(reaction = reaction,out = o)
   } else {
     # Output for species: strip the coeff column from reaction
-    reaction <- reaction[,-match('coeff',colnames(reaction))]
+    reaction <- reaction[,-match("coeff",colnames(reaction))]
     OUT <- c(list(species = reaction),outprops)
   }
   # Append T, P, rho, A, logQ columns and convert units
@@ -570,24 +568,24 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       OUT[[i]] <- cbind(OUT[[i]], data.frame(logQ = logQ, A = A))
     }
     # 20120114 Only prepend T, P, rho columns if we have more than one T
-    # 20171020 or if the 'property' argument is missing (it's nice to see everything using e.g. subcrt("H2O", T = 150))
-    # 20171021 or if the 'property' argument is not missing, but is identical to the default (happens when auto-balancing reactions)
+    # 20171020 or if the "property" argument is missing (it's nice to see everything using e.g. subcrt("H2O", T = 150))
+    # 20171021 or if the "property" argument is not missing, but is identical to the default (happens when auto-balancing reactions)
     if(length(T) > 1 | missing(property) | identical(property, c("logK", "G", "H", "S", "V", "Cp"))) {
       # 20090329 Added checks for converting T, P units
       if(convert) T.out <- outvert(T, "K") else T.out <- T
       if(convert) P.out <- outvert(P, "bar") else P.out <- P
       # Try to stuff in a column of rho if we have aqueous species
       # watch out! supcrt-ish densities are in g/cc not kg/m3
-      if('rho' %in% calcprop | ( (missing(property) | identical(property, c("logK", "G", "H", "S", "V", "Cp"))) &
-                                any(c(isaq,isH2O))) & (names(OUT)[i]) != 'polymorph') 
-        OUT[[i]] <- cbind(data.frame(T = T.out,P = P.out,rho = H2O.PT$rho/1000),OUT[[i]])
+      if("rho" %in% calcprop | ( (missing(property) | identical(property, c("logK", "G", "H", "S", "V", "Cp"))) &
+                                any(c(isaq, isH2O))) & (names(OUT)[i]) != "polymorph") 
+        OUT[[i]] <- cbind(data.frame(T = T.out, P = P.out, rho = H2O.PT$rho/1000), OUT[[i]])
       else
-        OUT[[i]] <- cbind(data.frame(T = T.out,P = P.out,OUT[[i]]))
+        OUT[[i]] <- cbind(data.frame(T = T.out, P = P.out, OUT[[i]]))
     }
   }
   # Put ionic strength next to any loggam columns
   for(i in 2:length(OUT)) {
-    if('loggam' %in% colnames(OUT[[i]])) OUT[[i]] <- cbind(OUT[[i]],IS = newIS)
+    if("loggam" %in% colnames(OUT[[i]])) OUT[[i]] <- cbind(OUT[[i]], IS = newIS)
   }
   # More fanagling for species
   if(!do.reaction) {
@@ -614,4 +612,3 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   }
   return(OUT)
 }
-
