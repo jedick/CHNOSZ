@@ -12,11 +12,14 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 2.0.0-5 (2023-05-15)}{
+\section{Changes in CHNOSZ version 2.0.0-10 (2023-06-20)}{
 
     \itemize{
 
-      \item Restore EOSregress.R, eos-regress.Rmd, and demo/adenine.R.
+      \item Restore \file{EOSregress.R}, \file{eos-regress.Rmd}, and \file{demo/adenine.R}.
+
+      \item Add \code{use.polymorphs} argument to \code{subcrt()} to allow
+      turning off automatic identification of stable polymorphs.
 
     }
 

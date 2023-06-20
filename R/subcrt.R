@@ -16,7 +16,7 @@
 
 subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "H", "S", "V", "Cp"),
   T = seq(273.15, 623.15, 25), P = "Psat", grid = NULL, convert = TRUE, exceed.Ttr = FALSE,
-  exceed.rhomin = FALSE, logact = NULL, autobalance = TRUE, IS = 0) {
+  exceed.rhomin = FALSE, logact = NULL, autobalance = TRUE, use.polymorphs = TRUE, IS = 0) {
 
   # Revise the call if the states are the second argument 
   if(!is.null(coeff[1])) {
@@ -118,37 +118,36 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
 
   # Get species information
   thermo <- get("thermo", CHNOSZ)
-  # Pre-20110808, we sent numeric species argument through info() to get species name and state(s)
+  # Before 20110808, we sent numeric species argument through info() to get species name and state(s)
   # But why slow things down if we already have a species index?
-  # ... so now polymorph stuff will only work for character species names
   if(is.numeric(species[1])) {
     ispecies <- species
     species <- as.character(thermo$OBIGT$name[ispecies])
     state <- as.character(thermo$OBIGT$state[ispecies])
     newstate <- as.character(thermo$OBIGT$state[ispecies])
   } else {
-    # From names, get species indices and states and possibly
-    # keep track of polymorphs (cr,cr2 ...)
+    # Species are named ... look up the index
     ispecies <- numeric()
     newstate <- character()
     for(i in 1:length(species)) {
       # Get the species index for a named species
-      if(!can.be.numeric(species[i])) si <- info.character(species[i], state[i])
+      if(!can.be.numeric(species[i])) sindex <- info.character(species[i], state[i])
       else {
-        # Check that a numeric argument is a rownumber of thermo()$OBIGT
-        si <- as.numeric(species[i])
-        if(!si %in% 1:nrow(thermo$OBIGT)) stop(paste(species[i], "is not a row number of thermo()$OBIGT"))
+        # Check that a coerced-to-numeric argument is a rownumber of thermo()$OBIGT
+        sindex <- as.numeric(species[i])
+        if(!sindex %in% 1:nrow(thermo$OBIGT)) stop(paste(species[i], "is not a row number of thermo()$OBIGT"))
       }
-      # That could have the side-effect of adding a protein; re-read thermo
+      # info.character() has the possible side-effect of adding a protein; re-read thermo to use the (possible) additions
       thermo <- get("thermo", CHNOSZ)
-      if(is.na(si[1])) stop("no info found for ", species[i], " ",state[i])
+      if(is.na(sindex[1])) stop("no info found for ", species[i], " ",state[i])
       if(!is.null(state[i])) is.cr <- state[i]=="cr" else is.cr <- FALSE
-      if(thermo$OBIGT$state[si[1]] == "cr" & (is.null(state[i]) | is.cr)) {
+      # If we found multiple species, take the first one (useful for minerals with polymorphs)
+      if(thermo$OBIGT$state[sindex[1]] == "cr" & (is.null(state[i]) | is.cr)) {
         newstate <- c(newstate, "cr")
-        ispecies <- c(ispecies, si[1])
+        ispecies <- c(ispecies, sindex[1])
       } else {
-        newstate <- c(newstate, as.character(thermo$OBIGT$state[si[1]]))
-        ispecies <- c(ispecies, si[1])
+        newstate <- c(newstate, as.character(thermo$OBIGT$state[sindex[1]]))
+        ispecies <- c(ispecies, sindex[1])
       }
     }
   }
@@ -162,17 +161,19 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   state <- as.character(thermo$OBIGT$state[ispecies])
   name <- as.character(thermo$OBIGT$name[ispecies])
   # A counter of all species considered
-  # iphases is longer than ispecies if cr,cr2 ... phases are present
+  # iphases is longer than ispecies if multiple polymorphs (cr, cr2, ...) are present
   # polymorph.species shows which of ispecies correspond to iphases
-  # pre-20091114: the success of this depends on there not being duplicated aqueous or other
-  #   non-mineral-polymorphs (i.e., two entries in OBIGT for Cu+ screw this up when running the skarn example).
-  # after 20091114: we can deal with duplicated species (aqueous at least)
+  # Before 20091114: the success of this depends on there not being duplicated aqueous or other
+  #   non-mineral species (i.e., two entries in OBIGT for Cu+ mess this up when running the skarn example).
+  # After 20091114: we can deal with duplicated species (aqueous at least)
   iphases <- polymorph.species <- coeff.new <- numeric()
   for(i in 1:length(ispecies)) {
-     if(newstate[i] == "cr") {
-       searchstates <- c("cr", "cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9") 
-       tghs <- thermo$OBIGT[(thermo$OBIGT$name %in% name[i]) & thermo$OBIGT$state %in% searchstates, ]
-       # we only take one if they are in fact duplicated species and not polymorphs
+     # Add check for use.polymorphs argument 20230620
+     if(newstate[i] == "cr" & use.polymorphs) {
+       # Check for available polymorphs in OBIGT
+       polymorph.states <- c("cr", "cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9") 
+       tghs <- thermo$OBIGT[(thermo$OBIGT$name %in% name[i]) & thermo$OBIGT$state %in% polymorph.states, ]
+       # Only take the first one if they are duplicated non-mineral species (i.e., not polymorphs)
        if(all(tghs$state == tghs$state[1])) tghs <- thermo$OBIGT[ispecies[i], ]
      } else tghs <- thermo$OBIGT[ispecies[i], ]
      iphases <- c(iphases, as.numeric(rownames(tghs))) 
@@ -354,12 +355,12 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         # Name and state
         myname <- reaction$name[i]
         mystate <- reaction$state[i]
-        # If we are considering multiple phases, and if this phase is cr2 or higher, check if we're below the transition temperature
+        # If we are considering multiple polymorphs, and if this polymorph is cr2 or higher, check if we're below the transition temperature
         if(length(iphases) > length(ispecies) & i > 1) {
           if(!(reaction$state[i] %in% c("liq", "cr", "gas")) & reaction$name[i-1] == reaction$name[i]) {
             # After add.OBIGT("SUPCRT92"), quartz cr and cr2 are not next to each other in thermo()$OBIGT,
             # so use iphases[i-1] here, not iphases[i]-1  20181107
-            Ttr <- Ttr(iphases[i-1], iphases[i], P=P, dPdT = dPdTtr(iphases[i-1], iphases[i]))
+            Ttr <- Ttr(iphases[i-1], iphases[i], P = P, dPdT = dPdTtr(iphases[i-1], iphases[i]))
             if(all(is.na(Ttr))) next
             if(any(T <= Ttr)) {
               status.Ttr <- "(extrapolating G)"
@@ -443,15 +444,15 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       npolymorphs <- length(are.polymorphs) / ndups
       are.polymorphs <- are.polymorphs[1:npolymorphs]
     }
-    if(length(are.polymorphs)>1) {
-      message(paste("subcrt:", length(are.polymorphs), "phases for", thermo$OBIGT$name[ispecies[i]], "... "), appendLF = FALSE)
+    if(length(are.polymorphs) > 1) {
+      message(paste("subcrt:", length(are.polymorphs), "polymorphs for", thermo$OBIGT$name[ispecies[i]], "... "), appendLF = FALSE)
       # Assemble the Gibbs energies for each species
       for(j in 1:length(are.polymorphs)) {
         G.this <- outprops[[are.polymorphs[j]]]$G
         if(sum(is.na(G.this)) > 0 & exceed.Ttr) warning(paste("subcrt: NAs found for G of ",
           reaction$name[are.polymorphs[j]], " ", reaction$state[are.polymorphs[j]], " at T-P point(s) ", 
           c2s(which(is.na(G.this)), sep = " "), sep = ""), call. = FALSE)
-        if(j==1) G <- as.data.frame(G.this)
+        if(j == 1) G <- as.data.frame(G.this)
         else G <- cbind(G, as.data.frame(G.this))
       }
       # Find the minimum-energy polymorph at each T-P point
@@ -461,11 +462,11 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         ps <- which.min(as.numeric(G[j, ]))
         if(length(ps)==0) {
           # minimum not found (we have NAs)
-          # - no non-NA value of G to begin with, e.g. aegerine) --> probably should use lowest-T phase
+          # - no non-NA value of G to begin with (e.g. aegerine) --> probably should use lowest-T phase
           #ps <- 1
           # - above temperature limit for the highest-T phase (subcrt.Rd skarn example) --> use highest-T phase 20171110
           ps <- ncol(G)
-          if(exceed.Ttr) warning("subcrt: stable phase for ", reaction$name[are.polymorphs[ps]], " at T-P point ", j, 
+          if(exceed.Ttr) warning("subcrt: stable polymorph for ", reaction$name[are.polymorphs[ps]], " at T-P point ", j, 
           " undetermined (using ", reaction$state[are.polymorphs[ps]], ")", call. = FALSE)
         } 
         stable.polymorph <- c(stable.polymorph, ps)

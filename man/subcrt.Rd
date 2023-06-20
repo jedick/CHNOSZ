@@ -11,7 +11,7 @@
     property = c("logK","G","H","S","V","Cp"),
     T = seq(273.15,623.15,25), P = "Psat", grid = NULL, 
     convert = TRUE, exceed.Ttr = FALSE, exceed.rhomin = FALSE,
-    logact = NULL, autobalance = TRUE, IS = 0)
+    logact = NULL, autobalance = TRUE, use.polymorphs = TRUE, IS = 0)
 }
 
 \arguments{
@@ -27,6 +27,7 @@
   \item{logact}{numeric, logarithms of activities of species in reaction}
   \item{convert}{logical, are units of T, P, and energy settable by the user (default) (see \code{\link{T.units}})?}
   \item{autobalance}{logical, attempt to automatically balance reaction with basis species?}
+  \item{use.polymorphs}{logical, automatically identify available polymorphs in OBIGT and use the stable one at each value of \code{T}?}
   \item{IS}{numeric, ionic strength(s) at which to calculate adjusted molal properties, mol kg\eqn{^{-1}}{^-1}}
 }
 
@@ -101,12 +102,12 @@ On the other hand, if the \code{water} option is \samp{SUPCRT} (the default), \c
 }
 
 \section{Note on phase transitions}{
-Minerals with polymorphic transitions (denoted by having states \samp{cr} (lowest T phase), \samp{cr2}, \samp{cr3} etc.) can be defined generically by \samp{cr} in the \code{state} argument with a character value for \code{species}.
-\code{subcrt} in this case simultaneously calculates the requested properties of all the phases of each such mineral (phase species) and, using the values of the transition temperatures calculated from those at P = 1 bar given in the thermodynamic database together with functions of the entropies and volumes of transitions (see \code{\link{dPdTtr}}), determines the stable phase of the mineral at any grid point and substitutes the properties of this phase at that point for further calculations.
-If individual phase species of minerals are specified (by \samp{cr}, \samp{cr2} etc. in \code{state}), and \code{exceed.Ttr} is \code{FALSE} (the default), the Gibbs energies of these minerals are assigned values of NA at conditions beyond their transition temperature, where another of the phases is stable.
-If you set \code{exceed.Ttr} to \code{TRUE} to calculate the properties of mineral polymorphs (i.e., using \samp{cr}) the function will identify the stable polymorph using the calculated Gibbs energies of the phase species instead of the tabulated transition temperatures.
-This is not generally advised, as the computed standard molal properties of a phase species lose their physical meaning beyond the transition temperatures of the phase.
-
+Minerals with polymorphic transitions (denoted in OBIGT by having states \samp{cr} (lowest-\T phase), \samp{cr2}, etc.) can be specified by name with \samp{cr} for the \code{state} or by using a numeric species index for the lowest-\T polymorph.
+If \code{use.polymorphs} is TRUE, \code{subcrt} uses the transition temperatures calculated from those at P = 1 bar given in OBIGT together with functions of the entropies and volumes of transitions (see \code{\link{dPdTtr}}) to determine the stable polymorph at each grid point and uses the properties of that polymorph in the output.
+A \code{polymorph} column is added to the output to indicate the stable polymorph at each \T-\P condition.
+If \code{exceed.Ttr} is \code{FALSE} (the default), output values of Gibbs energy are assigned NA beyond the transition temperature of the highest-temperature polymorph.
+Set \code{exceed.Ttr} to \code{TRUE} to identify the stable polymorphs by comparing their extrapolated Gibbs energies instead of the tabulated transition temperatures.
+This is generally not advised, as extrapolated Gibbs energies may not reliably determine the stable polymorph at extreme temperatures.
 }
 
 \value{
@@ -150,12 +151,12 @@ basis(c("H2O", "H2S", "O2", "H+"))
 subcrt(c("HS-", "SO4-2"), c(-1, 1), T = 100)
 
 ## Mineral polymorphs
-# Properties of the stable polymorph
+# Properties of the stable polymorph at each temperature
 subcrt("pyrrhotite")
-# Properties of one of the polymorphs (metastable at other temperatures)
-subcrt(c("pyrrhotite"), state = "cr2")
 # Reactions automatically use stable polymorph
 subcrt(c("pyrite", "pyrrhotite", "H2O", "H2S", "O2"), c(-1, 1, -1, 1, 0.5))
+# Extrapolated properties of the lowest-T polymorph (metastable at higher temperatures)
+subcrt(c("pyrrhotite"), use.polymorphs = FALSE, exceed.Ttr = TRUE)
 
 ## Messages about problems with the calculation
 # Above the T, P limits for the H2O equations of state

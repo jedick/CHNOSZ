@@ -202,6 +202,23 @@ expect_error(subcrt("H2O", -1, "liq", "xxx"), "invalid property name: xxx", info
 # Before version 1.1.3-63, having more than one invalid property gave a mangled error message
 expect_error(subcrt("H2O", -1, "liq", c(1, 2)), "invalid property names: 1 2", info = info)
 
+# Added on 20230620
+info <- "Polymorphs are used by default"
+sres_poly <- subcrt("pyrrhotite")
+expect_equal(unique(sres_poly$out[[1]]$polymorph), c(1, 2, 3), info = info)
+info <- "Polymorphs work for named species or numeric indices"
+iPo <- info("pyrrhotite")
+sres_poly1 <- subcrt(iPo)
+expect_identical(sres_poly, sres_poly1, info = info)
+info <- "Automatic identificatio of polymorphs can be turned off"
+sres_nopoly <- subcrt("pyrrhotite", use.polymorphs = FALSE)
+expect_null(sres_nopoly$out[[1]]$polymorph, info = info)
+info <- "Gibbs energy is NA beyond the transition temperature"
+expect_true(anyNA(sres_nopoly$out[[1]]$G))
+info <- "Gibbs energy can be extrapolated beyond the transition temperature"
+sres_nopoly_extrap <- subcrt("pyrrhotite", use.polymorphs = FALSE, exceed.Ttr = TRUE)
+expect_false(anyNA(sres_nopoly_extrap$out[[1]]$G))
+
 # References
 
 # Amend, J. P. and Shock, E. L. (2001) 
