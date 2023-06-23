@@ -7,19 +7,19 @@ OBIGT()
 d2 <- thermo()$OBIGT
 expect_equal(d1, d2, info = info)
 
-info <- "checkGHS() and checkEOS() (via info()) produce messages"
+info <- "check.GHS() and check.EOS() (via info()) produce messages"
 i1 <- info("S2O3-2")
-expect_message(info(i1), "G of S2O3-2\\(aq\\) differs by 939 cal mol-1 from tabulated value", info = info)
+expect_message(info(i1), "calculated G of S2O3-2\\(aq\\) differs by 939 cal mol-1 from database value", info = info)
 i2 <- info("Cu+2")
-expect_message(info(i2), "Cp of Cu\\+2\\(aq\\) differs by 3.62 cal K-1 mol-1 from tabulated value", info = info)
+expect_message(info(i2), "calculated Cp of Cu\\+2\\(aq\\) differs by 3.62 cal K-1 mol-1 from database value", info = info)
 
-info <- "checkGHS() and checkEOS() respond to thermo()$opt$*.tol"
+info <- "check.GHS() and check.EOS() respond to thermo()$opt$*.tol"
 i1 <- info("SO4-2")
 thermo("opt$Cp.tol" = 0.5)
-expect_message(info(i1), "checkEOS", info = info)
+expect_message(info(i1), "check.EOS", info = info)
 i2 <- info("a,w-dicarboxytetracosane")
 thermo("opt$G.tol" = 50)
-expect_message(info(i2), "checkGHS", info = info)
+expect_message(info(i2), "check.GHS", info = info)
 
 info <- "RH2OBIGT() gives group additivity results consistent with database values (from Richard and Helgeson, 1998)"
 file <- system.file("extdata/adds/RH98_Table15.csv", package = "CHNOSZ")
@@ -64,7 +64,7 @@ info <- "info() gives consistent messages for cal and J"
 expect_message(add.OBIGT(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ")), "energy units: J and cal", info = info)
 expect_message(info(info("DMA_cal")), "-1.92 cal", info = info)
 expect_message(info(info("DMA_J")), "-8.02 J", info = info)
-# For TMA, only a checkGHS message for the entry in J is produced,
+# For TMA, only a check.GHS message for the entry in J is produced,
 # because it's above the threshold of 100 set in thermo()$opt$G.tol
 expect_silent(info(info("TMA_cal")), info = info)
 expect_message(info(info("TMA_J")), "-102 J", info = info)
@@ -120,7 +120,7 @@ info <- "We can define an aqueous species with CGL model"
 # Test added 20230220
 icr <- mod.OBIGT("fake_cr", formula = "Na2Cl2", state = "cr", model = "CGL", G = -1000, H = -1000, S = 10, Cp = 10, V = 10)
 iaq <- mod.OBIGT("fake_aq", formula = "Na2Cl2", state = "aq", model = "CGL", G = -1000, H = -1000, S = 10, Cp = 10, V = 10)
-# Make sure info() runs (message is from checkEOS())
+# Make sure info() runs (message is from check.EOS())
 expect_message(info(iaq), "differs", info = info)
 expect_silent(info(iaq), info = info)
 # Make sure subcrt() runs

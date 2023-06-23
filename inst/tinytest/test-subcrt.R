@@ -219,6 +219,10 @@ info <- "Gibbs energy can be extrapolated beyond the transition temperature"
 sres_nopoly_extrap <- subcrt("pyrrhotite", use.polymorphs = FALSE, exceed.Ttr = TRUE)
 expect_false(anyNA(sres_nopoly_extrap$out[[1]]$G))
 
+# Added on 20230621
+info <- "Arguments 2 and 3 can't both be character"
+expect_error(subcrt(c("hydrogen", "H2"), c("gas", "aq"), "G"), info = info)
+
 # References
 
 # Amend, J. P. and Shock, E. L. (2001) 

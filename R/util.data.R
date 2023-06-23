@@ -159,8 +159,8 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
   }
 }
 
-checkEOS <- function(eos, model, prop, ret.diff = FALSE) {
-  # Compare calculated properties from thermodynamic parameters with reference (tabulated) values.
+check.EOS <- function(eos, model, prop, ret.diff = TRUE) {
+  # Compare calculated properties from thermodynamic parameters with given (database) values.
   # Print message and return the calculated value if tolerance is exceeded
   # or NA if the difference is within the tolerance.
   # 20110808 jmd
@@ -209,8 +209,8 @@ checkEOS <- function(eos, model, prop, ret.diff = FALSE) {
     if(!is.na(calcval)) {
       if(!is.na(refval)) {
         if(abs(diff) > tol) {
-          message(paste("checkEOS: ", prop, " of ", eos$name, "(", eos$state,
-            ") differs by ", round(diff,2), " ", units, " from tabulated value", sep=""))
+          message(paste("check.EOS: calculated ", prop, " of ", eos$name, "(", eos$state,
+            ") differs by ", round(diff,2), " ", units, " from database value", sep=""))
           return(calcval)
         }
       } else return(calcval)
@@ -220,8 +220,8 @@ checkEOS <- function(eos, model, prop, ret.diff = FALSE) {
   return(NA)
 }
 
-checkGHS <- function(ghs, ret.diff=FALSE) {
-  # Compare calculated G from H and S with reference (tabulated) values
+check.GHS <- function(ghs, ret.diff = TRUE) {
+  # Compare G calculated from H and S with given (database) values
   # Print message and return the calculated value if tolerance is exceeded
   # or NA if the difference is within the tolerance
   # 20110808 jmd
@@ -243,8 +243,8 @@ checkGHS <- function(ghs, ret.diff=FALSE) {
     if(!is.na(refval)) {
       diff <- calcval - refval
       if(abs(diff) > thermo$opt$G.tol) {
-        message(paste("checkGHS: G of ", ghs$name, "(", ghs$state,
-          ") differs by ", round(diff), " ", ghs$E_units, " mol-1 from tabulated value", sep=""))
+        message(paste("check.GHS: calculated G of ", ghs$name, "(", ghs$state,
+          ") differs by ", round(diff), " ", ghs$E_units, " mol-1 from database value", sep=""))
         return(calcval)
       }
     } else return(calcval)
@@ -278,10 +278,10 @@ check.OBIGT <- function() {
     isHKF <- tdata$model %in% c("HKF", "DEW")
     if(any(isHKF)) {
       eos.HKF <- OBIGT2eos(tdata[isHKF,], "HKF")
-      DCp.HKF <- checkEOS(eos.HKF, "HKF", "Cp", ret.diff = TRUE)
-      DV.HKF <- checkEOS(eos.HKF, "HKF", "V", ret.diff = TRUE)
+      DCp.HKF <- check.EOS(eos.HKF, "HKF", "Cp")
+      DV.HKF <- check.EOS(eos.HKF, "HKF", "V")
       cat(paste("check.OBIGT: GHS for", sum(isHKF), "species with HKF model in", what, "\n"))
-      DG.HKF <- checkGHS(eos.HKF, ret.diff = TRUE)
+      DG.HKF <- check.GHS(eos.HKF)
       # Store the results
       DCp[isHKF] <- DCp.HKF
       DV[isHKF] <- DV.HKF
@@ -290,9 +290,9 @@ check.OBIGT <- function() {
     # Then other species, if they are present
     if(sum(!isHKF) > 0) {
       eos.cgl <- OBIGT2eos(tdata[!isHKF,], "cgl")
-      DCp.cgl <- checkEOS(eos.cgl, "CGL", "Cp", ret.diff = TRUE)
+      DCp.cgl <- check.EOS(eos.cgl, "CGL", "Cp")
       cat(paste("check.OBIGT: GHS for", sum(!isHKF), "cr,gas,liq species in", what, "\n"))
-      DG.cgl <- checkGHS(eos.cgl, ret.diff = TRUE)
+      DG.cgl <- check.GHS(eos.cgl)
       DCp[!isHKF] <- DCp.cgl
       DG[!isHKF] <- DG.cgl
     }

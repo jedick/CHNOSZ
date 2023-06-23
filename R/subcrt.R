@@ -20,22 +20,19 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
 
   # Revise the call if the states are the second argument 
   if(!is.null(coeff[1])) {
-    if(is.numeric(state[1])) newcoeff <- state else newcoeff <- 1
-    if(is.character(coeff[1])) newstate <- coeff else newstate <- NULL
     if(is.character(coeff[1])) {
-      if(missing(T)) {
-        if(identical(newcoeff, 1) & !(identical(newcoeff, state))) 
-          return(subcrt(species, state = coeff, property = property, P = P, grid = grid,
-            convert = convert, exceed.Ttr = exceed.Ttr, logact = logact))
-          else return(subcrt(species, coeff = newcoeff, state = coeff, property = property,
-            P = P, grid = grid, convert = convert, exceed.Ttr = exceed.Ttr, logact = logact))
-      } else {
-        if(identical(newcoeff,1) & !(identical(newcoeff, state))) 
-          return(subcrt(species, state = coeff, property = property, T = T, P = P, grid = grid,
-            convert = convert, exceed.Ttr = exceed.Ttr, logact = logact))
-          else return(subcrt(species, coeff = newcoeff, state = coeff, property = property,
-            T = T, P = P, grid = grid, convert = convert, exceed.Ttr = exceed.Ttr, logact = logact))
+      newstate <- coeff
+      # This is missing coeff and T in order that missing values are correctly detected further below 20230621
+      newargs <- list(species = species, state = newstate,
+        property = property, P = P, grid = grid, convert = convert,
+        exceed.Ttr = exceed.Ttr, exceed.rhomin = exceed.rhomin, logact = logact,
+        autobalance = autobalance, use.polymorphs = use.polymorphs, IS = IS)
+      if(!missing(state)) {
+        if(is.numeric(state[1])) newcoeff <- state else stop("If they are both given, one of arguments 2 and 3 should be numeric reaction coefficients")
+        newargs <- c(list(coeff = newcoeff), newargs)
       }
+      if(!missing(T)) newargs <- c(list(T = T), newargs)
+      return(do.call(subcrt, newargs))
     }
   }
 

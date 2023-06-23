@@ -13,6 +13,47 @@ bibliography: vig.bib
 csl: elementa.csl
 ---
 
+<style>
+/* CSS snippet from boostrap.css modified by jmd on 2023-06-23 */
+/*!
+ * Bootstrap  v5.3.0 (https://getbootstrap.com/)
+ * Copyright 2011-2023 The Bootstrap Authors
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+:root,
+[data-bs-theme=light] {
+  --bs-info-text-emphasis: #31708f;
+  --bs-info-bg-subtle: #d9edf7;
+  --bs-info-border-subtle: #9eeaf9;
+  --bs-border-width: 1px;
+  --bs-border-radius: 0.375rem;
+}
+.alert {
+  --bs-alert-bg: transparent;
+  --bs-alert-padding-x: 0.5rem;
+  --bs-alert-padding-y: 0.5rem;
+  --bs-alert-margin-bottom: 1rem;
+  --bs-alert-color: inherit;
+  --bs-alert-border-color: transparent;
+  --bs-alert-border: var(--bs-border-width) solid var(--bs-alert-border-color);
+  --bs-alert-border-radius: var(--bs-border-radius);
+  --bs-alert-link-color: inherit;
+  position: relative;
+  padding: var(--bs-alert-padding-y) var(--bs-alert-padding-x);
+  margin-bottom: var(--bs-alert-margin-bottom);
+  color: var(--bs-alert-color);
+  background-color: var(--bs-alert-bg);
+  border: var(--bs-alert-border);
+  border-radius: var(--bs-alert-border-radius);
+}
+.alert-info {
+  --bs-alert-color: var(--bs-info-text-emphasis);
+  --bs-alert-bg: var(--bs-info-bg-subtle);
+  --bs-alert-border-color: var(--bs-info-border-subtle);
+  --bs-alert-link-color: var(--bs-info-text-emphasis);
+}
+</style>
+
 <script>
 function ToggleDiv(ID) {
   var D = document.getElementById("D-" + ID);
@@ -32,11 +73,30 @@ function ToggleDiv(ID) {
 ```{r setup, include = FALSE}
 library(CHNOSZ)
 options(width = 80)
-## use pngquant to optimize PNG images
+# Use pngquant to optimize PNG images
 library(knitr)
 knit_hooks$set(pngquant = hook_pngquant)
 pngquant <- "--speed=1 --quality=0-25"
 if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
+# To make warnings appear in text box 20230619
+# https://selbydavid.com/2017/06/18/rmarkdown-alerts/
+knitr::knit_hooks$set(
+   error = function(x, options) {
+     paste('\n\n<div class="alert alert-danger">',
+           gsub('##', '\n', gsub('^##\ Error', '**Error:**', x)),
+           '</div>', sep = '\n')
+   },
+   warning = function(x, options) {
+     paste('\n\n<div class="alert alert-warning">',
+           gsub('##', '\n', gsub('^##\ Warning:', '**Warning:**', x)),
+           '</div>', sep = '\n')
+   },
+   message = function(x, options) {
+     paste('\n\n<div class="alert alert-info">',
+           gsub('##', '\n', x),
+           '</div>', sep = '\n')
+   }
+)
 ```
 
 ```{r HTML, include = FALSE}
@@ -69,7 +129,7 @@ This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo(
 
 ## How is 'CHNOSZ' pronounced?
 
-As one syllable, starting with an *sh* sound and [rhyming with *Oz*](https://en.wiktionary.org/wiki/Rhymes:English/%C9%92z).
+As one syllable that starts with an *sh* sound and [rhymes with *Oz*](https://en.wiktionary.org/wiki/Rhymes:English/%C9%92z).
 CHNOSZ and [schnoz](https://en.wiktionary.org/wiki/schnozz) are homophones.
 
 *Answered on 2023-05-22.*
@@ -184,5 +244,165 @@ mtitle(c("Inorganic and organic species", "C[total] = 3 molal"))
 ```
 
 *Answered on 2023-05-17.*
+
+## How can minerals with phase transitions be added to the database?
+
+Many minerals undergo phase transitions upon heating.
+The stable phases at different temperatures are called polymorphs.
+Each polymorph for a given mineral should have its own entry in OBIGT, including values of the standard thermodynamic properties (Δ*G*°, Δ*H*°, and *S*°) at 25 °C.
+The 25 °C (or 298.15 K) values for high-temperature polymorphs are often not listed in thermodynamic tables, but they can be calculated.
+This thermodynamic cycle shows how: we calculate the changes of a thermodyamic property (pictured here as `DS1` and `DS2`) between 298.15 K and the transition temperature (`Ttr`) for two polymorphs, then combine those with the property of the polymorphic transition (`DStr`) to obtain the difference of the property between the polymorphs at 298.15 K (`DS298`).
+
+```text
+               DStr              DStr: entropy of transition between polymorphs 1 and 2
+      Ttr  o---------->o          Ttr: temperature of transition
+           ^           |         
+           |           |         
+       DS1 |           | DS2      DS1: entropy change of polymorph 1 from 298.15 K to Ttr
+           |           |          DS2: entropy change of polymorph 2 from 298.15 K to Ttr
+           |           v
+ 298.15 K  o==========>o    DS298: entropy difference between polymorphs 1 and 2 at 298.15 K
+               DS298        DS298 = DS1 + DStr - DS2
+Polymorph  1           2
+```
+
+As an example, let's add pyrrhotite (Fe0.877S) from @PMW87.
+The formula and thermodynamic properties of this pyrrhotite differ from those of FeS from @HDNB78, which is already in OBIGT.
+We begin by defining all the input values in the next code block.
+In addition to `G`, `H`, `S`, and the heat capacity coefficients, non-NA values of volume (`V`) must be provided for the polymorph transitions to be calculated correctly by `subcrt()`.
+
+```{r pyrrhotite_values, message = FALSE}
+# The formula of the new mineral
+formula <- "Fe0.877S"
+# Because the properties from Pankratz et al. (1987) are listed in calories,
+# we need to change the output of subcrt() to calories (the default is Joules)
+E.units("cal")
+# Use temperature in Kelvin for the calculations below
+T.units("K")
+# Thermodynamic properties of polymorph 1 at 25 °C (298.15 K)
+G1 <- -25543
+H1 <- -25200
+S1 <- 14.531
+Cp1 <- 11.922
+# Heat capacity coefficients for polymorph 1
+a1 <- 7.510
+b1 <- 0.014798
+# For volume, use the value from Helgeson et al. (1978)
+V1 <- V2 <- 18.2
+# Transition temperature
+Ttr <- 598
+# Transition enthalpy (cal/mol)
+DHtr <- 95
+# Heat capacity coefficients for polymorph 2
+a2 <- -1.709
+b2 <- 0.011746
+c2 <- 3073400
+# Maximum temperature of polymorph 2
+T2 <- 1800
+```
+
+Use the temperature (`Ttr`) and enthalpy of transition (`DHtr`) to calculate the entropy of transition (`DStr`).
+Note that the Gibbs energy of transition (`DGtr`) is zero at `Ttr`.
+```{r pyrrhotite_Ttr, message = FALSE}
+DGtr <- 0  # DON'T CHANGE THIS
+TDStr <- DHtr - DGtr  # TΔS° = ΔH° - ΔG°
+DStr <- TDStr / Ttr
+```
+
+Put the heat capacity coefficients and volume in the database.
+There is no tabulated value of `Cp` of the high-temperature polymorph extrapolated to 298.15 K, so leave it out.
+If the properties were in Joules, we would omit `E_units = "cal"` or change it to `E_units = "J"`.
+```{r pyrrhotite_Cp, results = "hide", message = FALSE}
+mod.OBIGT("pyrrhotite_new", formula = formula, state = "cr", E_units = "cal",
+  G = 0, H = 0, S = 0, V = V1, Cp = Cp1,
+  a = a1, b = b1, c = 0, d = 0, e = 0, f = 0, lambda = 0, T = Ttr)
+mod.OBIGT("pyrrhotite_new", formula = formula, state = "cr2", E_units = "cal",
+  G = 0, H = 0, S = 0, V = V2,
+  a = a2, b = b2, c = c2, d = 0, e = 0, f = 0, lambda = 0, T = T2)
+```
+
+For the time being, we set `G`, `H`, and `S` (i.e., the properties at 25 °C) to zero in order to easily calculate the temperature integrals of the properties from 298.15 K to `Ttr`.
+Values of zero are placeholders that don't satisfy Δ*G*° = Δ*H*° − *T*Δ*S*° for the formation properties from the elements for either polymorph, as indicated by the following messages.
+We will check again for self-consistency at the end of the example.
+```{r pyrrhotite_info, results = "hide", collapse = TRUE}
+info(info("pyrrhotite_new", "cr"))
+info(info("pyrrhotite_new", "cr2"))
+```
+
+In order to calculate the temperature integrals of Δ*G*° and Δ*H*°, we need not only the heat capacity coefficients but also actual values of *S*°.
+Therefore, we start by calculating the entropy changes of each polymorph from 298.15 to `r Ttr` K (`DS1` and `DS2`) and combining those with the entropy of transition to obtain the difference of entropy between the polymorphs at 298.15 K.
+For polymorph 1 (with `state = "cr"`) it's advisable to include `use.polymorphs = FALSE` to prevent `subcrt()` from trying to identify the most stable polymorph at the indicated temperature.
+```{r pyrrhotite_S, message = FALSE}
+DS1 <- subcrt("pyrrhotite_new", "cr", P = 1, T = Ttr, use.polymorphs = FALSE)$out[[1]]$S
+DS2 <- subcrt("pyrrhotite_new", "cr2", P = 1, T = Ttr)$out[[1]]$S
+DS25 <- DS1 + DStr - DS2
+```
+
+Put the values of *S*° at 298.15 in OBIGT, then calculate the changes of all thermodynamic properties of each polymorph between 298.15 K and `Ttr`.
+```{r pyrrhotite_D1_D2, message = FALSE, results = "hide"}
+mod.OBIGT("pyrrhotite_new", state = "cr", S = S1)
+mod.OBIGT("pyrrhotite_new", state = "cr2", S = S1 + DS25)
+D1 <- subcrt("pyrrhotite_new", "cr", P = 1, T = Ttr, use.polymorphs = FALSE)$out[[1]]
+D2 <- subcrt("pyrrhotite_new", "cr2", P = 1, T = Ttr)$out[[1]]
+```
+
+It's a good idea to check that the entropy of transition is calculated correctly.
+```{r pyrrhotite_check_S, results = "hide"}
+stopifnot(all.equal(D2$S - D1$S, DStr))
+```
+
+Now we're ready to add up the contributions to Δ*G*° and Δ*H*° from the left, top, and right sides of the cycle.
+This gives us the differences between the polymorphs at 298.15 K, which we use to make the final changes to the database.
+```{r pyrrhotite_DG25_DH25, results = "hide", message = FALSE}
+DG25 <- D1$G + DGtr - D2$G
+DH25 <- D1$H + DHtr - D2$H
+mod.OBIGT("pyrrhotite_new", state = "cr", G = G1, H = H1)
+mod.OBIGT("pyrrhotite_new", state = "cr2", G = G1 + DG25, H = H1 + DH25)
+```
+
+It's a good idea to check that the values of `G`, `H`, and `S` at 25 °C for each polymorph are self-consistent.
+Here we use `check.GHS()` to calculate the difference between the value given for `G` and the value calculated from `H` and `S`.
+The difference of less than 1 `r E.units()`/mol can probably be attributed to small differences in the entropies of the elements used by @PMW87 and in CHNOSZ.
+We still get a message that the database value of `Cp` at 25 °C for the high-temperature polymorph is NA; this is OK because the (extrapolated) value can be calculated from the heat capacity coefficients.
+```{r pyrrhotite_info2, collapse = TRUE}
+cr_parameters <- info(info("pyrrhotite_new", "cr"))
+stopifnot(abs(check.GHS(cr_parameters)) < 1)
+cr2_parameters <- info(info("pyrrhotite_new", "cr2"))
+stopifnot(abs(check.GHS(cr2_parameters)) < 1)
+```
+
+For the curious, here are the parameter values:
+```{r pyrrhotite_parameters}
+cr_parameters
+cr2_parameters
+```
+
+Finally, let's look at the thermodynamic properties of the newly added pyrrhotite as a function of temperature around `Ttr`.
+Here, we use the feature of `subcrt()` that identifies the stable polymorph at each temperature.
+Note that Δ*G*° is a continuous function -- visual confirmation that the parameters yield zero for `DGtr` -- but Δ*H*°, *S*°, and *Cp*° are discontinuous at the transition temperature.
+
+<button id="B-pyrrhotite_T" onclick="ToggleDiv('pyrrhotite_T')">Show code</button>
+<div id="D-pyrrhotite_T" style="display: none">
+```{r pyrrhotite_T, eval = FALSE}
+T <- seq(550, 650, 1)
+sout <- subcrt("pyrrhotite_new", T = T, P = 1)$out[[1]]
+par(mfrow = c(1, 4), mar = c(4, 4.2, 1, 1))
+labels <- c(G = "DG0", H = "DH0", S = "S0", Cp = "Cp0")
+for(property in c("G", "H", "S", "Cp")) {
+  plot(sout$T, sout[, property], col = sout$polymorph,
+    xlab = axis.label("T"), ylab = axis.label(labels[property])
+  )
+  abline(v = Ttr, lty = 3, col = 8)
+  if(property == "G")
+    legend("bottomleft", c("1", "2"), pch = 1, col = c(1, 2), title = "Polymorph")
+}
+```
+</div>
+```{r pyrrhotite_T, echo = FALSE, message = FALSE, results = "hide", fig.width = 8, fig.height = 2.5, out.width = "100%", fig.align = "center", pngquant = pngquant}
+```
+
+For additional polymorphs, we could repeat the above procedure using polymorph 2 as the starting point to calculate `G`, `H`, and `S` of polymorph 3, and so on.
+
+*Answered on 2023-06-23.*
 
 ## References

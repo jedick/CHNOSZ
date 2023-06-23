@@ -2,8 +2,8 @@
 \name{util.data}
 \alias{util.data}
 \alias{thermo.refs}
-\alias{checkEOS}
-\alias{checkGHS}
+\alias{check.EOS}
+\alias{check.GHS}
 \alias{check.OBIGT}
 \alias{dumpdata}
 \alias{RH2OBIGT}
@@ -15,8 +15,8 @@ Check self consistency of individual entries in database.
 
 \usage{
   thermo.refs(key = NULL, keep.duplicates = FALSE)
-  checkEOS(eos, model, prop, ret.diff = FALSE)
-  checkGHS(ghs, ret.diff = FALSE)
+  check.EOS(eos, model, prop, ret.diff = TRUE)
+  check.GHS(ghs, ret.diff = TRUE)
   check.OBIGT()
   dumpdata(file)
   RH2OBIGT(compound = NULL, state = "cr", 
@@ -29,7 +29,7 @@ Check self consistency of individual entries in database.
   \item{eos}{dataframe, equations-of-state parameters in the format of \code{thermo()$OBIGT}}
   \item{model}{character, thermodynamic model (see \code{\link{thermo}})}
   \item{prop}{character, property of interest (\samp{Cp} or \samp{V})}
-  \item{ret.diff}{logical, return the difference between calculated and tabulated values?}
+  \item{ret.diff}{logical, return the difference between database and calculated values?}
   \item{ghs}{dataframe, containing G, H and S, in the format of \code{thermo()$OBIGT}}
   \item{file}{character, path to a file}
   \item{compound}{character, name of compound(s) in group additivity calculation}
@@ -45,17 +45,20 @@ If \code{key} is a list, it is interpreted as the result of a call to \code{subc
 Only unique references are returned, unless \code{keep.duplicates} is TRUE.
 In that case, a single reference for each species is returned, ignoring anything in \code{thermo()$OBIGT$ref2}.
 
-\code{checkEOS} compares heat capacity and volume calculated from equation-of-state parameters with reference (tabulated) values at 25 \degC and 1 bar and prints a message and returns the calculated value if tolerance is exceeded.
-The thermodynamic parameters should be provided in \code{eos}, which is a data frame with columns (and column names) in the same format as \code{\link{thermo}$OBIGT}.
-The \code{prop}erty can be one of \samp{Cp} or \samp{V}.
-The default tolerances, given in \code{thermo()$opt$Cp.tol} and \code{thermo()$opt$V.tol}, are 1 J/K.mol or 1 cal/K.mol for Cp and 1 cm3/mol for V.
-If \code{ret.diff} is TRUE, the differences are returned irrespective of their values, and no messages are printed.
+\code{check.EOS} calculates heat capacity (\code{prop = "Cp"}) or volume (\code{prop = "V"}) from equation-of-state parameters at 25 \degC and 1 bar.
+\code{check.GHS} calculates G (standard molal Gibbs energy of formation from the elements) from H (standard molal enthalpy of formation) and S (standard molal entropy) at 25 \degC and 1 bar.
+The calculated values of Cp, V, or G are then compared with the given values (i.e., database values).
+If \code{ret.diff} is TRUE (the default), the difference between the database and calculated values is returned.
+If \code{ret.diff} is FALSE, the difference is compared with a tolerance setting (see below).
+If the absolute value of the difference exceeds the tolerance, the function prints a message and returns the calculated value (not the difference) of the property.
+If the absolute value of the difference is less than the tolerance, the function returns NA with no message.
 
-\code{checkGHS} compares G (standard molal Gibbs energy of formation from the elements) calculated from H (standard molal enthalpy of formation) and S (standard molal entropy) with reference (tabulated) values of G at 25 \degC and 1 bar.
-A message is printed and the calculated difference is returned if it exceeds the value given in \code{thermo()$opt$G.tol}, which has a default value of 100 cal/mol.
-The calculation requires that G, H and S, and the chemical formula of the species all be present.
+For \code{check.EOS}, the thermodynamic parameters should be provided in \code{eos}, which is a data frame with column names in the same format as \code{\link{thermo}$OBIGT}.
+For \code{check.GHS}, the data frame should include G, H, S, and the chemical formula of the species.
+The default tolerances are 1 J/K.mol or 1 cal/K.mol for Cp (depending on the \code{E_units} for the species), 1 cm3/mol for V, and 100 cal/mol for G.
+These can be changed by setting \code{thermo()$opt$Cp.tol}, \code{thermo()$opt$V.tol}, and \code{thermo()$opt$G.tol}.
 
-\code{check.OBIGT} is a function to check self-consistency of each entry in the thermodynamic database, using \code{checkEOS} and \code{checkGHS}.
+\code{check.OBIGT} is a function to check self-consistency of each entry in the thermodynamic database, using \code{check.EOS} and \code{check.GHS}.
 The output is a table listing only species that exceed at least one of the tolerance limits, giving the species index (rownumber in `thermo()$OBIGT`), species name and state, and DCp, DV and DG, for the calculated differences (only those above the tolerances are given).
 Values of DCp and DG are given in the units present in the data files.
 This function is used to generate the file found at \code{extdata/thermo/OBIGT_check.csv}.

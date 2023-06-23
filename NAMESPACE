@@ -39,7 +39,7 @@ export(
   "count.elements",
 # (no other functions are used in the tests)
 # other exported functions that are not used above
-  "checkEOS", "checkGHS", "check.OBIGT",
+  "check.EOS", "check.GHS", "check.OBIGT",
   "V_s_var", "Cp_s_var",
   "EOSlab", "EOScalc",
   "basis.elements", "element.mu", "ibasis",

@@ -50,9 +50,9 @@ These files are used to build the \code{thermo} object, which is described below
       \code{P.units} \tab character \tab The user's units of pressure ([\samp{bar}] or \samp{MPa})\cr
       \code{state} \tab character \tab The default physical state for searching species [\samp{aq}] (see \code{\link{info}})\cr
       \code{water} \tab character \tab Computational option for properties of water ([\samp{SUPCRT}] or \samp{IAPWS}; see \code{\link{water}})\cr
-      \code{G.tol} \tab numeric \tab Difference in G above which \code{\link{checkGHS}} produces a message (cal mol\ifelse{latex}{\eqn{^{-1}}}{\ifelse{html}{\out{<sup>-1</sup>}}{^-1}}) [100]\cr
-      \code{Cp.tol} \tab numeric \tab Difference in Cp above which \code{\link{checkEOS}} produces a message (cal K\ifelse{latex}{\eqn{^{-1}}}{\ifelse{html}{\out{<sup>-1</sup>}}{^-1}} mol\ifelse{latex}{\eqn{^{-1}}}{\ifelse{html}{\out{<sup>-1</sup>}}{^-1}}) [1]\cr
-      \code{V.tol} \tab numeric \tab Difference in V above which \code{\link{checkEOS}} produces a message (cm\ifelse{latex}{\eqn{^{3}}}{\ifelse{html}{\out{<sup>3</sup>}}{^3}} mol\ifelse{latex}{\eqn{^{-1}}}{\ifelse{html}{\out{<sup>-1</sup>}}{^-1}}) [1]\cr
+      \code{G.tol} \tab numeric \tab Difference in G above which \code{\link{check.GHS}} produces a message (cal mol\ifelse{latex}{\eqn{^{-1}}}{\ifelse{html}{\out{<sup>-1</sup>}}{^-1}}) [100]\cr
+      \code{Cp.tol} \tab numeric \tab Difference in Cp above which \code{\link{check.EOS}} produces a message (cal K\ifelse{latex}{\eqn{^{-1}}}{\ifelse{html}{\out{<sup>-1</sup>}}{^-1}} mol\ifelse{latex}{\eqn{^{-1}}}{\ifelse{html}{\out{<sup>-1</sup>}}{^-1}}) [1]\cr
+      \code{V.tol} \tab numeric \tab Difference in V above which \code{\link{check.EOS}} produces a message (cm\ifelse{latex}{\eqn{^{3}}}{\ifelse{html}{\out{<sup>3</sup>}}{^3}} mol\ifelse{latex}{\eqn{^{-1}}}{\ifelse{html}{\out{<sup>-1</sup>}}{^-1}}) [1]\cr
       \code{varP} \tab logical \tab Use variable-pressure standard state for gases? [\code{FALSE}] (see \code{\link{subcrt}})\cr
       \code{IAPWS.sat} \tab character \tab State of water for saturation properties [\samp{liquid}] (see \code{\link{util.water}})\cr
       \code{paramin} \tab integer \tab Minimum number of calculations to launch parallel processes [1000] (see \code{\link{palply}}) \cr

@@ -1537,26 +1537,27 @@ A comparison of log*K* of metal-glycinate complexes using the updated data is in
 
 The next three optional datasets are provided to support newer data or models:
 
-<span style="color:red">`add.OBIGT("AD")`</span> -- These data are used in the Akinfiev-Diamond model for aqeuous nonelectrolytes [@AD03].
-
-<span style="color:red">`add.OBIGT("AS04")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
-These data are included to help transition to the "higher solubility of quartz paradigm" [@WJ17], but are not included in the default database in order to maintain compatibility with existing data for minerals that are linked to the older aqueous `r sio2` data.
-See [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.
-
-<span style="color:red">`add.OBIGT("DEW")`</span> -- These are aqueous species, with modified parameters, that are intended for use with the Deep Earth Water (DEW) model [@SHA14].
+<span style="color:red">`add.OBIGT("DEW")`</span> -- These are parameters for aqueous species that are intended for use with the Deep Earth Water (DEW) model [@SHA14].
 You should also run <span style="color:red">`water("DEW")`</span> to activate the equations in the model; then, they will be used by <span style="color:green">`subcrt()`</span> and <span style="color:green">`affinity()`</span>.
 Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
+<span style="color:red">`add.OBIGT("AD")`</span> -- These data are used in the Akinfiev-Diamond model for aqeuous nonelectrolytes [@AD03].
+
 <span style="color:red">`add.OBIGT("GEMSFIT")`</span> -- Thermodynamic data for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl obtained from global optimization of Gibbs energies with the GEMSFIT package [@MWKL17].
+
+<span style="color:red">`add.OBIGT("AS04")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
+These data reflect a revised (higher) solubility of quartz compared to previous compilations, but are not included in the default database in order to maintain compatibility with existing data for minerals that are linked to the older aqueous `r sio2` data.
+See [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.
 
 ## Cross-checking data entries
 
 <span style="color:green">`info()`</span> automatically performs some cross-checks of the thermodynamic data.
 ```{marginfigure}
-This only checks the parameters for individual species, not the internal consistency of the database itself.
+This only checks the parameters for individual species, not the internal consistency among different species.
 ```
-Given a numeric species index, it runs <span style="color:green">`checkEOS()`</span>, which is a function that calculates values of *C*<sub>*P*</sub>° and *V*° from the HKF or heat capacity parameters and indicates whether differences from the database are greater than 1 cal K<sup>-1</sup> mol<sup>-1</sup> or 1 cm<sup>3</sup> mol<sup>-1</sup>.
-<span style="color:green">`info()`</span> also runs <span style="color:green">`checkGHS()`</span>, which calculates the value of Δ*G*°<sub>*f*</sub> from those of Δ*H*°<sub>*f*</sub> and *S*° and from the entropy of the elements [@CWM89] in the chemical formula of the species.
+Given a numeric species index, it runs <span style="color:green">`check.EOS()`</span>, which compares the given values of *C*<sub>*P*</sub>° and *V*° with those calculated from the HKF or heat capacity parameters.
+<span style="color:green">`info()`</span> also runs <span style="color:green">`check.GHS()`</span>, which compares the given value of Δ*G*°<sub>*f*</sub> with that calculated from Δ*H*°<sub>*f*</sub>, *S*°, and the entropy of the elements [@CWM89] in the chemical formula of the species.
+If any of the differences is above a certain tolerance (see <span style="color:blue">`?check.GHS`</span> for details), a message to this effect is produced.
 
 Some species in the default and optional databases are known to have inconsistent parameters.
 For instance, we can check the data for the trisulfur radical ion (S<sub>3</sub><sup>-</sup>) from @PD15:
@@ -1564,9 +1565,8 @@ For instance, we can check the data for the trisulfur radical ion (S<sub>3</sub>
 info(info("S3-"))
 ```
 
-The calculated value of Δ*G*°<sub>*f*</sub> is 661 cal mol<sup>-1</sup> higher than the entered value.
-Because the difference between the entered and calculated values of Δ*G*°<sub>*f*</sub> is greater than 100 cal mol<sup>-1</sup>, <span style="color:green">`checkGHS()`</span> produces a message.
-After checking for any typographical errors in the entries for Δ*G*°<sub>*f*</sub>, Δ*H*°<sub>*f*</sub>, *S*°, and the chemical formula, the source should be consulted for clarification.
+The calculated value of Δ*G*°<sub>*f*</sub> is `r round(suppressMessages(check.GHS(info(info("S3-")))))` cal mol<sup>-1</sup> higher than the given value.
+After checking for any typographical errors in the entries for Δ*G*°<sub>*f*</sub>, Δ*H*°<sub>*f*</sub>, *S*°, and the chemical formula, the literature may need to be revisited for further clarification.
 
 All of the species with inconsistencies detected in this manner, in both OBIGT and the optional data files, are listed in the file `OBIGT_check.csv`.
 ```{r check_OBIGT}
@@ -1576,7 +1576,7 @@ nrow(dat)
 ```
 
 Without additional information, there is often no clear strategy for "fixing" these inconsistent data, and they are provided as-is.
-However, users are encouraged to send any corrections they find to the package maintainer.
+Users are encouraged to send any corrections to the package maintainer.
 
 ## Water: SUPCRT92 or IAPWS-95 or DEW
 

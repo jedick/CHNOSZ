@@ -38,7 +38,7 @@ If any of these are found, the results are summarized on the screen, but the fun
 With a numeric argument, the rows of \code{thermo()$OBIGT} indicated by \code{ispecies} are returned, after removing any order-of-magnitude scaling factors (see \code{\link{thermo}}).
 If these species are all aqueous or are all not aqueous, the compounded column names used in \code{thermo()$OBIGT} are replaced with names appropriate for the corresponding equations of state.
 A missing value of one of the standard molal Gibbs energy (\code{G}) or enthalpy (\code{H}) of formation from the elements or entropy (\code{S}) is calculated from the other two, if available.
-If \code{check.it} is TRUE, several checks of self consistency among the thermodynamic properties and parameters are performed using \code{\link{checkGHS}} and \code{\link{checkEOS}}.
+If \code{check.it} is TRUE, several checks of self consistency among the thermodynamic properties and parameters are performed using \code{\link{check.GHS}} and \code{\link{check.EOS}}.
 }
 
 

@@ -64,8 +64,8 @@ subcrt_ <- '<code style="color: green;">subcrt()</code>'
 affinity_ <- '<code style="color: green;">affinity()</code>'
 thermo.refs_ <- '<code style="color: green;">thermo.refs()</code>'
 thermo_ <- '<code style="color: green;">thermo()</code>'
-checkGHS_ <- '<code style="color: green;">checkGHS()</code>'
-checkEOS_ <- '<code style="color: green;">checkEOS()</code>'
+check.GHS_ <- '<code style="color: green;">check.GHS()</code>'
+check.EOS_ <- '<code style="color: green;">check.EOS()</code>'
 # Math stuff
 logK <- "log&thinsp;<i>K</i>"
 logB <- "log&thinsp;&beta;"
@@ -233,9 +233,9 @@ This is a summary of its main features:
 - Remove OOM scaling. This is used primarily by other functions in CHNOSZ to get a set of unscaled `r model` parameters for calculating thermodynamic properties as a function of T and P.
 - Extract the HKF or CGL parts of column names (only if all matching species have the same `r model`).
 - Calculate a missing one of `r G_`, `r H_`, or `r S_` if two of them are present.
-- Cross-check `r G_`, `r H_`, and `r S_` if all of them are present, and print a message if the difference is above a threshold (see `r checkGHS_`).
+- Cross-check `r G_`, `r H_`, and `r S_` if all of them are present, and print a message if the difference is above a threshold (see `r check.GHS_`).
 - Calculate a missing `r Cp_` or `r V_` from the `r model` parameters, if possible.
-- Cross-check `r Cp_` or `r V_` (if present) against the `r model` parameters, if possible, and print a message if the difference is above a threshold (see `r checkEOS_`).
+- Cross-check `r Cp_` or `r V_` (if present) against the `r model` parameters, if possible, and print a message if the difference is above a threshold (see `r check.EOS_`).
 
 `r NOTE`: `r info_` does **NOT** change the units of energy; the values it displays (including possibly calculated ones) correspond to the `r E_units` for that species in OBIGT.
 On the other hand, `r subcrt_` outputs values in the units previously selected with the function `r E.units_`.

@@ -60,7 +60,7 @@
     \item \code{OBIGT_check.csv} contains the results of running \code{\link{check.OBIGT}} to check the internal consistency of entries in the default and optional datafiles.
     \item \code{RH98_Table15.csv} Group stoichiometries for high molecular weight crystalline and liquid organic compounds taken from Table 15 of Richard and Helgeson, 1998. The first three columns have the \code{compound} name, \code{formula} and physical \code{state} (\samp{cr} or \samp{liq}). The remaining columns have the numbers of each group in the compound; the names of the groups (columns) correspond to species in \code{\link{thermo}$OBIGT}. The compound named \samp{5a(H),14a(H)-cholestane} in the paper has been changed to \samp{5a(H),14b(H)-cholestane} here to match the group stoichiometry given in the table. See \code{\link{RH2OBIGT}} for a function that uses this file.
     \item \code{SK95.csv} contains thermodynamic data for alanate, glycinate, and their complexes with metals, taken from Amend and Helgeson (1997) and Shock and Koretsky (1995) as corrected in slop98.dat. These data are used in \code{demo("copper")} and \code{demo("glycinate")}.
-    \item \code{LA19_test.csv} contains thermodynamic data for dimethylamine and trimethylamine from LaRowe and Amend (2019) in energy units of both J and cal. This file is used in \code{test-util.data.R}) to check the messages produced by \code{\link{checkGHS}} and \code{\link{checkEOS}}.
+    \item \code{LA19_test.csv} contains thermodynamic data for dimethylamine and trimethylamine from LaRowe and Amend (2019) in energy units of both J and cal. This file is used in \code{test-util.data.R}) to check the messages produced by \code{\link{check.GHS}} and \code{\link{check.EOS}}.
   }
 
 

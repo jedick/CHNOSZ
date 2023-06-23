@@ -18,6 +18,7 @@ sed -i 's/<code>?water<\/code>/<code><a href="..\/html\/water.html" style="backg
 sed -i 's/<code>?subcrt<\/code>/<code><a href="..\/html\/subcrt.html" style="background-image:none;">?subcrt<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?EOSregress<\/code>/<code><a href="..\/html\/EOSregress.html" style="background-image:none;">?EOSregress<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?taxonomy<\/code>/<code><a href="..\/html\/taxonomy.html" style="background-image:none;">?taxonomy<\/a><\/code>/g' anintro.html
+sed -i 's/<code>?check.GHS<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">?check.GHS<\/a><\/code>/g' anintro.html
 
 # anintro.html: add links to function names
 # Start at line 120 (below the TOC)
@@ -62,8 +63,8 @@ sed -i '312,$s/<code>add.protein()<\/code>/<code><a href="..\/html\/add.protein.
 sed -i '312,$s/<code>aminoacids()<\/code>/<code><a href="..\/html\/util.seq.html" style="background-image:none;">aminoacids()<\/a><\/code>/g' anintro.html
 sed -i '312,$s/<code>add.OBIGT()<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="background-image:none;">add.OBIGT()<\/a><\/code>/g' anintro.html
 sed -i '312,$s/<code>mod.OBIGT()<\/code>/<code><a href="..\/html\/add.OBIGT.html" style="background-image:none;">mod.OBIGT()<\/a><\/code>/g' anintro.html
-sed -i '312,$s/<code>checkGHS()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">checkGHS()<\/a><\/code>/g' anintro.html
-sed -i '312,$s/<code>checkEOS()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">checkEOS()<\/a><\/code>/g' anintro.html
+sed -i '312,$s/<code>check.GHS()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">check.GHS()<\/a><\/code>/g' anintro.html
+sed -i '312,$s/<code>check.EOS()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">check.EOS()<\/a><\/code>/g' anintro.html
 sed -i '312,$s/<code>equil.reaction()<\/code>/<code><a href="..\/html\/equilibrate.html" style="background-image:none;">equil.reaction()<\/a><\/code>/g' anintro.html
 sed -i '312,$s/<code>EOSregress()<\/code>/<code><a href="..\/html\/EOSregress.html" style="background-image:none;">EOSregress()<\/a><\/code>/g' anintro.html
 sed -i '312,$s/<code>RH2OBIGT()<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">RH2OBIGT()<\/a><\/code>/g' anintro.html
@@ -135,10 +136,12 @@ sed -i '375,$s/subcrt(/<a href="..\/html\/subcrt.html" style="color:\ green;">su
 sed -i '375,$s/affinity(/<a href="..\/html\/affinity.html" style="color:\ green;">affinity<\/a>(/g' custom_data.html
 sed -i '375,$s/thermo.refs(/<a href="..\/html\/util.data.html" style="color:\ green;">thermo.refs<\/a>(/g' custom_data.html
 sed -i '375,$s/thermo(/<a href="..\/html\/thermo.html" style="color:\ green;">thermo<\/a>(/g' custom_data.html
-sed -i '375,$s/checkGHS(/<a href="..\/html\/util.data.html" style="color:\ green;">checkGHS<\/a>(/g' custom_data.html
-sed -i '375,$s/checkEOS(/<a href="..\/html\/util.data.html" style="color:\ green;">checkEOS<\/a>(/g' custom_data.html
+sed -i '375,$s/check.GHS(/<a href="..\/html\/util.data.html" style="color:\ green;">check.GHS<\/a>(/g' custom_data.html
+sed -i '375,$s/check.EOS(/<a href="..\/html\/util.data.html" style="color:\ green;">check.EOS<\/a>(/g' custom_data.html
 
 # Add links to FAQ.html 20230517
 sed -i 's/<code>equilibrate()<\/code>/<code><a href="..\/html\/equilibrate.html" style="color:\ green;">equilibrate()<\/a><\/code>/g' FAQ.html
 sed -i 's/<code>info()<\/code>/<code><a href="..\/html\/info.html" style="color:\ green;">info()<\/a><\/code>/g' FAQ.html
 sed -i 's/<code>thermo.refs()<\/code>/<code><a href="..\/html\/util.data.html" style="color:\ green;">thermo.refs()<\/a><\/code>/g' FAQ.html
+sed -i 's/<code>subcrt()<\/code>/<code><a href="..\/html\/subcrt.html" style="color:\ green;">subcrt()<\/a><\/code>/g' FAQ.html
+sed -i 's/<code>check.GHS()<\/code>/<code><a href="..\/html\/util.data.html" style="color:\ green;">check.GHS()<\/a><\/code>/g' FAQ.html

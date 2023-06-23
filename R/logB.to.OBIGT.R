@@ -120,7 +120,7 @@ logB.to.OBIGT <- function(logB, species, coeffs, T, P, npar = 3, optimize.omega 
   if(is.na(c1)) c1 <- 0
   if(is.na(c2)) c2 <- 0
   if(is.na(omega)) omega <- 0
-  # Calculate Cp at 25 °C (not used in HKF - just for info() and checkEOS())
+  # Calculate Cp at 25 °C (not used in HKF - just for info() and check.EOS())
   PAR$c1 <- c1
   PAR$c2 <- c2
   PAR$omega <- omega
