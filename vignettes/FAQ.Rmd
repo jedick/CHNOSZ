@@ -336,13 +336,13 @@ For polymorph 1 (with `state = "cr"`) it's advisable to include `use.polymorphs 
 ```{r pyrrhotite_S, message = FALSE}
 DS1 <- subcrt("pyrrhotite_new", "cr", P = 1, T = Ttr, use.polymorphs = FALSE)$out[[1]]$S
 DS2 <- subcrt("pyrrhotite_new", "cr2", P = 1, T = Ttr)$out[[1]]$S
-DS25 <- DS1 + DStr - DS2
+DS298 <- DS1 + DStr - DS2
 ```
 
 Put the values of *S*° at 298.15 into OBIGT, then calculate the changes of all thermodynamic properties of each polymorph between 298.15 K and `Ttr`.
 ```{r pyrrhotite_D1_D2, message = FALSE, results = "hide"}
 mod.OBIGT("pyrrhotite_new", state = "cr", S = S1)
-mod.OBIGT("pyrrhotite_new", state = "cr2", S = S1 + DS25)
+mod.OBIGT("pyrrhotite_new", state = "cr2", S = S1 + DS298)
 D1 <- subcrt("pyrrhotite_new", "cr", P = 1, T = Ttr, use.polymorphs = FALSE)$out[[1]]
 D2 <- subcrt("pyrrhotite_new", "cr2", P = 1, T = Ttr)$out[[1]]
 ```
@@ -354,11 +354,11 @@ stopifnot(all.equal(D2$S - D1$S, DStr))
 
 Now we're ready to add up the contributions to Δ*G*° and Δ*H*° from the left, top, and right sides of the cycle.
 This gives us the differences between the polymorphs at 298.15 K, which we use to make the final changes to the database.
-```{r pyrrhotite_DG25_DH25, results = "hide", message = FALSE}
-DG25 <- D1$G + DGtr - D2$G
-DH25 <- D1$H + DHtr - D2$H
+```{r pyrrhotite_DG298_DH298, results = "hide", message = FALSE}
+DG298 <- D1$G + DGtr - D2$G
+DH298 <- D1$H + DHtr - D2$H
 mod.OBIGT("pyrrhotite_new", state = "cr", G = G1, H = H1)
-mod.OBIGT("pyrrhotite_new", state = "cr2", G = G1 + DG25, H = H1 + DH25)
+mod.OBIGT("pyrrhotite_new", state = "cr2", G = G1 + DG298, H = H1 + DH298)
 ```
 
 It's a good idea to check that the values of `G`, `H`, and `S` at 25 °C for a given polymorph are consistent with each other.
