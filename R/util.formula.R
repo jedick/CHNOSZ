@@ -13,7 +13,7 @@ i2A <- function(formula) {
   } else {
     # Get the elemental makeup of each formula, counting
     # zero for elements that appear only in other formulas
-    msz <- makeup(formula, count.zero=TRUE)
+    msz <- makeup(formula, count.zero = TRUE)
     # Convert formulas into a stoichiometric matrix with elements on the columns
     A <- t(sapply(msz, c))
     # Add names from character argument
@@ -24,30 +24,30 @@ i2A <- function(formula) {
   return(A)
 }
 
-as.chemical.formula <- function(makeup, drop.zero=TRUE) {
+as.chemical.formula <- function(makeup, drop.zero = TRUE) {
   # Make a formula character string from the output of makeup()
   # or from a stoichiometric matrix (output of i2A() or protein.formula())
   # First define a function to work with a single makeup object
   cffun <- function(makeup) {
     # First strip zeroes if needed
-    if(drop.zero) makeup <- makeup[makeup!=0]
+    if(drop.zero) makeup <- makeup[makeup != 0]
     # Z always goes at end
-    makeup <- c(makeup[names(makeup)!="Z"], makeup[names(makeup)=="Z"])
+    makeup <- c(makeup[names(makeup) != "Z"], makeup[names(makeup) == "Z"])
     # The elements and coefficients
     elements <- names(makeup)
     coefficients <- as.character(makeup)
     # Any 1's get zapped
-    coefficients[makeup==1] <- ""
+    coefficients[makeup == 1] <- ""
     # Any Z's get zapped (if they're followed by a negative number)
     # or turned into a plus sign (to indicate a positive charge)
-    elements[elements=="Z" & makeup < 0] <- ""
-    elements[elements=="Z" & makeup >= 0] <- "+"
+    elements[elements == "Z" & makeup < 0] <- ""
+    elements[elements == "Z" & makeup >= 0] <- "+"
     # Put the elements and coefficients together
-    formula <- paste(elements, coefficients, sep="", collapse="")
+    formula <- paste(elements, coefficients, sep = "", collapse = "")
     # If the formula is uncharged, and the last element has a negative
     # coefficient, add an explicit +0 at the end
     if(!"Z" %in% names(makeup) & tail(makeup,1) < 0) 
-      formula <- paste(formula, "+0", sep="")
+      formula <- paste(formula, "+0", sep = "")
     return(formula)
   }
   # Call cffun() once for a single makeup, or loop for a matrix
@@ -75,7 +75,7 @@ entropy <- function(formula) {
   formula <- i2A(get.formula(formula))
   ielem <- match(colnames(formula), thermo$element$element)
   if(any(is.na(ielem))) warning(paste("element(s)",
-    paste(colnames(formula)[is.na(ielem)], collapse=" "), "not available in thermo()$element"))
+    paste(colnames(formula)[is.na(ielem)], collapse = " "), "not available in thermo()$element"))
   # Entropy per atom
   Sn <- thermo$element$s[ielem] / thermo$element$n[ielem]
   # If there are any NA values of entropy, put NA in the matrix, then set the value to zero
@@ -140,15 +140,15 @@ ZC <- function(formula) {
   iknown <- match(knownelement, colnames(formula))
   # Any unknown elements in formula get dropped with a warning
   iunk <- !colnames(formula) %in% c(knownelement, "C")
-  if(any(iunk)) warning(paste("element(s)",paste(colnames(formula)[iunk], collapse=" "),
-    "not in", paste(knownelement, collapse=" "), "so not included in this calculation"))
+  if(any(iunk)) warning(paste("element(s)", paste(colnames(formula)[iunk], collapse = " "),
+    "not in", paste(knownelement, collapse = " "), "so not included in this calculation"))
   # Contribution to charge only from known elements that are in the formula
-  formulacharges <- t(formula[,iknown[!is.na(iknown)]]) * charge[!is.na(iknown)]
+  formulacharges <- t(formula[, iknown[!is.na(iknown)]]) * charge[!is.na(iknown)]
   # Sum of the charges; the arrangement depends on the number of formulas
-  if(nrow(formula)==1) formulacharge <- rowSums(formulacharges) 
+  if(nrow(formula) == 1) formulacharge <- rowSums(formulacharges) 
   else formulacharge <- colSums(formulacharges)
   # Numbers of carbons
-  nC <- formula[,iC]
+  nC <- formula[, iC]
   # Average oxidation state
   ZC <- as.numeric(formulacharge/nC)
   return(ZC)
@@ -174,7 +174,7 @@ get.formula <- function(formula) {
   thermo <- get("thermo", CHNOSZ)
   iover <- i > nrow(thermo$OBIGT)
   iover[is.na(iover)] <- FALSE
-  if(any(iover)) stop(paste("species number(s)",paste(i[iover],collapse=" "),
+  if(any(iover)) stop(paste("species number(s)", paste(i[iover], collapse = " "), 
     "not available in thermo()$OBIGT"))
   # We let negative numbers pass as formulas
   i[i < 0] <- NA

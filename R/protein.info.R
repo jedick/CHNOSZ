@@ -8,7 +8,7 @@
 # protein.basis: coefficients of basis species in formation reactions of [ionized] proteins [residues]
 # protein.equil: step-by-step example of protein equilibrium calculation
 
-pinfo <- function(protein, organism=NULL, residue=FALSE, regexp=FALSE) {
+pinfo <- function(protein, organism = NULL, residue = FALSE, regexp = FALSE) {
   # Return the `protein` (possibly per residue) for:
   #   dataframe `protein`
   # Return the rownumber(s) of thermo()$protein for:
@@ -38,9 +38,9 @@ pinfo <- function(protein, organism=NULL, residue=FALSE, regexp=FALSE) {
       iprotein <- which(iprotein & iorganism)
     } else {
       # Search for protein or protein_organism in thermo()$protein
-      t_p_names <- paste(t_p$protein, t_p$organism, sep="_")
+      t_p_names <- paste(t_p$protein, t_p$organism, sep = "_")
       if(is.null(organism)) my_names <- protein
-      else my_names <- paste(protein, organism, sep="_")
+      else my_names <- paste(protein, organism, sep = "_")
       iprotein <- match(my_names, t_p_names)
     }
     out <- iprotein
@@ -48,17 +48,17 @@ pinfo <- function(protein, organism=NULL, residue=FALSE, regexp=FALSE) {
   out
 }
 
-protein.formula <- function(protein, organism=NULL, residue=FALSE) {
+protein.formula <- function(protein, organism = NULL, residue = FALSE) {
   # Return a matrix with chemical formulas of proteins
   aa <- pinfo(pinfo(protein, organism))
   rf <- group.formulas()
   out <- as.matrix(aa[, 5:25]) %*% as.matrix(rf)
   if(residue) out <- out / rowSums(aa[, 6:25])
-  row.names(out) <- make.unique(paste(aa$protein, aa$organism, sep="_"))
+  row.names(out) <- make.unique(paste(aa$protein, aa$organism, sep = "_"))
   return(out)
 }
 
-protein.length <- function(protein, organism=NULL) {
+protein.length <- function(protein, organism = NULL) {
   # Calculate the length(s) of proteins
   aa <- pinfo(pinfo(protein, organism))
   # Use rowSums on the columns containing amino acid counts
@@ -66,17 +66,17 @@ protein.length <- function(protein, organism=NULL) {
   return(pl)
 }
 
-protein.OBIGT <- function(protein, organism=NULL, state=thermo()$opt$state) {
+protein.OBIGT <- function(protein, organism = NULL, state = thermo()$opt$state) {
   # Display and return the properties of
   # proteins calculated from amino acid composition
   aa <- pinfo(pinfo(protein, organism))
   # The names of the protein backbone groups depend on the state
   # [UPBB] for aq or [PBB] for cr
-  if(state=="aq") bbgroup <- "UPBB" else bbgroup <- "PBB"
+  if(state == "aq") bbgroup <- "UPBB" else bbgroup <- "PBB"
   # Names of the AABB, sidechain and protein backbone groups
   groups <- c("AABB", colnames(aa)[6:25], bbgroup)
   # Put brackets around the group names
-  groups <- paste("[", groups, "]", sep="")
+  groups <- paste("[", groups, "]", sep = "")
   # The rownumbers of the groups in thermo()$OBIGT
   groups_state <- paste(groups, state)
   OBIGT <- get("thermo", CHNOSZ)$OBIGT
@@ -100,14 +100,14 @@ protein.OBIGT <- function(protein, organism=NULL, state=thermo()$opt$state) {
     # To get the formula, add up and round the group compositions 20090331
     f.in <- round(colSums(groupelements * ngroups), 3)
     # Take out any elements that don't appear (sometimes S)
-    f.in <- f.in[f.in!=0]
+    f.in <- f.in[f.in != 0]
     # Turn it into a formula
     f <- as.chemical.formula(f.in)
     # Now the species name
-    name <- paste(aa$protein, aa$organism, sep="_")
+    name <- paste(aa$protein, aa$organism, sep = "_")
     # Tell the user about it
-    message("protein.OBIGT: found ", appendLF=FALSE)
-    message(name, " (", f, ", ", appendLF=FALSE)
+    message("protein.OBIGT: found ", appendLF = FALSE)
+    message(name, " (", f, ", ", appendLF = FALSE)
     message(round(length, 3), " residues)")
     ref <- aa$ref
     # Include 'model' column 20220919
@@ -124,7 +124,7 @@ protein.OBIGT <- function(protein, organism=NULL, state=thermo()$opt$state) {
   return(out)
 }
 
-protein.basis <- function(protein, T=25, normalize=FALSE) {
+protein.basis <- function(protein, T = 25, normalize = FALSE) {
   # 20090902 Calculate the coefficients of basis species in reactions
   # to form proteins (possibly per normalized by length) listed in protein
   # 20120528 Renamed protein.basis from residue.info
@@ -138,7 +138,7 @@ protein.basis <- function(protein, T=25, normalize=FALSE) {
   iHplus <- match("H+", rownames(thermo$basis))
   if(!is.na(iHplus)) {
     pH <- -thermo$basis$logact[iHplus]
-    Z <- ionize.aa(aa, T=T, pH=pH)[1, ]
+    Z <- ionize.aa(aa, T = T, pH = pH)[1, ]
     sb[, iHplus] <- sb[, iHplus] + Z
   }
   # Compute per length-normalized coefficients if requested
@@ -151,7 +151,7 @@ protein.basis <- function(protein, T=25, normalize=FALSE) {
   return(sb)
 }
 
-protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
+protein.equil <- function(protein, T = 25, loga.protein = 0, digits = 4) {
   out <- character()
   mymessage <- function(...) {
     message(...)
@@ -167,7 +167,7 @@ protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
   # Get the amino acid compositions of the proteins
   aa <- pinfo(pinfo(protein))
   # Get some general information about the proteins
-  pname <- paste(aa$protein, aa$organism, sep="_")
+  pname <- paste(aa$protein, aa$organism, sep = "_")
   plength <- protein.length(aa)
   # Use thermo()$basis to decide whether to ionize the proteins
   thermo <- get("thermo", CHNOSZ)
@@ -186,19 +186,19 @@ protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
   ## First set of output: show results of calculations for a single protein
   mymessage("protein.equil [1]: first protein is ", pname[1], " with length ", plength[1])
   # Standard Gibbs energies of basis species
-  G0basis <- unlist(suppressMessages(subcrt(thermo$basis$ispecies, T=T, property="G")$out))
+  G0basis <- unlist(suppressMessages(subcrt(thermo$basis$ispecies, T = T, property = "G")$out))
   # Coefficients of basis species in formation reactions of proteins
-  protbasis <- suppressMessages(protein.basis(aa, T=T))
+  protbasis <- suppressMessages(protein.basis(aa, T = T))
   # Sum of standard Gibbs energies of basis species in each reaction
   G0basissum <- colSums(t(protbasis) * G0basis)
   # Standard Gibbs energies of nonionized proteins
-  G0prot <- unlist(suppressMessages(subcrt(pname, T=T, property="G")$out))
+  G0prot <- unlist(suppressMessages(subcrt(pname, T = T, property = "G")$out))
   # Standard Gibbs energy of formation reaction of nonionized protein, E_units/mol
   G0protform <- G0prot - G0basissum
   mymessage("protein.equil [1]: reaction to form nonionized protein from basis species has G0(", E_units, "/mol) of ", signif(G0protform[1], digits))
   if(ionize.it) {
     # Standard Gibbs energy of ionization of protein, J/mol
-    G0ionization <- suppressMessages(ionize.aa(aa, property="G", T=T, pH=pH))[1, ]
+    G0ionization <- suppressMessages(ionize.aa(aa, property = "G", T = T, pH = pH))[1, ]
     # Standard Gibbs energy of ionization of protein, E_units/mol
     if(E_units == "cal") G0ionization <- convert(G0ionization, "cal")
     mymessage("protein.equil [1]: ionization reaction of protein has G0(", E_units, "/mol) of ", signif(G0ionization[1], digits))
@@ -211,7 +211,7 @@ protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
   G0res.RT <- G0protform/R/TK/plength
   mymessage("protein.equil [1]: per residue, reaction to form ", iword, " protein from basis species has G0/RT of ", signif(G0res.RT[1], digits))
   # Coefficients of basis species in formation reactions of residues
-  resbasis <- suppressMessages(protein.basis(aa, T=T, normalize=TRUE))
+  resbasis <- suppressMessages(protein.basis(aa, T = T, normalize = TRUE))
   # logQstar and Astar/RT
   logQstar <- colSums(t(resbasis) * - thermo$basis$logact)
   mymessage("protein.equil [1]: per residue, logQstar is ", signif(logQstar[1], digits))
@@ -220,31 +220,31 @@ protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
   if(!is.numeric(protein)) mymessage("protein.equil [1]: not comparing calculations with affinity() because 'protein' is not numeric")
   else {
     # For **Astar** we have to set the activities of the proteins to zero, not loga.protein!
-    a <- suppressMessages(affinity(iprotein=protein, T=T, loga.protein=0))
+    a <- suppressMessages(affinity(iprotein = protein, T = T, loga.protein = 0))
     aAstar.RT <- log(10) * as.numeric(a$values) / plength
     mymessage("check it!       per residue, Astar/RT calculated using affinity() is ", signif(aAstar.RT[1], digits))
-    if(!isTRUE(all.equal(Astar.RT, aAstar.RT, check.attributes=FALSE)))
+    if(!isTRUE(all.equal(Astar.RT, aAstar.RT, check.attributes = FALSE)))
       stop("Bug alert! The same value for Astar/RT cannot be calculated manually as by using affinity()")
   }
-  if(length(pname)==1) mymessage("protein.equil [all]: all done... give me more than one protein for equilibrium calculations")
+  if(length(pname) == 1) mymessage("protein.equil [all]: all done... give me more than one protein for equilibrium calculations")
   else {
     ## Next set of output: equilibrium calculations
-    mymessage("protein.equil [all]: lengths of all proteins are ", paste(plength, collapse=" "))
-    mymessage("protein.equil [all]: Astar/RT of all residue equivalents are ", paste(signif(Astar.RT, digits), collapse=" "))
+    mymessage("protein.equil [all]: lengths of all proteins are ", paste(plength, collapse = " "))
+    mymessage("protein.equil [all]: Astar/RT of all residue equivalents are ", paste(signif(Astar.RT, digits), collapse = " "))
     expAstar.RT <- exp(Astar.RT)
     sumexpAstar.RT <- sum(expAstar.RT)
     mymessage("protein.equil [all]: sum of exp(Astar/RT) of all residue equivalents is ", signif(sumexpAstar.RT, digits))
     # Boltzmann distribution
     alpha <- expAstar.RT / sumexpAstar.RT    
-    mymessage("protein.equil [all]: equilibrium degrees of formation (alphas) of residue equivalents are ", paste(signif(alpha, digits), collapse=" "))
+    mymessage("protein.equil [all]: equilibrium degrees of formation (alphas) of residue equivalents are ", paste(signif(alpha, digits), collapse = " "))
     # Check with equilibrate()
     if(is.numeric(protein)) {
-      loga.equil.protein <- unlist(suppressMessages(equilibrate(a, normalize=TRUE))$loga.equil)
+      loga.equil.protein <- unlist(suppressMessages(equilibrate(a, normalize = TRUE))$loga.equil)
       # Here we do have to convert from logarithms of activities of proteins to degrees of formation of residue equivalents
       a.equil.residue <- plength*10^loga.equil.protein
       ealpha <- a.equil.residue/sum(a.equil.residue)
-      mymessage("check it!     alphas of residue equivalents from equilibrate() are ", paste(signif(ealpha, digits), collapse=" "))
-      if(!isTRUE(all.equal(alpha, ealpha, check.attributes=FALSE)))
+      mymessage("check it!     alphas of residue equivalents from equilibrate() are ", paste(signif(ealpha, digits), collapse = " "))
+      if(!isTRUE(all.equal(alpha, ealpha, check.attributes = FALSE)))
         stop("Bug alert! The same value for alpha cannot be calculated manually as by using equilibrate()")
     }
     # Total activity of residues
@@ -252,15 +252,15 @@ protein.equil <- function(protein, T=25, loga.protein=0, digits=4) {
     mymessage("protein.equil [all]: for activity of proteins equal to 10^", signif(loga.protein, digits), ", total activity of residues is 10^", signif(loga.residue, digits))
     # Equilibrium activities of residues
     loga.residue.equil <- log10(alpha*10^loga.residue)
-    mymessage("protein.equil [all]: log10 equilibrium activities of residue equivalents are ", paste(signif(loga.residue.equil, digits), collapse=" "))
+    mymessage("protein.equil [all]: log10 equilibrium activities of residue equivalents are ", paste(signif(loga.residue.equil, digits), collapse = " "))
     # Equilibrium activities of proteins
     loga.protein.equil <- log10(10^loga.residue.equil/plength)
-    mymessage("protein.equil [all]: log10 equilibrium activities of proteins are ", paste(signif(loga.protein.equil, digits), collapse=" "))
+    mymessage("protein.equil [all]: log10 equilibrium activities of proteins are ", paste(signif(loga.protein.equil, digits), collapse = " "))
     # Check with equilibrate()
     if(is.numeric(protein)) {
-      eloga.protein.equil <- unlist(suppressMessages(equilibrate(a, loga.balance=loga.residue, normalize=TRUE))$loga.equil)
-      mymessage("check it!    log10 eq'm activities of proteins from equilibrate() are ", paste(signif(eloga.protein.equil, digits), collapse=" "))
-      if(!isTRUE(all.equal(loga.protein.equil, eloga.protein.equil, check.attributes=FALSE)))
+      eloga.protein.equil <- unlist(suppressMessages(equilibrate(a, loga.balance = loga.residue, normalize = TRUE))$loga.equil)
+      mymessage("check it!    log10 eq'm activities of proteins from equilibrate() are ", paste(signif(eloga.protein.equil, digits), collapse = " "))
+      if(!isTRUE(all.equal(loga.protein.equil, eloga.protein.equil, check.attributes = FALSE)))
         stop("Bug alert! The same value for log10 equilibrium activities of proteins cannot be calculated manually as by using equilibrate()")
     }
   }

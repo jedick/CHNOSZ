@@ -40,7 +40,7 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
         intCpdlnT <- PAR$a*log(T / Tr) + PAR$b*(T - Tr) + PAR$c*(T^-2 - Tr^-2)/-2 + PAR$d*(T^-0.5 - Tr^-0.5)/-0.5  + PAR$e*(T^2 - Tr^2)/2
         # Do we also have the lambda parameter (Cp term with adjustable exponent on T)?
         if(!is.na(PAR$lambda) & !identical(PAR$lambda, 0)) {
-           # equations for lambda adapted from Helgeson et al., 1998 (doi:10.1016/S0016-7037(97)00219-6)
+           # Equations for lambda adapted from Helgeson et al., 1998 (doi:10.1016/S0016-7037(97)00219-6)
            if(PAR$lambda == -1) intCpdT <- intCpdT + PAR$f*log(T/Tr) 
            else intCpdT <- intCpdT - PAR$f*( T^(PAR$lambda + 1) - Tr^(PAR$lambda + 1) ) / (PAR$lambda + 1)
            intCpdlnT <- intCpdlnT + PAR$f*(T^PAR$lambda - Tr^PAR$lambda) / PAR$lambda
@@ -51,8 +51,8 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
         intCpdT <- PAR$Cp*(T - Tr)
         intCpdlnT <- PAR$Cp*log(T / Tr)
         # In case Cp is listed as NA, set the integrals to 0 at Tr
-        intCpdT[T==Tr] <- 0
-        intCpdlnT[T==Tr] <- 0
+        intCpdT[T == Tr] <- 0
+        intCpdlnT[T == Tr] <- 0
       }
       # Volume and its integrals
       if(PAR$name %in% c("quartz", "coesite")) {
@@ -99,7 +99,7 @@ cgl <- function(property = NULL, parameters = NULL, T = 298.15, P = 1) {
 # (these are the only mineral phases for which SUPCRT92 uses an inconstant volume)
 quartz_coesite <- function(PAR, T, P) {
   # The corrections are 0 for anything other than quartz and coesite
-  if(!PAR$name %in% c("quartz", "coesite")) return(list(G=0, H=0, S=0, V=0))
+  if(!PAR$name %in% c("quartz", "coesite")) return(list(G = 0, H = 0, S = 0, V = 0))
   ncond <- max(c(length(T), length(P)))
   # Tr, Pr and TtPr (transition temperature at Pr)
   Pr <- 1      # bar
@@ -144,5 +144,5 @@ quartz_coesite <- function(PAR, T, P) {
   SVterm <- cm3bar_to_J * (-k * (ba + aa * ca * k) *
     log((aa + P/k) / (aa + Pstar/k)) + ca * k * (P - Pstar)) - Sstar
   # Note the minus sign on "SVterm" in order that intdVdTdP has the correct sign
-  list(intVdP=GVterm, intdVdTdP=-SVterm, V=V)
+  list(intVdP = GVterm, intdVdTdP = -SVterm, V = V)
 }

@@ -6,9 +6,9 @@
 #source("util.misc.R")
 #source("util.character.R")
 
-equilibrate <- function(aout, balance=NULL, loga.balance=NULL, 
-  ispecies = !grepl("cr", aout$species$state), normalize=FALSE, as.residue=FALSE,
-  method=c("boltzmann", "reaction"), tol=.Machine$double.eps^0.25) {
+equilibrate <- function(aout, balance = NULL, loga.balance = NULL, 
+  ispecies = !grepl("cr", aout$species$state), normalize = FALSE, as.residue = FALSE,
+  method = c("boltzmann", "reaction"), tol = .Machine$double.eps^0.25) {
   ### Calculate equilibrium activities of species from the affinities 
   ### of their formation reactions from basis species at given activities
   ### Split from diagram() 20120925 jmd
@@ -48,12 +48,12 @@ equilibrate <- function(aout, balance=NULL, loga.balance=NULL,
   } else {
     ## We get here if there are any aqueous species 20200714
     ## Take selected species in 'ispecies'
-    if(length(ispecies)==0) stop("the length of ispecies is zero")
+    if(length(ispecies) == 0) stop("the length of ispecies is zero")
     if(is.logical(ispecies)) ispecies <- which(ispecies)
     # Take out species that have NA affinities
     ina <- sapply(aout$values, function(x) all(is.na(x)))
     ispecies <- ispecies[!ina[ispecies]]
-    if(length(ispecies)==0) stop("all species have NA affinities")
+    if(length(ispecies) == 0) stop("all species have NA affinities")
     if(!identical(ispecies, 1:nspecies)) {
       message(paste("equilibrate: using", length(ispecies), "of", nspecies, "species"))
       aout$species <- aout$species[ispecies, ]
@@ -103,12 +103,12 @@ equilibrate <- function(aout, balance=NULL, loga.balance=NULL,
     })
     ## Chose a method and compute the equilibrium activities of species
     if(missing(method)) {
-      if(all(n.balance==1)) method <- method[1]
+      if(all(n.balance == 1)) method <- method[1]
       else method <- method[2]
     }
     message(paste("equilibrate: using", method[1], "method"))
-    if(method[1]=="boltzmann") loga.equil <- equil.boltzmann(Astar, n.balance, loga.balance)
-    else if(method[1]=="reaction") loga.equil <- equil.reaction(Astar, n.balance, loga.balance, tol)
+    if(method[1] == "boltzmann") loga.equil <- equil.boltzmann(Astar, n.balance, loga.balance)
+    else if(method[1] == "reaction") loga.equil <- equil.reaction(Astar, n.balance, loga.balance, tol)
     ## If we normalized the formulas, get back to activities to species
     if(any(normalize) & !as.residue) {
       loga.equil <- lapply(1:nspecies, function(i) {
@@ -150,8 +150,8 @@ equilibrate <- function(aout, balance=NULL, loga.balance=NULL,
     }
   }
   ## Put together the output
-  out <- c(aout, list(balance=balance, m.balance=m.balance, n.balance=n.balance,
-    loga.balance=loga.balance, Astar=Astar, loga.equil=loga.equil))
+  out <- c(aout, list(balance = balance, m.balance = m.balance, n.balance = n.balance,
+    loga.balance = loga.balance, Astar = Astar, loga.equil = loga.equil))
   # Done!
   return(out)
 }
@@ -169,7 +169,7 @@ equil.boltzmann <- function(Astar, n.balance, loga.balance) {
   # Disadvantage:
   # 1) only works for per-residue reactions
   # 2) can create NaN logacts if the Astars are huge/small
-  if(any(n.balance!=1)) stop("won't run equil.boltzmann for balance <> 1")
+  if(any(n.balance != 1)) stop("won't run equil.boltzmann for balance <> 1")
   # Initialize output object
   A <- Astar
   # Remember the dimensions of elements of Astar (could be vector,matrix)
@@ -196,7 +196,7 @@ equil.boltzmann <- function(Astar, n.balance, loga.balance) {
   return(A)
 }
 
-equil.reaction <- function(Astar, n.balance, loga.balance, tol=.Machine$double.eps^0.25) {
+equil.reaction <- function(Astar, n.balance, loga.balance, tol = .Machine$double.eps^0.25) {
   # To turn the affinities/RT (A) of formation reactions into 
   # logactivities of species (logact(things)) at metastable equilibrium
   # 20090217 extracted from diagram and renamed to abundance.old
@@ -217,7 +217,7 @@ equil.reaction <- function(Astar, n.balance, loga.balance, tol=.Machine$double.e
   # Instead, use uniroot() to compute Abar satisfying [1]
 
   # We can't run on one species
-  if(length(Astar)==1) stop("at least two species needed for reaction-based equilibration")
+  if(length(Astar) == 1) stop("at least two species needed for reaction-based equilibration")
   # Remember the dimensions and names
   Adim <- dim(Astar[[1]])
   Anames <- names(Astar)
@@ -226,7 +226,7 @@ equil.reaction <- function(Astar, n.balance, loga.balance, tol=.Machine$double.e
   if(length(loga.balance) != nrow(Astar)) stop("length of loga.balance must be equal to the number of conditions for affinity()")
   # That produces the same result (other than colnames) and is much faster than
   #Astar <- sapply(Astar, c)  
-  # Also, latter has NULL nrow for length(Astar[[x]])==1
+  # Also, latter has NULL nrow for length(Astar[[x]]) == 1
   # Some function definitions:
   # To calculate log of activity of balanced quantity from logact(thing) of all species [1]
   logafun <- function(logact) log10(sum(10^logact * n.balance))
@@ -239,7 +239,7 @@ equil.reaction <- function(Astar, n.balance, loga.balance, tol=.Machine$double.e
     # Starting guess of Abar (min/max) from range of Astar / n.balance
     Abar.range <- range(Astar[i, ] / n.balance)
     # diff(Abar.range) can't be 0 (dlogadiff.dAbar becomes NaN)
-    if(diff(Abar.range)==0) {
+    if(diff(Abar.range) == 0) {
       Abar.range[1] <- Abar.range[1] - 0.1
       Abar.range[2] <- Abar.range[2] + 0.1
     }
@@ -291,7 +291,7 @@ equil.reaction <- function(Astar, n.balance, loga.balance, tol=.Machine$double.e
     # Get limits of Abar where logadiff brackets zero
     Abar.range <- Abarrange(i)
     # Now for the real thing: uniroot!
-    Abar <- uniroot(logadiff, interval=Abar.range, i=i, tol=tol)$root
+    Abar <- uniroot(logadiff, interval = Abar.range, i = i, tol = tol)$root
     return(Abar)
   }
   # Calculate the logact(thing) for each condition
@@ -301,7 +301,7 @@ equil.reaction <- function(Astar, n.balance, loga.balance, tol=.Machine$double.e
     return(logactfun(Abar, i))
   }) 
   # Restore the dimensions and names
-  if(length(Adim)==1) logact <- list2array(logact)
+  if(length(Adim) == 1) logact <- list2array(logact)
   else logact <- sapply(logact, c)
   logact <- lapply(1:nrow(logact), function(i) {
     thisla <- list(logact[i,])[[1]]
@@ -349,7 +349,7 @@ moles <- function(eout) {
 ### Unexported functions ###
 
 # Return a list containing the balancing coefficients (n.balance) and a textual description (balance)
-balance <- function(aout, balance=NULL) {
+balance <- function(aout, balance = NULL) {
   ## Generate n.balance from user-given or automatically identified basis species
   ## Extracted from equilibrate() 20120929
   # 'balance' can be:
@@ -375,7 +375,7 @@ balance <- function(aout, balance=NULL) {
   if(identical(balance, "1")) balance <- 1
   if(is.numeric(balance[1])) {
     # A numeric vector
-    n.balance <- rep(balance, length.out=length(aout$values))
+    n.balance <- rep(balance, length.out = length(aout$values))
     msgtxt <- paste0("balance: on supplied numeric argument (", paste(balance, collapse = ","), ")")
     if(identical(balance, 1)) msgtxt <- paste(msgtxt, "[1 means balance on formula units]")
     message(msgtxt)
@@ -386,11 +386,11 @@ balance <- function(aout, balance=NULL) {
       n.balance <- protein.length(aout$species$name)
       message("balance: on protein length")
     } else if(identical(balance, "volume")) {
-      n.balance <- info(aout$species$ispecies, check.it=FALSE)$V
+      n.balance <- info(aout$species$ispecies, check.it = FALSE)$V
       message("balance: on volume")
     } else {
       # Is the balance the name of a basis species?
-      if(length(ibalance)==0) {
+      if(length(ibalance) == 0) {
         ibalance <- match(balance, rownames(aout$basis))
         if(is.na(ibalance)) stop("basis species (", balance, ") not available to balance reactions")
       }
@@ -400,8 +400,8 @@ balance <- function(aout, balance=NULL) {
       # The balancing coefficients
       n.balance <- aout$species[, ibalance[1]]
       # We check if that all formation reactions contain this basis species
-      if(any(n.balance==0)) stop("some species have no ", balance, " in the formation reaction")
+      if(any(n.balance == 0)) stop("some species have no ", balance, " in the formation reaction")
     }
   }
-  return(list(n.balance=n.balance, balance=balance))
+  return(list(n.balance = n.balance, balance = balance))
 }

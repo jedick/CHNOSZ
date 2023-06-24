@@ -7,7 +7,7 @@
 
 reset <- function() {
   # Create thermo list
-  thermodir <- system.file("extdata/thermo/", package="CHNOSZ")
+  thermodir <- system.file("extdata/thermo/", package = "CHNOSZ")
   thermo <- list(
     # Use as.is = TRUE to keep character values as character and not factor
     opt = as.list(read.csv(file.path(thermodir, "opt.csv"), as.is = TRUE)),

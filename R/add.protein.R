@@ -56,7 +56,7 @@ add.protein <- function(aa, as.residue = FALSE) {
 aasum <- function(aa, abundance = 1, average = FALSE, protein = NULL, organism = NULL) {
   # Returns the sum of the amino acid counts in aa,
   #   multiplied by the abundances of the proteins
-  abundance <- rep(abundance, length.out=nrow(aa))
+  abundance <- rep(abundance, length.out = nrow(aa))
   # Drop any NA rows or abundances
   ina.aa <- is.na(aa$chains)
   ina.ab <- is.na(abundance)

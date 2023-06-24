@@ -21,9 +21,9 @@ CHNOSZ <- new.env()
 .onAttach <- function(libname,pkgname) {
 
   # Version figuring adapted from package mgcv
-  pkghelp <- library(help=CHNOSZ)$info[[1]]
+  pkghelp <- library(help = CHNOSZ)$info[[1]]
   # Things are different for older versions of R
-  if(length(pkghelp)==1) pkghelp <- library(help=CHNOSZ)$info[[2]]
+  if(length(pkghelp) == 1) pkghelp <- library(help = CHNOSZ)$info[[2]]
   version <- pkghelp[pmatch("Version:", pkghelp)]
   um <- strsplit(version, " ")[[1]]
   version <- um[nchar(um)>0][2]
@@ -32,7 +32,7 @@ CHNOSZ <- new.env()
   date <- um[nchar(um)>0][2]
 
   # Identify the program and version
-  packageStartupMessage(paste("CHNOSZ version ", version, " (", date, ")", sep=""))
+  packageStartupMessage(paste("CHNOSZ version ", version, " (", date, ")", sep = ""))
 
   # Initialize the 'thermo' data object
   reset()

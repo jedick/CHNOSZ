@@ -15,35 +15,35 @@ diagram <- function(
   # Species affinities or activities
   eout, 
   # Type of plot
-  type="auto", alpha=FALSE, normalize=FALSE, as.residue=FALSE, balance=NULL,
-  groups=as.list(1:length(eout$values)), xrange=NULL,
+  type = "auto", alpha = FALSE, normalize = FALSE, as.residue = FALSE, balance = NULL,
+  groups = as.list(1:length(eout$values)), xrange = NULL,
   # Figure size and sides for axis tick marks
-  mar=NULL, yline=par("mgp")[1]+0.3, side=1:4,
+  mar = NULL, yline = par("mgp")[1]+0.3, side = 1:4,
   # Axis limits and labels
-  ylog=TRUE, xlim=NULL, ylim=NULL, xlab=NULL, ylab=NULL, 
+  ylog = TRUE, xlim = NULL, ylim = NULL, xlab = NULL, ylab = NULL, 
   # Sizes
-  cex=par("cex"), cex.names=1, cex.axis=par("cex"),
+  cex = par("cex"), cex.names = 1, cex.axis = par("cex"),
   # Line styles
-  lty=NULL, lty.cr=NULL, lty.aq=NULL, lwd=par("lwd"), dotted=NULL,
-  spline.method=NULL, contour.method="edge", levels=NULL,
+  lty = NULL, lty.cr = NULL, lty.aq = NULL, lwd = par("lwd"), dotted = NULL,
+  spline.method = NULL, contour.method = "edge", levels = NULL,
   # Colors
-  col=par("col"), col.names=par("col"), fill=NULL,
-  fill.NA="gray80", limit.water=NULL,
+  col = par("col"), col.names = par("col"), fill = NULL,
+  fill.NA = "gray80", limit.water = NULL,
   # Field and line labels
-  names=NULL, format.names=TRUE, bold=FALSE, italic=FALSE,
-  font=par("font"), family=par("family"), adj=0.5, dx=0, dy=0, srt=0,
-  min.area=0,
+  names = NULL, format.names = TRUE, bold = FALSE, italic = FALSE,
+  font = par("font"), family = par("family"), adj = 0.5, dx = 0, dy = 0, srt = 0,
+  min.area = 0,
   # Title and legend
-  main=NULL, legend.x=NA,
+  main = NULL, legend.x = NA,
   # Plotting controls
-  add=FALSE, plot.it=TRUE, tplot=TRUE, ...
+  add = FALSE, plot.it = TRUE, tplot = TRUE, ...
 ) {
 
   ### Argument handling ###
 
   ## Check that eout is a valid object
   efun <- eout$fun
-  if(length(efun)==0) efun <- ""
+  if(length(efun) == 0) efun <- ""
   if(!(efun %in% c("affinity", "rank.affinity", "equilibrate") | grepl("solubilit", efun)))
     stop("'eout' is not the output from one of these functions: affinity, rank.affinity, equilibrate, or solubility")
   # For solubilities(), default type is loga.balance 20210303
@@ -69,7 +69,7 @@ diagram <- function(
     if(!"loga.equil" %in% names(eout)) {
       eout.is.aout <- TRUE
       # Get the balancing coefficients
-      if(type=="auto") {
+      if(type == "auto") {
         bal <- balance(eout, balance)
         n.balance <- bal$n.balance
         balance <- bal$balance
@@ -83,7 +83,7 @@ diagram <- function(
     if(!missing(groups)) stop("can't plot equilibrium activities of basis species for grouped species")
     if(isTRUE(alpha) | is.character(alpha)) stop("equilibrium activities of basis species not available with alpha = TRUE")
     plot.loga.basis <- TRUE
-  } else if(type=="loga.equil" & !"loga.equil" %in% names(eout)) stop("'eout' is not the output from equil()") 
+  } else if(type == "loga.equil" & !"loga.equil" %in% names(eout)) stop("'eout' is not the output from equil()") 
   else if(!type %in% c("loga.equil", "loga.balance")) stop(type, " is not a valid diagram type")
 
   ## Consider a different number of species if we're grouping them together
@@ -95,7 +95,7 @@ diagram <- function(
   plotvar <- "loga.equil"
 
   ## Handle loga.balance here (i.e. solubility calculations)
-  if(type=="loga.balance") {
+  if(type == "loga.balance") {
     plotvals <- list(eout$loga.balance)
     plotvar <- "loga.balance"
   }
@@ -110,7 +110,7 @@ diagram <- function(
 
   ## Number of dimensions (T, P or chemical potentials that are varied)
   # length(eout$vars) - the number of variables = the maximum number of dimensions
-  # length(dim(eout$values[[1]])) - nd=1 if it was a transect along multiple variables
+  # length(dim(eout$values[[1]])) - nd = 1 if it was a transect along multiple variables
   nd <- min(length(eout$vars), length(dim(eout$values[[1]])))
 
   ## Deal with output from affinity()
@@ -127,12 +127,12 @@ diagram <- function(
     if(efun == "rank.affinity") {
       plotvar <- "rank.affinity"
       message(paste("diagram: plotting average affinity ranking for", length(plotvals), "groups"))
-    } else if(plotvar=="A") {
+    } else if(plotvar == "A") {
       # We change 'A' to 'A/(2.303RT)' so the axis label is made correctly
       # 20171027 use parentheses to avoid ambiguity about order of operations
       plotvar <- "A/(2.303RT)"
-      if(nd==2 & type=="auto") message("diagram: using maximum affinity method for 2-D diagram")
-      else if(nd==2 & type=="saturation") message("diagram: plotting saturation lines for 2-D diagram")
+      if(nd == 2 & type == "auto") message("diagram: using maximum affinity method for 2-D diagram")
+      else if(nd == 2 & type == "saturation") message("diagram: plotting saturation lines for 2-D diagram")
       else message("diagram: plotting A/(2.303RT) / n.balance")
     } else message(paste("diagram: plotting", plotvar, " / n.balance"))
   }
@@ -144,7 +144,7 @@ diagram <- function(
   if(normalize | as.residue) {
     if(normalize & as.residue) stop("'normalize' and 'as.residue' can not both be TRUE")
     if(!eout.is.aout) stop("'normalize' or 'as.residue' can be TRUE only if 'eout' is the output from affinity()")
-    if(nd!=2) stop("'normalize' or 'as.residue' can be TRUE only for a 2-D (predominance) diagram")
+    if(nd != 2) stop("'normalize' or 'as.residue' can be TRUE only for a 2-D (predominance) diagram")
     if(normalize) message("diagram: using 'normalize' in calculation of predominant species")
     else message("diagram: using 'as.residue' in calculation of predominant species")
   }
@@ -186,7 +186,7 @@ diagram <- function(
   }
 
   ## alpha: plot fractional degree of formation
-  # Scale the activities to sum=1  ... 20091017
+  # Scale the activities to sum = 1  ... 20091017
   # Allow scaling by balancing component 20171008
   if(isTRUE(alpha) | is.character(alpha)) {
     # Remove the logarithms
@@ -203,7 +203,7 @@ diagram <- function(
   ## Identify predominant species
   predominant <- NA
   H2O.predominant <- NULL
-  if(plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)", "rank.affinity") & type!="saturation") {
+  if(plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)", "rank.affinity") & type != "saturation") {
     pv <- plotvals
     # Some additional steps for affinity values, but not for equilibrated activities
     if(eout.is.aout) {
@@ -225,8 +225,8 @@ diagram <- function(
     }
 
     # Show water stability region
-    if((is.null(limit.water) | isTRUE(limit.water)) & nd==2) {
-      wl <- water.lines(eout, plot.it=FALSE)
+    if((is.null(limit.water) | isTRUE(limit.water)) & nd == 2) {
+      wl <- water.lines(eout, plot.it = FALSE)
       # Proceed if water.lines produced calculations for this plot
       if(!identical(wl, NA)) {
         H2O.predominant <- predominant
@@ -258,7 +258,7 @@ diagram <- function(
     if(eout$property %in% c("G.basis", "logact.basis")) names <- rownames(eout$basis)
     else {
       if(!missing(groups)) {
-        if(is.null(names(groups))) names <- paste("group", 1:length(groups), sep="")
+        if(is.null(names(groups))) names <- paste("group", 1:length(groups), sep = "")
         else names <- names(groups)
       }
       else names <- as.character(eout$species$name)
@@ -270,13 +270,13 @@ diagram <- function(
         # Everything after the underscore (the organism)
         oname <- gsub("^.*_", "", names)
         # If the pname or oname are all the same, use the other one as identifying name
-        if(length(unique(pname))==1) names <- oname
-        if(length(unique(oname))==1) names <- pname
+        if(length(unique(pname)) == 1) names <- oname
+        if(length(unique(oname)) == 1) names <- pname
       }
       # Append state to distinguish ambiguous species names
       isdup <- names %in% names[duplicated(names)]
       if(any(isdup)) names[isdup] <- paste(names[isdup],
-        " (", eout$species$state[isdup], ")", sep="")
+        " (", eout$species$state[isdup], ")", sep = "")
     }
   }
   # Numeric values indicate a subset 20181007
@@ -309,8 +309,8 @@ diagram <- function(
     bold <- rep(bold, length.out = length(exprnames))
     italic <- rep(italic, length.out = length(exprnames))
     for(i in seq_along(exprnames)) {
-      if(bold[i]) exprnames[[i]] <- substitute(bold(a), list(a=exprnames[[i]]))
-      if(italic[i]) exprnames[[i]] <- substitute(italic(a), list(a=exprnames[[i]]))
+      if(bold[i]) exprnames[[i]] <- substitute(bold(a), list(a = exprnames[[i]]))
+      if(italic[i]) exprnames[[i]] <- substitute(italic(a), list(a = exprnames[[i]]))
     }
     # Only use the expression if it's different from the unformatted names
     if(parsed | !identical(as.character(exprnames), names)) names <- exprnames
@@ -327,35 +327,35 @@ diagram <- function(
 
     ## Handle line type/width/color arguments
     if(is.null(lty)) {
-      if(type=="loga.balance" | nd==2) lty <- 1
+      if(type == "loga.balance" | nd == 2) lty <- 1
       else lty <- 1:ngroups
     }
     lty <- rep(lty, length.out = length(plotvals))
     lwd <- rep(lwd, length.out = length(plotvals))
     col <- rep(col, length.out = length(plotvals))
 
-    if(nd==0) {
+    if(nd == 0) {
 
       ### 0-D diagram - bar graph of properties of species or reactions
       # Plot setup
-      if(missing(ylab)) ylab <- axis.label(plotvar, units="", molality=molality)
-      barplot(unlist(plotvals), names.arg=names, ylab=ylab, cex.names=cex.names, col=col, ...)
-      if(!is.null(main)) title(main=main)
+      if(missing(ylab)) ylab <- axis.label(plotvar, units = "", molality = molality)
+      barplot(unlist(plotvals), names.arg = names, ylab = ylab, cex.names = cex.names, col = col, ...)
+      if(!is.null(main)) title(main = main)
 
-    } else if(nd==1) {
+    } else if(nd == 1) {
 
       ### 1-D diagram - lines for properties or chemical activities
       xvalues <- eout$vals[[1]]
       if(missing(xlim)) xlim <- range(xvalues)  # TODO: this is backward if the vals are not increasing
       # Initialize the plot
       if(!add) {
-        if(missing(xlab)) xlab <- axis.label(eout$vars[1], basis=eout$basis, molality=molality)
+        if(missing(xlab)) xlab <- axis.label(eout$vars[1], basis = eout$basis, molality = molality)
         if(missing(ylab)) {
-          ylab <- axis.label(plotvar, units="", molality=molality)
+          ylab <- axis.label(plotvar, units = "", molality = molality)
           if(plotvar == "rank.affinity") ylab <- "Average affinity ranking"
           # Use ppb, ppm, ppt (or log ppb etc.) for converted values of solubility 20190526
-          if(grepl("solubility.", eout$fun, fixed=TRUE)) {
-            ylab <- strsplit(eout$fun, ".", fixed=TRUE)[[1]][2]
+          if(grepl("solubility.", eout$fun, fixed = TRUE)) {
+            ylab <- strsplit(eout$fun, ".", fixed = TRUE)[[1]][2]
             ylab <- gsub("log", "log ", ylab)
           }
         }
@@ -366,23 +366,23 @@ diagram <- function(
           myval <- sapply(plotvals, xfun)
           ylim <- extendrange(myval)
         }
-        if(tplot) thermo.plot.new(xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, cex=cex, mar=mar, yline=yline, side=side, ...)
-        else plot(0, 0, type="n", xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
+        if(tplot) thermo.plot.new(xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab, cex = cex, mar = mar, yline = yline, side = side, ...)
+        else plot(0, 0, type = "n", xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab, ...)
       }
       # Draw the lines
       spline.n <- 256 # the number of values at which to calculate splines
       if(is.null(spline.method) | length(xvalues) > spline.n) {
-        for(i in 1:length(plotvals)) lines(xvalues, plotvals[[i]], col=col[i], lty=lty[i], lwd=lwd[i])
+        for(i in 1:length(plotvals)) lines(xvalues, plotvals[[i]], col = col[i], lty = lty[i], lwd = lwd[i])
       } else {
         # Plot splines instead of lines connecting the points 20171116
-        spline.x <- seq(xlim[1], xlim[2], length.out=spline.n)
+        spline.x <- seq(xlim[1], xlim[2], length.out = spline.n)
         for(i in 1:length(plotvals)) {
-          spline.y <- splinefun(xvalues, plotvals[[i]], method=spline.method)(spline.x)
-          lines(spline.x, spline.y, col=col[i], lty=lty[i], lwd=lwd[i])
+          spline.y <- splinefun(xvalues, plotvals[[i]], method = spline.method)(spline.x)
+          lines(spline.x, spline.y, col = col[i], lty = lty[i], lwd = lwd[i])
         }
       }
       if(type %in% c("auto", "loga.equil") & !is.null(legend.x)) {
-        # 20120521: use legend.x=NA to label lines rather than make legend
+        # 20120521: use legend.x = NA to label lines rather than make legend
         if(is.na(legend.x)) {
           maxvals <- do.call(pmax, pv)
           # Label placement and rotation
@@ -405,7 +405,7 @@ diagram <- function(
             thisadj <- alladj[i]
             # If this line has any of the overall maximum values, use only those values
             # (useful for labeling straight-line affinity comparisons 20170221)
-            is.max <- myvals==maxvals
+            is.max <- myvals == maxvals
             if(any(is.max) & plotvar != "alpha") {
               # Put labels on the median x-position
               imax <- median(which(is.max))
@@ -426,14 +426,15 @@ diagram <- function(
             }
             # Also include y-offset (dy) and y-adjustment (labels bottom-aligned with the line)
             # ... and srt (string rotation) 20171127
-            text(xvalues[imax] + dx[i], plotvals[[i]][imax] + dy[i], labels=names[i], adj=c(thisadj, 0), cex=cex.names, srt=srt[i], font=font, family=family)
+            text(xvalues[imax] + dx[i], plotvals[[i]][imax] + dy[i], labels = names[i], adj = c(thisadj, 0),
+              cex = cex.names, srt = srt[i], font = font, family = family)
           }
-        } else legend(x=legend.x, lty=lty, legend=names, col=col, cex=cex.names, lwd=lwd, ...)
+        } else legend(x = legend.x, lty = lty, legend = names, col = col, cex = cex.names, lwd = lwd, ...)
       }
       # Add a title
-      if(!is.null(main)) title(main=main)
+      if(!is.null(main)) title(main = main)
 
-    } else if(nd==2) {
+    } else if(nd == 2) {
 
       ### 2-D diagram - fields indicating species predominance, or contours for other properties
 
@@ -468,7 +469,7 @@ diagram <- function(
         breaks <- c(-1, 0, 1:nspecies) + 0.5
         # Use fill.NA for NA values
         zs[is.na(zs)] <- 0
-        image(x=xs, y=ys, z=zs, col=c(fill.NA, fill), add=TRUE, breaks=breaks, useRaster=TRUE)
+        image(x = xs, y = ys, z = zs, col = c(fill.NA, fill), add = TRUE, breaks = breaks, useRaster = TRUE)
       }
       ## Curve plot function
       # 20091116 replaced plot.curve with plot.line; different name, same functionality, *much* faster
@@ -477,30 +478,30 @@ diagram <- function(
         vline <- function(out, ix) {
           ny <- nrow(out)
           xs <- rep(ix, ny*2+1)
-          ys <- c(rep(ny:1, each=2), 0)
+          ys <- c(rep(ny:1, each = 2), 0)
           y1 <- out[, ix]
           y2 <- out[, ix+1]
           # No line segment inside a stability field
-          iy <- which(y1==y2)
+          iy <- which(y1 == y2)
           ys[iy*2] <- NA
           # No line segment at a dotted position
-          iyd <- rowSums(sapply(dotted, function(y) ys%%y==0)) > 0
+          iyd <- rowSums(sapply(dotted, function(y) ys%%y == 0)) > 0
           ys[iyd] <- NA
-          return(list(xs=xs, ys=ys))
+          return(list(xs = xs, ys = ys))
         }
         hline <- function(out, iy) {
           nx <- ncol(out)
           ys <- rep(iy, nx*2+1)
-          xs <- c(0, rep(1:nx, each=2))
+          xs <- c(0, rep(1:nx, each = 2))
           x1 <- out[iy, ]
           x2 <- out[iy+1, ]
           # No line segment inside a stability field
-          ix <- which(x1==x2)
+          ix <- which(x1 == x2)
           xs[ix*2] <- NA
           # No line segment at a dotted position
-          ixd <- rowSums(sapply(dotted, function(x) xs%%x==0)) > 0
+          ixd <- rowSums(sapply(dotted, function(x) xs%%x == 0)) > 0
           xs[ixd] <- NA
-          return(list(xs=xs, ys=ys))
+          return(list(xs = xs, ys = ys))
         }
         clipfun <- function(z, zlim) {
           if(zlim[2] > zlim[1]) {
@@ -525,7 +526,7 @@ diagram <- function(
         ys <- ylim[1] + (ys - 0.5) * ry
         ys <- clipfun(ys, ylim)
         if(!is.null(xrange)) xs <- clipfun(xs, xrange)
-        lines(xs, ys, col=col, lwd=lwd)
+        lines(xs, ys, col = col, lwd = lwd)
         # Horizontal lines
         xs <- ys <-NA
         for(iy in 1:(nrow(out)-1)) {
@@ -537,13 +538,13 @@ diagram <- function(
         ys <- ylim[2] - (ys - 0.5) * ry
         xs <- clipfun(xs, xlim)
         if(!is.null(xrange)) xs <- clipfun(xs, xrange)
-        lines(xs, ys, col=col, lwd=lwd)
+        lines(xs, ys, col = col, lwd = lwd)
       }
       ## New line plotting function 20170122
       contour.lines <- function(predominant, xlim, ylim, lty, col, lwd) {
         # The x and y values
-        xs <- seq(xlim[1], xlim[2], length.out=dim(predominant)[1])
-        ys <- seq(ylim[1], ylim[2], length.out=dim(predominant)[2])
+        xs <- seq(xlim[1], xlim[2], length.out = dim(predominant)[1])
+        ys <- seq(ylim[1], ylim[2], length.out = dim(predominant)[2])
         # Reverse any axis that has decreasing values
         if(diff(xlim) < 0) {
           predominant <- predominant[nrow(predominant):1, ]
@@ -587,10 +588,10 @@ diagram <- function(
               # Draw contours only for this pair
               z[!z %in% c(zvals[i], zvals[j])] <- NA
               # Give them neighboring values (so we get one contour line)
-              z[z==zvals[i]] <- 0
-              z[z==zvals[j]] <- 1
+              z[z == zvals[i]] <- 0
+              z[z == zvals[j]] <- 1
               # Use contourLines() instead of contour() in order to get line coordinates 20181029
-              cLines <- contourLines(xs, ys, z, levels=0.5)
+              cLines <- contourLines(xs, ys, z, levels = 0.5)
               if(length(cLines) > 0) {
                 # Loop in case contourLines returns multiple lines
                 for(k in 1:length(cLines)) {
@@ -621,8 +622,8 @@ diagram <- function(
         # Even if 'names' is NULL, we run the loop in order to generate namesx and namesy for the output 20190225
         area.plot <- length(xs) * length(ys)
         for(i in seq_along(groups)) {
-          this <- which(out==i, arr.ind=TRUE)
-          if(length(this)==0) next
+          this <- which(out == i, arr.ind = TRUE)
+          if(length(this) == 0) next
           xsth <- xs[this[, 2]]
           ysth <- rev(ys)[this[, 1]]
           # Use only values within the plot range
@@ -630,7 +631,7 @@ diagram <- function(
           ry <- range(ylim)
           xsth <- xsth[xsth >= rx[1] & xsth <= rx[2]]
           ysth <- ysth[ysth >= ry[1] & ysth <= ry[2]]
-          if(length(xsth)==0 | length(ysth)==0) next
+          if(length(xsth) == 0 | length(ysth) == 0) next
           # Skip plotting names if the fields are too small 20200720
           area <- max(length(xsth), length(ysth))
           frac.area <- area / area.plot
@@ -649,7 +650,7 @@ diagram <- function(
           dy <- rep(dy, length.out = length(names))
           for(i in seq_along(names)) {
             if(!(identical(col[i], 0)) & !is.na(col[i]))
-              text(namesx[i] + dx[i], namesy[i] + dy[i], labels=names[i], cex=cex[i], col=col[i], font=font[i], family=family[i], srt = srt[i])
+              text(namesx[i] + dx[i], namesy[i] + dy[i], labels = names[i], cex = cex[i], col = col[i], font = font[i], family = family[i], srt = srt[i])
           }
         }
         return(list(namesx = namesx, namesy = namesy))
@@ -662,10 +663,10 @@ diagram <- function(
       if(is.null(fill)) {
         if(length(unique(eout$species$state)) == 1) fill <- "transparent"
         else fill <- ifelse(grepl("cr,cr", eout$species$state), "#DEB88788", ifelse(grepl("cr", eout$species$state), "#FAEBD788", "#F0F8FF88"))
-      } else if(identical(fill, NA) | length(fill)==0) fill <- "transparent"
-      else if(isTRUE(fill[1]=="rainbow")) fill <- rainbow(ngroups)
+      } else if(identical(fill, NA) | length(fill) == 0) fill <- "transparent"
+      else if(isTRUE(fill[1] == "rainbow")) fill <- rainbow(ngroups)
       else if(isTRUE(fill[1] %in% c("heat", "terrain", "topo", "cm"))) fill <- get(paste0(fill[1], ".colors"))(ngroups)
-      else if(getRversion() >= "3.6.0" & length(fill)==1) {
+      else if(getRversion() >= "3.6.0" & length(fill) == 1) {
         # Choose an HCL palette 20190411
         # Matching adapted from hcl.colors()
         fx <- function(x) tolower(gsub("[-, _, \\,, (, ), \\ , \\.]", "", x))
@@ -676,7 +677,7 @@ diagram <- function(
           }
         }
       }
-      fill <- rep(fill, length.out=ngroups)
+      fill <- rep(fill, length.out = ngroups)
       # The x and y values 
       xs <- eout$vals[[1]]
       ys <- eout$vals[[2]]
@@ -694,24 +695,24 @@ diagram <- function(
       }
       # Initialize the plot
       if(!add) {
-        if(is.null(xlab)) xlab <- axis.label(eout$vars[1], basis=eout$basis, molality=molality)
-        if(is.null(ylab)) ylab <- axis.label(eout$vars[2], basis=eout$basis, molality=molality)
-        if(tplot) thermo.plot.new(xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab,
-          cex=cex, cex.axis=cex.axis, mar=mar, yline=yline, side=side, ...)
-        else plot(0, 0, type="n", xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
+        if(is.null(xlab)) xlab <- axis.label(eout$vars[1], basis = eout$basis, molality = molality)
+        if(is.null(ylab)) ylab <- axis.label(eout$vars[2], basis = eout$basis, molality = molality)
+        if(tplot) thermo.plot.new(xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab,
+          cex = cex, cex.axis = cex.axis, mar = mar, yline = yline, side = side, ...)
+        else plot(0, 0, type = "n", xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab, ...)
         # Add a title
-        if(!is.null(main)) title(main=main)
+        if(!is.null(main)) title(main = main)
       }
       if(identical(predominant, NA)) {
 
         # No predominance matrix, so we're contouring properties
-        contour.method <- rep(contour.method, length.out=length(plotvals))
-        if(type=="saturation") {
-          # For saturation plot, contour affinity=0 for all species
+        contour.method <- rep(contour.method, length.out = length(plotvals))
+        if(type == "saturation") {
+          # For saturation plot, contour affinity = 0 for all species
           for(i in 1:length(plotvals)) {
             zs <- plotvals[[i]]
             # Skip plotting if this species has no possible saturation line, or a line outside the plot range
-            if(length(unique(as.numeric(zs)))==1) {
+            if(length(unique(as.numeric(zs))) == 1) {
               message("diagram: no saturation line possible for ", names[i])
               next
             }
@@ -720,8 +721,8 @@ diagram <- function(
               next
             }
             if(identical(contour.method, NULL) | identical(contour.method[1], NA) | identical(contour.method[1], ""))
-              contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, levels=0, labels=names[i], drawlabels=FALSE)
-            else contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, levels=0, labels=names[i], method=contour.method[i])
+              contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, levels = 0, labels = names[i], drawlabels = FALSE)
+            else contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, levels = 0, labels = names[i], method = contour.method[i])
           }
         } else {
           # Contour solubilities (loga.balance), or properties using first species only
@@ -730,14 +731,14 @@ diagram <- function(
           drawlabels <- TRUE
           if(identical(contour.method, NULL) | identical(contour.method[1], NA) | identical(contour.method[1], "")) drawlabels <- FALSE
           if(is.null(levels)) {
-            if(drawlabels) contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, method=contour.method[1])
-            else contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, drawlabels = FALSE)
+            if(drawlabels) contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, method = contour.method[1])
+            else contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, drawlabels = FALSE)
           } else {
-            if(drawlabels) contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, method=contour.method[1], levels = levels)
-            else contour(xs, ys, zs, add=TRUE, col=col, lty=lty, lwd=lwd, labcex=cex, levels = levels, drawlabels = FALSE)
+            if(drawlabels) contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, method = contour.method[1], levels = levels)
+            else contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, levels = levels, drawlabels = FALSE)
           }
         }
-        pn <- list(namesx=NULL, namesy=NULL)
+        pn <- list(namesx = NULL, namesy = NULL)
 
       } else {
 
@@ -759,8 +760,8 @@ diagram <- function(
         #   (to avoid warnings from contour, which seem to be associated with weird
         #   font metric state and subsequent errors adding e.g. subscripted text to plot)
         if(length(na.omit(unique(as.vector(zs)))) > 1) {
-          if(!is.null(dotted)) plot.line(zs, xlim.calc, ylim.calc, dotted, col, lwd, xrange=xrange)
-          else contour.lines(predominant, xlim.calc, ylim.calc, lty=lty, col=col, lwd=lwd)
+          if(!is.null(dotted)) plot.line(zs, xlim.calc, ylim.calc, dotted, col, lwd, xrange = xrange)
+          else contour.lines(predominant, xlim.calc, ylim.calc, lty = lty, col = col, lwd = lwd)
         }
         # Re-draw the tick marks and axis lines in case the fill obscured them
         has.color <- FALSE
@@ -772,11 +773,11 @@ diagram <- function(
           box()
         }
       } # Done with the 2D plot!
-      out2D <- list(namesx=pn$namesx, namesy=pn$namesy)
-    } # end if(nd==2)
+      out2D <- list(namesx = pn$namesx, namesy = pn$namesy)
+    } # end if(nd == 2)
   } # end if(plot.it)
 
-  # Even if plot=FALSE, return the diagram clipped to the water stability region (for testing) 20200719
+  # Even if plot = FALSE, return the diagram clipped to the water stability region (for testing) 20200719
   if(isTRUE(limit.water) & !is.null(H2O.predominant)) predominant <- H2O.predominant
 
   # Make a matrix with the affinities or activities of predominant species 20200724

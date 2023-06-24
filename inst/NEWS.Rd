@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 2.0.0-12 (2023-06-23)}{
+\section{Changes in CHNOSZ version 2.0.0-13 (2023-06-24)}{
 
     \itemize{
 
@@ -25,7 +25,8 @@
       turning off automatic identification of stable polymorphs.
 
       \item Rename \code{checkGHS()} and \code{checkEOS()} to
-      \code{check.GHS()} and \code{check.EOS()}.
+      \code{check.GHS()} and \code{check.EOS()} and make
+      \code{return.difference} TRUE by default.
 
     }
 

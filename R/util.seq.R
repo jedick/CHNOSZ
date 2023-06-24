@@ -1,7 +1,7 @@
 # CHNOSZ/util.seq.R
 # Functions to work with sequence data
 
-aminoacids <- function(nchar=1, which=NULL) {
+aminoacids <- function(nchar = 1, which = NULL) {
   # Return the abbreviations or names of the amino acids
   # The following are all in the same order as thermo()$protein
   # The single-letter codes
@@ -21,13 +21,13 @@ aminoacids <- function(nchar=1, which=NULL) {
   # Defaults are in the same order as in thermo()$protein
   if(is.null(which)) which <- aa1
   # Figure out which amino acids are wanted (can use 1- or 3-letter codes, or neutral names)
-  if(all(nchar(which)==1)) iaa <- match(which, aa1)
-  else if(all(nchar(which)==3)) iaa <- match(which, aa3)
+  if(all(nchar(which) == 1)) iaa <- match(which, aa1)
+  else if(all(nchar(which) == 3)) iaa <- match(which, aa3)
   else iaa <- match(which, aaneutral)
   # Return the desired abbreviations or names
-  if(nchar==1) return(aa1[iaa])
-  else if(nchar==3) return(aa3[iaa])
-  else if(nchar=="") return(aaneutral[iaa])
-  else if(nchar=="Z") return(aacharged[iaa])
+  if(nchar == 1) return(aa1[iaa])
+  else if(nchar == 3) return(aa3[iaa])
+  else if(nchar == "") return(aaneutral[iaa])
+  else if(nchar == "Z") return(aacharged[iaa])
 }
 

@@ -48,7 +48,7 @@ group.formulas <- function() {
   # Return a matrix with chemical formulas of residues
   # Memoize this 20200509
   ## Names of the sidechain groups
-  #groups <- paste("[", aminoacids(3), "]", sep="")
+  #groups <- paste("[", aminoacids(3), "]", sep = "")
   ## The indices of H2O, sidechain groups, and [UPBB]
   #ig <- suppressMessages(info(c("H2O", groups, "[UPBB]")))
   ## Their formulas

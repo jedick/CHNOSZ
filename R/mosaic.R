@@ -88,7 +88,7 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
   # Calculate affinities of the basis species themselves
   A.bases <- list()
   for(i in 1:length(bases)) {
-    message("mosaic: calculating affinities of basis species group ", i, ": ", paste(bases[[i]], collapse=" "))
+    message("mosaic: calculating affinities of basis species group ", i, ": ", paste(bases[[i]], collapse = " "))
     mysp <- species(bases[[i]])
     # 20191111 include only aq species in total activity
     iaq <- mysp$state == "aq"

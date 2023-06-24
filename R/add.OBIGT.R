@@ -15,7 +15,7 @@ mod.OBIGT <- function(..., zap = FALSE) {
   if(is.list(args[[1]])) args <- args[[1]]
   if(length(args) < 2) stop("please supply at least a species name and a property to update")
   if(is.null(names(args))) stop("all arguments after the first should be named")
-  if(any(tail(nchar(names(args)), -1)==0)) stop("all arguments after the first should be named")
+  if(any(tail(nchar(names(args)), -1) == 0)) stop("all arguments after the first should be named")
   # If the first argument is numeric, it's the species index
   if(is.numeric(args[[1]][1])) {
     ispecies <- args[[1]]
@@ -23,7 +23,7 @@ mod.OBIGT <- function(..., zap = FALSE) {
     speciesname <- info(ispecies, check.it = FALSE)$name
   } else {
     # If the name of the first argument is missing, assume it's the species name
-    if(names(args)[1]=="") names(args)[1] <- "name"
+    if(names(args)[1] == "") names(args)[1] <- "name"
     speciesname <- args$name
     # Search for this species, use check.protein = FALSE to avoid infinite loop when adding proteins
     # and suppressMessages to not show messages about matches of this name to other states
@@ -33,10 +33,10 @@ mod.OBIGT <- function(..., zap = FALSE) {
       species = args$name, check.protein = FALSE, SIMPLIFY = TRUE, USE.NAMES = FALSE))
   }
   # The column names of thermo()$OBIGT, split at the "."
-  cnames <- c(do.call(rbind, strsplit(colnames(thermo$OBIGT), ".", fixed=TRUE)), colnames(thermo$OBIGT))
+  cnames <- c(do.call(rbind, strsplit(colnames(thermo$OBIGT), ".", fixed = TRUE)), colnames(thermo$OBIGT))
   # The columns we are updating
   icol <- match(names(args), cnames)
-  if(any(is.na(icol))) stop(paste("properties not in thermo$OBIGT:", paste(names(args)[is.na(icol)], collapse=" ")) )
+  if(any(is.na(icol))) stop(paste("properties not in thermo$OBIGT:", paste(names(args)[is.na(icol)], collapse = " ")) )
   # The column numbers for properties that matched after the split
   icol[icol > 44] <- icol[icol > 44] - 44
   icol[icol > 22] <- icol[icol > 22] - 22
@@ -44,7 +44,7 @@ mod.OBIGT <- function(..., zap = FALSE) {
   inew <- which(is.na(ispecies))
   iold <- which(!is.na(ispecies))
   # The arguments as data frame
-  args <- data.frame(args, stringsAsFactors=FALSE)
+  args <- data.frame(args, stringsAsFactors = FALSE)
   if(length(inew) > 0) {
     # The right number of blank rows of thermo()$OBIGT
     newrows <- thermo$OBIGT[1:length(inew), ]
@@ -62,7 +62,7 @@ mod.OBIGT <- function(..., zap = FALSE) {
     namodel <- is.na(newrows$model)
     if(any(namodel)) newrows$model[namodel] <- ifelse(newrows$state[namodel] == "aq", "HKF", "CGL")
     # Now check the formulas
-    e <- tryCatch(makeup(newrows$formula), error=function(e) e)
+    e <- tryCatch(makeup(newrows$formula), error = function(e) e)
     if(inherits(e, "error")) {
       warning("please supply a valid chemical formula as the species name or in the 'formula' argument")
       # Transmit the error from makeup
@@ -76,7 +76,8 @@ mod.OBIGT <- function(..., zap = FALSE) {
     ntotal <- nrow(thermo$OBIGT)
     ispecies[inew] <- (ntotal-length(inew)+1):ntotal
     # Inform user
-    message(paste("mod.OBIGT: added ", newrows$name, "(", newrows$state, ")", " with ", newrows$model, " model and energy units of ", newrows$E_units, sep="", collapse="\n"))
+    message(paste("mod.OBIGT: added ", newrows$name, "(", newrows$state, ")", " with ", newrows$model,
+      " model and energy units of ", newrows$E_units, sep = "", collapse = "\n"))
   }
   if(length(iold) > 0) {
     # Loop over species
@@ -108,26 +109,26 @@ mod.OBIGT <- function(..., zap = FALSE) {
   return(ispecies)
 }
 
-add.OBIGT <- function(file, species=NULL, force=TRUE) {
+add.OBIGT <- function(file, species = NULL, force = TRUE) {
   # Add/replace entries in thermo$OBIGT from values saved in a file
-  # Only replace if force==TRUE
+  # Only replace if force == TRUE
   thermo <- get("thermo", CHNOSZ)
   to1 <- thermo$OBIGT
   id1 <- paste(to1$name,to1$state)
   # We match system files with the file suffixes (.csv) removed
-  sysfiles <- dir(system.file("extdata/OBIGT/", package="CHNOSZ"))
+  sysfiles <- dir(system.file("extdata/OBIGT/", package = "CHNOSZ"))
   sysnosuffix <- sapply(strsplit(sysfiles, "\\."), "[", 1)
   isys <- match(file, sysnosuffix)
-  if(!is.na(isys)) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package="CHNOSZ")
+  if(!is.na(isys)) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package = "CHNOSZ")
   # Read data from the file
-  to2 <- read.csv(file, as.is=TRUE)
+  to2 <- read.csv(file, as.is = TRUE)
   Etxt <- paste(unique(to2$E_units), collapse = " and ")
   # Load only selected species if requested
   if(!is.null(species)) {
     idat <- match(species, to2$name)
     ina <- is.na(idat)
     if(!any(ina)) to2 <- to2[idat, ]
-    else stop(paste("file", file, "doesn't have", paste(species[ina], collapse=", ")))
+    else stop(paste("file", file, "doesn't have", paste(species[ina], collapse = ", ")))
   }
   id2 <- paste(to2$name,to2$state)
   # Check if the data table is compatible with thermo$OBIGT

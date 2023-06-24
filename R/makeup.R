@@ -4,7 +4,7 @@
 #source("util.formula.R")
 #source("util.character.R")
 
-makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
+makeup <- function(formula, multiplier = 1, sum = FALSE, count.zero = FALSE) {
   # Return the elemental makeup (counts) of a chemical formula
   # that may contain suffixed and/or parenthetical subformulas and/or charge
   # and negative or positive, fractional coefficients
@@ -68,10 +68,10 @@ makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
   # count.elements doesn't know about charge so we need
   # to explicate the elemental symbol for it
   formula <- cc$uncharged
-  if(cc$Z != 0 ) formula <- paste(formula, "Z", cc$Z, sep="")
+  if(cc$Z != 0 ) formula <- paste(formula, "Z", cc$Z, sep = "")
   # Now "Z" will be counted
   # If there are no subformulas, just use count.elements
-  if(length(grep("(\\(|\\)|\\*|\\:)", formula))==0) {
+  if(length(grep("(\\(|\\)|\\*|\\:)", formula)) == 0) {
     out <- count.elements(formula)
   } else {
     # Count the subformulas
@@ -82,7 +82,7 @@ makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
     mcc <- lapply(seq_along(cf), function(i) ce[[i]]*cf[i])
     # Unlist the subformula counts and sum them together by element
     um <- unlist(mcc)
-    out <- unlist(tapply(um, names(um), sum, simplify=FALSE))
+    out <- unlist(tapply(um, names(um), sum, simplify = FALSE))
   }
   # All done with the counting, now apply the multiplier
   out <- out * multiplier
@@ -90,7 +90,7 @@ makeup <- function(formula, multiplier=1, sum=FALSE, count.zero=FALSE) {
   if("CHNOSZ" %in% .packages()) {
     are.elements <- names(out) %in% thermo$element$element
     if(!all(are.elements)) warning(paste("element(s) not in thermo()$element:", 
-      paste(names(out)[!are.elements], collapse=" ") ))
+      paste(names(out)[!are.elements], collapse = " ") ))
   }
   # Done!
   return(out)
@@ -107,11 +107,11 @@ count.elements <- function(formula) {
   elementSymbol <- "([A-Z][a-z]*)"
   # Here, element coefficients can be signed (+ or -) and have a decimal point
   elementCoeff <- "((\\+|-|\\.|[0-9])*)"
-  elementRegex <- paste(elementSymbol, elementCoeff, sep="")
+  elementRegex <- paste(elementSymbol, elementCoeff, sep = "")
   # Stop if it doesn't look like a chemical formula 
-  validateRegex <- paste("^(", elementRegex, ")+$", sep="")
+  validateRegex <- paste("^(", elementRegex, ")+$", sep = "")
   if(length(grep(validateRegex, formula)) == 0)
-    stop(paste("'",formula,"' is not a simple chemical formula", sep="", collapse="\n"))
+    stop(paste("'",formula,"' is not a simple chemical formula", sep = "", collapse = "\n"))
   # Where to put the output
   element <- character()
   count <- numeric()
@@ -138,8 +138,8 @@ count.elements <- function(formula) {
   count <- c(count, mycount)
   # In case there are repeated elements, sum all of their counts
   # (tapply hint from https://stat.ethz.ch/pipermail/r-help/2011-January/265341.html)
-  # use simplify=FALSE followed by unlist to get a vector, not array 20171005
-  out <- unlist(tapply(count, element, sum, simplify=FALSE))
+  # use simplify = FALSE followed by unlist to get a vector, not array 20171005
+  out <- unlist(tapply(count, element, sum, simplify = FALSE))
   # tapply returns alphabetical sorted list. keep the order appearing in the formula
   out <- out[match(unique(element), names(out))]
   return(out)
@@ -171,18 +171,18 @@ count.charge <- function(formula) {
     # The position of the sign of charge
     isign <- tail(grep("(\\+|-)", fsplit), 1)
     # The sign as +1 or -1
-    if(fsplit[isign]=="+") sign <- 1 else sign <- -1
+    if(fsplit[isign] == "+") sign <- 1 else sign <- -1
     # If the +/- symbol is at the end by itself thats a +/- 1
     # otherwise we multiply the magnitude by the sign
     nf <- nchar(formula)
-    if(isign==nf) Z <- sign 
+    if(isign == nf) Z <- sign 
     else Z <- sign * as.numeric(substr(formula, isign+1 ,nf))
     # All set ... Zzzz this is wearing me out!
     # got our charge, so remove it from the formula
     uncharged <- substr(formula, 1, isign-1)
   } 
   # Assemble the output
-  out <- list(Z=Z, uncharged=uncharged)
+  out <- list(Z = Z, uncharged = uncharged)
   return(out)
 }
 
@@ -214,7 +214,7 @@ count.formulas <- function(formula) {
     # Are all parentheses paired?
     if(length(iopen) != length(iclose)) stop("formula has unpaired parentheses")
     # Are the parentheses unnested?
-    iparen <- as.numeric(matrix(c(iopen, iclose), nrow=2, byrow=TRUE))
+    iparen <- as.numeric(matrix(c(iopen, iclose), nrow = 2, byrow = TRUE))
     if(any(diff(iparen) < 0)) stop(paste("formula has nested parentheses: ", formula))
     # iend will be the last position including coefficients
     # (e.g. the position of 2 in (OH)2)
@@ -232,7 +232,7 @@ count.formulas <- function(formula) {
         # iend is the position of the next character, minus one
         ic <- head(ichar[ichar-iclose[i] > 0], 1)
         # If it's not present, then we're at the end of the formula
-        if(length(ic)==0) iend[i] <- nf else iend[i] <- ic - 1
+        if(length(ic) == 0) iend[i] <- nf else iend[i] <- ic - 1
         # All the stuff after the iclose up to iend is the coefficient
         count <- c(count, as.numeric(substr(formula,iclose[i]+1, iend[i])))
       } else count <- c(count, 1)
@@ -241,13 +241,13 @@ count.formulas <- function(formula) {
     }
     # We can remove all of the paranthetical terms and their coefficients
     for(i in seq_along(iopen)) fsplit[iopen[i]:iend[i]] <- ""
-    formula <- paste(fsplit, collapse="")
+    formula <- paste(fsplit, collapse = "")
   }
   # Deal with a suffixed subformula if we have one
   # We assume that there is at most one suffix, so
   # at most two strings after both of these splitting tests
-  fsplit <- unlist(strsplit(formula, "*", fixed=TRUE))
-  fsplit <- unlist(strsplit(fsplit, ":", fixed=TRUE))
+  fsplit <- unlist(strsplit(formula, "*", fixed = TRUE))
+  fsplit <- unlist(strsplit(fsplit, ":", fixed = TRUE))
   formula <- fsplit[1]
   if(length(fsplit) > 1) {
     # Parse the coefficient; this time it's in front
@@ -255,7 +255,7 @@ count.formulas <- function(formula) {
     f2split <- unlist(strsplit(f2, ""))
     # The positions of the numbers
     inum <- grep("\\+|-|\\.|[0-9]", f2split)
-    if(length(inum)==0) {
+    if(length(inum) == 0) {
       # No numbers, we have one of the subformula
       mycount <- 1
       mysub <- f2

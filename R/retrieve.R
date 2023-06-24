@@ -47,15 +47,15 @@ retrieve <- function(elements = NULL, ligands = NULL, state = NULL, T = NULL, P 
   allelements <- c(unlist(elements), unlist(ligands))
   not.present <- ! allelements %in% c(colnames(stoich), "all")
   if(any(not.present)) {
-    if(sum(not.present)==1) stop('"', allelements[not.present], '" is not an element that is present in any species in the database')
-    else stop('"', paste(allelements[not.present], collapse='", "'), '" are not elements that are present in any species in the database')
+    if(sum(not.present) == 1) stop('"', allelements[not.present], '" is not an element that is present in any species in the database')
+    else stop('"', paste(allelements[not.present], collapse = '", "'), '" are not elements that are present in any species in the database')
   }
 
   ## Handle 'ligands' argument
   if(!is.null(ligands)) {
 
     # If 'ligands' is cr, liq, gas, or aq, use that as the state
-    if(any(ligands %in% c("cr", "liq", "gas", "aq")) & length(ligands)==1) {
+    if(any(ligands %in% c("cr", "liq", "gas", "aq")) & length(ligands) == 1) {
       state <- ligands
       ispecies <- retrieve(elements, add.charge = add.charge)
     } else {
@@ -123,8 +123,8 @@ retrieve <- function(elements = NULL, ligands = NULL, state = NULL, T = NULL, P 
 
   # Assign names; use e- instead of (Z-1)
   names(ispecies) <- thermo()$OBIGT$formula[ispecies]
-  names(ispecies)[names(ispecies)=="(Z-1)"] <- "e-"
+  names(ispecies)[names(ispecies) == "(Z-1)"] <- "e-"
   # If there's nothing, don't give it a name
-  if(length(ispecies)==0) ispecies <- integer()
+  if(length(ispecies) == 0) ispecies <- integer()
   ispecies
 }

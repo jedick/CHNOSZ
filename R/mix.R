@@ -59,7 +59,7 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
   i2 <- 1:nrow(d2$species)
   combs <- expand.grid(i1, i2)
   # For bimetallic species (m33)
-  if(length(.balance)==2) {
+  if(length(.balance) == 2) {
     # Remove combinations of a species with itself
     combs <- combs[combs[, 1] != combs[, 2], ]
     # Remove duplicated combinations
@@ -76,7 +76,7 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
   ibal <- match(c(d1$balance, d2$balance), colnames(s1))
   # With non-null '.balance', d2 is really d3 so we calculate the needed balancing coefficients
   if(!is.null(.balance)) {
-    if(length(.balance)==2) {
+    if(length(.balance) == 2) {
       # For combinations of bimetallic species (m33)
       b1 <- suppressMessages(balance(d1, .balance[1])$n.balance[combs[, 1]])
       b2 <- suppressMessages(balance(d2, .balance[2])$n.balance[combs[, 2]])
@@ -146,7 +146,7 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
     name <- sapply(1:nrow(combs), function(i) {
       if(frac1[i] <= 0) d2$names[combs[i, 2]]
       else if(frac2[i] <= 0) d1$names[combs[i, 1]]
-      else paste(d1$names[combs[i, 1]], d2$names[combs[i, 2]], sep="+")
+      else paste(d1$names[combs[i, 1]], d2$names[combs[i, 2]], sep = "+")
     })
   }
   species <- cbind(species, ispecies, logact, state, name, stringsAsFactors = FALSE)
@@ -160,7 +160,7 @@ mix <- function(d1, d2, d3 = NULL, parts = c(1, 1), .balance = NULL) {
   # Add together the scaled affinities
   values <- Map("+", v1, v2)
   ipredominant <- logical(length(values))
-  if(length(.balance)==2) {
+  if(length(.balance) == 2) {
     # For combinations of bimetallic species (m33), don't do predominance masking
     # (there are no mono-metallic species to look at)
     ipredominant[] <- TRUE

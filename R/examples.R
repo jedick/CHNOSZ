@@ -40,7 +40,7 @@ demos <- function(which = c("sources", "protein.equil", "affinity", "NaCl", "den
   for(i in 1:length(which)) {
     # A message so the user knows where we are
     message("------------")
-    if(which[i]=="dehydration" & !save.png) {
+    if(which[i] == "dehydration" & !save.png) {
       message("demos: skipping dehydration demo as save.png is FALSE")
       next 
     } else message(paste("demos: running '", which[i], "'", sep = ""))

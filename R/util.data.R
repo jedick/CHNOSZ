@@ -6,7 +6,7 @@
 #source("util.data.R")
 #source("util.character.R")
 
-thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
+thermo.refs <- function(key = NULL, keep.duplicates = FALSE) {
   ## Return references for thermodynamic data.
   ## 20110615 browse.refs() first version
   ## 20170212 thermo.refs() remove browsing (except for table of all sources)
@@ -32,21 +32,21 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
     # e.g. if key is "Kel60" we match "Kel60 [S92]" but not "Kel60.1 [S92]"
     # http://stackoverflow.com/questions/6713310/how-to-specify-space-or-end-of-string-and-space-or-start-of-string
     # We also have to escape keys with "+" signs
-    ns1 <- sapply(x$key, function(x) sum(grepl(gsub("+", "\\+", paste0(x, "($|\\s)"), fixed=TRUE), thermo$OBIGT$ref1)) )
-    ns2 <- sapply(x$key, function(x) sum(grepl(gsub("+", "\\+", paste0(x, "($|\\s)"), fixed=TRUE), thermo$OBIGT$ref2)) )
+    ns1 <- sapply(x$key, function(x) sum(grepl(gsub("+", "\\+", paste0(x, "($|\\s)"), fixed = TRUE), thermo$OBIGT$ref1)) )
+    ns2 <- sapply(x$key, function(x) sum(grepl(gsub("+", "\\+", paste0(x, "($|\\s)"), fixed = TRUE), thermo$OBIGT$ref2)) )
     number <- ns1 + ns2
-    number[number==0] <- ""
+    number[number == 0] <- ""
     # Now that we're using the sortTable() from w3schools.com, numbers are sorted like text
     # Add leading zeros to make the numbers sortable 20170317
     # (the zeros disappear somewhere in the rendering of the page)
     number <- formatC(number, width = 3, format = "d", flag = "0")
     # append the counts to the table to be shown
-    x <- c(list(number=number), x)
+    x <- c(list(number = number), x)
     # Title to display for web page
     title <- "References for thermodynamic data in CHNOSZ"
     ### The following is adapted from print.findFn in package 'sos'
     f0 <- tempfile()
-    File <- paste(f0, ".html", sep="")
+    File <- paste(f0, ".html", sep = "")
     #Dir <- dirname(File)
     #js <- system.file("extdata/js", "sorttable.js", package = "CHNOSZ")
     #file.copy(js, Dir)
@@ -159,7 +159,7 @@ thermo.refs <- function(key=NULL, keep.duplicates=FALSE) {
   }
 }
 
-check.EOS <- function(eos, model, prop, ret.diff = TRUE) {
+check.EOS <- function(eos, model, prop, return.difference = TRUE) {
   # Compare calculated properties from thermodynamic parameters with given (database) values.
   # Print message and return the calculated value if tolerance is exceeded
   # or NA if the difference is within the tolerance.
@@ -169,7 +169,7 @@ check.EOS <- function(eos, model, prop, ret.diff = TRUE) {
   Theta <- 228  # K
   if(model %in% c("HKF", "DEW")) {
     # Run checks for aqueous species
-    if(prop=="Cp") {
+    if(prop == "Cp") {
       ## Value of X consistent with IAPWS95
       #X <- -2.773788E-7
       # We use the value of X consistent with SUPCRT
@@ -178,7 +178,7 @@ check.EOS <- function(eos, model, prop, ret.diff = TRUE) {
       calcval <- eos$c1 + eos$c2/(298.15-Theta)^2 + eos$omega*298.15*X
       tol <- thermo$opt$Cp.tol
       units <- paste(eos$E_units, "K-1 mol-1")
-    } else if(prop=="V") {
+    } else if(prop == "V") {
       ## Value of Q consistent with IAPWS95
       #Q <- 0.00002483137
       # Value of Q consistent with SUPCRT92
@@ -193,7 +193,7 @@ check.EOS <- function(eos, model, prop, ret.diff = TRUE) {
     }
   } else {
     # Run checks for non-aqueous species (i.e., CGL)
-    if(prop=="Cp") {
+    if(prop == "Cp") {
       refval <- eos$Cp
       Tr <- 298.15
       calcval <- eos$a + eos$b*Tr + eos$c*Tr^-2 + eos$d*Tr^-0.5 + eos$e*Tr^2 + eos$f*Tr^eos$lambda
@@ -203,14 +203,14 @@ check.EOS <- function(eos, model, prop, ret.diff = TRUE) {
   }
   # Calculate the difference
   diff <- calcval - refval
-  if(ret.diff) return(diff)
+  if(return.difference) return(diff)
   else {
     # Return the calculated value if the difference is greater than tol
     if(!is.na(calcval)) {
       if(!is.na(refval)) {
         if(abs(diff) > tol) {
           message(paste("check.EOS: calculated ", prop, " of ", eos$name, "(", eos$state,
-            ") differs by ", round(diff,2), " ", units, " from database value", sep=""))
+            ") differs by ", round(diff,2), " ", units, " from database value", sep = ""))
           return(calcval)
         }
       } else return(calcval)
@@ -220,7 +220,7 @@ check.EOS <- function(eos, model, prop, ret.diff = TRUE) {
   return(NA)
 }
 
-check.GHS <- function(ghs, ret.diff = TRUE) {
+check.GHS <- function(ghs, return.difference = TRUE) {
   # Compare G calculated from H and S with given (database) values
   # Print message and return the calculated value if tolerance is exceeded
   # or NA if the difference is within the tolerance
@@ -238,13 +238,13 @@ check.GHS <- function(ghs, ret.diff = TRUE) {
   # Now on to the comparison
   # Calculate the difference
   diff <- calcval - refval
-  if(ret.diff) return(diff)
+  if(return.difference) return(diff)
   else if(!is.na(calcval)) {
     if(!is.na(refval)) {
       diff <- calcval - refval
       if(abs(diff) > thermo$opt$G.tol) {
         message(paste("check.GHS: calculated G of ", ghs$name, "(", ghs$state,
-          ") differs by ", round(diff), " ", ghs$E_units, " mol-1 from database value", sep=""))
+          ") differs by ", round(diff), " ", ghs$E_units, " mol-1 from database value", sep = ""))
         return(calcval)
       }
     } else return(calcval)
@@ -260,20 +260,20 @@ check.OBIGT <- function() {
   # Function to check self-consistency between
   # values of Cp and V vs. EOS parameters
   # and among G, H, S values
-  # 20110808 jmd replaces 'check=TRUE' argument of info()
+  # 20110808 jmd replaces 'check = TRUE' argument of info()
   checkfun <- function(what) {
     message(paste("check.OBIGT: checking", what))
     # Looking at thermo$OBIGT
-    if(what=="OBIGT") tdata <- get("thermo", CHNOSZ)$OBIGT
-    else if(what=="DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what=="SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what=="SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what=="AS04") tdata <- read.csv(system.file("extdata/OBIGT/AS04.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what=="AD") tdata <- read.csv(system.file("extdata/OBIGT/AD.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what=="GEMSFIT") tdata <- read.csv(system.file("extdata/OBIGT/GEMSFIT.csv", package = "CHNOSZ"), as.is = TRUE)
+    if(what == "OBIGT") tdata <- get("thermo", CHNOSZ)$OBIGT
+    else if(what == "DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW.csv", package = "CHNOSZ"), as.is = TRUE)
+    else if(what == "SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package = "CHNOSZ"), as.is = TRUE)
+    else if(what == "SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package = "CHNOSZ"), as.is = TRUE)
+    else if(what == "AS04") tdata <- read.csv(system.file("extdata/OBIGT/AS04.csv", package = "CHNOSZ"), as.is = TRUE)
+    else if(what == "AD") tdata <- read.csv(system.file("extdata/OBIGT/AD.csv", package = "CHNOSZ"), as.is = TRUE)
+    else if(what == "GEMSFIT") tdata <- read.csv(system.file("extdata/OBIGT/GEMSFIT.csv", package = "CHNOSZ"), as.is = TRUE)
     ntot <- nrow(tdata)
     # Where to keep the results
-    DCp <- DV <- DG <- rep(NA,ntot)
+    DCp <- DV <- DG <- rep(NA, ntot)
     # First get the species that use HKF equations
     isHKF <- tdata$model %in% c("HKF", "DEW")
     if(any(isHKF)) {
@@ -316,30 +316,30 @@ check.OBIGT <- function() {
   ina <- is.na(out$DCp) & is.na(out$DV) & is.na(out$DG)
   out <- out[!ina,]
   # Round the values
-  out$DCp <- round(out$DCp,2)
-  out$DV <- round(out$DV,2)
+  out$DCp <- round(out$DCp, 2)
+  out$DV <- round(out$DV, 2)
   out$DG <- round(out$DG)
   # Return the results
   return(out)
 }
 
-RH2OBIGT <- function(compound=NULL, state="cr", file=system.file("extdata/adds/RH98_Table15.csv", package="CHNOSZ")) {
+RH2OBIGT <- function(compound = NULL, state = "cr", file = system.file("extdata/adds/RH98_Table15.csv", package = "CHNOSZ")) {
   # Get thermodynamic properties and equations of state parameters using 
   #   group contributions from Richard and Helgeson, 1998   20120609 jmd
   # Read the compound names, physical states, chemical formulas and group stoichiometry from the file
   # We use check.names=FALSE because the column names are the names of the groups,
-  #   and are not syntactically valid R names, and stringsAsFactors=FALSE
+  #   and are not syntactically valid R names, and stringsAsFactors = FALSE
   #   so that formulas are read as characters (for checking with as.chemical.formula)
-  dat <- read.csv(file, check.names=FALSE, stringsAsFactors=FALSE)
+  dat <- read.csv(file, check.names = FALSE, stringsAsFactors = FALSE)
   # "compound" the compound names and states from the file
-  comate.arg <- comate.dat <- paste(dat$compound, "(", dat$state, ")", sep="")
+  comate.arg <- comate.dat <- paste(dat$compound, "(", dat$state, ")", sep = "")
   # "compound" the compound names and states from the arguments
-  if(!is.null(compound)) comate.arg <- paste(compound, "(", state, ")", sep="")
+  if(!is.null(compound)) comate.arg <- paste(compound, "(", state, ")", sep = "")
   # Identify the compounds
   icomp <- match(comate.arg, comate.dat)
   # Check if all compounds were found
   ina <- is.na(icomp)
-  if(any(ina)) stop(paste("compound(s)", paste(comate.arg[ina], collapse=" "), "not found in", file))
+  if(any(ina)) stop(paste("compound(s)", paste(comate.arg[ina], collapse = " "), "not found in", file))
   # Initialize output data frame
   out <- get("thermo", CHNOSZ)$OBIGT[0, ]
   # Loop over the compounds
@@ -348,13 +348,13 @@ RH2OBIGT <- function(compound=NULL, state="cr", file=system.file("extdata/adds/R
     thisdat <- dat[i, ]
     # Take out groups that are NA or 0
     thisdat <- thisdat[, !is.na(thisdat)]
-    thisdat <- thisdat[, thisdat!=0]
+    thisdat <- thisdat[, thisdat != 0]
     # Identify the groups in this compound
     igroup <- 4:ncol(thisdat)
-    ispecies <- info(colnames(thisdat)[igroup], state=thisdat$state)
+    ispecies <- info(colnames(thisdat)[igroup], state = thisdat$state)
     # Check if all groups were found
     ina <- is.na(ispecies)
-    if(any(ina)) stop(paste("group(s)", paste(colnames(thisdat)[igroup][ina], collapse=" "), "not found in", thisdat$state, "state"))
+    if(any(ina)) stop(paste("group(s)", paste(colnames(thisdat)[igroup][ina], collapse = " "), "not found in", thisdat$state, "state"))
     # Group additivity of properties and parameters: add contributions from all groups
     thiseos <- t(colSums(get("thermo", CHNOSZ)$OBIGT[ispecies, 10:22] * as.numeric(thisdat[, igroup])))
     # Group additivity of chemical formula
@@ -363,8 +363,8 @@ RH2OBIGT <- function(compound=NULL, state="cr", file=system.file("extdata/adds/R
     if(!identical(formula, thisdat$formula)) 
       stop(paste("formula", formula, "of", comate.dat[i], "(from groups) is not identical to", thisdat$formula, "(listed in file)" ))
     # Build the front part of OBIGT data frame
-    thishead <- data.frame(name=thisdat$compound, abbrv=NA, formula=formula, state=thisdat$state, 
-      ref1=NA, ref2=NA, date=as.character(Sys.Date()), E_units = "cal", stringsAsFactors=FALSE)
+    thishead <- data.frame(name = thisdat$compound, abbrv = NA, formula = formula, state = thisdat$state, 
+      ref1 = NA, ref2 = NA, date = as.character(Sys.Date()), E_units = "cal", stringsAsFactors = FALSE)
     # Insert the result into the output
     out <- rbind(out, cbind(thishead, thiseos))
   }

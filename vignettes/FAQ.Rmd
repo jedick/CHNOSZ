@@ -272,8 +272,9 @@ We begin by defining all the input values in the next code block.
 In addition to `G`, `H`, `S`, and the heat capacity coefficients, non-NA values of volume (`V`) must be provided for the polymorph transitions to be calculated correctly by `subcrt()`.
 
 ```{r pyrrhotite_values, message = FALSE}
-# The formula of the new mineral
+# The formula of the new mineral and literature reference
 formula <- "Fe0.877S"
+ref1 <- "PMW87"
 # Because the properties from Pankratz et al. (1987) are listed in calories,
 # we need to change the output of subcrt() to calories (the default is Joules)
 E.units("cal")
@@ -309,27 +310,27 @@ TDStr <- DHtr - DGtr  # TΔS° = ΔH° - ΔG°
 DStr <- TDStr / Ttr
 ```
 
-Put the heat capacity coefficients and volume in the database.
-There is no tabulated value of `Cp` of the high-temperature polymorph extrapolated to 298.15 K, so leave it out.
+Start new database entries that include basic information, volume, and heat capacity coefficients for each polymorph.
+@PMW87 don't list `Cp` of the high-temperature polymorph extrapolated to 298.15 K, so leave it out.
 If the properties were in Joules, we would omit `E_units = "cal"` or change it to `E_units = "J"`.
 ```{r pyrrhotite_Cp, results = "hide", message = FALSE}
-mod.OBIGT("pyrrhotite_new", formula = formula, state = "cr", E_units = "cal",
-  G = 0, H = 0, S = 0, V = V1, Cp = Cp1,
+mod.OBIGT("pyrrhotite_new", formula = formula, state = "cr", ref1 = ref1,
+  E_units = "cal", G = 0, H = 0, S = 0, V = V1, Cp = Cp1,
   a = a1, b = b1, c = 0, d = 0, e = 0, f = 0, lambda = 0, T = Ttr)
-mod.OBIGT("pyrrhotite_new", formula = formula, state = "cr2", E_units = "cal",
-  G = 0, H = 0, S = 0, V = V2,
+mod.OBIGT("pyrrhotite_new", formula = formula, state = "cr2", ref1 = ref1,
+  E_units = "cal", G = 0, H = 0, S = 0, V = V2,
   a = a2, b = b2, c = c2, d = 0, e = 0, f = 0, lambda = 0, T = T2)
 ```
 
 For the time being, we set `G`, `H`, and `S` (i.e., the properties at 25 °C) to zero in order to easily calculate the temperature integrals of the properties from 298.15 K to `Ttr`.
 Values of zero are placeholders that don't satisfy Δ*G*° = Δ*H*° − *T*Δ*S*° for the formation properties from the elements for either polymorph, as indicated by the following messages.
-We will check again for self-consistency at the end of the example.
+We will check again for consistency of the thermodynamic parameters at the end of the example.
 ```{r pyrrhotite_info, results = "hide", collapse = TRUE}
 info(info("pyrrhotite_new", "cr"))
 info(info("pyrrhotite_new", "cr2"))
 ```
 
-In order to calculate the temperature integrals of Δ*G*° and Δ*H*°, we need not only the heat capacity coefficients but also actual values of *S*°.
+In order to calculate the temperature integral of Δ*G*°, we need not only the heat capacity coefficients but also actual values of *S*°.
 Therefore, we start by calculating the entropy changes of each polymorph from 298.15 to `r Ttr` K (`DS1` and `DS2`) and combining those with the entropy of transition to obtain the difference of entropy between the polymorphs at 298.15 K.
 For polymorph 1 (with `state = "cr"`) it's advisable to include `use.polymorphs = FALSE` to prevent `subcrt()` from trying to identify the most stable polymorph at the indicated temperature.
 ```{r pyrrhotite_S, message = FALSE}
@@ -338,7 +339,7 @@ DS2 <- subcrt("pyrrhotite_new", "cr2", P = 1, T = Ttr)$out[[1]]$S
 DS25 <- DS1 + DStr - DS2
 ```
 
-Put the values of *S*° at 298.15 in OBIGT, then calculate the changes of all thermodynamic properties of each polymorph between 298.15 K and `Ttr`.
+Put the values of *S*° at 298.15 into OBIGT, then calculate the changes of all thermodynamic properties of each polymorph between 298.15 K and `Ttr`.
 ```{r pyrrhotite_D1_D2, message = FALSE, results = "hide"}
 mod.OBIGT("pyrrhotite_new", state = "cr", S = S1)
 mod.OBIGT("pyrrhotite_new", state = "cr2", S = S1 + DS25)
@@ -360,7 +361,7 @@ mod.OBIGT("pyrrhotite_new", state = "cr", G = G1, H = H1)
 mod.OBIGT("pyrrhotite_new", state = "cr2", G = G1 + DG25, H = H1 + DH25)
 ```
 
-It's a good idea to check that the values of `G`, `H`, and `S` at 25 °C for each polymorph are self-consistent.
+It's a good idea to check that the values of `G`, `H`, and `S` at 25 °C for a given polymorph are consistent with each other.
 Here we use `check.GHS()` to calculate the difference between the value given for `G` and the value calculated from `H` and `S`.
 The difference of less than 1 `r E.units()`/mol can probably be attributed to small differences in the entropies of the elements used by @PMW87 and in CHNOSZ.
 We still get a message that the database value of `Cp` at 25 °C for the high-temperature polymorph is NA; this is OK because the (extrapolated) value can be calculated from the heat capacity coefficients.

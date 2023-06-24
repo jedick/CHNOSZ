@@ -7,7 +7,7 @@ water <- function(property = NULL, T = 298.15, P = "Psat", P1 = TRUE) {
   # T in Kelvin, P in bar
   if(is.null(property)) return(get("thermo", CHNOSZ)$opt$water)
   # Set water option
-  if(length(property)==1 & any(property %in% c("SUPCRT", "SUPCRT92", "IAPWS", "IAPWS95", "DEW"))) {
+  if(length(property) == 1 & any(property %in% c("SUPCRT", "SUPCRT92", "IAPWS", "IAPWS95", "DEW"))) {
     # Change references 20200629
     if(property %in% c("SUPCRT", "SUPCRT92")) {
       suppressMessages(mod.OBIGT("water", ref1 = "HGK84"))
@@ -47,7 +47,7 @@ water <- function(property = NULL, T = 298.15, P = "Psat", P1 = TRUE) {
   w.out
 }
 
-water.SUPCRT92 <- function(property=NULL, T=298.15, P=1, P1=TRUE) {
+water.SUPCRT92 <- function(property = NULL, T = 298.15, P = 1, P1 = TRUE) {
   ### Interface to H2O92D.f: FORTRAN subroutine taken from 
   ### SUPCRT92 for calculating the thermodynamic and 
   ### electrostatic properties of H2O. 
@@ -106,13 +106,13 @@ water.SUPCRT92 <- function(property=NULL, T=298.15, P=1, P1=TRUE) {
       rho.out[i] <- rho
       # 23 properties of the phase in the liquid state
       w <- t(H2O[[3]][seq(1, 45, length.out = 23)+inc])
-      if(err.out[i]==1) w[1, ] <- NA
+      if(err.out[i] == 1) w[1, ] <- NA
       # Update the ith row of the output matrix
       w.out[i,] <- w
       # Psat
       if(identical(P, "Psat")) {
         w.P <- H2O[[2]][2]
-        w.P[w.P==0] <- NA
+        w.P[w.P == 0] <- NA
         # Psat specifies P = 1 below 100 degC
         if(P1) w.P[w.P < 1] <- 1
         P.out[i] <- w.P
@@ -128,8 +128,8 @@ water.SUPCRT92 <- function(property=NULL, T=298.15, P=1, P1=TRUE) {
     mwH2O <- 18.0152 # SUP92.f
     V <- mwH2O/rho.out
     rho <- rho.out*1000
-    # rho==0 should be NA 20180923
-    rho[rho==0] <- NA
+    # rho == 0 should be NA 20180923
+    rho[rho == 0] <- NA
     Psat <- P.out
     E <- V*w.out$alpha
     kT <- V*w.out$beta
@@ -141,9 +141,9 @@ water.SUPCRT92 <- function(property=NULL, T=298.15, P=1, P1=TRUE) {
     w.out <- cbind(w.out, data.frame(V = V, rho = rho, Psat = Psat, E = E, kT = kT, A_DH = A_DH, B_DH = B_DH))
   }
   # Tell the user about any problems
-  if(any(err.out==1)) {
+  if(any(err.out == 1)) {
     if(length(T) > 1) plural <- "s" else plural <- ""
-    nerr <- sum(err.out==1)
+    nerr <- sum(err.out == 1)
     if(nerr > 1) plural2 <- "s" else plural2 <- ""
     if(identical(P, "Psat")) message(paste("water.SUPCRT92: error", plural2, " calculating ",
       nerr, " of ", length(T), " point", plural, "; for Psat we need 273.16 < T < 647.067 K", sep = ""))
@@ -378,9 +378,9 @@ water.DEW <- function(property = NULL, T = 373.15, P = 1000) {
   if(any(ilow)) {
     out[ilow, ] <- water.SUPCRT92(property, T = T[ilow], P = P[ilow])
     iPrTr <- T == 298.15 & P == 1
-    if(sum(iPrTr)==sum(ilow)) message(paste("water.DEW: using SUPCRT calculations for Pr,Tr"))
-    if(sum(iPrTr)==0) message(paste("water.DEW: using SUPCRT calculations for", sum(ilow), "low-T or low-P condition(s)"))
-    if(sum(iPrTr)==1 & sum(ilow) > sum(iPrTr)) message(paste("water.DEW: using SUPCRT calculations for Pr,Tr and", sum(ilow)-1, "other low-T or low-P condition(s)"))
+    if(sum(iPrTr) == sum(ilow)) message(paste("water.DEW: using SUPCRT calculations for Pr,Tr"))
+    if(sum(iPrTr) == 0) message(paste("water.DEW: using SUPCRT calculations for", sum(ilow), "low-T or low-P condition(s)"))
+    if(sum(iPrTr) == 1 & sum(ilow) > sum(iPrTr)) message(paste("water.DEW: using SUPCRT calculations for Pr,Tr and", sum(ilow)-1, "other low-T or low-P condition(s)"))
     # However, we also have this:
     # epsilon(Pr,Tr) from SUPCRT: 78.24514
     # epsilon(Pr,Tr) in DEW spreadsheet: 78.47

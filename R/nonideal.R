@@ -3,7 +3,7 @@
 # Moved to nonideal.R from util.misc.R 20151107
 # Added Helgeson method 20171012
 
-nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, method=thermo()$opt$nonideal) {
+nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star = NULL, method = thermo()$opt$nonideal) {
   # Generate nonideal contributions to thermodynamic properties
   # number of species, same length as speciesprops list
   # T in Kelvin, same length as nrows of speciespropss
@@ -12,7 +12,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
 
   mettext <- function(method) {
     mettext <- paste(method, "equation")
-    if(method=="Bdot0") mettext <- "B-dot equation (B-dot = 0)"
+    if(method == "Bdot0") mettext <- "B-dot equation (B-dot = 0)"
     mettext
   }
 
@@ -59,26 +59,26 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     lngamma <- function(alpha, Z, I, B) - alpha * Z^2 * I^(1/2) / (1 + B * I^(1/2))
     # 20171013 convert lngamma to common logarithm
     # 20190603 use equations for H, S, and Cp from Alberty, 2001 (doi:10.1021/jp011308v)
-    if(prop=="loggamma") return(lngamma(eval(alpha), Z, I, B) / log(10))
-    else if(prop=="G") return(R * T * lngamma(eval(alpha), Z, I, B))
-    else if(prop=="H") return(- R * T^2 * lngamma(eval(DD(alpha, "T", 1)), Z, I, B))
-    else if(prop=="S") return( ( - R * T^2 * lngamma(eval(DD(alpha, "T", 1)), Z, I, B) - R * T * lngamma(eval(alpha), Z, I, B) ) / T)
-    else if(prop=="Cp") return(- 2 * R * T * lngamma(eval(DD(alpha, "T", 1)), Z, I, B) - R * T^2 * lngamma(eval(DD(alpha, "T", 2)), Z, I, B))
+    if(prop == "loggamma") return(lngamma(eval(alpha), Z, I, B) / log(10))
+    else if(prop == "G") return(R * T * lngamma(eval(alpha), Z, I, B))
+    else if(prop == "H") return(- R * T^2 * lngamma(eval(DD(alpha, "T", 1)), Z, I, B))
+    else if(prop == "S") return( ( - R * T^2 * lngamma(eval(DD(alpha, "T", 1)), Z, I, B) - R * T * lngamma(eval(alpha), Z, I, B) ) / T)
+    else if(prop == "Cp") return(- 2 * R * T * lngamma(eval(DD(alpha, "T", 1)), Z, I, B) - R * T^2 * lngamma(eval(DD(alpha, "T", 2)), Z, I, B))
   }
   
   # Function for Debye-Huckel equation with b_gamma or B-dot extended term parameter (Helgeson, 1969)
   Helgeson <- function(prop = "loggamma", Z, I, T, A_DH, B_DH, acirc, m_star, bgamma) {
     loggamma <- - A_DH * Z^2 * I^0.5 / (1 + acirc * B_DH * I^0.5) - log10(1 + 0.0180153 * m_star) + bgamma * I
-    if(prop=="loggamma") return(loggamma)
-    else if(prop=="G") return(R * T * log(10) * loggamma)
+    if(prop == "loggamma") return(loggamma)
+    else if(prop == "G") return(R * T * log(10) * loggamma)
     # note the log(10) (=2.303) ... use natural logarithm to calculate G
   }
 
   # Function for Setchenow equation with b_gamma or B-dot extended term parameter (Shvarov and Bastrakov, 1999)  20181106
   Setchenow <- function(prop = "loggamma", I, T, m_star, bgamma) {
     loggamma <- - log10(1 + 0.0180153 * m_star) + bgamma * I
-    if(prop=="loggamma") return(loggamma)
-    else if(prop=="G") return(R * T * log(10) * loggamma)
+    if(prop == "loggamma") return(loggamma)
+    else if(prop == "G") return(R * T * log(10) * loggamma)
   }
 
   # Get species indices
@@ -87,11 +87,11 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
   Z <- numeric(length(species))
   for(i in 1:length(species)) {
     # force a charge count even if it's zero
-    mkp <- makeup(c("Z0", species[i]), sum=TRUE)
+    mkp <- makeup(c("Z0", species[i]), sum = TRUE)
     thisZ <- mkp[match("Z", names(mkp))]
     # no charge if Z is absent from the formula or equal to zero
     if(is.na(thisZ)) next
-    if(thisZ==0) next
+    if(thisZ == 0) next
     Z[i] <- thisZ
   }
   # Use formulas of species to get acirc 20181105
@@ -103,9 +103,9 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     acirc <- as.numeric(Bdot_acirc[formula])
     acirc[is.na(acirc)] <- 4.5
     ## Make a message
-    #nZ <- sum(Z!=0)
-    #if(nZ > 1) message("nonideal: using ", paste(acirc[Z!=0], collapse=" "), " for ion size parameters of ", paste(formula[Z!=0], collapse=" "))
-    #else if(nZ==1) message("nonideal: using ", acirc[Z!=0], " for ion size parameter of ", formula[Z!=0])
+    #nZ <- sum(Z != 0)
+    #if(nZ > 1) message("nonideal: using ", paste(acirc[Z != 0], collapse = " "), " for ion size parameters of ", paste(formula[Z != 0], collapse = " "))
+    #else if(nZ == 1) message("nonideal: using ", acirc[Z != 0], " for ion size parameter of ", formula[Z != 0])
     # Use correct units (cm) for ion size parameter
     acirc <- acirc * 10^-8
   } else if(grepl("bgamma", method)) {
@@ -113,8 +113,8 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     acirc <- rep(3.72e-8, length(species))
   }
   # Get b_gamma or B-dot
-  if(method=="bgamma") bgamma <- bgamma(convert(T, "C"), P)
-  else if(method=="Bdot") bgamma <- Bdot(convert(T, "C"))
+  if(method == "bgamma") bgamma <- bgamma(convert(T, "C"), P)
+  else if(method == "Bdot") bgamma <- Bdot(convert(T, "C"))
   else if(method %in% c("Bdot0", "bgamma0")) bgamma <- 0
   # Loop over species #2: activity coefficient calculations
   if(is.null(m_star)) m_star <- IS
@@ -129,7 +129,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     if(species[i] == ie & get("thermo", CHNOSZ)$opt$ideal.e) next
     didcharged <- didneutral <- FALSE
     # Logic for neutral and charged species 20181106
-    if(Z[i]==0) {
+    if(Z[i] == 0) {
       for(j in 1:ncol(myprops)) {
         pname <- colnames(myprops)[j]
         if(!pname %in% c("G", "H", "S", "Cp")) next
@@ -145,7 +145,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
       for(j in 1:ncol(myprops)) {
         pname <- colnames(myprops)[j]
         if(!pname %in% c("G", "H", "S", "Cp")) next
-        if(method=="Alberty") {
+        if(method == "Alberty") {
           myprops[, j] <- myprops[, j] + Alberty(pname, Z[i], IS, T)
           didcharged <- TRUE
         } else {
@@ -156,7 +156,7 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     }
     # Append a loggam column if we did any calculations of adjusted thermodynamic properties
     if(didcharged) {
-      if(method=="Alberty") myprops <- cbind(myprops, loggam = Alberty("loggamma", Z[i], IS, T))
+      if(method == "Alberty") myprops <- cbind(myprops, loggam = Alberty("loggamma", Z[i], IS, T))
       else myprops <- cbind(myprops, loggam = Helgeson("loggamma", Z[i], IS, T, A_DH, B_DH, acirc[i], m_star, bgamma))
     }
     if(didneutral) {
@@ -168,8 +168,8 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star=NULL, m
     if(didcharged) icharged[i] <- TRUE
     if(didneutral) ineutral[i] <- TRUE
   }
-  if(sum(icharged) > 0) message("nonideal: calculations for ", paste(formula[icharged], collapse=", "), " (", mettext(method), ")")
-  if(sum(ineutral) > 0) message("nonideal: calculations for ", paste(formula[ineutral], collapse=", "), " (Setchenow equation)")
+  if(sum(icharged) > 0) message("nonideal: calculations for ", paste(formula[icharged], collapse = ", "), " (", mettext(method), ")")
+  if(sum(ineutral) > 0) message("nonideal: calculations for ", paste(formula[ineutral], collapse = ", "), " (Setchenow equation)")
   return(speciesprops)
 }
 
@@ -182,7 +182,7 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
   T <- TC
   # Are we at a pre-fitted constant pressure?
   uP <- unique(P)
-  is1 <- identical(uP, 1) & all(T==25)
+  is1 <- identical(uP, 1) & all(T == 25)
   is500 <- identical(uP, 500)
   is1000 <- identical(uP, 1000)
   is2000 <- identical(uP, 2000)
@@ -286,46 +286,46 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
   }
   # Show points and spline(T) curves
   if(showsplines == "T") {
-    thermo.plot.new(c(0, 1000), c(-.2, .7), xlab=axis.label("T"), ylab=expression(italic(b)[gamma]))
-    points(T0, B0, pch=0)
-    points(T0.5, B0.5, pch=1)
-    points(T1, B1, pch=1)
-    points(T2[-c(22:23)], B2[-c(22:23)], pch=1)
-    points(T2[c(22:23)], B2[c(22:23)], pch=2)
-    points(T3, B3, pch=1)
-    points(T4, B4, pch=1)
-    points(T5[-c(22:23)], B5[-c(22:23)], pch=1)
-    points(T5[c(22:23)], B5[c(22:23)], pch=2)
-    points(T10[-1], B10[-1], pch=2)
-    points(T20[-1], B20[-1], pch=2)
-    points(T30[-1], B30[-1], pch=2)
-    points(T10[1], B10[1], pch=5)
-    points(T20[1], B20[1], pch=5)
-    points(T30[1], B30[1], pch=5)
-    points(T40, B40, pch=6)
-    points(T50, B50, pch=6)
-    points(T60, B60, pch=6)
+    thermo.plot.new(c(0, 1000), c(-.2, .7), xlab = axis.label("T"), ylab = expression(italic(b)[gamma]))
+    points(T0, B0, pch = 0)
+    points(T0.5, B0.5, pch = 1)
+    points(T1, B1, pch = 1)
+    points(T2[-c(22:23)], B2[-c(22:23)], pch = 1)
+    points(T2[c(22:23)], B2[c(22:23)], pch = 2)
+    points(T3, B3, pch = 1)
+    points(T4, B4, pch = 1)
+    points(T5[-c(22:23)], B5[-c(22:23)], pch = 1)
+    points(T5[c(22:23)], B5[c(22:23)], pch = 2)
+    points(T10[-1], B10[-1], pch = 2)
+    points(T20[-1], B20[-1], pch = 2)
+    points(T30[-1], B30[-1], pch = 2)
+    points(T10[1], B10[1], pch = 5)
+    points(T20[1], B20[1], pch = 5)
+    points(T30[1], B30[1], pch = 5)
+    points(T40, B40, pch = 6)
+    points(T50, B50, pch = 6)
+    points(T60, B60, pch = 6)
     col <- rev(topo.colors(13))
-    T0 <- seq(0, 350, 5); lines(T0, S0(T0), col=col[1])
-    T0.5 <- seq(0, 500, 5); lines(T0.5, S0.5(T0.5), col=col[2])
-    T1 <- seq(0, 500, 5); lines(T1, S1(T1), col=col[3])
-    T2 <- seq(0, 600, 5); lines(T2, S2(T2), col=col[4])
-    T3 <- seq(0, 600, 5); lines(T3, S3(T3), col=col[5])
-    T4 <- seq(0, 600, 5); lines(T4, S4(T4), col=col[6])
-    T5 <- seq(0, 600, 5); lines(T5, S5(T5), col=col[7])
-    T10 <- c(25, seq(100, 1000, 5)); lines(T10, S10(T10), col=col[8])
-    T20 <- c(80, seq(100, 1000, 5)); lines(T20, S20(T20), col=col[9])
-    T30 <- c(125, seq(200, 1000, 5)); lines(T30, S30(T30), col=col[10])
-    T40 <- c(175, seq(300, 1000, 5)); lines(T40, S40(T40), col=col[11])
-    T50 <- c(225, seq(300, 1000, 5)); lines(T50, S50(T50), col=col[12])
-    T60 <- c(250, seq(300, 1000, 5)); lines(T60, S60(T60), col=col[13])
-    legend("topleft", pch=c(0, 1, 2, 5, 6), bty = "n",
-           legend=c("Helgeson, 1969", "Helgeson et al., 1981", "Manning et al., 2013", "spline control point", "high-P extrapolation"))
+    T0 <- seq(0, 350, 5); lines(T0, S0(T0), col = col[1])
+    T0.5 <- seq(0, 500, 5); lines(T0.5, S0.5(T0.5), col = col[2])
+    T1 <- seq(0, 500, 5); lines(T1, S1(T1), col = col[3])
+    T2 <- seq(0, 600, 5); lines(T2, S2(T2), col = col[4])
+    T3 <- seq(0, 600, 5); lines(T3, S3(T3), col = col[5])
+    T4 <- seq(0, 600, 5); lines(T4, S4(T4), col = col[6])
+    T5 <- seq(0, 600, 5); lines(T5, S5(T5), col = col[7])
+    T10 <- c(25, seq(100, 1000, 5)); lines(T10, S10(T10), col = col[8])
+    T20 <- c(80, seq(100, 1000, 5)); lines(T20, S20(T20), col = col[9])
+    T30 <- c(125, seq(200, 1000, 5)); lines(T30, S30(T30), col = col[10])
+    T40 <- c(175, seq(300, 1000, 5)); lines(T40, S40(T40), col = col[11])
+    T50 <- c(225, seq(300, 1000, 5)); lines(T50, S50(T50), col = col[12])
+    T60 <- c(250, seq(300, 1000, 5)); lines(T60, S60(T60), col = col[13])
+    legend("topleft", pch = c(0, 1, 2, 5, 6), bty = "n",
+           legend = c("Helgeson, 1969", "Helgeson et al., 1981", "Manning et al., 2013", "spline control point", "high-P extrapolation"))
     legend("bottomright", col=c(NA, rev(col)), lty=1, bty = "n",
-           legend=c("kbar", "60", "50", "40", "30", "20", "10", "5", "4", "3", "2", "1", "0.5", "Psat"))
-    title(main=expression("Deybe-H\u00FCckel extended term ("*italic(b)[gamma]*") parameter"))
-  } else if(showsplines=="P") {
-    thermo.plot.new(c(0, 5), c(-.2, .7), xlab=expression(log~italic(P)*"(bar)"), ylab=expression(italic(b)[gamma]))
+           legend = c("kbar", "60", "50", "40", "30", "20", "10", "5", "4", "3", "2", "1", "0.5", "Psat"))
+    title(main = expression("Deybe-H\u00FCckel extended term ("*italic(b)[gamma]*") parameter"))
+  } else if(showsplines == "P") {
+    thermo.plot.new(c(0, 5), c(-.2, .7), xlab = expression(log~italic(P)*"(bar)"), ylab = expression(italic(b)[gamma]))
     # Pressures that are used to make the isothermal splines (see below)
     P25 <- c(1, 500, 1000, 2000, 3000, 4000, 5000)
     P100 <- c(1, 500, 1000, 2000, 3000, 4000, 5000, 10000, 20000)
@@ -352,31 +352,31 @@ bgamma <- function(TC = 25, P = 1, showsplines = "") {
     points(log10(P1000), bgamma(1000, P1000))
     # Plot the isothermal spline functions
     col <- tail(rev(rainbow(12)), -1)
-    P <- c(1, seq(50, 5000, 50)); lines(log10(P), bgamma(25, P), col=col[1])
-    P <- c(1, seq(50, 20000, 50)); lines(log10(P), bgamma(100, P), col=col[2])
-    P <- c(1, seq(50, 40000, 50)); lines(log10(P), bgamma(200, P), col=col[3])
-    P <- c(1, seq(50, 60000, 50)); lines(log10(P), bgamma(300, P), col=col[4])
-    P <- seq(500, 60000, 50); lines(log10(P), bgamma(400, P), col=col[5])
-    P <- seq(1000, 60000, 50); lines(log10(P), bgamma(500, P), col=col[6])
-    P <- seq(2000, 60000, 50); lines(log10(P), bgamma(600, P), col=col[7])
-    P <- seq(10000, 60000, 50); lines(log10(P), bgamma(700, P), col=col[8])
-    P <- seq(10000, 60000, 50); lines(log10(P), bgamma(800, P), col=col[9])
-    P <- seq(10000, 60000, 50); lines(log10(P), bgamma(900, P), col=col[10])
-    P <- seq(10000, 60000, 50); lines(log10(P), bgamma(1000, P), col=col[11])
-    legend("topleft", col=c(NA, col), lty=1, bty = "n", legend=c("degrees C", 25, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000))
-    legend("bottomright", pch=1, bty = "n", legend="points from iso-P splines")
-    title(main=expression("Deybe-H\u00FCckel extended term ("*italic(b)[gamma]*") parameter"))
+    P <- c(1, seq(50, 5000, 50)); lines(log10(P), bgamma(25, P), col = col[1])
+    P <- c(1, seq(50, 20000, 50)); lines(log10(P), bgamma(100, P), col = col[2])
+    P <- c(1, seq(50, 40000, 50)); lines(log10(P), bgamma(200, P), col = col[3])
+    P <- c(1, seq(50, 60000, 50)); lines(log10(P), bgamma(300, P), col = col[4])
+    P <- seq(500, 60000, 50); lines(log10(P), bgamma(400, P), col = col[5])
+    P <- seq(1000, 60000, 50); lines(log10(P), bgamma(500, P), col = col[6])
+    P <- seq(2000, 60000, 50); lines(log10(P), bgamma(600, P), col = col[7])
+    P <- seq(10000, 60000, 50); lines(log10(P), bgamma(700, P), col = col[8])
+    P <- seq(10000, 60000, 50); lines(log10(P), bgamma(800, P), col = col[9])
+    P <- seq(10000, 60000, 50); lines(log10(P), bgamma(900, P), col = col[10])
+    P <- seq(10000, 60000, 50); lines(log10(P), bgamma(1000, P), col = col[11])
+    legend("topleft", col = c(NA, col), lty = 1, bty = "n", legend = c("degrees C", 25, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000))
+    legend("bottomright", pch = 1, bty = "n", legend = "points from iso-P splines")
+    title(main = expression("Deybe-H\u00FCckel extended term ("*italic(b)[gamma]*") parameter"))
   } else {
     # Make T and P the same length
     ncond <- max(length(T), length(P))
-    T <- rep(T, length.out=ncond)
-    P <- rep(P, length.out=ncond)
+    T <- rep(T, length.out = ncond)
+    P <- rep(P, length.out = ncond)
     # Loop over P, T conditions
     bgamma <- numeric()
     lastT <- NULL
     for(i in 1:length(T)) {
       # Make it fast: skip splines at 25 degC and 1 bar
-      if(T[i]==25 & P[i]==1) bgamma <- c(bgamma, 0.041)
+      if(T[i] == 25 & P[i] == 1) bgamma <- c(bgamma, 0.041)
       else {
         if(!identical(T[i], lastT)) {
           # Get the spline fits from particular pressures for each T

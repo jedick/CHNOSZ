@@ -1,6 +1,6 @@
 # Calculate properties of water using the IAPWS-95 formulation (Wagner and Pruss, 2002)
 
-IAPWS95 <- function(property,T=298.15,rho=1000) {
+IAPWS95 <- function(property,T = 298.15,rho = 1000) {
   property <- tolower(property)
   # Triple point
   T.triple <- 273.16 # K
@@ -95,7 +95,7 @@ IAPWS95 <- function(property,T=298.15,rho=1000) {
       t <- c(t,get(property[j])())
     }
     t <- data.frame(t)
-    if(j==1) ww <- t else ww <- cbind(ww,t)
+    if(j == 1) ww <- t else ww <- cbind(ww,t)
   }
   colnames(ww) <- property
   return(ww)

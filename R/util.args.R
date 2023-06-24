@@ -13,7 +13,7 @@ TP.args <- function(T = NULL, P = NULL) {
     # exceeding Psat's temperature limit
     if(get("thermo", CHNOSZ)$opt$water == "IAPWS95")
       if(sum(is.na(P))>0) 
-        warning('TP.args: NAs in Psat (likely T > Tc where Tc = 647.096 K)',call.=FALSE)
+        warning('TP.args: NAs in Psat (likely T > Tc where Tc = 647.096 K)', call. = FALSE)
   }
   if(length(P) < length(T) & !is.null(P)) P <- rep(P, length.out = length(T))
   else if(length(T) < length(P) & !is.null(T)) T <- rep(T, length.out = length(P))

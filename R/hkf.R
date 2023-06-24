@@ -139,7 +139,7 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
           if(PROP == "G") {
             p <- -omega.PT*(ZBorn+1) + omega*(ZBorn.PrTr+1) + omega*H2O.PrTr$YBorn*(T-Tr)
             # If the origination contribution is not NA at Tr,Pr, ensure the solvation contribution is 0, not NA
-            if(!is.na(PAR$G)) p[T==Tr & P==Pr] <- 0
+            if(!is.na(PAR$G)) p[T == Tr & P == Pr] <- 0
           }
           if(PROP == "H") 
             p <- -omega.PT*(ZBorn+1) + omega.PT*T*H2O.PT$YBorn + T*(ZBorn+1)*dwdT +
@@ -161,7 +161,7 @@ hkf <- function(property = NULL, parameters = NULL, T = 298.15, P = 1,
           if(PROP == "G") {
             p <- PAR$G - PAR$S * (T-Tr)
             # Don't inherit NA from PAR$S at Tr
-            p[T==Tr] <- PAR$G
+            p[T == Tr] <- PAR$G
           }
           else if(PROP == "H") p <- PAR$H
           else if(PROP == "S") p <- PAR$S

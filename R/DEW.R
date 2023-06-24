@@ -47,8 +47,8 @@ calculateDensity <- function(pressure, temperature, error = 0.01) {
     calculateDensity
   }
   # Make input pressure and temperature the same length
-  if(length(pressure) < length(temperature)) pressure <- rep(pressure, length.out=length(temperature))
-  if(length(temperature) < length(pressure)) temperature <- rep(temperature, length.out=length(pressure))
+  if(length(pressure) < length(temperature)) pressure <- rep(pressure, length.out = length(temperature))
+  if(length(temperature) < length(pressure)) temperature <- rep(temperature, length.out = length(pressure))
   # Use a loop to process vectorized input
   sapply(1:length(pressure), function(i) myfunction(pressure[i], temperature[i]))
 }
@@ -88,8 +88,8 @@ calculateGibbsOfWater <- function(pressure, temperature) {
     GAtOneKb + integral
   }
   # Make input pressure and temperature the same length
-  if(length(pressure) < length(temperature)) pressure <- rep(pressure, length.out=length(temperature))
-  if(length(temperature) < length(pressure)) temperature <- rep(temperature, length.out=length(pressure))
+  if(length(pressure) < length(temperature)) pressure <- rep(pressure, length.out = length(temperature))
+  if(length(temperature) < length(pressure)) temperature <- rep(temperature, length.out = length(pressure))
   # Use a loop to process vectorized input
   sapply(1:length(pressure), function(i) myfunction(pressure[i], temperature[i]))
 }
@@ -223,7 +223,7 @@ calculateOmega <- function(pressure, temperature, density, wref, Z) {
   omega <- eta * (Z * Z / re - Z / (3.082 + g))
   # 'If species is hydrogen, the species is neutral, or the pressure is above 6 kb,
   # 'this equation is not necessary because omega is very close to wref.
-  if(Z==0) omega[] <- wref
+  if(Z == 0) omega[] <- wref
   omega[pressure > 6000] <- wref
 }
 

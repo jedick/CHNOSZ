@@ -106,7 +106,7 @@ solubility_calc <- function(aout, dissociate = NULL, find.IS = FALSE, in.terms.o
   ## Is aout the output from mosaic() instead of affinity()?
   aout.save <- aout
   thisfun <- aout$fun
-  if(thisfun=="mosaic") aout <- aout$A.species
+  if(thisfun == "mosaic") aout <- aout$A.species
 
   # Get starting ionic strength (probably zero, but could be anything set by user)
   IS <- aout$IS
@@ -193,11 +193,11 @@ solubility_calc <- function(aout, dissociate = NULL, find.IS = FALSE, in.terms.o
     # On the first iteration, expand argument values for affinity() or mosaic()
     # (e.g. convert pH = c(0, 14) to pH = seq(0, 14, 256) so that it has the same length as the IS values)
     # We don't do this if aout$vals is NA 20190731
-    if(niter==1 & !all(is.na(aout$vals))) {
-      if(thisfun=="affinity") for(i in 1:length(aout$vals)) {
+    if(niter == 1 & !all(is.na(aout$vals))) {
+      if(thisfun == "affinity") for(i in 1:length(aout$vals)) {
         aout.save$args[[i]] <- aout$vals[[i]]
       }
-      else if(thisfun=="mosaic") {
+      else if(thisfun == "mosaic") {
         for(i in 1:length(aout$vals)) {
           argname <- names(aout$args)[i]
           aout.save$args[[argname]] <- aout$vals[[i]]
@@ -206,7 +206,7 @@ solubility_calc <- function(aout, dissociate = NULL, find.IS = FALSE, in.terms.o
     }
     # Recalculate the affinity using the new IS
     aout <- suppressMessages(do.call(thisfun, list(aout.save, IS = IS)))
-    if(thisfun=="mosaic") aout <- aout$A.species
+    if(thisfun == "mosaic") aout <- aout$A.species
     niter <- niter + 1
   }
 
@@ -221,7 +221,7 @@ solubility_calc <- function(aout, dissociate = NULL, find.IS = FALSE, in.terms.o
     loga.balance <- loga.balance - log10(coeff)
   }
 
-  # Make the output (we don't deal with normalized formulas yet, so for now m.balance==n.balance)
+  # Make the output (we don't deal with normalized formulas yet, so for now m.balance == n.balance)
   # Indicate the function used to make this output 20190525
   aout$fun <- "solubility"
   # Add names to loga.equil 20190731

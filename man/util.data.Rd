@@ -15,8 +15,8 @@ Check self consistency of individual entries in database.
 
 \usage{
   thermo.refs(key = NULL, keep.duplicates = FALSE)
-  check.EOS(eos, model, prop, ret.diff = TRUE)
-  check.GHS(ghs, ret.diff = TRUE)
+  check.EOS(eos, model, prop, return.difference = TRUE)
+  check.GHS(ghs, return.difference = TRUE)
   check.OBIGT()
   dumpdata(file)
   RH2OBIGT(compound = NULL, state = "cr", 
@@ -29,7 +29,7 @@ Check self consistency of individual entries in database.
   \item{eos}{dataframe, equations-of-state parameters in the format of \code{thermo()$OBIGT}}
   \item{model}{character, thermodynamic model (see \code{\link{thermo}})}
   \item{prop}{character, property of interest (\samp{Cp} or \samp{V})}
-  \item{ret.diff}{logical, return the difference between database and calculated values?}
+  \item{return.difference}{logical, return the difference between database and calculated values?}
   \item{ghs}{dataframe, containing G, H and S, in the format of \code{thermo()$OBIGT}}
   \item{file}{character, path to a file}
   \item{compound}{character, name of compound(s) in group additivity calculation}
@@ -48,8 +48,8 @@ In that case, a single reference for each species is returned, ignoring anything
 \code{check.EOS} calculates heat capacity (\code{prop = "Cp"}) or volume (\code{prop = "V"}) from equation-of-state parameters at 25 \degC and 1 bar.
 \code{check.GHS} calculates G (standard molal Gibbs energy of formation from the elements) from H (standard molal enthalpy of formation) and S (standard molal entropy) at 25 \degC and 1 bar.
 The calculated values of Cp, V, or G are then compared with the given values (i.e., database values).
-If \code{ret.diff} is TRUE (the default), the difference between the database and calculated values is returned.
-If \code{ret.diff} is FALSE, the difference is compared with a tolerance setting (see below).
+If \code{return.difference} is TRUE (the default), the difference between the database and calculated values is returned.
+If \code{return.difference} is FALSE, the difference is compared with a tolerance setting (see below).
 If the absolute value of the difference exceeds the tolerance, the function prints a message and returns the calculated value (not the difference) of the property.
 If the absolute value of the difference is less than the tolerance, the function returns NA with no message.
 

@@ -4,14 +4,14 @@
 #      in the system Na2O-K2O-CaO-MgO-FeO-Fe2O3-Al2O3-SiO2-TiO2-H2O-CO2.
 #      J. Petrol. 29, 445-522. https://doi.org/10.1093/petrology/29.2.445
 
-Berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE, calc.disorder=TRUE) {
+Berman <- function(name, T = 298.15, P = 1, check.G = FALSE, calc.transition = TRUE, calc.disorder = TRUE) {
   # Reference temperature and pressure
   Pr <- 1
   Tr <- 298.15
   # Make T and P the same length
   ncond <- max(length(T), length(P))
-  T <- rep(T, length.out=ncond)
-  P <- rep(P, length.out=ncond)
+  T <- rep(T, length.out = ncond)
+  P <- rep(P, length.out = ncond)
 
   # Get parameters in the Berman equations
   # Start with thermodynamic parameters provided with CHNOSZ
@@ -20,10 +20,10 @@ Berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE,
   userfile <- get("thermo", CHNOSZ)$opt$Berman
   userfileexists <- FALSE
   if(!is.na(userfile)) {
-    if(userfile!="") {
+    if(userfile != "") {
       if(file.exists(userfile)) {
         userfileexists <- TRUE
-        BDat_user <- read.csv(userfile, as.is=TRUE)
+        BDat_user <- read.csv(userfile, as.is = TRUE)
         dat <- rbind(BDat_user, dat)
       } else stop("the file named in thermo()$opt$Berman (", userfile, ") does not exist")
     } 
@@ -38,7 +38,7 @@ Berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE,
   if(missing(name)) return(dat) else {
     # Which row has data for this mineral?
     irow <- which(dat$name == name)
-    if(length(irow)==0) {
+    if(length(irow) == 0) {
       if(userfileexists) stop("Data for ", name, " not available. Please add it to ", userfile)
       if(!userfileexists) stop("Data for ", name, " not available. Please add it to your_data_file.csv and run thermo('opt$Berman' = 'path/to/your_data_file.csv')")
     }
@@ -62,7 +62,7 @@ Berman <- function(name, T = 298.15, P = 1, check.G=FALSE, calc.transition=TRUE,
     Gdiff <- GfPrTr_calc - GfPrTr
     #if(is.na(GfPrTr)) warning(paste0(name, ": GfPrTr(table) is NA"), call.=FALSE)
     if(!is.na(GfPrTr)) if(abs(Gdiff) >= 1000) warning(paste0(name, ": GfPrTr(calc) - GfPrTr(table) is too big! == ",
-                                          round(GfPrTr_calc - GfPrTr), " J/mol"), call.=FALSE)
+                                          round(GfPrTr_calc - GfPrTr), " J/mol"), call. = FALSE)
     # (the tabulated GfPrTr is unused below)
   }
 

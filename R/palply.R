@@ -8,12 +8,12 @@ palply <- function(varlist, X, FUN, ...) {
     # and set max at 2 for now (per CRAN policies)
     nCores <- min(getOption("mc.cores"), get("thermo", CHNOSZ)$opt$maxcores)
     # Don't load methods package, to save startup time - ?makeCluster
-    cl <- parallel::makeCluster(nCores, methods=FALSE)
+    cl <- parallel::makeCluster(nCores, methods = FALSE)
     # Export the variables and notify the user
     if(! "" %in% varlist) {
       parallel::clusterExport(cl, varlist)
       message(paste("palply:", caller.name(4), "running", length(X), "calculations on",
-        nCores, "cores with variable(s)", paste(varlist, collapse=", ")))
+        nCores, "cores with variable(s)", paste(varlist, collapse = ", ")))
     } else {
       message(paste("palply:", caller.name(4), "running", length(X), "calculations on",
         nCores, "cores"))

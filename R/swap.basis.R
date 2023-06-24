@@ -38,7 +38,7 @@ basis.logact <- function(emu, basis = thermo()$basis, T = 25) {
   # Sort names of emu in order of those in basis.mat
   ielem <- match(names(emu), colnames(basis.mat))
   # Check that elements of basis.mat and emu are identical
-  if(any(is.na(ielem))) stop(paste("element(s)", paste(names(emu)[is.na(ielem)], collapse=" "), "not found in basis"))
+  if(any(is.na(ielem))) stop(paste("element(s)", paste(names(emu)[is.na(ielem)], collapse = " "), "not found in basis"))
   # The standard Gibbs energies of the basis species
   # Don't take it from thermo()$OBIGT, even at 25 degC, because G for H2O is NA there
   # The sapply(..., "[", 1) is needed to get the first value, in case subcrt appends a polymorph column (i.e. for S(cr))  20171105
@@ -86,12 +86,12 @@ swap.basis <- function(species, species2, T = 25) {
   if(species2 %in% c("Eh", "pe")) species2 <- "e-"
   # Arguments are good, now find the basis species to swap out
   ib <- ibasis(species)
-  if(is.na(ib)) stop(paste("basis species '",species,"' is not defined",sep=""))
+  if(is.na(ib)) stop(paste("basis species '",species,"' is not defined",sep = ""))
   # Find species2 in the thermodynamic database
   if(is.numeric(species2)) ispecies2 <- species2
   else ispecies2 <- suppressMessages(info(species2))
   if(is.na(ispecies2) | is.list(ispecies2))
-    stop(paste("a species matching '",species2,"' is not available in thermo()$OBIGT",sep=""))
+    stop(paste("a species matching '",species2,"' is not available in thermo()$OBIGT",sep = ""))
   # Try to load the new basis species
   ispecies <- oldbasis$ispecies
   ispecies[ib] <- ispecies2
@@ -103,14 +103,14 @@ swap.basis <- function(species, species2, T = 25) {
   } else {
     # No buffers, so we can recalculate activities to maintain the chemical potentials of the elements
     # What were the original chemical potentials of the elements?
-    emu <- element.mu(oldbasis, T=T)
+    emu <- element.mu(oldbasis, T = T)
     # The corresponding logarithms of activities of the new basis species
-    bl <- basis.logact(emu, newbasis, T=T)
+    bl <- basis.logact(emu, newbasis, T = T)
   }
   # Update the basis with these logacts
   mb <- mod.basis(ispecies, state = newbasis$state, logact = bl)
   # Delete, then restore species if they were defined
-  species(delete=TRUE)
+  species(delete = TRUE)
   if(!is.null(ts)) {
     suppressMessages(species(ts$ispecies))
     suppressMessages(species(1:nrow(get("thermo", CHNOSZ)$species), ts$logact))

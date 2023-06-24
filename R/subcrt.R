@@ -54,7 +54,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   if(length(notprop) == 1) stop(paste("invalid property name:", paste(notprop, collapse = " ")))
   if(length(notprop) > 1) stop(paste("invalid property names:", paste(notprop, collapse = " ")))
   # Length checking
-  if(do.reaction & length(species)!=length(coeff)) 
+  if(do.reaction & length(species) != length(coeff)) 
     stop("the length of 'coeff' must equal the number of species")
   if(!is.null(logact)) {
     if(length(logact) != length(species)) stop("the length of 'logact' must equal the number of species")
@@ -433,11 +433,11 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   iscgl.new <- logical()
   isH2O.new <- logical()
   for(i in 1:length(ispecies)) {
-    are.polymorphs <- which(ispecies[i]==polymorph.species)
+    are.polymorphs <- which(ispecies[i] == polymorph.species)
     # Deal with repeated species here
     if(TRUE %in% duplicated(iphases[are.polymorphs])) {
       # Only take the first, not the duplicates
-      ndups <- sum(ispecies==ispecies[i])
+      ndups <- sum(ispecies == ispecies[i])
       npolymorphs <- length(are.polymorphs) / ndups
       are.polymorphs <- are.polymorphs[1:npolymorphs]
     }
@@ -457,7 +457,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       out.new.entry <- outprops[[are.polymorphs[1]]]
       for(j in 1:nrow(G)) {
         ps <- which.min(as.numeric(G[j, ]))
-        if(length(ps)==0) {
+        if(length(ps) == 0) {
           # minimum not found (we have NAs)
           # - no non-NA value of G to begin with (e.g. aegerine) --> probably should use lowest-T phase
           #ps <- 1
