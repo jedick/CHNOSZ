@@ -10,6 +10,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 bibliography: vig.bib
 csl: elementa.csl
+link-citations: true
 ---
 <style>
 /* https://gomakethings.com/how-to-break-an-image-out-of-its-parent-container-with-css/ */

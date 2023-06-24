@@ -11,10 +11,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 bibliography: vig.bib
 csl: elementa.csl
+link-citations: true
 ---
 
 <style>
-/* CSS snippet from boostrap.css modified by jmd on 2023-06-23 */
+/* CSS snippet from boostrap.css modified by Jeffrey Dick on 2023-06-23 */
 /*!
  * Bootstrap  v5.3.0 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors

@@ -12,6 +12,7 @@ bibliography: OBIGT.bib
 nocite: | 
   @SPRONS92, @SLOP98, @SLOP07, @SLOP16, @JOH92, @WP02, @CWM89, @PRPG97, @TH88, @Kul06, @Sho09, @HKF81
 csl: elementa.csl
+link-citations: true
 ---
 <style>
 /* https://css-tricks.com/hash-tag-links-padding/ */
