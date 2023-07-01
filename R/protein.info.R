@@ -206,8 +206,11 @@ protein.equil <- function(protein, T = 25, loga.protein = 0, digits = 4) {
     G0protform <- G0protform + G0ionization
   }
   # Standard Gibbs energy of formation reaction of non/ionized residue equivalents, dimensionless
-  if(E_units == "cal") R <- 1.9872  # gas constant, cal K^-1 mol^-1
-  if(E_units == "J") R <- 8.314445  # gas constant, J K^-1 mol^-1  20220325
+  # Gas constant
+  #if(E_units == "cal") R <- 1.9872  # gas constant, cal K^-1 mol^-1
+  #if(E_units == "J") R <- 8.314445  # = 1.9872 * 4.184 J K^-1 mol^-1  20220325
+  if(E_units == "J") R <- 8.314463  # https://physics.nist.gov/cgi-bin/cuu/Value?r 20230630
+  if(E_units == "cal") R <- 8.314463 / 4.184
   G0res.RT <- G0protform/R/TK/plength
   mymessage("protein.equil [1]: per residue, reaction to form ", iword, " protein from basis species has G0/RT of ", signif(G0res.RT[1], digits))
   # Coefficients of basis species in formation reactions of residues

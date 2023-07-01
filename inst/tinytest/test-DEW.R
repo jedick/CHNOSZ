@@ -1,3 +1,6 @@
+# Tests for DEW implementation in CHNOSZ
+# First version 20170925
+
 # Load default settings for CHNOSZ
 reset()
 
@@ -119,7 +122,8 @@ T <- c(300, 1100)
 P <- c(10000, 60000)
 # Adjust calculated logKs for different values of the
 # gas constant used in the DEW spreadsheet and CHNOSZ
-RoverR <- 1.9858775 / 1.9872
+#RoverR <- 1.9858775 / 1.9872 # 20170925
+RoverR <- 1.9858775 / (8.314463 / 4.184) # 20230630
 # Calculate logK for each reaction
 logK1 <- subcrt(c("H2O", "CO2", "H2CO3"), c(-1, -1, 1), T = T, P = P)$out$logK / RoverR
 logK2 <- subcrt(c("AlO2(SiO2)-", "H+", "Al+3", "H2O", "SiO2"), c(-1, -4, 1, 2, 1), T = T, P = P)$out$logK / RoverR

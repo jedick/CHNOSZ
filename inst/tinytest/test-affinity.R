@@ -122,9 +122,15 @@ expect_equal(A.2303RT_max, A.2303RT_ref, tolerance = 1e-3, info = info)
 # TODO: add comparison with results from loading proteins via species()
 
 info <- "affinity() for proteins (with/without 'iprotein') returns same value as in previous package versions"
-# These values were calculated using versions 0.6, 0.8 and 0.9-7 (25 degrees C, 1 bar, basis species "CHNOS" or "CHNOS+")
-A.2303RT.nonionized <- -3795.297
-A.2303RT.ionized <- -3075.222
+## These values were calculated using versions 0.6, 0.8 and 0.9-7 (25 degrees C, 1 bar, basis species "CHNOS" or "CHNOS+")
+#A.2303RT.nonionized <- -3795.297
+#A.2303RT.ionized <- -3075.222
+## Calculated with version 2.0.0 (util.units() has R = 8.314445)
+#A.2303RT.nonionized <- -3795.291
+#A.2303RT.ionized <- -3075.215
+# Calculated with version 2.0.0-16 (util.units() has R = 8.314463)
+A.2303RT.nonionized <- -3794.69
+A.2303RT.ionized <- -3074.613
 # First for nonionized protein
 basis("CHNOS")
 # Try it with iprotein

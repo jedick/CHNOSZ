@@ -19,9 +19,22 @@ mod.OBIGT("[UPBB]", G = -21436, H = -45220, S = 1.62, E_units = "cal")
 basis("CHNOS+")
 suppressMessages(swap.basis("O2", "H2"))
 pequil <- protein.equil(protein, loga.protein=-3)
+
+# Before 20230630:
+# With R = 8.314445 (= 1.9872 * 4.184) in util.units(), ionize.aa(pinfo(protein)) gives:
+#            20        18
+#[1,] -56.06509 -55.87025
 # Astar/RT in the paragraph following Eq. 23, p. 6 of DS11
 # (truncated because of rounding)
-expect_true(any(grepl(c("0\\.435.*1\\.36"), pequil)), info = info)
+# expect_true(any(grepl(c("0\\.435.*1\\.36"), pequil)), info = info)
+
+# After 20230630:
+# With R = 8.314463 in util.units(), ionize.aa(pinfo(protein)) gives:
+#            20        18
+#[1,] -56.06511 -55.87027
+# The differences propagate up, so the test was changed on 20230630:
+expect_true(any(grepl(c("0\\.437.*1\\.36"), pequil)), info = info)
+
 # log10 activities of the proteins in the left-hand column of the same page
 expect_true(any(grepl(c("-3\\.256.*-2\\.834"), pequil)), info = info)
 

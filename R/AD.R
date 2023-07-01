@@ -8,7 +8,8 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
   # Some constants (from Akinfiev and Diamond, 2004 doi:10.1016/j.fluid.2004.06.010)
   MW <- 18.0153 # g mol-1
   NW <- 1000 / MW # mol kg-1
-  R <- 8.31441 # J K-1 mol-1
+  #R <- 8.31441 # J K-1 mol-1  20190219
+  R <- 8.314463  # https://physics.nist.gov/cgi-bin/cuu/Value?r 20230630
   # R expressed in volume units
   RV <- 10 * R # cm3 bar K-1 mol-1
 

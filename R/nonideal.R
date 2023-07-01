@@ -34,8 +34,10 @@ nonideal <- function(species, speciesprops, IS, T, P, A_DH, B_DH, m_star = NULL,
     else stop("invalid method (", thermo$opt$nonideal, ")")
   }
 
-  #R <- 1.9872  # gas constant, cal K^-1 mol^-1
-  R <- 8.314445  # gas constant, J K^-1 mol^-1  20220325
+  # Gas constant
+  #R <- 1.9872  # cal K^-1 mol^-1  Value used in SUPCRT92
+  #R <- 8.314445  # = 1.9872 * 4.184 J K^-1 mol^-1  20220325
+  R <- 8.314463  # https://physics.nist.gov/cgi-bin/cuu/Value?r 20230630
 
   # Function to calculate extended Debye-Huckel equation and derivatives using Alberty's parameters
   Alberty <- function(prop = "loggamma", Z, I, T) {

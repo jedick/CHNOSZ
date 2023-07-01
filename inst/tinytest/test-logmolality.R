@@ -37,8 +37,8 @@ expect_equal(out1[[3]]$G - out0[[3]]$G, -convert(loggam_CO2, "G"), info = info)
 # What is the equilibrium constant for the reaction CO2 + H2O = H+ + HCO3-?
 # (this is the standard state property at IS = 0)
 logK <- subcrt(c("CO2", "H2O", "H+", "HCO3-"), c(-1, -1, 1, 1), T = 25)$out$logK
-# We get logK = -6.344694 (rounded)
-expect_true(maxdiff(logK, -6.344694) < 1e-6, info = info)
+# We get logK = -6.34468 (rounded)
+expect_true(maxdiff(logK, -6.34468) < 1e-6, info = info)
 
 ### What is the affinity of the reaction at pH=7 and molalities of HCO3- and CO2 = 10^-3?
 ## Case 1: ionic strength = 0, so gamma = 0 and activity = molality

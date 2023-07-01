@@ -100,8 +100,10 @@ convert <- function(value, units, T = 298.15,
     if(units == 'cal') value <- value / Jcal
   }
   else if(units %in% c('g', 'logk')) {
-    #R <- 1.9872  # Gas constant, cal K^-1 mol^-1
-    R <- 8.314445  # Gas constant, J K^-1 mol^-1  20220325
+    # Gas constant
+    #R <- 1.9872  # cal K^-1 mol^-1  Value used in SUPCRT92
+    #R <- 8.314445  # = 1.9872 * 4.184 J K^-1 mol^-1  20220325
+    R <- 8.314463  # https://physics.nist.gov/cgi-bin/cuu/Value?r 20230630
     if(units == 'logk') value <- value / (-log(10) * R * T)
     if(units == 'g') value <- value * (-log(10) * R * T)
   }
