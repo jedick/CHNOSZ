@@ -236,7 +236,7 @@ info.numeric <- function(ispecies, check.it = TRUE) {
     calcCp <- check.EOS(this, this$model, "Cp", return.difference = FALSE)
     # Fill in NA heat capacity
     if(!is.na(calcCp) & is.na(this$Cp)) {
-      message("info.numeric: Cp of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcCp, 2), " ", this$E_units, " K-1 mol-1")
+      message("info.numeric: Cp\u00B0 of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcCp, 2), " ", this$E_units, " K-1 mol-1")
       this$Cp <- as.numeric(calcCp)
     } else if(isBerman) {
       # Calculate Cp for Berman minerals 20220208
@@ -248,7 +248,7 @@ info.numeric <- function(ispecies, check.it = TRUE) {
       calcV <- check.EOS(this, this$model, "V", return.difference = FALSE)
       # Fill in NA volume
       if(!is.na(calcV) & is.na(this$V)) {
-        message("info.numeric: V of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcV, 2), " cm3 mol-1")
+        message("info.numeric: V\u00B0 of ", this$name, "(", this$state, ") is NA; set by EOS parameters to ", round(calcV, 2), " cm3 mol-1")
         this$V <- as.numeric(calcV)
       }
     }

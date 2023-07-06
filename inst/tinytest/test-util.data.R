@@ -9,9 +9,9 @@ expect_equal(d1, d2, info = info)
 
 info <- "check.GHS() and check.EOS() (via info()) produce messages"
 i1 <- info("S2O3-2")
-expect_message(info(i1), "calculated G of S2O3-2\\(aq\\) differs by 939 cal mol-1 from database value", info = info)
+expect_message(info(i1), "calculated ΔG°f of S2O3-2\\(aq\\) differs by 939 cal mol-1 from database value", info = info)
 i2 <- info("Cu+2")
-expect_message(info(i2), "calculated Cp of Cu\\+2\\(aq\\) differs by 3.62 cal K-1 mol-1 from database value", info = info)
+expect_message(info(i2), "calculated Cp° of Cu\\+2\\(aq\\) differs by 3.62 cal K-1 mol-1 from database value", info = info)
 
 info <- "check.GHS() and check.EOS() respond to thermo()$opt$*.tol"
 i1 <- info("SO4-2")

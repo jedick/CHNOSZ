@@ -209,7 +209,7 @@ check.EOS <- function(eos, model, prop, return.difference = TRUE) {
     if(!is.na(calcval)) {
       if(!is.na(refval)) {
         if(abs(diff) > tol) {
-          message(paste("check.EOS: calculated ", prop, " of ", eos$name, "(", eos$state,
+          message(paste("check.EOS: calculated ", prop, "\u00B0 of ", eos$name, "(", eos$state,
             ") differs by ", round(diff,2), " ", units, " from database value", sep = ""))
           return(calcval)
         }
@@ -243,7 +243,7 @@ check.GHS <- function(ghs, return.difference = TRUE) {
     if(!is.na(refval)) {
       diff <- calcval - refval
       if(abs(diff) > thermo$opt$G.tol) {
-        message(paste("check.GHS: calculated G of ", ghs$name, "(", ghs$state,
+        message(paste("check.GHS: calculated \u0394G\u00B0f of ", ghs$name, "(", ghs$state,
           ") differs by ", round(diff), " ", ghs$E_units, " mol-1 from database value", sep = ""))
         return(calcval)
       }

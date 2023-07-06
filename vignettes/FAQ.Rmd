@@ -250,7 +250,7 @@ mtitle(c("Inorganic and organic species", "C[total] = 3 molal"))
 
 Many minerals undergo phase transitions upon heating.
 The stable phases at different temperatures are called polymorphs.
-Each polymorph for a given mineral should have its own entry in OBIGT, including values of the standard thermodynamic properties (Δ*G*°, Δ*H*°, and *S*°) at 25 °C.
+Each polymorph for a given mineral should have its own entry in OBIGT, including values of the standard thermodynamic properties (Δ*G*°~*f*~, Δ*H*°~*f*~, and *S*°) at 25 °C.
 The 25 °C (or 298.15 K) values for high-temperature polymorphs are often not listed in thermodynamic tables, but they can be calculated.
 This thermodynamic cycle shows how: we calculate the changes of a thermodyamic property (pictured here as `DS1` and `DS2`) between 298.15 K and the transition temperature (`Ttr`) for two polymorphs, then combine those with the property of the polymorphic transition (`DStr`) to obtain the difference of the property between the polymorphs at 298.15 K (`DS298`).
 
@@ -312,7 +312,7 @@ DStr <- TDStr / Ttr
 ```
 
 Start new database entries that include basic information, volume, and heat capacity coefficients for each polymorph.
-@PMW87 don't list `Cp` of the high-temperature polymorph extrapolated to 298.15 K, so leave it out.
+@PMW87 don't list *C~p~*° of the high-temperature polymorph extrapolated to 298.15 K, so leave it out.
 If the properties were in Joules, we would omit `E_units = "cal"` or change it to `E_units = "J"`.
 ```{r pyrrhotite_Cp, results = "hide", message = FALSE}
 mod.OBIGT("pyrrhotite_new", formula = formula, state = "cr", ref1 = ref1,
@@ -324,14 +324,14 @@ mod.OBIGT("pyrrhotite_new", formula = formula, state = "cr2", ref1 = ref1,
 ```
 
 For the time being, we set `G`, `H`, and `S` (i.e., the properties at 25 °C) to zero in order to easily calculate the temperature integrals of the properties from 298.15 K to `Ttr`.
-Values of zero are placeholders that don't satisfy Δ*G*° = Δ*H*° − *T*Δ*S*° for the formation properties from the elements for either polymorph, as indicated by the following messages.
+Values of zero are placeholders that don't satisfy Δ*G*°~*f*~ = Δ*H*°~*f*~ − *T*Δ*S*°~*f*~ for either polymorph (the subscript *f* represents formation from the elements), as indicated by the following messages.
 We will check again for consistency of the thermodynamic parameters at the end of the example.
 ```{r pyrrhotite_info, results = "hide", collapse = TRUE}
 info(info("pyrrhotite_new", "cr"))
 info(info("pyrrhotite_new", "cr2"))
 ```
 
-In order to calculate the temperature integral of Δ*G*°, we need not only the heat capacity coefficients but also actual values of *S*°.
+In order to calculate the temperature integral of Δ*G*°~*f*~, we need not only the heat capacity coefficients but also actual values of *S*°.
 Therefore, we start by calculating the entropy changes of each polymorph from 298.15 to `r Ttr` K (`DS1` and `DS2`) and combining those with the entropy of transition to obtain the difference of entropy between the polymorphs at 298.15 K.
 For polymorph 1 (with `state = "cr"`) it's advisable to include `use.polymorphs = FALSE` to prevent `subcrt()` from trying to identify the most stable polymorph at the indicated temperature.
 ```{r pyrrhotite_S, message = FALSE}
@@ -353,7 +353,7 @@ It's a good idea to check that the entropy of transition is calculated correctly
 stopifnot(all.equal(D2$S - D1$S, DStr))
 ```
 
-Now we're ready to add up the contributions to Δ*G*° and Δ*H*° from the left, top, and right sides of the cycle.
+Now we're ready to add up the contributions to Δ*G*°~*f*~ and Δ*H*°~*f*~ from the left, top, and right sides of the cycle.
 This gives us the differences between the polymorphs at 298.15 K, which we use to make the final changes to the database.
 ```{r pyrrhotite_DG298_DH298, results = "hide", message = FALSE}
 DG298 <- D1$G + DGtr - D2$G
@@ -365,7 +365,7 @@ mod.OBIGT("pyrrhotite_new", state = "cr2", G = G1 + DG298, H = H1 + DH298)
 It's a good idea to check that the values of `G`, `H`, and `S` at 25 °C for a given polymorph are consistent with each other.
 Here we use `check.GHS()` to calculate the difference between the value given for `G` and the value calculated from `H` and `S`.
 The difference of less than 1 `r E.units()`/mol can probably be attributed to small differences in the entropies of the elements used by @PMW87 and in CHNOSZ.
-We still get a message that the database value of `Cp` at 25 °C for the high-temperature polymorph is NA; this is OK because the (extrapolated) value can be calculated from the heat capacity coefficients.
+We still get a message that the database value of *C~p~*° at 25 °C for the high-temperature polymorph is NA; this is OK because the (extrapolated) value can be calculated from the heat capacity coefficients.
 ```{r pyrrhotite_info2, collapse = TRUE}
 cr_parameters <- info(info("pyrrhotite_new", "cr"))
 stopifnot(abs(check.GHS(cr_parameters)) < 1)
@@ -381,7 +381,7 @@ cr2_parameters
 
 Finally, let's look at the thermodynamic properties of the newly added pyrrhotite as a function of temperature around `Ttr`.
 Here, we use the feature of `subcrt()` that identifies the stable polymorph at each temperature.
-Note that Δ*G*° is a continuous function -- visual confirmation that the parameters yield zero for `DGtr` -- but Δ*H*°, *S*°, and *Cp*° are discontinuous at the transition temperature.
+Note that Δ*G*°~*f*~ is a continuous function -- visual confirmation that the parameters yield zero for `DGtr` -- but Δ*H*°~*f*~, *S*°, and *C~p~*° are discontinuous at the transition temperature.
 
 <button id="B-pyrrhotite_T" onclick="ToggleDiv('pyrrhotite_T')">Show code</button>
 <div id="D-pyrrhotite_T" style="display: none">
@@ -389,7 +389,7 @@ Note that Δ*G*° is a continuous function -- visual confirmation that the param
 T <- seq(550, 650, 1)
 sout <- subcrt("pyrrhotite_new", T = T, P = 1)$out[[1]]
 par(mfrow = c(1, 4), mar = c(4, 4.2, 1, 1))
-labels <- c(G = "DG0", H = "DH0", S = "S0", Cp = "Cp0")
+labels <- c(G = "DG0f", H = "DH0f", S = "S0", Cp = "Cp0")
 for(property in c("G", "H", "S", "Cp")) {
   plot(sout$T, sout[, property], col = sout$polymorph,
     xlab = axis.label("T"), ylab = axis.label(labels[property])
