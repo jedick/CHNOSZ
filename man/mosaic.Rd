@@ -66,7 +66,7 @@ To calculate mineral solubilities with mosaic calculations that account for liga
 
 \examples{
 \dontshow{reset()}# Fe-minerals and aqueous species in Fe-S-O-H system
-# Speciate SO4-2, HSO4-, HS-, H2S as a function of Eh and pH
+# Speciate SO4-2, HSO4-, HS-, and H2S as a function of Eh and pH
 # After Garrels and Christ, 1965 Figure 7.20
 pH <- c(0, 14)
 Eh <- c(-1, 1)

@@ -13,21 +13,23 @@
 # Function to calculate affinities with mosaic of basis species
 mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
 
+  # Get the arguments for affinity() before doing anything else 20230809
+  affinityargs <- list(...)
+
   # Argument recall 20190120
   # If the first argument is the result from a previous mosaic() calculation,
   # just update the remaining arguments
   if(is.list(bases)) {
     if(identical(bases[1], list(fun = "mosaic"))) {
-      aargs <- bases$args
-      # We can only update arguments given in ...
-      ddd <- list(...)
-      if(length(ddd) > 0) {
-        for(i in 1:length(ddd)) {
-          if(names(ddd)[i] %in% names(aargs)) aargs[[names(ddd)[i]]] <- ddd[[i]]
-          else aargs <- c(aargs, ddd[i])
+      bargs <- bases$args
+      # We can only update arguments for affinity()
+      if(length(affinityargs) > 0) {
+        for(i in 1:length(affinityargs)) {
+          if(names(affinityargs)[i] %in% names(bargs)) bargs[[names(affinityargs)[i]]] <- affinityargs[[i]]
+          else bargs <- c(bargs, affinityargs[i])
         }
       }
-      return(do.call(mosaic, aargs))
+      return(do.call(mosaic, bargs))
     }
   }
 
@@ -35,8 +37,7 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
   # bases can be a vector instead of a list
   if(!is.list(bases)) {
     bases <- list(bases)
-    otherargs <- list(...)
-    allargs <- c(list(bases = bases, blend = blend, stable = stable), otherargs)
+    allargs <- c(list(bases = bases, blend = blend, stable = stable), affinityargs)
     out <- do.call(mosaic, allargs)
     # Replace A.bases (affinity calculations for all groups of basis species) with backwards-compatible A.bases
     out$A.bases <- out$A.bases[[1]]
@@ -71,31 +72,31 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
     stop("the starting basis does not have ", paste(names0[ina], collapse = " and "))
   }
 
-  ddd <- list(...)
-  if("sout" %in% names(ddd)) {
-    ddd_has_sout <- TRUE
-    # Get sout from ... (from solubility()) 20210322
-    sout <- ddd$sout
+  if("sout" %in% names(affinityargs)) {
+    affinityargs_has_sout <- TRUE
+    # Get sout from affinityargs (from solubility()) 20210322
+    sout <- affinityargs$sout
   } else {
-    ddd_has_sout <- FALSE
+    affinityargs_has_sout <- FALSE
     # Run subcrt() calculations for all basis species and formed species 20190131
-    # this avoids repeating the calculations in different calls to affinity()
-    # add all the basis species here - the formed species are already present
+    #   - This avoids repeating the calculations in different calls to affinity()
+    # Add all the basis species here - the formed species are already present
     lapply(bases, species, add = TRUE)
-    sout <- affinity(..., return.sout = TRUE)
+    sout <- do.call(affinity, c(affinityargs, list(return.sout = TRUE)))
   }
+
 
   # Calculate affinities of the basis species themselves
   A.bases <- list()
   for(i in 1:length(bases)) {
     message("mosaic: calculating affinities of basis species group ", i, ": ", paste(bases[[i]], collapse = " "))
     mysp <- species(bases[[i]])
-    # 20191111 include only aq species in total activity
+    # Include only aq species in total activity 20191111
     iaq <- mysp$state == "aq"
     # Use as.numeric in case a buffer is active 20201014
     if(any(iaq)) species(which(iaq), as.numeric(basis0$logact[ibasis0[i]]))
-    if(ddd_has_sout) A.bases[[i]] <- suppressMessages(affinity(...))
-    else A.bases[[i]] <- suppressMessages(affinity(..., sout = sout))
+    if(affinityargs_has_sout) A.bases[[i]] <- suppressMessages(do.call(affinity, affinityargs))
+    else A.bases[[i]] <- suppressMessages(do.call(affinity, c(affinityargs, list(sout = sout))))
   }
 
   # Get all combinations of basis species
@@ -128,8 +129,8 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
     put.basis(allbases[i, ], thislogact)
     # We have to define the species using the current basis
     species(species0$ispecies, species0$logact)
-    if(ddd_has_sout) aff.species[[i]] <- suppressMessages(affinity(...))
-    else aff.species[[i]] <- suppressMessages(affinity(..., sout = sout))
+    if(affinityargs_has_sout) aff.species[[i]] <- suppressMessages(do.call(affinity, affinityargs))
+    else aff.species[[i]] <- suppressMessages(do.call(affinity, c(affinityargs, list(sout = sout))))
   }
 
   # Calculate equilibrium mole fractions for each group of basis species
@@ -153,8 +154,7 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
         group.fraction[[i]] <- A.bases[[i]]$values
       }
     } else {
-      # For blend = FALSE, we just look at whether
-      # a basis species predominates within its group
+      # For blend = FALSE, we just look at whether a basis species predominates within its group
       if(is.null(stable[i][[1]])) {
         d <- diagram(A.bases[[i]], plot.it = FALSE, limit.water = FALSE)
         predom <- d$predominant
@@ -212,7 +212,8 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
   }
 
   # For argument recall, include all arguments in output 20190120
-  allargs <- c(list(bases = bases, blend = blend), list(...))
+  allargs <- c(list(bases = bases, blend = blend), affinityargs)
   # Return the affinities for the species and basis species
   return(list(fun = "mosaic", args = allargs, A.species = A.species, A.bases = A.bases, E.bases = E.bases))
+
 }
