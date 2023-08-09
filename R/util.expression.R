@@ -159,14 +159,20 @@ axis.label <- function(label, units = NULL, basis = thermo()$basis, prefix = "",
   # Make a formatted axis label from a generic description
   # It can be a chemical property, condition, or chemical activity in the system;
   # if the label matches one of the basis species or if the state is specified, it's a chemical activity
+
   # 20090826: Just return the argument if a comma is already present
-  # (it's good for custom labels that shouldn't be italicized)
+  # (used for custom labels that shouldn't be italicized)
   if(grepl(",", label)) return(label)
+
   if(label %in% rownames(basis)) {
     # 20090215: The state this basis species is in
     state <- basis$state[match(label, rownames(basis))]
     # Get the formatted label
     desc <- expr.species(label, state = state, log = TRUE, molality = molality)
+  } else if(label %in% colnames(basis)) {
+    # Make a label for an element (total C, total S, etc.) 20230809
+    if(molality) desc <- bquote(log~italic(m)~"(total "*.(label)*")")
+    else desc <- bquote(log~italic(a)~"(total "*.(label)*")")
   } else {
     # The label is for a chemical property or condition
     # Make the label by putting a comma between the property and the units
@@ -176,6 +182,7 @@ axis.label <- function(label, units = NULL, basis = thermo()$basis, prefix = "",
     if(units == "") desc <- substitute(a, list(a = property))
     else desc <- substitute(a~"("*b*")", list(a = property, b = units))
   }
+
   # Done!
   return(desc)
 }

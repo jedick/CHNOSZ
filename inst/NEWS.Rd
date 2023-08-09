@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 2.0.0-13 (2023-06-24)}{
+\section{Changes in CHNOSZ version 2.0.0-19 (2023-08-09)}{
 
     \itemize{
 
@@ -27,6 +27,11 @@
       \item Rename \code{checkGHS()} and \code{checkEOS()} to
       \code{check.GHS()} and \code{check.EOS()} and make
       \code{return.difference} TRUE by default.
+
+      \item Where the changing basis species include one of the axis variables
+      on a diagram, \code{mosaic()} now calls \code{affinity()} with the
+      appropriate argument names for basis species and adjusts the labels for
+      the diagram (\dQuote{total C}, \dQuote{total S}, etc.).
 
     }
 

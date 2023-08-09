@@ -333,6 +333,18 @@ diagram <- function(
     lty <- rep(lty, length.out = length(plotvals))
     lwd <- rep(lwd, length.out = length(plotvals))
     col <- rep(col, length.out = length(plotvals))
+    
+    # Function to get label for i'th variable 20230809
+    # (uses custom labels from 'labels' list element added by mosaic)
+    getlabel <- function(ivar) {
+      label <- eout$vars[ivar]
+      if(!is.null(eout$labels)) {
+        if(label %in% names(eout$labels)) {
+          label <- eout$labels[[label]]
+        }
+      }
+      label
+    }
 
     if(nd == 0) {
 
@@ -349,7 +361,7 @@ diagram <- function(
       if(missing(xlim)) xlim <- range(xvalues)  # TODO: this is backward if the vals are not increasing
       # Initialize the plot
       if(!add) {
-        if(missing(xlab)) xlab <- axis.label(eout$vars[1], basis = eout$basis, molality = molality)
+        if(missing(xlab)) xlab <- axis.label(getlabel(1), basis = eout$basis, molality = molality)
         if(missing(ylab)) {
           ylab <- axis.label(plotvar, units = "", molality = molality)
           if(plotvar == "rank.affinity") ylab <- "Average affinity ranking"
@@ -695,8 +707,8 @@ diagram <- function(
       }
       # Initialize the plot
       if(!add) {
-        if(is.null(xlab)) xlab <- axis.label(eout$vars[1], basis = eout$basis, molality = molality)
-        if(is.null(ylab)) ylab <- axis.label(eout$vars[2], basis = eout$basis, molality = molality)
+        if(is.null(xlab)) xlab <- axis.label(getlabel(1), basis = eout$basis, molality = molality)
+        if(is.null(ylab)) ylab <- axis.label(getlabel(2), basis = eout$basis, molality = molality)
         if(tplot) thermo.plot.new(xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab,
           cex = cex, cex.axis = cex.axis, mar = mar, yline = yline, side = side, ...)
         else plot(0, 0, type = "n", xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab, ...)
