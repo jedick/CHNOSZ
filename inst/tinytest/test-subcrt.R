@@ -223,6 +223,16 @@ expect_false(anyNA(sres_nopoly_extrap$out[[1]]$G))
 info <- "Arguments 2 and 3 can't both be character"
 expect_error(subcrt(c("hydrogen", "H2"), c("gas", "aq"), "G"), info = info)
 
+# Added on 20230818
+info <- "exceed.Ttr works for basis species in automatically balanced reactions"
+basis(c("gypsum", "SO4-2", "H2O", "H+", "O2"))
+# Defaults for subcrt() go above the temperature limit for gypsum, so use exceed.Ttr to calculate logK
+automatic_reaction <- subcrt("Ca+2", 1, exceed.Ttr = TRUE)$out
+expect_false(any(is.na(automatic_reaction$logK)), info = info)
+# Check that logK is identical for the reaction entered manually
+manual_reaction <- subcrt(c("gypsum", "Ca+2", "SO4-2", "H2O"), c(-1, 1, 1, 2), exceed.Ttr = TRUE)$out
+expect_equal(automatic_reaction$logK, manual_reaction$logK, info = info)
+
 # References
 
 # Amend, J. P. and Shock, E. L. (2001) 

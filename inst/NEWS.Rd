@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 2.0.0-19 (2023-08-09)}{
+\section{Changes in CHNOSZ version 2.0.0-20 (2023-08-22)}{
 
     \itemize{
 
@@ -32,6 +32,9 @@
       on a diagram, \code{mosaic()} now calls \code{affinity()} with the
       appropriate argument names for basis species and adjusts the labels for
       the diagram (\dQuote{total C}, \dQuote{total S}, etc.).
+
+      \item Fix bug where \code{exceed.Ttr} argument in \code{subcrt()} was
+      stuck at FALSE for automatically balanced reactions.
 
     }
 
