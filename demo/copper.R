@@ -1,3 +1,4 @@
+# CHNOSZ/demo/copper.R
 ## Eh-pH diagrams for copper-water-glycine
 ## After Fig. 2 of Aksu and Doyle, 2001
 ## (Aksu, S. and Doyle, F. M., 2001. Electrochemistry of copper in aqueous glycine 

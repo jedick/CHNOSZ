@@ -1,3 +1,4 @@
+# CHNOSZ/demo/sources.R
 ## Cross-checking sources
 library(CHNOSZ)
 

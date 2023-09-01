@@ -1,3 +1,4 @@
+# CHNOSZ/demo/protein.equil.R
 ## Steps in calculation of chemical activities of two proteins
 ## in metastable equilibrium, after Dick and Shock, 2011
 library(CHNOSZ)

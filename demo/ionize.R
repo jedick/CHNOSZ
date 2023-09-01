@@ -1,3 +1,4 @@
+# CHNOSZ/demo/ionize.R
 ## ionize.aa(): Contour plots of net charge and ionization properties of LYSC_CHICK
 library(CHNOSZ)
 

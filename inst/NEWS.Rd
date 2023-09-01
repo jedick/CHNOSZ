@@ -33,8 +33,9 @@
       appropriate argument names for basis species and adjusts the labels for
       the diagram (\dQuote{total C}, \dQuote{total S}, etc.).
 
-      \item Fix bug where \code{exceed.Ttr} argument in \code{subcrt()} was
-      stuck at FALSE for automatically balanced reactions.
+      \item Fix bug in \code{subcrt()} for \code{exceed.Ttr} not applied to
+      automatically balanced reactions (it was stuck on FALSE regardless of the
+      argument value).
 
     }
 

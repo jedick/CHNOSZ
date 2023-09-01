@@ -1,3 +1,4 @@
+# CHNOSZ/demo/NaCl.R
 ## NaCl dissocation logK f(T,P)
 ## after Shock et al., 1992, Fig. 1
 ## (Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) 

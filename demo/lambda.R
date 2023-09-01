@@ -1,3 +1,4 @@
+# CHNOSZ/demo/lambda.R
 # Plot effects of lambda transition in quartz
 # After Berman 1988 Figs. 1 and 2
 library(CHNOSZ)

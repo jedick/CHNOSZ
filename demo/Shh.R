@@ -1,3 +1,4 @@
+# CHNOSZ/demo/Shh.R
 # Compare affinities of Sonic hedgehog and transcription factors involved in dorsal-ventral patterning
 # (Dick, 2015. Chemical integration of proteins in signaling and development. https://doi.org/10.1101/015826)
 library(CHNOSZ)

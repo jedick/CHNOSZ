@@ -1,3 +1,4 @@
+# CHNOSZ/demo/affinity.R
 ## Affinities of metabolic reactions
 ## After Amend and Shock, 2001, Fig. 7
 ##  Amend, J. P. and Shock, E. L. (2001) Energetics of overall metabolic reactions of thermophilic and hyperthermophilic Archaea and Bacteria.

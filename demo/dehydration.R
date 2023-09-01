@@ -1,3 +1,4 @@
+# CHNOSZ/demo/dehydration.R
 # Plot temperature dependence of log K for some dehydration reactions
 library(CHNOSZ)
 
