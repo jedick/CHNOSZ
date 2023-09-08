@@ -15,6 +15,33 @@ link-citations: true
 ---
 
 <style>
+
+/* https://gomakethings.com/how-to-break-an-image-out-of-its-parent-container-with-css/ */
+@media (min-width: 700px) {
+  .full-width {
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    max-width: 100vw;
+    position: relative;
+    right: 50%;
+    width: 100vw;
+  }
+}
+@media (min-width: 1100px) {
+  .full-width {
+    left: 50vw; /* fallback if needed */
+    left: calc(50vw - 200px);
+    width: 1100px;
+    position: relative;
+  }
+}
+/* zero margin around pre blocks (looks more like R console output) */
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 /* CSS snippet from boostrap.css modified by Jeffrey Dick on 2023-06-23 */
 /*!
  * Bootstrap  v5.3.0 (https://getbootstrap.com/)
@@ -53,6 +80,7 @@ link-citations: true
   --bs-alert-border-color: var(--bs-info-border-subtle);
   --bs-alert-link-color: var(--bs-info-text-emphasis);
 }
+
 </style>
 
 <script>
@@ -124,6 +152,9 @@ a2HCO3_ <- "<i>a</i><sup>2</sup><sub>HCO<sub>3</sub><sup>−</sup></sub>"
 logCtot <- "log&thinsp;C<sub>tot</sub>"
 CO2 <- "CO<sub>2</sub>"
 H2O <- "H<sub>2</sub>O"
+S3minus <- "S<sub>3</sub><sup>-</sup>"
+H2S <- "H<sub>2</sub>S"
+SO4__ <- "SO<sub>4</sub><sup>-2</sup>"
 ```
 
 This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
@@ -135,11 +166,11 @@ CHNOSZ and [schnoz](https://en.wiktionary.org/wiki/schnozz) are homophones.
 
 *Answered on 2023-05-22.*
 
-## How can CHNOSZ be cited?
+## How should CHNOSZ be cited?
 
-* This paper is the general reference for CHNOSZ: @Dic19.
-* This paper describes the features for making diagrams with multiple metals: @Dic21b.
-* This paper describes the features for calculations involving proteins: @Dic08.
+* Cite this paper as the general reference for CHNOSZ: @Dic19.
+* Cite this paper for diagrams with multiple metals: @Dic21b.
+* Cite this paper for metastable equilibrium calculations for proteins: @Dic08.
 * The [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) represents the work of many researchers.
 **If you publish results that depend on any of these data, please cite the primary sources.**
 Use `r info_` to show the reference keys for particular species and `r thermo.refs_` to list the bibliographic details:
@@ -206,7 +237,7 @@ The plots below, which are made using `r equilibrate_` for species in the Deep E
 par(mfrow = c(1, 2), mar = c(3.0, 3.5, 2.5, 1.0), mgp = c(1.7, 0.3, 0), las = 1, tcl = 0.3, xaxs = "i", yaxs = "i")
 
 # Activate DEW model
-oldwat <- water("DEW")
+water("DEW")
 
 ###########
 ## logfO2-pH diagram for aqueous inorganic and organic carbon species at high pressure
@@ -238,6 +269,9 @@ dfun(Ctot = 0.03)
 mtitle(c("Inorganic and organic species", "C[total] = 0.03 molal"))
 dfun(Ctot = 3)
 mtitle(c("Inorganic and organic species", "C[total] = 3 molal"))
+
+# Restore default settings for the questions below
+reset()
 ```
 </div>
 
@@ -398,6 +432,9 @@ for(property in c("G", "H", "S", "Cp")) {
   if(property == "G")
     legend("bottomleft", c("1", "2"), pch = 1, col = c(1, 2), title = "Polymorph")
 }
+
+# Restore default settings for the questions below
+reset()
 ```
 </div>
 ```{r pyrrhotite_T, echo = FALSE, message = FALSE, results = "hide", fig.width = 8, fig.height = 2.5, out.width = "100%", fig.align = "center", pngquant = pngquant}
@@ -406,5 +443,181 @@ for(property in c("G", "H", "S", "Cp")) {
 For additional polymorphs, we could repeat the above procedure using polymorph 2 as the starting point to calculate `G`, `H`, and `S` of polymorph 3, and so on.
 
 *Answered on 2023-06-23.*
+
+## How can I make a diagram with the trisulfur radical ion (`r S3minus`)?
+
+A `r logfO2`--pH plot for aqueous sulfur species including `r S3minus` was first presented by @PD11.
+Later, @PD15 reported parameters in the revised HKF equations of state for `r S3minus`, which are available in OBIGT.
+
+```{r trisulfur, eval = FALSE, echo = FALSE}
+par(mfrow = c(1, 3))
+
+## BLOCK 1
+T <- 350
+P <- 5000
+res <- 200
+
+## BLOCK 2
+wt_percent_S <- 10
+wt_permil_S <- wt_percent_S * 10
+molar_mass_S <- mass("S") # 32.06
+moles_S <- wt_permil_S / molar_mass_S
+grams_H2O <- 1000 - wt_permil_S
+molality_S <- 1000 * moles_S / grams_H2O
+logm_S <- log10(molality_S)
+
+## BLOCK 3
+basis(c("Ni", "SiO2", "Fe2O3", "H2S", "H2O", "oxygen", "H+"))
+species(c("H2S", "HS-", "SO2", "HSO4-", "SO4-2", "S3-"))
+a <- affinity(pH = c(2, 10, res), O2 = c(-34, -22, res), T = T, P = P)
+e <- equilibrate(a, loga.balance = logm_S)
+diagram(e)
+
+## BLOCK 4
+mod.buffer("NNO", c("nickel", "bunsenite"), state = "cr", logact = 0)
+for(buffer in c("HM", "QFM", "NNO")) {
+  basis("O2", buffer)
+  logfO2 <- affinity(return.buffer = TRUE, T = T, P = P)$O2
+  abline(h = logfO2, lty = 3, col = 2)
+  text(8.5, logfO2, buffer, adj = c(0, 0), col = 2, cex = 0.9)
+}
+
+## BLOCK 5
+pH <- subcrt(c("H2O", "H+", "OH-"), c(-1, 1, 1), T = T, P = P)$out$logK / -2
+abline(v = pH, lty = 2, col = 4)
+
+## BLOCK 6
+lTP <- describe.property(c("T", "P"), c(T, P))
+lS <- paste(wt_percent_S, "wt% S(aq)")
+ltext <- c(lTP, lS)
+legend("topright", ltext, bty = "n", bg = "transparent")
+title(quote("Parameters for"~S[3]^"-"~"from Pokrovski and Dubessy (2015)"), xpd = NA)
+
+######## Plot 2: Modify Gibbs energy
+
+oldG <- info(info("S3-"))$G
+newG <- oldG - 12548
+mod.OBIGT("S3-", G = newG)
+a <- affinity(pH = c(2, 10, res), O2 = c(-34, -22, res), T = T, P = P)
+e <- equilibrate(a, loga.balance = logm_S)
+diagram(e)
+legend("topright", ltext, bty = "n", bg = "transparent")
+title(quote("Modified"~log*italic(K)~"after Pokrovski and Dubrovinsky (2011)"), xpd = NA)
+OBIGT()
+
+######## Plot 3: Do it with DEW
+
+T <- 700
+P <- 10000 # 10000 bar = 1 GPa
+oldwat <- water("DEW")
+add.OBIGT("DEW")
+info(species()$ispecies)
+a <- affinity(pH = c(2, 10, res), O2 = c(-18, -10, res), T = T, P = P)
+e <- equilibrate(a, loga.balance = logm_S)
+diagram(e)
+lTP <- describe.property(c("T", "P"), c(T, P))
+ltext <- c(lTP, lS)
+legend("topright", ltext, bty = "n", bg = "transparent")
+title(quote("Deep Earth Water (DEW)"~"model"))
+water(oldwat)
+OBIGT()
+```
+
+The blocks of code are commented here:
+
+1. Set temperature, pressure, and resolution.
+2. Calculate molality of S from given weight percent [this is rather tedious and could be condensed to fewer lines of code].
+   - Define the given weight percent (10 wt% S).
+   - Calculate weight permil S.
+   - Divide by molar mass to calculate moles of S in 1 kg of solution.
+   - Calculate grams of `r H2O` in 1 kg of solution.
+   - Calculate molality (moles of S per kg of `r H2O`, not kg of solution).
+   - Calculate decimal logarithm of molality.
+3. Define the basis species and formed species, calculate affinity, equilibrate activities, and make the diagram.
+   - If we didn't want to plot the buffer lines, we could just use `basis(c("H2S", "H2O", "oxygen", "H+"))`.
+   - Basis species with Fe, Si, and Ni are needed for the HM, QFM, and NNO buffers.
+   - Note that "oxygen" matches `r O2`(gas), not `r O2`(aq), so the variable on the diagram is `r logfO2`.
+4. Define Ni-NiO (NNO) buffer and plot buffer lines for HM, QFM, and NNO.
+   - QFM (quartz-fayalite-magnetite) is also known as FMQ.
+5. Calculate and plot pH of neutrality for water.
+6. Add a legend and title.
+
+<button id="B-trisulfur-1" onclick="ToggleDiv('trisulfur-1')">Show code</button>
+<div id="D-trisulfur-1" style="display: none">
+```{r trisulfur, eval = FALSE, echo = 3:43}
+```
+</div>
+
+### Why does the published diagram have a much larger stability field for `r S3minus`?
+
+Let's calculate `r logK` for the reaction 2 `r H2S`(aq) + `r SO4__` + `r Hplus` = `r S3minus` + 0.75 `r O2`(gas) + 2.5 `r H2O`.
+
+```{r trisulfur_logK, message = FALSE, echo = 1:3}
+species <- c("H2S", "SO4-2", "H+", "S3-", "oxygen", "H2O")
+coeffs <- c(-2, -1, -1, 1, 0.75, 2.5)
+(calclogK <- subcrt(species, coeffs, T = seq(300, 450, 50), P = 5000)$out$logK)
+fcalclogK <- formatC(calclogK, format = "f", digits = 1)
+reflogK <- -9.6
+dlogK <- calclogK[2] - reflogK
+# Put in a test so that we don't get surprised by
+# future database updates or changes to this vignette
+stopifnot(round(dlogK, 4) == -4.4132)
+```
+
+By using the thermodynamic parameters for `r S3minus` in OBIGT that are taken from @PD15, `r logK` is calculated to be `r paste(paste(fcalclogK[1:3], collapse = ", "), fcalclogK[4], sep = ", and ")` at 300, 350, 400, and 450 °C and 5000 bar.
+In contrast, ref. 22 of @PD11 lists `r reflogK` for `r logK` at 350 °C; this is `r round(-dlogK, 1)` log units higher than the calculated value of `r fcalclogK[2]`. 
+This corresponds to a difference of Gibbs energy of -2.303 * 1.9872 * (350 + 273.15) * `r round(-dlogK, 1)` = `r formatC(-2.303 * 1.9872 * (350 + 273.15) * -dlogK, format = "f", digits = 0)` cal/mol.
+
+In the code below, we use the difference of Gibbs energy to temporarily update the OBIGT entry for `r S3minus`.
+Then, we make a new diagram that is more similar to that from @PD11.
+Finally, we reset the OBIGT database so that the temporary parameters don't interfere with later calculations.
+
+<button id="B-trisulfur-2" onclick="ToggleDiv('trisulfur-2')">Show code</button>
+<div id="D-trisulfur-2" style="display: none">
+```{r trisulfur, eval = FALSE, echo = 46:55}
+```
+</div>
+
+### Can I make the diagram using the Deep Earth Water (DEW) model?
+
+Yes! Just set a new temperature and pressure and activate the DEW water model and load the DEW aqueous species.
+You can also use `r info_` to see which species are affected by loading the DEW parameters; it turns out that `r SO4__` isn't.
+Then, use similar commands as above to make the diagram.
+At the end, reset the water model and OBIGT database.
+
+<button id="B-trisulfur-DEW" onclick="ToggleDiv('trisulfur-DEW')">Show code</button>
+<div id="D-trisulfur-DEW" style="display: none">
+```{r trisulfur_DEW, message = FALSE, echo = 8:22, collapse = TRUE, fig.keep = "none"}
+# The first four lines are stand-ins to make this block runnable and get the right output from info();
+# the diagram actually shown in the vignette is made using the 'trisulfur' block above
+b <- basis("CHNOS+")
+s <- species(c("H2S", "HS-", "SO2", "HSO4-", "SO4-2", "S3-"))
+res <- 10
+wt_percent_S <- logm_S <- 0
+######## End of stand-in code ########
+T <- 700
+P <- 10000 # 10000 bar = 1 GPa
+oldwat <- water("DEW")
+add.OBIGT("DEW")
+info(species()$ispecies)[, 1:8]
+a <- affinity(pH = c(2, 10, res), O2 = c(-18, -10, res), T = T, P = P)
+e <- equilibrate(a, loga.balance = logm_S)
+diagram(e)
+lTP <- describe.property(c("T", "P"), c(T, P))
+lS <- paste(wt_percent_S, "wt% S(aq)")
+ltext <- c(lTP, lS)
+legend("topright", ltext, bty = "n", bg = "transparent")
+title(quote("Deep Earth Water (DEW)"~"model"))
+water(oldwat)
+OBIGT()
+```
+</div>
+
+Here are the three plots that we made:
+
+```{r trisulfur, echo = FALSE, message = FALSE, results = "hide", fig.width = 10, fig.height = 3.33, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
+```
+
+*Answered on 2023-09-08.*
 
 ## References

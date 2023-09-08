@@ -12,11 +12,22 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 2.0.0-22 (2023-09-08)}{
+\section{Changes in CHNOSZ version 2.0.0-23 (2023-09-08)}{
 
     \itemize{
 
-      \item Add FAQ vignette.
+      \item Add FAQ vignette with the following questions:
+
+      \itemize{
+
+        \item How is \sQuote{CHNOSZ} pronounced?
+        \item How should CHNOSZ be cited?
+        \item What thermodynamic models are used in CHNOSZ?
+        \item When and why do equal-activity boundaries depend on total activity?
+        \item How can minerals with phase transitions be added to the database?
+        \item How can I make a diagram with the trisulfur radical ion (S\s{3}\S{-})?
+
+      }
 
       \item Add \code{use.polymorphs} argument to \code{subcrt()} to allow
       turning off automatic identification of stable polymorphs. This is used
