@@ -12,30 +12,36 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 2.0.0-20 (2023-08-22)}{
+\section{Changes in CHNOSZ version 2.0.0-22 (2023-09-08)}{
 
     \itemize{
 
       \item Add FAQ vignette.
 
+      \item Add \code{use.polymorphs} argument to \code{subcrt()} to allow
+      turning off automatic identification of stable polymorphs. This is used
+      in the FAQ (\dQuote{How can minerals with phase transitions be added to
+      the database?}).
+
       \item Restore \file{EOSregress.R}, \file{eos-regress.Rmd}, and
       \file{demo/adenine.R}.
-
-      \item Add \code{use.polymorphs} argument to \code{subcrt()} to allow
-      turning off automatic identification of stable polymorphs.
 
       \item Rename \code{checkGHS()} and \code{checkEOS()} to
       \code{check.GHS()} and \code{check.EOS()} and make
       \code{return.difference} TRUE by default.
 
-      \item Where the changing basis species include one of the axis variables
+      \item Where the alternate basis species include one of the axis variables
       on a diagram, \code{mosaic()} now calls \code{affinity()} with the
-      appropriate argument names for basis species and adjusts the labels for
-      the diagram (\dQuote{total C}, \dQuote{total S}, etc.).
+      appropriate argument names and adjusts the labels for the diagram
+      (\dQuote{total C}, \dQuote{total S}, etc.).
 
       \item Fix bug in \code{subcrt()} for \code{exceed.Ttr} not applied to
       automatically balanced reactions (it was stuck on FALSE regardless of the
       argument value).
+
+      \item In \code{OBIGT()}, load \file{Berman_cr.csv} before
+      \file{inorganic_cr.csv} so that \code{info("Fe2O3")} matches hematite
+      rather than maghemite.
 
     }
 

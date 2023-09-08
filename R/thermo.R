@@ -61,7 +61,7 @@ OBIGT <- function(no.organics = FALSE) {
   if(!"thermo" %in% ls(CHNOSZ)) stop("The CHNOSZ environment doesn't have a \"thermo\" object. Try running reset()")
   # Identify OBIGT data files
   sources_aq <- paste0(c("H2O", "inorganic", "organic"), "_aq")
-  sources_cr <- paste0(c("inorganic", "organic", "Berman"), "_cr")
+  sources_cr <- paste0(c("Berman", "inorganic", "organic"), "_cr")
   sources_liq <- paste0(c("organic"), "_liq")
   sources_gas <- paste0(c("inorganic", "organic"), "_gas")
   sources <- c(sources_aq, sources_cr, sources_gas, sources_liq)
