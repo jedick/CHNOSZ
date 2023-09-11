@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 2.0.0-23 (2023-09-08)}{
+\section{Changes in CHNOSZ version 2.0.0-24 (2023-09-11)}{
 
     \itemize{
 
@@ -53,6 +53,11 @@
       \item In \code{OBIGT()}, load \file{Berman_cr.csv} before
       \file{inorganic_cr.csv} so that \code{info("Fe2O3")} matches hematite
       rather than maghemite.
+
+      \item Add 36 charged amino acids from
+      \href{https://doi.org/10.1007/s11084-015-9428-3}{Kitadai (2015)} and
+      update several others (Arg\S{+}, Arg\S{-}, Asp\S{-}, Glu\S{-}, His\S{+},
+      Lys\S{+}, Lys\S{-}, and Tyr\S{-}). Thanks to Grayson Boyer.
 
     }
 
