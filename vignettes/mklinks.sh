@@ -21,7 +21,7 @@ sed -i 's/<code>?taxonomy<\/code>/<code><a href="..\/html\/taxonomy.html" style=
 sed -i 's/<code>?check.GHS<\/code>/<code><a href="..\/html\/util.data.html" style="background-image:none;">?check.GHS<\/a><\/code>/g' anintro.html
 
 # anintro.html: add links to function names
-# Start at line 120 (below the TOC)
+# Start at line 312 (below the TOC)
 sed -i '312,$s/<code>info()<\/code>/<code><a href="..\/html\/info.html" style="background-image:none;">info()<\/a><\/code>/g' anintro.html
 sed -i '312,$s/<code>ZC()<\/code>/<code><a href="..\/html\/util.formula.html" style="background-image:none;">ZC()<\/a><\/code>/g' anintro.html
 sed -i '312,$s/<code>affinity()<\/code>/<code><a href="..\/html\/affinity.html" style="background-image:none;">affinity()<\/a><\/code>/g' anintro.html
@@ -108,7 +108,9 @@ sed -i 's/add.OBIGT()/<a href="..\/html\/add.OBIGT.html">add.OBIGT()<\/a>/g' equ
 sed -i 's/affinity()/<a href="..\/html\/affinity.html">affinity()<\/a>/g' multi-metal.html
 sed -i 's/mash()/<a href="..\/html\/mix.html">mash()<\/a>/g' multi-metal.html
 sed -i 's/diagram()/<a href="..\/html\/diagram.html">diagram()<\/a>/g' multi-metal.html
-sed -i 's/mosaic()/<a href="..\/html\/mosaic.html">mosaic()<\/a>/g' multi-metal.html
+sed -i 's/stack_mosaic()/<a href="..\/html\/stack_mosaic.html">stack_mosaic()<\/a>/g' multi-metal.html
+# Put a ">" in front so this doesn't match stack_mosaic 20230914
+sed -i 's/>mosaic()/><a href="..\/html\/mosaic.html">mosaic()<\/a>/g' multi-metal.html
 sed -i 's/equilibrate()/<a href="..\/html\/equilibrate.html">equilibrate()<\/a>/g' multi-metal.html
 sed -i 's/rebalance()/<a href="..\/html\/mix.html">rebalance()<\/a>/g' multi-metal.html
 sed -i 's/ratlab()/<a href="..\/html\/util.expression.html">ratlab()<\/a>/g' multi-metal.html
