@@ -12,11 +12,11 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 2.0.0-24 (2023-09-11)}{
+\section{Changes in CHNOSZ version 2.0.0-26 (2023-09-19)}{
 
     \itemize{
 
-      \item Add FAQ vignette with the following questions:
+      \item Add \viglink{FAQ} vignette with the following questions:
 
       \itemize{
 
@@ -34,17 +34,20 @@
       in the FAQ (\dQuote{How can minerals with phase transitions be added to
       the database?}).
 
-      \item Restore \file{EOSregress.R}, \file{eos-regress.Rmd}, and
-      \file{demo/adenine.R}.
+      \item Restore \file{EOSregress.R} and its reverse dependencies
+      \file{eos-regress.Rmd} and \file{demo/adenine.R}. Thanks to Kris Fecteau
+      and Kirt Robinson for the suggestion.
 
       \item Rename \code{checkGHS()} and \code{checkEOS()} to
       \code{check.GHS()} and \code{check.EOS()} and make
       \code{return.difference} TRUE by default.
 
-      \item Where the alternate basis species include one of the axis variables
-      on a diagram, \code{mosaic()} now calls \code{affinity()} with the
-      appropriate argument names and adjusts the labels for the diagram
-      (\dQuote{total C}, \dQuote{total S}, etc.).
+      \item \code{mosaic()} now handles the situation where the alternate basis
+      species include one of the axis variables on a diagram (by changing the
+      argument names in its internal calls to \code{affinity()}) and
+      adjusts the labels for the diagram accordingly (e.g. \dQuote{total C},
+      \dQuote{total S}, etc.). Thanks to Evgeniy Bastrakov for the feature
+      request.
 
       \item Fix bug in \code{subcrt()} for \code{exceed.Ttr} not applied to
       automatically balanced reactions (it was stuck on FALSE regardless of the

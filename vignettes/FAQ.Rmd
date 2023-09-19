@@ -168,9 +168,9 @@ CHNOSZ and [schnoz](https://en.wiktionary.org/wiki/schnozz) are homophones.
 
 ## How should CHNOSZ be cited?
 
-* Cite this paper as the general reference for CHNOSZ: @Dic19.
-* Cite this paper for diagrams with multiple metals: @Dic21b.
-* Cite this paper for metastable equilibrium calculations for proteins: @Dic08.
+* This paper is the general reference for CHNOSZ: @Dic19.
+* This paper describes diagrams with multiple metals: @Dic21b.
+* This paper describes metastable equilibrium calculations for proteins: @Dic08.
 * The [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) represents the work of many researchers.
 **If you publish results that depend on any of these data, please cite the primary sources.**
 Use `r info_` to show the reference keys for particular species and `r thermo.refs_` to list the bibliographic details:
