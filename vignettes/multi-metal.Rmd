@@ -35,7 +35,7 @@ link-citations: true
     padding:10px;
   }
 }
-/* zero margin around pre blocks (looks more like R console output) */
+/* Zero margin around pre blocks (looks more like R console output) */
 pre {
   margin-top: 0;
   margin-bottom: 0;
@@ -59,7 +59,7 @@ function ToggleDiv(ID) {
 
 ```{r setup, include=FALSE}
 options(width = 80)
-## use pngquant to optimize PNG images
+## Use pngquant to optimize PNG images
 library(knitr)
 knit_hooks$set(pngquant = hook_pngquant)
 pngquant <- "--speed=1 --quality=0-25"

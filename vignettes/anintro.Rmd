@@ -45,9 +45,9 @@ options(digits = 6)
 ```
 
 ```{r HTML, include=FALSE}
-## some frequently used HTML expressions
+## Some frequently used HTML expressions
 logfO2 <- "log<i>f</i><sub>O<sub>2</sub></sub>"
-# use lowercase here because these tend to be variable names in the examples
+# Use lowercase here because these tend to be variable names in the examples
 zc <- "<i>Z</i><sub>C</sub>"
 o2 <- "O<sub>2</sub>"
 h2o <- "H<sub>2</sub>O"
@@ -58,13 +58,13 @@ ch4 <- "CH<sub>4</sub>"
 ```{r setup, include=FALSE}
 library(knitr)
 
-## from "Tufte Handout" example dated 2016-12-27
-# invalidate cache when the tufte version changes
+## From "Tufte Handout" example dated 2016-12-27
+# Invalidate cache when the tufte version changes
 opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
 options(htmltools.dir.version = FALSE)
 
-## adjust plot margins
-## first one from https://yihui.name/knitr/hooks/
+## Adjust plot margins
+## First one from https://yihui.name/knitr/hooks/
 knit_hooks$set(small.mar = function(before, options, envir) {
     if (before) par(mar = c(4.2, 4.2, .1, .1))  # smaller margin on top and right
 })
@@ -75,21 +75,21 @@ knit_hooks$set(smallish.mar = function(before, options, envir) {
     if (before) par(mar = c(4.2, 4.2, 0.9, 0.9))  # smallish margins on top and right
 })
 
-## use pngquant to optimize PNG images
+## Use pngquant to optimize PNG images
 knit_hooks$set(pngquant = hook_pngquant)
 pngquant <- "--speed=1 --quality=0-25"
 # pngquant isn't available on R-Forge ...
 if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL 
 
-## use a low resolution to save space in the package
-# change this to 72 to make higher-resolution images for the CHNOSZ web page
+## Use a low resolution to save space in the package
+# Change this to 72 to make higher-resolution images for the CHNOSZ web page
 dpi <- 50
 
 ## http://stackoverflow.com/questions/23852753/knitr-with-gridsvg
 ## Set up a chunk hook for manually saved plots.
 knit_hooks$set(custom.plot = hook_plot_custom)
 
-## hook to change <img /> to <embed /> -- required for interactive SVG
+## Hook to change <img /> to <embed /> -- required for interactive SVG
 hook_plot <- knit_hooks$get("plot")
 knit_hooks$set(plot = function(x, options) {
   x <- hook_plot(x, options)
@@ -107,8 +107,8 @@ knit_hooks$set(timeit = function(before) {
 })
 timeit <- NULL
 
-## colorize messages 20171031
-## adapted from https://gist.github.com/yihui/2629886#file-knitr-color-msg-rnw
+## Colorize messages 20171031
+## Adapted from https://gist.github.com/yihui/2629886#file-knitr-color-msg-rnw
 color_block = function(color) {
   function(x, options) sprintf('<pre style="color:%s">%s</pre>', color, x)
 }

@@ -128,6 +128,35 @@ knitr::knit_hooks$set(
 )
 ```
 
+```{r echo = F, cache = F}
+# Merge consecutive messages into a single div 20231114
+knitr::knit_hooks$set(document = function(x){
+
+  # Not sure why this is needed, but simply computing on 'x' doesn't work
+  file <- tempfile()
+  writeLines(x, file)
+  x <- readLines(file)
+
+  # Line numbers of the document with </div>
+  enddiv <- which(x == "</div>")
+  # Line numbers with <div class="alert alert-info">
+  beginalert <- which(x == '<div class="alert alert-info">')
+  # Find </div> followed <div class="alert alert-info"> (skip empty lines)
+  removediv <- (enddiv + 2) %in% beginalert
+  if(any(removediv)) {
+    # Lines to remove
+    rmlines1 <- enddiv[removediv]
+    rmlines2 <- enddiv[removediv] + 1
+    rmlines3 <- enddiv[removediv] + 2
+    # Do the removing
+    x <- x[-c(rmlines1, rmlines2, rmlines3)]
+  }
+
+  x
+
+})
+```
+
 ```{r HTML, include = FALSE}
 NOTE <- '<span style="background-color: yellow;">NOTE</span>'
 # CHNOSZ functions
@@ -275,7 +304,7 @@ reset()
 ```
 </div>
 
-```{r DEW_Ctot, echo = FALSE, message = FALSE, results = "hide", fig.width = 8, fig.height = 4, out.width = "100%", fig.align = "center", pngquant = pngquant}
+```{r DEW_Ctot, echo = FALSE, message = FALSE, results = "hide", fig.width = 8, fig.height = 4, out.width = "100%", fig.align = "center", pngquant = pngquant, cache = TRUE}
 ```
 
 *Answered on 2023-05-17.*
@@ -615,40 +644,63 @@ OBIGT()
 
 Here are the three plots that we made:
 
-```{r trisulfur, echo = FALSE, message = FALSE, results = "hide", fig.width = 10, fig.height = 3.33, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
+```{r trisulfur, echo = FALSE, message = FALSE, results = "hide", fig.width = 10, fig.height = 3.33, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant, cache = TRUE}
 ```
 
 *Answered on 2023-09-08.*
 
-### What is purpose of the "T" column for minerals and solid and liquid organic species?
+## In OBIGT, what is the meaning of `T` for minerals and solid and liquid organic species?
 
-The purposes of this column are 1) to list the temperature(s) of transition(s) between polymorphs of a mineral (^) and 2) to indicate the temperature above which a phase is not stable (i.e., melting of a solid or vaporization of a liquid).
-This column does not list the T limit for the Maier-Kelley equation (see Historical Remarks below).
+This column lists 1) the temperature(s) of transition(s) between polymorphs of a mineral or 2) for the highest-temperature polymorph, the temperature above which the phase is not stable (i.e., melting or decomposition of a solid or vaporization of a liquid).
+This column does not list the *T* limit for the Maier-Kelley equation (see Historical Remarks below).
 
-These cases are handled by subcrt() as follows (note that the units of T in the OBIGT database are Kelvin, but subcrt() by default uses &deg;C):
-- For polymorphic transitions, the properties of specific polymorphs are returned:
+These cases are handled by `subcrt()` as follows (the units of `T` in OBIGT are Kelvin, but `subcrt()` by default uses &deg;C):
 
-(^) In both SUPCRT92 and OBIGT, quicksilver, tin, sulfur, and selenium are each listed as minerals with one or more polymorphic transitions, but the highest-temperature polymorph actually represents the liquid state.
+1. For polymorphic transitions, the properties of specific polymorphs are returned:
 
-- For phase transitions, G of the requested phase is set to NA above the transition temperature:
+```{r pyrrhotite_polymorphs, collapse = TRUE}
+subcrt("pyrrhotite", T = c(25, 150, 350), property = "G")$out
+```
 
-- If T for a phase is set to NA, then no upper temerature limit is imposed by subcrt().
+Note: In both SUPCRT92 and OBIGT, quicksilver, tin, sulfur, and selenium are listed as minerals with one or more polymorphic transitions, but the highest-temperature polymorph actually represents the liquid state.
 
-Historial Remarks:
-Data for minerals from Helgeson et al. (1978) are provided in the default OBIGT database (if they don't conflict with Berman (1988)) and optional SUPCRT92 database.
+2. For melting or other phase change, G of the low-temperature phase is set to NA above the transition temperature:
+
+The purpose of this behavior is to make it harder to obtain potentially unreliable results at temperatures higher than listed transition temperatures.
+If you want `subcrt()` to output the extrapolated Δ*G*°~*f*~ of a phase above its listed transition temperature, then add `exceed.Ttr = TRUE` to the function call.
+
+```{r pyrite_limit}
+subcrt("pyrite", T = seq(200, 1000, 200), P = 1)
+```
+
+3. Finally, if `T` for a phase is set to NA, then no upper temerature limit is imposed by `subcrt()`.
+
+
+Historical Remarks:
+Data for minerals from @HDNB78 are provided in the default OBIGT database (if they don't conflict with @Ber88) and optional SUPCRT92 database.
 The original SUPCRT92 package included "Tmax" values to indicate the (estimated) maximum temperature of validity of the Maier-Kelley equation for heat capacity.
 Calculations at temperatures higher than Tmax produced the warning "CAUTION: BEYOND T LIMIT OF CP COEFFS FOR A MINERAL OR GAS", but the calculated values of thermodynamnic properties were still output by SUPCRT92.
 It follows that "Tmax" in SUPCRT92 does not necessarily correspond to the melting or decomposition temperature of the mineral.
 Except as described below, Tmax values have been *removed* from OBIGT in the development version of CHNOSZ, with the result that subcrt() no longer imposes an uppper temperature limit for the majority of minerals.
 
-OBIGT's T column non-exhaustively lists melting temperatures for minerals, some of which were taken from SUPCRT92's Tmax values while others were taken from RH95 or other sources.
-The minerals with available temperatures of melting (or decomposition or other phase transition, not including polymorphs) include anhydrite, bunsenite, bromellite, chalcocite, chlorargyrite, cinnabar, copper, covellite, cuprite, galena, gold, halite, iron, nickel, pyrite, pyrrhotite, silver, sphalerite, strontianite, sylvite, cassiterite, uraninite, zincite, manganosite, wustite, cobalt monoxide, and zinc.
-Many organic solids and liquids have melting and vaporization temperatures listed as well.
-However, no melting temperatures are listed for minerals represented by the Berman (1988) equations.
+OBIGT has a non-exhaustive list of temperatures of melting (or decomposition or other phase change), some of which were taken from SUPCRT92 while others were taken from @RH95 or other sources.
+These minerals are listed below:
 
-If subcrt() is run at temperatures above the melting or vaporization temperature, then values of G and logK are reported as NA and a message is produced (e.g. "XXX").
-This is a design decision that is intended to discourage the user from choosing unrealistic physical states.
-If you want to calculate the extrapolated properties of a phase above its listed transition temperature, then set exceed.Ttr to TRUE.
+```{r mineral_Ttr, collapse = TRUE}
+file <- system.file("extdata/OBIGT/inorganic_cr.csv", package = "CHNOSZ")
+dat <- read.csv(file)
+# Reverse rows so highest-T polymorph for each mineral is listed first
+dat <- dat[nrow(dat):1, ]
+# Remove low-T polymorphs
+dat <- dat[!duplicated(dat$name), ]
+# Keep minerals with T of phase change
+dat <- dat[!is.na(dat$z.T), ]
+# Get names of minerals and put into original order
+rev(dat$name)
+```
+
+Many organic solids and liquids have melting or vaporization temperatures listed as well.
+However, no melting temperatures are listed for minerals that use the `Berman` model.
 
 In general, the removal of Tmax values from SUPCRT92 makes CHNOSZ more permissive with respect to the temperature range of calculations.
 However, OBIGT now uses the decomposition temperature of covellite (780 K from Robie and Hemingway, 1995) in contrast to the previous Tmax from SUPCRT92 (1273 K, which is referenced to an "estimated" Cp equation on p. 62 of Kelley (1960)).

@@ -54,7 +54,7 @@ water(oldwat)
 
 info <- "Phase transitions of minerals give expected messages and results"
 iacanthite <- info("acanthite", "cr2")
-expect_message(subcrt(iacanthite), "subcrt: temperature\\(s\\) of 623.15 K and above exceed limit for acanthite cr2 \\(using NA for G\\)", info = info)
+expect_message(subcrt(iacanthite), "subcrt: G is shown as NA for acanthite\\(cr2\\)", info = info)
 expect_equal(subcrt("acanthite")$out$acanthite$polymorph, c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3), info = info)
 # The reaction coefficients in the output should be unchanged 20171214
 expect_equal(subcrt(c("bunsenite", "nickel", "oxygen"), c(-1, 1, 0.5))$reaction$coeff, c(-1, 1, 0.5), info = info) 

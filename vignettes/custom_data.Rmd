@@ -17,7 +17,7 @@ link-citations: true
 ```{r setup, include = FALSE}
 library(CHNOSZ)
 options(width = 80)
-## use pngquant to optimize PNG images
+## Use pngquant to optimize PNG images
 library(knitr)
 knit_hooks$set(pngquant = hook_pngquant)
 pngquant <- "--speed=1 --quality=0-25"

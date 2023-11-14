@@ -34,7 +34,7 @@ body {
 li {
   padding: 0.25rem 0;
 }
-/* zero margin around pre blocks (looks more like R console output) */
+/* Zero margin around pre blocks (looks more like R console output) */
 pre {
   margin-top: 0;
   margin-bottom: 0;
@@ -49,7 +49,7 @@ options(digits = 6)
 ```
 
 ```{r HTML, include=FALSE}
-## some frequently used HTML expressions
+## Some frequently used HTML expressions
 V0 <- "<i>V</i>&deg;"
 Cp0 <- "<i>C<sub>P</sub></i>&deg;"
 c1 <- "<i>c</i><sub>1</sub>"
@@ -67,27 +67,27 @@ wPrTr <- "&omega;<sub><i>P<sub>r</sub></i>,<i>T<sub>r</sub></i></sub>"
 
 ```{r setup, include=FALSE}
 library(knitr)
-# invalidate cache when the tufte version changes
+# Invalidate cache when the tufte version changes
 opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
 options(htmltools.dir.version = FALSE)
-# adjust plot margins
+# Adjust plot margins
 knit_hooks$set(small.mar = function(before, options, envir) {
     if (before) par(mar = c(4.2, 4.2, .3, .3))  # smaller margin on top and right
 })
-# use pngquant to optimize PNG images
+# Use pngquant to optimize PNG images
 knit_hooks$set(pngquant = hook_pngquant)
 # pngquant isn't available on R-Forge ...
 if (!nzchar(Sys.which("pngquant"))) {
   pngquant <- NULL 
-  # save space by using a lower resolution
+  # Save space by using a lower resolution
   dpi <- 50
 } else {
   pngquant <- "--speed=1 --quality=0-50"
   dpi <- 72
 }
 
-## colorize messages 20171031
-## adapted from https://gist.github.com/yihui/2629886#file-knitr-color-msg-rnw
+## Colorize messages 20171031
+## Adapted from https://gist.github.com/yihui/2629886#file-knitr-color-msg-rnw
 color_block = function(color) {
   function(x, options) sprintf('<pre style="color:%s">%s</pre>', color, x)
 }

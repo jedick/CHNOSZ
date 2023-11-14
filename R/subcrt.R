@@ -352,24 +352,24 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         # Name and state
         myname <- reaction$name[i]
         mystate <- reaction$state[i]
-        # If we are considering multiple polymorphs, and if this polymorph is cr2 or higher, check if we're below the transition temperature
-        if(length(iphases) > length(ispecies) & i > 1) {
-          if(!(reaction$state[i] %in% c("liq", "cr", "gas")) & reaction$name[i-1] == reaction$name[i]) {
-            # After add.OBIGT("SUPCRT92"), quartz cr and cr2 are not next to each other in thermo()$OBIGT,
-            # so use iphases[i-1] here, not iphases[i]-1  20181107
-            Ttr <- Ttr(iphases[i-1], iphases[i], P = P, dPdT = dPdTtr(iphases[i-1], iphases[i]))
-            if(all(is.na(Ttr))) next
-            if(any(T <= Ttr)) {
-              status.Ttr <- "(extrapolating G)"
-              if(!exceed.Ttr) {
-                # put NA into the value of G
-                p.cgl[[ncgl[i]]]$G[T <= Ttr] <- NA
-                status.Ttr <- "(using NA for G)"
-              } 
-              #message(paste("subcrt: some points below transition temperature for", myname, mystate, status.Ttr))
-            }
-          }
-        }
+#        # If we are considering multiple polymorphs, and if this polymorph is cr2 or higher, check if we're below the transition temperature
+#        if(length(iphases) > length(ispecies) & i > 1) {
+#          if(!(reaction$state[i] %in% c("liq", "cr", "gas")) & reaction$name[i-1] == reaction$name[i]) {
+#            # After add.OBIGT("SUPCRT92"), quartz cr and cr2 are not next to each other in thermo()$OBIGT,
+#            # so use iphases[i-1] here, not iphases[i]-1  20181107
+#            Ttr <- Ttr(iphases[i-1], iphases[i], P = P, dPdT = dPdTtr(iphases[i-1], iphases[i]))
+#            if(all(is.na(Ttr))) next
+#            if(any(T <= Ttr)) {
+#              status.Ttr <- "(extrapolating G)"
+#              if(!exceed.Ttr) {
+#                # put NA into the value of G
+#                p.cgl[[ncgl[i]]]$G[T <= Ttr] <- NA
+#                status.Ttr <- "(using NA for G)"
+#              } 
+#              #message(paste("subcrt: some points below transition temperature for", myname, mystate, status.Ttr))
+#            }
+#          }
+#        }
         # Check if we're above the temperature limit or transition temperature
         # T limit (or Ttr) from the database
         warn.above <- TRUE
@@ -385,13 +385,12 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         }
         if(any(is.na(Ttr))) next
         if(!all(Ttr == 0) & any(T > Ttr)) {
-          status.Ttr <- "(extrapolating G)"
           if(!exceed.Ttr) {
             p.cgl[[ncgl[i]]]$G[T > Ttr] <- NA
-            status.Ttr <- "(using NA for G)"
+            if(warn.above) message(paste0("subcrt: G is shown as NA for ", myname, "(", mystate, ") above its transition temperature of ", Ttr, " K (use exceed.Ttr = TRUE to output G)"))
+          } else {
+            if(warn.above) message(paste0("subcrt: extrapolating G for ", myname, "(", mystate, ") above its transition temperature of ", Ttr, " K (use exceed.Ttr = FALSE to prevent this)"))
           }
-          Tmax <- min(T[T > Ttr])
-          if(warn.above) message(paste("subcrt: temperature(s) of", Tmax, "K and above exceed limit for", myname, mystate, status.Ttr))
         }
         # Use variable-pressure standard Gibbs energy for gases if varP is TRUE (not the default)
         if(mystate == "gas" & thermo$opt$varP) p.cgl[[ncgl[i]]]$G <- p.cgl[[ncgl[i]]]$G - convert(log10(P), "G", T = T)
