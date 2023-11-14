@@ -58,8 +58,9 @@ expect_message(subcrt(iacanthite), "subcrt: temperature\\(s\\) of 623.15 K and a
 expect_equal(subcrt("acanthite")$out$acanthite$polymorph, c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3), info = info)
 # The reaction coefficients in the output should be unchanged 20171214
 expect_equal(subcrt(c("bunsenite", "nickel", "oxygen"), c(-1, 1, 0.5))$reaction$coeff, c(-1, 1, 0.5), info = info) 
-# Properties are NA only above (not at) the transition temperature 20191111
-expect_equal(is.na(subcrt("rhodochrosite", T = c(699:701), P = 1, convert = FALSE)$out[[1]]$G), c(FALSE, FALSE, TRUE), info = info)
+## TODO: replace/revise this test after removal of temperature limit of Cp equations 20231114
+## Properties are NA only above (not at) the temperature limit 20191111
+#expect_equal(is.na(subcrt("rhodochrosite", T = c(699:701), P = 1, convert = FALSE)$out[[1]]$G), c(FALSE, FALSE, TRUE), info = info)
 
 # Use calories for comparisons with SUPCRT92
 E.units("cal")

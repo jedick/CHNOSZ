@@ -620,4 +620,39 @@ Here are the three plots that we made:
 
 *Answered on 2023-09-08.*
 
+### What is purpose of the "T" column for minerals and solid and liquid organic species?
+
+The purposes of this column are 1) to list the temperature(s) of transition(s) between polymorphs of a mineral (^) and 2) to indicate the temperature above which a phase is not stable (i.e., melting of a solid or vaporization of a liquid).
+This column does not list the T limit for the Maier-Kelley equation (see Historical Remarks below).
+
+These cases are handled by subcrt() as follows (note that the units of T in the OBIGT database are Kelvin, but subcrt() by default uses &deg;C):
+- For polymorphic transitions, the properties of specific polymorphs are returned:
+
+(^) In both SUPCRT92 and OBIGT, quicksilver, tin, sulfur, and selenium are each listed as minerals with one or more polymorphic transitions, but the highest-temperature polymorph actually represents the liquid state.
+
+- For phase transitions, G of the requested phase is set to NA above the transition temperature:
+
+- If T for a phase is set to NA, then no upper temerature limit is imposed by subcrt().
+
+Historial Remarks:
+Data for minerals from Helgeson et al. (1978) are provided in the default OBIGT database (if they don't conflict with Berman (1988)) and optional SUPCRT92 database.
+The original SUPCRT92 package included "Tmax" values to indicate the (estimated) maximum temperature of validity of the Maier-Kelley equation for heat capacity.
+Calculations at temperatures higher than Tmax produced the warning "CAUTION: BEYOND T LIMIT OF CP COEFFS FOR A MINERAL OR GAS", but the calculated values of thermodynamnic properties were still output by SUPCRT92.
+It follows that "Tmax" in SUPCRT92 does not necessarily correspond to the melting or decomposition temperature of the mineral.
+Except as described below, Tmax values have been *removed* from OBIGT in the development version of CHNOSZ, with the result that subcrt() no longer imposes an uppper temperature limit for the majority of minerals.
+
+OBIGT's T column non-exhaustively lists melting temperatures for minerals, some of which were taken from SUPCRT92's Tmax values while others were taken from RH95 or other sources.
+The minerals with available temperatures of melting (or decomposition or other phase transition, not including polymorphs) include anhydrite, bunsenite, bromellite, chalcocite, chlorargyrite, cinnabar, copper, covellite, cuprite, galena, gold, halite, iron, nickel, pyrite, pyrrhotite, silver, sphalerite, strontianite, sylvite, cassiterite, uraninite, zincite, manganosite, wustite, cobalt monoxide, and zinc.
+Many organic solids and liquids have melting and vaporization temperatures listed as well.
+However, no melting temperatures are listed for minerals represented by the Berman (1988) equations.
+
+If subcrt() is run at temperatures above the melting or vaporization temperature, then values of G and logK are reported as NA and a message is produced (e.g. "XXX").
+This is a design decision that is intended to discourage the user from choosing unrealistic physical states.
+If you want to calculate the extrapolated properties of a phase above its listed transition temperature, then set exceed.Ttr to TRUE.
+
+In general, the removal of Tmax values from SUPCRT92 makes CHNOSZ more permissive with respect to the temperature range of calculations.
+However, OBIGT now uses the decomposition temperature of covellite (780 K from Robie and Hemingway, 1995) in contrast to the previous Tmax from SUPCRT92 (1273 K, which is referenced to an "estimated" Cp equation on p. 62 of Kelley (1960)).
+
+*Answered on 2023-11-14.*
+
 ## References

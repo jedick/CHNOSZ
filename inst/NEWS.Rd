@@ -12,7 +12,7 @@
 % links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
 
-\section{Changes in CHNOSZ version 2.0.0-26 (2023-09-19)}{
+\section{Changes in CHNOSZ version 2.0.0-28 (2023-11-14)}{
 
     \itemize{
 
@@ -61,6 +61,12 @@
       \href{https://doi.org/10.1007/s11084-015-9428-3}{Kitadai (2015)} and
       update several others (Arg\S{+}, Arg\S{-}, Asp\S{-}, Glu\S{-}, His\S{+},
       Lys\S{+}, Lys\S{-}, and Tyr\S{-}). Thanks to Grayson Boyer.
+
+      \item In the default (inorganic_cr.csv) and optional (SUPCRT92.csv) data
+      files, remove T values that represent temperature limit of Cp equations
+      (these are now listed as NA). Temperatures of polymorphic phase
+      transitions and melting or decomposition temperatures (only available for
+      some minerals) have been retained. See FAQ for more details.
 
     }
 
