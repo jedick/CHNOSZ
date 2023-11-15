@@ -2,17 +2,20 @@
 \title{News for Package 'CHNOSZ'}
 \encoding{UTF-8}
 
-% macros
+% Macros
 \newcommand{\degC}{\ifelse{latex}{\eqn{^{\circ}}C}{\ifelse{html}{\out{&deg;}C}{°C}}}
 \newcommand{\H2O}{\ifelse{latex}{\eqn{\mathrm{H_{2}O}}}{\ifelse{html}{\out{H<sub>2</sub>O}}{H2O}}}
 \newcommand{\Hplus}{\ifelse{latex}{\eqn{\mathrm{H^{+}}}}{\ifelse{html}{\out{H<sup>+</sup>}}{H+}}}
-% subscript and superscript
+% Subscript and superscript
 \newcommand{\s}{\ifelse{latex}{\eqn{_{#1}}}{\ifelse{html}{\out{<sub>#1</sub>}}{#1}}}
 \newcommand{\S}{\ifelse{latex}{\eqn{^{#1}}}{\ifelse{html}{\out{<sup>#1</sup>}}{^#1}}}
-% links to vignettes 20220723
+% Links to vignettes 20220723
 \newcommand{\viglink}{\ifelse{html}{\out{<a href="../CHNOSZ/doc/#1.html"><strong>#1.Rmd</strong></a>}}{\bold{#1.Rmd}}}
+% Heat capacity and standard Gibbs energy 20231115
+\newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
+\newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.0.0-28 (2023-11-14)}{
+\section{Changes in CHNOSZ version 2.0.0-31 (2023-11-15)}{
 
     \itemize{
 
@@ -26,6 +29,7 @@
         \item When and why do equal-activity boundaries depend on total activity?
         \item How can minerals with polymorphic transitions be added to the database?
         \item How can I make a diagram with the trisulfur radical ion (S\s{3}\S{-})?
+        \item In OBIGT, what is the meaning of \code{T} for solids, liquids, and gases?
 
       }
 
@@ -62,11 +66,13 @@
       update several others (Arg\S{+}, Arg\S{-}, Asp\S{-}, Glu\S{-}, His\S{+},
       Lys\S{+}, Lys\S{-}, and Tyr\S{-}). Thanks to Grayson Boyer.
 
-      \item In the default (inorganic_cr.csv) and optional (SUPCRT92.csv) data
-      files, remove T values that represent temperature limit of Cp equations
-      (these are now listed as NA). Temperatures of polymorphic phase
-      transitions and melting or decomposition temperatures (only available for
-      some minerals) have been retained. See FAQ for more details.
+      \item \code{subcrt()} now outputs \DG0 and issues a warning above the
+      temperature limit for \Cp equations for minerals and other \samp{CGL}
+      species. The previous behavior of setting \DG0 to NA and issuing a
+      message is now reserved for phase stability limits (i.e., melting,
+      vaporization, or decomposition). The temperature limit for \Cp equations
+      is stored as the opposite (negative) value in OBIGT. See \viglink{FAQ}
+      for details.
 
     }
 

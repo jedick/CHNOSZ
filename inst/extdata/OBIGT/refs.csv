@@ -5,7 +5,7 @@ Kel60.3,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gypsum Cp",https:
 Pan70,"L. B. Pankratz",1970,"U. S. Bureau of Mines Report of Investigations 7430",chlorargyrite,https://www.worldcat.org/oclc/14154245
 PK70,"L. B. Pankratz and E. G. King",1970,"U. S. Bureau of Mines Report of Investigations 7435","bornite and chalcopyrite",https://www.worldcat.org/oclc/14154292
 BKK77,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","willemite Cp",https://www.worldcat.org/oclc/695258
-HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","data for minerals and polymorphic phase transitions",https://www.worldcat.org/oclc/13594862
+HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","minerals",https://www.worldcat.org/oclc/13594862
 HDNB78.2,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","celestite V and Cp parameters",https://www.worldcat.org/oclc/13594862
 RHF78,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",chlorargyrite,https://doi.org/10.3133/b1452
 RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",iron,https://doi.org/10.3133/b1452
@@ -65,7 +65,7 @@ RH95.3,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 213
 RH95.4,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","fluorphlogopite (Al/Si disordered) (G and H not in SUPCRT92)",https://doi.org/10.3133/b2131
 RH95.5,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","larnite (G and H not in SUPCRT92); Cp from @Kel60",https://doi.org/10.3133/b2131
 RH95.6,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","bromellite (melting temperature and G and H not in SUPCRT92)",https://doi.org/10.3133/b2131
-RH95.7,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","anhydrite, bunsenite, chalcocite, covellite, cuprite, galena, gold, halite, pyrite, silver, sodium oxide, cassiterite, uraninite, zincite (melting or decomposition temperature)",https://doi.org/10.3133/b2131
+RH95.7,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","phase stability limit",https://doi.org/10.3133/b2131
 SK95,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","metal-organic acid complexes",https://doi.org/10.1016/0016-7037(95)00058-8
 Sho95,"E. L. Shock",1995,"Am. J. Sci. 295, 496-580","carboxylic acids",https://doi.org/10.2475/ajs.295.5.496
 DPS+96,"I. Diakonov, G. Pokrovski et al.",1996,"Geochim. Cosmochim. Acta 60, 197-211",NaAl(OH)<sub>4</sub>,https://doi.org/10.1016/0016-7037(95)00403-3

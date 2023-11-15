@@ -343,7 +343,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     if("G" %in% eosprop) {
       # 20080304 This code is weird and hard to read - needs a lot of cleanup!
       # 20120219 Cleaned up somewhat; using exceed.Ttr and NA instead of do.phases and 999999
-      # the numbers of the cgl species (becomes 0 for any that aren't cgl)
+      # The numbers of the cgl species (becomes 0 for any that aren't cgl)
       ncgl <- iscgl
       ncgl[iscgl] <- 1:nrow(param)
       for(i in 1:length(iscgl)) {
@@ -370,26 +370,44 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
 #            }
 #          }
 #        }
-        # Check if we're above the temperature limit or transition temperature
-        # T limit (or Ttr) from the database
-        warn.above <- TRUE
+
+        # Check for a polymorphic transition
+        is.polymorphic.transition <- FALSE
         Ttr <- thermo$OBIGT$z.T[iphases[i]]
-        # Calculate Ttr at higher P if a phase transition is present
         if(i < nrow(reaction)) {
-          # If the next one is cr2, cr3, etc we have a transition
+          # If the next one is cr2, cr3, etc we have a polymorphic transition
           if(reaction$state[i+1] %in% c("cr1", "cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9") & reaction$name[i+1] == reaction$name[i]) {
+            # Calculate Ttr at higher P for a polymorphic transition
             Ttr <- Ttr(iphases[i], iphases[i+1], P = P, dPdT = dPdTtr(iphases[i], iphases[i+1]))
-            # We don't warn here about the transition
-            warn.above <- FALSE
+            # Put in NA for G
+            p.cgl[[ncgl[i]]]$G[T > Ttr] <- NA
+            is.polymorphic.transition <- TRUE
           }
         }
-        if(any(is.na(Ttr))) next
-        if(!all(Ttr == 0) & any(T > Ttr)) {
-          if(!exceed.Ttr) {
-            p.cgl[[ncgl[i]]]$G[T > Ttr] <- NA
-            if(warn.above) message(paste0("subcrt: G is shown as NA for ", myname, "(", mystate, ") above its transition temperature of ", Ttr, " K (use exceed.Ttr = TRUE to output G)"))
-          } else {
-            if(warn.above) message(paste0("subcrt: extrapolating G for ", myname, "(", mystate, ") above its transition temperature of ", Ttr, " K (use exceed.Ttr = FALSE to prevent this)"))
+
+        if(!is.polymorphic.transition) {
+          # Check if we're above the T limit for a Cp equation or T for phase change (e.g. melting or vaporization) listed in OBIGT
+          is.Cp.equation <- FALSE
+          if(all(is.na(Ttr))) next
+          if(all(Ttr == 0)) next
+          ineg <- Ttr < 0
+          if(any(ineg)) {
+            # This is the T limit for a Cp equation (not a phase change)
+            Ttr[ineg] <- -Ttr[ineg]
+            is.Cp.equation <- TRUE
+          }
+          if(any(T > Ttr)) {
+            if(!exceed.Ttr) {
+                if(is.Cp.equation) {
+                  warning(paste0("above T limit of ", Ttr, " K for the Cp equation for ", myname, "(", mystate, ")"))
+                } else {
+                  message(paste0("subcrt: G is set to NA for ", myname, "(", mystate, ") above its stability limit of ", Ttr, " K (use exceed.Ttr = TRUE to output G)"))
+                  p.cgl[[ncgl[i]]]$G[T > Ttr] <- NA
+                  print(p.cgl)
+                }
+            } else {
+              message(paste0("subcrt: showing G for ", myname, "(", mystate, ") above its stability limit of ", Ttr, " K (use exceed.Ttr = FALSE to prevent this)"))
+            }
           }
         }
         # Use variable-pressure standard Gibbs energy for gases if varP is TRUE (not the default)
@@ -398,7 +416,6 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     }
     outprops <- c(outprops,p.cgl)
   }
-
 
   # Water
   if(any(isH2O)) {

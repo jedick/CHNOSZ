@@ -42,17 +42,20 @@ pre {
   margin-bottom: 0;
 }
 
-/* CSS snippet from boostrap.css modified by Jeffrey Dick on 2023-06-23 */
+/* CSS snippet from boostrap.css modified by Jeffrey Dick on 2023-11-14 */
 /*!
- * Bootstrap  v5.3.0 (https://getbootstrap.com/)
+ * Bootstrap  v5.3.2 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root,
 [data-bs-theme=light] {
-  --bs-info-text-emphasis: #31708f;
-  --bs-info-bg-subtle: #d9edf7;
+  --bs-info-text-emphasis: #055160;
+  --bs-warning-text-emphasis: #664d03;
+  --bs-info-bg-subtle: #cff4fc;
+  --bs-warning-bg-subtle: #fff3cd;
   --bs-info-border-subtle: #9eeaf9;
+  --bs-warning-border-subtle: #ffe69c;
   --bs-border-width: 1px;
   --bs-border-radius: 0.375rem;
 }
@@ -79,6 +82,12 @@ pre {
   --bs-alert-bg: var(--bs-info-bg-subtle);
   --bs-alert-border-color: var(--bs-info-border-subtle);
   --bs-alert-link-color: var(--bs-info-text-emphasis);
+}
+.alert-warning {
+  --bs-alert-color: var(--bs-warning-text-emphasis);
+  --bs-alert-bg: var(--bs-warning-bg-subtle);
+  --bs-alert-border-color: var(--bs-warning-border-subtle);
+  --bs-alert-link-color: var(--bs-warning-text-emphasis);
 }
 
 </style>
@@ -169,6 +178,7 @@ Hplus <- "H<sup>+</sup>"
 HCO2_ <- "HCO<sub>2</sub><sup>−</sup>"
 HCO3_ <- "HCO<sub>3</sub><sup>−</sup>"
 O2 <- "O<sub>2</sub>"
+S2 <- "S<sub>2</sub>"
 log <- "log&thinsp;"
 aHCO2_ <- "<i>a</i><sub>HCO<sub>2</sub><sup>−</sup></sub>"
 aHCO3_ <- "<i>a</i><sub>HCO<sub>3</sub><sup>−</sup></sub>"
@@ -202,13 +212,26 @@ CHNOSZ and [schnoz](https://en.wiktionary.org/wiki/schnozz) are homophones.
 * This paper describes metastable equilibrium calculations for proteins: @Dic08.
 * The [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) represents the work of many researchers.
 **If you publish results that depend on any of these data, please cite the primary sources.**
-Use `r info_` to show the reference keys for particular species and `r thermo.refs_` to list the bibliographic details:
-```{r alanine, message = FALSE}
+Use `r info_` to show the reference keys for particular species and `r thermo.refs_` to list the bibliographic details.
+The following example shows the sources of data for aqueous alanine:
+```{r alanine_refs, message = FALSE}
 info(info("alanine"))[c("ref1", "ref2")]
 thermo.refs(info("alanine"))
 ```
 
-*Answered on 2023-05-27.*
+* Mineral data in OBIGT are based on @Ber88 together with sulfides and other non-conflicting minerals from @HDNB78. For a reaction such as the pyrite-pyrrhotite-magnetite (PPM) oxygen fugacity buffer, all the sources of data can be listed as follows (for the corresponding sulfur fugacity buffer, the code could be written with hematite and `r S2` in place of pyrrhotite and oxygen):
+
+```{r PPM_refs, message = FALSE}
+basis(c("pyrite", "pyrrhotite", "oxygen"))
+sres <- subcrt("magnetite", 1)
+info(sres$reaction$ispecies)[, 1:6]
+thermo.refs(sres)
+reset()
+```
+
+* Additional minerals from @HDNB78, which were available in SUPCRT92 but may conflict with the @Ber88 compilation, can be loaded from an optional database with `add.OBIGT("SUPCRT92")`. When using these data, it is appropriate to cite @HDNB78 rather than SUPCRT92.
+
+*Answered on 2023-05-27; PPM example added on 2023-11-15.*
 
 ## What thermodynamic models are used in CHNOSZ?
 
@@ -311,8 +334,8 @@ reset()
 
 ## How can minerals with polymorphic transitions be added to the database?
 
+The different crystal forms of a mineral are called polymorphs.
 Many minerals undergo polymorphic transitions upon heating.
-The stable phases at different temperatures are called polymorphs.
 Each polymorph for a given mineral should have its own entry in OBIGT, including values of the standard thermodynamic properties (Δ*G*°~*f*~, Δ*H*°~*f*~, and *S*°) at 25 °C.
 The 25 °C (or 298.15 K) values for high-temperature polymorphs are often not listed in thermodynamic tables, but they can be calculated.
 This thermodynamic cycle shows how: we calculate the changes of a thermodyamic property (pictured here as `DS1` and `DS2`) between 298.15 K and the transition temperature (`Ttr`) for two polymorphs, then combine those with the property of the polymorphic transition (`DStr`) to obtain the difference of the property between the polymorphs at 298.15 K (`DS298`).
@@ -649,41 +672,36 @@ Here are the three plots that we made:
 
 *Answered on 2023-09-08.*
 
-## In OBIGT, what is the meaning of `T` for minerals and solid and liquid organic species?
+## In OBIGT, what is the meaning of `T` for solids, liquids, and gases?
 
-This column lists 1) the temperature(s) of transition(s) between polymorphs of a mineral or 2) for the highest-temperature polymorph, the temperature above which the phase is not stable (i.e., melting or decomposition of a solid or vaporization of a liquid).
-This column does not list the *T* limit for the Maier-Kelley equation (see Historical Remarks below).
+The value in this column can be one of the following:
 
-These cases are handled by `subcrt()` as follows (the units of `T` in OBIGT are Kelvin, but `subcrt()` by default uses &deg;C):
+1. The temperature of transition to the next polymorph of a mineral;
+2. For the highest-temperature (or only) polymorph, if `T` is positive, it is the phase stability limit (i.e., the temperature of melting or decomposition of a solid or vaporization of a liquid);
+3. For the highest-temperature polymorph, if `T` is negative, the opposite (positive) value is the *T* limit of the *C~p~* equation. (*New feature in development version of CHNOSZ*)
 
-1. For polymorphic transitions, the properties of specific polymorphs are returned:
+These cases are handled by `subcrt()` as follows.
+The units of `T` in OBIGT are Kelvin, but `subcrt()` by default uses &deg;C:
+
+**1. For polymorphic transitions, the properties of specific polymorphs are returned:**
 
 ```{r pyrrhotite_polymorphs, collapse = TRUE}
 subcrt("pyrrhotite", T = c(25, 150, 350), property = "G")$out
 ```
 
-Note: In both SUPCRT92 and OBIGT, quicksilver, tin, sulfur, and selenium are listed as minerals with one or more polymorphic transitions, but the highest-temperature polymorph actually represents the liquid state.
+Note: In both SUPCRT92 and OBIGT, tin, sulfur, and selenium are listed as minerals with one or more polymorphic transitions, but the highest-temperature polymorph actually represents the liquid state.
+Furthermore, quicksilver is listed as a mineral whose polymorphs actually correspond to the liquid and gaseous states.
 
-2. For melting or other phase change, G of the low-temperature phase is set to NA above the transition temperature:
-
-The purpose of this behavior is to make it harder to obtain potentially unreliable results at temperatures higher than listed transition temperatures.
-If you want `subcrt()` to output the extrapolated Δ*G*°~*f*~ of a phase above its listed transition temperature, then add `exceed.Ttr = TRUE` to the function call.
+**2. For a phase stability limit, Δ*G*° is set to NA above the temperature limit:**
 
 ```{r pyrite_limit}
 subcrt("pyrite", T = seq(200, 1000, 200), P = 1)
 ```
 
-3. Finally, if `T` for a phase is set to NA, then no upper temerature limit is imposed by `subcrt()`.
+The purpose of this behavior is to make it harder to obtain potentially unreliable results at temperatures where a mineral (or an organic solid or liquid) is not stable.
+If you want `subcrt()` to output the extrapolated Δ*G*° of a phase above its listed temperature limit, then add `exceed.Ttr = TRUE` to the function call.
 
-
-Historical Remarks:
-Data for minerals from @HDNB78 are provided in the default OBIGT database (if they don't conflict with @Ber88) and optional SUPCRT92 database.
-The original SUPCRT92 package included "Tmax" values to indicate the (estimated) maximum temperature of validity of the Maier-Kelley equation for heat capacity.
-Calculations at temperatures higher than Tmax produced the warning "CAUTION: BEYOND T LIMIT OF CP COEFFS FOR A MINERAL OR GAS", but the calculated values of thermodynamnic properties were still output by SUPCRT92.
-It follows that "Tmax" in SUPCRT92 does not necessarily correspond to the melting or decomposition temperature of the mineral.
-Except as described below, Tmax values have been *removed* from OBIGT in the development version of CHNOSZ, with the result that subcrt() no longer imposes an uppper temperature limit for the majority of minerals.
-
-OBIGT has a non-exhaustive list of temperatures of melting (or decomposition or other phase change), some of which were taken from SUPCRT92 while others were taken from @RH95 or other sources.
+OBIGT has a non-exhaustive list of temperatures of melting, decomposition, or other phase change, some of which were taken from `SUPCRT92` while others were taken from @RH95.
 These minerals are listed below:
 
 ```{r mineral_Ttr, collapse = TRUE}
@@ -693,18 +711,34 @@ dat <- read.csv(file)
 dat <- dat[nrow(dat):1, ]
 # Remove low-T polymorphs
 dat <- dat[!duplicated(dat$name), ]
-# Keep minerals with T of phase change
+# Remove minerals with no T limit
 dat <- dat[!is.na(dat$z.T), ]
+# Keep minerals with T of phase change
+dat <- dat[dat$z.T > 0, ]
 # Get names of minerals and put into original order
 rev(dat$name)
 ```
 
-Many organic solids and liquids have melting or vaporization temperatures listed as well.
+OBIGT now uses the decomposition temperature of covellite (780.5 K from @RH95) in contrast to the previous Tmax from SUPCRT92 (1273 K, which is referenced to a \Cp equation described as "estimated" on p. 62 of [@Kel60]).
+Selected organic solids and liquids have melting or vaporization temperatures listed as well.
 However, no melting temperatures are listed for minerals that use the `Berman` model.
 
-In general, the removal of Tmax values from SUPCRT92 makes CHNOSZ more permissive with respect to the temperature range of calculations.
-However, OBIGT now uses the decomposition temperature of covellite (780 K from Robie and Hemingway, 1995) in contrast to the previous Tmax from SUPCRT92 (1273 K, which is referenced to an "estimated" Cp equation on p. 62 of Kelley (1960)).
+**3. For a *C~p~* equation limit, extrapolated values of Δ*G*° are shown and a warning is produced:**
 
-*Answered on 2023-11-14.*
+```{r muscovite_limit, message = FALSE}
+add.OBIGT("SUPCRT92")
+subcrt("muscovite", T = 850, P = 4500)
+reset()
+```
+
+The warning is similar to that produced by SUPCRT92 ("CAUTION: BEYOND T LIMIT OF CP COEFFS FOR A MINERAL OR GAS") at temperatures above maximum temperature of validity of the Maier-Kelley equation (Tmax).
+Tmax in the SUPCRT92 database does not in general correspond to the melting or decomposition temperature of a given mineral, and SUPCRT92 outputs Δ*G*° and other standard thermodynamic properties at higher temperatures despite the warning.
+
+This behavior is new in the development version of CHNOSZ (to be 2.0.1).
+In previous versions of CHNOSZ, values of Δ*G*° above the *C~p~* equation limit were set to NA without a warning (as with the phase stability limit described above).
+
+**4. Finally, if `T` is NA, then no upper temerature limit is imposed by `subcrt()`.**
+
+*Answered on 2023-11-15.*
 
 ## References
