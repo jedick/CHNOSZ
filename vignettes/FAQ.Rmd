@@ -309,9 +309,9 @@ reset()
 
 *Answered on 2023-05-17.*
 
-## How can minerals with phase transitions be added to the database?
+## How can minerals with polymorphic transitions be added to the database?
 
-Many minerals undergo phase transitions upon heating.
+Many minerals undergo polymorphic transitions upon heating.
 The stable phases at different temperatures are called polymorphs.
 Each polymorph for a given mineral should have its own entry in OBIGT, including values of the standard thermodynamic properties (Δ*G*°~*f*~, Δ*H*°~*f*~, and *S*°) at 25 °C.
 The 25 °C (or 298.15 K) values for high-temperature polymorphs are often not listed in thermodynamic tables, but they can be calculated.

@@ -7,7 +7,7 @@ expect_message(CHNOSZ:::info.character("acetate", "cr"), "only 'aq' is available
 expect_message(CHNOSZ:::info.character("methane", "cr"), "only 'gas' 'liq' are available", info = info)
 expect_message(CHNOSZ:::info.character("methane"), "also available in liq", info = info)
 expect_message(CHNOSZ:::info.character("SiO2", "cr"), "also available in.*quartz", info = info)
-expect_message(CHNOSZ:::info.character("chalcocite"), "found chalcocite\\(cr\\) with 2 phase transitions", info = info)
+expect_message(CHNOSZ:::info.character("chalcocite"), "found chalcocite\\(cr\\) with 2 polymorphic transitions", info = info)
 # H2O is a special case
 expect_equal(CHNOSZ:::info.character("H2O", "aq"), CHNOSZ:::info.character("H2O", "liq"), info = info)
 

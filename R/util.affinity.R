@@ -163,7 +163,7 @@ energy <- function(what, vars, vals, lims, T = 298.15, P = "Psat", IS = 0, sout 
         ind <- as.vector(indmat)
         sout$out <- lapply(sout$out, function(x) x[indmat, ])
       }
-      # Species indices are updated by subcrt() for minerals with phase transitions
+      # Species indices are updated by subcrt() for minerals with polymorphic transitions
       # e.g. i <- info("chalcocite"); subcrt(i, T = 200)$species$ispecies == i + 1
       # so we should keep the original species index to be able to find the species in a provided 'sout'
       # (noted for Mosaic diagram section of anintro.Rmd 20190203)

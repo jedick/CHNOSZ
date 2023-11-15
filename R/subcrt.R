@@ -399,6 +399,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     outprops <- c(outprops,p.cgl)
   }
 
+
   # Water
   if(any(isH2O)) {
     p.H2O <- H2O.PT[, match(eosprop, colnames(H2O.PT)), drop = FALSE]
@@ -445,9 +446,9 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       # Assemble the Gibbs energies for each species
       for(j in 1:length(are.polymorphs)) {
         G.this <- outprops[[are.polymorphs[j]]]$G
-        if(sum(is.na(G.this)) > 0 & exceed.Ttr) warning(paste("subcrt: NAs found for G of ",
-          reaction$name[are.polymorphs[j]], " ", reaction$state[are.polymorphs[j]], " at T-P point(s) ", 
-          c2s(which(is.na(G.this)), sep = " "), sep = ""), call. = FALSE)
+#        if(sum(is.na(G.this)) > 0 & exceed.Ttr) warning(paste("subcrt: NAs found for G of ",
+#          reaction$name[are.polymorphs[j]], " ", reaction$state[are.polymorphs[j]], " at T-P point(s) ", 
+#          c2s(which(is.na(G.this)), sep = " "), sep = ""), call. = FALSE)
         if(j == 1) G <- as.data.frame(G.this)
         else G <- cbind(G, as.data.frame(G.this))
       }
@@ -494,7 +495,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   }
 
   outprops <- out.new
-  # Remove the rows that were added to keep track of phase transitions
+  # Remove the rows that were added to keep track of polymorphs
   reaction <- reaction.new[1:length(ispecies), ]
   # The manipulations above should get the correct species indices and state labels,
   # but if species are (intentionally) repeated, include only the first

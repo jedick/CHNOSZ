@@ -26,8 +26,8 @@ For each match of \code{species} to the name, formula, or abbreviation of a spec
 
 The \code{state} argument can be omitted, in which case the first matching species in any state is added (in many cases, this means the aqueous species).
 If there are multiple matches for a species, the one that is in the state given by \code{thermo()$opt$state} is chosen, otherwise the matching (or \eqn{n}{n}'th matching duplicate) species is used.
-Note that the \code{state}s of species representing phases of minerals that undergo phase transitions are coded as \samp{cr} (lowest-T phase), \samp{cr2}, \samp{cr3}, \code{...} (phases with increasing temperature).
-If \code{state} is \samp{cr} when one of these minerals is matched, all the phase species are added.
+Note that the \code{state}s of species representing phases of minerals that undergo polymorphic transitions are coded as \samp{cr} (lowest-T phase), \samp{cr2}, \samp{cr3}, \code{...} (phases with increasing temperature).
+If \code{state} is \samp{cr} when one of these minerals is matched, all the polymorphs are added.
 
 The data frame in \code{thermo()$species} holds the species names and indices as well as the stoichiometric reaction coefficients for the formation reaction from the basis species and the logarithms of activities or fugacities that are used by \code{\link{affinity}}.
 The default values for logarithms of activities are -3 for aqueous (\samp{aq}) species and 0 for others. 

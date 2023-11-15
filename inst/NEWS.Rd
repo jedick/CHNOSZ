@@ -24,14 +24,14 @@
         \item How should CHNOSZ be cited?
         \item What thermodynamic models are used in CHNOSZ?
         \item When and why do equal-activity boundaries depend on total activity?
-        \item How can minerals with phase transitions be added to the database?
+        \item How can minerals with polymorphic transitions be added to the database?
         \item How can I make a diagram with the trisulfur radical ion (S\s{3}\S{-})?
 
       }
 
       \item Add \code{use.polymorphs} argument to \code{subcrt()} to allow
       turning off automatic identification of stable polymorphs. This is used
-      in the FAQ (\dQuote{How can minerals with phase transitions be added to
+      in the FAQ (\dQuote{How can minerals with polymorphic transitions be added to
       the database?}).
 
       \item Restore \file{EOSregress.R} and its reverse dependencies

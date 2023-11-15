@@ -3,7 +3,7 @@
 # speciate/thermo.R 20051021 jmd
 
 dPdTtr <- function(ispecies, ispecies2 = NULL) {
-  # Calculate dP/dT for a phase transition
+  # Calculate dP/dT for a polymorphic transition
   # (argument is index of the lower-T phase)
   thermo <- get("thermo", CHNOSZ)
   if(is.null(ispecies2)) ispecies2 <- ispecies + 1
@@ -21,7 +21,7 @@ dPdTtr <- function(ispecies, ispecies2 = NULL) {
 }
 
 Ttr <- function(ispecies, ispecies2 = NULL, P = 1, dPdT = NULL) {
-  # Calculate a phase transition temperature for given P
+  # Calculate polymorphic transition temperature for given P
   TtrPr <- get("thermo", CHNOSZ)$OBIGT$z.T[ispecies]
   # The constant slope, dP/dT
   if(is.null(dPdT)) dPdT <- dPdTtr(ispecies, ispecies2)

@@ -101,7 +101,7 @@ On the other hand, if the \code{water} option is \samp{SUPCRT} (the default), \c
 (This is not an inherent limitation in either formulation, but it is just a matter of implementation.)
 }
 
-\section{Note on phase transitions}{
+\section{Note on polymorphic transitions}{
 Minerals with polymorphic transitions (denoted in OBIGT by having states \samp{cr} (lowest-\T phase), \samp{cr2}, etc.) can be specified by name with \samp{cr} for the \code{state} or by using a numeric species index for the lowest-\T polymorph.
 If \code{use.polymorphs} is TRUE, \code{subcrt} uses the transition temperatures calculated from those at P = 1 bar given in OBIGT together with functions of the entropies and volumes of transitions (see \code{\link{dPdTtr}}) to determine the stable polymorph at each grid point and uses the properties of that polymorph in the output.
 A \code{polymorph} column is added to the output to indicate the stable polymorph at each \T-\P condition.
@@ -114,7 +114,7 @@ This is generally not advised, as extrapolated Gibbs energies may not reliably d
 A list of length two or three.
 If the properties of a reaction were calculated, the first element of the list (named \samp{reaction}) contains a dataframe with the reaction parameters; the second element, named \samp{out}, is a dataframe containing the calculated properties.
 Otherwise, the properties of species (not reactions) are returned: the first element, named \samp{species}, contains a dataframe with the species identification; the second element, named \samp{out}, is itself a list, each element of which is a dataframe of properties for a given species.
-If minerals with phase transitions are present, a third element (a dataframe) in the list indicates for all such minerals the stable phase at each grid point.
+If minerals with polymorphic transitions are present, a third element (a dataframe) in the list indicates for all such minerals the stable phase at each grid point.
 }
 
 \seealso{
@@ -165,7 +165,7 @@ subcrt("alanine", T = c(2250, 2251), P = c(30000, 30001), grid = "T")
 # (suppressWarnings is used so that checks of examples don't raise warnings)
 suppressWarnings(subcrt("alanine", T = seq(0, 5000, by = 1000)))
 
-## Minerals with phase transitions
+## Minerals with polymorphic transitions
 # Compare calculated values of heat capacity of iron with
 # values from Robie and Hemingway, 1995
 T.units("K")

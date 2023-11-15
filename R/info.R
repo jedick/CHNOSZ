@@ -158,13 +158,13 @@ info.character <- function(species, state = NULL, check.protein = TRUE) {
       otherstates[otherstates == mystate] <- thermo$OBIGT$name[ispecies.other[otherstates == mystate]]
     }
     transtext <- othertext <- ""
-    # We count, but don't show the states for phase transitions (cr2, cr3, etc)
+    # We count, but don't show the states for polymorphic transitions (cr2, cr3, etc)
     istrans <- otherstates %in% c("cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9")
     if(mystate == "cr") {
-      # If we are "cr" we show the number of phase transitions
+      # If we are "cr" we show the number of polymorphic transitions
       ntrans <- sum(istrans)
-      if(ntrans == 1) transtext <- paste(" with", ntrans, "phase transition")
-      else if(ntrans > 1) transtext <- paste(" with", ntrans, "phase transitions")
+      if(ntrans == 1) transtext <- paste(" with", ntrans, "polymorphic transition")
+      else if(ntrans > 1) transtext <- paste(" with", ntrans, "polymorphic transitions")
     }
     myname <- NULL
     if(mystate != "aq") {

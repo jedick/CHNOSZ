@@ -675,8 +675,8 @@ species(c("CuCl", "CuCl2-", "CuCl3-2", "CuCl+", "CuCl2", "CuCl3-", "CuCl4-2"))
 species(c("chalcocite", "tenorite", "cuprite", "copper"), add = TRUE)
 ```
 
-Note that chalcocite (Cu<sub>2</sub>S) undergoes phase transitions.
-To get the temperatures of the phase transitions from `thermo()$OBIGT` (in Kelvin, regardless of the <span style="color:red">`T.units()`</span>), we can use <span style="color:green">`info()`</span>.
+Note that chalcocite (Cu<sub>2</sub>S) undergoes polymorphic transitions.
+To get the temperatures of the polymorphic transitions from `thermo()$OBIGT` (in Kelvin, regardless of the <span style="color:red">`T.units()`</span>), we can use <span style="color:green">`info()`</span>.
 We see that at 200 °C (473.15 K) the second phase is stable; this one is automatially used by CHNOSZ for this diagram.
 ```{r info_chalcocite, message=FALSE}
 info(info("chalcocite", c("cr", "cr2", "cr3")))$T
@@ -810,7 +810,7 @@ unlist(affinity(T = 300, P = 100)$values)
 ##    0    0    0
 ```
 
-We use <span style="color:red">`mod.buffer()`</span> to choose the `cr2` phase of pyrrhotite, which is stable at this temperature ([see above](#mosaic-diagrams) for how to get this information for minerals with phase transitions).
+We use <span style="color:red">`mod.buffer()`</span> to choose the `cr2` phase of pyrrhotite, which is stable at this temperature ([see above](#mosaic-diagrams) for how to get this information for minerals with polymorphic transitions).
 Then, we set up H<sub>2</sub>S and `r o2` to be buffered by PPM, and inspect their buffered activities:
 ```{r PPM_setup, results="hide"}
 mod.buffer("PPM", "pyrrhotite", "cr2")

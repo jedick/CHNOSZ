@@ -257,7 +257,7 @@ title(main = paste("Degrees of formation of ATP species,\n",
 basis(c("Fe", "oxygen", "S2"))
 species(c("iron", "ferrous-oxide", "magnetite",
   "hematite", "pyrite", "pyrrhotite"))
-# The calculations include the phase transitions of
+# The calculations include the polymorphic transitions of
 # pyrrhotite; no additional step is needed
 a <- affinity(S2 = c(-50, 0), O2 = c(-90, -10), T=200)
 diagram(a, fill = "heat")

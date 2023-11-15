@@ -111,7 +111,7 @@ setfile <- function(csvfile, dat=NULL) {
   assign("csvfile", csvfile, parent.frame())
   file <- system.file(paste0("extdata/OBIGT/", csvfile), package="CHNOSZ")
   dat <- read.csv(file, as.is=TRUE)
-  ## Exclude entries for phase transitions
+  ## Exclude entries for high-T polymorphs
   #dat <- dat[!dat$state %in% c("cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9"), ]
   # The state and class of substance (used as section header), followed by number of species
   basename <- gsub(".csv", "", csvfile)
@@ -137,7 +137,7 @@ filerefs <- function(csvfile, dat=NULL, message=FALSE) {
     dat <- read.csv(file, as.is=TRUE)
     whichref <- "ref1"
   }
-  ## Exclude entries for phase transitions
+  ## Exclude entries for high-T polymorphs
   #dat <- dat[!dat$state %in% c("cr2", "cr3", "cr4", "cr5", "cr6", "cr7", "cr8", "cr9"), ]
   # Count number of times each reference is used
   tab <- table(dat[, whichref])

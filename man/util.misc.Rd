@@ -7,7 +7,7 @@
 \alias{unitize}
 \title{Functions for Miscellaneous Tasks}
 \description{
-Calculate \eqn{dP/dT}{dP/dT} and temperature of phase transitions; scale logarithms of activity to a desired total activity.
+Calculate \eqn{dP/dT}{dP/dT} and temperature of polymorphic transitions; scale logarithms of activity to a desired total activity.
 }
 
 \usage{
@@ -21,7 +21,7 @@ Calculate \eqn{dP/dT}{dP/dT} and temperature of phase transitions; scale logarit
   \item{ispecies}{numeric, species index of a mineral phase}
   \item{ispecies2}{numeric, species index of next mineral phase (the default is ispecies + 1)}
   \item{P}{numeric, pressure (bar)}
-  \item{dPdT}{numeric, values of (\eqn{dP/dT}{dP/dT}) of phase transitions (\code{Ttr})}
+  \item{dPdT}{numeric, values of (\eqn{dP/dT}{dP/dT}) of polymorphic transitions (\code{Ttr})}
   \item{Htr}{numeric, enthalpy(ies) of transition (cal/mol)}
   \item{logact}{numeric, logarithms of activity}
   \item{length}{numeric, numbers of residues}
@@ -29,8 +29,8 @@ Calculate \eqn{dP/dT}{dP/dT} and temperature of phase transitions; scale logarit
 }
 
 \details{
-\code{dPdTtr} returns values of \eqn{(dP/dT)_{Ttr}}{(dP/dT)Ttr}, where \eqn{Ttr}{Ttr} represents the transition temperature, of the phase transition at the high-\eqn{T}{T} stability limit of the \code{ispecies} in \code{thermo()$OBIGT} (other than checking that the names match, the function does not check that the species in fact represent different phases of the same mineral).
-\code{dPdTtr} takes account of the Clapeyron equation, \eqn{(dP/dT)_{Ttr}}{(dP/dT)Ttr}=\eqn{{\Delta}S/{\Delta}V}{DS/DV}, where \eqn{{\Delta}S}{DS} and \eqn{{\Delta}V}{DV} represent the changes in entropy and volume of phase transition, and are calculated using \code{subcrt} at Ttr from the standard molal entropies and volumes of the two phases involved.
+\code{dPdTtr} returns values of \eqn{(dP/dT)_{Ttr}}{(dP/dT)Ttr}, where \eqn{Ttr}{Ttr} represents the transition temperature, of the polymorphic transition at the high-\eqn{T}{T} stability limit of the \code{ispecies} in \code{thermo()$OBIGT} (other than checking that the names match, the function does not check that the species in fact represent different phases of the same mineral).
+\code{dPdTtr} takes account of the Clapeyron equation, \eqn{(dP/dT)_{Ttr}}{(dP/dT)Ttr}=\eqn{{\Delta}S/{\Delta}V}{DS/DV}, where \eqn{{\Delta}S}{DS} and \eqn{{\Delta}V}{DV} represent the changes in entropy and volume of polymorphic transition, and are calculated using \code{subcrt} at Ttr from the standard molal entropies and volumes of the two phases involved.
 Using values of \code{dPdT} calculated using \code{dPdTtr} or supplied in the arguments, \code{Ttr} returns as a function of \code{P} values of the upper transition temperature of the mineral phase represented by \code{ispecies}.
 
 \code{GHS_Tr} can be used to calculate values of G, H, and S at Tr for the cr2, cr3, and cr4 phases in the database.

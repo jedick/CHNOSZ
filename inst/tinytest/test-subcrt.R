@@ -31,7 +31,7 @@ AS01.C7 <- c(-1695.30, -1686.90, -1682.80, -1675.30, -1670.00, -1663.10, -1652.0
 s.C7 <- subcrt(c("S2O3-2", "H2O", "O2", "SO4-2", "H+", "S"), c("aq", "liq", "aq", "aq", "aq", "cr"), c(-5, -1, -4, 6, 2, 4), T = T)
 sout.C7 <- s.C7$out
 expect_true(maxdiff(sout.C7$G/1000, AS01.C7) < 0.06, info = info)
-# We can also check that sulfur has expected phase transitions
+# We can also check that sulfur has expected polymorphic transitions
 expect_equal(s.C7$polymorphs$sulfur, c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3), info = info)
 
 info <- "Subzero degree C calculations are possible"
@@ -116,7 +116,7 @@ OBIGT()
 info <- "More calculations for quartz are nearly consistent with SUPCRT92"
 add.OBIGT("SUPCRT92")
 # Output from SUPCRT92 for reaction specified as "1 QUARTZ" run at 1 bar
-# (SUPCRT shows phase transition at 574.850 deg C, and does not give Cp values around the transition)
+# (SUPCRT shows polymorphic transition at 574.850 deg C, and does not give Cp values around the transition)
 S92_1bar <- read.table(header = TRUE, text = "
     T       G       H    S       V
   573	-214507	-209517	24.7	23.3
@@ -130,7 +130,7 @@ expect_equal(round(CHNOSZ_1bar$H), S92_1bar$H, info = info)
 expect_equal(round(CHNOSZ_1bar$S, 1), S92_1bar$S, info = info)
 expect_equal(round(CHNOSZ_1bar$V, 1), S92_1bar$V, info = info)
 
-# 5000 bar: SUPCRT shows phase transition at 704.694 deg C
+# 5000 bar: SUPCRT shows polymorphic transition at 704.694 deg C
 S92_5000bar <- read.table(header = TRUE, text = "
     T       G       H    S       V
   703	-215044	-204913	26.7	23.3
@@ -148,8 +148,8 @@ OBIGT()
 
 } # end if(FALSE)
 
-info <- "Duplicated species yield correct phase transitions"
-# If a mineral with phase transitions is in both the basis and species lists,
+info <- "Duplicated species yield correct polymorphic transitions"
+# If a mineral with polymorphic transitions is in both the basis and species lists,
 # energy()'s call to subcrt() will have duplicated species.
 # This wasn't working (produced NAs at low T) for a long time prior to 20171003.
 s1 <- subcrt("chalcocite", T = c(100, 1000), P = 1000)
@@ -185,7 +185,7 @@ expect_equal(sum(is.na(s1$out$quartz$logK)), 0, info = info)
 s2 <- subcrt(c("Na+", "quartz"), T = 450, P = c(400, 450, 500), exceed.rhomin = TRUE)
 expect_equal(sum(is.na(s2$out$`Na+`$logK)), 0, info = info)
 
-info <- "Combining minerals with phase transitions and aqueous species with IS > 0 does not mangle output"
+info <- "Combining minerals with polymorphic transitions and aqueous species with IS > 0 does not mangle output"
 # s2 was giving quartz an extraneous loggam column and incorrect G and logK 20181107
 add.OBIGT("SUPCRT92")
 s1 <- subcrt(c("quartz", "K+"), T = 25, IS = 1)
