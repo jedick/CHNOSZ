@@ -403,7 +403,6 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
                 } else {
                   message(paste0("subcrt: G is set to NA for ", myname, "(", mystate, ") above its stability limit of ", Ttr, " K (use exceed.Ttr = TRUE to output G)"))
                   p.cgl[[ncgl[i]]]$G[T > Ttr] <- NA
-                  print(p.cgl)
                 }
             } else {
               message(paste0("subcrt: showing G for ", myname, "(", mystate, ") above its stability limit of ", Ttr, " K (use exceed.Ttr = FALSE to prevent this)"))

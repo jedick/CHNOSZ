@@ -52,15 +52,13 @@ expect_true(all(sb$`Na+`$G < sb$water$G), info = info)
 # Clean up
 water(oldwat)
 
-info <- "Phase transitions of minerals give expected messages and results"
-iacanthite <- info("acanthite", "cr2")
-expect_message(subcrt(iacanthite), "subcrt: G is set to NA for acanthite\\(cr2\\)", info = info)
-expect_equal(subcrt("acanthite")$out$acanthite$polymorph, c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3), info = info)
+info <- "Phase stability limits give expected results"
+expect_message(subcrt("gold", T = c(1300, 1350), P = 1, convert = FALSE), "subcrt: G is set to NA for gold\\(cr\\)", info = info)
 # The reaction coefficients in the output should be unchanged 20171214
 expect_equal(subcrt(c("bunsenite", "nickel", "oxygen"), c(-1, 1, 0.5))$reaction$coeff, c(-1, 1, 0.5), info = info) 
-## TODO: replace/revise this test after removal of temperature limit of Cp equations 20231114
-## Properties are NA only above (not at) the temperature limit 20191111
-#expect_equal(is.na(subcrt("rhodochrosite", T = c(699:701), P = 1, convert = FALSE)$out[[1]]$G), c(FALSE, FALSE, TRUE), info = info)
+# Properties are NA only above (not at) the temperature limit for phase stability 20191111
+sout <- subcrt("covellite", T = seq(780, 781, 0.5), P = 1, convert = FALSE)$out[[1]]
+expect_equal(is.na(sout$G), c(FALSE, FALSE, TRUE), info = info)
 
 # Use calories for comparisons with SUPCRT92
 E.units("cal")
@@ -233,6 +231,18 @@ expect_false(any(is.na(automatic_reaction$logK)), info = info)
 # Check that logK is identical for the reaction entered manually
 manual_reaction <- subcrt(c("gypsum", "Ca+2", "SO4-2", "H2O"), c(-1, 1, 1, 2), exceed.Ttr = TRUE)$out
 expect_equal(automatic_reaction$logK, manual_reaction$logK, info = info)
+
+# Added on 20231115
+info <- "Cp equation limits give expected results"
+expect_warning(sout <- subcrt("acanthite", T = 1000:1001, P = 1, convert = FALSE)$out[[1]], "above T limit of 1000 K", info = info)
+expect_false(any(is.na(sout$G)))
+info <- "exceed.Ttr doesn't interfere with polymorphic transitions"
+# Stable polymorphs of pyrrhotite at default T,P conditions of subcrt()
+polymorph <- c(1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3)
+s1 <- subcrt("pyrrhotite")$out[[1]]
+expect_equal(s1$polymorph, polymorph, info = info)
+s2 <- subcrt("pyrrhotite", exceed.Ttr = TRUE)$out[[1]]
+expect_equal(s2$polymorph, polymorph, info = info)
 
 # References
 

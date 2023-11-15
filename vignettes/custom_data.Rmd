@@ -49,8 +49,7 @@ H_ <- '<tt style="color: blue;">H</tt>'
 S_ <- '<tt style="color: blue;">S</tt>'
 Cp_ <- '<tt style="color: blue;">Cp</tt>'
 V_ <- '<tt style="color: blue;">V</tt>'
-Cp_0 <- "<i>C<sub>p</sub></i>&deg;"
-DG_0 <- "&Delta;<i>G</i>&deg;"
+T_ <- '<tt style="color: blue;">T</tt>'
 # CHNOSZ functions
 reset_ <- '<code style="color: red;">reset()</code>'
 OBIGT_ <- '<code style="color: red;">OBIGT()</code>'
@@ -75,6 +74,9 @@ Hplus <- "H<sup>+</sup>"
 HWO4_ <- "HWO<sub>4</sub><sup>-</sup>"
 H2WO4 <- "H<sub>2</sub>WO<sub>4</sub>"
 H3WO4F2_ <- "H<sub>3</sub>WO<sub>4</sub>F<sub>2</sub><sup>-</sup>"
+# Thermodynamic properties
+Cp_0 <- "<i>C<sub>p</sub></i>&deg;"
+DG_0 <- "&Delta;<i>G</i>&deg;"
 ```
 
 This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
@@ -171,8 +173,8 @@ There are two ways in which these limits are enforced in CHNOSZ:
   Note that the Deep Earth Water (DEW) model is available to extend the applicable range to pressures of up to 60 kbar (6 GPa) [@SHA14].
 - `r subcrt_` generates NA values beyond the density limit; the `exceed.rhomin` argument can be used to enable calculations at lower density in the supercritical region.
 
-The upper temperature limit for applicability of the CGL heat-capacity equation corresponds to the temperature of phase transition or to a temperature beyond which extrapolations from experimental data becomes highly uncertain.
-A maximum temperature can be stored in the final column of OBIGT, and is used by `r subcrt_` to replace computed values with NA above the maximum.
+The upper temperature limit for validity of the CGL heat-capacity equation is a species-dependent parameter.
+This value is stored as a negative value in the `r T_` column of OBIGT and is used by `r subcrt_` to issue a warning at temperatures beyond this limit.
 
 ### Required and optional data
 
