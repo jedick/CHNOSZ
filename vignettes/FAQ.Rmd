@@ -229,20 +229,20 @@ thermo.refs(sres)
 reset()
 ```
 
-* Additional minerals from @HDNB78, which were available in SUPCRT92 but may conflict with the @Ber88 compilation, can be loaded from an optional database with `add.OBIGT("SUPCRT92")`. When using these data, it is appropriate to cite @HDNB78 rather than SUPCRT92.
+* Additional minerals from @HDNB78, that were available in SUPCRT92 but may conflict with the @Ber88 compilation, can be loaded from an optional database with `add.OBIGT("SUPCRT92")`. When using these data, it is appropriate to cite @HDNB78 rather than SUPCRT92.
 
 *Answered on 2023-05-27; PPM example added on 2023-11-15.*
 
 ## What thermodynamic models are used in CHNOSZ?
 
-* The thermodynamic properties of liquid water are calculated using Fortran code from SUPCRT92 [@JOH92] or an implementation in R of the IAPWS-95 formulation [@WP02].
+* The thermodynamic properties of liquid water are calculated using Fortran code from SUPCRT92 [@JOH92] or optionally an implementation in R of the IAPWS-95 formulation [@WP02].
 * Thermodynamic properties of other species are taken from a database for minerals and inorganic and organic aqueous species including biomolecules, or from amino acid group additivity for proteins [@DLH06].
-* The corresponding high-temperature properties are calculated using the @BB85 equations for minerals and the revised Helgeson-Kirkham-Flowers [@HKF81] equations for aqueous species.
-* The HKF equations are augmented with the Deep Earth Water (DEW) model [@SHA14] and estimates of parameters in the extended Debye-H&uuml;ckel equation [@MSS13] to calculate standard-state properties and activity coefficients for given ionic strength at high pressure (to 6 GPa).
+* The corresponding high-temperature properties are calculated using the @BB85 equations for minerals and the revised [@TH88;@SH88] Helgeson-Kirkham-Flowers [@HKF81] equations for aqueous species.
+* The revised HKF equations are augmented with the Deep Earth Water (DEW) model [@SHA14] and estimates of parameters in the extended Debye-H&uuml;ckel equation [@MSS13] to calculate standard-state properties and activity coefficients for given ionic strength at high pressure (to 6 GPa).
 * Activity coefficients are implemented via adjusted standard Gibbs energies at specified ionic strength [@Alb96], which converts all activity variables in the workflow to molalities.
-* A related adjustment is available to convert standard Gibbs energies for gases from the 1 bar standard state used in SUPCRT to a variable-pressure standard state [@AC93,Ch.12].
+* A related adjustment is available to convert standard Gibbs energies for gases from the 1 bar standard state used in SUPCRT92 to a variable-pressure standard state [@AC93,Ch.12].
 
-*Answered on 2018-11-13; moved from <https://chnosz.net/> on 2023-05-27.*
+*Answered on 2018-11-13; moved to FAQ from <https://chnosz.net/> website on 2023-05-27; added references for **revised** HKF on 2023-11-17.*
 
 ## When and why do equal-activity boundaries depend on total activity?
 
@@ -701,7 +701,7 @@ subcrt("pyrite", T = seq(200, 1000, 200), P = 1)
 This feature is intended to make it harder to obtain potentially unreliable results at temperatures where a mineral (or an organic solid or liquid) is not stable.
 If you want the extrapolated Δ*G*° above the listed phase stability limit, then add `exceed.Ttr = TRUE` to the function call to `subcrt()`.
 
-OBIGT has a non-exhaustive list of temperatures of melting, decomposition, or other phase change, some of which were taken from `SUPCRT92` while others were taken from @RH95.
+OBIGT has a non-exhaustive list of temperatures of melting, decomposition, or other phase change, some of which were taken from SUPCRT92 while others were taken from @RH95.
 These minerals are listed below:
 
 ```{r mineral_Ttr, collapse = TRUE}
@@ -739,7 +739,7 @@ The warning is similar to that produced by SUPCRT92 ("CAUTION: BEYOND T LIMIT OF
 Notably, SUPCRT92 outputs Δ*G*° and other standard thermodynamic properties at temperatures higher than Tmax despite the warning.
 
 This is a new feature in the development version of CHNOSZ (to be 2.0.1).
-In previous versions of CHNOSZ, values of Δ*G*° above the *C~p~* equation limit were set to NA without a warning (as with the phase stability limit described above).
+In previous versions of CHNOSZ, values of Δ*G*° above the *C~p~* equation limit were set to NA without a warning, as with the phase stability limit described above.
 
 **4. Finally, if `T` is NA or 0, then no upper temerature limit is imposed by `subcrt()`.**
 

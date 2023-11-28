@@ -98,7 +98,7 @@ Au_pH2 <- function() {
   title(main=("After Stef\u00e1nsson and Seward, 2004, Fig. 12b"), font.main = 1, cex.main = 1.1)
 }
 
-# Dstimate the Cl- molality and ionic strength for a hypothetical 
+# Estimate the Cl- molality and ionic strength for a hypothetical 
 # NaCl solution with total chloride equal to specified NaCl + KCl solution,
 # then estimate the molality of K+ in that solution 20181109
 chloride <- function(T, P, m_NaCl, m_KCl) {
