@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.0.0-36 (2023-11-29)}{
+\section{Changes in CHNOSZ version 2.0.0-38 (2023-11-29)}{
 
     \itemize{
 
@@ -74,6 +74,11 @@
       vaporization, or decomposition). The temperature limit for \Cp equations
       is stored as the opposite (negative) value in OBIGT. See \viglink{FAQ}
       for details.
+      
+      \item The environment variable CHNOSZ_BUILD_LARGE_VIGNETTES is used to
+      control `dpi` in knitr chunk options. Setting this variable results in
+      larger vignettes (used for the CHNOSZ website); if this variable is unset
+      (as on CRAN), a smaller package is built.
 
     }
 

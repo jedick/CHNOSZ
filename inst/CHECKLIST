@@ -1,6 +1,6 @@
 ****************************
 Release checklist for CHNOSZ
-    (updated 2023-03-10)
+    (updated 2023-11-29)
 ****************************
 
 - Run examples() and demos() and inspect their output (especially plots)
@@ -73,11 +73,9 @@ exit_file("Skipping tests so development builds on R-Forge work")
 Making vignettes for website (https://chnosz.net)
 *************************************************
 
-- Use dpi <- 72 in anintro.Rmd
+- Build package after setting CHNOSZ_BUILD_LARGE_VIGNETTES environment variable.
 
-- Use hires <- TRUE in multi-metal.Rmd
-
-- After making vignettes, run doc/mklinks.sh in installed directory
+- Install the package and run doc/mklinks.sh within the installation directory.
   (this adds links to the HTML renditions of Rd files)
 
 ***************

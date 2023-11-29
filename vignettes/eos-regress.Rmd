@@ -79,11 +79,8 @@ knit_hooks$set(pngquant = hook_pngquant)
 # pngquant isn't available on R-Forge ...
 if (!nzchar(Sys.which("pngquant"))) {
   pngquant <- NULL 
-  # Save space by using a lower resolution
-  dpi <- 50
 } else {
   pngquant <- "--speed=1 --quality=0-50"
-  dpi <- 72
 }
 
 ## Colorize messages 20171031
@@ -92,6 +89,11 @@ color_block = function(color) {
   function(x, options) sprintf('<pre style="color:%s">%s</pre>', color, x)
 }
 knit_hooks$set(warning = color_block('magenta'), error = color_block('red'), message = color_block('blue'))
+
+# Set dpi 20231129
+knitr::opts_chunk$set(
+  dpi = if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) 72 else 50
+)
 ```
 
 
@@ -159,7 +161,7 @@ Cplm_low <- EOSregress(Cpdat, var, T.max = 600)
 Cplm_low$coefficients
 ```
 
-```{r EOSplot, fig.margin = TRUE, fig.cap = "Heat capacity of aqueous methane.", fig.width=3.5, fig.height=3.5, cache=TRUE, results="hide", message=FALSE, echo=FALSE, dpi=dpi, out.width=672, out.height=336, pngquant=pngquant}
+```{r EOSplot, fig.margin = TRUE, fig.cap = "Heat capacity of aqueous methane.", fig.width=3.5, fig.height=3.5, cache=TRUE, results="hide", message=FALSE, echo=FALSE, out.width=672, out.height=336, pngquant=pngquant}
 EOSplot(Cpdat, coefficients = round(Cplm_low$coefficients, 1))
 EOSplot(Cpdat, coeficients = Cplm_high, add = TRUE, lty = 3)
 PS01_data <- convert(EOScoeffs("CH4", "Cp"), "J")
@@ -239,7 +241,7 @@ Vcoeffs <- round(c(Vnonlm$coefficients, QBorn = Vomega), 1)
 Vcoeffs_database <- convert(EOScoeffs("CH4", "V"), "J")
 ```
 
-```{r Vplot, fig.margin=TRUE, results="hide", message=FALSE, echo=FALSE, fig.width=3.5, fig.height=7, fig.cap="Volume of aqueous methane.", dpi=dpi, out.width=672, out.height=672, pngquant=pngquant}
+```{r Vplot, fig.margin=TRUE, results="hide", message=FALSE, echo=FALSE, fig.width=3.5, fig.height=7, fig.cap="Volume of aqueous methane.", out.width=672, out.height=672, pngquant=pngquant}
 par(mfrow = c(2, 1))
 # plot 1
 EOSplot(Vdat, coefficients = Vcoeffs)
@@ -278,7 +280,7 @@ Nadat <- prop.PT[, c("T", "P", "Cp")]
 As noted above, &omega; for electrolytes is not a constant.
 What happens if we apply the constant-&omega; model anyway, knowing it's not applicable (especially at high temperature)?
 
-```{r Nalm, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Heat capacity of Na<sup>+</sup> (inapplicable: constant &omega;).", dpi=dpi, out.width=672, out.height=336, pngquant=pngquant}
+```{r Nalm, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Heat capacity of Na<sup>+</sup> (inapplicable: constant &omega;).", out.width=672, out.height=336, pngquant=pngquant}
 var <- c("invTTheta2", "TXBorn")
 Nalm <- EOSregress(Nadat, var, T.max = 600)
 EOSplot(Nadat, coefficients = Nalm$coefficients, fun.legend = NULL)
@@ -302,7 +304,7 @@ omega.guess <- coef(Nalm)[3]
 Then, we can use an iterative procedure that refines successive guesses of `r wPrTr`.
 The convergence criterion is measured by the difference in sequential regressed values of &omega;.
 
-```{r Nawhile, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Heat capacity of Na<sup>+</sup> (variable &omega;).", dpi=dpi, out.width=672, out.height=336, pngquant=pngquant}
+```{r Nawhile, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Heat capacity of Na<sup>+</sup> (variable &omega;).", out.width=672, out.height=336, pngquant=pngquant}
 diff.omega <- 999
 while(abs(diff.omega) > 1) {
   Nalm1 <- EOSregress(Nadat, var1, omega.PrTr = tail(omega.guess, 1), Z = 1)
@@ -324,7 +326,7 @@ Note that the regressed value of &omega; has volumetric units (cm<sup>3</sup> ba
 Compared to `r Cp0`, the regression of `r V0` is very finicky.
 Given a starting guess of `r wPrTr` of 1400000 cm<sup>3</sup> bar/mol, the iteration converges on 1394890 instead of the "true" database value of 1383230 (represented by dashed line in the plot).
 
-```{r NaVolume, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Volume of Na<sup>+</sup> (variable &omega;).", results="hide", message=FALSE, echo=FALSE, dpi=dpi, out.width=672, out.height=336, pngquant=pngquant}
+```{r NaVolume, fig.margin=TRUE, fig.width=3.5, fig.height=3.5, fig.cap="Volume of Na<sup>+</sup> (variable &omega;).", results="hide", message=FALSE, echo=FALSE, out.width=672, out.height=336, pngquant=pngquant}
 T <- convert(seq(0, 600, 25), "K")
 P <- 1000
 prop.PT <- subcrt("Na+", T = T, P = P, grid = "T", convert = FALSE)$out[[1]]
@@ -429,7 +431,7 @@ info(info(c("calc-H4SiO4", "H4SiO4")))
 ```{r width80, include=FALSE}
 ```
 
-```{r subcrt_H4SiO4, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, echo=FALSE, results="hide", message=FALSE, dpi=dpi, out.width="100%", cache=TRUE, fig.cap="Comparison of H<sub>4</sub>SiO<sub>4</sub> pseudospecies.", pngquant=pngquant}
+```{r subcrt_H4SiO4, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, echo=FALSE, results="hide", message=FALSE, out.width="100%", cache=TRUE, fig.cap="Comparison of H<sub>4</sub>SiO<sub>4</sub> pseudospecies.", pngquant=pngquant}
 s1 <- subcrt(c("calc-H4SiO4", "SiO2", "H2O"), c(-1, 1, 2))
 plot(s1$out$T, s1$out$G, type = "l", ylim = c(-500, 2000),
   xlab = axis.label("T"), ylab = axis.label("DG0"))
@@ -453,7 +455,7 @@ For example, the almost 800 J/mol offset in &Delta;<i>G</i>&deg; at 350 &deg;C c
 The following example uses the `H4SiO4` from Stef&aacute;nsson (2001) to make an activity diagram for the K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O system.
 This is similar to the diagram on p. 361 of [Garrels and Christ, 1965](https://www.worldcat.org/oclc/517586), but is quantitatively a closer match to the diagram in the [User's Guide to PHREEQC](https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/html/final-75.html).
 
-```{r activity_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, echo=TRUE, results="hide", message=FALSE, dpi=dpi, out.width="100%", cache=TRUE, fig.cap="Activity diagram for K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O.", pngquant=pngquant}
+```{r activity_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, echo=TRUE, results="hide", message=FALSE, out.width="100%", cache=TRUE, fig.cap="Activity diagram for K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O.", pngquant=pngquant}
 basis(c("Al+3", "H4SiO4", "K+", "H2O", "H+", "O2"))
 species(c("gibbsite", "muscovite", "kaolinite", "pyrophyllite", "K-feldspar"))
 a <- affinity(H4SiO4 = c(-8, 0, 300), `K+` = c(-1, 8, 300))

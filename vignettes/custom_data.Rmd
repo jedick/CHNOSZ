@@ -23,8 +23,10 @@ knit_hooks$set(pngquant = hook_pngquant)
 pngquant <- "--speed=1 --quality=0-25"
 if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
 
-## Set dpi 20231129
-dpi <- 72
+# Set dpi 20231129
+knitr::opts_chunk$set(
+  dpi = if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) 100 else 72
+)
 ```
 
 ```{r HTML, include = FALSE}
@@ -513,7 +515,7 @@ A constant molality of `r F_` is based on the assumption of complete dissociatio
 An ionic strength of 0.9 mol/kg is estimated for a solution with 1.8 m NaCl (use `NaCl(1.8, T = 300)`).
 `r NOTE`: because the ionic strength is non-zero, the calculations here refer to molality instead of activity of species (see [An Introduction to CHNOSZ](anintro.html#from-activity-to-molality)).
 
-```{r diagram1, message = FALSE, results = "hide", fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant, dpi = dpi}
+```{r diagram1, message = FALSE, results = "hide", fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
 basis(c("H+", "WO4-2", "F-", "H2O", "O2"))
 basis("F-", log10(0.1))
 iaq <- retrieve("W", c("O", "H", "F"), "aq")
@@ -542,7 +544,7 @@ a_F <- F_tot / (1 + 10^(logK_HF - pH))
 ```
 
 Now that we have the molality of `r F_` as a function of pH, we can provide it in the call to `r affinity_`.
-```{r diagram2, message = FALSE, results = "hide", results = "hide", fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant, dpi = dpi}
+```{r diagram2, message = FALSE, results = "hide", results = "hide", fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
 basis(c("H+", "WO4-2", "F-", "H2O", "O2"))
 iaq <- retrieve("W", c("O", "H", "F"), "aq")
 species(iaq)

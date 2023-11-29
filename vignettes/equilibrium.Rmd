@@ -64,8 +64,10 @@ knit_hooks$set(pngquant = hook_pngquant)
 pngquant <- "--speed=1 --quality=0-25"
 if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
 
-## Set dpi 20231129
-dpi <- 72
+# Set dpi 20231129
+knitr::opts_chunk$set(
+  dpi = if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) 100 else 72
+)
 ```
 
 ```{r CHNOSZ_reset, include=FALSE}
@@ -270,7 +272,7 @@ label.figure("F", yfrac=0.92, xfrac=0.1, font = 2)
 ```
 </div>
 
-```{r AAplot, echo = FALSE, results = "hide", message = FALSE, fig.width = 13/2, fig.height = 8.7/2, out.width = "100%", pngquant = pngquant, dpi = dpi}
+```{r AAplot, echo = FALSE, results = "hide", message = FALSE, fig.width = 13/2, fig.height = 8.7/2, out.width = "100%", pngquant = pngquant}
 ```
 
 Diagrams **A** and **B** use the *maximum affinity method*, where the reference
@@ -370,7 +372,7 @@ prF <- function() {
 ```
 </div>
 
-```{r PRplot, echo = FALSE, results = "hide", message = FALSE, fig.width = 13/2, fig.height = 8.7/2, out.width = "100%", pngquant = pngquant, dpi = dpi}
+```{r PRplot, echo = FALSE, results = "hide", message = FALSE, fig.width = 13/2, fig.height = 8.7/2, out.width = "100%", pngquant = pngquant}
 layout(t(matrix(1:12, nrow=4)), widths=c(1, 4, 4, 4), heights=c(0.7, 4, 4))
 
 ## Row 0 (column titles)
@@ -449,7 +451,7 @@ Here is another figure showing the effects of normalization.
 This is like Figure 5 of @Dic08, extended to more extreme conditions.
 If you wish to reproduce the diagram from the 2008 paper more closely, uncomment the `add.OBIGT()` command.
 
-```{r ProteinSpeciation, results = "hide", message = FALSE, fig.width = 8, fig.height = 5.5, out.width = "100%", pngquant = pngquant, dpi = dpi}
+```{r ProteinSpeciation, results = "hide", message = FALSE, fig.width = 8, fig.height = 5.5, out.width = "100%", pngquant = pngquant}
 organisms <- c("METSC", "METJA", "METFE",  "METVO", "METBU",
                "HALJP", "ACEKI", "GEOSE", "BACLI", "AERSA")
 proteins <- c(rep("CSG", 6), rep("SLAP", 4))
