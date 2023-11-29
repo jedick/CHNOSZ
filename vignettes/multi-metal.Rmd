@@ -661,7 +661,8 @@ The next code chunk prepends `@` to the reference keys and uses the chunk option
 ```{r stack2.cite, results = "asis"}
 allyears <- lapply(iall, function(x) thermo.refs(x)$year)
 o <- order(unlist(allyears))
-cat(paste(paste0("@", unique(unlist(allkeys)[o])), collapse = "; "))
+keys <- gsub("\\..*", "", unique(unlist(allkeys)[o]))
+cat(paste(paste0("@", keys), collapse = "; "))
 ```
 
 ## Mixing 2

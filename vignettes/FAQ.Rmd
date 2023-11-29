@@ -225,7 +225,7 @@ info(info("alanine"))[c("ref1", "ref2")]
 thermo.refs(info("alanine"))
 ```
 
-* Mineral data in OBIGT are based on @Ber88 together with sulfides and other non-conflicting minerals from @HDNB78. For a reaction such as the pyrite-pyrrhotite-magnetite (PPM) oxygen fugacity buffer, all the sources of data can be listed as follows (for the corresponding sulfur fugacity buffer, the code could be written with hematite and `r S2` in place of pyrrhotite and oxygen):
+* Mineral data in OBIGT are based on @Ber88 together with sulfides and other non-conflicting minerals from @HDNB78. For a reaction such as the pyrite-pyrrhotite-magnetite (PPM) oxygen fugacity buffer, all the sources of data can be listed as follows:
 
 ```{r PPM_refs, message = FALSE}
 basis(c("pyrite", "pyrrhotite", "oxygen"))
