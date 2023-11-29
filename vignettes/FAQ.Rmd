@@ -135,6 +135,8 @@ knitr::knit_hooks$set(
            '</div>', sep = '\n')
    }
 )
+# Set dpi 20231129
+dpi <- 72
 ```
 
 ```{r echo = F, cache = F}
@@ -207,7 +209,7 @@ This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo(
 As one syllable that starts with an *sh* sound and [rhymes with *Oz*](https://en.wiktionary.org/wiki/Rhymes:English/%C9%92z).
 CHNOSZ and [schnoz](https://en.wiktionary.org/wiki/schnozz) are homophones.
 
-*Answered on 2023-05-22.*
+*Added on 2023-05-22.*
 
 ## How should CHNOSZ be cited?
 
@@ -235,7 +237,7 @@ reset()
 
 * Additional minerals from @HDNB78, that were available in SUPCRT92 but may conflict with the @Ber88 compilation, can be loaded from an optional database with `add.OBIGT("SUPCRT92")`. When using these data, it is appropriate to cite @HDNB78 rather than SUPCRT92.
 
-*Answered on 2023-05-27; PPM example added on 2023-11-15.*
+*Added on 2023-05-27; PPM example added on 2023-11-15.*
 
 ## What thermodynamic models are used in CHNOSZ?
 
@@ -246,7 +248,7 @@ reset()
 * Activity coefficients are implemented via adjusted standard Gibbs energies at specified ionic strength [@Alb96], which converts all activity variables in the workflow to molalities.
 * A related adjustment is available to convert standard Gibbs energies for gases from the 1 bar standard state used in SUPCRT92 to a variable-pressure standard state [@AC93,Ch.12].
 
-*Answered on 2018-11-13; moved to FAQ from <https://chnosz.net/> website on 2023-05-27; added references for **revised** HKF on 2023-11-17.*
+*Added to <https://chnosz.net/> website on 2018-11-13; moved to FAQ on 2023-05-27; added references for **revised** HKF on 2023-11-17.*
 
 ## When and why do equal-activity boundaries depend on total activity?
 
@@ -331,10 +333,10 @@ reset()
 ```
 </div>
 
-```{r DEW_Ctot, echo = FALSE, message = FALSE, results = "hide", fig.width = 8, fig.height = 4, out.width = "100%", fig.align = "center", pngquant = pngquant, cache = TRUE}
+```{r DEW_Ctot, echo = FALSE, message = FALSE, results = "hide", fig.width = 8, fig.height = 4, out.width = "100%", fig.align = "center", pngquant = pngquant, cache = TRUE, dpi = dpi}
 ```
 
-*Answered on 2023-05-17.*
+*Added on 2023-05-17.*
 
 ## How can minerals with polymorphic transitions be added to the database?
 
@@ -493,12 +495,12 @@ for(property in c("G", "H", "S", "Cp")) {
 reset()
 ```
 </div>
-```{r pyrrhotite_T, echo = FALSE, message = FALSE, results = "hide", fig.width = 8, fig.height = 2.5, out.width = "100%", fig.align = "center", pngquant = pngquant}
+```{r pyrrhotite_T, echo = FALSE, message = FALSE, results = "hide", fig.width = 8, fig.height = 2.5, out.width = "100%", fig.align = "center", pngquant = pngquant, dpi = dpi}
 ```
 
 For additional polymorphs, we could repeat the above procedure using polymorph 2 as the starting point to calculate `G`, `H`, and `S` of polymorph 3, and so on.
 
-*Answered on 2023-06-23.*
+*Added on 2023-06-23.*
 
 ## How can I make a diagram with the trisulfur radical ion (`r S3minus`)?
 
@@ -671,10 +673,10 @@ OBIGT()
 
 Here are the three plots that we made:
 
-```{r trisulfur, echo = FALSE, message = FALSE, results = "hide", fig.width = 10, fig.height = 3.33, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant, cache = TRUE}
+```{r trisulfur, echo = FALSE, message = FALSE, results = "hide", fig.width = 10, fig.height = 3.33, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant, cache = TRUE, dpi = dpi}
 ```
 
-*Answered on 2023-09-08.*
+*Added on 2023-09-08.*
 
 ## In OBIGT, what is the meaning of `T` for solids, liquids, and gases?
 
@@ -747,7 +749,7 @@ In previous versions of CHNOSZ, values of Δ*G*° above the *C~p~* equation limi
 
 **4. Finally, if `T` is NA or 0, then no upper temerature limit is imposed by `subcrt()`.**
 
-*Answered on 2023-11-15.*
+*Added on 2023-11-15.*
 
 ## How do I plot mineral buffers for pH?
 
@@ -799,7 +801,7 @@ title("Mineral data from Helgeson et al. (1978)\n(as used in SUPCRT92)",
   font.main = 1, cex.main = 0.9)
 OBIGT()
 ```
-```{r KMQ_diagram, message = FALSE, fig.width = 8, fig.height = 4, results = "hide", echo = FALSE}
+```{r KMQ_diagram, message = FALSE, fig.width = 8, fig.height = 4, out.width = "100%", results = "hide", echo = FALSE, dpi = dpi}
 ```
 
 In this diagram, the gray area is below the reducing stability limit of water (i.e., where the equilibrium fugacity of `r H2` exceeds unity).
@@ -820,6 +822,6 @@ If we use the thermodynamic parameters for minerals from @HDNB78, we get the lin
 ```{r KMQ_diagram, eval = FALSE, echo = 10:14}
 ```
 
-*Answered on 2023-11-28.*
+*Added on 2023-11-28.*
 
 ## References

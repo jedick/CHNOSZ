@@ -64,8 +64,6 @@ library(knitr)
 knit_hooks$set(pngquant = hook_pngquant)
 pngquant <- "--speed=1 --quality=0-25"
 if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
-## logK with a thin space 20200627
-logK <- "log&thinsp;<i>K</i>"
 
 ## Resolution settings
 # Change this to TRUE to make high-resolution plots
@@ -77,6 +75,12 @@ res1 <- ifelse(hires, res1.hi, res1.lo)
 res2.lo <- 200
 res2.hi <- 400
 res2 <- ifelse(hires, res2.hi, res2.lo)
+
+## Set dpi 20231129
+dpi <- 72
+
+## logK with a thin space 20200627
+logK <- "log&thinsp;<i>K</i>"
 ```
 
 ```{r CHNOSZ_reset, include=FALSE}
@@ -138,7 +142,7 @@ legend("topright", legend = lTP(25, 1), bty = "n")
 
 The second diagram is just like the first, except the function `mash()` is used to label the fields with names of species from both systems, and a legend is added to indicate the temperature and pressure.
 
-```{r mash, echo = 9:14,  results = "hide", message = FALSE, fig.width = 10, fig.height = 5, out.width = "100%"}
+```{r mash, echo = 9:14,  results = "hide", message = FALSE, fig.width = 10, fig.height = 5, out.width = "100%", dpi = dpi}
 ```
 
 Note that these are predominance diagrams, so they show only the species with highest activity; there is in fact a distribution of activities of aqueous species that is not visible here.
@@ -313,7 +317,7 @@ The `mix()` function is used to calculate the affinities of formation from basis
 Finally, the `diagram()`s are plotted; the `min.area` argument is used to remove labels for very small fields.
 Regarding the legend, it should be noted that although the DFT calculations for solids are made for zero temperature and zero pressure [@SZS_17], the standard Gibbs energies of aqueous species [e.g. @WEP_82] are modified by a correction term so that they can be combined with DFT energies to reproduce the experimental energy for dissolution of a representative material for each metal at 25 °C and 1 bar [@PWLC12].
 
-```{r mixing1, echo = 16:47, message = FALSE, results = "hide", fig.width = 9, fig.height = 3, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant}
+```{r mixing1, echo = 16:47, message = FALSE, results = "hide", fig.width = 9, fig.height = 3, out.width = "100%", out.extra='class="full-width"', pngquant = pngquant, dpi = dpi}
 ```
 
 In these diagrams, changing the Fe:V ratio affects the fully reduced metallic species.
@@ -401,7 +405,7 @@ Given the diagram for the stable Fe-, V- and bimetallic materials *mixed with th
 This is plotted as a color map in the second diagram.
 (See the source of this vignette for the code used to make the scale bar.)
 
-```{r FeVO4, echo = 31:44, message = FALSE, results = "hide", fig.width = 11, fig.height = 5, out.width = "100%", pngquant = FALSE}
+```{r FeVO4, echo = 31:44, message = FALSE, results = "hide", fig.width = 11, fig.height = 5, out.width = "100%", pngquant = pngquant, dpi = dpi}
 ```
 
 Now we locate the pH and Eh that maximize the affinity (that is, minimize Δ*G*~pbx~) of FeVO~4~ compared to the stable species.
@@ -512,7 +516,7 @@ The result is used to plot the last layer of the diagram:
 
 After that we add the legend and title.
 
-```{r stack1_2, echo=5:17, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
+```{r stack1_2, echo=5:17, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant, dpi = dpi}
 ```
 
 This diagram has a distinctive  chalcopyrite "hook" surrounded by a thin bornite field.
@@ -638,7 +642,7 @@ OBIGT()
 ```
 </div>
 
-```{r stack2, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant}
+```{r stack2, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "75%", fig.align = "center", pngquant = pngquant, dpi = dpi}
 ```
 
 After running the code to make this diagram, we can list the reference keys for the minerals and aqueous species.
@@ -729,7 +733,7 @@ title("Fe:Cu = 1:2")
 ```
 </div>
 
-```{r mixing2, echo = FALSE, results = "hide", message = FALSE, fig.width = 8, fig.height = 6.5, out.width = "100%", pngquant = pngquant}
+```{r mixing2, echo = FALSE, results = "hide", message = FALSE, fig.width = 8, fig.height = 6.5, out.width = "100%", pngquant = pngquant, dpi = dpi}
 ```
 
 These diagrams show that changing the amounts of the metals affects the stability of minerals involved in reactions with chalcopyrite.
@@ -793,7 +797,7 @@ title("Cu-Fe-S-O-H")
 ```
 </div>
 
-```{r stack3, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant}
+```{r stack3, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 4, out.width = "100%", pngquant = pngquant, dpi = dpi}
 ```
 
 The resulting diagram is similar to Figure 2 of @Sve87; that diagram also shows calculations of the solubility of Cu and concentration of SO~4~^-2^ in model Cu ore-forming fluids.
@@ -876,7 +880,7 @@ title(bquote(bold(.(expr.species("SO4-2"))~"(ppm)")))
 ```
 </div>
 
-```{r solubility, echo = FALSE, results = "hide", message = FALSE, fig.width = 7, fig.height = 3, out.width = "100%", fig.align = "center", pngquant = pngquant}
+```{r solubility, echo = FALSE, results = "hide", message = FALSE, fig.width = 7, fig.height = 3, out.width = "100%", fig.align = "center", pngquant = pngquant, dpi = dpi}
 ```
 
 After running the code above, we can inspect the value of `calc` to show the estimated ionic strength and activity of Cl^-^; the latter is very close to unity.
@@ -1007,7 +1011,7 @@ The fields in this diagram are labeled with mineral abbreviations from the OBIGT
 ```{r rebalance, eval = FALSE, echo = 36:49}
 ```
 
-```{r rebalance, echo = FALSE, results = "hide", message = FALSE, fig.width = 6.5, fig.height = 5, out.width = "100%", fig.align = "center", pngquant = pngquant}
+```{r rebalance, echo = FALSE, results = "hide", message = FALSE, fig.width = 6.5, fig.height = 5, out.width = "100%", fig.align = "center", pngquant = pngquant, dpi = dpi}
 ```
 
 The final diagram is like one shown in Figure 5 of @Bri80 and Figure 5 of @MH85.
@@ -1027,7 +1031,7 @@ Here is an example for the Cu-Fe-S-O-H system.
 The reactions are balanced on O~2~, which means that no O~2~ appears in the reaction between any two minerals, but Fe^+2^ and/or Cu^+^ can be present, depending on the chemical composition.
 Saturation limits are shown for species that have no O~2~ in their formation reactions.
 
-```{r non-metal, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+```{r non-metal, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant, dpi = dpi}
 basis(c("Fe+2", "Cu+", "hydrogen sulfide", "oxygen", "H2O", "H+"))
 basis("H2S", 2)
 species(c("pyrite", "magnetite", "hematite", "covellite", "tenorite",
@@ -1142,7 +1146,7 @@ stopifnot(all.equal(as.numeric(e$loga.equil[[3]]), logAcAm, tol = 1e-3, scale = 
 ```
 </div>
 
-```{r mosaic-combo, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant}
+```{r mosaic-combo, echo = FALSE, results = "hide", message = FALSE, fig.width = 6, fig.height = 5, out.width = "80%", fig.align = "center", pngquant = pngquant, dpi = dpi}
 ```
 
 The diagram shows the ionization of acetic acid and NH~3~ at different pHs.
