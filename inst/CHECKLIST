@@ -79,3 +79,10 @@ Making vignettes for website (https://chnosz.net)
 
 - After making vignettes, run doc/mklinks.sh in installed directory
   (this adds links to the HTML renditions of Rd files)
+
+***************
+Temporary Items
+***************
+
+- Replace reference to "development version of CHNOSZ (to be 2.0.1)" in FAQ.Rmd.
+

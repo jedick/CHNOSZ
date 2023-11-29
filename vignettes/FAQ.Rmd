@@ -751,11 +751,11 @@ In previous versions of CHNOSZ, values of Δ*G*° above the *C~p~* equation limi
 
 *Added on 2023-11-15.*
 
-## How do I plot mineral buffers for pH?
+## How can mineral pH buffers be plotted?
 
-Unlike mineral redox buffers, the K-feldspar&ndash;muscovite&ndash;quartz (KMQ) and muscovite&ndash;kaolinite (MC) buffers for pH are known as "sliding scale" buffers because they do not determine pH but rather the activity ratio of `r Kplus` to `r Hplus` [@HA05].
-To add these buffers to a `r logfO2`&ndash;pH diagram in CHNOSZ, choose basis species that include Al<sup>+3</sup> (the least mobile element, which the reactions are balanced on), quartz (this is needed for the KMQ buffer), the mobile ions `r Kplus` and `r Hplus`, and the remaining elements in `r H2O` and `r O2` (`oxygen` denotes the gas in OBIGT).
-The formation reactions for these minerals don't involve `r O2`, but it is required so that the number of basis species equals the number of elements plus one for charge.
+Unlike mineral redox buffers, the K-feldspar&ndash;muscovite&ndash;quartz (KMQ) and muscovite&ndash;kaolinite (MC) pH buffers are known as "sliding scale" buffers because they do not determine pH but rather the activity ratio of `r Kplus` to `r Hplus` [@HA05].
+To add these buffers to a `r logfO2`&ndash;pH diagram in CHNOSZ, choose basis species that include Al<sup>+3</sup> (the least mobile element, which the reactions are balanced on), quartz (this is needed for the KMQ buffer), the mobile ions `r Kplus` and `r Hplus`, and the remaining elements in `r H2O` and `r O2`; `oxygen` denotes the gas in OBIGT.
+The formation reactions for these minerals don't involve `r O2`, but it must be present so that the number of basis species equals the number of elements +1 (i.e. elements plus charge).
 
 ```{r KMQ_basis_species, message = FALSE}
 basis(c("Al+3", "quartz", "K+", "H+", "H2O", "oxygen"))
@@ -783,15 +783,16 @@ K_AK <- 10 ^ logK_AK
 
 This calculation gives a molality of `r Kplus` that is lower than unity and accordingly makes the buffers less acidic [@HC14].
 Now we can apply the calculated molality of `r Kplus` to the basis species and add the buffer lines to the diagram.
-Note the `IS` argument is also used for `affinity()` so that activities are replaced by molalities (that is, affinity is calculated with standard Gibbs energies adjusted for ionic strength; this has the same effect as calculating activity coefficients).
-```{r KMQ_diagram, eval = FALSE, echo = 2:9}
+The `IS` argument is also used for `affinity()` so that activities are replaced by molalities (that is, affinity is calculated with standard Gibbs energies adjusted for ionic strength; this has the same effect as calculating activity coefficients).
+```{r KMQ_diagram, eval = FALSE, echo = 2:10}
 par(mfrow = c(1, 2))
 basis("K+", log10(m_K))
 a <- affinity(pH = c(2, 10), O2 = c(-55, -38), T = T, P = P, IS = IS)
 diagram(a, srt = 90)
 dTP <- as.expression(c(lT(T), lP(P)))
 legend("topleft", legend = dTP, bty = "n", inset = c(-0.05, 0), cex = 0.9)
-legend("topright", c("Unit molality of Cl-", "Quartz saturation"), bty = "n", cex = 0.9)
+ltxt <- c(quote("Unit molality of Cl"^"-"), "Quartz saturation")
+legend("topright", legend = ltxt, bty = "n", cex = 0.9)
 title("Mineral data from Berman (1988)\nand Sverjensky et al. (1991) (OBIGT default)",
   font.main = 1, cex.main = 0.9)
 add.OBIGT("SUPCRT92")
@@ -804,22 +805,23 @@ OBIGT()
 ```{r KMQ_diagram, message = FALSE, fig.width = 8, fig.height = 4, out.width = "100%", results = "hide", echo = FALSE, dpi = dpi}
 ```
 
-In this diagram, the gray area is below the reducing stability limit of water (i.e., where the equilibrium fugacity of `r H2` exceeds unity).
-The diagram in Fig. 4 of @HC14 shows lines at somewhat higher pH; ca. 5 and 6 for the two buffers.
-There are several possible reasons for the differences:
+The gray area, which is automatically drawn by `diagram()`, is below the reducing stability limit of water; that is, this area is where the equilibrium fugacity of `r H2` exceeds unity.
+
+The diagram in Fig. 4 of @HC14 shows the buffer lines at somewhat higher pH values of ca. 5 and 6.
+There are several possible reasons for these differences:
 
 1. We used different thermodynamic data for the minerals;
 2. Activity coefficients either were not calculated or were calculated differently by @HC14 (however, removing `IS` from the code moves the lines to lower rather than higher pH); or
-3. We calculated `r Kplus` molality incorrectly for the MC buffer [this represents "clay-rich but feldspar-free sediments", but we used the feldspathic Ab&ndash;Kfs reaction becauase no other reaction was given by @HC14].
+3. We calculated `r Kplus` molality incorrectly for the MC buffer. Although @HC14 invoked the muscovite&ndash;kaolinite buffer for "clay-rich but feldspar-free sediments", we used the feldspathic Ab&ndash;Kfs reaction for calculating `r Kplus` molality [no alternative reaction was given by @HC14].
 
-Addressing only the first point, note that the parameters for these minerals in the default OBIGT database come from @Ber88 and @SHD91.
+Regarding only the first point, note that the parameters for these minerals in the default OBIGT database come from @Ber88 and @SHD91.
 ```{r KMQ_refs, message = FALSE}
 thermo.refs(species()$ispecies)
 ```
 
 If we use the thermodynamic parameters for minerals from @HDNB78, we get the lines shown in the second plot above, representing a larger stability field for muscovite.
 
-```{r KMQ_diagram, eval = FALSE, echo = 10:14}
+```{r KMQ_diagram, eval = FALSE, echo = 11:15}
 ```
 
 *Added on 2023-11-28.*

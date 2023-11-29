@@ -148,3 +148,4 @@ sed -i 's/<code>thermo.refs()<\/code>/<code><a href="..\/html\/util.data.html" s
 sed -i 's/<code>subcrt()<\/code>/<code><a href="..\/html\/subcrt.html" style="color:\ green;">subcrt()<\/a><\/code>/g' FAQ.html
 sed -i 's/<code>check.GHS()<\/code>/<code><a href="..\/html\/util.data.html" style="color:\ green;">check.GHS()<\/a><\/code>/g' FAQ.html
 sed -i 's/<code>affinity()<\/code>/<code><a href="..\/html\/affinity.html" style="color:\ green;">affinity()<\/a><\/code>/g' FAQ.html
+sed -i 's/<code>diagram()<\/code>/<code><a href="..\/html\/diagram.html" style="color:\ green;">diagram()<\/a><\/code>/g' FAQ.html
