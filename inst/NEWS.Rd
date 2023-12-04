@@ -15,37 +15,28 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.0.0-38 (2023-11-29)}{
+\section{Changes in CHNOSZ version 2.0.0-39 (2023-12-04)}{
 
+  \subsection{NEW FEATURES}{
     \itemize{
 
-      \item Add \viglink{FAQ} vignette with the following questions:
+      \item Add \viglink{FAQ} vignette with the following questions: How is
+      \sQuote{CHNOSZ} pronounced?, How should CHNOSZ be cited?, What
+      thermodynamic models are used in CHNOSZ?, When and why do equal-activity
+      boundaries depend on total activity?, How can minerals with polymorphic
+      transitions be added to the database?, How can I make a diagram with the
+      trisulfur radical ion (S\s{3}\S{-})?, In OBIGT, what is the meaning of
+      \code{T} for solids, liquids, and gases?, and How can mineral pH buffers
+      be plotted?
 
-      \itemize{
-
-        \item How is \sQuote{CHNOSZ} pronounced?
-        \item How should CHNOSZ be cited?
-        \item What thermodynamic models are used in CHNOSZ?
-        \item When and why do equal-activity boundaries depend on total activity?
-        \item How can minerals with polymorphic transitions be added to the database?
-        \item How can I make a diagram with the trisulfur radical ion (S\s{3}\S{-})?
-        \item In OBIGT, what is the meaning of \code{T} for solids, liquids, and gases?
-        \item How can mineral pH buffers be plotted?
-
-      }
-
-      \item Add \code{use.polymorphs} argument to \code{subcrt()} to allow
+      \item Add \strong{use.polymorphs} argument to \code{subcrt()} to allow
       turning off automatic identification of stable polymorphs. This is used
-      in the FAQ (\dQuote{How can minerals with polymorphic transitions be added to
-      the database?}).
+      in the FAQ (How can minerals with polymorphic transitions be added to the
+      database?).
 
       \item Restore \file{EOSregress.R} and its reverse dependencies
-      \file{eos-regress.Rmd} and \file{demo/adenine.R}. Thanks to Kris Fecteau
+      \viglink{eos-regress} and \file{demo/adenine.R}. Thanks to Kris Fecteau
       and Kirt Robinson for the suggestion.
-
-      \item Rename \code{checkGHS()} and \code{checkEOS()} to
-      \code{check.GHS()} and \code{check.EOS()} and make
-      \code{return.difference} TRUE by default.
 
       \item \code{mosaic()} now handles the situation where the alternate basis
       species include one of the axis variables on a diagram (by changing the
@@ -54,33 +45,52 @@
       \dQuote{total S}, etc.). Thanks to Evgeniy Bastrakov for the feature
       request.
 
-      \item Fix bug in \code{subcrt()} for \code{exceed.Ttr} not applied to
-      automatically balanced reactions (it was stuck on FALSE regardless of the
-      argument value).
+      \item The environment variable CHNOSZ_BUILD_LARGE_VIGNETTES is used to
+      control \strong{dpi} in \pkg{knitr} chunk options. Setting this variable
+      results in larger vignettes that are used for the CHNOSZ website; if this
+      variable is unset (as on CRAN), a smaller package is built.
 
-      \item In \code{OBIGT()}, load \file{Berman_cr.csv} before
-      \file{inorganic_cr.csv} so that \code{info("Fe2O3")} matches hematite
-      rather than maghemite.
+    }
+  }
 
+
+  \subsection{OBIGT DATABASE}{
+    \itemize{
+
+      \item \code{subcrt()} now outputs \DG0 and issues a warning above the
+      temperature limit for \Cp equations for minerals and other \samp{CGL}
+      species. The temperature limit for \Cp equations is stored as the
+      opposite (negative) value in OBIGT. The previous behavior of outputting
+      NA for \DG0 and issuing a message is now reserved for phase stability
+      limits (i.e., melting, vaporization, or decomposition). See \viglink{FAQ}
+      for details.
+      
       \item Add 36 charged amino acids from
       \href{https://doi.org/10.1007/s11084-015-9428-3}{Kitadai (2015)} and
       update several others (Arg\S{+}, Arg\S{-}, Asp\S{-}, Glu\S{-}, His\S{+},
       Lys\S{+}, Lys\S{-}, and Tyr\S{-}). Thanks to Grayson Boyer.
 
-      \item \code{subcrt()} now outputs \DG0 and issues a warning above the
-      temperature limit for \Cp equations for minerals and other \samp{CGL}
-      species. The previous behavior of setting \DG0 to NA and issuing a
-      message is now reserved for phase stability limits (i.e., melting,
-      vaporization, or decomposition). The temperature limit for \Cp equations
-      is stored as the opposite (negative) value in OBIGT. See \viglink{FAQ}
-      for details.
-      
-      \item The environment variable CHNOSZ_BUILD_LARGE_VIGNETTES is used to
-      control `dpi` in knitr chunk options. Setting this variable results in
-      larger vignettes (used for the CHNOSZ website); if this variable is unset
-      (as on CRAN), a smaller package is built.
+      \item In \code{OBIGT()}, load \file{Berman_cr.csv} before
+      \file{inorganic_cr.csv} so that \code{info("Fe2O3")} matches hematite
+      rather than maghemite.
+
+      \item Rename \code{checkGHS()} and \code{checkEOS()} to
+      \code{check.GHS()} and \code{check.EOS()} and change the default for
+      \strong{return.difference} to TRUE.
 
     }
+  }
+
+
+  \subsection{BUG FIXES}{
+    \itemize{
+
+      \item Fix bugs in \code{subcrt()} where \strong{exceed.Ttr} and
+      \strong{IS} arguments were not applied to automatically balanced
+      reactions.
+
+    }
+  }
 
 }
 

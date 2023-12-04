@@ -244,6 +244,12 @@ expect_equal(s1$polymorph, polymorph, info = info)
 s2 <- subcrt("pyrrhotite", exceed.Ttr = TRUE)$out[[1]]
 expect_equal(s2$polymorph, polymorph, info = info)
 
+# Added on 20231204
+info <- "Auto-balanced reactions apply ionic strength correction"
+basis("CHNOS+")
+sres <- subcrt("acetate", 1, IS = 1)
+expect_length(sres$out$loggam, 15)
+
 # References
 
 # Amend, J. P. and Shock, E. L. (2001) 

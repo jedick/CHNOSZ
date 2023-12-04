@@ -792,8 +792,8 @@ par(mfrow = c(1, 2))
 basis("K+", log10(m_K))
 a <- affinity(pH = c(2, 10), O2 = c(-55, -38), T = T, P = P, IS = IS)
 diagram(a, srt = 90)
-dTP <- as.expression(c(lT(T), lP(P)))
-legend("topleft", legend = dTP, bty = "n", inset = c(-0.05, 0), cex = 0.9)
+lTP <- as.expression(c(lT(T), lP(P)))
+legend("topleft", legend = lTP, bty = "n", inset = c(-0.05, 0), cex = 0.9)
 ltxt <- c(quote("Unit molality of Cl"^"-"), "Quartz saturation")
 legend("topright", legend = ltxt, bty = "n", cex = 0.9)
 title("Mineral data from Berman (1988)\nand Sverjensky et al. (1991) (OBIGT default)",
@@ -823,6 +823,7 @@ thermo.refs(species()$ispecies)
 ```
 
 If we use the thermodynamic parameters for minerals from @HDNB78, we get the lines shown in the second plot above, representing a larger stability field for muscovite.
+For most purposes, the default database (generating the smaller muscovite field in the first plot) should be used as it is consistent with revisions described by @SHD91.
 
 ```{r KMQ_diagram, eval = FALSE, echo = 11:15}
 ```

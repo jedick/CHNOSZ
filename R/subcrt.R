@@ -266,7 +266,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
           newcoeff <- c(coeff, as.numeric(bc[1, ]))
           newstate <- c(state, b.state)
           return(subcrt(species = newspecies, coeff = newcoeff, state = newstate,
-            property = property, T = outvert(T, "K"), P = P, grid = grid, convert = convert, logact = logact, exceed.Ttr = exceed.Ttr))
+            property = property, T = outvert(T, "K"), P = P, grid = grid, convert = convert, logact = logact,
+            exceed.Ttr = exceed.Ttr, exceed.rhomin = exceed.rhomin, IS = IS))
         } else warnings <- c(warnings, paste("reaction among", paste(species, collapse = ","), "was unbalanced, missing", as.chemical.formula(miss)))
       } else warnings <- c(warnings, paste("reaction among", paste(species, collapse = ","), "was unbalanced, missing", as.chemical.formula(miss)))
     }
