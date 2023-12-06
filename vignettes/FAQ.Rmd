@@ -809,21 +809,19 @@ OBIGT()
 ```
 
 The gray area, which is automatically drawn by `diagram()`, is below the reducing stability limit of water; that is, this area is where the equilibrium fugacity of `r H2` exceeds unity.
+NOTE: Although the muscovite&ndash;kaolinite (MC) buffer was mentioned by @HC14 in the context of "clay-rich but feldspar-free sediments", this example uses the feldspathic Ab&ndash;Kfs reaction for calculating `r Kplus` molality for both the KMQ and MC buffers.
+A more appropriate reaction to constrain the Na/K ratio with the MC buffer may be that between paragonite and muscovite [e.g., @Yar05].
 
 The diagram in Fig. 4 of @HC14 shows the buffer lines at somewhat higher pH values of ca. 5 and 6.
-There are several possible reasons for these differences:
-
-1. We used different thermodynamic data for the minerals;
-2. Activity coefficients either were not calculated or were calculated differently by @HC14 (however, removing `IS` from the code moves the lines to lower rather than higher pH); or
-3. We calculated `r Kplus` molality incorrectly for the MC buffer. Although @HC14 invoked the muscovite&ndash;kaolinite buffer for "clay-rich but feldspar-free sediments", we used the feldspathic Ab&ndash;Kfs reaction for calculating `r Kplus` molality [no alternative reaction was given by @HC14].
-
-Regarding only the first point, note that the parameters for these minerals in the default OBIGT database come from @Ber88 and @SHD91.
+Removing `IS` from the code moves the lines to lower rather than higher pH (*not shown -- try it yourself!*), so the calculation of activity coefficients does not explain the differences.
+One possible reason for these differences is the use of different thermodynamic data for the minerals.
+The parameters for these minerals in the default OBIGT database come from @Ber88 and @SHD91.
 ```{r KMQ_refs, message = FALSE}
 thermo.refs(species()$ispecies)
 ```
 
-If we use the thermodynamic parameters for minerals from @HDNB78, we get the lines shown in the second plot above, representing a larger stability field for muscovite.
-For most purposes, the default database (generating the smaller muscovite field in the first plot) should be used as it is consistent with revisions described by @SHD91.
+If we use the thermodynamic parameters for minerals from @HDNB78 [these do not include the revisions for aluminosilicates described by @SHD91], we get the lines shown in the second plot above, representing a larger stability field for muscovite.
+This moves the KMQ buffer closer to the value shown by @HC14, but the MC buffer further away, so this still doesn't explain why we get a different result.
 
 ```{r KMQ_diagram, eval = FALSE, echo = 11:15}
 ```
