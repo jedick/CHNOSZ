@@ -11,12 +11,15 @@
 #source("util.args.R")
 #source("util.data.R")
 #source("species.R")
+#source("info.R")
+#source("hkf.R")
+#source("cgl.R")
 
 affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exceed.rhomin = FALSE,
   return.buffer = FALSE, return.sout = FALSE, balance = "PBB", iprotein = NULL, loga.protein = 0, transect = NULL) {
   # ...: variables over which to calculate
   # property: what type of energy
-  #   (G.basis,G.species,logact.basis,logK,logQ,A)
+  #   (G.basis, G.species, logact.basis, logK, logQ, A)
   # return.buffer: return buffered activities
   # balance: balance protein buffers on PBB
   # exceed.Ttr: extrapolate Gibbs energies
@@ -60,7 +63,7 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
     # The user just wants an energy property
     buffer <- FALSE
     args$what <- property
-    out <- do.call("energy",args)
+    out <- do.call("energy", args)
     a <- out$a
     sout <- out$sout
   } else {
@@ -68,17 +71,18 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
     # Affinity calculations
     property <- args$what
 
-    # iprotein stuff
+    # Protein stuff
     # Note that affinities of the residues are modified by ionization calculations in energy(), not here
     if(!is.null(iprotein)) {
       # Check all proteins are available
       if(any(is.na(iprotein))) stop("`iprotein` has some NA values")
       if(!all(iprotein %in% 1:nrow(thermo$protein))) stop("some value(s) of `iprotein` are not rownumbers of thermo()$protein")
       # Add protein residues to the species list
-      resnames <- c("H2O",aminoacids(3))
+      resnames <- c("H2O", aminoacids(3))
       # Residue activities set to zero; account for protein activities later
-      resprot <- paste(resnames,"RESIDUE",sep = "_")
+      resprot <- paste(resnames,"RESIDUE", sep = "_")
       species(resprot, 0)
+      # Re-read thermo because the preceding command changed the species
       thermo <- get("thermo", CHNOSZ)
       ires <- match(resprot, thermo$species$name)
     }
@@ -93,18 +97,17 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
       buffer <- TRUE
       message('affinity: loading buffer species')
       if(!is.null(thermo$species)) is.species <- 1:nrow(thermo$species) else is.species <- numeric()
+      # Load the species in the buffer and get their species number(s)
       is.buffer <- buffer(logK = NULL)
+      # Re-read thermo because the preceding command changed the species
       thermo <- get("thermo", CHNOSZ)
-      is.buff <- numeric()
-      for(i in 1:length(is.buffer)) is.buff <- c(is.buff,as.numeric(is.buffer[[i]]))
-      is.only.buffer <- is.buff[!is.buff %in% is.species]
       buffers <- names(is.buffer)
-      # Reorder the buffers according to thermo$buffer
-      buffers <- buffers[order(match(buffers,thermo$buffer$name))]
+      # Find species that are only in the buffer, not in the starting species list
+      is.only.buffer <- setdiff(unlist(is.buffer), is.species)
     }
 
     # Here we call 'energy'
-    aa <- do.call("energy",args)
+    aa <- do.call("energy", args)
     a <- aa$a
     sout <- aa$sout
 
@@ -114,7 +117,7 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
     if(buffer) {
       args$what <- "logact.basis"
       args$sout <- sout
-      logact.basis.new <- logact.basis <- do.call("energy",args)$a
+      logact.basis.new <- logact.basis <- do.call("energy", args)$a
       ibasis.new <- numeric()
       for(k in 1:length(buffers)) {
         ibasis <- which(as.character(mybasis$logact) == buffers[k])
@@ -123,11 +126,11 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
         for(i in 1:length(logK)) {
           logK[[i]] <- logK[[i]] + thermo$species$logact[i]
           for(j in 1:length(logact.basis.new)) {
-            logK[[i]] <- logK[[i]] - logact.basis.new[[j]] * thermo$species[i,j]
+            logK[[i]] <- logK[[i]] - logact.basis.new[[j]] * thermo$species[i, j]
           }
         }
-        lbn <- buffer(logK = logK,ibasis = ibasis,logact.basis = logact.basis.new,
-          is.buffer = as.numeric(is.buffer[[which(names(is.buffer) == buffers[k])]]),balance = balance)
+        lbn <- buffer(logK = logK, ibasis = ibasis, logact.basis = logact.basis.new,
+          is.buffer = is.buffer[[k]], balance = balance)
         for(j in 1:length(logact.basis.new)) if(j %in% ibasis) logact.basis.new[[j]] <- lbn[[2]][[j]]
         # Calculation of the buffered activities' effect on chemical affinities
         is.only.buffer.new <- is.only.buffer[is.only.buffer %in% is.buffer[[k]]]
@@ -139,16 +142,16 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
             if(!j %in% ibufbasis) next
             if(!j %in% ibasis) next
             aa <- a[[i]]
-            a[[i]] <- aa + (logact.basis.new[[j]] - logact.basis[[j]]) * thermo$species[i,j]
-            #if(!identical(a[[i]],aa)) print(paste(i,j))
+            a[[i]] <- aa + (logact.basis.new[[j]] - logact.basis[[j]]) * thermo$species[i, j]
+            #if(!identical(a[[i]], aa)) print(paste(i, j))
           }
         }
         if(k == length(buffers) & return.buffer) {
           logact.basis.new <- lbn[[2]]
-          ibasis.new <- c(ibasis.new,lbn[[1]])
-        } else ibasis.new <- c(ibasis.new,ibasis)
+          ibasis.new <- c(ibasis.new, lbn[[1]])
+        } else ibasis.new <- c(ibasis.new, ibasis)
       }
-      species(is.only.buffer,delete = TRUE)
+      species(is.only.buffer, delete = TRUE)
       if(length(is.only.buffer) > 0) a <- a[-is.only.buffer]
       # To return the activities of buffered basis species
       tb <- logact.basis.new[unique(ibasis.new)]
@@ -159,9 +162,9 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
           for(i in 1:length(tb)) {
             #tb[[i]] <- as.data.frame(tb[[i]])
             if(nd > 0) rownames(tb[[i]]) <- 
-              seq(args$lims[[1]][1],args$lims[[1]][2],length.out = args$lims[[1]][3])
+              seq(args$lims[[1]][1], args$lims[[1]][2], length.out = args$lims[[1]][3])
             if(nd > 1) colnames(tb[[i]]) <- 
-              seq(args$lims[[2]][1],args$lims[[2]][2],length.out = args$lims[[2]][3])
+              seq(args$lims[[2]][1], args$lims[[2]][2], length.out = args$lims[[2]][3])
           }
         }
       }
@@ -171,10 +174,10 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
     if(!is.null(iprotein)) {
       # Fast protein calculations 20090331
       # Function to calculate affinity of formation reactions from those of residues
-      loga.protein <- rep(loga.protein,length.out = length(iprotein))
+      loga.protein <- rep(loga.protein, length.out = length(iprotein))
       protein.fun <- function(ip) {
-        tpext <- as.numeric(thermo$protein[iprotein[ip],5:25])
-        return(Reduce("+", pprod(a[ires],tpext)) - loga.protein[ip])
+        tpext <- as.numeric(thermo$protein[iprotein[ip], 5:25])
+        return(Reduce("+", pprod(a[ires], tpext)) - loga.protein[ip])
       }
       # Use another level of indexing to let the function report on its progress
       jprotein <- 1:length(iprotein)
@@ -186,19 +189,19 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
       # The current species list, containing the residues
       resspecies <- thermo$species
       # Now we can delete the residues from the species list
-      species(ires,delete = TRUE)
+      species(ires, delete = TRUE)
       # State and protein names
       state <- resspecies$state[1]
-      name <- paste(thermo$protein$protein[iprotein],thermo$protein$organism[iprotein],sep = "_")
+      name <- paste(thermo$protein$protein[iprotein], thermo$protein$organism[iprotein], sep = "_")
       # The numbers of basis species in formation reactions of the proteins
-      protbasis <- t(t((resspecies[ires,1:nrow(mybasis)])) %*% t((thermo$protein[iprotein,5:25])))
+      protbasis <- t(t((resspecies[ires, 1:nrow(mybasis)])) %*% t((thermo$protein[iprotein, 5:25])))
       # Put them together
-      protspecies <- cbind(protbasis,data.frame(ispecies = ispecies,logact = loga.protein,state = state,name = name))
-      myspecies <- rbind(myspecies,protspecies)
+      protspecies <- cbind(protbasis, data.frame(ispecies = ispecies, logact = loga.protein, state = state, name = name))
+      myspecies <- rbind(myspecies, protspecies)
       rownames(myspecies) <- 1:nrow(myspecies)
       ## Update the affinity values
       names(protein.affinity) <- ispecies
-      a <- c(a,protein.affinity)
+      a <- c(a, protein.affinity)
       a <- a[-ires]
     }
 
@@ -266,4 +269,3 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
   if(buffer) a <- c(a, list(buffer = tb))
   return(a)
 }
-

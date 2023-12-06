@@ -33,6 +33,7 @@ A2 <- affinity("K+" = c(1, 5, 5), "Na+" = c(1, 5, 5), T = 200, P = 1000)
 expect_equivalent(unique(as.vector(A2$buffer[[1]])), logaSiO2[1], info = info)
 
 # A test for 0 dimensions with a two-mineral buffer 20201103
+info <- "2-mineral buffer at a single point"
 # (buffer errored trying to index columns of non-matrix prior to 1.3.6-85)
 T <- 400
 P <- 1000
