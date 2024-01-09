@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.0.0-39 (2023-12-04)}{
+\section{Changes in CHNOSZ version 2.0.0-42 (2023-01-09)}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -49,6 +49,9 @@
       control \strong{dpi} in \pkg{knitr} chunk options. Setting this variable
       results in larger vignettes that are used for the CHNOSZ website; if this
       variable is unset (as on CRAN), a smaller package is built.
+
+      \item \code{rank.affinity()} now returns average group rankings as
+      percentage values.
 
     }
   }

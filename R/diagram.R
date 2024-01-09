@@ -358,7 +358,7 @@ diagram <- function(
 
       ### 1-D diagram - lines for properties or chemical activities
       xvalues <- eout$vals[[1]]
-      if(missing(xlim)) xlim <- range(xvalues)  # TODO: this is backward if the vals are not increasing
+      if(missing(xlim)) xlim <- c(xvalues[1], rev(xvalues)[1])
       # Initialize the plot
       if(!add) {
         if(missing(xlab)) xlab <- axis.label(getlabel(1), basis = eout$basis, molality = molality)
@@ -401,6 +401,7 @@ diagram <- function(
           dx <- rep(dx, length.out = length(plotvals))
           dy <- rep(dy, length.out = length(plotvals))
           srt <- rep(srt, length.out = length(plotvals))
+          cex.names <- rep(cex.names, length.out = length(plotvals))
           # Don't assign to adj becuase that messes up the missing test below
           alladj <- rep(adj, length.out = length(plotvals))
           for(i in 1:length(plotvals)) {
@@ -439,7 +440,7 @@ diagram <- function(
             # Also include y-offset (dy) and y-adjustment (labels bottom-aligned with the line)
             # ... and srt (string rotation) 20171127
             text(xvalues[imax] + dx[i], plotvals[[i]][imax] + dy[i], labels = names[i], adj = c(thisadj, 0),
-              cex = cex.names, srt = srt[i], font = font, family = family)
+              cex = cex.names[i], srt = srt[i], font = font, family = family)
           }
         } else legend(x = legend.x, lty = lty, legend = names, col = col, cex = cex.names, lwd = lwd, ...)
       }

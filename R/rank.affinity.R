@@ -1,7 +1,7 @@
 # Calculate normalized sum of ranking of affinities for species in designated groups
 # 20220416 jmd first version
 
-rank.affinity <- function(aout, groups) {
+rank.affinity <- function(aout, groups, percent = TRUE) {
   # Put the affinities into matrix form
   amat <- sapply(aout$values, as.numeric)
   # Calculate ranks
@@ -14,6 +14,8 @@ rank.affinity <- function(aout, groups) {
     if(inherits(group, "integer")) n <- length(group)
     colSums(arank[group, ]) / n
   })
+  # Calculate rank-sum percentage 20240106
+  if(percent) grank <- grank / rowSums(grank) * 100
   # Restore dims
   dims <- dim(aout$values[[1]])
   # apply() got 'simplify' argument in R 4.1.0 20230313
