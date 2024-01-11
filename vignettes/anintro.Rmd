@@ -801,19 +801,17 @@ Under these conditions, the minerals are not in equilibrium, as shown by their d
 ```{r PPM_basis, results="hide", message=FALSE}
 basis(c("FeS2", "H2S", "O2", "H2O"))
 species(c("pyrite", "magnetite"))
-species("pyrrhotite", "cr2")
+species("pyrrhotite", "cr2", add = TRUE)
 ```
 ```{marginfigure}
 The affinity of formation of pyrite happens to be zero because it is identical to one of the selected basis species.
 ```
-```{r PPM_affinity, message=FALSE, echo=1}
+```{r PPM_affinity, message=FALSE}
 unlist(affinity(T = 300, P = 100)$values)
-## 2031 1999 2036 
-##    0    0    0
 ```
 
 We use <span style="color:red">`mod.buffer()`</span> to choose the `cr2` phase of pyrrhotite, which is stable at this temperature ([see above](#mosaic-diagrams) for how to get this information for minerals with polymorphic transitions).
-Then, we set up H<sub>2</sub>S and `r o2` to be buffered by PPM, and inspect their buffered activities:
+Then, we set up H<sub>2</sub>S and `r o2` to be buffered by PPM, and inspect their buffered activities (logarithmic values):
 ```{r PPM_setup, results="hide"}
 mod.buffer("PPM", "pyrrhotite", "cr2")
 basis(c("H2S", "O2"), c("PPM", "PPM"))
@@ -826,10 +824,14 @@ unlist(affinity(T = 300, P = 100, return.buffer = TRUE)[1:3])
 ```{r demo_buffer_noecho, fig.margin=TRUE, fig.width=4, fig.height=4, out.width="100%", message=FALSE, echo=FALSE, cache=TRUE, fig.cap="Values of log<i>f</i><sub>H<sub>2</sub></sub> corresponding to mineral buffers or to given activities of aqueous species.", pngquant=pngquant, timeit=timeit}
 demo(buffer, echo = FALSE)
 ```
-Et voilà! We have found log*a*<sub>H<sub>2</sub>S</sub> and `r logfO2` that are compatible with the coexistence of the three minerals.
+We have found log*a*<sub>H<sub>2</sub>S</sub> and `r logfO2` that are compatible with the coexistence of the three minerals.
 Under these conditions, the affinities of formation reactions of the minerals in the buffer are all equal to zero:
-<!-- show static (commented) results because demo(buffer) changes the system -->
-```{r PPM_affinity, eval=FALSE}
+<!-- re-run the commands from above because demo(buffer) changes the system -->
+```{r PPM_basis, echo = FALSE, results = "hide"}
+```
+```{r PPM_setup, echo = FALSE, results = "hide", message = FALSE}
+```
+```{r PPM_affinity, message = FALSE}
 ```
 
 Another example, based on Figure 6 of @SS95, is given in [<span style="color:blue">`demo(buffer)`</span>](../demo).
