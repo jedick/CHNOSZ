@@ -133,7 +133,7 @@ logB.to.OBIGT <- function(logB, species, coeffs, T, P, npar = 3, optimize.omega 
   logK <- suppressMessages(subcrt(species, coeffs, T = T, P = P)$out$logK)
   # Calculate the mean absolute difference
   mad <- mean(abs(logK - logB))
-  message(paste("logB.to.OBIGT: mean absolute difference between logB (experimental) and logK (calculated) is", round(mad, 4)))
+  message(paste("logB.to.OBIGT: mean difference between logB (experimental) and logK (calculated) is", round(mad, 4)))
   # Check that calculated values are close to input values
   stopifnot(all.equal(logK, logB, tolerance = tolerance, scale = 1))
   # Return the species index in OBIGT

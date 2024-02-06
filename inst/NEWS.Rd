@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.0.0-42 (2023-01-09)}{
+\section{Changes in CHNOSZ version 2.0.0-44 (2023-02-06)}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -67,6 +67,15 @@
       NA for \DG0 and issuing a message is now reserved for phase stability
       limits (i.e., melting, vaporization, or decomposition). See \viglink{FAQ}
       for details.
+
+      \item Add carrollite (Cu\s{0.92}Co\s{2.07}S\s{4}) from
+      \href{https://doi.org/10.3749/2300028}{von der Heyden et al. (2024)}.
+
+      \item Modify cattierite (CoS\s{2}) and linnaeite (Co\s{3}S\s{4}) to use
+      parameters from \href{https://www.worldcat.org/oclc/16131757}{Pankratz et
+        al. (1987)} as listed by
+      \href{https://doi.org/10.5382/econgeo.4895}{Williams-Jones and Vasyukova
+        (2022)}.
       
       \item Add 36 charged amino acids from
       \href{https://doi.org/10.1007/s11084-015-9428-3}{Kitadai (2015)} and

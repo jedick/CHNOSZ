@@ -18,8 +18,7 @@ BH83,"T. S. Bowers and H. C. Helgeson",1983,"Geochim. Cosmochim. Acta 47, 1247-1
 HGK84,"L. Haar and J. S. Gallagher and G. S. Kell",1984,"NBS/NRC Steam Tables",H<sub>2</sub>O,https://www.worldcat.org/oclc/858456124
 Hel85,"H. C. Helgeson",1985,"Am. J. Sci. 285, 845-855","ferrosilite and siderite",https://doi.org/10.2475/ajs.285.9.845
 JH85,"K. J. Jackson and H. C. Helgeson",1985,"Econ. Geol. 80, 1365-1378","Sn minerals",https://doi.org/10.2113/gsecongeo.80.5.1365
-PMW87,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","Co-pentlandite",https://www.worldcat.org/oclc/16131757
-PMW87.1,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","linnaeite Cp",https://www.worldcat.org/oclc/16131757
+PMW87,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","cattierite, linnaeite, and Co-pentlandite",https://www.worldcat.org/oclc/16131757
 RA87,"E. J. Reardon and D. K. Armstrong",1987,"Geochim. Cosmochim. Acta 51, 63-72","celestite GHS",https://doi.org/10.1016/0016-7037(87)90007-X
 RS87,"J. R. Ruaya and T. M. Seward",1987,"Geochim. Cosmochim. Acta 51, 121-130",HCl,https://doi.org/10.1016/0016-7037(87)90013-5
 Ber88,"R. G. Berman",1988,"J. Petrol. 29, 445-522",minerals,https://doi.org/10.1093/petrology/29.2.445
@@ -288,3 +287,4 @@ LX20,"Liu and Xiao",2020,"Ore Geol. Rev. 117, 103289","huebnerite Cp",https://do
 LXW21,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488","H<sub>2</sub>WO<sub>4</sub>",https://doi.org/10.1016/j.chemgeo.2021.120488
 LXW21.1,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488","scheelite Cp",https://doi.org/10.1016/j.chemgeo.2021.120488
 WV22,"A. E. Williams-Jones and O. V. Vasyukova",2022,"Econ. Geol. 117, 513-528","parameters listed here",https://doi.org/10.5382/econgeo.4895
+HDR+24,"B. P. von der Heyden et al.",2024,"Can. J. Mineral. Petrol. 62, 77-93","carrollite",https://doi.org/10.3749/2300028
