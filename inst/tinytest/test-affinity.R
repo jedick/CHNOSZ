@@ -194,3 +194,13 @@ species(1:2, delete = TRUE)
 a1 <- affinity(T = c(0, 100))
 a2 <- affinity(T = c(0, 100), sout = a0$sout)
 expect_equal(a1$values, a2$values, info = info)
+
+info <- "return.sout = TRUE returns output of subcrt()"
+# 20240206
+# Caught by Mosaic Stacking 2 in multi-metal.Rmd
+# (returned value was NULL in CHNOSZ_2.0.0-43,
+#  creating weirdness in mineral-aqueous boundaries on diagram)
+basis("CHNOS+")
+species("CO2")
+a <- affinity(return.sout = TRUE)
+expect_equal(names(a), c("species", "out"), info = info)

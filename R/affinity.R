@@ -110,7 +110,7 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
     affinity_values <- energy_result$a
     energy_sout <- energy_result$sout
 
-    if(return.sout) return(sout)
+    if(return.sout) return(energy_sout)
 
     # More buffer stuff
     if(buffer) {

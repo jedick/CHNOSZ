@@ -353,24 +353,24 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         # Name and state
         myname <- reaction$name[i]
         mystate <- reaction$state[i]
-#        # If we are considering multiple polymorphs, and if this polymorph is cr2 or higher, check if we're below the transition temperature
-#        if(length(iphases) > length(ispecies) & i > 1) {
-#          if(!(reaction$state[i] %in% c("liq", "cr", "gas")) & reaction$name[i-1] == reaction$name[i]) {
-#            # After add.OBIGT("SUPCRT92"), quartz cr and cr2 are not next to each other in thermo()$OBIGT,
-#            # so use iphases[i-1] here, not iphases[i]-1  20181107
-#            Ttr <- Ttr(iphases[i-1], iphases[i], P = P, dPdT = dPdTtr(iphases[i-1], iphases[i]))
-#            if(all(is.na(Ttr))) next
-#            if(any(T <= Ttr)) {
-#              status.Ttr <- "(extrapolating G)"
-#              if(!exceed.Ttr) {
-#                # put NA into the value of G
-#                p.cgl[[ncgl[i]]]$G[T <= Ttr] <- NA
-#                status.Ttr <- "(using NA for G)"
-#              } 
-#              #message(paste("subcrt: some points below transition temperature for", myname, mystate, status.Ttr))
-#            }
-#          }
-#        }
+        # If we are considering multiple polymorphs, and if this polymorph is cr2 or higher, check if we're below the transition temperature
+        if(length(iphases) > length(ispecies) & i > 1) {
+          if(!(reaction$state[i] %in% c("liq", "cr", "gas")) & reaction$name[i-1] == reaction$name[i]) {
+            # After add.OBIGT("SUPCRT92"), quartz cr and cr2 are not next to each other in thermo()$OBIGT,
+            # so use iphases[i-1] here, not iphases[i]-1  20181107
+            Ttr <- Ttr(iphases[i-1], iphases[i], P = P, dPdT = dPdTtr(iphases[i-1], iphases[i]))
+            if(all(is.na(Ttr))) next
+            if(any(T <= Ttr)) {
+              status.Ttr <- "(extrapolating G)"
+              if(!exceed.Ttr) {
+                # put NA into the value of G
+                p.cgl[[ncgl[i]]]$G[T <= Ttr] <- NA
+                status.Ttr <- "(using NA for G)"
+              } 
+              #message(paste("subcrt: some points below transition temperature for", myname, mystate, status.Ttr))
+            }
+          }
+        }
 
         # Check for a polymorphic transition
         is.polymorphic.transition <- FALSE
