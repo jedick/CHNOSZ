@@ -327,11 +327,11 @@ Regarding the legend, it should be noted that although the DFT calculations for 
 In these diagrams, changing the Fe:V ratio affects the fully reduced metallic species.
 In the 1:1 mixture, the FeV~3~ + Fe~3~V assemblage is predicted to be stable instead of FeV.
 This result is unlike Figure 1 of @SZS_17 but is consistent with the [MP page for FeV](https://doi.org/10.17188/1189535) where it is shown to decompose to this assemblage.
-On the other hand, [FeV~3~ is stable](https://materialsproject.org/materials/mp-1079399/) in the 1:3 mixture.
+On the other hand, [FeV~3~ is stable](https://next-gen.materialsproject.org/materials/mp-1079399/) in the 1:3 mixture.
 For an even higher proportion of V, the V + FeV~3~ assemblage is stable, which can be seen for instance in the Pourbaix diagram linked from the [MP page for FeV~5~O~12~](https://doi.org/10.17188/1305091).
 
 Let's make another diagram for the 1:1 Fe:V composition over a broader range of Eh and pH.
-The diagram shows a stable assemblage of Fe~2~O~3~ with an oxidized bimetallic material, [Fe~2~V~4~O~13~](https://materialsproject.org/materials/mp-1200054/).
+The diagram shows a stable assemblage of Fe~2~O~3~ with an oxidized bimetallic material, [Fe~2~V~4~O~13~](https://next-gen.materialsproject.org/materials/mp-1200054/).
 ```{r FeVO4, eval = FALSE, echo = 1:29}
 layout(t(matrix(1:3)), widths = c(1, 1, 0.2))
 par(cex = 1)
@@ -445,7 +445,7 @@ round(eV_atom, 3)
 stopifnot(round(eV_atom, 3) == 0.415)
 ```
 
-This is equal to the value for the energy above the hull / atom for [triclinic FeVO~4~ on the MP website](https://materialsproject.org/materials/mp-504509/) (0.415 eV, accessed on 2020-11-09 and 2021-02-19).
+This is equal to the value for the energy above the hull / atom for [triclinic FeVO~4~ on the MP website](https://next-gen.materialsproject.org/materials/mp-504509/) (0.415 eV, accessed on 2020-11-09 and 2021-02-19).
 This shows that we successfully made a round trip starting with the input formation energies (eV/atom) from the Materials API, to standard Gibbs energy (J/mol) in the OBIGT database, and back out to energy above the hull (eV/atom).
 
 The concept of using the stable minerals and aqueous species to calculate reaction energetics is formalized in the `mosaic()` function, which is described next.

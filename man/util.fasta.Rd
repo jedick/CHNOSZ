@@ -36,7 +36,7 @@ The default \samp{count} returns a data frame of amino acid counts (the data fra
 If the line numbers of the header lines were previously determined, they can be supplied in \code{ihead}. 
 Optionally, the lines of a previously read file may be supplied in \code{lines} (in this case no file is needed so \code{file} should be set to "").
 When \code{ret} is \samp{count}, the names of the proteins in the resulting data frame are parsed from the header lines of the file, unless \code{id} is provided.
-If {id} is not given, and a UniProt FASTA header is detected (regular expression \code{"\\|......\\|.*_"}), information there (accession, name, organism) is split into the \code{protein}, \code{abbrv}, and {organism} columns of the resulting data frame.
+If \code{id} is not given, and a UniProt FASTA header is detected (regular expression \code{"\\|......\\|.*_"}), information there (accession, name, organism) is split into the \code{protein}, \code{abbrv}, and \code{organism} columns of the resulting data frame.
 
 \code{count.aa} counts the occurrences of each amino acid or nucleic-acid base in a sequence (\code{seq}).
 For amino acids, the columns in the returned data frame are in the same order as \code{thermo()$protein}.

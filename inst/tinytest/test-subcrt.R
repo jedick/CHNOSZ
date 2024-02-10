@@ -253,8 +253,8 @@ expect_length(sres$out$loggam, 15)
 # Added on 20240206
 info <- "High-temperature polymorph is not shown as stable below the transition temperature"
 # This checks that the below-transition temperature code in subcrt() is working.
-# If not, then cr2 is incorrectly identified as stable at 25 and 103 degC
-# (that is, cr2 has a lower Delta G0, than cr at those temperature,
+# If not, then cr2 is incorrectly identified as stable at 25 and 103 °C
+# (that is, cr2 has a lower ΔG° than cr at those temperatures,
 #  but should only be shown as stable above the transition temperature of 377 K)
 T <- c(25, 50, 103, 104)
 sout <- subcrt("carrollite", T = T, P = 1)$out[[1]]

@@ -36,7 +36,7 @@ The first two of these parameters are standard-state values at 25 \degC and 1 ba
 The fitted parameters for the formed species are then added to OBIGT.
 Finally, \code{\link{all.equal}} is used to test for approximate equivalence of the input values of \logB and calculated equilibrium constants; if the mean absolute difference exceeds \code{tolerance}, an error occurs.
 
-To avoid overfitting, only the first three parameters (code{G}, \code{S}, and \code{c1}) are used by default.
+To avoid overfitting, only the first three parameters (\code{G}, \code{S}, and \code{c1}) are used by default.
 More parameters (up to 5) or fewer (down to 1) can be selected by changing \code{npar}.
 Volumetric parameters (\a1 to \a4) in the HKF equations currently aren't included, so the resulting fits are valid only at the input pressure values.
 
