@@ -747,7 +747,7 @@ reset()
 The warning is similar to that produced by SUPCRT92 ("CAUTION: BEYOND T LIMIT OF CP COEFFS FOR A MINERAL OR GAS") at temperatures above maximum temperature of validity of the Maier-Kelley equation (Tmax).
 Notably, SUPCRT92 outputs Δ*G*° and other standard thermodynamic properties at temperatures higher than Tmax despite the warning.
 
-This is a new feature in the development version of CHNOSZ (to be 2.0.1).
+This is a new feature in CHNOSZ version 2.1.0.
 In previous versions of CHNOSZ, values of Δ*G*° above the *C~p~* equation limit were set to NA without a warning, as with the phase stability limit described above.
 
 **4. Finally, if `T` is NA or 0, then no upper temerature limit is imposed by `subcrt()`.**
@@ -820,6 +820,7 @@ The parameters for these minerals in the default OBIGT database come from @Ber88
 thermo.refs(species()$ispecies)
 ```
 
+CHNOSZ doesn't implement the thermodynamic model for minerals from @HP98, which is one of the sources cited by @HC14.
 If we use the thermodynamic parameters for minerals from @HDNB78 [these do not include the revisions for aluminosilicates described by @SHD91], we get the lines shown in the second plot above, representing a larger stability field for muscovite.
 This moves the KMQ buffer closer to the value shown by @HC14, but the MC buffer further away, so this still doesn't explain why we get a different result.
 

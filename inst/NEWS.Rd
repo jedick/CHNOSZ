@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.0.0-44 (2023-02-06)}{
+\section{Changes in CHNOSZ version 2.1.0 (2024-02-11)}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -40,15 +40,14 @@
 
       \item \code{mosaic()} now handles the situation where the alternate basis
       species include one of the axis variables on a diagram (by changing the
-      argument names in its internal calls to \code{affinity()}) and
-      adjusts the labels for the diagram accordingly (e.g. \dQuote{total C},
-      \dQuote{total S}, etc.). Thanks to Evgeniy Bastrakov for the feature
-      request.
+      argument names in its internal calls to \code{affinity()}) and adjusts
+      the labels for the diagram accordingly (e.g. \dQuote{total C},
+      \dQuote{total S}, etc.). Thanks to Evgeniy Bastrakov for the suggestion.
 
       \item The environment variable CHNOSZ_BUILD_LARGE_VIGNETTES is used to
       control \strong{dpi} in \pkg{knitr} chunk options. Setting this variable
       results in larger vignettes that are used for the CHNOSZ website; if this
-      variable is unset (as on CRAN), a smaller package is built.
+      variable is unset (as in CRAN checks), a smaller package is built.
 
       \item \code{rank.affinity()} now returns average group rankings as
       percentage values.
@@ -100,6 +99,11 @@
       \item Fix bugs in \code{subcrt()} where \strong{exceed.Ttr} and
       \strong{IS} arguments were not applied to automatically balanced
       reactions.
+
+      \item Fix bug in \code{dPdTtr()} where OBIGT database parameters were not
+      converted to Joules. This allows re-activating the tests for quartz
+      (which depend on the computed transition temperature) in
+      \file{test-subcrt.R}.
 
     }
   }

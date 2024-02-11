@@ -41,3 +41,12 @@ expect_error(E.units("X"), "units of energy must be either cal or J", info = inf
 
 info <- "describe.property() does not accept NULL values"
 expect_error(describe.property(), "property or value is NULL", info = info)
+
+# Test added on 20240211
+# Incorrect result was causing quartz tests in test-subcrt.R to fail
+info <- "dPdTtr gives expected result"
+add.OBIGT("SUPCRT92")
+dPdTtr.calc <- round(dPdTtr(info("quartz", "cr"), info("quartz", "cr2")), 5)
+# The reference value was calculated with CHNOSZ_1.4.3
+# (prior to bug in dPdTtr introduced by switch to Joules)
+expect_equal(dPdTtr.calc, 38.45834, info = info)

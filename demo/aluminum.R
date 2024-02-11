@@ -55,7 +55,7 @@ legend("topleft", c("Boehmite - Kaolinite", "After Zhu and Lu, 2009 Fig. A1"), b
 # Shock et al., 1989 (SHS89): doi:10.1016/0016-7037(89)90341-4
 # Berman, 1988 (Ber88): doi:10.1093/petrology/29.2.445
 # Holland and Powell, 2011 (HP11): 10.1111/j.1525-1314.2010.00923.x
-# Hemingway et al., 1991 (HRA91): http://pubs.er.usgs.gov/publication/70016664
+# Hemingway et al., 1991 (HRA91): https://pubs.usgs.gov/publication/70016664
 # Apps and Spycher, 2004 (AS04): Bechtel SAIC Company, LLC ANL-NBS-HS-000043 REV 00 (DOC.20041118.0004)
 
 ###########

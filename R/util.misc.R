@@ -7,7 +7,8 @@ dPdTtr <- function(ispecies, ispecies2 = NULL) {
   # (argument is index of the lower-T phase)
   thermo <- get("thermo", CHNOSZ)
   if(is.null(ispecies2)) ispecies2 <- ispecies + 1
-  pars <- info(c(ispecies, ispecies2), check.it = FALSE)
+  # Use OBIGT2eos to ensure that all parameters are in Joules 20240211
+  pars <- OBIGT2eos(thermo$OBIGT[c(ispecies, ispecies2), ], "cgl", fixGHS = TRUE, toJoules = TRUE)
   # If these aren't the same mineral, we shouldn't be here
   if(as.character(pars$name[1]) != as.character(pars$name[2])) stop("different names for species ", ispecies, " and ", ispecies2)
   # The special handling for quartz and coesite interfere with this function,
@@ -15,7 +16,7 @@ dPdTtr <- function(ispecies, ispecies2 = NULL) {
   pars$name <- toupper(pars$name)
   props <- cgl(c("G", "S", "V"), pars, P = 0, T = thermo$OBIGT$z.T[ispecies])
   # The G's should be the same ...
-  #if(abs(props[[2]]$G - props[[1]]$G) > 0.1) warning('dP.dT: inconsistent values of G for different phases of ',ispecies,call. = FALSE)
+  #if(abs(props[[2]]$G - props[[1]]$G) > 0.1) warning('dP.dT: inconsistent values of G for different polymorphs of ',ispecies,call. = FALSE)
   dP.dT <- convert( ( props[[2]]$S - props[[1]]$S ) / ( props[[2]]$V - props[[1]]$V ), 'cm3bar' )
   return(dP.dT)
 }

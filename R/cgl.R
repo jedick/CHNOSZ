@@ -111,7 +111,7 @@ quartz_coesite <- function(PAR, T, P) {
   ca <- -0.4973e-4
   VPtTta <- 23.348
   VPrTtb <- 23.72
-  Stran <- convert(0.342, "J")
+  Stran <- 0.342
   # Constants from REAC92D.f
   VPrTra <- 22.688 # VPrTr(a-quartz)
   Vdiff <- 2.047   # VPrTr(a-quartz) - VPrTr(coesite)
@@ -136,13 +136,12 @@ quartz_coesite <- function(PAR, T, P) {
     V <- V - Vdiff
   }
   cm3bar_to_cal <- 0.023901488
-  cm3bar_to_J <- convert(cm3bar_to_cal, "J")
-  GVterm <- cm3bar_to_J * (VPrTra * (P - Pstar) + VPrTtb * (Pstar - Pr) -
+  GVterm <- cm3bar_to_cal * (VPrTra * (P - Pstar) + VPrTtb * (Pstar - Pr) -
     0.5 * ca * (2 * Pr * (P - Pstar) - (P^2 - Pstar^2)) -
     ca * k * (T - Tr) * (P - Pstar) +
     k * (ba + aa * ca * k) * (T - Tr) * log((aa + P/k) / (aa + Pstar/k)))
-  SVterm <- cm3bar_to_J * (-k * (ba + aa * ca * k) *
+  SVterm <- cm3bar_to_cal * (-k * (ba + aa * ca * k) *
     log((aa + P/k) / (aa + Pstar/k)) + ca * k * (P - Pstar)) - Sstar
   # Note the minus sign on "SVterm" in order that intdVdTdP has the correct sign
-  list(intVdP = GVterm, intdVdTdP = -SVterm, V = V)
+  list(intVdP = convert(GVterm, "J"), intdVdTdP = convert(-SVterm, "J"), V = V)
 }

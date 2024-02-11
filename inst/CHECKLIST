@@ -1,6 +1,6 @@
 ****************************
 Release checklist for CHNOSZ
-    (updated 2023-11-29)
+   (updated 2024-02-11)
 ****************************
 
 - Run examples() and demos() and inspect their output (especially plots)
@@ -77,10 +77,3 @@ Making vignettes for website (https://chnosz.net)
 
 - Install the package and run doc/mklinks.sh within the installation directory.
   (this adds links to the HTML renditions of Rd files)
-
-***************
-Temporary Items
-***************
-
-- Replace reference to "development version of CHNOSZ (to be 2.0.1)" in FAQ.Rmd.
-
