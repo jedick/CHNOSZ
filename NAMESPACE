@@ -9,8 +9,8 @@ export(
   "describe.property", "describe.basis", "equilibrate",
   "aminoacids", "ZC.col",
   "pinfo", "protein.length", "protein.formula",
-  "read.fasta", "protein.basis", "add.protein",
-  "unitize", "seq2aa",
+  "protein.basis", "add.protein",
+  "unitize",
   "thermo.refs", "mod.OBIGT",
 # examples
   "examples", "demos", "mtitle",
@@ -20,7 +20,6 @@ export(
   "mass", "entropy", "GHS", "water",
   "i2A",
   "dPdTtr", "Ttr",
-  "count.aa",
   "rho.IAPWS95", "IAPWS95", "water.AW90", "WP02.auxiliary", "water.IAPWS95",
   "getrank", "parent", "sciname", "allparents", "getnodes", "getnames",
   "protein.OBIGT", "which.pmax",

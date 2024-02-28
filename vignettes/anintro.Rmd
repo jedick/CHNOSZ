@@ -122,7 +122,7 @@ knit_hooks$set(warning = color_block('magenta'), error = color_block('red'), mes
 This vignette was made for version `r sessionInfo()$otherPkgs$CHNOSZ$Version` of CHNOSZ, a package for the [R software environment](https://www.r-project.org/).
 For more information on R, see "[An Introduction to R](https://cran.r-project.org/manuals.html)" and the [contributed documentation](https://cran.r-project.org/other-docs.html) for R.
 
-CHNOSZ has been developed since 2006 as a tool for thermodynamic calculations in geochemistry and compositional biology.
+CHNOSZ has been developed since 2006 as a tool for thermodynamic calculations in geochemistry and geochemical biology.
 The package provides functions and a thermodynamic database that can be used to calculate the stoichiometric and energetic properties of reactions involving minerals and inorganic and/or organic aqueous species.
 These functions also enable calculations of chemical affinities and metastable equilibrium distributions of proteins.
 A major feature of the package is the production of diagrams to visualize the effects of changing temperature, pressure, and activities of basis species on the potential for reactions among various species.
@@ -1242,7 +1242,7 @@ Calculations based on the formulas, such as the average oxidation state of carbo
 
 Let's compare the `r zc` of Rubisco with optimal growth temperature of organisms, as shown in Figure 6a of @Dic14.
 First we read a CSV file with the IDs of the proteins and the optimal growth temperatures (*T*<sub>opt</sub>); the midpoint of the range of *T*<sub>opt</sub> is used for plotting.
-Then we use <span style="color:green">`read.fasta()`</span> to read a FASTA file holding the amino acid sequences of the proteins; the function returns a data frame with the amino acid counts.
+Then we use `canprot::read.fasta()` to read a FASTA file holding the amino acid sequences of the proteins; the function returns a data frame with the amino acid counts.
 To put the proteins in the right order, the IDs in the CSV file are matched to the names of the proteins in the FASTA file.
 Then, we calculate `r zc` from the formulas of the proteins.
 Next, point symbols are assigned according to domain (Archaea, Bacteria, Eukaryota); numbers inside the symbols show the ordering of *T*<sub>opt</sub> in three temperature ranges (0--35 °C, 37.5--60 °C, and 65--100 °C).
@@ -1255,7 +1255,7 @@ file.copy("rubisco.svg", fig_path(".svg"))
 #  datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")
 #  fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 #  dat <- read.csv(datfile)
-#  aa <- read.fasta(fastafile)
+#  aa <- canprot::read.fasta(fastafile)
 #  Topt <- (dat$T1 + dat$T2) / 2
 #  idat <- match(dat$ID, substr(aa$protein, 4, 9))
 #  aa <- aa[idat, ]
@@ -1290,7 +1290,7 @@ file.copy("rubisco.svg", fig_path(".svg"))
 datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")
 fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 dat <- read.csv(datfile)
-aa <- read.fasta(fastafile)
+aa <- canprot::read.fasta(fastafile)
 Topt <- (dat$T1 + dat$T2) / 2
 idat <- match(dat$ID, substr(aa$protein, 4, 9))
 aa <- aa[idat, ]
@@ -1306,23 +1306,23 @@ legend("topright", legend = c("Archaea", "Bacteria", "Eukaryota"),
        pch = c(2, 1, 0), col = 2:4, pt.cex = 2)
 ```
 
-Let's look at the different ways of representing the chemical compositions of the proteins.
+Let's look at different ways of representing the chemical compositions of the proteins.
 <span style="color:green">`protein.basis()`</span> returns the stoichiometry for the formation reaction of each proteins.
-Dividing by <span style="color:green">`protein.length()`</span> gives the per-residue reaction coefficients (*n*&#773;).
-Using the set of basis species we have seen before (CO<sub>2</sub>, NH<sub>3</sub>, H<sub>2</sub>S, `r h2o`, `r o2`) there is a noticeable correlation between *n*&#773;<sub>`r o2`</sub> and `r zc`, but even more so between *n*&#773;<sub>`r h2o`</sub> and `r zc` (shown in the plots on the left).
+Dividing by <span style="color:green">`protein.length()`</span> gives the per-residue reaction coefficients.
+Using the set of basis species we have seen before (CO<sub>2</sub>, NH<sub>3</sub>, H<sub>2</sub>S, `r h2o`, `r o2`) there is a noticeable correlation between *n*<sub>`r o2`</sub> and `r zc`, but even more so between *n*<sub>`r h2o`</sub> and `r zc` (shown in the plots on the left).
 ```{marginfigure}
 The calculation of *Z*<sub>C</sub>, which sums elemental ratios, is not affected by the choice of basis species.
 ```
 The `QEC` keyword to <span style="color:red">`basis()`</span> loads basis species including three amino acids (glutamine, glutamic acid, cysteine, `r h2o`, `r o2`).
-This basis strengthens the relationship between `r zc` and *n*&#773;<sub>`r o2`</sub>, but weakens that between `r zc` and *n*&#773;<sub>`r h2o`</sub> (shown in the plots on the right).
+This basis strengthens the relationship between `r zc` and *n*<sub>`r o2`</sub>, but weakens that between `r zc` and *n*<sub>`r h2o`</sub> (shown in the plots on the right).
 
-```{r rubisco_O2, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap="Elemental compositions of proteins projected into different sets of basis species.", cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r rubisco_O2, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap="Chemical metrics (*n*<sub>O<sub>2</sub></sub> and *n*<sub>H<sub>2</sub>O</sub>) calculated with different sets of basis species, compared to carbon oxidation state (*Z*<sub>C</sub>) which does not depend on the basis species.", cache=TRUE, pngquant=pngquant, timeit=timeit}
 layout(matrix(1:4, nrow = 2))
 par(mgp = c(1.8, 0.5, 0))
 pl <- protein.length(aa)
 ZClab <- axis.label("ZC")
-nO2lab <- expression(bar(italic(n))[O[2]])
-nH2Olab <- expression(bar(italic(n))[H[2]*O])
+nO2lab <- expression(italic(n)[O[2]])
+nH2Olab <- expression(italic(n)[H[2]*O])
 lapply(c("CHNOS", "QEC"), function(thisbasis) {
   basis(thisbasis)
   pb <- protein.basis(aa)
@@ -1336,8 +1336,10 @@ lapply(c("CHNOS", "QEC"), function(thisbasis) {
 ```{r rubisco_O2, eval=FALSE}
 ```
 
-By projecting the compositions of proteins into the `QEC` set of basis species, *n*&#773;<sub>`r o2`</sub> emerges as a strong indicator of oxidation state, while *n*&#773;<sub>`r h2o`</sub> is a relatively uncorrelated (i.e. independent) compositional variable.
+By projecting the compositions of proteins into the `QEC` set of basis species, *n*<sub>`r o2`</sub> emerges as a strong indicator of oxidation state, while *n*<sub>`r h2o`</sub> is a relatively uncorrelated (i.e. independent) variable.
 These independent variables make it easier to distinguish the effects of oxidation and hydration state in proteomic datasets [@DYT20].
+
+- The [canprot](https://github.com/jedick/canprot) package has functions to calculate chemical metrics (*Z*<sub>C</sub>, *n*<sub>`r o2`</sub>, and *n*<sub>`r h2o`</sub>) directly from amino acid compositions of proteins, and to read amino acid compositions from FASTA files (`canprot::read.fasta()`).
 
 ## Normalization to residues
 
@@ -1415,44 +1417,6 @@ The experimental relative abundances are plotted as thin horizontal lines with t
 With the exception of YNL049C, the correspondence between the calculations and experiments looks to be greatest near the middle-left part of the figure.
 
 ```{r yeastplot, fig.width=6, fig.height=2.5, dpi=hidpi, out.width="100%", echo=FALSE, message=FALSE, results="hide", cache=TRUE, fig.cap="ER-to-Golgi proteins: calculations without and with length normalization.", pngquant=pngquant, timeit=timeit}
-```
-
-## Getting amino acid compositions
-
-In the Rubisco example above, we saw the use of <span style="color:green">`read.fasta()`</span> to read amino acid sequences from a FASTA file.
-There are several other methods for inputting amino acid compositions.
-
-R's `read.csv()` can be used to read amino acid compositions from a CSV file with the same columns that are present in `thermo()$protein`.
-Note the use of `as.is = TRUE` to prevent reading character data as factors.
-The `nrows` argument can be added to read that number of rows:
-```{r read_csv}
-file <- system.file("extdata/protein/POLG.csv", package = "CHNOSZ")
-aa_POLG <- read.csv(file, as.is = TRUE, nrows = 5)
-```
-<span style="color:green">`read.fasta()`</span> reads a FASTA file and returns the amino acid compositions of the sequences.
-The `iseq` argument can be used to read those sequences from the file:
-```{r read_fasta, message=FALSE}
-file <- system.file("extdata/protein/EF-Tu.aln", package = "CHNOSZ")
-aa_Ef <- read.fasta(file, iseq = 1:2)
-```
-<span style="color:green">`seq2aa()`</span> counts the amino acids in a user-supplied sequence and generates a data frame of the amino acid composition:
-```{marginfigure}
-See also <span style="color:blue">`?count.aa`</span>, which can process both protein and nucleic acid sequences.
-```
-```{r seq2aa}
-aa_PRIO <- seq2aa("
-MANLGCWMLVLFVATWSDLGLCKKRPKPGGWNTGGSRYPGQGSPGGNRYPPQGGGGWGQP
-HGGGWGQPHGGGWGQPHGGGWGQPHGGGWGQGGGTHSQWNKPSKPKTNMKHMAGAAAAGA
-VVGGLGGYMLGSAMSRPIIHFGSDYEDRYYRENMHRYPNQVYYRPMDEYSNQNNFVHDCV
-NITIKQHTVTTTTKGENFTETDVKMMERVVEQMCITQYERESQAYYQRGSSMVLFSSPPV
-ILLISFLIFLIVG
-", "PRIO_HUMAN")
-```
-
-These amino acid compositions can be processed using functions such as <span style="color:green">`protein.length()`</span> and <span style="color:green">`protein.formula()`</span>:
-```{r protein_length}
-myaa <- rbind(aa_Ef, aa_PRIO)
-protein.length(myaa)
 ```
 
 # Sources of thermodynamic data

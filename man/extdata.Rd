@@ -39,7 +39,6 @@
 
   Files in \code{protein} contain protein sequences and amino acid compositions for proteins.
   \itemize{
-    \item \code{EF-Tu.aln} consists of aligned sequences (394 amino acids) of elongation factor Tu (EF-Tu). The sequences correspond to those taken from UniProtKB for ECOLI (\emph{Escherichia coli}), THETH (\emph{Thermus thermophilus}) and THEMA (\emph{Thermotoga maritima}), and reconstructed ancestral sequences taken from Gaucher et al., 2003 (maximum likelihood bacterial stem and mesophilic bacterial stem, and alternative bacterial stem). See \code{\link{read.fasta}} for an example that uses this file.
     \item \code{rubisco.fasta} Sequences of Rubisco obtained from UniProt (see Dick, 2014). See the vignette \viglink{anintro} for an example that uses this file.
     \item \code{POLG.csv}
       Amino acid compositions of a few proteins used for some tests and examples.
@@ -80,8 +79,6 @@ Berman, R. G. and Aranovich, L. Ya. (1996) Optimized standard state and solution
 Dick, J. M. (2014) Average oxidation state of carbon in proteins. \emph{J. R. Soc. Interface} \bold{11}, 20131095. \doi{10.1098/rsif.2013.1095}
 
 Gattiker, A., Michoud, K., Rivoire, C., Auchincloss, A. H., Coudert, E., Lima, T., Kersey, P., Pagni, M., Sigrist, C. J. A., Lachaize, C., Veuthey, A.-L., Gasteiger, E. and Bairoch, A. (2003) Automatic annotation of microbial proteomes in Swiss-Prot. \emph{Comput. Biol. Chem.} \bold{27}, 49--58. \doi{10.1016/S1476-9271(02)00094-4}
-
-Gaucher, E. A., Thomson, J. M., Burgan, M. F. and Benner, S. A (2003) Inferring the palaeoenvironment of ancient bacteria on the basis of resurrected proteins. \emph{Nature} \bold{425}(6955), 285--288. \doi{10.1038/nature01977}
 
 Helgeson, H. C., Delany, J. M., Nesbitt, H. W. and Bird, D. K. (1978) Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am. J. Sci.} \bold{278-A}, 1--229. \url{https://www.worldcat.org/oclc/13594862}
 

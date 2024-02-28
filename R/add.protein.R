@@ -2,22 +2,6 @@
 # Calculate properties of proteins 20061109 jmd
 # Reorganize protein functions 20120513
 
-# Count numbers of amino acids in a sequence
-seq2aa <- function(sequence, protein = NA) {
-  # Remove newlines and whitespace
-  sequence <- gsub("\\s", "", gsub("[\r\n]", "", sequence))
-  # Make a data frame from counting the amino acids in the sequence
-  caa <- count.aa(sequence)
-  colnames(caa) <- aminoacids(3)
-  # Now make the data frame
-  po <- strsplit(as.character(protein), "_")[[1]]
-  aa <- data.frame(protein = po[1], organism = po[2], ref = NA, abbrv = NA, stringsAsFactors = FALSE)
-  # chains = 1 for any sequence, chains = 0 for no sequence
-  chains <- sum(nchar(sequence) > 0)
-  aa <- cbind(aa, chains = chains, caa)
-  return(aa)
-}
-
 # Add amino acid counts to thermo()$protein (returns iprotein)
 add.protein <- function(aa, as.residue = FALSE) {
   # Add a properly constructed data frame of 
