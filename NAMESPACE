@@ -24,7 +24,7 @@ export(
   "getrank", "parent", "sciname", "allparents", "getnodes", "getnames",
   "protein.OBIGT", "which.pmax",
   "equil.boltzmann", "equil.reaction", "find.tp",
-  "ionize.aa", "MP90.cp", "aasum",
+  "ionize.aa", "MP90.cp",
   "ratlab",
   "EOSregress", "EOScoeffs", "EOSplot", "EOSvar",
 # demos

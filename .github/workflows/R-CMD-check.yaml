@@ -28,4 +28,15 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      # Install remotes and development version of canprot 20240228
+      # https://stackoverflow.com/questions/76642914/use-a-github-package-for-a-r-github-action
+      
+      - name: Install remotes
+        run: |
+          Rscript -e "install.packages('remotes', repos='https://ftp.belnet.be/mirror/CRAN')"
+
+      - name: Install development version of canprot
+        run: |
+          Rscript -e "remotes::install_github('jedick/canprot')"
+
       - uses: r-lib/actions/check-r-package@v2
