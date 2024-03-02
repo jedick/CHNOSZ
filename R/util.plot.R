@@ -296,11 +296,3 @@ thermo.axis <- function(lab = NULL, side = 1:4,line = 1.5, cex = par('cex'), lwd
     if(!is.null(lab)) mtext(lab, side = thisside, line = line, cex = cex, las = las)
   }
 }
-
-# Function to add transparency to given color 20220223
-add.alpha <- function(col, alpha) {
-  x <- col2rgb(col)
-  newcol <- rgb(x[1], x[2], x[3], maxColorValue = 255)
-  newcol <- paste0(newcol, alpha)
-  newcol
-}

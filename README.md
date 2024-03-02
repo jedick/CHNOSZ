@@ -3,3 +3,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7765500.svg)](https://doi.org/10.5281/zenodo.7765500)
 [![R-CMD-check](https://github.com/jedick/CHNOSZ/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jedick/CHNOSZ/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
+
+This is a mirror of the [primary repository on R-Forge](https://r-forge.r-project.org/projects/chnosz/).
+
+Please see the [CHNOSZ website](https://chnosz.net) for more information.

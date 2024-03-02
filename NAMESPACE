@@ -60,7 +60,7 @@ export(
 # added 20220416
   "rank.affinity",
 # added 20220620
-  "stack_mosaic", "add.alpha"
+  "stack_mosaic"
 )
 
 # Load shared objects
@@ -70,7 +70,7 @@ useDynLib(CHNOSZ, .registration = TRUE, .fixes = "C_")
 # Imports from default packages
 importFrom("grDevices", "dev.cur", "dev.off", "extendrange",
   "heat.colors", "png", "rainbow", "topo.colors", "dev.list",
-  "contourLines", "col2rgb", "rgb")
+  "contourLines", "col2rgb", "rgb", "adjustcolor")
 importFrom("graphics", "abline", "axTicks", "axis", "barplot", "box",
   "contour", "image", "legend", "lines", "mtext", "par", "plot",
   "plot.new", "plot.window", "points", "rect", "text", "title")

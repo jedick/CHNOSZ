@@ -47,8 +47,7 @@ Here, only a single value of \code{loga_aq} is needed, unlike in \code{\link{mos
 The plot parameters \code{col}, \code{col.names}, \code{fill}, \code{dx}, \code{dy}, \code{srt}, \code{lwd}, and \code{lty} should be length-3 lists (not vectors).
 The values of elements 1--3 of the list are recycled to the number of species in \code{species1}, \code{species2}, and \code{species12}, respectively.
 
-For \code{fill}, the default is to use no fill except for \code{species12}, where the fill color is taken from \code{col.names} with added transparency.
-The default definition of \code{fill} is \code{list(NA, NA, add.alpha(col.names[3], "50"))}.
+For \code{fill}, the default is to use no fill except for \code{species12}, where the fill color is taken from \code{col.names} with added transparency added using \code{\link{adjustcolor}}.
 }
 
 \section{Warning}{
