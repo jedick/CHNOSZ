@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{affinity}
 \alias{affinity}
-\title{Chemical Affinities of Formation Reactions}
+\title{Chemical affinities of formation reactions}
 \description{
 Calculate the chemical affinities of formation reactions of species.
 }

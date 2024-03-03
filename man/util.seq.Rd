@@ -3,7 +3,7 @@
 \alias{util.seq}
 \alias{aminoacids}
 
-\title{Functions to Work with Sequence Data}
+\title{Functions to work with sequence data}
 
 \description{
   Return names or one- or three-letter abbreviations of amino acids.

@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{IAPWS95}
 \alias{IAPWS95}
-\title{Properties of Water from IAPWS-95}
+\title{Properties of water from IAPWS-95}
 \description{
 Calculate thermodynamic properties of water following the IAPWS-95 formulation.
 }

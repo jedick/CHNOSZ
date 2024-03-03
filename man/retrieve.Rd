@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{retrieve}
 \alias{retrieve}
-\title{Retrieve Species by Element}
+\title{Retrieve species by element}
 \description{
 Retrieve species in the database containing one or more chemical elements.
 }

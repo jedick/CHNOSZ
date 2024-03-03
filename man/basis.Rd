@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{basis}
 \alias{basis}
-\title{Define Basis Species}
+\title{Define basis species}
 \description{
 Define the basis species of a chemical system.
 }

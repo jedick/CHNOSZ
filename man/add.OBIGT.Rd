@@ -2,7 +2,7 @@
 \name{add.OBIGT}
 \alias{add.OBIGT}
 \alias{mod.OBIGT}
-\title{Functions to Work with the Thermodynamic Database}
+\title{Functions to work with the thermodynamic database}
 \description{
 Add or modify species in the thermodynamic database.
 }

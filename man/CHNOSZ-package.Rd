@@ -2,7 +2,7 @@
 \name{CHNOSZ-package}
 \alias{CHNOSZ-package}
 \docType{package}
-\title{Thermodynamic Calculations and Diagrams for Geochemistry}
+\title{Thermodynamic calculations and diagrams for geochemistry}
 \description{
 CHNOSZ is a package for thermodynamic calculations, primarily with applications in geochemistry and compositional biology.
 It can be used to calculate the standard molal thermodynamic properties and chemical affinities of reactions relevant to geobiochemical processes, and to visualize the equilibrium activities of species on chemical speciation and predominance diagrams.

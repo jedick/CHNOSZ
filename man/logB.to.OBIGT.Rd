@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{logB.to.OBIGT}
 \alias{logB.to.OBIGT}
-\title{Fit Thermodynamic Parameters to Formation Constants (\logB)}
+\title{Fit thermodynamic parameters to formation constants (\logB)}
 \description{
 Fit thermodynamic parameters to experimental formation constants for an aqueous species and add the parameters to OBIGT.
 }

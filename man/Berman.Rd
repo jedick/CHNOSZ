@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{Berman}
 \alias{Berman}
-\title{Thermodynamic Properties of Minerals}
+\title{Thermodynamic properties of minerals}
 \description{
 Calculate thermodynamic properties of minerals using the equations of Berman (1988).
 }

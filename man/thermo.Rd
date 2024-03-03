@@ -4,7 +4,7 @@
 \alias{OBIGT}
 \alias{thermo}
 \alias{CHNOSZ}
-\title{Thermodynamic Database and System Settings}
+\title{Thermodynamic database and system settings}
 \description{
 Run \code{reset()} to reset all of the data used in CHNOSZ to default values.
 This includes the computational settings, thermodynamic database, and system settings (chemical species).

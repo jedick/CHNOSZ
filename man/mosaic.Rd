@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{mosaic}
 \alias{mosaic}
-\title{Chemical Affinities with Changing Basis Species}
+\title{Chemical affinities with changing basis species}
 \description{
 Calculate chemical affinities of formation reactions of species using basis species that change with the conditions.
 }

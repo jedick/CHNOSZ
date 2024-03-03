@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{ionize.aa}
 \alias{ionize.aa}
-\title{Properties of Ionization of Proteins}
+\title{Properties of ionization of proteins}
 \description{
   Calculate the charges of proteins and contributions of ionization to the thermodynamic properties of proteins.
 }

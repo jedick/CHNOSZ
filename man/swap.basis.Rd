@@ -5,7 +5,7 @@
 \alias{basis.logact}
 \alias{swap.basis}
 \alias{ibasis}
-\title{Swap Basis Species}
+\title{Swap basis species}
 \description{
   Swap the basis species defining a chemical system. One basis species is replaced by a new one with a different chemical formula.
 }

@@ -2,7 +2,7 @@
 \name{nonideal}
 \alias{nonideal}
 \alias{bgamma}
-\title{Activity Coefficients of Aqueous Species}
+\title{Activity coefficients of aqueous species}
 \description{
 Calculate activity coefficients and adjusted molal properties of aqueous species.
 }

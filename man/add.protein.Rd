@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{add.protein}
 \alias{add.protein}
-\title{Amino Acid Compositions of Proteins}
+\title{Amino acid compositions of proteins}
 \description{
   Functions to get amino acid compositions and add them to protein list for use by other functions.
 }

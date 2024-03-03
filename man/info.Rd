@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{info}
 \alias{info}
-\title{Search the Thermodynamic Database}
+\title{Search the thermodynamic database}
 \description{
   Search for species by name or formula, retrieve their thermodynamic properties and parameters, and add proteins to the thermodynamic database.
 }

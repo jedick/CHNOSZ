@@ -5,7 +5,7 @@
 \alias{calculateGibbsOfWater}
 \alias{calculateEpsilon}
 \alias{calculateQ}
-\title{Deep Earth Water (DEW) Model}
+\title{Deep Earth Water (DEW) model}
 \description{
 Calculate thermodynamic properties of water using the Deep Earth Water (DEW) model.
 }

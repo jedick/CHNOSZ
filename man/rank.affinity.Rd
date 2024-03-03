@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{rank.affinity}
 \alias{rank.affinity}
-\title{Average Ranks of Chemical Affinities}
+\title{Average ranks of chemical affinities}
 \description{
 Affinity rankings for groups of species.
 }

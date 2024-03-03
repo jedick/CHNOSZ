@@ -5,7 +5,7 @@
 \alias{Ttr}
 \alias{GHS_Tr}
 \alias{unitize}
-\title{Functions for Miscellaneous Tasks}
+\title{Functions for miscellaneous tasks}
 \description{
 Calculate \eqn{dP/dT}{dP/dT} and temperature of polymorphic transitions; scale logarithms of activity to a desired total activity.
 }

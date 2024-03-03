@@ -4,7 +4,7 @@
 \alias{water.SUPCRT92}
 \alias{water.IAPWS95}
 \alias{water.DEW}
-\title{Properties of Water}
+\title{Properties of water}
 \description{
 Calculate thermodynamic and electrostatic properties of water.
 }

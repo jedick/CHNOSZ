@@ -3,7 +3,7 @@
 \alias{mash}
 \alias{rebalance}
 \alias{mix}
-\title{Combine Diagrams for Multi-Metal Systems}
+\title{Combine diagrams for multi-metal systems}
 \description{
   Combine diagrams for different systems by mashing or rebalancing two diagrams or mixing two diagrams with a third.
 }

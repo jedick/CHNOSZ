@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{NaCl}
 \alias{NaCl}
-\title{Simple NaCl-Water Solution}
+\title{Simple NaCl-water solution model}
 \description{
 Calculate speciation and ionic strength of aqueous solutions with a given molality of NaCl.
 }

@@ -7,7 +7,7 @@
 \alias{GHS}
 \alias{ZC}
 \alias{i2A}
-\title{Functions to Work with Chemical Formulas}
+\title{Functions to work with chemical formulas}
 
 \description{
 Calculate the standard molal entropy of elements in a compound; calculate the standard molal Gibbs energy or enthalpy of formation, or standard molal entropy, from the other two; list coefficients of selected elements in a chemical formula; calculate the average oxidation state of carbon. Create a stoichiometric matrix for selected species.

@@ -2,7 +2,7 @@
 \name{diagram}
 \alias{diagram}
 \alias{find.tp}
-\title{Chemical Activity Diagrams}
+\title{Chemical activity diagrams}
 \description{
 Plot equilibrium chemical activity (1-D speciation) or equal-activity (2-D predominance) diagrams as a function of chemical activities of basis species, temperature and/or pressure.
 }

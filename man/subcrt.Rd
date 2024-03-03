@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{subcrt}
 \alias{subcrt}
-\title{Properties of Species and Reactions}
+\title{Properties of species and reactions}
 \description{
   Calculate the standard molal thermodynamic properties of one or more species or a reaction between species as a function of temperature and pressure.
 }

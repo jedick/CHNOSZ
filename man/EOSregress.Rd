@@ -8,7 +8,7 @@
 \alias{EOScoeffs}
 \alias{Cp_s_var}
 \alias{V_s_var}
-\title{Regress Equations-of-State Parameters for Aqueous Species}
+\title{Regress equations-of-state parameters for aqueous species}
 \description{
 Fit experimental volumes and heat capacities using regression equations.
 Possible models include the Helgeson-Kirkham-Flowers (HKF) equations of state, or other equations defined using any combination of terms derived from the temperature, pressure and thermodynamic and electrostatic properties of water.

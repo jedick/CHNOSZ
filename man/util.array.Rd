@@ -5,7 +5,7 @@
 \alias{slice}
 \alias{dimSums}
 \alias{slice.affinity}
-\title{Functions to Work with Multidimensional Arrays}
+\title{Functions to work with multidimensional arrays}
 \description{
   These functions can be used to turn a list into an array and extract or replace values or take the sum along a certain dimension of an array.
 }

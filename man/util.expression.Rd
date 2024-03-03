@@ -10,7 +10,7 @@
 \alias{describe.reaction}
 \alias{syslab}
 \alias{ratlab}
-\title{Functions to Express Chemical Formulas and Properties}
+\title{Functions to express chemical formulas and properties}
 \description{Generate expressions suitable for axis labels and plot legends describing chemical species, properties and reactions.}
 
 \usage{

@@ -2,7 +2,7 @@
 \name{palply}
 \alias{palply}
 
-\title{Conditional Parallel Processing}
+\title{Conditional parallel processing}
 \description{
   Use multiple processors for large calculations.
 }

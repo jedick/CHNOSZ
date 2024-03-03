@@ -7,7 +7,7 @@
 \alias{lP}
 \alias{lTP}
 \alias{lex}
-\title{Functions to Make Legend Text}
+\title{Functions to make legend text}
 \description{Generate expressions describing system conditions that can be added to legends of plots.}
 
 \usage{

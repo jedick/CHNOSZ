@@ -7,7 +7,7 @@
 \alias{check.OBIGT}
 \alias{dumpdata}
 \alias{RH2OBIGT}
-\title{Functions for Checking Thermodynamic Data}
+\title{Functions for checking thermodynamic data}
 \description{
 Show table of references in a web browser or get individual references for species.
 Check self consistency of individual entries in database.

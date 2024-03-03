@@ -2,7 +2,7 @@
 \name{extdata}
 \alias{extdata}
 \docType{data}
-\title{Extra Data}
+\title{Extra data}
 
 \description{
   The files in the subdirectories of \code{extdata} provide additional thermodynamic data and other data to support the examples in the package documentation and vignettes. 

@@ -2,7 +2,7 @@
 \name{makeup}
 \alias{makeup}
 \alias{count.elements}
-\title{Parse Chemical Formulas}
+\title{Parse chemical formulas}
 \description{
 Count the elements and charges in a chemical formula.
 }

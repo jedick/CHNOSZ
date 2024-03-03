@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{species}
 \alias{species}
-\title{Species of Interest}
+\title{Species of interest}
 \description{
   Define the species of interest in a system; modify their physical states and logarithms of activities.
 }

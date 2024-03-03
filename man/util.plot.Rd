@@ -9,7 +9,7 @@
 \alias{water.lines}
 \alias{mtitle}
 \alias{ZC.col}
-\title{Functions to Create and Modify Plots}
+\title{Functions to create and modify plots}
 
 \description{
   Initialize a new plot window using preset parameters, add an axis or title to a plot, generate labels for axes and subplots, add stability lines for water, get colors for a set of numeric values.

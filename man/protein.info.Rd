@@ -7,7 +7,7 @@
 \alias{protein.OBIGT}
 \alias{protein.basis}
 \alias{protein.equil}
-\title{Summaries of Thermodynamic Properties of Proteins}
+\title{Summaries of thermodynamic properties of proteins}
 
 \description{
   Protein information, length, chemical formula, thermodynamic properties by group additivity, reaction coefficients of basis species, and metastable equilibrium example calculation.

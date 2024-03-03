@@ -2,7 +2,7 @@
 \name{examples}
 \alias{examples}
 \alias{demos}
-\title{Run Examples from the Documentation}
+\title{Run examples from the documentation}
 \description{
   Run the examples contained in each of the documentation topics. }
 

@@ -4,7 +4,7 @@
 \alias{WP02.auxiliary}
 \alias{rho.IAPWS95}
 \alias{water.AW90}
-\title{Functions for Properties of Water and Steam}
+\title{Functions for properties of water and steam}
 \description{
   Utility functions for properties of water and steam.
 }

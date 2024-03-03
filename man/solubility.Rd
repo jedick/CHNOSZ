@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{solubility}
 \alias{solubility}
-\title{Equilibrium Chemical Activities of Species}
+\title{Equilibrium chemical activities of species}
 \description{
 Calculate chemical activities of aqueous species in equilibrium with a mineral or gas.
 }

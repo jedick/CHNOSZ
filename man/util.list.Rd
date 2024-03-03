@@ -2,7 +2,7 @@
 \name{util.list}
 \alias{util.list}
 \alias{which.pmax}
-\title{Functions to Work with Lists}
+\title{Functions to work with lists}
 
 \description{
   Identify list elements that have the maximum (or minimum) values.

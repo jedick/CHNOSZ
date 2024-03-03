@@ -3,7 +3,7 @@
 \alias{util.protein}
 \alias{group.formulas}
 \alias{MP90.cp}
-\title{Functions for Proteins (Other Calculations)}
+\title{Functions for proteins (other calculations)}
 
 \description{
   Return chemical formulas of groups in proteins, and calculate heat capacity using an additivity model from the literature.

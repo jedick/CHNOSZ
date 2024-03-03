@@ -5,7 +5,7 @@
 \alias{T.units}
 \alias{E.units}
 \alias{convert}
-\title{Functions to Convert Units}
+\title{Functions to convert units}
 \description{
 These functions convert values between units and set the user's preferred units.
 }

@@ -4,7 +4,7 @@
 \alias{equil.boltzmann}
 \alias{equil.reaction}
 \alias{moles}
-\title{Equilibrium Chemical Activities of Species}
+\title{Equilibrium chemical activities of species}
 \description{
 Calculate equilibrium chemical activities of species from the affinities of formation of the species at unit activity. 
 }

@@ -7,7 +7,7 @@
 \alias{allparents}
 \alias{getnames}
 \alias{sciname}
-\title{Extract Data from NCBI Taxonomy Files}
+\title{Extract data from NCBI taxonomy files}
 
 \description{
   Read data from NCBI taxonomy files, traverse taxonomic ranks, get scientific names of taxonomic nodes.
