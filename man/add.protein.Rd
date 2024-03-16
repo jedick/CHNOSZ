@@ -45,7 +45,7 @@ protein.formula(iprotein)
 }
 
 \seealso{
-\code{\link[canprot]{read.fasta}} for reading amino acid compositions from FASTA files.
+\code{\link[canprot]{read_fasta}} for reading amino acid compositions from FASTA files.
 
 \code{\link{pinfo}} for protein-level functions (length, chemical formulas, reaction coefficients of basis species).
 }

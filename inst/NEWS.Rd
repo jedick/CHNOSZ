@@ -15,11 +15,11 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-3 (2024-03-02)}{
+\section{Changes in CHNOSZ version 2.1.0-5 (2024-03-16)}{
 
     \itemize{
 
-      \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to canprot package.
+      \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to canprot package with different names.
 
       \item Remove \code{seq2aa()}.
 

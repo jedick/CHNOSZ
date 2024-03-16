@@ -41,7 +41,7 @@ Because balancing on a basis species (i.e., dividing by its reaction coefficient
 datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")
 fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 dat <- read.csv(datfile)
-aa <- canprot::read.fasta(fastafile)
+aa <- canprot::read_fasta(fastafile)
 groups <- sapply(c("A", "B", "E"), "==", dat$domain, simplify = FALSE)
 names(groups) <- c("Archaea", "Bacteria", "Eukaryota")
 ip <- add.protein(aa, as.residue = TRUE)

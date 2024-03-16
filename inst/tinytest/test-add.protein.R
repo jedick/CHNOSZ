@@ -12,7 +12,7 @@ ip2 <- add.protein(aa)
 expect_equal(ip1, ip2, info = info)
 
 info <- "Errors and messages occur in some circumstances"
-expect_error(add.protein(canprot::count.aa("AAA")), "does not have the same columns as thermo\\(\\)\\$protein", info = info)
+expect_error(add.protein(canprot::count_aa("AAA")), "does not have the same columns as thermo\\(\\)\\$protein", info = info)
 expect_message(add.protein(pinfo(pinfo("CYC_BOVIN"))), "replaced 1 existing protein\\(s\\)", info = info)
 
 info <- "group additivity for proteins gives expected values"
@@ -32,12 +32,12 @@ expect_equal(Cp, lprop$Cp, tolerance = 1e-5, info = info)
 expect_equal(V, lprop$V, tolerance = 1e-4, info = info)
 expect_equal(formula, lprop$formula, info = info)
 
-info <- "read.fasta() identifies sequences correctly and gives amino acid compositions in the correct format"
+info <- "read_fasta() identifies sequences correctly and gives amino acid compositions in the correct format"
 ffile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
-aa <- canprot::read.fasta(ffile)
-expect_equal(aa[1, ], canprot::read.fasta(ffile, 1), info = info)
+aa <- canprot::read_fasta(ffile)
+expect_equal(aa[1, ], canprot::read_fasta(ffile, 1), info = info)
 # Use unlist here so that different row names are not compared
-aa8 <- canprot::read.fasta(ffile, 1:8)
+aa8 <- canprot::read_fasta(ffile, 1:8)
 expect_equal(unlist(aa[1:8, ]), unlist(aa8), info = info)
 expect_message(ip1 <- add.protein(aa8), "added 8 new protein\\(s\\)", info = info)
 expect_message(ip2 <- add.protein(aa8), "replaced 8 existing protein\\(s\\)", info = info)

@@ -10,7 +10,6 @@ sed -i 's/<code>?mosaic<\/code>/<code><a href="..\/html\/mosaic.html" style="bac
 sed -i 's/<code>?buffer<\/code>/<code><a href="..\/html\/buffer.html" style="background-image:none;">?buffer<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?solubility<\/code>/<code><a href="..\/html\/solubility.html" style="background-image:none;">?solubility<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?ionize.aa<\/code>/<code><a href="..\/html\/ionize.aa.html" style="background-image:none;">?ionize.aa<\/a><\/code>/g' anintro.html
-sed -i 's/<code>?count.aa<\/code>/<code><a href="..\/html\/util.fasta.html" style="background-image:none;">?count.aa<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?thermo<\/code>/<code><a href="..\/html\/thermo.html" style="background-image:none;">?thermo<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?hkf<\/code>/<code><a href="..\/html\/eos.html" style="background-image:none;">?hkf<\/a><\/code>/g' anintro.html
 sed -i 's/<code>?cgl<\/code>/<code><a href="..\/html\/eos.html" style="background-image:none;">?cgl<\/a><\/code>/g' anintro.html

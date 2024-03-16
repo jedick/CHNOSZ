@@ -57,7 +57,3 @@ don't have to compile anything to install CHNOSZ updates).
 - Re-enter data from PS01 and AP01 (original units in J not cal)
 
 - subcrt(): Don't output properties in HKF region 4
-
-[20220503]
-
-- Don't use palply in read.fasta()

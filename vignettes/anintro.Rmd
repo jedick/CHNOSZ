@@ -1242,7 +1242,7 @@ Calculations based on the formulas, such as the average oxidation state of carbo
 
 Let's compare the `r zc` of Rubisco with optimal growth temperature of organisms, as shown in Figure 6a of @Dic14.
 First we read a CSV file with the IDs of the proteins and the optimal growth temperatures (*T*<sub>opt</sub>); the midpoint of the range of *T*<sub>opt</sub> is used for plotting.
-Then we use `canprot::read.fasta()` to read a FASTA file holding the amino acid sequences of the proteins; the function returns a data frame with the amino acid counts.
+Then we use `canprot::read_fasta()` to read a FASTA file holding the amino acid sequences of the proteins; the function returns a data frame with the amino acid counts.
 To put the proteins in the right order, the IDs in the CSV file are matched to the names of the proteins in the FASTA file.
 Then, we calculate `r zc` from the formulas of the proteins.
 Next, point symbols are assigned according to domain (Archaea, Bacteria, Eukaryota); numbers inside the symbols show the ordering of *T*<sub>opt</sub> in three temperature ranges (0--35 °C, 37.5--60 °C, and 65--100 °C).
@@ -1255,7 +1255,7 @@ file.copy("rubisco.svg", fig_path(".svg"))
 #  datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")
 #  fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 #  dat <- read.csv(datfile)
-#  aa <- canprot::read.fasta(fastafile)
+#  aa <- canprot::read_fasta(fastafile)
 #  Topt <- (dat$T1 + dat$T2) / 2
 #  idat <- match(dat$ID, substr(aa$protein, 4, 9))
 #  aa <- aa[idat, ]
@@ -1290,7 +1290,7 @@ file.copy("rubisco.svg", fig_path(".svg"))
 datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")
 fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 dat <- read.csv(datfile)
-aa <- canprot::read.fasta(fastafile)
+aa <- canprot::read_fasta(fastafile)
 Topt <- (dat$T1 + dat$T2) / 2
 idat <- match(dat$ID, substr(aa$protein, 4, 9))
 aa <- aa[idat, ]
@@ -1339,7 +1339,7 @@ lapply(c("CHNOS", "QEC"), function(thisbasis) {
 By projecting the compositions of proteins into the `QEC` set of basis species, *n*<sub>`r o2`</sub> emerges as a strong indicator of oxidation state, while *n*<sub>`r h2o`</sub> is a relatively uncorrelated (i.e. independent) variable.
 These independent variables make it easier to distinguish the effects of oxidation and hydration state in proteomic datasets [@DYT20].
 
-- The [canprot](https://github.com/jedick/canprot) package has functions to calculate chemical metrics (*Z*<sub>C</sub>, *n*<sub>`r o2`</sub>, and *n*<sub>`r h2o`</sub>) directly from amino acid compositions of proteins, and to read amino acid compositions from FASTA files (`canprot::read.fasta()`).
+- The [canprot](https://github.com/jedick/canprot) package has functions to calculate chemical metrics (*Z*<sub>C</sub>, *n*<sub>`r o2`</sub>, and *n*<sub>`r h2o`</sub>) directly from amino acid compositions of proteins, and to read amino acid compositions from FASTA files (`canprot::read_fasta()`).
 
 ## Normalization to residues
 
