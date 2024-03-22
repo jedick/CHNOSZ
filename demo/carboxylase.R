@@ -1,7 +1,7 @@
 # CHNOSZ/demo/carboxylase.R
-# Animate rank-activity diagrams along a temperature and logaH2 gradient
+# Animate rank-activity diagram along a temperature and logaH2 gradient
 # ca. 200903 First version
-# 20220819 moved to anim.carboxylase() in CHNOSZ
+# 20110819 moved to anim.carboxylase() in CHNOSZ
 # 20171030 moved to demo/carboxylase.R
 # 20240322 increase resolution; use R's numeric colors; use GraphicsMagick
 
