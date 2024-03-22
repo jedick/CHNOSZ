@@ -1,14 +1,12 @@
 # CHNOSZ/demo/carboxylase.R
-# Animate rank-activity diagrams over a temperature
-# and logaH2 gradient, or plot a single one for a single temperature
-# First version ca. 200903; packaged anim.carboxylase() 20110818; converted to demo 20171030
+# Animate rank-activity diagrams along a temperature and logaH2 gradient
+# ca. 200903 First version
+# 20220819 moved to anim.carboxylase() in CHNOSZ
+# 20171030 moved to demo/carboxylase.R
+# 20240322 increase resolution; use R's numeric colors; use GraphicsMagick
+
 library(CHNOSZ)
 
-T <- 25:125
-ntop <- 5
-lcex <- 0.8
-width <- 380
-height <- 380
 # Plot rank-activity diagrams for 24 carboxylases;
 # 12 ribulose phosphate carboxylase
 # 12 acetyl-coenzyme A carboxylase
@@ -29,18 +27,19 @@ accoaco.organisms <- c("g-proteobacterium", "Deinococcus", "Planctomyces", "Acti
 organisms <- c(rubisco.organisms, accoaco.organisms)
 # New scheme 20090611: red for hot,  blue for cold
 # Open for rubisco,  filled for accoaco
-col <- rep(c(rep("blue", 6), rep("red", 6)), 2)
+col <- rep(c(rep(4, 6), rep(2, 6)), 2)
 pch <- c(rep(c(0:2, 5:7), 2), rep(c(15:20), 2))
 # How many frames do we want?
+T <- 25:125
 res <- length(T)
 if(res == 1) ido <- 1 else {
   # Check for png directory
   if(!"png" %in% dir()) stop("directory 'png' not present")
   else if(length(dir("png")) > 0) stop("directory 'png' not empty")
   # Start the plot device - multiple png figures
-  png(filename = "png/Rplot%04d.png", width = width, height = height)
+  png(filename = "png/Rplot%04d.png", width = 6, height = 6, res = 100, units = "in")
   # Add counters for lead-in and lead-out frames
-  ido <- c(rep(1, 15), 1:res, rep(res, 20))
+  ido <- c(rep(1, 6), 1:res, rep(res, 12))
 }
 # Set up system
 basis(c("CO2", "H2O", "NH3", "H2", "H2S", "H+"), 
@@ -53,9 +52,9 @@ get.logaH2 <- function(T) return(-11 + T * 3 / 40)
 H2 <- get.logaH2(T)
 # Calculate affinities
 if(res == 1) {
-  basis("H2",H2)
+  basis("H2", H2)
   a <- affinity(T = T)
-} else a <- affinity(T = T,H2 = H2)
+} else a <- affinity(T = T, H2 = H2)
 # Calculate activities
 e <- equilibrate(a, normalize = TRUE)
 # For each point make a rank plot
@@ -94,20 +93,21 @@ for(i in 1:length(ido)) {
     ichanged <- myrank != myrank1
     cex[ichanged[order]] <- cex[ichanged[order]] + 0.4
   }
-  plot(rank,loga[order],col = col[order],pch = pch[order],
-    ylab = expression(log~italic(a)), cex = cex, cex.main = 1, cex.lab = 1, cex.axis = 1)
+  plot(rank, loga[order], col = col[order], pch = pch[order],
+    xlab = "Rank", ylab = "log abundance", cex = cex, cex.main = 1, cex.lab = 1, cex.axis = 1)
   myT <- format(round(T, 1))[ido[i]]
   myH2 <- format(round(H2, 2))[ido[i]]
   title(main = substitute(list(X~degree*C, log*italic(a)[paste(H2)] == Y), 
     list(X = myT, Y = myH2)))
   # Legends showing highest and lowest few
-  legend("topright", legend = c(paste("top", ntop), organisms[order[1:ntop]]), 
-    pch = c(NA, pch[order[1:ntop]]), col = c(NA, col[order[1:ntop]]), 
-    pt.cex = c(NA, cex[1:ntop]), cex = lcex)
+  ntop <- 5
+  legend("topright", legend = c(organisms[order[1:ntop]]), 
+    pch = pch[order[1:ntop]], col = col[order[1:ntop]], 
+    pt.cex = cex[1:ntop], cex = 0.8, title = paste("High", ntop))
   order <- order(loga)
-  legend("bottomleft", legend = c(paste("low", ntop), organisms[order[ntop:1]]), 
-    pch = c(NA, pch[order[ntop:1]]), col = c(NA, col[order[ntop:1]]), 
-    pt.cex = c(NA, cex[24:(24-ntop+1)]), cex = lcex)
+  legend("bottomleft", legend = c(organisms[order[ntop:1]]), 
+    pch = pch[order[ntop:1]], col = col[order[ntop:1]],
+    pt.cex = cex[24:(24-ntop+1)], cex = 0.8, title = paste("Low", ntop))
 }
 # Finish up animation stuff
 if(res > 1) {
@@ -118,7 +118,9 @@ if(res > 1) {
   # Make animated GIF using ImageMagick
   cat("anim.carboxylase: converting to animated GIF...\n")
   outfile <- "carboxylase.gif"
-  syscmd <- paste("convert -loop 0 -delay 10 png/*.png png/", outfile, sep = "")
+  #syscmd <- paste("convert -loop 0 -delay 10 png/*.png png/", outfile, sep = "")
+  # Using GraphicsMagick because of ImageMagick error (convert: list length exceeds limit) 20240322
+  syscmd <- paste("gm convert -loop 0 -delay 10 png/*.png png/", outfile, sep = "")
   cat(paste(syscmd,"\n"))
   if(.Platform$OS.type == "unix") sres <- system(syscmd)
   else sres <- shell(syscmd)
