@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-5 (2024-03-16)}{
+\section{Changes in CHNOSZ version 2.1.0-8 (2024-04-01)}{
 
     \itemize{
 
@@ -25,6 +25,8 @@
 
       \item Remove \code{add.alpha()}. Now \code{grDevices::adjustcolor()} is
       used in \code{stack_mosaic()} to add transparency.
+      
+      \item Add FAQ question: Why are mineral stability boundaries curved on mosaic diagrams?
 
     }
 

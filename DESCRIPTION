@@ -1,6 +1,6 @@
-Date: 2024-03-22
+Date: 2024-04-01
 Package: CHNOSZ
-Version: 2.1.0-7
+Version: 2.1.0-8
 Title: Thermodynamic Calculations and Diagrams for Geochemistry
 Authors@R: c(
     person("Jeffrey", "Dick", , "j3ffdick@gmail.com", role = c("aut", "cre"),
@@ -9,7 +9,7 @@ Authors@R: c(
 Author: Jeffrey Dick [aut, cre] (0000-0002-0687-5890)
 Maintainer: Jeffrey Dick <j3ffdick@gmail.com>
 Depends: R (>= 3.1.0)
-Suggests: tinytest, knitr, rmarkdown, tufte, canprot
+Suggests: tinytest, knitr, rmarkdown, tufte, canprot (>= 2.0.0)
 Imports: grDevices, graphics, stats, utils
 Description: An integrated set of tools for thermodynamic calculations in
   aqueous geochemistry and geobiochemistry. Functions are provided for writing

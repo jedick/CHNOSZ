@@ -500,7 +500,7 @@ FeCu.abbrv <- c("Ccp", "Bn", "Cu", "Cpr", "Tnr", "Cct", "Cv")
 species(c(FeCu.cr, Cu.cr))
 mFeCu <- mosaic(list(S.aq, Fe.cr), pH = pH, O2 = O2,
               T = T, stable = list(NULL, dFe$predominant))
-col <- c("#FF8C00", rep(2, 6))
+col <- c(rep("#FF8C00", 2), rep(2, 5))
 lwd <- c(2, 1, 1, 1, 1, 1, 1)
 dy = c(0, 0, 0, 0, 0, 1, 0)
 diagram(mFeCu$A.species, add = TRUE, col = col, lwd = lwd, col.names = col, bold = TRUE, names = FeCu.abbrv, dy = dy)
@@ -516,7 +516,7 @@ The NULL means that the abundances of S-bearing aqueous species are calculated a
 Because the Fe-bearing minerals are the second group of changing basis species (`Fe.cr`), their stabilities are given in the second position of the `stable` list.
 The result is used to plot the last layer of the diagram:
 
-4. Stability areas for Cu-bearing minerals (red text and lines; orange for chalcopyrite)
+4. Stability areas for Cu-bearing minerals (red text and lines; orange for chalcopyrite and bornite)
 
 After that we add the legend and title.
 
@@ -610,10 +610,11 @@ dx[names == "CuCl2-"] <- -1
 dy[names == "CuCl2-"] <- 2
 cex[names == "Bn"] <- 0.8
 srt[names == "Bn"] <- 85
-# Highlight Ccp field
 col.names <- col <- rep(2, nrow(mFeCu$A.species$species))
-col[1] <- "#FF8C00"
-col.names[1] <- "#FF8C00"
+# Highlight Ccp and Bn in orange
+col[1:2] <- "#FF8C00"
+col.names[1:2] <- "#FF8C00"
+# Thick line around Ccp field
 lwd <- rep(1, nrow(mFeCu$A.species$species))
 lwd[1] <- 2
 diagram(mFeCu$A.species, add = TRUE, lwd = lwd, col = col, col.names = col.names, names = names, bold = bold, dx = dx, dy = dy, cex.names = cex, srt = srt)
@@ -1163,5 +1164,6 @@ The predicted appearance of acetamide (CH~3~CONH~2~) is a consequence of the int
 
 * 2020-07-15 First version.
 * 2021-03-01 Improve mineral abbreviations and placement of labels; use updated DFT energies from Materials Project; add Mosaic Stacking 2 (minerals and aqueous species); add *K*~eff~ calculation; add Δ*G*~pbx~ color scale.
+* 2024-03-25 Use orange for both chalcopyrite and bornite in Mosaic Stacking 1 and 2
 
 ## References

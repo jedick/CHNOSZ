@@ -829,4 +829,129 @@ This moves the KMQ buffer closer to the value shown by @HC14, but the MC buffer 
 
 *Added on 2023-11-28.*
 
+## Why are mineral stability boundaries curved on mosaic diagrams?
+
+The reason they are curved has to do with mass balance of elements in different aqueous species.
+For example, take two reactions between pyrite (FeS~2~) and pyrrhotite (FeS), one with H~2~S and the other with HS^-^:
+
+1. FeS~2~ + H~2~O = FeS + 0.5 O~2~ + H~2~S
+2. FeS~2~ + H~2~O = FeS + 0.5 O~2~ + HS^-^ + H^+^
+
+If a pH 4 solution at 150 &deg;C has 0.001 mol/kg H~2~S, then raising the pH to 8 would give 0.001 mol/kg of HS^-^ and essentially no H~2~S.
+For the remainder of this discussion we will assume that mol/kg is equivalent to activity (i.e., that activity cofficients are unity).
+If we use the same value (0.001) for H~2~S and HS^-^ in reactions 1 and 2 (the *constant activity* constraint), then we will get straight lines on a `r logfO2`&ndash;pH diagram.
+There is nothing inherently wrong with this, but it is inconsistent with a *constant sum* constraint of activities that is often attributed to these diagrams.
+
+The *constant activity* constraint is compatible with the *constant sum* constraint only well inside the predomince field of a given aqueous species.
+The equivalence breaks down near the transitions between aqueous species.
+For instance, if the total activity of S is 0.001, then at the p*K*~a~ of H~2~S (about 6.5 at 150 &deg;C), the activities of H~2~S and HS^-^ are equal to each other and by mass balance are both 0.0005.
+The position of the stability boundary should be calculated with these activities to satisfy the *constant sum* constraint.
+
+The following code defines functions to calculate `r logfO2` for these two reactions.
+
+<button id="B-PyPo_logfO2" onclick="ToggleDiv('PyPo_logfO2')">Show code</button>
+<div id="D-PyPo_logfO2" style="display: none">
+```{r PyPo_logfO2, message = FALSE, results = "hide"}
+# Constants
+a_S <- 0.001
+T <- 150
+
+# Get the pKa of H2S (note the minus sign!)
+pKa_H2S <- - subcrt(c("H2S", "HS-", "H+"), c(-1, 1, 1), T = T)$out$logK
+
+# Reaction 1 between pyrite and pyrrhotite with H2S
+basis(c("pyrite", "H2S", "oxygen", "H2O", "H+"))
+PyPo_H2S <- subcrt("pyrrhotite", 1, T = T)
+
+# Reaction 1 law of mass action (LMA)
+# logf_O2 = 2 logK_1 - 2 loga_H2S
+logf_O2_1 <- function(loga_H2S) 2 * PyPo_H2S$out$logK - 2 * loga_H2S
+
+# Reaction 2 between pyrite and pyrrhotite with HS-
+basis(c("pyrite", "HS-", "oxygen", "H2O", "H+"))
+PyPo_HS <- subcrt("pyrrhotite", 1, T = T)
+
+# Reaction 2 LMA
+# logf_O2 = 2 pH + 2 logK_2 - 2 loga_HS-
+logf_O2_2 <- function(pH, loga_HS) 2 * pH + 2 * PyPo_HS$out$logK - 2 * loga_HS
+
+# The logf_O2 for each reaction is the same at the pKa of H2S
+stopifnot(all.equal(logf_O2_1(log10(a_S)), logf_O2_2(pKa_H2S, log10(a_S))))
+stopifnot(all.equal(logf_O2_1(log10(a_S / 2)), logf_O2_2(pKa_H2S, log10(a_S / 2))))
+```
+</div>
+
+At 150 &deg;C and the p*K*~a~ of H~2~S, we get `r logfO2` = `r round(logf_O2_1(log10(0.001)), 2)` for *a*<sub>H~2~S</sub> = *a*<sub>HS^-^</sub> = 0.001 but `r logfO2` = `r round(logf_O2_1(log10(0.0005)), 2)` for *a*<sub>H~2~S</sub> + *a*<sub>HS^-^</sub> = 0.001.
+In other words, the *constant activity* and *constant sum* constraints produce different results; the former yields two straight lines while the latter yields a curve.
+This is shown graphically in the plots below.
+
+<button id="B-PyPo_plot" onclick="ToggleDiv('PyPo_plot')">Show code</button>
+<div id="D-PyPo_plot" style="display: none">
+```{r PyPo_plot, eval = FALSE}
+par(mfrow = c(1, 2))
+
+# Let's draw this out
+thermo.plot.new(c(2, 10), c(-56, -46), xlab = "pH", ylab = axis.label("O2"))
+lines(c(2, pKa_H2S), c(logf_O2_1(log10(a_S)), logf_O2_1(log10(a_S))), col = 2)
+lines(c(pKa_H2S, 10), c(logf_O2_2(pKa_H2S, log10(a_S)), logf_O2_2(10, log10(a_S))), col = 4)
+abline(v = pKa_H2S, lty = 2, col = 8)
+text(6, -46.5, expr.species("H2S"), adj = c(0.5, 1))
+text(7, -46.5, expr.species("HS-"), adj = c(0.5, 1))
+text(4, -54, "pyrite")
+text(4, -55.5, "pyrrhotite")
+points(pKa_H2S, logf_O2_1(log10(a_S)), pch = 0)
+points(pKa_H2S, logf_O2_1(log10(a_S / 2)), pch = 19)
+legend("bottomright", c("Yes", "No"), pch = c(19, 0), title = as.expression(quote(sum(S) == "constant")), bty = "n")
+legend("topleft", legend = lT(T), bty = "n")
+title(quote("Straight lines for" ~ italic(a)[H[2]*S] ~ "=" ~ italic(a)[HS^"-"] == "0.001"), font.main = 1)
+
+# Do it with mosaic()
+basis(c("pyrite", "H2S", "oxygen", "H2O", "H+"))
+# This sets the activity of H2S, which is used for total S when mosaic is called with blend = TRUE
+basis("H2S", -3)
+# This defines the basis species to swap through
+bases <- c("H2S", "HS-")
+species(c("pyrite", "pyrrhotite"))
+m <- mosaic(bases, pH = c(2, 10, 500), O2 = c(-56, -46, 500), T = T)
+diagram(m$A.species, dx = c(-1, -3), dy = c(-3, -1.5), col = 6)
+abline(v = pKa_H2S, lty = 2, col = 8)
+text(6, -46.5, expr.species("H2S"), adj = c(0.5, 1))
+text(7, -46.5, expr.species("HS-"), adj = c(0.5, 1))
+points(pKa_H2S, logf_O2_1(log10(a_S)), pch = 0)
+points(pKa_H2S, logf_O2_1(log10(a_S / 2)), pch = 19)
+legend("bottomright", c("Yes", "No"), pch = c(19, 0), title = as.expression(quote(sum(S) == "constant")), bty = "n")
+legend("topleft", legend = lT(T), bty = "n")
+title(quote("Curved line for" ~ italic(a)[H[2]*S] + italic(a)[HS^"-"] == "0.001"), font.main = 1)
+```
+</div>
+
+```{r PyPo_plot, echo = FALSE, message = FALSE, results = "hide", fig.width = 9, fig.height = 4.5, out.width = "100%", fig.align = "center", pngquant = pngquant, cache = TRUE}
+```
+
+The plot on the left is made "by hand" (using equilibrium constants calculated with `subcrt()`)
+while the plot on the right is made with the `mosaic()` and `diagram()` functions.
+The gray area is where water is unstable and is automatically added by `diagram()`.
+If you'd like to make a plot without curved lines (i.e., for *constant activity* instead of *constant sum*), then set `blend = FALSE` in `mosaic()`.
+
+There are relatively few published `r logfO2`&ndash;pH diagrams with curved mineral stability lines.
+An example of one is in Figure 5 of @CBLM00.
+The code below makes a diagram for the minerals shown in that figure:
+
+```{r Fe-S-O-C, message = FALSE, results = "hide", fig.width = 5, fig.height = 5, fig.align = "center", pngquant = pngquant, cache = TRUE}
+basis(c("FeO", "SO4-2", "CO3-2", "H2O", "H+", "oxygen"))
+basis("SO4-2", -3)
+basis("CO3-2", -0.6)
+species(c("hematite", "pyrite", "pyrrhotite", "magnetite", "siderite"))
+bases <- list( c("SO4-2", "HSO4-", "HS-", "H2S"), c("CO3-2", "HCO3-", "CO2") )
+m <- mosaic(bases, pH = c(0, 14, 500), O2 = c(-57, -35, 500), T = 150, IS = 0.77)
+d <- diagram(m$A.species, fill = "terrain", dx = c(0, 0, 0, 0, 0.3))
+water.lines(d)
+```
+
+This result suggests two improvements to Fig. 5A in @CBLM00.
+First, the triangular area above the water stability limit should be labeled as part of the siderite field (which is interrupted by the pyrite wedge), not as pyrrhotite.
+Second, the boundary between pyrite and magnetite has one kink, not two.
+
+*Added on 2024-04-01.*
+
 ## References
