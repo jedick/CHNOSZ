@@ -831,7 +831,7 @@ This moves the KMQ buffer closer to the value shown by @HC14, but the MC buffer 
 
 ## Why are mineral stability boundaries curved on mosaic diagrams?
 
-The reason they are curved has to do with mass balance of elements in different aqueous species.
+The reason they are curved has to do with mass balance of elements in aqueous solution.
 For example, take two reactions between pyrite (FeS~2~) and pyrrhotite (FeS), one with H~2~S and the other with HS^-^:
 
 1. FeS~2~ + H~2~O = FeS + 0.5 O~2~ + H~2~S
@@ -840,9 +840,9 @@ For example, take two reactions between pyrite (FeS~2~) and pyrrhotite (FeS), on
 If a pH 4 solution at 150 &deg;C has 0.001 mol/kg H~2~S, then raising the pH to 8 would give 0.001 mol/kg of HS^-^ and essentially no H~2~S.
 For the remainder of this discussion we will assume that mol/kg is equivalent to activity (i.e., that activity cofficients are unity).
 If we use the same value (0.001) for H~2~S and HS^-^ in reactions 1 and 2 (the *constant activity* constraint), then we will get straight lines on a `r logfO2`&ndash;pH diagram.
-There is nothing inherently wrong with this, but it is inconsistent with a *constant sum* constraint of activities that is often attributed to these diagrams.
+However, this is inconsistent with a *constant sum* constraint of activities that is sometimes attributed to these diagrams.
 
-The *constant activity* constraint is compatible with the *constant sum* constraint only well inside the predomince field of a given aqueous species.
+The *constant activity* constraint is compatible with the *constant sum* constraint only well inside the predominance field of a given aqueous species.
 The equivalence breaks down near the transitions between aqueous species.
 For instance, if the total activity of S is 0.001, then at the p*K*~a~ of H~2~S (about 6.5 at 150 &deg;C), the activities of H~2~S and HS^-^ are equal to each other and by mass balance are both 0.0005.
 The position of the stability boundary should be calculated with these activities to satisfy the *constant sum* constraint.
@@ -937,7 +937,7 @@ There are relatively few published `r logfO2`&ndash;pH diagrams with curved mine
 An example of one is in Figure 5 of @CBLM00.
 The code below makes a diagram for the minerals shown in that figure:
 
-```{r Fe-S-O-C, message = FALSE, results = "hide", fig.width = 5, fig.height = 5, fig.align = "center", pngquant = pngquant, cache = TRUE}
+```{r Fe-S-O-C, message = FALSE, results = "hide", fig.width = 5, fig.height = 5, out.width = "60%", fig.align = "center", pngquant = pngquant, cache = TRUE}
 basis(c("FeO", "SO4-2", "CO3-2", "H2O", "H+", "oxygen"))
 basis("SO4-2", -3)
 basis("CO3-2", -0.6)

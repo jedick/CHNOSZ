@@ -51,7 +51,7 @@ title(main = substitute("Solubility of"~what, list(what = expr.species("CO2"))))
 basis(c("CO2", "Ca+2", "H2O", "O2", "H+"))
 species("calcite")
 iaq <- info(c("CO2", "HCO3-", "CO3-2"))
-# Change this to dissociate = 2 to reproduce straight lines in Fig. 4A of Manning et al., 2013
+# Optional: use dissociate = 2 to get straight lines like Fig. 4A of Manning et al., 2013
 s <- solubility(iaq, pH = c(pH, res), T = T1, IS = IS, dissociate = TRUE)
 diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
 diagram(s, add = TRUE, dy = 1)
