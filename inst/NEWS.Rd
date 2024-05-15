@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-10 (2024-04-17)}{
+\section{Changes in CHNOSZ version 2.1.0-11 (2024-05-15)}{
 
     \itemize{
 
@@ -29,6 +29,12 @@
       \item Add FAQ question: Why are mineral stability boundaries curved on mosaic diagrams?
 
       \item \code{check.EOS()} now uses values of Born coefficients \emph{X} and \emph{Q} that are consistent with either SUPCRT92 or DEW, depending on the \code{model} defined in OBIGT (HKF or DEW, respectively).
+
+      \item Add aqueous uranyl complexes from \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)} and related U-bearing minerals from \href{https://doi.org/10.1787/bf86a907-en}{Grenthe et al. (2020)}.
+
+      \item Except for HUO\s{4}\S{-}, aqueous uranium species from \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al. (1997)} have been moved to \file{SLOP98.csv}.
+
+      \item Remove \code{ispecies} from output of \code{check.OBIGT()} to avoid superfluous diffs.
 
     }
 

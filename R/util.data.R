@@ -297,7 +297,7 @@ check.OBIGT <- function() {
       DG[!isHKF] <- DG.cgl
     }
     # Put it all together
-    out <- data.frame(table = what, ispecies = 1:ntot, name = tdata$name, state = tdata$state, E_units = tdata$E_units, DCp = DCp, DV = DV, DG = DG)
+    out <- data.frame(table = what, name = tdata$name, state = tdata$state, E_units = tdata$E_units, DCp = DCp, DV = DV, DG = DG)
     return(out)
   }
   # Check default database (OBIGT)
