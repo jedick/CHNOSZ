@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-8 (2024-04-01)}{
+\section{Changes in CHNOSZ version 2.1.0-10 (2024-04-17)}{
 
     \itemize{
 
@@ -27,6 +27,8 @@
       used in \code{stack_mosaic()} to add transparency.
       
       \item Add FAQ question: Why are mineral stability boundaries curved on mosaic diagrams?
+
+      \item \code{check.EOS()} now uses values of Born coefficients \emph{X} and \emph{Q} that are consistent with either SUPCRT92 or DEW, depending on the \code{model} defined in OBIGT (HKF or DEW, respectively).
 
     }
 

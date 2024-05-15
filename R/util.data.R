@@ -172,8 +172,8 @@ check.EOS <- function(eos, model, prop, return.difference = TRUE) {
     if(prop == "Cp") {
       ## Value of X consistent with IAPWS95
       #X <- -2.773788E-7
-      # We use the value of X consistent with SUPCRT
-      X <- -3.055586E-7
+      # Choose a value of X consistent with SUPCRT92 or DEW 2019 20240417
+      X <- switch(model, HKF = -3.055586E-7, DEW = -3.09E-7)
       refval <- eos$Cp
       calcval <- eos$c1 + eos$c2/(298.15-Theta)^2 + eos$omega*298.15*X
       tol <- thermo$opt$Cp.tol
@@ -181,8 +181,8 @@ check.EOS <- function(eos, model, prop, return.difference = TRUE) {
     } else if(prop == "V") {
       ## Value of Q consistent with IAPWS95
       #Q <- 0.00002483137
-      # Value of Q consistent with SUPCRT92
-      Q <- 0.00002775729
+      # Choose a value of Q consistent with SUPCRT92 or DEW 2019 20240417
+      Q <- switch(model, HKF = 0.00002775729, DEW = 0.0000005903 * 41.84)
       refval <- eos$V
       calcval <- 41.84*eos$a1 + 41.84*eos$a2/2601 + 
         (41.84*eos$a3 + 41.84*eos$a4/2601) / (298.15-Theta) - Q * eos$omega

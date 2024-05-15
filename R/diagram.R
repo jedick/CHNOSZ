@@ -720,6 +720,8 @@ diagram <- function(
 
         # No predominance matrix, so we're contouring properties
         contour.method <- rep(contour.method, length.out = length(plotvals))
+        drawlabels <- TRUE
+        if(identical(contour.method, NULL) | identical(contour.method[1], NA) | identical(contour.method[1], "")) drawlabels <- FALSE
         if(type == "saturation") {
           # For saturation plot, contour affinity = 0 for all species
           for(i in 1:length(plotvals)) {
@@ -733,16 +735,15 @@ diagram <- function(
               message("diagram: beyond range for saturation line of ", names[i])
               next
             }
-            if(identical(contour.method, NULL) | identical(contour.method[1], NA) | identical(contour.method[1], ""))
-              contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, levels = 0, labels = names[i], drawlabels = FALSE)
-            else contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, levels = 0, labels = names[i], method = contour.method[i])
+print(drawlabels)
+            if(drawlabels) contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, levels = 0, labels = names[i], method = contour.method[i])
+            else contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, levels = 0, labels = names[i], drawlabels = FALSE)
+print('hello')
           }
         } else {
           # Contour solubilities (loga.balance), or properties using first species only
           if(length(plotvals) > 1) warning("showing only first species in 2-D property diagram")
           zs <- plotvals[[1]]
-          drawlabels <- TRUE
-          if(identical(contour.method, NULL) | identical(contour.method[1], NA) | identical(contour.method[1], "")) drawlabels <- FALSE
           if(is.null(levels)) {
             if(drawlabels) contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, method = contour.method[1])
             else contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, drawlabels = FALSE)
