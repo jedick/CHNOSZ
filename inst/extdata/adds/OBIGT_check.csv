@@ -105,6 +105,13 @@
 "OBIGT","CO2","aq","cal",-4.94,,
 "OBIGT","CF4","aq","cal",5.9,,-2329
 "OBIGT","AsH3","aq","cal",-2.67,,
+"OBIGT","AmOH+2","aq","cal",,,11642
+"OBIGT","AmO+","aq","cal",,,11636
+"OBIGT","HAmO2","aq","cal",,,23273
+"OBIGT","AmCO3+","aq","cal",,,-9689
+"OBIGT","Am(CO3)2-","aq","cal",,,69826
+"OBIGT","AmSO4+","aq","cal",,,46571
+"OBIGT","Am(SO4)2-","aq","cal",,,93130
 "OBIGT","RuCrO4+2","aq","cal",,,-4659
 "OBIGT","AgCl","aq","cal",,-1.88,
 "OBIGT","AgCl2-","aq","cal",1.65,,
@@ -340,13 +347,6 @@
 "SLOP98","AsO4-3","aq","cal",,-1.65,
 "SLOP98","Al+3","aq","cal",1.74,,
 "SLOP98","ZnO2-2","aq","cal",,-1.17,
-"SLOP98","AmOH+2","aq","cal",,,11642
-"SLOP98","AmO+","aq","cal",,,11636
-"SLOP98","HAmO2","aq","cal",,,23273
-"SLOP98","AmCO3+","aq","cal",,,-9689
-"SLOP98","Am(CO3)2-","aq","cal",,,69826
-"SLOP98","AmSO4+","aq","cal",,,46571
-"SLOP98","Am(SO4)2-","aq","cal",,,93130
 "SLOP98","Al(Mal)+","aq","cal",,-2.19,
 "SLOP98","Al(Oxal)+","aq","cal",,-2.62,
 "SLOP98","PuO2(Oxal)","aq","cal",,,2913

@@ -331,8 +331,7 @@ Use `add.OBIGT("SUPCRT92")` to load the data.
 ## <a id="optional-SLOP98" class="anchor"></a> `r setfile("SLOP98.csv")`
 These species, which were taken from or are linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default database, including aqueous Al species [@TS01], As species [@NA03], Au, Ag, and Cu species [@AZ01; @AZ10], Pd species [@TBZ+13], Zn species [@AT14], Pt species [@TBB15], Nb species [@AKK+20], and CoCl<sub>2</sub><sup>+</sup> [@LBT+11].
 
-Except for HUO<sub>4</sub><sup>-</sup>, aqueous uranium species from @SSB97 have been moved here to avoid possible inconsistencies with data for uranyl complexes from @MBA+24.
-Furthermore, transuranic actinide complexes are listed here as no entropies of the corresponding elements at 298.15 K are available to check the self-consistency of the GHS values for the complexes.
+Except for HUO<sub>4</sub><sup>-</sup>, aqueous uranium species from @SSB97 have been moved here to avoid possible inconsistencies with uranyl complexes from @MBA+24.
 
 Use `add.OBIGT("SLOP98")` to load the data.
 

@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-11 (2024-05-15)}{
+\section{Changes in CHNOSZ version 2.1.0-12 (2024-05-16)}{
 
     \itemize{
 
@@ -35,6 +35,8 @@
       \item Except for HUO\s{4}\S{-}, aqueous uranium species from \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al. (1997)} have been moved to \file{SLOP98.csv}.
 
       \item Remove \code{ispecies} from output of \code{check.OBIGT()} to avoid superfluous diffs.
+
+      \item Move americium complexes from \file{slop98.dat} back to \file{inorganic_aq.csv} (entropy of the element Am has been available for checking GHS self-consistency since version 1.4.0).
 
     }
 
