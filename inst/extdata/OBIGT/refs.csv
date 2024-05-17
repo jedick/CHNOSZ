@@ -94,7 +94,6 @@ SSB97.1,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 
 TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976","humic acid, microflora, and plants",https://doi.org/10.1016/S1251-8050(97)83981-X
 TZA97,"B. R. Tagirov, A. V. Zotov and N. N. Akinfiev",2007,"Geochim. Cosmochim. Acta 61, 4267-4280","aqueous HCl",https://doi.org/10.1016/S0016-7037(97)00274-3
 ST97,"D. Shvedov and P. R. Tremaine",1997,"J. Solution Chem. 26, 1113-1143","dimethylammonium chloride HKF parameters",https://doi.org/10.1023/A:1022977006327
-ST97.1,"D. Shvedov and P. R. Tremaine",1997,"J. Solution Chem. 26, 1113-1143","dimethylamine HKF parameters",https://doi.org/10.1023/A:1022977006327
 proton,OBIGT,1997,"Hydrogen-ion convention","""The conventional standard molal properties of the hydrogen ion are zero at any pressure and temperature"" [@JOH92]",https://chnosz.net
 HOKR98,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00219-6
 HOKR98.1,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","amino acids",https://doi.org/10.1016/S0016-7037(97)00219-6
@@ -290,4 +289,5 @@ WV22,"A. E. Williams-Jones and O. V. Vasyukova",2022,"Econ. Geol. 117, 513-528",
 HDR+24,"B. P. von der Heyden et al.",2024,"Can. J. Mineral. Petrol. 62, 77-93","carrollite",https://doi.org/10.3749/2300028
 NEA20,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium","rutherfordine, beta-UO<sub>2</sub>(OH)<sub>2</sub>, and Na<sub>2</sub>U<sub>2</sub>O<sub>7</sub>",https://doi.org/10.1787/bf86a907-en
 NEA20.1,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium","UO<sub>3</sub>",https://doi.org/10.1787/bf86a907-en
-MBA+24,"A. Migdisov, E. Bastrakov et al.",2024,"Geochim. Cosmochim. Acta 62","uranyl-carbonate, -chloride, -sulfate, and -hydroxide complexes",https://doi.org/10.1016/j.gca.2024.04.023
+MBA+24,"A. Migdisov, E. Bastrakov et al.",2024,"Geochim. Cosmochim. Acta","uranyl-carbonate, -chloride, -sulfate, and -hydroxide complexes",https://doi.org/10.1016/j.gca.2024.04.023
+RSS+24,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","alkylamines, benzylamines, and aminiums",https://doi.org/10.1016/j.gca.2024.03.013
