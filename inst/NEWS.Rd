@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-13 (2024-05-17)}{
+\section{Changes in CHNOSZ version 2.1.0-15 (2024-05-22)}{
 
     \itemize{
 
@@ -39,6 +39,10 @@
       \item Move americium complexes from \file{slop98.dat} back to \file{inorganic_aq.csv} (entropy of the element Am has been available for checking GHS self-consistency since version 1.4.0).
 
       \item Add alkylamines, benzylamines, and aminiums from \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
+
+      \item \samp{OBIGT/inorganic_cr.csv}: Add cerianite (CeO\s{2}) and
+      chromite (FeCr\s{2}O\s{4}) from
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
 
     }
 
