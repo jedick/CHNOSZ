@@ -484,6 +484,7 @@ diagram <- function(
         zs[is.na(zs)] <- 0
         image(x = xs, y = ys, z = zs, col = c(fill.NA, fill), add = TRUE, breaks = breaks, useRaster = TRUE)
       }
+
       ## Curve plot function
       # 20091116 replaced plot.curve with plot.line; different name, same functionality, *much* faster
       plot.line <- function(out, xlim, ylim, dotted, col, lwd, xrange) {
@@ -553,6 +554,7 @@ diagram <- function(
         if(!is.null(xrange)) xs <- clipfun(xs, xrange)
         lines(xs, ys, col = col, lwd = lwd)
       }
+
       ## New line plotting function 20170122
       contour.lines <- function(predominant, xlim, ylim, lty, col, lwd) {
         # The x and y values
@@ -569,6 +571,10 @@ diagram <- function(
         }
 	# The categories (species/groups/etc) on the plot
 	zvals <- na.omit(unique(as.vector(predominant)))
+        
+        # Initialize list and counter for line x,y values 20240615
+        linesout <- list()
+        iout <- 1
 
         if(is.null(lty.aq) & is.null(lty.cr)) {
 
@@ -585,6 +591,13 @@ diagram <- function(
               for(k in 1:length(cLines)) {
                 # Draw the lines
                 lines(cLines[[k]][2:3], lty = lty[zvals[i]], col = col[zvals[i]], lwd = lwd[zvals[i]])
+
+                # Store the x and y values (list components 2 and 3)
+                linesout[[iout]] <- cLines[[k]][[2]]
+                names(linesout)[iout] <- paste0("x", k, "_", zvals[i])
+                linesout[[iout+1]] <- cLines[[k]][[3]]
+                names(linesout)[iout+1] <- paste0("y", k, "_", zvals[i])
+                iout <- iout + 2
               }
             }
             # Mask species to prevent double-plotting contour lines
@@ -619,6 +632,14 @@ diagram <- function(
                     if(all(grepl("aq", eout$species$state[c(zvals[i], zvals[j])]))) mylty <- lty.aq
                   }
                   lines(cLines[[k]][2:3], lty = mylty, col = col[zvals[i]], lwd = lwd[zvals[i]])
+
+                  # Store the x and y values (list components 2 and 3)
+                  linesout[[iout]] <- cLines[[k]][[2]]
+                  names(linesout)[iout] <- paste0("x", k, "_", zvals[i], ".", zvals[j])
+                  linesout[[iout+1]] <- cLines[[k]][[3]]
+                  names(linesout)[iout+1] <- paste0("y", k, "_", zvals[i], ".", zvals[j])
+                  iout <- iout + 2
+
                 }
               }
             }
@@ -626,7 +647,13 @@ diagram <- function(
 
         }
 
+        # Return x,y coordinates of lines padded to equal length
+        # https://stackoverflow.com/questions/34570860/adding-na-to-make-all-list-elements-equal-length 20181029
+        # For compatibility with R 3.1.0, don't use lengths() here 20190302
+        lapply(linesout, `length<-`, max(sapply(linesout, length)))
+
       }
+
       ## To add labels
       plot.names <- function(out, xs, ys, xlim, ylim, names, srt, min.area) {
         # Calculate coordinates for field labels
@@ -716,6 +743,10 @@ diagram <- function(
         # Add a title
         if(!is.null(main)) title(main = main)
       }
+
+      # Start with NA value for x,y locations of lines
+      linesout <- NA
+
       if(identical(predominant, NA)) {
 
         # No predominance matrix, so we're contouring properties
@@ -735,10 +766,8 @@ diagram <- function(
               message("diagram: beyond range for saturation line of ", names[i])
               next
             }
-print(drawlabels)
             if(drawlabels) contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, levels = 0, labels = names[i], method = contour.method[i])
             else contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, levels = 0, labels = names[i], drawlabels = FALSE)
-print('hello')
           }
         } else {
           # Contour solubilities (loga.balance), or properties using first species only
@@ -752,6 +781,7 @@ print('hello')
             else contour(xs, ys, zs, add = TRUE, col = col, lty = lty, lwd = lwd, labcex = cex, levels = levels, drawlabels = FALSE)
           }
         }
+        # Keep the x,y coordinates of the names around to add to the output
         pn <- list(namesx = NULL, namesy = NULL)
 
       } else {
@@ -775,7 +805,7 @@ print('hello')
         #   font metric state and subsequent errors adding e.g. subscripted text to plot)
         if(length(na.omit(unique(as.vector(zs)))) > 1) {
           if(!is.null(dotted)) plot.line(zs, xlim.calc, ylim.calc, dotted, col, lwd, xrange = xrange)
-          else contour.lines(predominant, xlim.calc, ylim.calc, lty = lty, col = col, lwd = lwd)
+          else linesout <- contour.lines(predominant, xlim.calc, ylim.calc, lty = lty, col = col, lwd = lwd)
         }
         # Re-draw the tick marks and axis lines in case the fill obscured them
         has.color <- FALSE
@@ -786,8 +816,11 @@ print('hello')
           thermo.axis()
           box()
         }
-      } # Done with the 2D plot!
-      out2D <- list(namesx = pn$namesx, namesy = pn$namesy)
+      }
+
+      # Done with the 2D plot!
+      out2D <- list(namesx = pn$namesx, namesy = pn$namesy, linesout = linesout)
+
     } # end if(nd == 2)
   } # end if(plot.it)
 

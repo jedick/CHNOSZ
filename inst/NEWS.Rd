@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-15 (2024-05-22)}{
+\section{Changes in CHNOSZ version 2.1.0-17 (2024-06-15)}{
 
     \itemize{
 
@@ -43,6 +43,10 @@
       \item \samp{OBIGT/inorganic_cr.csv}: Add cerianite (CeO\s{2}) and
       chromite (FeCr\s{2}O\s{4}) from
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
+
+      \item Add \file{demo/total_S.R} (total activity of S--pH diagram for Fe-S-O-C minerals).
+
+      \item Restore \code{lines} to the output of \code{diagram()} for the x and y values of predominance field boundaries.
 
     }
 

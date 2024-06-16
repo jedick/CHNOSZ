@@ -206,6 +206,7 @@ It can be used with the output from \code{diagram} for calculations in 2 dimensi
   For 2-D diagrams, \code{plotvals} corresponds to the values of affinity (from \code{eout$values}) divided by the respective balancing coefficients for each species.
   For 2-D diagrams, the output also contains the matrices \code{predominant}, which identifies the predominant species in \code{eout$species} at each grid point, and \code{predominant.values}, which has the affinities of the predominant species divided by the balancing coefficients (if \code{eout} is the output of \code{affinity}) or the activities of the predominant species (if \code{eout} is the output of \code{equilibrate}).
   The rows and columns of these matrices correspond to the \emph{x} and \emph{y} variables, respectively.
+  Finally, the output for 2-D diagrams contains a \code{lines} component, giving the x- and y-coordinates of the field boundaries computed using \code{\link{contourLines}}; the values are padded to equal length with NAs to faciliate exporting the results using \code{\link{write.csv}}.
 
 }
 

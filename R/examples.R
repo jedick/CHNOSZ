@@ -6,7 +6,7 @@ examples <- function(save.png = FALSE) {
   .ptime <- proc.time()
   topics <- c("thermo", "examples",
     "util.array", "util.data", "util.expression", "util.legend", "util.plot",
-    "util.fasta", "util.formula", "util.misc", "util.seq", "util.units",
+    "util.formula", "util.misc", "util.seq", "util.units",
     "util.water", "taxonomy", "info", "retrieve", "add.OBIGT", "protein.info",
     "water", "IAPWS95", "subcrt", "Berman",
     "makeup", "basis", "swap.basis", "species", "affinity",
