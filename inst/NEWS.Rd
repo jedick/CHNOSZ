@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-17 (2024-06-15)}{
+\section{Changes in CHNOSZ version 2.1.0-18 (2024-06-27)}{
 
     \itemize{
 
@@ -47,6 +47,8 @@
       \item Add \file{demo/total_S.R} (total activity of S--pH diagram for Fe-S-O-C minerals).
 
       \item Restore \code{lines} to the output of \code{diagram()} for the x and y values of predominance field boundaries.
+
+      \item OBIGT: Restore steam (H\s{2}O,g) in \file{inorganic_gas.csv}.
 
     }
 
