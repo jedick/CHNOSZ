@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-18 (2024-06-27)}{
+\section{Changes in CHNOSZ version 2.1.0-19 (2024-11-08)}{
 
     \itemize{
 
@@ -49,6 +49,8 @@
       \item Restore \code{lines} to the output of \code{diagram()} for the x and y values of predominance field boundaries.
 
       \item OBIGT: Restore steam (H\s{2}O,g) in \file{inorganic_gas.csv}.
+
+      \item OBIGT: Fix sign of \emph{c} parameter for nesquehonite. Thanks to James Leong and Grayson Boyer.
 
     }
 

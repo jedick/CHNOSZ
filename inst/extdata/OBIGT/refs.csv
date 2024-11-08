@@ -4,8 +4,9 @@ Kel60.2,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","iron Cp",https://
 Kel60.3,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gypsum Cp",https://www.worldcat.org/oclc/693388901
 Pan70,"L. B. Pankratz",1970,"U. S. Bureau of Mines Report of Investigations 7430",chlorargyrite,https://www.worldcat.org/oclc/14154245
 PK70,"L. B. Pankratz and E. G. King",1970,"U. S. Bureau of Mines Report of Investigations 7435","bornite and chalcopyrite",https://www.worldcat.org/oclc/14154292
+RH72,"R. A. Robie and B. S. Hemingway",1972,"Am. Mineral. 57, 1768-1781","nesquehonite Cp",https://pubs.geoscienceworld.org/msa/ammin/article-pdf/57/11-12/1768/4256711/am-1972-1768.pdf
 BKK77,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","willemite Cp",https://www.worldcat.org/oclc/695258
-HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","minerals",https://www.worldcat.org/oclc/13594862
+HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229",minerals,https://www.worldcat.org/oclc/13594862
 HDNB78.2,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","celestite V and Cp parameters",https://www.worldcat.org/oclc/13594862
 RHF78,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",chlorargyrite,https://doi.org/10.3133/b1452
 RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",iron,https://doi.org/10.3133/b1452
@@ -29,7 +30,7 @@ SH88.2,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-
 SH88.3,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",Ag<sup>+</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.4,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","K<sup>+</sup>, Na<sup>+</sup>, Ca<sup>+2</sup>, Mg<sup>+2</sup>, Cl<sup>-</sup>, and OH<sup>-</sup>",https://doi.org/10.1016/0016-7037(88)90181-0
 SHS89,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","inorganic neutral species",https://doi.org/10.1016/0016-7037(89)90341-4
-SHS89.1,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","SiO<sub>2</sub>",https://doi.org/10.1016/0016-7037(89)90341-4
+SHS89.1,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183",SiO<sub>2</sub>,https://doi.org/10.1016/0016-7037(89)90341-4
 Ber90,"R. G. Berman",1990,"Am. Mineral. 75, 328-344",annite,http://ammin.geoscienceworld.org/content/75/3-4/328
 Ber90.1,"R. G. Berman",1990,"Am. Mineral. 75, 328-344","almandine and ilmenite: modified H and/or S",http://ammin.geoscienceworld.org/content/75/3-4/328
 Eva90,"B. W. Evans",1990,"Lithos 25, 3-23","glaucophane and pumpellyite",https://doi.org/10.1016/0024-4937(90)90003-J
@@ -284,12 +285,12 @@ LA19,"D. E. LaRowe and J. P. Amend",2019,"Geomicrobiol. J. 36, 492-505","dimethy
 SPD+19,"B. St Clair et al.",2019,"ACS Earth Space Chem 3, 905-921","metal carbonate and bicarbonate complexes and FeSO<sub>4</sub>",https://doi.org/10.1021/acsearthspacechem.9b00016
 AKK+20,"N. N. Akinfiev et al.",2020,"Geochim. Cosmochim. Acta 280, 102-115","Nb and Ta species",https://doi.org/10.1016/j.gca.2020.04.009
 LX20,"Liu and Xiao",2020,"Ore Geol. Rev. 117, 103289","huebnerite Cp",https://doi.org/10.1016/j.oregeorev.2019.103289
-LXW21,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488","H<sub>2</sub>WO<sub>4</sub>",https://doi.org/10.1016/j.chemgeo.2021.120488
+LXW21,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488",H<sub>2</sub>WO<sub>4</sub>,https://doi.org/10.1016/j.chemgeo.2021.120488
 LXW21.1,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488","scheelite Cp",https://doi.org/10.1016/j.chemgeo.2021.120488
 WV22,"A. E. Williams-Jones and O. V. Vasyukova",2022,"Econ. Geol. 117, 513-528","parameters listed here",https://doi.org/10.5382/econgeo.4895
-HDR+24,"B. P. von der Heyden et al.",2024,"Can. J. Mineral. Petrol. 62, 77-93","carrollite",https://doi.org/10.3749/2300028
+HDR+24,"B. P. von der Heyden et al.",2024,"Can. J. Mineral. Petrol. 62, 77-93",carrollite,https://doi.org/10.3749/2300028
 NEA20,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium","rutherfordine, beta-UO<sub>2</sub>(OH)<sub>2</sub>, and Na<sub>2</sub>U<sub>2</sub>O<sub>7</sub>",https://doi.org/10.1787/bf86a907-en
-NEA20.1,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium","UO<sub>3</sub>",https://doi.org/10.1787/bf86a907-en
+NEA20.1,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium",UO<sub>3</sub>,https://doi.org/10.1787/bf86a907-en
 MBA+24,"A. Migdisov, E. Bastrakov et al.",2024,"Geochim. Cosmochim. Acta","uranyl-carbonate, -chloride, -sulfate, and -hydroxide complexes",https://doi.org/10.1016/j.gca.2024.04.023
 RSS+24,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","alkylamines, benzylamines, and aminiums",https://doi.org/10.1016/j.gca.2024.03.013
 RSS+24.1,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","corrected V for tripropylaminium",https://doi.org/10.1016/j.gca.2024.03.013
