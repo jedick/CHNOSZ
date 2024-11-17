@@ -33,3 +33,4 @@ Pourbaix        Eh-pH diagram for Fe-O-H with equisolubility lines
 E_coli          Gibbs energy of biomass synthesis in E. coli
 rank.affinity   Affinity ranking for proteins in yeast nutrient limitation
 yttrium         logB.to.OBIGT fits at 800 and 1000 bar and Y speciation in NaCl solution at varying pH
+uranium         Total (carbonate|sulfate)-pH diagrams for uranium

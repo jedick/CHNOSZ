@@ -65,6 +65,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{E_coli}{Gibbs energy of biomass synthesis in \emph{E. coli} (LaRowe and Amend, 2016)}
     \item{rank.affinity}{Affinity ranking for proteins in yeast nutrient limitation (data from Tai et al., 2005)}
     \item{yttrium}{\code{\link{logB.to.OBIGT}} fits at 800 and 1000 bar and Y speciation in \code{\link{NaCl}} solution at varying pH (Guan et al., 2020)}
+    \item{uranium}{Total (carbonate|sulfate)-pH diagrams for uranium (Migdisov et al., 2024)}
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
@@ -127,6 +128,8 @@ Lowe, A. R., Cox, J. S. and Tremaine, P. R. (2017) Thermodynamics of aqueous ade
 Lu, P. and Zhu, C. (2011) Arsenic Eh--pH diagrams at 25\degC and 1 bar. \emph{Environ. Earth Sci.} \bold{62}, 1673--1683. \doi{10.1007/s12665-010-0652-x}
   
 Manning, C. E., Shock, E. L. and Sverjensky, D. A. (2013) The chemistry of carbon in aqueous fluids at crustal and upper-mantle conditions: Experimental and theoretical constraints. \emph{Rev. Mineral. Geochem.} \bold{75}, 109--148. \doi{10.2138/rmg.2013.75.5}
+
+Migdisov, A., Bastrakov, E., Alcorn C., Reece M., Boukhalfa H., Caporuscio, F. A. and Jove-Colon, C. (2024) A spectroscopic study of the stability of uranyl-carbonate complexes at 25--150 \degC and re-visiting the data available for uranyl-chloride, uranyl-sulfate, and uranyl-hydroxide species. \emph{Geochim. Cosmochim. Acta}. \doi{10.1016/j.gca.2024.04.023}
 
 Pourbaix, M. (1974) \emph{Atlas of Electrochemical Equilibria in Aqueous Solutions}, NACE, Houston, TX and CEBELCOR, Brussels. \url{https://www.worldcat.org/oclc/563921897}
 
