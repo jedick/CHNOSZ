@@ -18,7 +18,8 @@
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "minsol", "Shh", "saturation",
     "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
-    "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity"),
+    "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity",
+    "uranyl"),
     save.png = FALSE)
 }
 
