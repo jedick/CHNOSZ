@@ -1,5 +1,5 @@
-# CHNOSZ/demo/uranium.R
-# Total (carbonate|sulfate)-pH diagrams for U, after Migdisov et al., 2024
+# CHNOSZ/demo/uranyl.R
+# Total (carbonate|sulfate)-pH diagrams for uranyl species, after Migdisov et al., 2024
 # 20241116 jmd
 library(CHNOSZ)
 

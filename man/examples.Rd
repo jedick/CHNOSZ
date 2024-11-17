@@ -65,7 +65,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{E_coli}{Gibbs energy of biomass synthesis in \emph{E. coli} (LaRowe and Amend, 2016)}
     \item{rank.affinity}{Affinity ranking for proteins in yeast nutrient limitation (data from Tai et al., 2005)}
     \item{yttrium}{\code{\link{logB.to.OBIGT}} fits at 800 and 1000 bar and Y speciation in \code{\link{NaCl}} solution at varying pH (Guan et al., 2020)}
-    \item{uranium}{Total (carbonate|sulfate)-pH diagrams for uranium (Migdisov et al., 2024)}
+    \item{uranyl}{Total (carbonate|sulfate)-pH diagrams for uranyl species (Migdisov et al., 2024)}
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
