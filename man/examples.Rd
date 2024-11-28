@@ -19,7 +19,7 @@
     "contour", "sphalerite", "minsol", "Shh", "saturation",
     "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
     "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity",
-    "uranyl"),
+    "uranyl", "sum_S"),
     save.png = FALSE)
 }
 
@@ -67,6 +67,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{rank.affinity}{Affinity ranking for proteins in yeast nutrient limitation (data from Tai et al., 2005)}
     \item{yttrium}{\code{\link{logB.to.OBIGT}} fits at 800 and 1000 bar and Y speciation in \code{\link{NaCl}} solution at varying pH (Guan et al., 2020)}
     \item{uranyl}{Total (carbonate|sulfate)-pH diagrams for uranyl species (Migdisov et al., 2024)}
+    \item{sum_S}{Mineral stabilities with the sum of S species and ionic strength}
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.

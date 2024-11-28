@@ -171,8 +171,8 @@ axis.label <- function(label, units = NULL, basis = thermo()$basis, prefix = "",
     desc <- expr.species(label, state = state, log = TRUE, molality = molality)
   } else if(label %in% colnames(basis)) {
     # Make a label for an element (total C, total S, etc.) 20230809
-    if(molality) desc <- bquote(log~italic(m)~"(total "*.(label)*")")
-    else desc <- bquote(log~italic(a)~"(total "*.(label)*")")
+    if(molality) desc <- bquote(log~italic(m)~sum(.(label)))
+    else desc <- bquote(log~italic(a)~sum(.(label)))
   } else {
     # The label is for a chemical property or condition
     # Make the label by putting a comma between the property and the units

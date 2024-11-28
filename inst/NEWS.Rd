@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-21 (2024-11-17)}{
+\section{Changes in CHNOSZ version 2.1.0-22 (2024-11-28)}{
 
     \itemize{
 
@@ -55,6 +55,10 @@
       \item Add \file{demo/uranyl.R}, total (carbonate|sulfate)-pH diagrams
       for uranyl species, after
       \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
+
+      \item Adjust \code{util.expression()} to show sum symbol in axis label,
+      rename \file{demo/total_S.R} to \file{demo/sum_S.R}, and add ionic
+      strength to demo.
 
     }
 
