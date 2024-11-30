@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-22 (2024-11-28)}{
+\section{Changes in CHNOSZ version 2.1.0-25 (2024-11-30)}{
 
     \itemize{
 
@@ -60,6 +60,10 @@
       
       \item Rename \file{demo/total_S.R} to \file{demo/sum_S.R}, change axes,
       and add solubility contours for Fe and Au.
+
+      \item Add \file{OBIGT/IGEM24.csv} with updated data for Au and Cu
+      complexes and SO\s{4}\S{-2}-bearing species from
+      researchers at IGEM RAS.
 
     }
 

@@ -73,6 +73,7 @@ function OpenAllDivs() {
   OpenDiv("optional-AS04");
   OpenDiv("optional-DEW");
   OpenDiv("optional-GEMSFIT");
+  OpenDiv("optional-IGEM24");
   // change the footer message
   document.getElementById("footer").style.display = "none";
   document.getElementById("all-open").style.display = "block";
@@ -93,6 +94,7 @@ function CloseAllDivs() {
   CloseDiv("optional-AS04");
   CloseDiv("optional-DEW");
   CloseDiv("optional-GEMSFIT");
+  CloseDiv("optional-IGEM24");
   // change the footer message
   document.getElementById("footer").style.display = "block";
   document.getElementById("all-open").style.display = "none";
@@ -204,7 +206,7 @@ Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthal
 ### Aqueous Species <button id="B-aqueous-H2O" onclick='ToggleDiv("aqueous-H2O")'>H2O</button> <button id="B-aqueous-inorganic" onclick='ToggleDiv("aqueous-inorganic")'>Inorganic</button> <button id="B-aqueous-organic" onclick='ToggleDiv("aqueous-organic")'>Organic</button>
 ### Solids <button id="B-solid-inorganic" onclick='ToggleDiv("solid-inorganic")'>Inorganic</button> <button id="B-solid-organic" onclick='ToggleDiv("solid-organic")'>Organic</button> <button id="B-solid-Berman" onclick='ToggleDiv("solid-Berman")'>Berman</button>
 ### Gases <button id="B-gas-inorganic" onclick='ToggleDiv("gas-inorganic")'>Inorganic</button> <button id="B-gas-organic" onclick='ToggleDiv("gas-organic")'>Organic</button> &nbsp;&nbsp;&nbsp;Liquids <button id="B-liquid-organic" onclick='ToggleDiv("liquid-organic")'>Organic</button>
-### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AD" onclick='ToggleDiv("optional-AD")'>AD</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-GEMSFIT" onclick='ToggleDiv("optional-GEMSFIT")'>GEMSFIT</button>
+### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AD" onclick='ToggleDiv("optional-AD")'>AD</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-GEMSFIT" onclick='ToggleDiv("optional-GEMSFIT")'>GEMSFIT</button> <button id="B-optional-IGEM24" onclick='ToggleDiv("optional-IGEM24")'>IGEM24</button>
 
 <!-- Normal or "all open" footer message --> 
 
@@ -324,6 +326,7 @@ Use `add.OBIGT("SUPCRT92")` to load the data.
 **NOTE:** Other minerals from SUPCRT92, including native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate those in the Berman dataset, are still present in the default database (**inorganic_cr.csv**).
 
 ```{r optreflist, results="asis", echo=FALSE}
+optused <- c(optused, filerefs(csvfile))
 ```
 </div>
 
@@ -373,7 +376,6 @@ See `demo(DEW)` for some examples.
 Most of the comments below were transcribed from the DEW spreadsheet. (Comments in parentheses were added by JMD.)
 
 ```{r optreflist, results="asis", echo=FALSE}
-optused <- c(optused, filerefs(csvfile))
 ```
 </div>
 
@@ -381,6 +383,15 @@ optused <- c(optused, filerefs(csvfile))
 ## <a id="optional-GEMSFIT" class="anchor"></a> `r setfile("GEMSFIT.csv")`
 [Miron et al. (2016)](https://doi.org/10.1016/j.gca.2016.04.026) and [Miron et al. (2017)](https://doi.org/10.2475/07.2017.01) described an internally consistent thermodynamic dataset for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl that was obtained by using the [GEMSFIT](https://doi.org/10.1016/j.apgeochem.2014.10.013) package.
 Use `add.OBIGT("GEMSFIT")` to load the data.
+
+```{r optreflist, results="asis", echo=FALSE}
+```
+</div>
+
+<div id="D-optional-IGEM24" style="display: none">
+## <a id="optional-IGEM24" class="anchor"></a> `r setfile("IGEM24.csv")`
+Data updates from researchers at the Institute of Geology of Ore Deposits, Petrography, Mineralogy, and Geochemistry, Russian Academy of Sciences (IGEM RAS).
+Use `add.OBIGT("IGEM24")` to load the data.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```
