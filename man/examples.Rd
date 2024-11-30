@@ -67,7 +67,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{rank.affinity}{Affinity ranking for proteins in yeast nutrient limitation (data from Tai et al., 2005)}
     \item{yttrium}{\code{\link{logB.to.OBIGT}} fits at 800 and 1000 bar and Y speciation in \code{\link{NaCl}} solution at varying pH (Guan et al., 2020)}
     \item{uranyl}{Total (carbonate|sulfate)-pH diagrams for uranyl species (Migdisov et al., 2024)}
-    \item{sum_S}{Mineral stabilities with the sum of S species and ionic strength}
+    \item{sum_S}{Summed molality of S species and solubility contours for iron and gold (Skirrow and Walshe, 2002)}
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
@@ -140,6 +140,8 @@ Schulte, M. D. and Shock, E. L. (1995) Thermodynamics of Strecker synthesis in h
 Shock, E. L. and Koretsky, C. M. (1995) Metal-organic complexes in geochemical processes: Estimation of standard partial molal thermodynamic properties of aqueous complexes between metal cations and monovalent organic acid ligands at high pressures and temperatures. \emph{Geochim. Cosmochim. Acta} \bold{59}, 1497--1532. \doi{10.1016/0016-7037(95)00058-8}
 
 Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \doi{10.1039/FT9928800803}
+
+Skirrow, R. G. and Walshe, J. L. (2002) Reduced and oxidized Au-Cu-Bi iron oxide deposits of the Tennant Creek Inlier, Australia: An integrated geologic and chemical model. \emph{Econ. Geol.}. \bold{97}, 1167--1202. \doi{10.2113/gsecongeo.97.6.1167}
 
 Stef{\aacute}nsson, A. and Seward, T. M. (2004) Gold(I) complexing in aqueous sulphide solutions to 500\degC at 500 bar. \emph{Geochim. Cosmochim. Acta} \bold{68}, 4121--4143. \doi{10.1016/j.gca.2004.04.006}
 

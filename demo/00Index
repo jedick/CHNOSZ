@@ -9,7 +9,7 @@ buffer          Minerals and aqueous species as buffers of hydrogen fugacity
 protbuff        Chemical activities buffered by thiol peroxidases or sigma factors
 glycinate       Metal-glycinate complexes
 mosaic          Eh-pH diagram for iron oxides, sulfides and carbonate with two sets of changing basis species
-sum_S           Mineral stabilities with the sum of S species and ionic strength
+sum_S           Summed molality of S species and solubility contours for iron and gold
 copper          Another example of mosaic(): complexation of copper with glycine species
 arsenic         Another example of mosaic(): Eh-pH diagram for the system As-O-H-S
 solubility      Solubility of calcite and CO2(gas) as a function of pH

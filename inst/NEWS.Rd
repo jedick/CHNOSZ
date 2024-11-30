@@ -56,9 +56,10 @@
       for uranyl species, after
       \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
 
-      \item Adjust \code{util.expression()} to show sum symbol in axis label,
-      rename \file{demo/total_S.R} to \file{demo/sum_S.R}, and add ionic
-      strength to demo.
+      \item Adjust \code{axis.label()} to show sum symbol.
+      
+      \item Rename \file{demo/total_S.R} to \file{demo/sum_S.R}, change axes,
+      and add solubility contours for Fe and Au.
 
     }
 
