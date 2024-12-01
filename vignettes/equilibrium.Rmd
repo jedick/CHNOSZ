@@ -292,13 +292,13 @@ figure:
   than two species.
 
 * Diagrams **E** and **F** both use the equilibration method to calculate
-  activities of species as a function of log*a*~H2O~ at log*f*~O2~ = -66.
-  Diagram **F** shows the default setting, where *a*~CO2~ is taken from the sum
+  activities of species as a function of log*a*H~2~O at log*f*O~2~ = -66.
+  Diagram **F** shows the default setting, where *a*CO~2~ is taken from the sum
   of initial activities of species (each 10^-3^). The positions of equal
   activities (where the lines cross) are the same as in Diagram **D** at
-  log*f*~O2~ = -66.
+  log*f*O~2~ = -66.
 
-* Diagram **F** is drawn for a lower total activity of *a*~CO2~. Not only are
+* Diagram **F** is drawn for a lower total activity of *a*CO~2~. Not only are
   the activities of all amino acids decreased, but glycine starts to become
   predominant at some conditions. This is because, compared to other amino
   acids, it is smaller and has a lower coefficient on CO~2~ in its formation
@@ -425,7 +425,7 @@ label.figure("F", yfrac=0.9, xfrac=0.1, font = 2)
 
 Diagrams **A**, **C**, and **E** are predominance (equal-activity) diagrams
 made with different balancing constraints.  Diagrams **B**, **D**, and **F**
-show a cross-section of the same system at log*a*~H2O~ = 0.
+show a cross-section of the same system at log*a*H~2~O = 0.
 
 * In Diagrams **A** and **B**, the reactions are balanced on protein length.
   The drastic transitions between proteins in **B** result from the large
@@ -473,7 +473,7 @@ title(main = "Equilibrium activities of proteins, normalize = TRUE")
 
 Although it is below the stability limit of H~2~O (vertical dashed line), there
 is an interesting convergence of the metastable equilibrium activities of some
-proteins at low log *f*~O2~.
+proteins at low log *f*O~2~.
 
 ## Document history
 

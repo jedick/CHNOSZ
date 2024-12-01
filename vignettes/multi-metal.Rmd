@@ -122,7 +122,7 @@ The methods are **mashing**, **mixing**, **mosaic stacking**, and **secondary ba
 
 Mashing or simple overlay refers to independent calculations for two different systems that are displayed on the same diagram.
 
-This example starts with a log*f*~O<sub>2</sub>~--pH base diagram for the C-O-H system then overlays a diagram for S-O-H.
+This example starts with a log f*O<sub>2</sub>--pH base diagram for the C-O-H system then overlays a diagram for S-O-H.
 The second call to `affinity()` uses the argument recall feature, where the arguments after the first are taken from the previous command.
 This allows calculations to be run at the same conditions for a different system.
 This feature is also used in other examples in this vignette.
@@ -915,7 +915,7 @@ subcrt(c("CuCl3-2", "Cu+", "Cl-"), c(-1, 1, 3), T = T)$out$logK
 
 The higher stability of these complexes from @Hel69 causes the 35 ppm contour to move closer to the position shown by @Sve87.
 
-Interestingly, the calculation here also predict substantial increases of Cu concentration of Cu at high *f*~S<sub>2</sub>~ and low *f*~O<sub>2</sub>~, due to the formation of bisulfide complexes with Cu.
+Interestingly, the calculation here also predict substantial increases of Cu concentration of Cu at high *f*S<sub>2</sub> and low *f*O<sub>2</sub>, due to the formation of bisulfide complexes with Cu.
 The aqueous species considered in the calculation can be seen like this:
 ```{r iCu.aq}
 names(iCu.aq)
@@ -923,7 +923,7 @@ names(iCu.aq)
 
 CuHS and Cu(HS)~2~^-^ can be excluded by removing S from the `retrieve()` call above (i.e. only `c("O", "H", "Cl")` as the elements in possible ligands); doing so precludes a high concentration of aqueous Cu in the highly reduced, sulfidic region.
 
-The third plot for the concentation of SO~4~^-2^ is simply made by using `affinity()` to calculate the affinity of its formation reaction as a function of *f*~S<sub>2</sub>~ and *f*~O<sub>2</sub>~ at pH 6 and 125 °C, then using `solubility()` to calculate the solubility of S~2~(gas), expressed in terms of moles of SO~4~^-2^ in order to calculate parts per million (ppm) by weight.
+The third plot for the concentation of SO~4~^-2^ is simply made by using `affinity()` to calculate the affinity of its formation reaction as a function of *f*S<sub>2</sub> and *f*O<sub>2</sub> at pH 6 and 125 °C, then using `solubility()` to calculate the solubility of S~2~(gas), expressed in terms of moles of SO~4~^-2^ in order to calculate parts per million (ppm) by weight.
 
 ## Secondary Balancing
 
@@ -1058,8 +1058,8 @@ legend("topleft", legend = lTP(400, 2000), bty = "n")
 This example was prompted by Figure 3 of @MH85; earlier versions of the diagram are in @HBL69 and @Hel70a.
 
 In some ways this is like the inverse of the **mosaic stacking** example.
-There, reactions were balanced on Fe or Cu, and *f*~O<sub>2</sub>~ and pH were used as plotting variables.
-Here, the reactions are balanced on O~2~ and implicitly on H^+^ through the activity ratios with *a*~Fe^+2^~ and *a*~Cu^+^~, which are the plotting variables.
+There, reactions were balanced on Fe or Cu, and *f*O<sub>2</sub> and pH were used as plotting variables.
+Here, the reactions are balanced on O~2~ and implicitly on H^+^ through the activity ratios with *a*Fe^+2^ and *a*Cu^+^, which are the plotting variables.
 
 More common diagrams of this type are balanced on Si or Al.
 See `demo(saturation)` for an example in the H~2~O-CO~2~-CaO-MgO-SiO~2~ system.

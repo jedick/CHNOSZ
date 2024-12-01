@@ -58,7 +58,8 @@ expr.species <- function(species, state = "aq", value = NULL, log = FALSE, molal
     var <- "a"
     if(molality) var <- "m"
     if(state %in% c("g", "gas")) var <- "f"
-    expr <- substitute(italic(a)[b], list(a = var, b = expr))
+    # For better readability, no longer using subscripts for species formulas 20241201
+    expr <- substitute(italic(a)*b, list(a = var, b = expr))
     # Use the logarithm?
     if(log) expr <- substitute(log ~ a, list(a = expr))
     # Write the value if not NULL or NA
@@ -311,7 +312,8 @@ ratlab <- function(top = "K+", bottom = "H+", molality = FALSE) {
   # With molality, change a to m
   a <- ifelse(molality, "m", "a")
   # The final expression
-  substitute(log~(italic(a)[expr.top]^exp.top / italic(a)[expr.bottom]^exp.bottom),
+  # For better readability, no longer using subscripts for species formulas 20241201
+  substitute(log~(italic(a)^exp.top*expr.top / italic(a)^exp.bottom*expr.bottom),
              list(a = a, expr.top = expr.top, exp.top = exp.top, expr.bottom = expr.bottom, exp.bottom = exp.bottom))
 }
 

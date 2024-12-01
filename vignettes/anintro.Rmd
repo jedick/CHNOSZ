@@ -643,7 +643,7 @@ acr <- affinity(aaq)
 diagram(acr, add = TRUE, bold = acr$species$state=="cr", limit.water = FALSE)
 # Add legend
 legend <- c(
-  bquote(log * italic(a)["Mn(aq)"] == .(logact)),
+  bquote(log ~ italic(a)*"Mn(aq)" == .(logact)),
   bquote(italic(T) == .(T) ~ degree*C)
 )
 legend("topright", legend = as.expression(legend), bty = "n")
@@ -761,7 +761,7 @@ a$values <- lapply(a$values, `*`, -0.001)
 ```
 
 ```{r rainbow_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, out.width="100%", echo=FALSE, message=FALSE, cache=TRUE, fig.cap="Affinities of organic synthesis in a hydrothermal system, after Shock and Canovas (2010).", pngquant=pngquant, timeit=timeit}
-diagram(a, balance = 1, ylim = c(-100, 100), ylab = quote(italic(A)*", kcal/mol"),
+diagram(a, balance = 1, ylim = c(-100, 100), ylab = quote(italic(A)~"(kcal/mol)"),
         col = rainbow(8), lwd = 2, bg = "slategray3")
 abline(h = 0, lty = 2, lwd = 2)
 ```
@@ -1160,7 +1160,7 @@ subcrt("LYSC_CHICK")$out[[1]][1:6, ]
 Let's compare experimental values of heat capacity of four proteins, from @PM90, with those calculated using group additivity.
 We divide Privalov and Makhatadze's experimental values by the lengths of the proteins to get per-residue values, then plot them.
 
-```{r protein_Cp, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, out.width="100%", echo=FALSE, message=FALSE, fig.cap='The heat capacity calculated by group additivity closely approximates experimental values for aqueous proteins. For a related figure showing the effects of ionization in the calculations, see <span style="color:blue">`?ionize.aa`</span>.', cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r protein_Cp, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, out.width="100%", echo=FALSE, message=FALSE, fig.cap='The heat capacity calculated by group additivity closely approximates experimental values for aqueous proteins.', cache=TRUE, pngquant=pngquant, timeit=timeit}
 PM90 <- read.csv(system.file("extdata/cpetc/PM90.csv", package = "CHNOSZ"))
 plength <- protein.length(colnames(PM90)[2:5])
 Cp_expt <- t(t(PM90[, 2:5]) / plength)
@@ -1193,7 +1193,7 @@ The following plot shows the calculated affinity of reaction between nonionized 
 Charged and uncharged sets of basis species are used to to activate and suppress the ionization calculations.
 The calculation of affinity for the ionized proteins returns multiple values (as a function of pH), but there is only one value of affinity returned for the nonionized proteins, so we need to use R's `as.numeric()` to avoid subtracting nonconformable arrays:
 
-```{r protein_ionization, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap='Affinity of ionization of proteins. See [<span style="color:blue">demo(ionize)</span>](../demo) for ionization properties calculated as a function of temperature and pH.', cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r protein_ionization, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap='Affinity of ionization of proteins. See [demo(ionize)](../demo) for ionization properties calculated as a function of temperature and pH.', cache=TRUE, pngquant=pngquant, timeit=timeit}
 ip <- pinfo(c("CYC_BOVIN", "LYSC_CHICK", "MYG_PHYCA", "RNAS1_BOVIN"))
 basis("CHNOS+")
 a_ion <- affinity(pH = c(0, 14), iprotein = ip)
@@ -1309,20 +1309,20 @@ legend("topright", legend = c("Archaea", "Bacteria", "Eukaryota"),
 Let's look at different ways of representing the chemical compositions of the proteins.
 <span style="color:green">`protein.basis()`</span> returns the stoichiometry for the formation reaction of each proteins.
 Dividing by <span style="color:green">`protein.length()`</span> gives the per-residue reaction coefficients.
-Using the set of basis species we have seen before (CO<sub>2</sub>, NH<sub>3</sub>, H<sub>2</sub>S, `r h2o`, `r o2`) there is a noticeable correlation between *n*<sub>`r o2`</sub> and `r zc`, but even more so between *n*<sub>`r h2o`</sub> and `r zc` (shown in the plots on the left).
+Using the set of basis species we have seen before (CO<sub>2</sub>, NH<sub>3</sub>, H<sub>2</sub>S, `r h2o`, `r o2`) there is a noticeable correlation between *n*`r o2` and `r zc`, but even more so between *n*`r h2o` and `r zc` (shown in the plots on the left).
 ```{marginfigure}
 The calculation of *Z*<sub>C</sub>, which sums elemental ratios, is not affected by the choice of basis species.
 ```
 The `QEC` keyword to <span style="color:red">`basis()`</span> loads basis species including three amino acids (glutamine, glutamic acid, cysteine, `r h2o`, `r o2`).
-This basis strengthens the relationship between `r zc` and *n*<sub>`r o2`</sub>, but weakens that between `r zc` and *n*<sub>`r h2o`</sub> (shown in the plots on the right).
+This basis strengthens the relationship between `r zc` and *n*`r o2`, but weakens that between `r zc` and *n*`r h2o` (shown in the plots on the right).
 
-```{r rubisco_O2, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap="Chemical metrics (*n*<sub>O<sub>2</sub></sub> and *n*<sub>H<sub>2</sub>O</sub>) calculated with different sets of basis species, compared to carbon oxidation state (*Z*<sub>C</sub>) which does not depend on the basis species.", cache=TRUE, pngquant=pngquant, timeit=timeit}
+```{r rubisco_O2, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, out.width="100%", echo=FALSE, results="hide", message=FALSE, fig.cap="Chemical metrics (*n*O<sub>2</sub> and *n*H<sub>2</sub>O) calculated with different sets of basis species, compared to carbon oxidation state (*Z*<sub>C</sub>) which does not depend on the basis species.", cache=TRUE, pngquant=pngquant, timeit=timeit}
 layout(matrix(1:4, nrow = 2))
 par(mgp = c(1.8, 0.5, 0))
 pl <- protein.length(aa)
 ZClab <- axis.label("ZC")
-nO2lab <- expression(italic(n)[O[2]])
-nH2Olab <- expression(italic(n)[H[2]*O])
+nO2lab <- expression(italic(n)*O[2])
+nH2Olab <- expression(italic(n)*H[2]*O)
 lapply(c("CHNOS", "QEC"), function(thisbasis) {
   basis(thisbasis)
   pb <- protein.basis(aa)
@@ -1336,10 +1336,10 @@ lapply(c("CHNOS", "QEC"), function(thisbasis) {
 ```{r rubisco_O2, eval=FALSE}
 ```
 
-By projecting the compositions of proteins into the `QEC` set of basis species, *n*<sub>`r o2`</sub> emerges as a strong indicator of oxidation state, while *n*<sub>`r h2o`</sub> is a relatively uncorrelated (i.e. independent) variable.
+By projecting the compositions of proteins into the `QEC` set of basis species, *n*`r o2` emerges as an indicator of oxidation state, while *n*`r h2o` is a relatively uncorrelated (i.e. independent) variable.
 These independent variables make it easier to distinguish the effects of oxidation and hydration state in proteomic datasets [@DYT20].
 
-- The [canprot](https://github.com/jedick/canprot) package has functions to calculate chemical metrics (*Z*<sub>C</sub>, *n*<sub>`r o2`</sub>, and *n*<sub>`r h2o`</sub>) directly from amino acid compositions of proteins, and to read amino acid compositions from FASTA files (`canprot::read_fasta()`).
+- The [canprot](https://github.com/jedick/canprot) package has functions to calculate chemical metrics (*Z*<sub>C</sub>, *n*`r o2`, and *n*`r h2o`) directly from amino acid compositions of proteins, and to read amino acid compositions from FASTA files (`canprot::read_fasta()`).
 
 ## Normalization to residues
 
