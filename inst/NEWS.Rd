@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-26 (2024-12-01)}{
+\section{Changes in CHNOSZ version 2.1.0-28 (2024-12-23)}{
 
     \itemize{
 
@@ -86,6 +86,10 @@
       subscripted by \code{axis.label()} (via \code{expr.species()}). An
       example of the new formatting is log \emph{f}O\s{2}). Similar formatting
       for other expressions has been used in the vignettes.
+
+      \item OBIGT: Add Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
+      \href{https://doi.org/10.1016/j.apgeochem.2024.106032}{Knight et al.
+        (2024)}.
 
     }
 

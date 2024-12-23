@@ -67,6 +67,7 @@ RH95.4,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 213
 RH95.5,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","larnite (G and H not in SUPCRT92); Cp from @Kel60",https://doi.org/10.3133/b2131
 RH95.6,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","bromellite (melting temperature and G and H not in SUPCRT92)",https://doi.org/10.3133/b2131
 RH95.7,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","phase stability limit",https://doi.org/10.3133/b2131
+RH95.8,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","brucite V",https://doi.org/10.3133/b2131
 SK95,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","metal-organic acid complexes",https://doi.org/10.1016/0016-7037(95)00058-8
 Sho95,"E. L. Shock",1995,"Am. J. Sci. 295, 496-580","carboxylic acids",https://doi.org/10.2475/ajs.295.5.496
 DPS+96,"I. Diakonov, G. Pokrovski et al.",1996,"Geochim. Cosmochim. Acta 60, 197-211",NaAl(OH)<sub>4</sub>,https://doi.org/10.1016/0016-7037(95)00403-3
@@ -285,16 +286,18 @@ LA19,"D. E. LaRowe and J. P. Amend",2019,"Geomicrobiol. J. 36, 492-505","dimethy
 SPD+19,"B. St Clair et al.",2019,"ACS Earth Space Chem 3, 905-921","metal carbonate and bicarbonate complexes and FeSO<sub>4</sub>",https://doi.org/10.1021/acsearthspacechem.9b00016
 AKK+20,"N. N. Akinfiev et al.",2020,"Geochim. Cosmochim. Acta 280, 102-115","Nb and Ta species",https://doi.org/10.1016/j.gca.2020.04.009
 LX20,"Liu and Xiao",2020,"Ore Geol. Rev. 117, 103289","huebnerite Cp",https://doi.org/10.1016/j.oregeorev.2019.103289
+NEA20,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium","rutherfordine, beta-UO<sub>2</sub>(OH)<sub>2</sub>, and Na<sub>2</sub>U<sub>2</sub>O<sub>7</sub>",https://doi.org/10.1787/bf86a907-en
+NEA20.1,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium",UO<sub>3</sub>,https://doi.org/10.1787/bf86a907-en
 LXW21,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488",H<sub>2</sub>WO<sub>4</sub>,https://doi.org/10.1016/j.chemgeo.2021.120488
 LXW21.1,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488","scheelite Cp",https://doi.org/10.1016/j.chemgeo.2021.120488
 WV22,"A. E. Williams-Jones and O. V. Vasyukova",2022,"Econ. Geol. 117, 513-528","parameters listed here",https://doi.org/10.5382/econgeo.4895
-HDR+24,"B. P. von der Heyden et al.",2024,"Can. J. Mineral. Petrol. 62, 77-93",carrollite,https://doi.org/10.3749/2300028
-NEA20,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium","rutherfordine, beta-UO<sub>2</sub>(OH)<sub>2</sub>, and Na<sub>2</sub>U<sub>2</sub>O<sub>7</sub>",https://doi.org/10.1787/bf86a907-en
-NEA20.1,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium",UO<sub>3</sub>,https://doi.org/10.1787/bf86a907-en
 AZ23,"N. N. Akinfiev and A. V. Zotov",2023,"Geol. Ore Deposits 65, 1-10","Cu<sup>+</sup> and CuO<sup>-</sup>",https://doi.org/10.1134/S1075701523010026
 TTA+23,"N. D. Trofimov, B. R. Tagirov et al.",2023,"Chem. Geol. 625, 121413","Cu hydrosulfide and chloride complexes",https://doi.org/10.1016/j.chemgeo.2023.121413
+HDR+24,"B. P. von der Heyden et al.",2024,"Can. J. Mineral. Petrol. 62, 77-93",carrollite,https://doi.org/10.3749/2300028
+KBJ24,"A. W. Knight, C. R. Bryan and C. F. Jové-Colón",2024,"Appl. Geochem. 169, 106032","Mg(OH)<sub>2</sub>-MgCl<sub>2</sub>-H<sub>2</sub>O phases",https://doi.org/10.1016/j.apgeochem.2024.106032
 MBA+24,"A. Migdisov, E. Bastrakov et al.",2024,"Geochim. Cosmochim. Acta","uranyl-carbonate, -chloride, -sulfate, and -hydroxide complexes",https://doi.org/10.1016/j.gca.2024.04.023
 RSS+24,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","alkylamines, benzylamines, and aminiums",https://doi.org/10.1016/j.gca.2024.03.013
 RSS+24.1,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","corrected V for tripropylaminium",https://doi.org/10.1016/j.gca.2024.03.013
 TAT+24,"B. R. Tagirov, N. N. Akinfiev et al.",2024,"Geochim. Cosmochim. Acta","Au-(hydro)sulfide species and SO<sub>4</sub><sup>-2</sup>-bearing species",https://doi.org/10.1016/j.gca.2024.08.022
 TAZ24,"B. R. Tagirov, N. N. Akinfiev and A. V. Zotov",2024,"Geol. Ore Deposits 66, 581--597","Au hydroxide and chloride complexes",https://doi.org/10.1134/S1075701524600403
+
