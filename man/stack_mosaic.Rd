@@ -9,7 +9,7 @@ The species in each layer are usually minerals with different metals; any bimeta
 
 \usage{
   stack_mosaic(bases, species1, species2, species12, names = NULL,
-    col = list(4, 3, 6), col.names = list(4, 3, 6), fill = NULL,
+    col = list(1, 4, 4), col.names = list(1, 4, 4), fill = list(NA, NA, NA),
     dx = list(0, 0, 0), dy = list(0, 0, 0), srt = list(0, 0, 0),
     lwd = list(1, 1, 1), lty = list(1, 1, 1), loga_aq = NULL,
     plot.it = TRUE, ...)
@@ -74,7 +74,7 @@ O2 <- c(-48, -33, res)
 basis(c("pyrite", "Cu", "Cl-", "H2S", "H2O", "oxygen", "H+"))
 basis("H2S", -2)
 # Calculate solution composition for 1 mol/kg NaCl
-NaCl <- NaCl(T = T, P = P, m_tot = 1)
+NaCl <- NaCl(m_tot = 1, T = T, P = P)
 basis("Cl-", log10(NaCl$m_Cl))
 
 # Define arguments for stack_mosaic: Speciate aqueous sulfur
@@ -84,20 +84,12 @@ species1 <- c("pyrite", "pyrrhotite", "magnetite", "hematite")
 # Calculate stabilities of Cu-bearing and FeCu-bearing minerals second
 species2 <- c("copper", "cuprite", "tenorite", "chalcocite", "covellite")
 species12 <- c("chalcopyrite", "bornite")
-# Use abbreviations for Fe-bearing minerals and formulas for Cu-bearing minerals
-names1 <- c("Py", "Po", "Mag", "Hem")
-names2 <- info(info(species2))$formula
-names12 <- info(info(species12))$formula
-names <- list(names1, names2, names12)
 # Adjust x-position for one species (chalcocite, Cu2S)
 dx <- list(c(0, 0, 0, 0), c(0, 0, 0, 1, 0), c(0, 0))
-# Use thick dashed lines for the bimetallic species
-lwd <- list(1, 1, 2)
-lty <- list(1, 1, 2)
 
 # Make the diagram
-stack_mosaic(bases, species1, species2, species12, names = names,
-  dx = dx, lwd = lwd, lty = lty,
+stack_mosaic(bases,
+  species1, species2, species12, dx = dx,
   pH = pH, O2 = O2, T = T, P = P, IS = NaCl$IS)
 # Add legend and title
 lTP <- lex(lTP(T, P))

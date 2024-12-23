@@ -5,11 +5,11 @@
 # col: Colors for species1, species2, and species12
 #   (default of NA for col[3] means to plot species12 boundaries with color for species2)
 # ...: Arguments for mosaic() (including affinity() arguments)
-stack_mosaic <- function(bases, species1, species2, species12, names = NULL, col = list(4, 3, 6), col.names = list(4, 3, 6),
-  fill = NULL, dx = list(0, 0, 0), dy = list(0, 0, 0), srt = list(0, 0, 0), lwd = list(1, 1, 1), lty = list(1, 1, 1),
+stack_mosaic <- function(bases, species1, species2, species12, names = NULL, col = list(1, 4, 4), col.names = list(1, 4, 4),
+  fill = list(NA, NA, NA), dx = list(0, 0, 0), dy = list(0, 0, 0), srt = list(0, 0, 0), lwd = list(1, 1, 1), lty = list(1, 1, 1),
   loga_aq = NULL, plot.it = TRUE, ...) {
 
-  # Default is to use semi-transparent fill for bimetallic species
+  # Set fill = NULL to use semi-transparent color for bimetallic species
   if(is.null(fill)) fill <- list(NA, NA, adjustcolor(col.names[3], alpha.f = 0.312))
 
   # Load species1 (first metal-bearing species)

@@ -2,7 +2,7 @@
 # Functions for making legend text
 # 20190530 jmd first version
 
-lNaCl <- function(x, digits = 2) substitute(italic(m)[NaCl] == x~mol~kg^-1, list(x = round(x, digits)))
+lNaCl <- function(x, digits = 2) substitute(NaCl == x~mol~kg^-1, list(x = round(x, digits)))
 
 lS <- function(x, digits = 3) substitute(sum(S) == x~mol~kg^-1, list(x = round(x, digits)))
 

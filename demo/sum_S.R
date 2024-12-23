@@ -67,7 +67,7 @@ for(metal in c("Fe", "Au")) {
     diagram(sp, type = "loga.balance", contour.method = "flattest", levels = 10^(-3:5), add = TRUE, col = col, lty = 3, lwd = 1.8, cex = 1.2)
   }
 
-  # Add legends and title
+  # Add legend and title
   T_P <- describe.property(c("T", "P"), c(T, P))
   P_Cl <- c(bquote(pH == .(pH)), bquote(NaCl == .(m_NaCl)~mol~kg^-1))
   legend <- lex(T_P, P_Cl)

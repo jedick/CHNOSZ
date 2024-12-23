@@ -143,7 +143,7 @@ expr.units <- function(property, prefix = "", per = "mol") {
     if(T.units() == "C") expr <- substitute(degree*a, list(a = expr))
   }
   # Eh - electrical potential
-  if(grepl("Eh", property)) expr <- substitute(a, list(a = "volt"))
+  if(grepl("Eh", property)) expr <- substitute(a, list(a = "V"))
   # IS - ionic strength
   if(grepl("IS", property)) expr <- substitute(a, list(a = mol~kg^-1))
   if(!expr == "") {
