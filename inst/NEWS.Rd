@@ -15,8 +15,53 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-28 (2024-12-23)}{
+\section{Changes in CHNOSZ version 2.1.0-29 (2024-12-24)}{
 
+  \subsection{OBIGT DEFAULT DATA}{
+    \itemize{
+
+      \item Add aqueous uranyl complexes from
+      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}
+      and related U-bearing minerals from
+      \href{https://doi.org/10.1787/bf86a907-en}{Grenthe et al. (2020)}.
+
+      \item Move americium complexes from \file{slop98.dat} back to
+      \file{inorganic_aq.csv} (entropy of the element Am has been available for
+      checking GHS self-consistency since version 1.4.0).
+
+      \item Add alkylamines, benzylamines, and aminiums from
+      \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
+
+      \item \samp{OBIGT/inorganic_cr.csv}: Add cerianite (CeO\s{2}) and
+      chromite (FeCr\s{2}O\s{4}) from
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
+
+      \item Restore steam (H\s{2}O,g) in \file{inorganic_gas.csv}.
+
+      \item Fix sign of \emph{c} parameter for nesquehonite. Thanks to
+      James Leong and Grayson Boyer.
+
+    }
+  }
+
+  \subsection{OBIGT OPTIONAL DATA}{
+    \itemize{
+
+      \item Except for HUO\s{4}\S{-}, aqueous uranium species from
+      \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al. (1997)}
+      have been moved to \file{SLOP98.csv}.
+
+      \item \file{IGEM24.csv}: updated data for Au and Cu complexes and
+      SO\s{4}\S{-2}-bearing species from researchers at IGEM RAS.
+      
+      \item \file{KBJ24.csv}: Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
+      \href{https://doi.org/10.1016/j.apgeochem.2024.106032}{Knight et al.
+        (2024)}.
+
+    }
+  }
+
+  \subsection{NEW FEATURES}{
     \itemize{
 
       \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to
@@ -34,39 +79,14 @@
       and \emph{Q} that are consistent with either SUPCRT92 or DEW, depending
       on the \code{model} defined in OBIGT (HKF or DEW, respectively).
 
-      \item Add aqueous uranyl complexes from
-      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}
-      and related U-bearing minerals from
-      \href{https://doi.org/10.1787/bf86a907-en}{Grenthe et al. (2020)}.
-
-      \item Except for HUO\s{4}\S{-}, aqueous uranium species from
-      \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al. (1997)}
-      have been moved to \file{SLOP98.csv}.
-
       \item Remove \code{ispecies} from output of \code{check.OBIGT()} to avoid
       superfluous diffs.
-
-      \item Move americium complexes from \file{slop98.dat} back to
-      \file{inorganic_aq.csv} (entropy of the element Am has been available for
-      checking GHS self-consistency since version 1.4.0).
-
-      \item Add alkylamines, benzylamines, and aminiums from
-      \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
-
-      \item \samp{OBIGT/inorganic_cr.csv}: Add cerianite (CeO\s{2}) and
-      chromite (FeCr\s{2}O\s{4}) from
-      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
 
       \item Add \file{demo/total_S.R} (total activity of S--pH diagram for
       Fe-S-O-C minerals).
 
       \item Restore \code{lines} to the output of \code{diagram()} for the x
       and y values of predominance field boundaries.
-
-      \item OBIGT: Restore steam (H\s{2}O,g) in \file{inorganic_gas.csv}.
-
-      \item OBIGT: Fix sign of \emph{c} parameter for nesquehonite. Thanks to
-      James Leong and Grayson Boyer.
 
       \item Add \file{demo/uranyl.R}, total (carbonate|sulfate)-pH diagrams
       for uranyl species, after
@@ -78,20 +98,13 @@
       \item Rename \file{demo/total_S.R} to \file{demo/sum_S.R}, change axes,
       and add solubility contours for Fe and Au.
 
-      \item Add \file{OBIGT/IGEM24.csv} with updated data for Au and Cu
-      complexes and SO\s{4}\S{-2}-bearing species from
-      researchers at IGEM RAS.
-      
       \item For better readability, formulas of species are no longer
       subscripted by \code{axis.label()} (via \code{expr.species()}). An
       example of the new formatting is log \emph{f}O\s{2}). Similar formatting
       for other expressions has been used in the vignettes.
 
-      \item OBIGT: Add Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
-      \href{https://doi.org/10.1016/j.apgeochem.2024.106032}{Knight et al.
-        (2024)}.
-
     }
+  }
 
 }
 

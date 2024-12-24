@@ -310,7 +310,6 @@
 "OBIGT","ferberite","cr","J",1.21,,
 "OBIGT","willemite","cr","J",-1.47,,
 "OBIGT","rutherfordine","cr","J",-14.37,,
-"OBIGT","2-1-4 phase","cr","J",-4.39,,
 "OBIGT","octadecane","cr","cal",-2.63,,
 "OBIGT","nonadecane","cr","cal",-13.32,,
 "OBIGT","eicosane","cr","cal",-2.79,,
@@ -400,3 +399,4 @@
 "SUPCRT92","greenalite","cr","cal",,,142507
 "SUPCRT92","grunerite","cr","cal",9.72,,
 "SUPCRT92","halloysite","cr","cal",-1.6,,
+"KBJ24","2-1-4 phase","cr","J",-4.39,,

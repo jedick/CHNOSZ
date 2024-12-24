@@ -206,7 +206,7 @@ Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthal
 ### Aqueous Species <button id="B-aqueous-H2O" onclick='ToggleDiv("aqueous-H2O")'>H2O</button> <button id="B-aqueous-inorganic" onclick='ToggleDiv("aqueous-inorganic")'>Inorganic</button> <button id="B-aqueous-organic" onclick='ToggleDiv("aqueous-organic")'>Organic</button>
 ### Solids <button id="B-solid-inorganic" onclick='ToggleDiv("solid-inorganic")'>Inorganic</button> <button id="B-solid-organic" onclick='ToggleDiv("solid-organic")'>Organic</button> <button id="B-solid-Berman" onclick='ToggleDiv("solid-Berman")'>Berman</button>
 ### Gases <button id="B-gas-inorganic" onclick='ToggleDiv("gas-inorganic")'>Inorganic</button> <button id="B-gas-organic" onclick='ToggleDiv("gas-organic")'>Organic</button> &nbsp;&nbsp;&nbsp;Liquids <button id="B-liquid-organic" onclick='ToggleDiv("liquid-organic")'>Organic</button>
-### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AD" onclick='ToggleDiv("optional-AD")'>AD</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-GEMSFIT" onclick='ToggleDiv("optional-GEMSFIT")'>GEMSFIT</button> <button id="B-optional-IGEM24" onclick='ToggleDiv("optional-IGEM24")'>IGEM24</button>
+### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AD" onclick='ToggleDiv("optional-AD")'>AD</button> <button id="B-optional-AS04" onclick='ToggleDiv("optional-AS04")'>AS04</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-GEMSFIT" onclick='ToggleDiv("optional-GEMSFIT")'>GEMSFIT</button> <button id="B-optional-IGEM24" onclick='ToggleDiv("optional-IGEM24")'>IGEM24</button> <button id="B-optional-KBJ24" onclick='ToggleDiv("optional-KBJ24")'>KBJ24</button>
 
 <!-- Normal or "all open" footer message --> 
 
@@ -392,6 +392,15 @@ Use `add.OBIGT("GEMSFIT")` to load the data.
 ## <a id="optional-IGEM24" class="anchor"></a> `r setfile("IGEM24.csv")`
 Data updates from researchers at the Institute of Geology of Ore Deposits, Petrography, Mineralogy, and Geochemistry, Russian Academy of Sciences (IGEM RAS).
 Use `add.OBIGT("IGEM24")` to load the data.
+
+```{r optreflist, results="asis", echo=FALSE}
+```
+</div>
+
+<div id="D-optional-KBJ24" style="display: none">
+## <a id="optional-KBJ24" class="anchor"></a> `r setfile("KBJ24.csv")`
+Model for the Mg(OH)<sub>2</sub>-MgCl<sub>2</sub>-H<sub>2</sub>O system from 25 to 150 &deg;C.
+Use `add.OBIGT("KBJ24")` to load the data.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```
