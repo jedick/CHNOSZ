@@ -126,6 +126,11 @@ expect_silent(info(iaq), info = info)
 # Make sure subcrt() runs
 expect_equal(subcrt(iaq)$G, subcrt(icr)$G, info = info)
 
+# 20241225
+info <- "add.OBIGT() errors with non-existent file"
+file <- "XXX"
+expect_error(add.OBIGT(file), "XXX is not a file and doesn't match any files in the OBIGT database")
+
 # Reference
 
 # Richard, L. and Helgeson, H. C. (1998) Calculation of the thermodynamic properties at elevated 

@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-29 (2024-12-24)}{
+\section{Changes in CHNOSZ version 2.1.0-30 (2024-12-25)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -32,7 +32,7 @@
       \item Add alkylamines, benzylamines, and aminiums from
       \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
 
-      \item \samp{OBIGT/inorganic_cr.csv}: Add cerianite (CeO\s{2}) and
+      \item \file{inorganic_cr.csv}: Add cerianite (CeO\s{2}) and
       chromite (FeCr\s{2}O\s{4}) from
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
 
@@ -47,33 +47,48 @@
   \subsection{OBIGT OPTIONAL DATA}{
     \itemize{
 
-      \item Except for HUO\s{4}\S{-}, aqueous uranium species from
+      \item Aqueous uranium species other than HUO\s{4}\S{-} from
       \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al. (1997)}
       have been moved to \file{SLOP98.csv}.
 
-      \item \file{IGEM24.csv}: updated data for Au and Cu complexes and
+      \item Make new directory \file{OBIGT/testing} to hold optional data files
+      for testing (currently \file{AS04.csv}, \file{GEMSFIT.csv},
+      \file{IGEM24.csv}, and \file{KBJ24.csv}).
+
+      \item Add \file{IGEM24.csv}: updated data for Au and Cu complexes and
       SO\s{4}\S{-2}-bearing species from researchers at IGEM RAS.
       
-      \item \file{KBJ24.csv}: Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
+      \item Add \file{KBJ24.csv}: Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
       \href{https://doi.org/10.1016/j.apgeochem.2024.106032}{Knight et al.
         (2024)}.
 
     }
   }
 
-  \subsection{NEW FEATURES}{
+  \subsection{DOCUMENTATION}{
+
     \itemize{
 
-      \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to
-      canprot package with different names.
-
-      \item Remove \code{seq2aa()}.
-
-      \item Remove \code{add.alpha()}. Now \code{grDevices::adjustcolor()} is
-      used in \code{stack_mosaic()} to add transparency.
-      
       \item Add FAQ question: Why are mineral stability boundaries curved on
       mosaic diagrams?
+
+      \item Add \file{demo/total_S.R}: total activity of S--pH diagram for
+      Fe-S-O-C minerals.
+
+      \item Add \file{demo/uranyl.R}: total (carbonate|sulfate)-pH diagrams
+      for uranyl species, after
+      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
+
+      \item Rename \file{demo/total_S.R} to \file{demo/sum_S.R}, change axes,
+      and add solubility contours for Fe and Au.
+
+    }
+
+  }
+
+
+  \subsection{OTHER CHANGES}{
+    \itemize{
 
       \item \code{check.EOS()} now uses values of Born coefficients \emph{X}
       and \emph{Q} that are consistent with either SUPCRT92 or DEW, depending
@@ -82,26 +97,31 @@
       \item Remove \code{ispecies} from output of \code{check.OBIGT()} to avoid
       superfluous diffs.
 
-      \item Add \file{demo/total_S.R} (total activity of S--pH diagram for
-      Fe-S-O-C minerals).
-
       \item Restore \code{lines} to the output of \code{diagram()} for the x
       and y values of predominance field boundaries.
 
-      \item Add \file{demo/uranyl.R}, total (carbonate|sulfate)-pH diagrams
-      for uranyl species, after
-      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
-
-      \item Adjust \code{axis.label()} to show sum symbol for
-      \code{mosaic()}-ed basis species used as a plot variable.
+      \item Adjust \code{axis.label()} to show sum symbol (Σ) for total
+      activity or molality of basis species used as a plotting variable in
+      \code{mosaic()}.
       
-      \item Rename \file{demo/total_S.R} to \file{demo/sum_S.R}, change axes,
-      and add solubility contours for Fe and Au.
-
       \item For better readability, formulas of species are no longer
       subscripted by \code{axis.label()} (via \code{expr.species()}). An
       example of the new formatting is log \emph{f}O\s{2}). Similar formatting
       for other expressions has been used in the vignettes.
+
+    }
+  }
+
+  \subsection{REMOVED FEATURES}{
+    \itemize{
+
+      \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to
+      canprot package with different names.
+
+      \item Remove \code{seq2aa()}.
+
+      \item Remove \code{add.alpha()}. Instead, \code{grDevices::adjustcolor()}
+      is now used in \code{stack_mosaic()} to add transparency.
 
     }
   }

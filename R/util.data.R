@@ -265,14 +265,11 @@ check.OBIGT <- function() {
     message(paste("check.OBIGT: checking", what))
     # Looking at thermo$OBIGT
     if(what == "OBIGT") tdata <- get("thermo", CHNOSZ)$OBIGT
-    else if(what == "DEW") tdata <- read.csv(system.file("extdata/OBIGT/DEW.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what == "SLOP98") tdata <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what == "SUPCRT92") tdata <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what == "AS04") tdata <- read.csv(system.file("extdata/OBIGT/AS04.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what == "AD") tdata <- read.csv(system.file("extdata/OBIGT/AD.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what == "GEMSFIT") tdata <- read.csv(system.file("extdata/OBIGT/GEMSFIT.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what == "IGEM24") tdata <- read.csv(system.file("extdata/OBIGT/IGEM24.csv", package = "CHNOSZ"), as.is = TRUE)
-    else if(what == "KBJ24") tdata <- read.csv(system.file("extdata/OBIGT/KBJ24.csv", package = "CHNOSZ"), as.is = TRUE)
+    else {
+      if(what %in% c("DEW", "SLOP98", "SUPCRT92" ,"AD")) file <- paste0("extdata/OBIGT/", what, ".csv")
+      else file <- paste0("extdata/OBIGT/testing/", what, ".csv")
+      tdata <- read.csv(system.file(file, package = "CHNOSZ"), as.is = TRUE)
+    }
     ntot <- nrow(tdata)
     # Where to keep the results
     DCp <- DV <- DG <- rep(NA, ntot)
@@ -305,13 +302,11 @@ check.OBIGT <- function() {
   # Check default database (OBIGT)
   out <- checkfun("OBIGT")
   # Check optional data
-  out <- rbind(out, checkfun("DEW"))
-  out <- rbind(out, checkfun("SLOP98"))
-  out <- rbind(out, checkfun("SUPCRT92"))
-  out <- rbind(out, checkfun("AS04"))
-  out <- rbind(out, checkfun("GEMSFIT"))
-  out <- rbind(out, checkfun("IGEM24"))
-  out <- rbind(out, checkfun("KBJ24"))
+  for(what in c("DEW", "SLOP98", "SUPCRT92" ,"AD")) out <- rbind(out, checkfun(what))
+  # Check testing data 
+  testing_files <- dir(system.file("extdata/OBIGT/testing", package = "CHNOSZ"), full.names = TRUE)
+  sources <- gsub(".csv", "", basename(testing_files))
+  for(what in sources) out <- rbind(out, checkfun(what))
   # Set differences within a tolerance to NA
   out$DCp[abs(out$DCp) < 1] <- NA
   out$DV[abs(out$DV) < 1] <- NA
@@ -387,19 +382,18 @@ dumpdata <- function(file = NULL) {
   SLOP98 <- cbind(source = "SLOP98", dat)
   dat <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package = "CHNOSZ"), as.is = TRUE)
   SUPCRT92 <- cbind(source = "SUPCRT92", dat)
-  # More optional data 20220929
-  dat <- read.csv(system.file("extdata/OBIGT/AS04.csv", package = "CHNOSZ"), as.is = TRUE)
-  AS04 <- cbind(source = "AS04", dat)
   dat <- read.csv(system.file("extdata/OBIGT/AD.csv", package = "CHNOSZ"), as.is = TRUE)
   AD <- cbind(source = "AD", dat)
-  dat <- read.csv(system.file("extdata/OBIGT/GEMSFIT.csv", package = "CHNOSZ"), as.is = TRUE)
-  GEMSFIT <- cbind(source = "GEMSFIT", dat)
-  dat <- read.csv(system.file("extdata/OBIGT/IGEM24.csv", package = "CHNOSZ"), as.is = TRUE)
-  IGEM24 <- cbind(source = "IGEM24", dat)
-  dat <- read.csv(system.file("extdata/OBIGT/KBJ24.csv", package = "CHNOSZ"), as.is = TRUE)
-  KBJ24 <- cbind(source = "KBJ24", dat)
+  # Testing data 20220929
+  testing_files <- dir(system.file("extdata/OBIGT/testing", package = "CHNOSZ"), full.names = TRUE)
+  testing_list <- lapply(testing_files, function(file) {
+    dat <- read.csv(file, as.is = TRUE)
+    source <- gsub(".csv", "", basename(file))
+    cbind(source = source, dat)
+  })
+  testing <- do.call(rbind, testing_list)
   # Put it all together
-  out <- rbind(OBIGT, SUPCRT92, SLOP98, AS04, AD, DEW, GEMSFIT, IGEM24, KBJ24)
+  out <- rbind(OBIGT, SUPCRT92, SLOP98, AD, DEW, testing)
   # Quote columns 2 (name) and 3 (abbrv) because they have commas for some entries
   if(!is.null(file)) write.csv(out, file, row.names = FALSE, quote = c(2, 3))
   else(return(out))

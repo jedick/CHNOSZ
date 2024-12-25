@@ -115,11 +115,22 @@ add.OBIGT <- function(file, species = NULL, force = TRUE) {
   thermo <- get("thermo", CHNOSZ)
   to1 <- thermo$OBIGT
   id1 <- paste(to1$name,to1$state)
-  # We match system files with the file suffixes (.csv) removed
-  sysfiles <- dir(system.file("extdata/OBIGT/", package = "CHNOSZ"))
-  sysnosuffix <- sapply(strsplit(sysfiles, "\\."), "[", 1)
-  isys <- match(file, sysnosuffix)
-  if(!is.na(isys)) file <- system.file(paste0("extdata/OBIGT/", sysfiles[isys]), package = "CHNOSZ")
+
+  # `file` should be the path to a CSV file, or the name (without path or .csv) of a file in the package's OBIGT or OBIGT/testing
+  if(!file.exists(file)) {
+
+    # List all files in OBIGT and OBIGT/testing
+    OBIGT_files <- dir(system.file("extdata/OBIGT/", package = "CHNOSZ"), full.names = TRUE)
+    testing_files <- dir(system.file("extdata/OBIGT/testing", package = "CHNOSZ"), full.names = TRUE)
+    all_files <- c(OBIGT_files, testing_files)
+    # Match argument to file names without path or .csv suffix
+    all_names <- gsub(".csv", "", basename(all_files))
+    ifile <- match(file, all_names)
+    if(is.na(ifile)) stop(paste(file, "is not a file and doesn't match any files in the OBIGT database"))
+    file <- all_files[ifile]
+
+  }
+
   # Read data from the file
   to2 <- read.csv(file, as.is = TRUE)
   Etxt <- paste(unique(to2$E_units), collapse = " and ")
