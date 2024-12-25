@@ -405,6 +405,10 @@ Aqueous SiO<sub>2</sub> from @AS04 and HSiO<sub>3</sub><sup>-</sup> modified to 
 This file also has H<sub>4</sub>SiO<sub>4</sub> from an earlier publication [@Ste01] that is roughly consistent with the SiO<sub>2</sub> here.
 See `demo(aluminum)` and the vignette [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html) for examples.
 
+<h3>REE</h3>
+
+Rare earth element (REE(III)) fluoride and chloride complexes [@MWW09].
+
 <h3>GEMSFIT</h3>
 
 Internally consistent dataset for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl obtained with the [GEMSFIT](https://doi.org/10.1016/j.apgeochem.2014.10.013) package [@MWKH16;@MWKL17].

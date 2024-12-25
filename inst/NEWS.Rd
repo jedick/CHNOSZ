@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-30 (2024-12-25)}{
+\section{Changes in CHNOSZ version 2.1.0-31 (2024-12-25)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -25,7 +25,12 @@
       and related U-bearing minerals from
       \href{https://doi.org/10.1787/bf86a907-en}{Grenthe et al. (2020)}.
 
-      \item Move americium complexes from \file{slop98.dat} back to
+      \item For compatibility with the above change, aqueous uranium species
+      other than HUO\s{4}\S{-} from
+      \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al. (1997)}
+      have been moved to optional data (\file{SLOP98.csv}).
+
+      \item Move americium complexes from \file{SLOP98.csv} back to
       \file{inorganic_aq.csv} (entropy of the element Am has been available for
       checking GHS self-consistency since version 1.4.0).
 
@@ -47,45 +52,23 @@
   \subsection{OBIGT OPTIONAL DATA}{
     \itemize{
 
-      \item Aqueous uranium species other than HUO\s{4}\S{-} from
-      \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al. (1997)}
-      have been moved to \file{SLOP98.csv}.
-
       \item Make new directory \file{OBIGT/testing} to hold optional data files
-      for testing (currently \file{SiO2.csv}, \file{GEMSFIT.csv},
-      \file{IGEM.csv}, and \file{Sandia.csv}).
+      for testing, including \file{SiO2.csv} and \file{GEMSFIT.csv} in addition
+      to those listed below.
 
-      \item Add \file{IGEM.csv}: updated data for Au and Cu complexes and
+      \item Add \file{testing/IGEM.csv}: Au and Cu complexes and
       SO\s{4}\S{-2}-bearing species from researchers at IGEM RAS.
       
-      \item Add \file{Sandia.csv}: Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
+      \item Add \file{testing/Sandia.csv}: Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
       \href{https://doi.org/10.1016/j.apgeochem.2024.106032}{Knight et al.
         (2024)}.
 
-    }
-  }
-
-  \subsection{DOCUMENTATION}{
-
-    \itemize{
-
-      \item Add FAQ question: Why are mineral stability boundaries curved on
-      mosaic diagrams?
-
-      \item Add \file{demo/total_S.R}: total activity of S--pH diagram for
-      Fe-S-O-C minerals.
-
-      \item Add \file{demo/uranyl.R}: total (carbonate|sulfate)-pH diagrams
-      for uranyl species, after
-      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
-
-      \item Rename \file{demo/total_S.R} to \file{demo/sum_S.R}, change axes,
-      and add solubility contours for Fe and Au.
+      \item Add \file{testing/REE.csv}: REE(III) fluoride and chloride complexes from
+      \href{https://doi.org/10.1016/j.gca.2009.08.023}{Migdisov et al. (2009)}
+      (previously available in CHNOSZ verisons 0.9-5 to 1.0.8).
 
     }
-
   }
-
 
   \subsection{OTHER CHANGES}{
     \itemize{
@@ -106,10 +89,31 @@
       
       \item For better readability, formulas of species are no longer
       subscripted by \code{axis.label()} (via \code{expr.species()}). An
-      example of the new formatting is log \emph{f}O\s{2}). Similar formatting
+      example of the new formatting is log \emph{f}O\s{2}. Similar formatting
       for other expressions has been used in the vignettes.
 
     }
+  }
+
+  \subsection{DOCUMENTATION}{
+
+    \itemize{
+
+      \item Add FAQ question: Why are mineral stability boundaries curved on
+      mosaic diagrams?
+
+      \item Add \file{demo/total_S.R}: total activity of S--pH diagram for
+      Fe-S-O-C minerals.
+
+      \item Add \file{demo/uranyl.R}: total (carbonate|sulfate)-pH diagrams
+      for uranyl species, after
+      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
+
+      \item Revise \file{demo/sum_S.R} for log \emph{f}O\s{2} - log \emph{m} ΣS
+      diagram and add solubility contours for Fe and Au.
+
+    }
+
   }
 
   \subsection{REMOVED FEATURES}{
