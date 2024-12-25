@@ -4,14 +4,17 @@ Kel60.2,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","iron Cp",https://
 Kel60.3,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gypsum Cp",https://www.worldcat.org/oclc/693388901
 Pan70,"L. B. Pankratz",1970,"U. S. Bureau of Mines Report of Investigations 7430",chlorargyrite,https://www.worldcat.org/oclc/14154245
 PK70,"L. B. Pankratz and E. G. King",1970,"U. S. Bureau of Mines Report of Investigations 7435","bornite and chalcopyrite",https://www.worldcat.org/oclc/14154292
+NRH74,"Naumov, G. B., Ryzhenko, B. N., & Khodakovsky, I. L.",1974,"Handbook of Thermodynamic Data (U.S. Geol. Surv.)","GeS<sub>2</sub>",https://www.worldcat.org/oclc/8139446
 RH72,"R. A. Robie and B. S. Hemingway",1972,"Am. Mineral. 57, 1768-1781","nesquehonite Cp",https://pubs.geoscienceworld.org/msa/ammin/article-pdf/57/11-12/1768/4256711/am-1972-1768.pdf
 BKK77,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","willemite Cp",https://www.worldcat.org/oclc/695258
+BKK77.1,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","Ga<sub>2</sub>S<sub>3</sub> and In<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>",https://www.worldcat.org/oclc/695258
 HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229",minerals,https://www.worldcat.org/oclc/13594862
 HDNB78.2,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","celestite V and Cp parameters",https://www.worldcat.org/oclc/13594862
 RHF78,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",chlorargyrite,https://doi.org/10.3133/b1452
 RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",iron,https://doi.org/10.3133/b1452
 RHF78.3,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","gibbsite GHS",https://doi.org/10.3133/b1452
 RHF78.4,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","rutile and titanite",https://doi.org/10.3133/b1452
+Pan82,"L. B. Pankratz",1987,"Thermodynamic Properties of Elements and Oxides (U.S. Bureau of Mines Bull. 672)","gallium, Ga<sub>2</sub>O<sub>3</sub>, indium, In<sub>2</sub>O<sub>3</sub>",https://catalog.hathitrust.org/Record/102119912
 PB82,"L. N. Plummer and E. Busenberg",1982,"Geochim. Cosmochim. Acta 46, 1011-1040","aragonite and calcite",https://doi.org/10.1016/0016-7037(82)90056-4
 WEP+82,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","gases GHS",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
 WEP+82.1,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","Mn(OH)<sub>2</sub> (amorphous) and MgSO<sub>4</sub>",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
@@ -20,6 +23,7 @@ HGK84,"L. Haar and J. S. Gallagher and G. S. Kell",1984,"NBS/NRC Steam Tables",H
 Hel85,"H. C. Helgeson",1985,"Am. J. Sci. 285, 845-855","ferrosilite and siderite",https://doi.org/10.2475/ajs.285.9.845
 JH85,"K. J. Jackson and H. C. Helgeson",1985,"Econ. Geol. 80, 1365-1378","Sn minerals",https://doi.org/10.2113/gsecongeo.80.5.1365
 PMW87,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","cattierite, linnaeite, and Co-pentlandite",https://www.worldcat.org/oclc/16131757
+PMW87.1,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","GaS, InS, and In<sub>2</sub>S<sub>3</sub>",https://www.worldcat.org/oclc/16131757
 RA87,"E. J. Reardon and D. K. Armstrong",1987,"Geochim. Cosmochim. Acta 51, 63-72","celestite GHS",https://doi.org/10.1016/0016-7037(87)90007-X
 RS87,"J. R. Ruaya and T. M. Seward",1987,"Geochim. Cosmochim. Acta 51, 121-130",HCl,https://doi.org/10.1016/0016-7037(87)90013-5
 Ber88,"R. G. Berman",1988,"J. Petrol. 29, 445-522",minerals,https://doi.org/10.1093/petrology/29.2.445
@@ -56,6 +60,7 @@ SK93.1,"E. L. Shock and C. M. Koretsky",1993,"Geochim. Cosmochim. Acta 57, 4899-
 SM93,"E. L. Shock and W. B. McKinnon",1993,"Icarus 106, 464-477","CO, HCN, urea",https://doi.org/10.1006/icar.1993.1185
 SS93,"M. D. Schulte and E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3835-3846",aldehydes,https://doi.org/10.1016/0016-7037(93)90337-V
 HDM+94,"A. W. Hakin et al.",1994,"J. Chem. Soc., Faraday Trans. 90, 2027-2035","glutamic acid",https://doi.org/10.1039/FT9949002027
+OC95,"P. A. G. O'Hare and L. A. Curtiss",1995,"J. Chem. Thermodynamics 27, 643-662","GeS",https://doi.org/10.1006/jcht.1995.0066
 HSS95,"J. R. Haas, E. L. Shock and D. C. Sassani",1995,"Geochim. Cosmochim. Acta 59, 4329-4350","complexes of rare earth elements",https://doi.org/10.1016/0016-7037(95)00314-P
 PH95,"V. A. Pokrovskii and H. C. Helgeson",1995,"Am. J. Sci. 295, 1255-1342","aluminum species",https://doi.org/10.2475/ajs.295.10.1255
 PK95,"V. B. Parker and I. L. Khodakovskii",1995,"J. Phys. Chem. Ref. Data 24, 1699-1745",melanterite,https://doi.org/10.1063/1.555964
@@ -68,6 +73,7 @@ RH95.5,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 213
 RH95.6,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","bromellite (melting temperature and G and H not in SUPCRT92)",https://doi.org/10.3133/b2131
 RH95.7,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","phase stability limit",https://doi.org/10.3133/b2131
 RH95.8,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","brucite V",https://doi.org/10.3133/b2131
+RH95.9,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","germanium, cadmium, and greenockite (CdS)",https://doi.org/10.3133/b2131
 SK95,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","metal-organic acid complexes",https://doi.org/10.1016/0016-7037(95)00058-8
 Sho95,"E. L. Shock",1995,"Am. J. Sci. 295, 496-580","carboxylic acids",https://doi.org/10.2475/ajs.295.5.496
 DPS+96,"I. Diakonov, G. Pokrovski et al.",1996,"Geochim. Cosmochim. Acta 60, 197-211",NaAl(OH)<sub>4</sub>,https://doi.org/10.1016/0016-7037(95)00403-3
@@ -100,12 +106,13 @@ ST97,"D. Shvedov and P. R. Tremaine",1997,"J. Solution Chem. 26, 1113-1143","dim
 proton,OBIGT,1997,"Hydrogen-ion convention","""The conventional standard molal properties of the hydrogen ion are zero at any pressure and temperature"" [@JOH92]",https://chnosz.net
 HOKR98,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00219-6
 HOKR98.1,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","amino acids",https://doi.org/10.1016/S0016-7037(97)00219-6
+PS98,"G. S. Pokrovski and J. Schott",1998,"Geochim. Cosmochim. Acta 62, 1631-1642","GeO<sub>2</sub> (hex) and (tetr) (augite) and Ge hydroxide and oxyhydroxide complexes",https://doi.org/10.1016/S0016-7037(98)00081-7
 RH98,"L. Richard and H. C. Helgeson",1998,"Geochim. Cosmochim. Acta 62, 3591-3636","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00345-1
-SLOP98.1,"E. L. Shock et al.",1998,"slop98.dat computer data file","zincite and litharge; &quot;These data were used in @SSWS97, but were not tabulated in the paper.&quot;",http://geopig.asu.edu/?q=tools
-SLOP98.2,"E. L. Shock et al.",1998,"slop98.dat computer data file","daphnite; &quot;G<sub>f</sub> and H<sub>f</sub> from @SS93a TMM&quot;",http://geopig.asu.edu/?q=tools
-SLOP98.8,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;These data were used in @SK95, but were not tabulated in the paper.&quot;",http://geopig.asu.edu/?q=tools
-SLOP98.10,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;Corrected values based on data from @HSS95 &quot;",http://geopig.asu.edu/?q=tools
-SLOP98.11,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;Data and parameters as used by @MS97. &quot;",http://geopig.asu.edu/?q=tools
+SLOP98.1,"E. L. Shock et al.",1998,"slop98.dat computer data file","zincite and litharge; &quot;These data were used in @SSWS97, but were not tabulated in the paper.&quot;",https://doi.org/10.5281/zenodo.2630820
+SLOP98.2,"E. L. Shock et al.",1998,"slop98.dat computer data file","daphnite; &quot;G<sub>f</sub> and H<sub>f</sub> from @SS93a TMM&quot;",https://doi.org/10.5281/zenodo.2630820
+SLOP98.8,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;These data were used in @SK95, but were not tabulated in the paper.&quot;",https://doi.org/10.5281/zenodo.2630820
+SLOP98.10,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;Corrected values based on data from @HSS95 &quot;",https://doi.org/10.5281/zenodo.2630820
+SLOP98.11,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;Data and parameters as used by @MS97. &quot;",https://doi.org/10.5281/zenodo.2630820
 SS98a,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671","platinum-group ions and complexes",https://doi.org/10.1016/S0016-7037(98)00049-0
 SS98a.1,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671","platinum-group solids",https://doi.org/10.1016/S0016-7037(98)00049-0
 SS98a.2,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671",Rh<sup>+3</sup>,https://doi.org/10.1016/S0016-7037(98)00049-0
@@ -144,6 +151,7 @@ MSB+04,"J. Majzlan, R. Stevens et al.",2004,"Phys. Chem. Mineral. 31, 518-531","
 SR04,"M. D. Schulte and K. L. Rogers",2004,"Geochim. Cosmochim. Acta 68, 1087-1097","alkane thiols",https://doi.org/10.1016/j.gca.2003.06.001
 VPV05,"O. Vidal, T. Parra and P. Viellard",2005,"Am. Mineral. 90, 347-358",Fe-amesite,https://doi.org/10.2138/am.2005.1554
 ZZX+05,"Y. Zhu et al.",2005,"J. Hazard. Mater. A120, 37-44","barium arsenate and barium hydrogen arsenate: G",https://doi.org/10.1016/j.jhazmat.2004.12.025
+electron,OBIGT,2006,"See CHNOSZ vignette OBIGT.Rmd for more information","Non-zero entropy of the electron based on the hydrogen-ion convention",https://chnosz.net
 ARHB06,"C. Akilan et al.",2006,"ChemPhysChem 7, 2319-2330",MgSO<sub>4</sub>,https://doi.org/10.1002/cphc.200600342
 AVZP06,"N. N. Akinfiev et al.",2006,"Geochem. Int. 44, 867-878",AgCl<sub>3</sub><sup>-2</sup>,https://doi.org/10.1134/S0016702906090035
 BL06,"A. V. Bandura and S. N. Lvov",2006,"J. Phys. Chem. Ref. Data 35, 15-30",OH<sup>-</sup>,https://doi.org/10.1063/1.1928231
@@ -162,11 +170,10 @@ LEB+06,"W. Liu et al.",2006,"Chem. Geol. 231, 326-349","FeCl<sub>2</sub><sup>+</
 LMR06,"D. Langmuir et al.",2006,"Geochim. Cosmochim. Acta 70, 2942-2956","scorodite and amorphous ferric arsenate: G",https://doi.org/10.1016/j.gca.2006.03.006
 MNM+06,"J. Majzlan, A. Navrotsky et al.",2006,"Eur. J. Mineral. 18, 175-186","coquimbite, ferricopiapite, and rhomboclase",https://doi.org/10.1127/0935-1221/2006/0018-0175
 SGX+06,"A. V. Sharygin et al.",2006,"Geochim. Cosmochim. Acta 70, 5169-5182",KSO<sub>4</sub><sup>-</sup>,https://doi.org/10.1016/j.gca.2006.07.034
-electron,OBIGT,2006,"See CHNOSZ vignette OBIGT.Rmd for more information","Non-zero entropy of the electron based on the hydrogen-ion convention",https://chnosz.net
 Dic07,"J. M. Dick",2007,"Ph.D. Dissertation, Univ. of California","glutathione, cystine, and cystine sidechain",
 MA07,"L. Marini and M. Accornero",2007,"Environ. Geol. 52, 1343-1363","metal-arsenate and metal-arsenite complexes; linked to properties of arsenate and arsenite from @SSWS97",https://doi.org/10.1007/s00254-006-0578-5
-SLOP07.1,"E. L. Shock et al.",2007,"slop07.dat computer data file","corrected charge of Pu(Oxal)<sup>+2</sup>",http://geopig.asu.edu/?q=tools
-SLOP07.2,"E. L. Shock et al.",2007,"slop07.dat computer data file","high-temperature HKF parameters from @AP01",http://geopig.asu.edu/?q=tools
+SLOP07.1,"E. L. Shock et al.",2007,"slop07.dat computer data file","corrected charge of Pu(Oxal)<sup>+2</sup>",https://doi.org/10.5281/zenodo.2630820
+SLOP07.2,"E. L. Shock et al.",2007,"slop07.dat computer data file","high-temperature HKF parameters from @AP01",https://doi.org/10.5281/zenodo.2630820
 ZW07,"S. P. Ziemer and E. M. Woolley",2007,"J. Chem. Thermodynamics 39, 645-666",glutamate,https://doi.org/10.1016/j.jct.2006.08.008
 Ric08,"L. Richard",2008,"personal communication",alkenes,
 PPB+08,"E. Perfetti et al.",2008,"Geochim. Cosmochim. Acta 72, 713-731","arsenopyrite, loellingite, and westerveldite",https://doi.org/10.1016/j.gca.2007.11.017
@@ -175,6 +182,7 @@ GM09,"K.-D. Grevel and J. Majzlan",2009,"Geochim. Cosmochim. Acta 73, 6805-6815"
 HRMNS09,"H. C. Helgeson, L. Richard et al.",2009,"Geochim. Cosmochim. Acta 73, 594-695","kerogens (C128, C292, C406, C415, C515) and pyrobitumen (C<sub>54</sub>H<sub>42</sub>)",https://doi.org/10.1016/j.gca.2008.03.004
 LRB09,"K. H. Lemke, R. J. Rosenbauer and D. K. Bird",2009,"Astrobiology 9, 141-146","diglycine and diketopiperazine",https://doi.org/10.1089/ast.2008.0166
 MWW09,"A. A. Migdisov, A. E. Williams-Jones and T. Wagner",2009,"Geochim. Cosmochim. Acta 73, 7087-7109","REE F<sup>-</sup> and Cl<sup>-</sup> complexes",https://doi.org/10.1016/j.gca.2009.08.023
+BZA10,"E. F. Bazarkina, A. V. Zotov and N. N. Akinfiev",2010,"Geol. Ore Deposits 52, 167-178","Cd chloride complexes",https://doi.org/10.1134/S1075701510020054
 AML10,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","metal-chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
 AML10.1,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","Np- and Am-chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
 AZ10,"N. N. Akinfiev and A. V. Zotov",2010,"Geochem. Int. 48, 714-720","MHS and M(HS)<sub>2</sub><sup>-</sup> (M = Au<sup>+</sup>, Ag<sup>+</sup>, or Cu<sup>+</sup>)",https://doi.org/10.1134/S0016702910070074
@@ -182,6 +190,7 @@ DS10,"J. Delgado Martin and A. Soler i Gil",2010,"Eur. J. Mineral. 22, 363-380",
 MA10,"L. Marini and M. Accornero",2010,"Environ. Earth Sci. 59, 1601-1606","corrected values",https://doi.org/10.1007/s12665-009-0369-x
 Sch10,"M. Schulte",2010,"Aquat. Geochem. 16, 621-637","organic sulfides",https://doi.org/10.1007/s10498-010-9102-3
 LBT+11,"W. Liu et al.",2011,"Geochim. Cosmochim. Acta 75, 1227-1248","Co-chloride complexes",https://doi.org/10.1016/j.gca.2010.12.002
+MMO+11,"Jiří Málek, Takefumi Mitsuhashi et al.",2011,"J. Chem. Thermodynamics 43, 405-409","GeS<sub>2</sub> (alpha)",https://doi.org/10.1016/j.jct.2010.10.011
 RG11,"L. Richard and X. Gaona",2011,"Geochim. Cosmochim. Acta 75, 7304-7350","organic iodine compounds",https://doi.org/10.1016/j.gca.2011.07.030
 LD12,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","4-hydroxyproline, 5-hydroxylysine, 4 dipeptides, and sidechain and backbone groups in proteins",https://doi.org/10.1016/j.gca.2011.11.041
 LD12.1,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","updated and corrected parameters for cysteine, glycine, leucine, and methionine",https://doi.org/10.1016/j.gca.2011.11.041
@@ -230,6 +239,7 @@ OBIGT.6,"J. M. Dick",2019,"OBIGT database in CHNOSZ","recalculated values of Cp 
 OBIGT.7,"J. M. Dick",2019,"OBIGT database in CHNOSZ","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: change Ti to Tl",https://chnosz.net
 OBIGT.8,"J. M. Dick",2019,"OBIGT database in CHNOSZ","GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",https://chnosz.net
 OBIGT.9,"J. M. Dick",2021,"OBIGT database in CHNOSZ","diaminopimelic acid, putrescine and spermidine: parameters recalculated to account for a missing [-CH2NH2] group in the group additivity equations",https://chnosz.net
+Bla17,"P. Blanc",2017,"Thermoddem: Update for the 2017 version","monteponite, Cd(OH)<sub>2</sub>, CdSO<sub>4</sub>, otavite, GaOOH, and Ga hydroxide complexes",https://thermoddem.brgm.fr/page/brgm-reports
 LCT17,"A. R. Lowe, J. S. Cox and P. R. Tremaine",2017,"J. Chem. Thermodynamics 112, 129-145","adenine HKF parameters",https://doi.org/10.1016/j.jct.2017.04.005
 DEW17.01,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(acetic acid, glycine, methanol, propanoic acid, propanol: parameters in DEW spreadsheet are the same as in @PS01)",http://www.dewcommunity.org
 DEW17.02,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(ethanol: parameters in DEW spreadsheet are different from @PS01; no comment provided)",http://www.dewcommunity.org
@@ -292,6 +302,7 @@ NEA20.1,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of U
 LXW21,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488",H<sub>2</sub>WO<sub>4</sub>,https://doi.org/10.1016/j.chemgeo.2021.120488
 LXW21.1,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488","scheelite Cp",https://doi.org/10.1016/j.chemgeo.2021.120488
 WV22,"A. E. Williams-Jones and O. V. Vasyukova",2022,"Econ. Geol. 117, 513-528","parameters listed here",https://doi.org/10.5382/econgeo.4895
+BS23,"G. Boyer and E. Shock",2023,"The Complicator (prototype)","In (indium) complexes",https://doi.org/10.5281/zenodo.8206644
 AZ23,"N. N. Akinfiev and A. V. Zotov",2023,"Geol. Ore Deposits 65, 1-10","Cu<sup>+</sup> and CuO<sup>-</sup>",https://doi.org/10.1134/S1075701523010026
 TTA+23,"N. D. Trofimov, B. R. Tagirov et al.",2023,"Chem. Geol. 625, 121413","Cu hydrosulfide and chloride complexes",https://doi.org/10.1016/j.chemgeo.2023.121413
 HDR+24,"B. P. von der Heyden et al.",2024,"Can. J. Mineral. Petrol. 62, 77-93",carrollite,https://doi.org/10.3749/2300028
@@ -301,3 +312,4 @@ RSS+24,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","alkylami
 RSS+24.1,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","corrected V for tripropylaminium",https://doi.org/10.1016/j.gca.2024.03.013
 TAT+24,"B. R. Tagirov, N. N. Akinfiev et al.",2024,"Geochim. Cosmochim. Acta","Au-(hydro)sulfide species and SO<sub>4</sub><sup>-2</sup>-bearing species",https://doi.org/10.1016/j.gca.2024.08.022
 TAZ24,"B. R. Tagirov, N. N. Akinfiev and A. V. Zotov",2024,"Geol. Ore Deposits 66, 581--597","Au hydroxide and chloride complexes",https://doi.org/10.1134/S1075701524600403
+HB24,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci.","Ga and In sulfate complexes [algorithms based on @SSH97]",https://doi.org/10.1080/08120099.2024.2423772

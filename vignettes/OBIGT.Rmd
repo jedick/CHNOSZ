@@ -421,6 +421,10 @@ Updates for Au and Cu complexes and SO<sub>4</sub><sup>-2</sup>-bearing species 
 
 Model for the Mg(OH)<sub>2</sub>-MgCl<sub>2</sub>-H<sub>2</sub>O system at 25 to 150 &deg;C from researchers at Sandia National Laboratories [@KBJ24].
 
+<h3>GA</h3>
+
+Germanium, indium, gallium, and cadmium species from researchers at Geoscience Australia [@HB24].
+
 <h3>Citations</h3>
 
 ```{r optreflist, results="asis", echo=FALSE}

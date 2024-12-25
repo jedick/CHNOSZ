@@ -399,4 +399,22 @@
 "SUPCRT92","greenalite","cr","cal",,,142507
 "SUPCRT92","grunerite","cr","cal",9.72,,
 "SUPCRT92","halloysite","cr","cal",-1.6,,
+"GA","cadmium","cr","J",-22.72,,
+"GA","otavite","cr","J",,,677368
+"GA","GaOH+2","aq","J",9.07,,
+"GA","Ga(OH)4-","aq","J",-3.75,,
+"GA","GaSO4+","aq","cal",2.05,,
+"GA","Ga(SO4)2-","aq","cal",-19.44,-36.42,
+"GA","germanium","cr","J",17.63,,
+"GA","InCl+2","aq","cal",,,7343
+"GA","InCl2+","aq","cal",,,7350
+"GA","InCl3","aq","cal",,,7358
+"GA","InF+2","aq","cal",,,7346
+"GA","InF2+","aq","cal",,,7357
+"GA","InF3","aq","cal",,,7367
+"GA","InF4-","aq","cal",,,7378
+"GA","InSO4+","aq","cal",3.64,,7358
+"GA","In(SO4)2-","aq","cal",-19.05,-33.6,7380
+"GA","InHS+2","aq","cal",,,7362
+"GA","In(HS)2+","aq","cal",,,7389
 "Sandia","2-1-4 phase","cr","J",-4.39,,

@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-31 (2024-12-25)}{
+\section{Changes in CHNOSZ version 2.1.0-33 (2024-12-25)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -66,6 +66,10 @@
       \item Add \file{testing/REE.csv}: REE(III) fluoride and chloride complexes from
       \href{https://doi.org/10.1016/j.gca.2009.08.023}{Migdisov et al. (2009)}
       (previously available in CHNOSZ verisons 0.9-5 to 1.0.8).
+
+      \item Add \file{testing/GA.csv}: Germanium, indium, gallium, and cadmium
+      species from \href{https://doi.org/10.1080/08120099.2024.2423772}{Huston
+        and Bastrakov (2024)}.
 
     }
   }
