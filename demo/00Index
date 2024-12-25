@@ -1,4 +1,4 @@
-sources         Cross-check the reference list with the thermodynamic database
+references      Cross-check the references in refs.csv with the thermodynamic database
 protein.equil   Chemical activities of two proteins in metastable equilibrium
 affinity        Affinities of metabolic reactions and amino acid synthesis
 NaCl            Equilibrium constant for aqueous NaCl dissociation

@@ -2,7 +2,7 @@
 \name{add.OBIGT}
 \alias{add.OBIGT}
 \alias{mod.OBIGT}
-\title{Functions to work with the thermodynamic database}
+\title{Functions to Work with the Thermodynamic Database}
 \description{
 Add or modify species in the thermodynamic database.
 }
@@ -135,11 +135,11 @@ OBIGT()
 # Another use of add.OBIGT(): calculate Delta G of
 # H4SiO4 = SiO2 + 2H2O using various sources of data for SiO2.
 # First, get H4SiO4 from Stefansson, 2001
-add.OBIGT("AS04", "H4SiO4")
+add.OBIGT("SiO2", "H4SiO4")
 T <- seq(0, 350, 10)
 s1 <- subcrt(c("H4SiO4", "SiO2", "H2O"), c(-1, 1, 2), T = T)
 # Now, get SiO2 from Apps and Spycher, 2004
-add.OBIGT("AS04", "SiO2")
+add.OBIGT("SiO2", "SiO2")
 s2 <- subcrt(c("H4SiO4", "SiO2", "H2O"), c(-1, 1, 2), T = T)
 # Plot logK from the first and second calculations
 plot(T, s1$out$G, type = "l", xlab = axis.label("T"),

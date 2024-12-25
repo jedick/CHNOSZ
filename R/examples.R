@@ -30,7 +30,7 @@ examples <- function(save.png = FALSE) {
   cat("Time elapsed: ", proc.time() - .ptime, "\n")
 }
 
-demos <- function(which = c("sources", "protein.equil", "affinity", "NaCl", "density", 
+demos <- function(which = c("references", "protein.equil", "affinity", "NaCl", "density", 
   "ORP", "ionize", "buffer", "protbuff", "glycinate",
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "minsol",
   "Shh", "saturation", "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum",

@@ -120,8 +120,8 @@ add.OBIGT <- function(file, species = NULL, force = TRUE) {
   if(!file.exists(file)) {
 
     # List all files in OBIGT and OBIGT/testing
-    OBIGT_files <- dir(system.file("extdata/OBIGT/", package = "CHNOSZ"), full.names = TRUE)
-    testing_files <- dir(system.file("extdata/OBIGT/testing", package = "CHNOSZ"), full.names = TRUE)
+    OBIGT_files <- dir(system.file("extdata/OBIGT", package = "CHNOSZ"), pattern = ".csv", full.names = TRUE)
+    testing_files <- dir(system.file("extdata/OBIGT/testing", package = "CHNOSZ"), pattern = ".csv", full.names = TRUE)
     all_files <- c(OBIGT_files, testing_files)
     # Match argument to file names without path or .csv suffix
     all_names <- gsub(".csv", "", basename(all_files))

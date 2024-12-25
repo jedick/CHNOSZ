@@ -217,7 +217,7 @@ Except for Optional Data, all data are present in the default database, which is
 Each section below corresponds to one of the CSV data files in the `extdata/OBIGT` package directory.
 Clicking on a button opens that section, which contains a list of primary references (from column `ref1` in the file) in chronological order.
 Any secondary references (`ref2`) are listed with bullet points under the primary reference.
-Each citation is followed by the number of species, and a note taken from the file `extdata/OBIGT/refs.csv`.
+Each citation is followed by the number of species, and a note taken from the file `extdata/refs.csv`.
 Additional comments (from this vignette) are present for some sections.
 
 Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthalpy, entropy), Cp (heat capacity), V (volume), HKF (<abbr title="Tanger and Helgeson, 1988">revised</abbr> <abbr title="Helgeson et al., 1981">Helgeson-Kirkham-Flowers</abbr> equations).
@@ -397,8 +397,9 @@ Most of the comments below were transcribed from the DEW spreadsheet. (Comments 
 ## <a id="optional-Testing" class="anchor"></a> `r setfile("testing")`
 
 These are optional data files used for testing purposes.
+Load the data with e.g. `add.OBIGT("GEMSFIT")`.
 
-<h3>AS04</h3>
+<h3>SiO2</h3>
 
 Aqueous SiO<sub>2</sub> from @AS04 and HSiO<sub>3</sub><sup>-</sup> modified to be consistent with it.
 This file also has H<sub>4</sub>SiO<sub>4</sub> from an earlier publication [@Ste01] that is roughly consistent with the SiO<sub>2</sub> here.
@@ -408,11 +409,11 @@ See `demo(aluminum)` and the vignette [<span style="color:blue">*Regressing ther
 
 Internally consistent dataset for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl obtained with the [GEMSFIT](https://doi.org/10.1016/j.apgeochem.2014.10.013) package [@MWKH16;@MWKL17].
 
-<h3>IGEM24</h3>
+<h3>IGEM</h3>
 
 Updates for Au and Cu complexes and SO<sub>4</sub><sup>-2</sup>-bearing species from researchers at the Institute of Geology of Ore Deposits, Petrography, Mineralogy, and Geochemistry, Russian Academy of Sciences (IGEM RAS) [@AZ23;@TTA+23;@TAT+24;@TAZ24].
 
-<h3>KBJ24</h3>
+<h3>Sandia</h3>
 
 Model for the Mg(OH)<sub>2</sub>-MgCl<sub>2</sub>-H<sub>2</sub>O system at 25 to 150 &deg;C from researchers at Sandia National Laboratories [@KBJ24].
 

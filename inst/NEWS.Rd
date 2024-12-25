@@ -52,13 +52,13 @@
       have been moved to \file{SLOP98.csv}.
 
       \item Make new directory \file{OBIGT/testing} to hold optional data files
-      for testing (currently \file{AS04.csv}, \file{GEMSFIT.csv},
-      \file{IGEM24.csv}, and \file{KBJ24.csv}).
+      for testing (currently \file{SiO2.csv}, \file{GEMSFIT.csv},
+      \file{IGEM.csv}, and \file{Sandia.csv}).
 
-      \item Add \file{IGEM24.csv}: updated data for Au and Cu complexes and
+      \item Add \file{IGEM.csv}: updated data for Au and Cu complexes and
       SO\s{4}\S{-2}-bearing species from researchers at IGEM RAS.
       
-      \item Add \file{KBJ24.csv}: Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
+      \item Add \file{Sandia.csv}: Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
       \href{https://doi.org/10.1016/j.apgeochem.2024.106032}{Knight et al.
         (2024)}.
 

@@ -357,8 +357,8 @@ EOSplot(NaVdat, coefficients = coefficients, Z = 1, add = TRUE, lty = 2,
 Some mineral stability diagrams use the activity of `r h4sio4` as a variable.
 However, the primary species for dissolved silica in CHNOSZ is `r sio2`(aq).
 As recommended by @WJ17, let us use data for `r sio2`(aq) from @AS04, which gives a higher solubility of quartz compared to values from @SHS89 that are loaded by default in the package:
-```{r AS04, message=FALSE}
-add.OBIGT("AS04")
+```{r add_SiO2, message=FALSE}
+add.OBIGT("SiO2")
 ```
 
 The pseudo-reaction with zero properties, `r h4sio4` = `r sio2`  + 2 `r h2o`, defines the properties of the pseudospecies `r h4sio4`.

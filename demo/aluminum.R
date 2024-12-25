@@ -25,7 +25,7 @@ basis(delete = TRUE)
 # boehmite from Hemingway et al., 1991
 r1 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
 ## Second calculation: get SiO2(aq) from Apps and Spycher, 2004
-add.OBIGT("AS04")
+add.OBIGT("SiO2")
 r2 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
 reset()
 ## Third calculation: get Si(OH)4 from Akinfiev and Plyasunov, 2014
@@ -48,7 +48,7 @@ points(seq(125, 350, 25), -c(3.489, 3.217, 2.967, 2.734, 2.517, 2.314, 2.124, 1.
 title(main = describe.reaction(r4$reaction), cex.main = 1.1)
 legend("bottomright", lty = c(0, 0, 1, 2, 3, 0), pch = c(1, 4, NA, NA, NA, NA), lwd = c(1, 1, 1.5, 1, 1, 0),
        col = c("black", "red", "black", "red", "purple", NA), bty = "n", cex = 0.9,
-       legend = c("Hemley et al., 1980", "SUPCRTBL", "CHNOSZ", 'add.OBIGT("AS04")', 'add.OBIGT("AD")', ""))
+       legend = c("Hemley et al., 1980", "SUPCRTBL", "CHNOSZ", 'add.OBIGT("SiO2")', 'add.OBIGT("AD")', ""))
 legend("bottomright", lty = 4, pch = NA, lwd = 1, col = "blue", legend = 'add.OBIGT("SUPCRT92")', bty = "n", cex = 0.9)
 legend("topleft", c("Boehmite - Kaolinite", "After Zhu and Lu, 2009 Fig. A1"), bty = "n")
 # Helgeson et al., 1978 (HDNB78): http://www.worldcat.org/oclc/13594862
@@ -105,7 +105,7 @@ sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2"), c(-1, -2, -1, 2
 pK <- -sres$out$logK
 lines(invTK, pK, lwd = 1.5)
 # Plot line: SiO2 from Apps and Spycher, 2004
-add.OBIGT("AS04")
+add.OBIGT("SiO2")
 sres <- subcrt(c("kaolinite", "OH-", "H2O", "Al(OH)4-", "SiO2"), c(-1, -2, -1, 2, 2), T = T)
 pK <- -sres$out$logK
 lines(invTK, pK, col = "red", lty = 2)
@@ -133,7 +133,7 @@ par(xpd = FALSE)
 legend("topright", c("Kaolinite solubility", "After Tutolo et al., 2014 Fig. 2"), bty = "n")
 legend("bottomleft", lty = c(0, 0, 0, 1, 2, 3, 4), pch = c(1, NA, 4, NA, NA, NA, NA),
        lwd = c(1, 1, 1, 1.5, 1, 1, 1), col = c("black", "black", "red", "black", "red", "purple", "blue"),
-       legend = c("Various sources \u2013", "  see Tutolo et al., 2014", "SUPCRTBL", "CHNOSZ", 'add.OBIGT("AS04")', 'add.OBIGT("AD")', 'add.OBIGT("SUPCRT92")'),
+       legend = c("Various sources \u2013", "  see Tutolo et al., 2014", "SUPCRTBL", "CHNOSZ", 'add.OBIGT("SiO2")', 'add.OBIGT("AD")', 'add.OBIGT("SUPCRT92")'),
        bty = "n", cex = 0.9)
 
 ###########

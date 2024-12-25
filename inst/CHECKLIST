@@ -1,6 +1,6 @@
 ****************************
 Release checklist for CHNOSZ
-   (updated 2024-02-11)
+   (updated 2024-12-25)
 ****************************
 
 - Run examples() and demos() and inspect their output (especially plots)
@@ -19,11 +19,11 @@ Updating data in OBIGT
 - Add BibTeX references to vignettes/OBIGT.bib
   (used in the OBIGT.Rmd vignette).
 
-- Add references and notes to extdata/OBIGT/refs.csv
+- Add references and notes to extdata/refs.csv
   (also used in the OBIGT.Rmd vignette and thermo.refs()).
 
-- Check output of demo/sources.R to make sure all references
-  are cited (printed results should be character(0)).
+- Check output of demo/references.R to cross-check references in refs.csv with
+  OBIGT files.
 
 - Rebuild extdata/thermo/stoich.csv.xz after all data updates
   (used in retrieve() to search the databse by element):

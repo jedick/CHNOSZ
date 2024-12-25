@@ -1513,7 +1513,7 @@ Examples are in [<span style="color:blue">`demo(DEW)`</span>](../demo).
 
 <span style="color:red">`add.OBIGT("GEMSFIT")`</span> -- Thermodynamic data for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl obtained from global optimization of Gibbs energies with the GEMSFIT package [@MWKL17].
 
-<span style="color:red">`add.OBIGT("AS04")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
+<span style="color:red">`add.OBIGT("SiO2")`</span> -- This file has data for aqueous `r sio2` from @AS04 and modified HSiO<sub>3</sub><sup>-</sup>.
 These data reflect a revised (higher) solubility of quartz compared to previous compilations, but are not included in the default database in order to maintain compatibility with existing data for minerals that are linked to the older aqueous `r sio2` data.
 See [<span style="color:blue">`demo(aluminum)`</span>](../demo) for an example.
 

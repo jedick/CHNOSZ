@@ -78,7 +78,7 @@ OBIGT <- function(no.organics = FALSE) {
   # Create OBIGT data frame
   OBIGT <- do.call(rbind, datalist)
   # Also read references file
-  refs <- read.csv(file.path(OBIGTdir, "refs.csv"), as.is = TRUE)
+  refs <- read.csv(file.path(OBIGTdir, "../refs.csv"), as.is = TRUE)
   # Get thermo from CHNOSZ environment
   thermo <- get("thermo", CHNOSZ)
   # Set OBIGT and refs

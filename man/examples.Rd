@@ -13,7 +13,7 @@
 
 \usage{
   examples(save.png = FALSE)
-  demos(which = c("sources", "protein.equil", "affinity", "NaCl",
+  demos(which = c("references", "protein.equil", "affinity", "NaCl",
     "density", "ORP", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "minsol", "Shh", "saturation",
@@ -32,7 +32,7 @@
 The demo(s) to run is/are specified by \code{which}; the default is to run them in the order of the list below.
 
   \describe{
-    \item{sources}{Cross-check the reference list with the thermodynamic database}
+    \item{references}{Cross-check the references in refs.csv with the thermodynamic database}
     \item{protein.equil}{Chemical activities of two proteins in metastable equilibrium (Dick and Shock, 2011)}
     \item{affinity}{Affinities of metabolic reactions and amino acid synthesis (Amend and Shock, 1998, 2001)}
     \item{NaCl}{Equilibrium constant for aqueous NaCl dissociation (Shock et al., 1992)}
