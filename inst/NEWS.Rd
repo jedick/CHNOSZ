@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-33 (2024-12-25)}{
+\section{Changes in CHNOSZ version 2.1.0-34 (2024-12-26)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -30,12 +30,15 @@
       \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al. (1997)}
       have been moved to optional data (\file{SLOP98.csv}).
 
+      \item Add alkylamines, benzylamines, and aminiums from
+      \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
+
+      \item Add tantalum species from
+      \href{https://doi.org/10.1016/j.gca.2024.10.019}{Hu et al. (2024)}.
+
       \item Move americium complexes from \file{SLOP98.csv} back to
       \file{inorganic_aq.csv} (entropy of the element Am has been available for
       checking GHS self-consistency since version 1.4.0).
-
-      \item Add alkylamines, benzylamines, and aminiums from
-      \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
 
       \item \file{inorganic_cr.csv}: Add cerianite (CeO\s{2}) and
       chromite (FeCr\s{2}O\s{4}) from
