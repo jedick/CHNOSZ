@@ -38,7 +38,7 @@ Because balancing on a basis species (i.e., dividing by its reaction coefficient
 
 \examples{
 \dontshow{reset()}# Compare Rubisco proteins from three domains
-datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")
+datfile <- system.file("extdata/misc/rubisco.csv", package = "CHNOSZ")
 fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 dat <- read.csv(datfile)
 aa <- canprot::read_fasta(fastafile)

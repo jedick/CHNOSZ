@@ -22,7 +22,7 @@ thermo("opt$G.tol" = 50)
 expect_message(info(i2), "check.GHS", info = info)
 
 info <- "RH2OBIGT() gives group additivity results consistent with database values (from Richard and Helgeson, 1998)"
-file <- system.file("extdata/adds/RH98_Table15.csv", package = "CHNOSZ")
+file <- system.file("extdata/misc/RH98_Table15.csv", package = "CHNOSZ")
 dat <- read.csv(file, stringsAsFactors = FALSE)
 ispecies <- info(dat$compound, dat$state)
 OBIGT.ref <- thermo()$OBIGT[ispecies, ]
@@ -44,7 +44,7 @@ info <- "add.OBIGT() replaces existing entries without changing species index"
 # Store the original species index of CdCl2
 iCdCl2 <- info("CdCl2", "aq")
 # Add supplemental database - includes CdCl2
-file <- system.file("extdata/adds/BZA10.csv", package = "CHNOSZ")
+file <- system.file("extdata/misc/BZA10.csv", package = "CHNOSZ")
 isp <- add.OBIGT(file)
 # Species index of CdCl2 should not have changed
 expect_equal(info("CdCl2", "aq"), iCdCl2, info = info)
@@ -61,7 +61,7 @@ expect_error(add.OBIGT(file), info = info)
 info <- "info() gives consistent messages for cal and J"
 # Test added 20190529
 # Add data for dimethylamine and trimethylamine in different units (cal or J)
-expect_message(add.OBIGT(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ")), "energy units: J and cal", info = info)
+expect_message(add.OBIGT(system.file("extdata/misc/LA19_test.csv", package = "CHNOSZ")), "energy units: J and cal", info = info)
 expect_message(info(info("DMA_cal")), "-1.92 cal", info = info)
 expect_message(info(info("DMA_J")), "-8.02 J", info = info)
 # For TMA, only a check.GHS message for the entry in J is produced,
@@ -72,7 +72,7 @@ expect_message(info(info("TMA_J")), "-102 J", info = info)
 info <- "Missing values for G, Cp, and V are correct in cal and J"
 # Test added 20190530
 # Add data for dimethylamine and trimethylamine in different units (cal or J)
-add.OBIGT(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ"))
+add.OBIGT(system.file("extdata/misc/LA19_test.csv", package = "CHNOSZ"))
 calccal <- info(info("DMA_cal_NA"))
 expect_equal(round(calccal$G), 13934, info = info)
 expect_equal(round(calccal$Cp, 1), 60.3, info = info)
@@ -85,7 +85,7 @@ expect_equal(round(calcJ$V, 1), 58.2, info = info)
 info <- "subcrt() gives same results for data entered in cal and J"
 # Test added 20190530
 # Add data for dimethylamine and trimethylamine in different units (cal or J)
-add.OBIGT(system.file("extdata/adds/LA19_test.csv", package = "CHNOSZ"))
+add.OBIGT(system.file("extdata/misc/LA19_test.csv", package = "CHNOSZ"))
 E.units("cal")
 scal <- subcrt("DMA_cal")
 sJ <- subcrt("DMA_J")

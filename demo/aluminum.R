@@ -95,7 +95,7 @@ reset()
 ### Plot 3: kaolinite solubility
 ###########
 # After Tutolo et al., 2014, Fig. 2 (doi:10.1016/j.gca.2014.02.036)
-dat <- read.csv(system.file("extdata/cpetc/TKSS14_Fig2.csv", package = "CHNOSZ"))
+dat <- read.csv(system.file("extdata/misc/TKSS14_Fig2.csv", package = "CHNOSZ"))
 thermo.plot.new(c(3.5, 1.5), c(-2, 14), quote(1000 / italic(T)*"(K)"), quote(p*italic(K)))
 points(dat)
 # Plot line: default database
@@ -149,7 +149,7 @@ P <- 150
 a <- affinity("K+" = c(4, 7), "Na+" = c(6, 9), T = T, P = P)
 diagram(a, lwd = 1.5, xlab = ratlab("K+"), ylab = ratlab("Na+"), names = FALSE)
 # Plot experimental data
-dat <- read.csv(system.file("extdata/cpetc/Mer75_Table4.csv", package = "CHNOSZ"))
+dat <- read.csv(system.file("extdata/misc/Mer75_Table4.csv", package = "CHNOSZ"))
 points(dat$log.aK..aH.., dat$log.aNa..aH..)
 # Plot line calculated using SUPCRT92 data
 add.OBIGT("SUPCRT92")

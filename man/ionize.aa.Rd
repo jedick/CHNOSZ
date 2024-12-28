@@ -52,7 +52,7 @@ for(pH in c(5, 9, 3)) {
 T <- c(5, 25, 50, 75, 100, 125)
 points(T, MP90.cp("LYSC_CHICK", T))
 # Privalov and Makhatadze's experimental values
-e <- read.csv(system.file("extdata/cpetc/PM90.csv", package = "CHNOSZ"))
+e <- read.csv(system.file("extdata/misc/PM90.csv", package = "CHNOSZ"))
 points(e$T, e$LYSC_CHICK, pch = 16)
 legend("bottomright", pch = c(16, 1, NA, NA), lty = c(NA, NA, 1, 2),
   legend = c("PM90 experiment", "MP90 groups", 

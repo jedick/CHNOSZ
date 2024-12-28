@@ -204,7 +204,7 @@ OPTIONAL but useful:
 
 - `r abbrv` *may be* an abbreviation (e.g. Qtz for quartz). It is used by `r info_` (together with `r name` and `r formula`) to look up species in the database.
 - `r date` is a timestamp for the data entry (YYYY-MM-DD format in the default OBIGT database).
-- `r ref1` and `r ref2` are bibliographic reference keys. They have matching entries in `extdata/refs.csv`, which is used by `r thermo.refs_` to display references, and in `vignettes/OBIGT.bib`, which is used in the [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) vignette to produce a reference list. 
+- `r ref1` and `r ref2` are bibliographic reference keys. They have matching entries in `extdata/thermo/refs.csv`, which is used by `r thermo.refs_` to display references, and in `vignettes/OBIGT.bib`, which is used in the [<span style="color:blue">*OBIGT thermodynamic database*</span>](OBIGT.html) vignette to produce a reference list. 
   
 `r NOTE`: Other functions in CHNOSZ do not depend on `r date`, `r ref1`, and `r ref2`, so you can put anything there that is convenient for you.
 
@@ -328,7 +328,7 @@ The file must be a CSV (comma separated value) file with column headers that mat
 As an example, here are the contents of `BZA10.csv`, which has parameters taken from @BZA10.
 Missing values are indicated by `NA`:
 ```{r BZA10}
-file <- system.file("extdata/adds/BZA10.csv", package = "CHNOSZ")
+file <- system.file("extdata/misc/BZA10.csv", package = "CHNOSZ")
 read.csv(file, as.is = TRUE)
 ```
 

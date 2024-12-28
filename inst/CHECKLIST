@@ -19,7 +19,7 @@ Updating data in OBIGT
 - Add BibTeX references to vignettes/OBIGT.bib
   (used in the OBIGT.Rmd vignette).
 
-- Add references and notes to extdata/refs.csv
+- Add references and notes to extdata/thermo/refs.csv
   (also used in the OBIGT.Rmd vignette and thermo.refs()).
 
 - Check output of demo/references.R to cross-check references in refs.csv with
@@ -32,7 +32,7 @@ Updating data in OBIGT
   write.csv(stoich, "stoich.csv")
   system("xz -f stoich.csv")
 
-- Rebuild extdata/adds/OBIGT_check.csv after all data updates:
+- Rebuild extdata/misc/OBIGT_check.csv after all data updates:
   (not used elsewhere in CHNOSZ, but helpful to see which
   species entries have self inconsistencies):
   co <- check.OBIGT()

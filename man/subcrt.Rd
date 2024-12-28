@@ -176,7 +176,7 @@ s <- subcrt("Fe", T=seq(300, 1800, 20), P=1)
 plot(s$out[[1]]$T, s$out[[1]]$Cp, type="l",
   xlab=axis.label("T"), ylab=axis.label("Cp"))
 # Add points from RH95
-RH95 <- read.csv(system.file("extdata/cpetc/RH95.csv", package="CHNOSZ"))
+RH95 <- read.csv(system.file("extdata/misc/RH95.csv", package="CHNOSZ"))
 points(RH95[,1], RH95[,2])
 title(main=paste("Heat capacity of Fe(cr)\n",
   "(points - Robie and Hemingway, 1995)"))

@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-34 (2024-12-26)}{
+\section{Changes in CHNOSZ version 2.1.0-35 (2024-12-28)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -98,6 +98,9 @@
       subscripted by \code{axis.label()} (via \code{expr.species()}). An
       example of the new formatting is log \emph{f}O\s{2}. Similar formatting
       for other expressions has been used in the vignettes.
+
+      \item Merge \file{extdata/adds} and \file{extdata/cpetc} into
+      \file{extdata/misc}.
 
     }
   }

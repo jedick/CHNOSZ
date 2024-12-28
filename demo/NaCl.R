@@ -14,7 +14,7 @@ library(CHNOSZ)
 # Start a new plot and show the experimental logK
 thermo.plot.new(xlim=c(0, 1000), ylim=c(-5.5, 1),
   xlab=axis.label("T"), ylab=axis.label("logK"))
-expt <- read.csv(system.file("extdata/cpetc/SOJSH.csv", 
+expt <- read.csv(system.file("extdata/misc/SOJSH.csv", 
   package="CHNOSZ"), as.is=TRUE)
 points(expt$T,expt$logK, pch=expt$pch)
 

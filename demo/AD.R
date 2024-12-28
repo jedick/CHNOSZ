@@ -44,7 +44,7 @@ lines.KH("CO2", 1:373, "Psat")
 lines.KH("CO2", seq(100, 650, 10), 500)
 lines.KH("CO2", 1:373, "Psat", HKF = TRUE)
 lines.KH("CO2", seq(100, 650, 10), 500, HKF = TRUE)
-dat <- read.csv(system.file("extdata/cpetc/AD03_Fig1a.csv", package = "CHNOSZ"))
+dat <- read.csv(system.file("extdata/misc/AD03_Fig1a.csv", package = "CHNOSZ"))
 points(dat$x, dat$y, pch = dat$pch)
 text(3.5, 7.8, quote(italic(P)[sat]))
 text(3.05, 9.2, "500 bar")
@@ -60,7 +60,7 @@ lines.KH("H2", 1:373, "Psat", HKF = TRUE)
 lines.KH("H2", seq(100, 650, 10), 1000, HKF = TRUE)
 text(3.4, 11.4, quote(italic(P)[sat]))
 text(1.5, 11, "1000 bar")
-dat <- read.csv(system.file("extdata/cpetc/AD03_Fig1b.csv", package = "CHNOSZ"))
+dat <- read.csv(system.file("extdata/misc/AD03_Fig1b.csv", package = "CHNOSZ"))
 points(dat$x, dat$y, pch = dat$pch)
 legend("bottomright", c("Data (AD03, Fig. 1b)", "AD model", "Revised HKF model"),
        lty = c(0, 1, 2), pch = c(1, NA, NA), col = c(1, 1, 2), bty = "n")
@@ -74,7 +74,7 @@ lines.KH("H2S", 1:373, "Psat", altH2S = TRUE)
 lines.KH("H2S", seq(100, 650, 10), 1000, altH2S = TRUE)
 lines.KH("H2S", 1:373, "Psat", HKF = TRUE)
 lines.KH("H2S", seq(100, 650, 10), 1000, HKF = TRUE)
-dat <- read.csv(system.file("extdata/cpetc/AD03_Fig1c.csv", package = "CHNOSZ"))
+dat <- read.csv(system.file("extdata/misc/AD03_Fig1c.csv", package = "CHNOSZ"))
 points(dat$x, dat$y, pch = dat$pch)
 text(3.4, 6.9, quote(italic(P)[sat]))
 text(3.1, 8.6, "1000 bar")
@@ -86,7 +86,7 @@ title(main = syslab(c("H2S", "H2O"), dash = " - "))
 plot(0, 0, xlim = c(1.5, 4), ylim = c(8, 12), xlab = xlab, ylab = ylab)
 lines.KH("CH4", 1:350, "Psat")
 lines.KH("CH4", 1:350, "Psat", HKF = TRUE)
-dat <- read.csv(system.file("extdata/cpetc/AD03_Fig1d.csv", package = "CHNOSZ"))
+dat <- read.csv(system.file("extdata/misc/AD03_Fig1d.csv", package = "CHNOSZ"))
 points(dat$x, dat$y, pch = dat$pch)
 text(3.4, 11, quote(italic(P)[sat]))
 legend("bottomright", c("Data (AD03, Fig. 1d)", "AD model", "Revised HKF model"),
@@ -110,7 +110,7 @@ lines.V <- function(species = "CO2", T = seq(300, 440, 1), P = 280, HKF = FALSE)
 }
 
 # Read file with V data for four species
-file <- system.file("extdata/cpetc/HWM96_V.csv", package = "CHNOSZ")
+file <- system.file("extdata/misc/HWM96_V.csv", package = "CHNOSZ")
 dat <- read.csv(file)
 # Use data near 280 bar
 dat <- dat[abs(dat$P - 28) < 0.1, ]
@@ -154,7 +154,7 @@ lines.Cp <- function(species = "CO2", T = seq(300, 440, 1), P = 280, HKF = FALSE
 }
 
 # Read file with Cp data for four species
-file <- system.file("extdata/cpetc/HW97_Cp.csv", package = "CHNOSZ")
+file <- system.file("extdata/misc/HW97_Cp.csv", package = "CHNOSZ")
 dat <- read.csv(file)
 # Setup plot
 par(mfrow = c(2, 2))

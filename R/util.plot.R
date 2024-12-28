@@ -205,7 +205,7 @@ ZC.col <- function(z) {
   # Diverging (blue - light grey - red) palette
   # dcol <- colorspace::diverge_hcl(1000, c = 100, l = c(50, 90), power = 1)
   # Use precomputed values
-  file <- system.file("extdata/cpetc/bluered.txt", package = "CHNOSZ")
+  file <- system.file("extdata/misc/bluered.txt", package = "CHNOSZ")
   dcol <- read.table(file, as.is = TRUE)[[1]]
   # Reverse the palette so red is at lower ZC (more reduced)
   rev(dcol)[z]

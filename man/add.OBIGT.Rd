@@ -96,7 +96,7 @@ SSH97 <- lapply(1:4, function(i) {
   subcrt(c(Cdspecies[i], "Cl-", Cdspecies[i+1]),
     c(-1, -1, 1), T=25, P=P)$out$logK
 })
-file <- system.file("extdata/adds/BZA10.csv", package="CHNOSZ")
+file <- system.file("extdata/misc/BZA10.csv", package="CHNOSZ")
 add.OBIGT(file)
 BZA10 <- lapply(1:4, function(i) {
   subcrt(c(Cdspecies[i], "Cl-", Cdspecies[i+1]),

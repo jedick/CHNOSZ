@@ -322,7 +322,7 @@ check.OBIGT <- function() {
   return(out)
 }
 
-RH2OBIGT <- function(compound = NULL, state = "cr", file = system.file("extdata/adds/RH98_Table15.csv", package = "CHNOSZ")) {
+RH2OBIGT <- function(compound = NULL, state = "cr", file = system.file("extdata/misc/RH98_Table15.csv", package = "CHNOSZ")) {
   # Get thermodynamic properties and equations of state parameters using 
   #   group contributions from Richard and Helgeson, 1998   20120609 jmd
   # Read the compound names, physical states, chemical formulas and group stoichiometry from the file

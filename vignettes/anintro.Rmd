@@ -722,7 +722,7 @@ Let's use this feature to calculate affinities (negative Gibbs energies) of meth
 Some results of mixing calculations for seawater and vent fluid from the Rainbow hydrothermal field, calculated using EQ3/6 by @SC10, are included in a data file in CHNOSZ.
 Reading the file with R's `read.csv()`, we set `check.names = FALSE` to preserve the `NH4+` column name (which is not a syntactically valid variable name):
 ```{r rainbow_data}
-file <- system.file("extdata/cpetc/SC10_Rainbow.csv", package = "CHNOSZ")
+file <- system.file("extdata/misc/SC10_Rainbow.csv", package = "CHNOSZ")
 rb <- read.csv(file, check.names = FALSE)
 ```
 
@@ -1161,7 +1161,7 @@ Let's compare experimental values of heat capacity of four proteins, from @PM90,
 We divide Privalov and Makhatadze's experimental values by the lengths of the proteins to get per-residue values, then plot them.
 
 ```{r protein_Cp, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, out.width="100%", echo=FALSE, message=FALSE, fig.cap='The heat capacity calculated by group additivity closely approximates experimental values for aqueous proteins.', cache=TRUE, pngquant=pngquant, timeit=timeit}
-PM90 <- read.csv(system.file("extdata/cpetc/PM90.csv", package = "CHNOSZ"))
+PM90 <- read.csv(system.file("extdata/misc/PM90.csv", package = "CHNOSZ"))
 plength <- protein.length(colnames(PM90)[2:5])
 Cp_expt <- t(t(PM90[, 2:5]) / plength)
 matplot(PM90[, 1], Cp_expt, type = "p", pch = 19,
@@ -1252,7 +1252,7 @@ Next, point symbols are assigned according to domain (Archaea, Bacteria, Eukaryo
 file.copy("rubisco.svg", fig_path(".svg"))
 ## the code for making the SVG image -- not "live" in the vignette because RSVGTipsDevice isn't available on Windows
 #if(require(RSVGTipsDevice)) {
-#  datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")
+#  datfile <- system.file("extdata/misc/rubisco.csv", package = "CHNOSZ")
 #  fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 #  dat <- read.csv(datfile)
 #  aa <- canprot::read_fasta(fastafile)
@@ -1287,7 +1287,7 @@ file.copy("rubisco.svg", fig_path(".svg"))
 ```
 
 ```{r rubisco_ZC, fig.keep="none", message=FALSE}
-datfile <- system.file("extdata/cpetc/rubisco.csv", package = "CHNOSZ")
+datfile <- system.file("extdata/misc/rubisco.csv", package = "CHNOSZ")
 fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 dat <- read.csv(datfile)
 aa <- canprot::read_fasta(fastafile)
@@ -1538,7 +1538,7 @@ After checking for any typographical errors in the entries for Δ*G*°<sub>*f*</
 
 All of the species with inconsistencies detected in this manner, in both OBIGT and the optional data files, are listed in the file `OBIGT_check.csv`.
 ```{r check_OBIGT}
-file <- system.file("extdata/adds/OBIGT_check.csv", package = "CHNOSZ")
+file <- system.file("extdata/misc/OBIGT_check.csv", package = "CHNOSZ")
 dat <- read.csv(file, as.is = TRUE)
 nrow(dat)
 ```

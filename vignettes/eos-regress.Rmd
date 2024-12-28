@@ -142,7 +142,7 @@ reset()
 Now, read a data file with experimental measurements from @HW97 and convert pressures in MPa to bar (the values of `r Cp0` in Joules will be used as-is):
 
 ```{r Cpdat}
-file <- system.file("extdata/cpetc/HW97_Cp.csv", package = "CHNOSZ")
+file <- system.file("extdata/misc/HW97_Cp.csv", package = "CHNOSZ")
 Cpdat <- read.csv(file)
 # Use data for CH4
 Cpdat <- Cpdat[Cpdat$species == "CH4", ]
@@ -196,7 +196,7 @@ Let's regress volumetric data using a value of omega taken from the heat capacit
 First, read the data from @HWM96.
 
 ```{r Vdat}
-file <- system.file("extdata/cpetc/HWM96_V.csv", package = "CHNOSZ")
+file <- system.file("extdata/misc/HWM96_V.csv", package = "CHNOSZ")
 Vdat <- read.csv(file)
 # Use data for CH4 near 280 bar
 Vdat <- Vdat[Vdat$species == "CH4", ]

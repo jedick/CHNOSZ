@@ -217,7 +217,7 @@ Except for Optional Data, all data are present in the default database, which is
 Each section below corresponds to one of the CSV data files in the `extdata/OBIGT` package directory.
 Clicking on a button opens that section, which contains a list of primary references (from column `ref1` in the file) in chronological order.
 Any secondary references (`ref2`) are listed with bullet points under the primary reference.
-Each citation is followed by the number of species, and a note taken from the file `extdata/refs.csv`.
+Each citation is followed by the number of species, and a note taken from `extdata/thermo/refs.csv`.
 Additional comments (from this vignette) are present for some sections.
 
 Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthalpy, entropy), Cp (heat capacity), V (volume), HKF (<abbr title="Tanger and Helgeson, 1988">revised</abbr> <abbr title="Helgeson et al., 1981">Helgeson-Kirkham-Flowers</abbr> equations).

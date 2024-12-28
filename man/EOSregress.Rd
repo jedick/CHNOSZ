@@ -122,7 +122,7 @@ The vignette \viglink{eos-regress} has more references and examples, including a
 ## Fit experimental heat capacities of CH4
 ## using revised Helgeson-Kirkham-Flowers equations
 # Read the data from Hnedkovsky and Wood, 1997
-f <- system.file("extdata/cpetc/HW97_Cp.csv", package = "CHNOSZ")
+f <- system.file("extdata/misc/HW97_Cp.csv", package = "CHNOSZ")
 d <- read.csv(f)
 # Use data for CH4
 d <- d[d$species == "CH4", ]
@@ -170,7 +170,7 @@ attr(invTX, "label") <- quote(phantom() / italic(T * X))
 
 ## Model experimental volumes of CH4
 ## using HKF equation and an exploratory one
-f <- system.file("extdata/cpetc/HWM96_V.csv", package = "CHNOSZ")
+f <- system.file("extdata/misc/HWM96_V.csv", package = "CHNOSZ")
 d <- read.csv(f)
 # Use data for CH4 near 280 bar
 d <- d[d$species == "CH4", ]

@@ -6,7 +6,7 @@
 library(CHNOSZ)
 
 # We need data for Cu-Gly complexes 20190206
-add.OBIGT(system.file("extdata/adds/SK95.csv", package = "CHNOSZ"))
+add.OBIGT(system.file("extdata/misc/SK95.csv", package = "CHNOSZ"))
 # Add some new species to thermo()$OBIGT
 m1 <- makeup(info(c("Cu+", "glycinate", "glycinate")), sum = TRUE)
 mod.OBIGT(name = "Cu(Gly)2-", formula = as.chemical.formula(m1))
