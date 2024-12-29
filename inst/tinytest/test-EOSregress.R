@@ -5,9 +5,9 @@ info <- "EOSvar stops with unknown variables"
 expect_error(EOSvar("TX", T = 25, P = 1), "can't find a variable named TX", info = info)
 # Why can't the test find these?
 #TX <- 2
-#expect_error(EOSvar("TX", T = 25, P = 1), "an object named TX is not a function")
+#expect_error(EOSvar("TX", T = 25, P = 1), "an object named TX is not a function", info = info)
 #TX <- function(T) 2
-#expect_error(EOSvar("TX", T = 25, P = 1), "the arguments of TX\\(\\) are not T, P")
+#expect_error(EOSvar("TX", T = 25, P = 1), "the arguments of TX\\(\\) are not T, P", info = info)
 
 info <- "Regressions return known HKF parameters (neutral species)"
 # Regress computed values of heat capacity and volume of CH4(aq)

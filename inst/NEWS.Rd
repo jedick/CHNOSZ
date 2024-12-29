@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-35 (2024-12-28)}{
+\section{Changes in CHNOSZ version 2.1.0-36 (2024-12-29)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -79,6 +79,11 @@
 
   \subsection{OTHER CHANGES}{
     \itemize{
+
+      \item \code{OBIGT} now lists \samp{CGL_Ttr} in \code{model} for species
+      whose \code{T} value denotes a phase stability limit (as opposed to a Cp
+      equation limit).  This replaces the (overloaded) use of signed values of
+      \code{T}.
 
       \item \code{check.EOS()} now uses values of Born coefficients \emph{X}
       and \emph{Q} that are consistent with either SUPCRT92 or DEW, depending

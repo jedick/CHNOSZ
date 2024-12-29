@@ -191,8 +191,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     ispecies = iphases, model = model, stringsAsFactors = FALSE)
   # Make the rownames readable ... but they have to be unique
   if(length(unique(iphases))==length(iphases)) rownames(reaction) <- as.character(iphases)
-  # Which species use models for aqueous species
-  # This breaks things if we have state = "aq" and model = "CGL" 20230220
+  # Identify aqueous species from their 'model' parameter
+  # NOTE: checking for state == "aq" would break using CGL for aqueous species 20230220
   #isaq <- reaction$state == "aq"
   isaq <- toupper(reaction$model) %in% c("HKF", "AD", "DEW")
 
@@ -334,7 +334,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   }
 
   # Crystalline, gas, or liquid (except water) species
-  iscgl <- reaction$model %in% c("CGL", "Berman")
+  iscgl <- reaction$model %in% c("CGL", "CGL_Ttr", "Berman")
 
   if(TRUE %in% iscgl) {
     param <- OBIGT2eos(thermo$OBIGT[iphases[iscgl],], "cgl", fixGHS = TRUE, toJoules = TRUE)
@@ -387,26 +387,23 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         }
 
         if(!is.polymorphic.transition) {
-          # Check if we're above the T limit for a Cp equation or T for phase change (e.g. melting or vaporization) listed in OBIGT
-          is.Cp.equation <- FALSE
+          # Check if we're above the T limit for a Cp equation or a phase change (e.g. melting or vaporization)
           if(all(is.na(Ttr))) next
           if(all(Ttr == 0)) next
-          ineg <- Ttr < 0
-          if(any(ineg)) {
-            # This is the T limit for a Cp equation (not a phase change)
-            Ttr[ineg] <- -Ttr[ineg]
-            is.Cp.equation <- TRUE
-          }
+          is.phase_change <- any(thermo$OBIGT$model[iphases[i]] == "CGL_Ttr")
           if(any(T > Ttr)) {
-            if(!exceed.Ttr) {
-                if(is.Cp.equation) {
-                  warning(paste0("above T limit of ", Ttr, " K for the Cp equation for ", myname, "(", mystate, ")"))
-                } else {
-                  message(paste0("subcrt: G is set to NA for ", myname, "(", mystate, ") above its stability limit of ", Ttr, " K (use exceed.Ttr = TRUE to output G)"))
-                  p.cgl[[ncgl[i]]]$G[T > Ttr] <- NA
-                }
+            if(is.phase_change) {
+              if(exceed.Ttr) {
+                message(paste0("subcrt: showing G for ", myname, "(", mystate, ") above its stability limit of ", Ttr, " K (use exceed.Ttr = FALSE to prevent this)"))
+              } else {
+                message(paste0("subcrt: setting G to NA for ", myname, "(", mystate, ") above its stability limit of ", Ttr, " K (use exceed.Ttr = TRUE to output G)"))
+                p.cgl[[ncgl[i]]]$G[T > Ttr] <- NA
+              }
             } else {
-              message(paste0("subcrt: showing G for ", myname, "(", mystate, ") above its stability limit of ", Ttr, " K (use exceed.Ttr = FALSE to prevent this)"))
+              if(! exceed.Ttr) {
+                # Warn if we're above a Cp limit (but don't change the output)
+                warning(paste0("above T limit of ", Ttr, " K for the Cp equation for ", myname, "(", mystate, ")"))
+              }
             }
           }
         }

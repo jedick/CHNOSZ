@@ -129,7 +129,7 @@ expect_equal(subcrt(iaq)$G, subcrt(icr)$G, info = info)
 # 20241225
 info <- "add.OBIGT() errors with non-existent file"
 file <- "XXX"
-expect_error(add.OBIGT(file), "XXX is not a file and doesn't match any files in the OBIGT database")
+expect_error(add.OBIGT(file), "XXX is not a file and doesn't match any files in the OBIGT database", info = info)
 
 # Reference
 

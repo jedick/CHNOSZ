@@ -37,13 +37,13 @@ expect_equal(s.C7$polymorphs$sulfur, c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3), info
 info <- "Calculations using IAPWS-95 are possible"
 oldwat <- water("IAPWS95")
 # The tests pass if we get numeric values and no error
-expect_silent(sb <- subcrt(c("H2O", "Na+"), T = c(-30, -20, 0, 10), P = 1)$out)
+expect_silent(sb <- subcrt(c("H2O", "Na+"), T = c(-30, -20, 0, 10), P = 1)$out, info = info)
 expect_true(all(sb$`Na+`$G < sb$water$G), info = info)
 # Clean up
 water(oldwat)
 
 info <- "Phase stability limits give expected results"
-expect_message(subcrt("gold", T = c(1300, 1350), P = 1, convert = FALSE), "subcrt: G is set to NA for gold\\(cr\\)", info = info)
+expect_message(subcrt("gold", T = c(1300, 1350), P = 1, convert = FALSE), "subcrt: setting G to NA for gold\\(cr\\)", info = info)
 # The reaction coefficients in the output should be unchanged 20171214
 expect_equal(subcrt(c("bunsenite", "nickel", "oxygen"), c(-1, 1, 0.5))$reaction$coeff, c(-1, 1, 0.5), info = info) 
 # Properties are NA only above (not at) the temperature limit for phase stability 20191111
@@ -195,14 +195,14 @@ info <- "Polymorphs work for named species or numeric indices"
 iPo <- info("pyrrhotite")
 sres_poly1 <- subcrt(iPo)
 expect_identical(sres_poly, sres_poly1, info = info)
-info <- "Automatic identificatio of polymorphs can be turned off"
+info <- "Automatic identification of polymorphs can be turned off"
 sres_nopoly <- subcrt("pyrrhotite", use.polymorphs = FALSE)
 expect_null(sres_nopoly$out[[1]]$polymorph, info = info)
-info <- "Gibbs energy is NA beyond the transition temperature"
-expect_true(anyNA(sres_nopoly$out[[1]]$G))
-info <- "Gibbs energy can be extrapolated beyond the transition temperature"
-sres_nopoly_extrap <- subcrt("pyrrhotite", use.polymorphs = FALSE, exceed.Ttr = TRUE)
-expect_false(anyNA(sres_nopoly_extrap$out[[1]]$G))
+info <- "Warning is issued above beyond the transition temperature"
+expect_warning(sres_nopoly <- subcrt("pyrrhotite", use.polymorphs = FALSE), "above T limit of 411 K", info = info)
+info <- "Gibbs energy is silently extrapolated with exceed.Ttr = TRUE"
+expect_silent(sres_nopoly_extrap <- subcrt("pyrrhotite", use.polymorphs = FALSE, exceed.Ttr = TRUE), info = info)
+expect_false(anyNA(sres_nopoly_extrap$out[[1]]$G), info = info)
 
 # Added on 20230621
 info <- "Arguments 2 and 3 can't both be character"
@@ -221,7 +221,7 @@ expect_equal(automatic_reaction$logK, manual_reaction$logK, info = info)
 # Added on 20231115
 info <- "Cp equation limits give expected results"
 expect_warning(sout <- subcrt("acanthite", T = 1000:1001, P = 1, convert = FALSE)$out[[1]], "above T limit of 1000 K", info = info)
-expect_false(any(is.na(sout$G)))
+expect_false(any(is.na(sout$G)), info = info)
 info <- "exceed.Ttr doesn't interfere with polymorphic transitions"
 # Stable polymorphs of pyrrhotite at default T,P conditions of subcrt()
 polymorph <- c(1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3)
@@ -234,7 +234,7 @@ expect_equal(s2$polymorph, polymorph, info = info)
 info <- "Auto-balanced reactions apply ionic strength correction"
 basis("CHNOS+")
 sres <- subcrt("acetate", 1, IS = 1)
-expect_length(sres$out$loggam, 15)
+expect_length(sres$out$loggam, 15, info = info)
 
 # Added on 20240206
 info <- "High-temperature polymorph is not shown as stable below the transition temperature"

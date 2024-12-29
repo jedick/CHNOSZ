@@ -413,7 +413,7 @@ OBIGT2eos <- function(OBIGT, state, fixGHS = FALSE, toJoules = FALSE) {
   # Figure out the model for each species 20220929
   model <- OBIGT$model
   model[is.na(model)] <- ""
-  isCGL <- model == "CGL"
+  isCGL <- model %in% c("CGL", "CGL_Ttr")
   isHKF <- model == "HKF"
   isDEW <- model == "DEW"
   isAD <- model == "AD"
