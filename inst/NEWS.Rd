@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-36 (2024-12-29)}{
+\section{Changes in CHNOSZ version 2.1.0-37 (2025-01-05)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -35,6 +35,9 @@
 
       \item Add tantalum species from
       \href{https://doi.org/10.1016/j.gca.2024.10.019}{Hu et al. (2024)}.
+
+      \item Add Sn\S{+2}, Th\S{+4}, and Sn chloride complexes from
+      \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al. (2023)}.
 
       \item Move americium complexes from \file{SLOP98.csv} back to
       \file{inorganic_aq.csv} (entropy of the element Am has been available for
@@ -56,8 +59,8 @@
     \itemize{
 
       \item Make new directory \file{OBIGT/testing} to hold optional data files
-      for testing, including \file{SiO2.csv} and \file{GEMSFIT.csv} in addition
-      to those listed below.
+      for testing, including \file{SiO2.csv} (renamed from \file{AS04.csv}) and
+      \file{GEMSFIT.csv} in addition to those listed below.
 
       \item Add \file{testing/IGEM.csv}: Au and Cu complexes and
       SO\s{4}\S{-2}-bearing species from researchers at IGEM RAS.
