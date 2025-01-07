@@ -23,8 +23,8 @@ plotfun <- function(T = 400, P = 500, m_tot = 0.1, pHmin = 4, logppmmax = 3) {
 
   # Convert log activity to log ppm
   sp <- convert(s, "logppm")
-  diagram(sp, ylim = c(-5, logppmmax))
-  diagram(sp, type = "loga.balance", add = TRUE, lwd = 2, col = "green3")
+  diagram(sp, type = "loga.equil", ylim = c(-5, logppmmax))
+  diagram(sp, add = TRUE, lwd = 2, col = "green3")
 
   # Add water neutrality line
   pKw <- - subcrt(c("H2O", "OH-", "H+"), c(-1, 1, 1), T = T, P = P)$out$logK

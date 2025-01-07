@@ -932,8 +932,9 @@ basis(c("Al+3", "H2O", "H+", "O2"))
 species("corundum")
 iaq <- c("Al+3", "AlO2-", "AlOH+2", "AlO+", "HAlO2")
 s <- solubility(iaq, pH = c(0, 10), IS = 0, in.terms.of = "Al+3")
-diagram(s, type = "loga.balance", ylim = c(-10, 0), lwd = 4, col = "green3")
-diagram(s, add = TRUE, adj = c(0, 1, 2.1, -0.2, -1.5), dy = c(0, 0, 4, -0.3, 0.1))
+diagram(s, ylim = c(-10, 0), lwd = 4, col = "green3")
+diagram(s, type = "loga.equil", add = TRUE, adj = c(0, 1, 2.1, -0.2, -1.5),
+  dy = c(0, 0, 4, -0.3, 0.1))
 legend("topright", c("25 °C", "1 bar"), text.font = 2, bty = "n")
 reset()
 ```
@@ -1588,11 +1589,6 @@ maintainer("CHNOSZ")
 ```
 
 Thank you for reading, and have fun!
-
-> "The real fun of life is this perpetual testing to realize how far out you can go with any potentialities."
->
-> `r tufte::quote_footer('--- Richard P. Feynman')`
-
 
 # Document history
 

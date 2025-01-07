@@ -129,14 +129,15 @@ This \dQuote{maximum affinity method} (Dick, 2019) uses balancing coefficients t
 If \code{type} is \samp{saturation}, the function plots the line for each species where the affinity of formation equals zero (see \code{demo("saturation")} for an example).
 If for a given species no saturation line is possible or the range of the diagram does not include the saturation line, the function prints a message instead.
 If \code{type} is the name of a basis species, then the equilibrium activity of the selected basis species in each of the formation reactions is plotted (see the \CO2-acetic acid example in \code{\link{buffer}}).
-In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines, with the method specified in \code{contour.method}.
+In the case of 2-D diagrams, both of these options use \code{\link{contour}} to draw the lines, with the method specified in \code{contour.method} and the contour levels specified in \code{levels}.
 
-This paragraph describes the effect of the \code{type} argument when the output from \code{solubility} is being used.
-For one mineral or gas, if \code{type} set to \samp{auto}, the equilibrium activities of each aqueous species are plotted.
-If \code{type} is \samp{loga.balance}, the activity of the balancing basis species (i.e. total solubility) is plotted; this is represented by contours on a 2-D diagram.
-For two or more minerals or gases, if \code{type} set to \samp{auto}, the values of \samp{loga.balance} (overall minimum solubility) are plotted.
-If \code{type} is \samp{loga.equil}, the solubilities of the individual minerals and gases are plotted.
-For examples that use these features, see \code{\link{solubility}} and various \code{\link{demos}}: \samp{DEW}, \samp{contour}, \samp{gold}, \samp{solubility}, \samp{sphalerite}.
+When \code{eout} is the output from \code{solubility}, the \code{type} argument has different effects depending on the number of mineral (or gas) species being dissolved.
+The default, when \code{type} is \samp{auto}, is to plot the total solubility (total equilibrium activity of aqueous species) taken from the \samp{loga.balance} component of the \code{solubility} output.
+If there are two or more minerals or gases, this corresponds to the overall minimum solubility.
+If \code{type} set to \samp{loga.equil}, then the activities of each aqueous species are plotted if there is one mineral or gas being dissolved.
+However, if there is more than one mineral or gas, then the solubilities of the individual minerals and gases are plotted.
+Solubilities are represented by contours on a 2-D diagram, which can be adjusted using the \code{contour.method} and \code{levels arguments}.
+For examples, see \code{\link{solubility}} and various \code{\link{demos}}: \samp{contour}, \samp{gold}, \samp{solubility}, \samp{sphalerite}, \samp{minsol}, \samp{sum_S}.
 
 }
 

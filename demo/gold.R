@@ -60,8 +60,8 @@ Au_pH1 <- function() {
   # (set IS = 0 for diagram to show "log m" instead of "log a")
   s <- solubility(iaq, pH = c(3, 8), T = 300, P = 1000, IS = 0)
   # Make diagram and show total log molality
-  diagram(s, ylim = c(-10, -5), col = col, lwd = 2, lty = 1)
-  diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
+  diagram(s, type = "loga.equil", ylim = c(-10, -5), col = col, lwd = 2, lty = 1)
+  diagram(s, add = TRUE, lwd = 3, lty = 2)
   # Add neutral pH line
   pH <- -subcrt(c("H2O", "H+", "OH-"), c(-1, 1, 1), T = 300, P = 1000)$out$logK/2
   abline(v = pH, lty = 3)
@@ -85,8 +85,8 @@ Au_pH2 <- function() {
   iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
   s <- solubility(iaq, pH = c(3, 8), T = 450, P = 1000, IS = 0)
   # Make diagram and show total log molality
-  diagram(s, ylim = c(-8, -3), col = col, lwd = 2, lty = 1)
-  diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
+  diagram(s, type = "loga.equil", ylim = c(-8, -3), col = col, lwd = 2, lty = 1)
+  diagram(s, add = TRUE, lwd = 3, lty = 2)
   # Add neutral pH line
   pH <- -subcrt(c("H2O", "H+", "OH-"), c(-1, 1, 1), T = 450, P = 1000)$out$logK/2
   abline(v = pH, lty = 3)
@@ -125,8 +125,8 @@ Au_T1 <- function() {
   iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
   s <- solubility(iaq, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
   # Make diagram and show total log molality
-  diagram(s, ylim = c(-10, -3), col = col, lwd = 2, lty = 1)
-  diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
+  diagram(s, type = "loga.equil", ylim = c(-10, -3), col = col, lwd = 2, lty = 1)
+  diagram(s, add = TRUE, lwd = 3, lty = 2)
   # Make legend and title
   dP <- describe.property("P", 1000)
   dNaCl <- expression(italic(m)[NaCl] == 1.5)
@@ -159,8 +159,8 @@ Au_T2 <- function() {
 #  bases <- c("H2S", "HS-", "SO4-2", "HSO4-")
 #  s <- solubility(iaq, bases = bases, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
   # Make diagram and show total log molality
-  diagram(s, ylim = c(-10, -3), col = col, lwd = 2, lty = 1)
-  diagram(s, add = TRUE, type = "loga.balance", lwd = 3, lty = 2)
+  diagram(s, type = "loga.equil", ylim = c(-10, -3), col = col, lwd = 2, lty = 1)
+  diagram(s, add = TRUE, lwd = 3, lty = 2)
   # Make legend and title
   dP <- describe.property("P", 1000)
   dNaCl <- expression(italic(m)[NaCl] == 1.5)

@@ -28,9 +28,9 @@ species("carbon dioxide", -3.5)
 iaq <- info(c("CO2", "HCO3-", "CO3-2"))
 s <- solubility(iaq, pH = c(pH, res), T = T1, IS = IS)
 # First plot total activity line
-diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
-# Add activities of species
-diagram(s, ylim=c(-10, 4), add = TRUE, dy = 1)
+diagram(s, ylim = c(-10, 4), lwd = 4, col = "green2")
+# Plot activities of species
+diagram(s, type = "loga.equil", ylim=c(-10, 4), add = TRUE, dy = 1)
 # Add legend
 lexpr <- as.expression(c("total", expr.species("CO2", state = "aq"),
   expr.species("HCO3-"), expr.species("CO3-2")))
@@ -44,7 +44,7 @@ stopifnot(round(s$loga.balance[c(1, res)])==c(-5, 6))
 
 # CO2 T-pH plot
 s <- solubility(iaq, pH = c(pH, res), T = c(T, res), IS = IS)
-diagram(s, type = "loga.balance")
+diagram(s)
 title(main = substitute("Solubility of"~what, list(what = expr.species("CO2"))))
 
 # Now do calcite
@@ -53,8 +53,8 @@ species("calcite")
 iaq <- info(c("CO2", "HCO3-", "CO3-2"))
 # Optional: use dissociate = 2 to get straight lines like Fig. 4A of Manning et al., 2013
 s <- solubility(iaq, pH = c(pH, res), T = T1, IS = IS, dissociate = TRUE)
-diagram(s, ylim = c(-10, 4), type = "loga.balance", lwd = 4, col = "green2")
-diagram(s, add = TRUE, dy = 1)
+diagram(s, ylim = c(-10, 4), lwd = 4, col = "green2")
+diagram(s, type = "loga.equil", add = TRUE, dy = 1)
 legend("topright", lty = c(1, 1:3), lwd = c(4, 2, 2, 2),
   col = c("green2", rep("black", 3)), legend = lexpr)
 title(main = substitute("Solubility of"~what~"at"~T~degree*"C",
@@ -65,7 +65,7 @@ stopifnot(round(s$loga.balance[c(1, res)])==c(4, -4))
 
 # Calcite T-pH plot
 s <- solubility(iaq, pH = c(pH, res), T = c(T, res), IS = IS, dissociate = TRUE)
-diagram(s, type = "loga.balance")
+diagram(s)
 title(main = "Solubility of calcite", font.main = 1)
 
 layout(matrix(1))

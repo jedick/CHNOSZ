@@ -61,7 +61,6 @@ legend("bottomleft", c("Predominance diagram: molality of aqueous", "species def
 par(xpd = FALSE)
 
 # Make diagram for minerals only 20201007
-if(packageVersion("CHNOSZ") <= "1.3.6") species(delete = TRUE)
 species(icr)
 mcr <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = sat$IS)
 diagram(mcr$A.species, col = 2)
@@ -73,7 +72,7 @@ label.figure("B")
 s <- solubility(iaq, bases = bases, pH = pH, O2 = O2, T = T, P = P, IS = sat$IS, in.terms.of = metal)
 # Specify contour levels
 levels <- seq(-12, 9, 3)
-diagram(s, type = "loga.balance", levels = levels, contour.method = "flattest")
+diagram(s, levels = levels, contour.method = "flattest")
 
 # Show the mineral stability boundaries
 diagram(mcr$A.species, names = NA, add = TRUE, lty = 2, col = 2)

@@ -1,4 +1,5 @@
 # CHNOSZ/diagram.R
+
 # Plot equilibrium chemical activity and predominance diagrams 
 # 20061023 jmd v1
 # 20120927 work with output from either equil() or affinity(), 
@@ -46,8 +47,8 @@ diagram <- function(
   if(length(efun) == 0) efun <- ""
   if(!(efun %in% c("affinity", "rank.affinity", "equilibrate") | grepl("solubilit", efun)))
     stop("'eout' is not the output from one of these functions: affinity, rank.affinity, equilibrate, or solubility")
-  # For solubilities(), default type is loga.balance 20210303
-  if(grepl("solubilities", efun) & missing(type)) type <- "loga.balance"
+  # For solubility(), default type is loga.balance 20210303
+  if(grepl("solubilit", efun) & missing(type)) type <- "loga.balance"
   # Check balance argument for rank.affinity() 20220416
   if(efun == "rank.affinity") {
     if(!identical(balance, 1)) {
@@ -58,11 +59,11 @@ diagram <- function(
   }
 
   ## 'type' can be:
-  #    'auto'                - property from affinity() (1D) or maximum affinity (affinity 2D) (aout) or loga.equil (eout)
-  #    'loga.equil'          - equilibrium activities of species of interest (eout)
-  #    name of basis species - equilibrium activity of a basis species (aout)
-  #    'saturation'          - affinity=0 line for each species (2D)
-  #    'loga.balance'        - activity of balanced basis species (eout from solubility() or solubilities())
+  #    'auto'                - values returned by affinity() (aout)
+  #    'loga.equil'          - activities of formed species (eout from equilibrate() or solubility())
+  #    name of basis species - activity of a basis species (aout)
+  #    'saturation'          - affinity=0 line for each species (aout)
+  #    'loga.balance'        - total activities of formed species (eout from solubility())
   eout.is.aout <- FALSE
   plot.loga.basis <- FALSE
   if(type %in% c("auto", "saturation")) {
@@ -203,7 +204,9 @@ diagram <- function(
   ## Identify predominant species
   predominant <- NA
   H2O.predominant <- NULL
-  if(plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)", "rank.affinity") & type != "saturation") {
+  # Whether we're considering multiple species, based on the plotting variable
+  pv_multi <- plotvar %in% c("loga.equil", "alpha", "A/(2.303RT)", "rank.affinity") & type != "saturation"
+  if(pv_multi) {
     pv <- plotvals
     # Some additional steps for affinity values, but not for equilibrated activities
     if(eout.is.aout) {

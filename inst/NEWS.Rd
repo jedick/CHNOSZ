@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-37 (2025-01-05)}{
+\section{Changes in CHNOSZ version 2.1.0-38 (2025-01-07)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -109,6 +109,11 @@
 
       \item Merge \file{extdata/adds} and \file{extdata/cpetc} into
       \file{extdata/misc}.
+
+      \item In \code{diagram}, the default for the \strong{type} argument when
+      using the output from \code{solubility} is now \code{loga.balance} (sum
+      of activities of aqueous species) rather than \code{loga.equil}
+      (activities of individual aqueous species).
 
     }
   }

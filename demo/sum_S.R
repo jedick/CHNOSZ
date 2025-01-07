@@ -64,7 +64,7 @@ for(metal in c("Fe", "Au")) {
   sp <- convert(s, "ppb")
   # Plot twice to get deeper colors
   for(col in cols) {
-    diagram(sp, type = "loga.balance", contour.method = "flattest", levels = 10^(-3:5), add = TRUE, col = col, lty = 3, lwd = 1.8, cex = 1.2)
+    diagram(sp, contour.method = "flattest", levels = 10^(-3:5), add = TRUE, col = col, lty = 3, lwd = 1.8, cex = 1.2)
   }
 
   # Add legend and title

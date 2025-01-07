@@ -26,15 +26,18 @@ The definitions of plotting variables should be provided in \code{...}, which ar
 It must be possible to obtain a valid set of basis species by substituting each of the minerals or gases in the first position of the current \code{\link{basis}} defintion, and all of the aqueous species must include that basis species in their formation reactions.
 (This essentially means that all minerals, gases and aqueous species must share a common element, which is what the reactions are balanced on.)
 
-For a single mineral or gas, the output of \code{solubility} can be used by \code{\link{diagram}} with \code{type = NULL} (the default) to plot the activities of the aqueous species or with \code{type = "loga.balance"} to plot the sum of activities of aqueous species, which corresponds to the solubility of the mineral or gas.
-This value corresponds to the total extent of dissolution of the mineral or gas; \code{in.terms.of} can be used to express this value in terms of another species or element.
+For a single mineral or gas, the output of \code{solubility} can be used by \code{\link{diagram}} with \code{type = "loga.balance"} (the default when \code{type} is \samp{auto}) to plot the sum of activities of aqueous species.
+This value corresponds to the solubility of the mineral or gas; \code{in.terms.of} can be used to express this value in terms of another species or element.
 For example, for dissolution of gaseous S\s{2}, \code{in.terms.of = "S"} gives the total amount of S in solution, which is twice the amount of S\s{2} dissolved.
 Likewise, the solubility of corundum (Al\s{2}O\s{3}) can be expressed in terms of the moles of Al\S{+3} in solution (see the vignette \viglink{anintro}).
+
 
 For multiple minerals, the function calculates the solubilities for each of the minerals separately; these are stored in the \code{loga.equil} element of the output.
 The overall \emph{minimum} solubility among all the minerals at each point is stored in \code{loga.balance}.
 This corresponds to the total activity of dissolved species in equilibrium with the most stable mineral.
-In contrast to the situation for a single mineral or gas, \code{\link{diagram}} by default plots \code{loga.balance}; \code{type = "loga.equil"} can be used to plot the solubilities for the individual minerals or gases.
+
+Note that \code{\link{diagram}} by default plots \code{loga.balance}.
+Use \code{type = "loga.equil"} in the function call to plot the solubilities for the individual minerals or gases, or the activities of aqueous species when there is one mineral or gas being dissolved.
 }
 
 \section{Backward Compatibility}{
@@ -120,13 +123,13 @@ lexpr <- lex(S_, pH_, T_)
 # Make diagrams from the results of solubility calculations
 layout(matrix(c(1, 3, 2, 3), nrow = 2))
 # Logarithm of activity of aqueous species in equilibrium with SO2(gas)
-diagram(s1, ylim = c(-15, 0))
-diagram(s1, type = "loga.balance", col = 3, lwd = 3, add = TRUE)
+diagram(s1, type = "loga.equil", ylim = c(-15, 0))
+diagram(s1, col = 3, lwd = 3, add = TRUE)
 legend("topright", legend = lexpr, bty = "n")
 # Logarithm of concentration (parts per million) of aqueous species
 sppm <- convert(s1, "logppm")
-diagram(sppm, ylim = c(-10, 5))
-diagram(sppm, type = "loga.balance", col = 3, lwd = 3, add = TRUE)
+diagram(sppm, type = "loga.equil", ylim = c(-10, 5))
+diagram(sppm, col = 3, lwd = 3, add = TRUE)
 legend("topright", legend = lexpr, bty = "n")
 par(xpd = NA)
 text(-58, 6.5, paste("Solubility of gaseous SO2 (green line) is",

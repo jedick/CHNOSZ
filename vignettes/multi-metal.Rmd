@@ -834,8 +834,8 @@ mfun <- function() {
     T = T, IS = calc$IS, stable = list(dFe$predominant, dCu$predominant))
   s <- convert(s, "ppm")
   diagram(aFeCu, names = NA, col = "gray", fill = fill)
-  diagram(s, type = "loga.balance", levels = 10^(-3:3), add = TRUE)
-  diagram(s, type = "loga.balance", levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
+  diagram(s, levels = 10^(-3:3), add = TRUE)
+  diagram(s, levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
 }
 # DIAGRAM 1
 mfun()
@@ -880,8 +880,8 @@ s <- solubility(iaq, S2 = c(-34, -10, res1), O2 = c(-55, -40, res1), T = T, IS =
 s <- convert(s, "ppm")
 # DIAGRAM 3
 diagram(aFeCu, names = NA, col = "gray", fill = fill)
-diagram(s, type = "loga.balance", levels = 10^(-3:3), add = TRUE)
-diagram(s, type = "loga.balance", levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
+diagram(s, levels = 10^(-3:3), add = TRUE)
+diagram(s, levels = 35, add = TRUE, lwd = 3, col = 6, contour.method = NA)
 title(bquote(bold(.(expr.species("SO4-2"))~"(ppm)")))
 ```
 </div>
