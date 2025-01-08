@@ -27,14 +27,14 @@ iFe.aq <- retrieve("Fe", c("S", "O", "H", "Cl"), "aq")
 Fe.aq <- info(iFe.aq)$name
 iCu.aq <- retrieve("Cu", c("S", "O", "H", "Cl"), "aq")
 Cu.aq <- info(iCu.aq)$name
-nacl <- NaCl(T = T, P = "Psat", m_tot = m_NaCl)
+NaCl <- NaCl(m_NaCl = m_NaCl, T = T, P = "Psat")
 
 setup <- function() {
   reset()
   # Setup basis species
   basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+", "Cl-"))
   basis("H2S", logmS)
-  basis("Cl-", log10(nacl$m_Cl))
+  basis("Cl-", log10(NaCl$m_Clminus))
 }
 
 ref_Cu_craq <- function() {
@@ -43,20 +43,20 @@ ref_Cu_craq <- function() {
   # Add aqueous species 20210220
   species(iCu.aq, logm_aq, add = TRUE)
 
-  mCu <- mosaic(list(S.aq), pH = pH, O2 = O2, T = T, IS = nacl$IS)
+  mCu <- mosaic(list(S.aq), pH = pH, O2 = O2, T = T, IS = NaCl$IS)
   diagram(mCu$A.species)
 }
 
 ref_FeCu_cr <- function() {
   # Load Fe-bearing minerals
   species(Fe.cr)
-  mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = nacl$IS)
+  mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = NaCl$IS)
   dFe <- diagram(mFe$A.species, lwd = 0, names = FALSE, plot.it = FALSE)
 
   # Load Cu-bearing minerals
   species(c(FeCu.cr, Cu.cr))
   # Mosaic with all Fe species as basis species
-  mFeCu <- mosaic(list(S.aq, Fe.cr), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dFe$predominant))
+  mFeCu <- mosaic(list(S.aq, Fe.cr), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dFe$predominant))
 
   diagram(mFeCu$A.species)
 }
@@ -66,7 +66,7 @@ setup_FeCu <- function() {
   species(Fe.cr)
   # Add aqueous species 20210220
   species(iFe.aq, logm_aq, add = TRUE)
-  mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = nacl$IS)
+  mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = NaCl$IS)
   dFe <- diagram(mFe$A.species, lwd = 0, names = FALSE, plot.it = FALSE)
 
   # Load Cu-bearing minerals
@@ -95,7 +95,7 @@ test_FeCu_old <- function() {
   mod.OBIGT(iFe.aq, G = G.new)
 
   # Mosaic with all Fe species as basis species
-  mFeCu <- mosaic(list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dFe$predominant))
+  mFeCu <- mosaic(list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dFe$predominant))
 
   diagram(mFeCu$A.species)
 }
@@ -108,7 +108,7 @@ test_FeCu_new <- function() {
   # c(NA, logm_aq) means to use:
   #   basis()'s value for logact of aqueous S species
   #   logm_aq for logact of aqueous Fe species
-  mFeCu <- mosaic(list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dFe$predominant), loga_aq = c(NA, logm_aq))
+  mFeCu <- mosaic(list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dFe$predominant), loga_aq = c(NA, logm_aq))
 
   diagram(mFeCu$A.species)
 }
@@ -127,7 +127,7 @@ test_FeCu_stack <- function() {
   # Cu-bearing aqueous species
   species2 <- c(species2, Cu.aq)
 
-  sm <- stack_mosaic(bases, species1, species2, species12, pH = pH, O2 = O2, T = T, IS = nacl$IS, loga_aq = logm_aq, plot.it = FALSE)
+  sm <- stack_mosaic(bases, species1, species2, species12, pH = pH, O2 = O2, T = T, IS = NaCl$IS, loga_aq = logm_aq, plot.it = FALSE)
   diagram(sm[[2]])
 }
 

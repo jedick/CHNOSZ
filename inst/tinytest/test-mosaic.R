@@ -88,8 +88,8 @@ basis("H2S", -2)
 # Set a low logfO2 to get into H2S - HS- fields
 basis("O2", -40)
 # Calculate solution composition for 1 mol/kg NaCl
-NaCl <- NaCl(T = T, P = P, m_tot = 1)
-basis("Cl-", log10(NaCl$m_Cl))
+NaCl <- NaCl(m_NaCl = 1, T = T, P = P)
+basis("Cl-", log10(NaCl$m_Clminus))
 # Calculate affinity with changing basis species
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 m <- mosaic(bases, pH = c(2, 10), T = 250, P = 500, IS = NaCl$IS)

@@ -50,29 +50,29 @@ Fe.aq <- info(iFe.aq)$name
 iCu.aq <- retrieve("Cu", c("S", "O", "H", "Cl"), "aq")
 Cu.aq <- info(iCu.aq)$name
 # Apply NaCl concentration
-nacl <- NaCl(T = T, P = "Psat", m_tot = m_NaCl)
+NaCl <- NaCl(m_NaCl = m_NaCl, T = T, P = "Psat")
 
 ### Setup basis species for Fe-Cu stacks
 reset()
 basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+", "Cl-"))
 basis("H2S", logmS)
-basis("Cl-", log10(nacl$m_Cl))
+basis("Cl-", log10(NaCl$m_Clminus))
 
 ## Diagram 1: Only Fe-bearing minerals
 species(Fe.cr)
 # Mosaic with S species as basis species
-mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = nacl$IS)
+mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = NaCl$IS)
 dFe <- diagram(mFe$A.species, col = 2)
 
 ## Diagram 2: Cu- (and FeCu-) bearing minerals and aqueous species
 species(c("chalcopyrite", Cu.cr))
 species(Cu.aq, -6, add = TRUE)
-mFeCu <- mosaic(list(S.aq, Fe.cr), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dFe$predominant))
+mFeCu <- mosaic(list(S.aq, Fe.cr), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dFe$predominant))
 diagram(mFeCu$A.species)
 
 ## Diagram 2a: Overlay single solubility contour
 species(c("chalcopyrite", Cu.cr))
-sout1 <- solubility(iCu.aq, bases = list(S.aq, Fe.cr), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dFe$predominant))
+sout1 <- solubility(iCu.aq, bases = list(S.aq, Fe.cr), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dFe$predominant))
 diagram(sout1, add = TRUE, col = 4, lwd = 2, levels = -6)
 
 mtext("Stack 1: Fe minerals only -> Cu(Fe) minerals and Cu aqueous", adj = 1.1, line = 1.1)
@@ -80,18 +80,18 @@ mtext("Stack 1: Fe minerals only -> Cu(Fe) minerals and Cu aqueous", adj = 1.1, 
 ## Diagram 3: Fe-bearing minerals and aqueous species
 species(Fe.cr)
 species(Fe.aq, -6, add = TRUE)
-mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = nacl$IS)
+mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = NaCl$IS)
 dFe <- diagram(mFe$A.species, col = 2)
 
 ## Diagram 4: Cu- (and FeCu-) bearing minerals and aqueous species
 species(c("chalcopyrite", Cu.cr))
 species(Cu.aq, -6, add = TRUE)
-mFeCu <- mosaic(list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dFe$predominant), loga_aq = c(NA, logm_aq))
+mFeCu <- mosaic(list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dFe$predominant), loga_aq = c(NA, logm_aq))
 diagram(mFeCu$A.species)
 
 ## Diagram 4a: Overlay single solubility contour
 species(c("chalcopyrite", Cu.cr))
-sout2 <- solubility(iCu.aq, bases = list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dFe$predominant), loga_aq = c(NA, logm_aq))
+sout2 <- solubility(iCu.aq, bases = list(S.aq, c(Fe.cr, Fe.aq)), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dFe$predominant), loga_aq = c(NA, logm_aq))
 diagram(sout2, add = TRUE, col = 4, lwd = 2, levels = -6)
 
 mtext("Stack 2: Fe minerals and aqueous -> Cu(Fe) minerals and Cu aqueous", adj = 1, line = 1.1)
@@ -100,22 +100,22 @@ mtext("Stack 2: Fe minerals and aqueous -> Cu(Fe) minerals and Cu aqueous", adj 
 reset()
 basis(c("Fe+2", "copper", "H2S", "oxygen", "H2O", "H+", "Cl-"))
 basis("H2S", logmS)
-basis("Cl-", log10(nacl$m_Cl))
+basis("Cl-", log10(NaCl$m_Cl))
 
 ## Diagram 5: Only Cu-bearing minerals
 species(Cu.cr)
-mCu <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = nacl$IS)
+mCu <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = NaCl$IS)
 dCu <- diagram(mCu$A.species, col = 4)
 
 ## Diagram 6: Fe- (and CuFe-) bearing minerals and aqueous species
 species(c("chalcopyrite", Fe.cr))
 species(Fe.aq, -6, add = TRUE)
-mCuFe <- mosaic(list(S.aq, Cu.cr), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dCu$predominant))
+mCuFe <- mosaic(list(S.aq, Cu.cr), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dCu$predominant))
 diagram(mCuFe$A.species)
 
 ## Diagram 6a: Overlay single solubility contour
 species(c("chalcopyrite", Fe.cr))
-sout3 <- solubility(iFe.aq, bases = list(S.aq, Cu.cr), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dCu$predominant))
+sout3 <- solubility(iFe.aq, bases = list(S.aq, Cu.cr), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dCu$predominant))
 diagram(sout3, add = TRUE, col = 2, lwd = 2, levels = -6)
 
 mtext("Stack 3: Cu minerals only -> Fe(Cu) minerals and Fe aqueous", adj = 1.1, line = 1.1)
@@ -123,18 +123,18 @@ mtext("Stack 3: Cu minerals only -> Fe(Cu) minerals and Fe aqueous", adj = 1.1, 
 ## Diagram 7: Cu-bearing minerals and aqueous species
 species(Cu.cr)
 species(Cu.aq, -6, add = TRUE)
-mCu <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = nacl$IS)
+mCu <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = NaCl$IS)
 dCu <- diagram(mCu$A.species, col = 4)
 
 ## Diagram 8: Fe- (and CuFe-) bearing minerals and aqueous species
 species(c("chalcopyrite", Fe.cr))
 species(Fe.aq, -6, add = TRUE)
-mCuFe <- mosaic(list(S.aq, c(Cu.cr, Cu.aq)), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dCu$predominant), loga_aq = c(NA, logm_aq))
+mCuFe <- mosaic(list(S.aq, c(Cu.cr, Cu.aq)), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dCu$predominant), loga_aq = c(NA, logm_aq))
 diagram(mCuFe$A.species)
 
 ## Diagram 8a: Overlay single solubility contour
 species(c("chalcopyrite", Fe.cr))
-sout4 <- solubility(iFe.aq, bases = list(S.aq, c(Cu.cr, Cu.aq)), pH = pH, O2 = O2, T = T, IS = nacl$IS, stable = list(NULL, dCu$predominant), loga_aq = c(NA, logm_aq))
+sout4 <- solubility(iFe.aq, bases = list(S.aq, c(Cu.cr, Cu.aq)), pH = pH, O2 = O2, T = T, IS = NaCl$IS, stable = list(NULL, dCu$predominant), loga_aq = c(NA, logm_aq))
 diagram(sout4, add = TRUE, col = 2, lwd = 2, levels = -6)
 
 mtext("Stack 4: Cu minerals and aqueous -> Fe(Cu) minerals and Fe aqueous", adj = 1, line = 1.1)

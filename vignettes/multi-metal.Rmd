@@ -564,13 +564,13 @@ aqexpr <- as.expression(bquote("("*aq*")"[italic(i)] == 10^.(logm_aq)*m))
 # Setup basis species
 basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+", "Cl-"))
 basis("H2S", logmS)
-nacl <- NaCl(m_tot = m_NaCl, T = T, P = "Psat")
-basis("Cl-", log10(nacl$m_Cl))
+NaCl <- NaCl(m_NaCl = m_NaCl, T = T, P = "Psat")
+basis("Cl-", log10(NaCl$m_Clminus))
 # Fe-bearing minerals
 species(Fe.cr)
 # Add aqueous species 20210220
 species(iFe.aq, logm_aq, add = TRUE)
-mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = nacl$IS)
+mFe <- mosaic(S.aq, pH = pH, O2 = O2, T = T, IS = NaCl$IS)
 # Start plot with just the fields for transparency effect
 dFe <- diagram(mFe$A.species, lwd = 0, names = FALSE)
 
@@ -590,7 +590,7 @@ Fe.predom <- c(Fe.cr, Fe.aq)[ipredom]
 # c(NA, logm_aq) means to use:
 #   basis()'s value for logact of aqueous S species
 #   logm_aq for logact of aqueous Fe species
-mFeCu <- mosaic(list(S.aq, Fe.predom), pH = pH, O2 = O2, T = T, stable = list(NULL, predom), IS = nacl$IS, loga_aq = c(NA, logm_aq))
+mFeCu <- mosaic(list(S.aq, Fe.predom), pH = pH, O2 = O2, T = T, stable = list(NULL, predom), IS = NaCl$IS, loga_aq = c(NA, logm_aq))
 
 # Adjust labels
 bold <- c(rep(TRUE, length(FeCu.abbrv)), rep(FALSE, length(Cu.aq)))
@@ -818,11 +818,11 @@ This also gives an estimated ionic strength, which is used in the following `mos
 par(mfrow = c(1, 3))
 basis("pH", 6)
 # Estimate the molality of Cl for ca. 80,000 mg/kg solution (Table 2 of Sverjensky, 1987)
-m_tot <- 80000 / mass("Cl") / 1000
-calc <- NaCl(T = T, m_tot = m_tot)
+m_NaCl <- 80000 / mass("Cl") / 1000
+NaCl <- NaCl(m_NaCl = m_NaCl, T = T)
 # Use log molality here, not log activity, because
 # activity coefficients are calculated by setting IS below
-basis("Cl-", log10(calc$m_Cl))
+basis("Cl-", log10(NaCl$m_Clminus))
 # Initial setup: dissolve a single mineral to form aqueous Cu complexes
 species("copper")
 iaq <- retrieve("Cu", c("O", "H", "Cl", "S"), "aq")
@@ -831,7 +831,7 @@ iaq <- retrieve("Cu", c("O", "H", "Cl", "S"), "aq")
 # (i.e. equilibrium is imposed with all of these minerals, not only Cu(s))
 mfun <- function() {
   s <- solubility(iaq, bases = list(bFe, bCu), S2 = c(-34, -10, res1), O2 = c(-55, -40, res1),
-    T = T, IS = calc$IS, stable = list(dFe$predominant, dCu$predominant))
+    T = T, IS = NaCl$IS, stable = list(dFe$predominant, dCu$predominant))
   s <- convert(s, "ppm")
   diagram(aFeCu, names = NA, col = "gray", fill = fill)
   diagram(s, levels = 10^(-3:3), add = TRUE)
@@ -876,7 +876,7 @@ basis("pH", 6)
 species("S2")
 # Calculate concentration of SO4-2
 iaq <- info("SO4-2")
-s <- solubility(iaq, S2 = c(-34, -10, res1), O2 = c(-55, -40, res1), T = T, IS = calc$IS, in.terms.of = "SO4-2")
+s <- solubility(iaq, S2 = c(-34, -10, res1), O2 = c(-55, -40, res1), T = T, IS = NaCl$IS, in.terms.of = "SO4-2")
 s <- convert(s, "ppm")
 # DIAGRAM 3
 diagram(aFeCu, names = NA, col = "gray", fill = fill)
@@ -889,12 +889,13 @@ title(bquote(bold(.(expr.species("SO4-2"))~"(ppm)")))
 ```{r solubility, echo = FALSE, results = "hide", message = FALSE, fig.width = 7, fig.height = 3, out.width = "100%", fig.align = "center", pngquant = pngquant}
 ```
 
-After running the code above, we can inspect the value of `calc` to show the estimated ionic strength and activity of Cl^-^; the latter is very close to unity.
+After running the code above, we can inspect the value of `NaCl` to show the estimated ionic strength and molality of Cl^-^.
+In this case, they are equivalent because we did not specify pH in the call to `NaCl()`.
 ```{r NaCl}
 # Ionic strength
-calc$IS
-# Logarithm of activity of Cl-
-log10(calc$m_Cl * calc$gam_Cl)
+NaCl$IS
+# Molality of Cl-
+NaCl$m_Clminus
 ```
 
 The thick magenta lines indicate the 35 ppm contour for Cu and SO~4~^-2^.

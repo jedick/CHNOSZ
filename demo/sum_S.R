@@ -17,14 +17,14 @@ P <- 1000
 # Calculate solution composition for 0.8 mol/kg NaCl
 # Based on activity of Cl- from Fig. 18 of Skirrow and Walsh (2002)
 m_NaCl = 0.8
-NaCl <- NaCl(m_tot = m_NaCl, T = T, P = P, pH = pH)
+NaCl <- NaCl(m_NaCl = m_NaCl, T = T, P = P, pH = pH)
 IS <- NaCl$IS
 
 # Setup chemical system
 # Use oxygen instead of O2 to get the gas
 basis(c("Fe", "SO4-2", "oxygen", "H+", "Cl-", "H2O"))
 basis("pH", pH)
-basis("Cl-", log10(NaCl$m_Cl))
+basis("Cl-", log10(NaCl$m_Clminus))
 # Add minerals as formed species
 species(c("pyrrhotite", "pyrite", "hematite", "magnetite"))
 
@@ -38,7 +38,7 @@ for(metal in c("Fe", "Au")) {
 
   # Plot diagram for Fe minerals and show sulfur species
   d <- diagram(m$A.species, bold = TRUE, lwd = 2)
-  diagram(m$A.bases[[1]], add = TRUE, col = 4, col.names = 4, lty = 4, dx = -2.5, dy = c(-4, 0, 0, 6))
+  diagram(m$A.bases[[1]], add = TRUE, col = 8, col.names = 8, lty = 4, dx = -2.5, dy = c(-4, 0, 0, 6), italic = TRUE)
   # Add water stability limit
   water.lines(d)
 

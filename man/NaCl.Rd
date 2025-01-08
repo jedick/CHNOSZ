@@ -7,11 +7,11 @@ Calculate speciation and ionic strength of aqueous solutions with a given molali
 }
 
 \usage{
-  NaCl(m_tot = 1, T = 25, P = "Psat", pH = NA, attenuate = FALSE)
+  NaCl(m_NaCl = 1, T = 25, P = "Psat", pH = NA, attenuate = FALSE)
 }
 
 \arguments{
-  \item{m_tot}{numeric, total molality of NaCl (single value)}
+  \item{m_NaCl}{numeric, moles of NaCl added to 1 kg \H2O}
   \item{T}{numeric, temperature in \degC}
   \item{P}{numeric, pressure in bar}
   \item{pH}{numeric, pH}
@@ -20,20 +20,20 @@ Calculate speciation and ionic strength of aqueous solutions with a given molali
 
 \details{
 Thermodynamic models for metal solubility and speciation involving chloride complexes are commonly specified in terms of amount of NaCl rather than activity (or molality) of Cl\S{-} as an independent variable.
-This function calculates distribution of species and ionic strength in a simple aqueous solution given a total amount (\code{m_tot}, in mol/kg) of NaCl.
+This function calculates distribution of species and ionic strength in a simple aqueous solution given a total amount (\code{m_NaCl}, in mol/kg) of NaCl.
 The aqueous Cl-bearing species considered in the system are Cl\S{-}, NaCl, and optionally HCl.
 Na\S{+} is present as a basis species, but the formation of Na-bearing species such as NaOH is not considered.
 The activity coefficients of charged species are calculated using the extended Debye-Hückel equation (see \code{\link{nonideal}}) via the \code{IS} argument of \code{\link{affinity}}.
-The function first sets the molality of Na\S{+} and ionic strength equal to \code{m_tot}, then calculates the distribution of Cl-bearing species.
+The function first sets the molality of Na\S{+} and ionic strength equal to \code{m_NaCl}, then calculates the distribution of Cl-bearing species.
 Based on mass balance of Na atoms, the molality of NaCl is then used to recalculate the molality of Na\S{+}, followed by ionic strength.
-To find a solution, the function iterates until the change of molality of Na\S{+} and ionic strength are both less than \code{m_tot} / 100.
+To find a solution, the function iterates until the change of molality of Na\S{+} and ionic strength are both less than \code{m_NaCl} / 100.
 
 At very high NaCl concentrations, which are beyond the applicability limits of the extended Debye-Hückel model and therefore not recommended for normal use, the iterations tend to oscillate without converging.
 Setting \code{attenuate} to TRUE, which halves the amount of change in each step, may help with convergence.
 If a solution is not found after 100 iterations, the function stops with an error.
 
 If \code{pH} is NA (the default), then HCl is not included in the calculation and its molality in the output is also assigned NA.
-Note that only a single value is accepted for \code{m_tot}, but the other numeric arguments can have length > 1, allowing multiple combinations \code{T}, \code{P}, and \code{pH} in a single function call.
+Note that only a single value is accepted for \code{m_NaCl}, but the other numeric arguments can have length > 1, allowing multiple combinations \code{T}, \code{P}, and \code{pH} in a single function call.
 However, due to limitations in \code{\link{affinity}}, only one of \code{T} and \code{P} can have length > 1.
 }
 
@@ -43,7 +43,7 @@ Furthermore, metal-ligand complexing is not calculated by this function, so meta
 }
 
 \value{
-A list with components \samp{IS} (ionic strength calculated from molalities of Na\S{+} and Cl\S{-}), \samp{m_Cl}, \samp{m_Cl}, \samp{m_NaCl}, and \samp{m_HCl} (molalities of Na\S{+}, Cl\S{-}, NaCl, and HCl).
+A list with components \samp{IS} (ionic strength calculated from molalities of Na\S{+} and Cl\S{-}), \samp{m_Naplus}, \samp{m_Clminus}, \samp{m_NaCl0}, and \samp{m_HCl0} (molalities of Na\S{+}, Cl\S{-}, NaCl, and HCl).
 }
 
 \seealso{
@@ -59,13 +59,13 @@ IS.HCh <- list(`100` = c(0.992, 1.969, 2.926, 3.858, 4.758, 5.619),
                `300` = c(0.807, 1.499, 2.136, 2.739, 3.317, 3.875),
                `500` = c(0.311, 0.590, 0.861, 1.125, 1.385, 1.642))
 # Total molality in the calculation with NaCl()
-m_tot <- seq(1, 6, 0.5)
-N <- length(m_tot)
+m_NaCl <- seq(1, 6, 0.5)
+N <- length(m_NaCl)
 # Where we'll put the calculated values
 IS.calc <- data.frame(`100` = numeric(N), `300` = numeric(N), `500` = numeric(N))
-# NaCl() is *not* vectorized over m_tot, so we use a loop here
-for(i in 1:length(m_tot)) {
-  NaCl.out <- NaCl(m_tot[i], c(100, 300, 500), P = 1000)
+# NaCl() is *not* vectorized over m_NaCl, so we use a loop here
+for(i in 1:length(m_NaCl)) {
+  NaCl.out <- NaCl(m_NaCl[i], c(100, 300, 500), P = 1000)
   IS.calc[i, ] <- NaCl.out$IS
 }
 # Plot ionic strength from HCh and NaCl() as points and lines
@@ -76,7 +76,7 @@ for(i in 1:3) {
   # for the properties of NaCl(aq) (HCh: B.Ryhzenko model;
   # CHONSZ: revised HKF with parameters from Shock et al., 1997)
   points(m.HCh, IS.HCh[[i]], col = col[i])
-  lines(m_tot, IS.calc[, i], col = col[i])
+  lines(m_NaCl, IS.calc[, i], col = col[i])
 }
 # Add legend and title
 dprop <- describe.property(rep("T", 3), c(100, 300, 500))

@@ -20,15 +20,18 @@ species(iaq)
 # This gets us close to total S = 0.01 m
 basis("H2S", -2)
 # Calculate solution composition for 1 mol/kg NaCl
-NaCl <- NaCl(m_tot = 1, T = T, P = P)
-basis("Cl-", log10(NaCl$m_Cl))
+NaCl <- NaCl(m_NaCl = 1, T = T, P = P)
+basis("Cl-", log10(NaCl$m_Clminus))
 # Calculate affinity with changing basis species
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 m <- mosaic(bases, pH = c(2, 10, res), O2 = c(-41, -29, res), T = T, P = P, IS = NaCl$IS, blend = blend)
 # Show predominance fields for S-species
-diagram(m$A.bases, col = 4, col.names = 4, lty = 2, italic = TRUE)
+diagram(m$A.bases, col = 8, col.names = 8, lty = 2, italic = TRUE)
 # Show predominance fields for Au-species
-diagram(m$A.species, add=TRUE, col = 2, col.names = 2, lwd = 2, bold = TRUE)
+# Plot multiple times to get deeper color
+diagram(m$A.species, add=TRUE, col = 7, col.names = 7, lwd = 2, bold = TRUE)
+diagram(m$A.species, add=TRUE, col = 7, col.names = 7, lwd = 2, bold = TRUE)
+diagram(m$A.species, add=TRUE, col = 7, col.names = 7, lwd = 2, bold = TRUE)
 
 # Calculate and plot solubility of Au (use named 'bases' argument to trigger mosaic calculation)
 species("Au")

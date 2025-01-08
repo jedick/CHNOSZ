@@ -102,12 +102,12 @@ Au_pH2 <- function() {
 # NaCl solution with total chloride equal to specified NaCl + KCl solution,
 # then estimate the molality of K+ in that solution 20181109
 chloride <- function(T, P, m_NaCl, m_KCl) {
-  NaCl <- NaCl(m_tot = m_NaCl + m_KCl, T = T, P = P)
+  NaCl <- NaCl(m_NaCl = m_NaCl + m_KCl, T = T, P = P)
   # Calculate logK of K+ + Cl- = KCl, adjusted for ionic strength
   logKadj <- subcrt(c("K+", "Cl-", "KCl"), c(-1, -1, 1), T = T, P = P, IS = NaCl$IS)$out$logK
   # What is the molality of K+ from 0.5 mol KCl in solution with 2 mol total Cl
-  m_K <- m_KCl / (10^logKadj * NaCl$m_Cl + 1)
-  list(IS = NaCl$IS, m_Cl = NaCl$m_Cl, m_K = m_K)
+  m_Kplus <- m_KCl / (10^logKadj * NaCl$m_Clminus + 1)
+  list(IS = NaCl$IS, m_Clminus = NaCl$m_Clminus, m_Kplus = m_Kplus)
 }
 
 # log(m_Au)-T diagram like Fig. 2B of Williams-Jones et al., 2009
@@ -123,7 +123,7 @@ Au_T1 <- function() {
   # Calculate solubility of gold
   species("Au")
   iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
-  s <- solubility(iaq, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
+  s <- solubility(iaq, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Clminus), `K+` = log10(chl$m_Kplus), P = 1000, IS = chl$IS)
   # Make diagram and show total log molality
   diagram(s, type = "loga.equil", ylim = c(-10, -3), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, lwd = 3, lty = 2)
@@ -154,10 +154,10 @@ Au_T2 <- function() {
   # Calculate solubility of gold
   species("Au")
   iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
-  s <- solubility(iaq, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
+  s <- solubility(iaq, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Clminus), `K+` = log10(chl$m_Kplus), P = 1000, IS = chl$IS)
 #  # Uncomment to calculate solubility considering speciation of sulfur
 #  bases <- c("H2S", "HS-", "SO4-2", "HSO4-")
-#  s <- solubility(iaq, bases = bases, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Cl), `K+` = log10(chl$m_K), P = 1000, IS = chl$IS)
+#  s <- solubility(iaq, bases = bases, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Clminus), `K+` = log10(chl$m_Kplus), P = 1000, IS = chl$IS)
   # Make diagram and show total log molality
   diagram(s, type = "loga.equil", ylim = c(-10, -3), col = col, lwd = 2, lty = 1)
   diagram(s, add = TRUE, lwd = 3, lty = 2)

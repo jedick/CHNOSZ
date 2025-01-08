@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-38 (2025-01-07)}{
+\section{Changes in CHNOSZ version 2.1.0-39 (2025-01-08)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -110,10 +110,15 @@
       \item Merge \file{extdata/adds} and \file{extdata/cpetc} into
       \file{extdata/misc}.
 
-      \item In \code{diagram}, the default for the \strong{type} argument when
-      using the output from \code{solubility} is now \code{loga.balance} (sum
-      of activities of aqueous species) rather than \code{loga.equil}
+      \item In \code{diagram()}, the default for the \strong{type} argument
+      when using the output from \code{solubility()} is now \code{loga.balance}
+      (sum of activities of aqueous species) rather than \code{loga.equil}
       (activities of individual aqueous species).
+
+      \item In \code{NaCl()}, rename \strong{m_tot} to \strong{m_NaCl} (moles
+      of of NaCl added to 1 kg H\s{2}O) and rename output with \samp{m_Naplus},
+      \samp{m_Clminus}, \samp{m_NaCl0}, and \samp{m_HCl0} (molalities of
+      aqueous species).
 
     }
   }
