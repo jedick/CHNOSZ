@@ -135,7 +135,6 @@
 "OBIGT","TaF7-2","aq","cal",-9.97,-4.13,
 "OBIGT","Sn+4","aq","cal",,-1.18,
 "OBIGT","Th+4","aq","cal",,-1.13,
-"OBIGT","SnCl3-","aq","cal",,,596
 "OBIGT","CH4","aq","cal",-2.61,,
 "OBIGT","hexane","aq","cal",1.43,3.21,
 "OBIGT","ethylene","aq","cal",6.12,-3.82,
@@ -392,6 +391,7 @@
 "SLOP98","MnAsO4-","aq","cal",-1.45,,
 "SLOP98","AmCrO4+2","aq","cal",,,-4654
 "SLOP98","PdCl4-2","aq","cal",,-1.05,
+"SLOP98","Th+4","aq","cal",,-1.14,
 "SUPCRT92","almandine","cr","cal",4.43,,
 "SUPCRT92","antigorite","cr","cal",,,812
 "SUPCRT92","clinochlore,7A","cr","cal",,,666

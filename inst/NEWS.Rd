@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-39 (2025-01-08)}{
+\section{Changes in CHNOSZ version 2.1.0-40 (2025-01-17)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -36,15 +36,16 @@
       \item Add tantalum species from
       \href{https://doi.org/10.1016/j.gca.2024.10.019}{Hu et al. (2024)}.
 
-      \item Add Sn\S{+2}, Th\S{+4}, and Sn chloride complexes from
-      \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al. (2023)}.
+      \item Add Sn chloride complexes and updated parameters for Sn\S{+2},
+      Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
+        (2023)}.
 
       \item Move americium complexes from \file{SLOP98.csv} back to
       \file{inorganic_aq.csv} (entropy of the element Am has been available for
       checking GHS self-consistency since version 1.4.0).
 
-      \item \file{inorganic_cr.csv}: Add cerianite (CeO\s{2}) and
-      chromite (FeCr\s{2}O\s{4}) from
+      \item \file{inorganic_cr.csv}: Add cerianite (CeO\s{2}), chromite
+      (FeCr\s{2}O\s{4}), and cassiterite (SnO\s{2}) from
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
 
       \item Restore steam (H\s{2}O,g) in \file{inorganic_gas.csv}.
@@ -83,10 +84,11 @@
   \subsection{OTHER CHANGES}{
     \itemize{
 
-      \item \code{OBIGT} now lists \samp{CGL_Ttr} in \code{model} for species
-      whose \code{T} value denotes a phase stability limit (as opposed to a Cp
-      equation limit).  This replaces the (overloaded) use of signed values of
-      \code{T}.
+      \item \code{OBIGT} now uses \samp{CGL_Ttr} as the \code{model} for
+      species whose \code{T} value denotes a phase stability limit above which
+      \code{subcrt()} returns NA values (in contrast to \samp{CGL}, for which
+      the value of \code{T} is a Cp equation limit that only produces a
+      warning). This replaces the use of signed values of \code{T}.
 
       \item \code{check.EOS()} now uses values of Born coefficients \emph{X}
       and \emph{Q} that are consistent with either SUPCRT92 or DEW, depending
