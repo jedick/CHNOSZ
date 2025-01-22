@@ -122,11 +122,11 @@ sed -i 's/convert()/<a href="..\/html\/util.units.html">convert()<\/a>/g' multi-
 # Add links to custom_data.Rmd 20230302
 # Start at line 375 (below the TOC)
 sed -i '375,$s/reset()/<a href="..\/html\/thermo.html" style="color:\ red;">reset()<\/a>/g' custom_data.html
-# Note closing ) so we don't clash with add.OBIGT(, mod.OBIGT(, or logB.to.OBIGT(
+# Note closing ) so we don't clash with add.OBIGT(, mod.OBIGT(, or logK.to.OBIGT(
 sed -i '375,$s/>OBIGT()/><a href="..\/html\/thermo.html" style="color:\ red;">OBIGT()<\/a>/g' custom_data.html
 sed -i '375,$s/add.OBIGT(/<a href="..\/html\/add.OBIGT.html" style="color:\ red;">add.OBIGT<\/a>(/g' custom_data.html
 sed -i '375,$s/mod.OBIGT(/<a href="..\/html\/add.OBIGT.html" style="color:\ red;">mod.OBIGT<\/a>(/g' custom_data.html
-sed -i '375,$s/logB.to.OBIGT(/<a href="..\/html\/logB.to.OBIGT.html" style="color:\ red;">logB.to.OBIGT<\/a>(/g' custom_data.html
+sed -i '375,$s/logK.to.OBIGT(/<a href="..\/html\/logK.to.OBIGT.html" style="color:\ red;">logK.to.OBIGT<\/a>(/g' custom_data.html
 sed -i '375,$s/basis(/<a href="..\/html\/basis.html" style="color:\ red;">basis<\/a>(/g' custom_data.html
 sed -i '375,$s/species(/<a href="..\/html\/species.html" style="color:\ red;">species<\/a>(/g' custom_data.html
 sed -i '375,$s/E.units(/<a href="..\/html\/util.units.html" style="color:\ red;">E.units<\/a>(/g' custom_data.html

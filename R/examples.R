@@ -14,7 +14,7 @@ examples <- function(save.png = FALSE) {
     "diagram", "mosaic", "mix",
     "buffer", "nonideal", "NaCl",
     "add.protein", "ionize.aa", "EOSregress", "rank.affinity",
-    "DEW", "logB.to.OBIGT", "stack_mosaic"
+    "DEW", "logK.to.OBIGT", "stack_mosaic"
   )
   plot.it <- FALSE
   if(is.character(save.png))

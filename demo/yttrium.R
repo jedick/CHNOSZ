@@ -5,25 +5,25 @@
 
 library(CHNOSZ)
 
-# Function to add Y(III)-Cl species using logB values from Table 9 of Guan et al. (2020)
+# Function to add Y(III)-Cl species using logK values from Table 9 of Guan et al. (2020)
 add.Y.species <- function(P, plot.it = FALSE) {
   # Temperature
   T <- c(25, seq(50, 500, 50))
   if(P == 800) {
-    logB <- list(
+    logK <- list(
       c(1.04, 0.48, 0.13, 0.43, 1.12, 2.06, 3.21, 4.58, 6.26, 8.39, 11.14),
       c(-9.14, -7.34, -4.14, -1.37, 1.12, 3.46, 5.78, 8.24, 11.05, 14.48, 18.77),
       c(-14, -11.48, -7.06, -3.25, 0.14, 3.32, 6.45, 9.74, 13.47, 18.01, 23.65),
       c(-15.94, -13.2, -8.39, -4.27, -0.61, 2.79, 6.15, 9.67, 13.63, 18.45, 24.41)
     )
   } else if(P == 1000) {
-    logB <- list(
+    logK <- list(
       c(1.13, 0.54, 0.16, 0.43, 1.09, 2, 3.1, 4.39, 5.9, 7.69, 9.85),
       c(-9.33, -7.51, -4.3, -1.55, 0.9, 3.18, 5.4, 7.68, 10.15, 12.94, 16.16),
       c(-14.24, -11.71, -7.27, -3.49, -0.14, 2.95, 5.95, 9.01, 12.3, 16, 20.25),
       c(-16.19, -13.43, -8.62, -4.52, -0.91, 2.41, 5.62, 8.89, 12.4, 16.33, 20.84)
     )
-  } else stop("logB values for P =", P, "are not available here")
+  } else stop("logK values for P =", P, "are not available here")
   # Define species and coefficients in formation reactions
   species <- list(
     c("Y+3", "Cl-", "YCl+2"),
@@ -38,16 +38,16 @@ add.Y.species <- function(P, plot.it = FALSE) {
     c(-1, -4, 1)
   )
   # Fit the formation constants to thermodynamic parameters and add them to OBIGT
-  for(i in 1:4) logB.to.OBIGT(logB[[i]], species[[i]], coeffs[[i]], T = T, P = P, tolerance = 0.6, npar = 5)
+  for(i in 1:4) logK.to.OBIGT(logK[[i]], species[[i]], coeffs[[i]], T = T, P = P, tolerance = 0.6, npar = 5)
   # Plot the given and fitted values
   if(plot.it) {
     par(mfrow = c(2, 2))
     for(i in 1:4) {
       sres <- subcrt(species[[i]], coeffs[[i]], T = T, P = P)
       plot(T, sres$out$logK, type = "l", xlab = axis.label("T"), ylab = axis.label("logK"))
-      points(T, logB[[i]], pch = 19)
+      points(T, logK[[i]], pch = 19)
       title(describe.reaction(sres$reaction))
-      if(i == 1) legend("topleft", c("Guan et al. (2020)", "logB.to.OBIGT()"), pch = c(19, NA), lty = c(NA, 1))
+      if(i == 1) legend("topleft", c("Guan et al. (2020)", "logK.to.OBIGT()"), pch = c(19, NA), lty = c(NA, 1))
       legend("bottomright", paste(P, "bar"), bty = "n")
     }
   }

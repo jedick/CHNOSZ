@@ -65,7 +65,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{Pourbaix}{Eh-pH diagram for Fe-O-H with equisolubility lines (Pourbaix, 1974)}
     \item{E_coli}{Gibbs energy of biomass synthesis in \emph{E. coli} (LaRowe and Amend, 2016)}
     \item{rank.affinity}{Affinity ranking for proteins in yeast nutrient limitation (data from Tai et al., 2005)}
-    \item{yttrium}{\code{\link{logB.to.OBIGT}} fits at 800 and 1000 bar and Y speciation in \code{\link{NaCl}} solution at varying pH (Guan et al., 2020)}
+    \item{yttrium}{\code{\link{logK.to.OBIGT}} fits at 800 and 1000 bar and Y speciation in \code{\link{NaCl}} solution at varying pH (Guan et al., 2020)}
     \item{uranyl}{Total (carbonate|sulfate)-pH diagrams for uranyl species (Migdisov et al., 2024)}
     \item{sum_S}{Summed molality of S species and solubility contours for iron and gold (Skirrow and Walshe, 2002)}
   }

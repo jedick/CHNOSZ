@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-40 (2025-01-17)}{
+\section{Changes in CHNOSZ version 2.1.0-41 (2025-01-22)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -121,6 +121,8 @@
       of of NaCl added to 1 kg H\s{2}O) and rename output with \samp{m_Naplus},
       \samp{m_Clminus}, \samp{m_NaCl0}, and \samp{m_HCl0} (molalities of
       aqueous species).
+
+      \item Rename \code{logB.to.OBIGT()} to \code{logK.to.OBIGT()}.
 
     }
   }

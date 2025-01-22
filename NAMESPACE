@@ -56,7 +56,7 @@ export(
 # added 20200716 or later
   "mash", "mix", "rebalance",
 # added 20220324
-  "logB.to.OBIGT",
+  "logK.to.OBIGT",
 # added 20220416
   "rank.affinity",
 # added 20220620

@@ -63,7 +63,7 @@ Use \code{zap = TRUE} to replace all prexisting parameters (except for \code{sta
 The values returned (\code{\link{invisible}}-y) are the indices of the added and/or modified species.
 }
 
-\seealso{ \code{\link{thermo}} (description of OBIGT), \code{\link{mod.buffer}} (modify buffer definitions), \code{\link{logB.to.OBIGT}} (fit thermodynamic parameters to formation constants) }
+\seealso{ \code{\link{thermo}} (description of OBIGT), \code{\link{mod.buffer}} (modify buffer definitions), \code{\link{logK.to.OBIGT}} (fit thermodynamic parameters to formation constants) }
 
 \examples{\dontshow{reset()}
 ## Modify an existing species (not real properties)

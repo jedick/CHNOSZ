@@ -60,7 +60,7 @@ reset_ <- '<code style="color: red;">reset()</code>'
 OBIGT_ <- '<code style="color: red;">OBIGT()</code>'
 add.OBIGT_ <- '<code style="color: red;">add.OBIGT()</code>'
 mod.OBIGT_ <- '<code style="color: red;">mod.OBIGT()</code>'
-logB.to.OBIGT_ <- '<code style="color: red;">logB.to.OBIGT()</code>'
+logK.to.OBIGT_ <- '<code style="color: red;">logK.to.OBIGT()</code>'
 basis_ <- '<code style="color: red;">basis()</code>'
 species_ <- '<code style="color: red;">species()</code>'
 E.units_ <- '<code style="color: red;">E.units()</code>'
@@ -73,7 +73,7 @@ check.GHS_ <- '<code style="color: green;">check.GHS()</code>'
 check.EOS_ <- '<code style="color: green;">check.EOS()</code>'
 # Math stuff
 logK <- "log&thinsp;<i>K</i>"
-logB <- "log&thinsp;&beta;"
+logK <- "log&thinsp;&beta;"
 F_ <- "F<sup>-</sup>"
 Hplus <- "H<sup>+</sup>"
 HWO4_ <- "HWO<sub>4</sub><sup>-</sup>"
@@ -88,7 +88,7 @@ This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo(
 
 This vignette will cover some topics about using custom thermodynamic data in CHNOSZ.
 The two main functions to remember are `r add.OBIGT_` to add data from a CSV file and `r mod.OBIGT_` to add or modify data through a function interface.
-A third function, `r logB.to.OBIGT_`, is provided to fit thermodynamic parameters to experimental formation constants (`r logB`).
+A third function, `r logK.to.OBIGT_`, is provided to fit thermodynamic parameters to experimental formation constants (`r logK`).
 
 Before describing the methods to add or modify data, some notes on the basic structure of the database and data entry conventions are given.
 Column names (or parts thereof) are formatted in blue (e.g. `r formula`), and important notes are highlighted in yellow (`r NOTE`).
@@ -455,24 +455,24 @@ TODO: Add van't Hoff example?
 
 <!-- ######## SECTION MARKER ######## -->
 ## Case study: Formation constants for aqueous tungsten species
-Here we use `r logB.to.OBIGT_` to fit to thermodynamic parameters to experimental formation constants.
+Here we use `r logK.to.OBIGT_` to fit to thermodynamic parameters to experimental formation constants.
 Some additional steps are shown to refine a thermodynamic model to generate a speciation diagram as a function of pH.
 
 ### Fitting formation constants
 
-`r logB.to.OBIGT_` requires three things:
+`r logK.to.OBIGT_` requires three things:
 
-- Experimental decimal logarithms of formation constants (`r logB`) as a function of temperature;
+- Experimental decimal logarithms of formation constants (`r logK`) as a function of temperature;
 - The stoichiometry of the formation reaction in terms of known species (the new species must be last);
 - The experimental temperature and pressure.
 
-`r logB.to.OBIGT_` does three things:
+`r logK.to.OBIGT_` does three things:
 
 - Combines the formation constants with standard Gibbs energies (`r DG_0`) of the known species to calculate `r DG_0` of the new species;
 - Fits `r DG_0` of the new species using 25 °C thermodynamic properties and selected HKF model parameters (i.e., `r G_`, `r S_`, `r c1`, `r c2`, and `r omega` parameters in OBIGT);
 - Adds the parameters to OBIGT for use by other functions in CHNOSZ.
 
-First we set the pressure for all `r logB` data.
+First we set the pressure for all `r logK` data.
 ```{r Psat}
 P <- "Psat"
 ```
@@ -480,32 +480,32 @@ P <- "Psat"
 Add first species: `r HWO4_` [@WTW_19].
 ```{r HWO4_}
 T <- c(250, 300, 350)
-logB <- c(5.58, 6.51, 7.99)
+logK <- c(5.58, 6.51, 7.99)
 species <- c("WO4-2", "H+", "HWO4-")
 coeff <- c(-1, -1, 1)
-logB.to.OBIGT(logB, species, coeff, T, P)
+logK.to.OBIGT(logK, species, coeff, T, P)
 ```
 
 Add second species: `r H3WO4F2_` [@WWH_21].
 ```{r H3WO4F2-}
 T <- seq(100, 250, 25)
-logB <- c(17.00, 17.11, 17.46, 17.75, 18.17, 18.71, 19.23)
+logK <- c(17.00, 17.11, 17.46, 17.75, 18.17, 18.71, 19.23)
 # Species and coefficients in the formation reaction
 species <- c("H+", "WO4-2", "F-", "H3WO4F2-")
 coeff <- c(-3, -1, -2, 1)
-logB.to.OBIGT(logB, species, coeff, T, P)
+logK.to.OBIGT(logK, species, coeff, T, P)
 ```
 
 Add third species: `r H2WO4` [@WWH_21].
 Here we increase the tolerance because there is considerable scatter in the experimental values.
 ```{r H2WO4}
-logB <- c(7.12, 7.82, 7.07, 7.76, 7.59, 7.98, 8.28)
+logK <- c(7.12, 7.82, 7.07, 7.76, 7.59, 7.98, 8.28)
 species <- c("H+", "WO4-2", "H2WO4")
 coeff <- c(-2, -1, 1)
-logB.to.OBIGT(logB, species, coeff, T, P, tolerance = 0.3)
+logK.to.OBIGT(logK, species, coeff, T, P, tolerance = 0.3)
 ```
 
-After running, `r logB.to.OBIGT_` returns the species indices; the low values for `r HWO4_` (`r info("HWO4-")`) and `r H2WO4` (`r info("H2WO4")`) indicate that the function replaced parameters for these species that were already present in OBIGT.
+After running, `r logK.to.OBIGT_` returns the species indices; the low values for `r HWO4_` (`r info("HWO4-")`) and `r H2WO4` (`r info("H2WO4")`) indicate that the function replaced parameters for these species that were already present in OBIGT.
 
 ### Diagram 1: Constant molality of `r F_`
 
@@ -561,7 +561,7 @@ The highest experimental temperature for the formation constants of `r H2WO4` an
 @WWH_21 used the modified Ryzhenko-Bryzgalin (MRB) model to extrapolate to 300 °C.
 In contrast, we used a different model but obtained quite similar results.
 
-`r NOTE`: The coefficients in the model used by `r logB.to.OBIGT_` include 25 °C values of `r G_` and `r S_`.
+`r NOTE`: The coefficients in the model used by `r logK.to.OBIGT_` include 25 °C values of `r G_` and `r S_`.
 These should be conservatively treated only as *fitting parameters* and should not be used to compute thermodynamic properties close to 25 °C unless they were fit to experimental data in that temperature range.
 
 ## References

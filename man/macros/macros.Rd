@@ -65,5 +65,5 @@
 \newcommand{\c2}{\ifelse{latex}{\eqn{c_2}}{\ifelse{html}{\out{<I>c</I><sub>2</sub>}}{c2}}}
 \newcommand{\omega}{\ifelse{latex}{\eqn{\omega}}{\ifelse{html}{\out{&omega;}}{ω}}}
 
-% For logB.to.OBIGT.Rd
+% For logK.to.OBIGT.Rd
 \newcommand{\logB}{\ifelse{latex}{\eqn{\log \beta}}{\ifelse{html}{\out{log&thinsp;&beta;}}{log β}}}

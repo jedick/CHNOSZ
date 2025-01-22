@@ -1,18 +1,18 @@
-# CHNOSZ/logB.to.OBIGT.R
-# Get thermodynamic parameters from formation constants (logB) as a function of temperature
+# CHNOSZ/logK.to.OBIGT.R
+# Get thermodynamic parameters from formation constants (logK) as a function of temperature
 # 20220324 v1 Regress three parameters (G, S, and Cp)
 # 20221202 v2 Regress HKF parameters (assume constant pressure and optimize omega parameter for charged species)
 
-logB.to.OBIGT <- function(logB, species, coeffs, T, P, npar = 3, optimize.omega = FALSE, tolerance = 0.05) {
+logK.to.OBIGT <- function(logK, species, coeffs, T, P, npar = 3, optimize.omega = FALSE, tolerance = 0.05) {
 
   # We need at least five temperature values to optimize omega
   if(optimize.omega & length(unique(T)) < 5) {
-    message("logB.to.OBIGT: forcing optimize.omega = FALSE because there are < 5 T values")
+    message("logK.to.OBIGT: forcing optimize.omega = FALSE because there are < 5 T values")
     optimize.omega <- FALSE
   }
   # We need five parameters to optimize omega 20221209
   if(optimize.omega & npar != 5) {
-    message("logB.to.OBIGT: forcing optimize.omega = FALSE because npar != 5")
+    message("logK.to.OBIGT: forcing optimize.omega = FALSE because npar != 5")
     optimize.omega <- FALSE
   }
 
@@ -25,11 +25,11 @@ logB.to.OBIGT <- function(logB, species, coeffs, T, P, npar = 3, optimize.omega 
   # Calculate logK of the formation reaction with ΔG°f = 0 for the formed species
   logK0 <- suppressMessages(subcrt(species, coeffs, T = T, P = P)$out$logK)
 
-  ## Get Gibbs energy of species from logB of reaction
+  ## Get Gibbs energy of species from logK of reaction
   # Calculate T in Kelvin
   TK <- convert(T, "K")
-  # logB gives values for ΔG°r of the reaction
-  Gr <- convert(logB, "G", TK)
+  # logK gives values for ΔG°r of the reaction
+  Gr <- convert(logK, "G", TK)
   # logK0 gives values for ΔG°r of the reaction with ΔG°f = 0 for the formed species
   Gr0 <- convert(logK0, "G", TK)
   # Calculate ΔG°f of the formed species
@@ -130,12 +130,12 @@ logB.to.OBIGT <- function(logB, species, coeffs, T, P, npar = 3, optimize.omega 
   # NOTE: we have to apply OOM scaling
   ispecies <- do.call(mod.OBIGT, list(name = name, G = G, S = S, Cp = Cp, c1 = c1, c2 = c2 * 1e-4, omega = omega * 1e-5, z = Z))
   # Calculate logK of the formation reaction with "real" ΔG°f for the formed species
-  logK <- suppressMessages(subcrt(species, coeffs, T = T, P = P)$out$logK)
+  logK_calc <- suppressMessages(subcrt(species, coeffs, T = T, P = P)$out$logK)
   # Calculate the mean absolute difference
-  mad <- mean(abs(logK - logB))
-  message(paste("logB.to.OBIGT: mean difference between logB (experimental) and logK (calculated) is", round(mad, 4)))
+  mad <- mean(abs(logK_calc - logK))
+  message(paste("logK.to.OBIGT: mean absolute difference between experimental and calculated logK is", round(mad, 4)))
   # Check that calculated values are close to input values
-  stopifnot(all.equal(logK, logB, tolerance = tolerance, scale = 1))
+  stopifnot(all.equal(logK_calc, logK, tolerance = tolerance, scale = 1))
   # Return the species index in OBIGT
   ispecies
 
