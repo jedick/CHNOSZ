@@ -7,16 +7,19 @@ Fit thermodynamic parameters to experimental formation constants for an aqueous 
 }
 
 \usage{
-  logK.to.OBIGT(logK, species, coeffs, T, P, npar = 3,
-    optimize.omega = FALSE, tolerance = 0.05)
+  logK.to.OBIGT(logK, species, coeffs, T, P, name = NULL, state = "aq", 
+    V = NA, npar = 3, optimize.omega = FALSE, tolerance = 0.05)
 }
 
 \arguments{
-  \item{logK}{Values of \logK}
-  \item{species}{Species in the formation reaction (the formed species must be last)}
-  \item{coeffs}{Coefficients of the formation reaction}
-  \item{T}{Temperature (units of \code{\link{T.units}})}
-  \item{P}{Temperature (\samp{Psat} or numerical values with units of \code{\link{P.units}})}
+  \item{logK}{numeric, values of \logK}
+  \item{species}{character, formulas of species in the formation reaction (the newly formed species must be last)}
+  \item{coeffs}{numeric, coefficients of the formation reaction}
+  \item{T}{numeric, temperature (units of \code{\link{T.units}})}
+  \item{P}{numeric, pressure (\samp{Psat} or numerical values with units of \code{\link{P.units}})}
+  \item{name}{character, name of newly formed species; if NULL it is set to the formula from the last member of \code{species}}
+  \item{state}{character, state: \samp{aq} or \samp{cr}}
+  \item{V}{numeric, molar volume of the formed species, if it is a mineral (for \code{state == "cr"})}
   \item{npar}{numeric, number of parameters to use in fitting}
   \item{optimize.omega}{logical, optimize the omega parameter (relevant for charged species)?}
   \item{tolerance}{Tolerance for checking equivalence of input and calculated \logK values}
@@ -31,13 +34,15 @@ All species in the formation reaction must be present in OBIGT except for the \e
 
 The function works as follows.
 First, the properties of the known species are combined with \logK to calculate the standard Gibbs energy (G[T]) of the formed species at each value of \code{T} and \code{P}.
-Then, \code{\link{lm}} is used to fit one or more of the thermodynamic parameters \code{G}, \code{S}, \code{c1}, \code{c2}, and \code{omega} to the values of G[T].
-The first two of these parameters are standard-state values at 25 \degC and 1 bar, and the last three are parameters in the revised HKF equations (e.g. Eq. B25 of Shock et al., 1992).
+Then, for \code{state == "aq"}, \code{\link{lm}} is used to fit one or more of the thermodynamic parameters \code{G}, \code{S}, \code{c1}, \code{c2}, and \code{omega} to the values of G[T].
+The first two of these parameters are standard-state values at 25 \degC and 1 bar, and the last three are parameters in the revised HKF equations (e.g. Eq. B25 of Shock et al., 1992) (\samp{HKF} model in OBIGT).
+For \code{state == "cr"}, the supported fitting parameters are \code{G}, \code{S}, \code{a}, \code{b}, and \code{c}; the last three of these are the coefficient in the Maier-Kelley heat capacity equation (\samp{CGL} model in OBIGT).
 The fitted parameters for the formed species are then added to OBIGT.
 Finally, \code{\link{all.equal}} is used to test for approximate equivalence of the input values of \logK and calculated equilibrium constants; if the mean absolute difference exceeds \code{tolerance}, an error occurs.
 
 To avoid overfitting, only the first three parameters (\code{G}, \code{S}, and \code{c1}) are used by default.
 More parameters (up to 5) or fewer (down to 1) can be selected by changing \code{npar}.
+The default of 3 correspond to a constant heat capacity for both \code{aq} and \code{cr} states.
 Volumetric parameters (\a1 to \a4) in the HKF equations currently aren't included, so the resulting fits are valid only at the input pressure values.
 
 Independent of \code{npar}, the number of parameters used in the fit is not more than the number of data values (\emph{n}).
