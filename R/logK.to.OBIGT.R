@@ -194,7 +194,6 @@ logK.to.OBIGT <- function(logK, species, coeffs, T, P, name = NULL, state = "aq"
     PAR$a <- a
     PAR$b <- b
     PAR$c <- c
-    print(PAR)
     Cp <- cgl("Cp", parameters = PAR)[[1]]$Cp
 
     ## Update the thermodynamic parameters of the formed species
@@ -209,7 +208,6 @@ logK.to.OBIGT <- function(logK, species, coeffs, T, P, name = NULL, state = "aq"
 
   # Calculate logK of the formation reaction with "real" ΔG°f for the formed species
   logK_calc <- suppressMessages(subcrt(ispecies, coeffs, T = T, P = P)$out$logK)
-  print(inew)
   # Calculate the mean absolute difference
   mad <- mean(abs(logK_calc - logK))
   message(paste("logK.to.OBIGT: mean absolute difference between experimental and calculated logK is", round(mad, 4)))

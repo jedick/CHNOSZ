@@ -1,6 +1,6 @@
-Date: 2025-01-22
+Date: 2025-02-02
 Package: CHNOSZ
-Version: 2.1.0-42
+Version: 2.1.0-43
 Title: Thermodynamic Calculations and Diagrams for Geochemistry
 Authors@R: c(
     person("Jeffrey", "Dick", , "j3ffdick@gmail.com", role = c("aut", "cre"),
@@ -30,4 +30,4 @@ Description: An integrated set of tools for thermodynamic calculations in
 Encoding: UTF-8
 License: GPL-3
 VignetteBuilder: knitr
-URL: https://www.chnosz.net/, https://r-forge.r-project.org/projects/chnosz/
+URL: https://chnosz.net/, https://r-forge.r-project.org/projects/chnosz/

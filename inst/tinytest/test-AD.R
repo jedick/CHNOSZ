@@ -84,10 +84,8 @@ expect_equal(sort(info(iaq[abs(GAD - GOBIGT) > 900])$name), sort(c("HCl", "ethan
 ## This line should be commented for a released package
 #exit_file("Skipping tests so development builds on R-Forge work")
 
-## The following tests work on JMD's Linux machine "at home" but not on some CRAN machines 20220210
+## The remaining tests work on JMD's Linux machine "at home" but not on some CRAN machines 20220210
 if(!at_home()) exit_file("Skipping tests on CRAN")
-# This one fails on Windows (tolerance = 9 works) 20220208
-expect_equal(sout1$Cp[1:3], Cp_ref1[1:3], tolerance = 3, scale = 1, info = "AD produces correct values for CO2 along saturation curve")
 # This one fails on ATLAS and M1mac on CRAN 20220210
 expect_equal(sout1$Cp[4], Cp_ref1[4], tolerance = 800, scale = 1, info = "AD produces correct values for CO2 along saturation curve")
 # This one fails on ATLAS
@@ -96,3 +94,8 @@ expect_equal(sout2$Cp, Cp_ref2, tolerance = 14, scale = 1, info = "AD produces c
 # g / cm3 / K^2
 expect_equal(CHNOSZ:::.d2rho1_dT2(298.15, 1, FALSE), -0.000009503, tolerance = 0.000007, scale = 1,
              info = "Fugacity, density, and density derivatives of H2O are close to values in Akinfiev and Diamond (2003)")
+
+## Add another exit_file here for problematic test on Windows (especially on R-Forge and winbuilder) 20250202
+if(identical(.Platform$OS.type, "windows")) exit_file("Skipping test on Windows")
+# This one fails on Windows (tolerance = 9 works) 20220208
+expect_equal(sout1$Cp[1:3], Cp_ref1[1:3], tolerance = 3, scale = 1, info = "AD produces correct values for CO2 along saturation curve")

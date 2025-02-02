@@ -13,11 +13,11 @@ Fit thermodynamic parameters to experimental formation constants for an aqueous 
 
 \arguments{
   \item{logK}{numeric, values of \logK}
-  \item{species}{character, formulas of species in the formation reaction (the newly formed species must be last)}
+  \item{species}{character, formulas or names of species in the formation reaction (the last item must be the formula of newly formed species)}
   \item{coeffs}{numeric, coefficients of the formation reaction}
   \item{T}{numeric, temperature (units of \code{\link{T.units}})}
   \item{P}{numeric, pressure (\samp{Psat} or numerical values with units of \code{\link{P.units}})}
-  \item{name}{character, name of newly formed species; if NULL it is set to the formula from the last member of \code{species}}
+  \item{name}{character, name of newly formed species; if NULL it is set to the formula from the last item of \code{species}}
   \item{state}{character, state: \samp{aq} or \samp{cr}}
   \item{V}{numeric, molar volume of the formed species, if it is a mineral (for \code{state == "cr"})}
   \item{npar}{numeric, number of parameters to use in fitting}
