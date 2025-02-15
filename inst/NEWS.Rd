@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-42 (2025-01-22)}{
+\section{Changes in CHNOSZ version 2.1.0-44 (2025-02-15)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -36,6 +36,9 @@
       \item Add tantalum species from
       \href{https://doi.org/10.1016/j.gca.2024.10.019}{Hu et al. (2024)}.
 
+      \item Add Pd(HS)\s{4}\S{-2} and Pt(HS)\s{4}\S{-2} from
+      \href{https://doi.org/10.1016/j.gca.2024.12.019}{Laskar et al. (2024)}.
+
       \item Add Sn chloride complexes and updated parameters for Sn\S{+2},
       Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
         (2023)}.
@@ -48,10 +51,10 @@
       (FeCr\s{2}O\s{4}), and cassiterite (SnO\s{2}) from
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
 
-      \item Restore steam (H\s{2}O,g) in \file{inorganic_gas.csv}.
-
       \item Fix sign of \emph{c} parameter for nesquehonite. Thanks to
       James Leong and Grayson Boyer.
+
+      \item Restore steam (H\s{2}O,g) in \file{inorganic_gas.csv}.
 
     }
   }
