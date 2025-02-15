@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-44 (2025-02-15)}{
+\section{Changes in CHNOSZ version 2.1.0-45 (2025-02-15)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -39,7 +39,7 @@
       \item Add Pd(HS)\s{4}\S{-2} and Pt(HS)\s{4}\S{-2} from
       \href{https://doi.org/10.1016/j.gca.2024.12.019}{Laskar et al. (2024)}.
 
-      \item Add Sn chloride complexes and updated parameters for Sn\S{+2},
+      \item Add Sn chloride complexes and updated parameters for Sn\S{+2} and
       Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
         (2023)}.
 
@@ -99,6 +99,11 @@
 
       \item Revise \file{demo/sum_S.R} for log \emph{f}O\s{2} - log \emph{m} ΣS
       diagram and add solubility contours for Fe and Au.
+
+      \item Update \file{demo/contour.R} to use conditions taken from
+      \href{https://doi.org/10.1016/j.oregeorev.2022.105231}{Ding et al.
+        (2023)} and optional data for Au species from IGEM RAS, including
+      polynuclear Au\s{2}S\s{2}\S{-2}.
 
     }
   }

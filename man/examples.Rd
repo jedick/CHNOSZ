@@ -47,7 +47,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{arsenic}{Another example of \code{\link{mosaic}}: Eh-pH diagram for the system As-O-H-S (Lu and Zhu, 2011)}
     \item{solubility}{Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996)}
     \item{gold}{Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009)}
-    \item{contour}{Gold solubility contours on a log fO2 - pH diagram (Williams-Jones et al., 2009)}
+    \item{contour}{Gold solubility contours on a log fO2 - pH diagram (Ding et al., 2023)}
     \item{sphalerite}{Solubility of sphalerite (Akinfiev and Tagirov, 2014)}
     \item{minsol}{Solubilities of multiple minerals}
     \item{dehydration}{\logK of dehydration reactions; SVG file contains tooltips and links}
@@ -116,6 +116,8 @@ Canovas, P. A., III and Shock, E. L. (2016) Geobiochemistry of metabolism: Stand
 Dick, J. M. and Shock, E. L. (2011) Calculation of the relative chemical stabilities of proteins as a function of temperature and redox chemistry in a hot spring. \emph{PLOS One} \bold{6}, e22782. \doi{10.1371/journal.pone.0022782}
 
 Dick, J. M. (2015) Chemical integration of proteins in signaling and development. \emph{bioRxiv}. \doi{10.1101/015826}
+
+Ding, Z., Sun, X., Hu, S., Chen, H., Li, D., Fu, Y., Xu, L., Wu, Z., and Huang, F.. (2023) Role of carbonaceous material in gold precipitation for orogenic gold deposits: A case study of the Bangbu gold deposit in southern Tibet, China. \emph{Ore Geol. Rev.} \bold{152}, 105231. \doi{10.1016/j.oregeorev.2022.105231}
 
 Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibria}, Harper & Row, New York, 450 p. \url{https://www.worldcat.org/oclc/517586}
 
