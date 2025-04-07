@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-45 (2025-02-15)}{
+\section{Changes in CHNOSZ version 2.1.0-48 (2025-04-07)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -86,6 +86,8 @@
 
   \subsection{DOCUMENTATION}{
     \itemize{
+
+      \item Revise and shorten \file{anintro.Rmd} with AI assistance.
 
       \item Add FAQ question: Why are mineral stability boundaries curved on
       mosaic diagrams?

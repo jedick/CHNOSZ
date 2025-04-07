@@ -76,13 +76,22 @@ reset()
 ```
 
 This vignette was compiled on `r Sys.Date()` with CHNOSZ version `r sessionInfo()$otherPkgs$CHNOSZ$Version`.
-This document defines the concepts and provides examples of equilibrium calculations in CHNOSZ.
 
-First, some limitations.
-CHNOSZ is not a general-purpose speciation code.
-The types of equilibrium calculations it can handle are restricted to those systems that can be described as *balanced on an element*.
-For example, we can predict the speciation of Au in complexes with chloride, hydroxide, and sulfide all with specified activities.
-But we can not at the same time predict the formation of species such as NaCl(aq), which is required for a complete equilibrium model.
+Scope of this document:
+
+- This document defines the concepts underlying equilibrium calculations with the `equilibrate()` function in CHNOSZ.
+- Some illustrative examples of equilibrium calculations are provided, using proteins as a case study.
+- The main use case for `equilibriate()` is to calculate and visualize distributions of aqueous species subject to the limitations below.
+- A different function, `solubility()`, can be used to obtain the distributions of aqueous species in equilibrium with one or more minerals.
+- Many types of relative stablity diagrams (e.g. mineral and aqueous species predominance diagrams) can be made using the *maximum affinity method* (basis - species - [affinity|mosaic] - diagram) and do not require either of the `equilibrate()` or `solubility()` functions.
+
+Limitations:
+
+- CHNOSZ is not a general-purpose speciation code.
+- The types of equilibrium calculations it can handle are restricted to systems described as *balanced on an element*.
+  - For example, we can predict the distribution of aqueous Au complexes with given activities of chloride, hydroxide, and sulfide.
+  - But we can not at the same time predict the formation of species without Au (such as NaCl(aq)), which would be required for a complete equilibrium model.
+- Protein length can be used as the balancing constraint instead of an element.
 
 ## Concepts
 
@@ -133,7 +142,7 @@ Equilibration method
     :   The condition that the affinities of all *transformation* reactions are zero.
     Implemented with the `equilibrate()` function in CHNOSZ, which is used below.
 
-    Total equilibrium
+    Stable equilibrium
     :   The condition that the affinities of all *formation* reactions are zero.
     Implemented with the `solubility()` function in CHNOSZ, which is not described here.
 
