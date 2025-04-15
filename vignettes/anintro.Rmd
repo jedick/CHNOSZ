@@ -12,6 +12,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: vig.bib
+link-citations: yes
 csl: elementa.csl
 ---
 
@@ -83,12 +84,15 @@ CHNOSZ offers several primary functions for thermodynamic analysis:
 
 ## Querying the Thermodynamic Database
 
-The `info()` function provides access to the OBIGT thermodynamic database:
+The `info()` function provides access to the OBIGT thermodynamic database.
+Use it to search for species by name or formula and (optionally) state - `aq`, `cr`, `gas`, or `liq`.
 
 ```{r info_CH4}
 # Get database index for aqueous methane
 info("CH4")
 ```
+
+Use `info()` recursively to lookup thermodynamic parameters:
 
 ```{r info_info_CH4}
 # Get thermodynamic properties for methane
@@ -120,7 +124,7 @@ subcrt("H2O", T = c(400, 500), P = c(250, 300))
 Unit conversions are handled by `T.units()`, `P.units()`, and `E.units()`:
 
 ```{r E.units}
-# Convert energy units from Joules to calories
+# Change energy units from Joules to calories
 E.units("cal")
 subcrt("CH4", T = 25)
 reset()  # Restore defaults
@@ -235,6 +239,69 @@ legend("topright", c("25 °C", "1 bar"), bty = "n")
 Functions that have the `IS` parameter are `subcrt()`, `affinity()`, `mosaic()`, and `solubility()`.
 When a value for `IS` is specified, inputs and outputs labeled as activities are actually interpreted or reported as molalities.
 
+## Building Up
+
+Having seen basic examples of the main features of CHNOSZ, here are ideas for building more complex calculations and diagrams.
+
+### 1. Use retrieve() to search species by elements
+
+Want to find all the Al complexes in the database?
+List them by calling `retrieve()` with the main element optionally followed by the ligand elements and state.
+
+```{r retrieve_Al_default, results = "show"}
+# List aqueous Al species in the default database
+iaq <- retrieve("Al", ligands = c("F", "H", "O"), state = "aq")
+# Print the first few rows and columns
+info(iaq)[1:3, 1:5]
+# Use the species index or name in subcrt()
+subcrt(iaq[1:3], T = 25)
+#subcrt(names(iaq)[1:3], T = 25)  # same as above
+```
+
+The result of `retrieve()` can also be used to add species to a diagram.
+
+```{r Al_diagram}
+basis(c("Al+3", "H2O", "F-", "H+", "e-"))
+species(iaq)
+species(names(iaq))  # same as above
+```
+
+### 2. Load optional data with add.OBIGT()
+
+Perhaps you'd like to use data from older databases that have been superseded by later updates (briefly summarized here for [SUPCRT92](OBIGT.html#optional-SUPCRT92) and [SLOP98](OBIGT.html#optional-SLOP98)).
+Use add.OBIGT() to load these old data entries.
+
+```{r add_OBIGT_SLOP98, results = "show"}
+add.OBIGT("SLOP98")
+iaq_all <- retrieve("Al", ligands = c("F", "H", "O"), state = "aq")
+# Use difference between sets to get the added species
+info(setdiff(iaq_all, iaq))
+```
+
+The convention for SUPCRT-family databases is to use anhydrous species.
+For example, AlO2- in SLOP98 corresponds to Al(OH)4- in the default database (see output above).
+They are effectively the same species, which is why only the latter [taken from a more extensive compilation for Al species properties; @TS01] is used in the default database.
+Unless you have a specific reason to compare them, redundant species should not be used in the same equilibrium calculation.
+
+### 3. Use OBIGT() or reset() to restore the default database and settings
+
+`OBIGT()` restores just the database, without affecting other settings (e.g. `E.units()`, `basis()` and `species()`).
+`reset()` resets all settings in CHNOSZ, including the database.
+These functions are useful for both interactive use and scripts that compare different versions of data or plots for different systems or conditions.
+
+4. Use basis() species to select variables to plot
+5. Set activities of formed species() to define a single solubility contour
+6. When to use add = TRUE
+7. Set grid resolution and constant T, P, or IS in affinity()
+8. Use solubility() to draw multiple solubility contours
+9. Use the transect mode of affinity() for arbitrary numbers of variables
+10. Choose non-default balancing constraints in diagram()
+11. Extract lines and image data from the output of diagram()
+12. Use helper functions to create labels for diagrams
+13. Use the output of subcrt() to format reactions for diagrams
+14. Calculate affinity values (opposite of Gibbs energy of reaction) with subcrt()
+15. On-demand database updates with mod.OBIGT() and logK.to.OBIGT()
+
 ## Further Resources
 
 - Browse the package documentation with `help(package = "CHNOSZ")`
@@ -261,12 +328,9 @@ thermo.refs(info("CH4"))
 
 ## Document history
 
-- 2010-09-30 Initial version, titled "Getting started with CHNOSZ".
-- 2012-06-16 Add "More activity diagrams" (section no longer exists).
-- 2015-05-14 Add warning about [internal consistency of thermodynamic data](#thermodynamic-database).
-- 2017-02-15 Completely rewritten; switch from Sweave to [knitr](https://yihui.org/knitr/) ([Tufte style](https://rstudio.github.io/tufte/)).
-- 2019-01-24 Add [section on solubility calculations](#complete-equilibrium-solubility).
-- 2025-04-07 Shortened and revised with AI assistance.
+- 2010-09-30 First version, titled "Getting started with CHNOSZ".
+- 2017-02-15 Rewritten and switched from Sweave to [knitr](https://yihui.org/knitr/).
+- 2025-04-07 Revised and shortened with AI assistance (except for [Building Up](#building-up)).
 
 <p>
 ```{r the_end}
