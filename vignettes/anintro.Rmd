@@ -85,17 +85,25 @@ CHNOSZ offers several primary functions for thermodynamic analysis:
 ## Querying the Thermodynamic Database
 
 The `info()` function provides access to the OBIGT thermodynamic database.
-Use it to search for species by name or formula and (optionally) state - `aq`, `cr`, `gas`, or `liq`.
 
 ```{r info_CH4}
 # Get database index for aqueous methane
 info("CH4")
 ```
 
-Use `info()` recursively to lookup thermodynamic parameters:
+When searching by formula, aqueous species are returned if they are available.
+Use a species name or add the state to get a particular physical state - `aq`, `cr`, `gas`, or `liq`:
+
+```{r info_methane}
+# Two ways to lookup methane gas
+info("methane")
+info("CH4", "gas")
+```
+
+Use `info()` recursively to return thermodynamic parameters:
 
 ```{r info_info_CH4}
-# Get thermodynamic properties for methane
+# Get thermodynamic properties for aqueous methane
 info(info("CH4"))
 ```
 
@@ -108,7 +116,7 @@ info("ribose+")
 
 ## Calculating Thermodynamic Properties
 
-The `subcrt()` function (named after SUPCRT) calculates standard thermodynamic properties:
+The `subcrt()` function [named after SUPCRT; @JOH92] calculates standard thermodynamic properties:
 
 ```{r subcrt_CH4}
 # Properties of aqueous methane at default T and P
@@ -184,7 +192,7 @@ bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 m <- mosaic(bases, pH = c(0, 12), Eh = c(-1, 1), T = 200)
 diagram(m$A.species, lwd = 2, bold = species()$state == "cr")
 diagram(m$A.bases, add = TRUE, col = 4, col.names = 4, italic = TRUE)
-water.lines(m$A.species)
+water.lines(m$A.species, lty = 3, col = 8)
 ```
 
 ## Equilibrium Calculations
@@ -258,7 +266,7 @@ subcrt(iaq[1:3], T = 25)
 #subcrt(names(iaq)[1:3], T = 25)  # same as above
 ```
 
-The result of `retrieve()` can also be used to add species to a diagram.
+The result of `retrieve()` can also be used to add species to a diagram; see the example in #3 below.
 
 ```{r Al_diagram}
 basis(c("Al+3", "H2O", "F-", "H+", "e-"))
@@ -268,7 +276,8 @@ species(names(iaq))  # same as above
 
 ### 2. Load optional data with add.OBIGT()
 
-Perhaps you'd like to use data from older databases that have been superseded by later updates (briefly summarized here for [SUPCRT92](OBIGT.html#optional-SUPCRT92) and [SLOP98](OBIGT.html#optional-SLOP98)).
+Perhaps you'd like to use data from older databases that have been superseded by later updates.
+The OBIGT vignette briefly summarizes the superseded data for [SUPCRT92](OBIGT.html#optional-SUPCRT92) and [SLOP98](OBIGT.html#optional-SLOP98) [@SLOP98].
 Use add.OBIGT() to load these old data entries.
 
 ```{r add_OBIGT_SLOP98, results = "show"}
@@ -289,9 +298,117 @@ Unless you have a specific reason to compare them, redundant species should not 
 `reset()` resets all settings in CHNOSZ, including the database.
 These functions are useful for both interactive use and scripts that compare different versions of data or plots for different systems or conditions.
 
-4. Use basis() species to select variables to plot
-5. Set activities of formed species() to define a single solubility contour
+Let's put items #1-3 together to remake the corundum solubility plot using only species available in SLOP98.
+To do this, we use `add.OBIGT()` followed by `retrieve()` to gather the species indices for all Al species, then taken only those species sourced from @SSWS97.
+
+```{r corundum_solubility_2, fig.cap="Corundum solubility with species from SLOP98"}
+# Add superseded species from SLOP98
+add.OBIGT("SLOP98")
+# List all aqueous Al species
+iaq <- retrieve("Al", state = "aq")
+# Keep only species from Shock et al. (1997)
+iaq <- iaq[grepl("SSWS97", info(iaq)$ref1)]
+# Plot corundum solubility vs pH
+basis(c("Al+3", "H2O", "H+", "e-"))
+species("corundum")
+s <- solubility(iaq, pH = c(2, 10), in.terms.of = "Al+3")
+## Alternatively, we could use the species names
+#s <- solubility(names(iaq), pH = c(2, 10), in.terms.of = "Al+3")
+diagram(s, col = 3, lwd = 2, ylim = c(-10, -2))
+diagram(s, type = "loga.equil", add = TRUE)
+legend("topright", c("25 °C", "1 bar"), bty = "n")
+# Reset the database for subsequent calculations
+reset()
+```
+
+4. Use `basis()` species to select compositional variables to plot
+
+A common question is: what are the basis species used for?
+The basis species define the compositional variables that can be added to a diagram.
+In more precise terms, they define the thermodynamic components of a chemical system.
+The composition of any possible species in that system can be represented by a linear combination of the basis species.
+
+CHNOSZ requires that the number of basis species is equal to the number of different elements in the basis species (plus charge, if present).
+If you were studying the relative stability of F- and OH-complexes with Al, you might be tempted to try this basis definition:
+
+```{r basis_Al_F_OH_1, error=TRUE}
+basis(c("Al+3", "F-", "OH-"))
+```
+
+According to the message, we don't have enough basis species for the number of elements.
+Since hydroxide (OH-) is just water minus a proton, we could try this instead:
+
+```{r basis_Al_F_OH_2, error=TRUE}
+basis(c("Al+3", "F-", "H+", "H2O"))
+```
+
+That's still not enough species.
+As is often the case, we need to include a basis species representing oxidation-reduction (redox) reactions, even if there are no redox reactions between the formed species.
+Here are two possible basis definitions that do not give an error.
+
+```{r basis_Al_F_OH_3}
+# Use "oxygen" to get oxygen gas (for logfO2 diagrams)
+basis(c("Al+3", "F-", "H+", "H2O", "oxygen"))
+# Use "e-" to get aqueous electron (for Eh diagrams)
+basis(c("Al+3", "F-", "H+", "H2O", "e-"))
+```
+
+5. Set activities of formed `species()` to define a single solubility contour
+
+In order to make a diagram with stability fields for different species, CHNOSZ needs to know about the activities of all the species in the reaction.
+The activities of the basis species start with constant values as shown in the output above (`logact` column).
+Selected basis species can be assigned to plot axes (with a range of values) in `affinity()`.
+
+How about the formed species in the system - that is, the species whose stability fields we want to visualize?
+We both list the species and set their activities using `species()`.
+The function defaults to activities of 1e-3 (`logact` of -3) for aqueous species and unit activity (`logact` = 0) for minerals, gases, and liquids.
+Let's change this to activities of 1e-6 for the formed species.
+
+```{r species_logact}
+basis(c("Al+3", "F-", "H+", "H2O", "e-"))
+iaq <- retrieve("Al", ligands = c("F", "H", "O"), state = "aq")
+# Check that the data are from the same source
+stopifnot(all(info(iaq)$ref1 == "TS01"))
+species(iaq, -6)
+```
+
+This value for `logact` defines a solubility contour, as we'll see below.
+
 6. When to use add = TRUE
+
+There are two places where you might see `add = TRUE`.
+First, in `species()` to add species not already in the list.
+Without `add = TRUE`, any existing species are discarded.
+Second, in `diagram()` to add to an existing plot.
+
+Let's put items #4-6 together to make a Pourbaix (Eh-pH) diagram for Al with two solubility contours.
+
+```{r Pourbaix_Mn, fig.cap = "Pourbaix diagram for Mn with two solubility contours"}
+basis(c("Mn+2", "H+", "H2O", "e-"))
+icr <- retrieve("Mn", ligands = c("H", "O"), state = "cr")
+iaq <- retrieve("Mn", ligands = c("H", "O"), state = "aq")
+# First layer, logact(aq) = -3
+species(icr)
+species(iaq, add = TRUE)
+a <- affinity(pH = c(4, 14), Eh = c(-1, 1), T = 100)
+# Use names = NA to avoid plotting labels twice
+diagram(a, lty = 2, names = NA)
+# Second layer, logact(aq) = -4
+species(icr)
+species(iaq, -4, add = TRUE)
+a <- affinity(pH = c(4, 14), Eh = c(-1, 1), T = 100)
+d <- diagram(a, add = TRUE)
+# Add water stability limits
+water.lines(d, lty = 3, col = 8)
+# Add legends
+legend("topright", legend = c(lT(100), lP("Psat")), bty = "n")
+title = as.expression(quote(log~italic(a)))
+legend("bottomleft", legend = c(-3, -4), lty = c(2, 1), title = title, bty = "n")
+```
+
+The shaded areas in the diagram represent water instability regions and are automatically added by `diagram()`.
+We use `water.lines()` here to plot the water stability limits with dotted lines.
+
 7. Set grid resolution and constant T, P, or IS in affinity()
 8. Use solubility() to draw multiple solubility contours
 9. Use the transect mode of affinity() for arbitrary numbers of variables
