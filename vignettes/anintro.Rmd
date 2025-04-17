@@ -249,9 +249,38 @@ When a value for `IS` is specified, inputs and outputs labeled as activities are
 
 ## Building Up
 
-Having seen basic examples of the main features of CHNOSZ, here are ideas for building more complex calculations and diagrams.
+Having seen basic examples of the main features of CHNOSZ, here are some ideas for building more complex calculations and diagrams.
 
-### 1. Use retrieve() to search species by elements
+### 1. Use helper functions to create formatted logK and other labels for diagrams
+
+Labeling diagrams is an importan part of creating publication-ready figures, and chemical formulas and reactions can be diffcult for beginners and experienced R coders alike.
+See the documentation for R's `plotmath()` for formatting mathematical expressions.
+My go-to function for building expressions programmatically is `bquote()`, which allows substituting variables into a formula:
+
+```{r bquote}
+```
+
+CHNOSZ has several helper functions for creating labels.
+`axis.label()` and `expr.species()` are used to create formatted axis labels and chemical formulas.
+Let's revisit the CO2 dissolution example seen earlier and add two other gases (carbon monoxide and methane).
+This plot is similar to Figure 18 of @MSS13.
+
+```{r dissolution_logK, fig.cap="Equilibrium constants of dissolution reactions"}
+T <- seq(0, 350, 10)
+CO2 <- subcrt(c("CO2", "CO2"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
+CO <- subcrt(c("CO", "CO"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
+CH4 <- subcrt(c("CH4", "CH4"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
+logK <- data.frame(T, CO2, CO, CH4)
+matplot(logK[, 1], logK[, -1], type = "l", col = 1, lty = 1,
+        xlab = axis.label("T"), ylab = axis.label("logK"))
+text(80, -1.7, expr.species("CO2"))
+text(240, -2.37, expr.species("CO"))
+text(300, -2.57, expr.species("CH4"))
+```
+
+See the help pages in CHNOSZ for additional functions for labeling diagrams, including `describe.reaction()` to format a chemical reaction from the output of `subcrt()`, and `lT()` and related functions for compact representations of temperature and other variables for plot legends.
+
+### 2. Use retrieve() to search species by elements
 
 Want to find all the Al complexes in the database?
 List them by calling `retrieve()` with the main element optionally followed by the ligand elements and state.
@@ -274,7 +303,7 @@ species(iaq)
 species(names(iaq))  # same as above
 ```
 
-### 2. Load optional data with add.OBIGT()
+### 3. Load optional data with add.OBIGT()
 
 Perhaps you'd like to use data from older databases that have been superseded by later updates.
 The OBIGT vignette briefly summarizes the superseded data for [SUPCRT92](OBIGT.html#optional-SUPCRT92) and [SLOP98](OBIGT.html#optional-SLOP98) [@SLOP98].
@@ -292,7 +321,7 @@ For example, AlO2- in SLOP98 corresponds to Al(OH)4- in the default database (se
 They are effectively the same species, which is why only the latter [taken from a more extensive compilation for Al species properties; @TS01] is used in the default database.
 Unless you have a specific reason to compare them, redundant species should not be used in the same equilibrium calculation.
 
-### 3. Use OBIGT() or reset() to restore the default database and settings
+### 4. Use OBIGT() or reset() to restore the default database and settings
 
 `OBIGT()` restores just the database, without affecting other settings (e.g. `E.units()`, `basis()` and `species()`).
 `reset()` resets all settings in CHNOSZ, including the database.
@@ -321,7 +350,7 @@ legend("topright", c("25 °C", "1 bar"), bty = "n")
 reset()
 ```
 
-4. Use `basis()` species to select compositional variables to plot
+### 5. Use `basis()` species to select compositional variables to plot
 
 A common question is: what are the basis species used for?
 The basis species define the compositional variables that can be added to a diagram.
@@ -353,7 +382,7 @@ basis(c("Al+3", "F-", "H+", "H2O", "oxygen"))
 basis(c("Al+3", "F-", "H+", "H2O", "e-"))
 ```
 
-5. Set activities of formed `species()` to define a single solubility contour
+### 6. Set activities of formed `species()` to define a single solubility contour
 
 In order to make a diagram with stability fields for different species, CHNOSZ needs to know about the activities of all the species in the reaction.
 The activities of the basis species start with constant values as shown in the output above (`logact` column).
@@ -374,7 +403,7 @@ species(iaq, -6)
 
 This value for `logact` defines a solubility contour, as we'll see below.
 
-6. When to use add = TRUE
+### 7. When to use add = TRUE
 
 There are two places where you might see `add = TRUE`.
 First, in `species()` to add species not already in the list.
@@ -409,15 +438,45 @@ legend("bottomleft", legend = c(-3, -4), lty = c(2, 1), title = title, bty = "n"
 The shaded areas in the diagram represent water instability regions and are automatically added by `diagram()`.
 We use `water.lines()` here to plot the water stability limits with dotted lines.
 
-7. Set grid resolution and constant T, P, or IS in affinity()
-8. Use solubility() to draw multiple solubility contours
-9. Use the transect mode of affinity() for arbitrary numbers of variables
-10. Choose non-default balancing constraints in diagram()
-11. Extract lines and image data from the output of diagram()
-12. Use helper functions to create labels for diagrams
-13. Use the output of subcrt() to format reactions for diagrams
-14. Calculate affinity values (opposite of Gibbs energy of reaction) with subcrt()
-15. On-demand database updates with mod.OBIGT() and logK.to.OBIGT()
+### 8. Set grid resolution and constant T, P, or IS in affinity()
+
+After defining the basis species and formed species (and their constant activities), you have some choices about what variables to put on the plot, the grid resolution, and values for a few other variables.
+`affinity()` accepts one or more named arguments of the form `(min, max)` or `(min, max, res)`; the number of such arguments is the dimensionality of the final plot.
+The grid resolution (`res`) defaults to 256 and can be different for each variable.
+The names of the variables can be the formulas of any of the basis species, or `T`, `P`, or `IS` for temperature, pressure, or ionic strength.
+These last three default to 25 °C, `Psat` (1 bar below 100 °C and saturation pressure at higher temperatures), and 0 mol/kg.
+
+I often start with a low grid resolution to quickly iterate a calculation, then switch to a higher resolution when I'm satisfied with the result.
+
+### 9. Use NaCl() to estimate ionic strength from NaCl concentration
+
+Sodium chloride (NaCl) solutions are commonly used reference points for geochemical models.
+The `NaCl()` function provides a quick-and-dirty way to estimate ionic strength and activity of chloride (Cl-) for a given total amount of NaCl added to 1 kg of H2O.
+These values can then be used in setting up a calculation that involves these variables.
+
+This function does not use either the basis() or species() definitions.
+The following example runs a calculation for 0.8 mol/kg NaCl and given T, P, and pH.
+See `demo('sum_S')` for the fully worked-out example that uses this code [based on a diagram in @SW02].
+
+```{r NaCl, results = "show"}
+T <- 300
+P <- 1000
+pH <- 5
+m_NaCl = 0.8
+NaCl <- NaCl(m_NaCl = m_NaCl, T = T, P = P, pH = pH)
+print(paste("mol NaCl added to 1 kg H2O:", m_NaCl))
+print(paste("Ionic strength (mol/kg):", NaCl$IS))
+print(paste("Chloride concentration (mol/kg):", NaCl$m_Clminus))
+```
+
+10. Use solubility() to draw multiple solubility contours
+11. Use the transect mode of affinity() for linked variables
+12. Choose non-default balancing constraints in diagram()
+13. Extract lines and image data from the output of diagram()
+14. Use the output of subcrt() to format reactions for diagrams
+15. Calculate affinity values (opposite of Gibbs energy of reaction) with subcrt()
+16. On-demand database updates with mod.OBIGT() and logK.to.OBIGT()
+17. More about mosaic()
 
 ## Further Resources
 
@@ -427,20 +486,39 @@ We use `water.lines()` here to plot the water stability limits with dotted lines
 
 Additional vignettes cover:
 
-- OBIGT thermodynamic database
-- Creating multi-metal diagrams
-- Customizing the thermodynamic database
+### OBIGT thermodynamic database
+
+### Creating multi-metal diagrams (aside: why affinity?)
+
+The idea for creating stability diagrams in CHNOSZ came from Harold Helgeson's geochemistry course.
+There, we constructed diagrams that were "balanced on" a metal.
+For instance, in a system balanced on Al, Al is only present in the minerals on both sides of the reaction and is not free as an ion.
+
+The reaction-based method, used for making diagrams by hand, looks at reactions between pairs of species (let's call them transformation reactions), then draws a line between stability fields where the non-standard Gibbs energy of reaction is zero.
+The grid-based method, used in CHNOSZ, looks at reactions to compose individual species from the basis species (let's call them formation reactions), then selects the most stable species according to their affinity values.
+
+Affinity is just the opposite of non-standard Gibbs energy of reaction.
+"Standard Gibbs energy of reaction" and "Gibbs energy of reaction" - which are two very different things - have unfortunately similar names except for an optional [depending on the author, e.g. @AL19;@STK19] "overall" or "non-standard" in front of the latter.
+"Non-standard Gibbs energy of reaction" doesn't lend itself to a short, unambiguous function name, which is why its opposite, "affinity", is used in CHNOSZ.
+
+In the reaction-based method, transformation reactions are "balanced on" a metal, while in the grid based method, formation reactions are normalized on that metal.
+The grid-based method in CHNOSZ is called the "maximum affinity method" for making relative stability diagrams and produces equivalent resuls to the reaction-based method.
+It also has the same limitations: every mineral or other formed species must have that "balanced on" (or "conserved") metal in their formula.
+
+The multi-metal vignette has some techniques for overcoming this limitation of balancing reactions on a single metal.
+
+### Customizing the thermodynamic database
 
 ## References
 
-The CHNOSZ package incorporates data and methods from numerous sources. To view citation information:
+The CHNOSZ package incorporates data and methods from various sources. To view citation information for data sources:
 
 ```{r refs, eval = FALSE}
-# View all references
+# View all references in a browser
 thermo.refs()
 
-# View references for specific species
-thermo.refs(info("CH4"))
+# Return data frame with references for one or more species
+thermo.refs(info("CH4", c("aq", "gas")))
 ```
 
 ## Document history
