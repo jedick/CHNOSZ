@@ -79,5 +79,6 @@ diagram(mcr$A.species, names = NA, add = TRUE, lty = 2, col = 2)
 title(paste("Solubilities of", length(icr), "minerals"), font.main = 1, line = 1.5)
 title(bquote(log[10]~"moles of"~.(metal)~"in solution"), line = 0.7)
 label.figure("C")
+title(bquote(log * italic(m)*.(metal)*"(aq)" == .(logm_metal)))
 
 par(opar)

@@ -25,7 +25,22 @@ pre {
   margin: 0;
   padding: 0;
 }
-</style>
+```
+
+```{js, echo=FALSE}
+function ToggleDiv(ID) {
+  var D = document.getElementById("D-" + ID);
+  var B = document.getElementById("B-" + ID);
+  if (D.style.display === "none") {
+    // open the div and change button text
+    D.style.display = "block";
+    B.innerText = "Hide code";
+  } else {
+    // close the div and change button text
+    D.style.display = "none";
+    B.innerText = "Show code";
+  }
+}
 ```
 
 ```{r setup, include=FALSE}
@@ -215,7 +230,7 @@ diagram(e, alpha = TRUE, add = TRUE, col = 2, names = NA)
 
 Calculate solubility of minerals or gases:
 
-```{r solubility, fig.cap="Solubility of corundum (green line) and equilibrium concentrations of aqueous species (black lines)"}
+```{r corundum_solubility, fig.cap="Solubility of corundum (green line) and equilibrium concentrations of aqueous species (black lines)"}
 # Corundum solubility vs pH
 basis(c("Al+3", "H2O", "H+", "e-"))
 species("corundum")
@@ -230,7 +245,7 @@ legend("topright", c("25 °C", "1 bar"), bty = "n")
 
 Incorporate non-ideal behavior using the extended Debye-Hückel equation by setting the ionic strength parameter `IS`:
 
-```{r solubility_IS, fig.cap="Solubility of corundum dependent on ionic strength"}
+```{r corundum_solubility_IS, fig.cap="Solubility of corundum dependent on ionic strength"}
 # Corundum solubility again
 basis(c("Al+3", "H2O", "H+", "e-"))
 species("corundum")
@@ -426,12 +441,12 @@ diagram(a, lty = 2, names = NA)
 species(icr)
 species(iaq, -4, add = TRUE)
 a <- affinity(pH = c(4, 14), Eh = c(-1, 1), T = 100)
-d <- diagram(a, add = TRUE)
+d <- diagram(a, bold = species()$state == "cr", add = TRUE)
 # Add water stability limits
 water.lines(d, lty = 3, col = 8)
 # Add legends
 legend("topright", legend = c(lT(100), lP("Psat")), bty = "n")
-title = as.expression(quote(log~italic(a)))
+title = as.expression(quote(log~italic(a)*"Mn(aq)"))
 legend("bottomleft", legend = c(-3, -4), lty = c(2, 1), title = title, bty = "n")
 ```
 
@@ -469,14 +484,116 @@ print(paste("Ionic strength (mol/kg):", NaCl$IS))
 print(paste("Chloride concentration (mol/kg):", NaCl$m_Clminus))
 ```
 
-10. Use solubility() to draw multiple solubility contours
-11. Use the transect mode of affinity() for linked variables
+### 10. Use solubility() to draw multiple solubility contours
+
+There are many uses for "composite diagrams" [@GC65], where stability fields for minerals and predominance fields for aqueous species are both present.
+As mentioned above (#6), setting the activities of formed aqueous species defines a single solubility contour.
+This represents a concentration-dependent boundary between minerals and aqueous species on a composite diagram, a concept referred to either as "equisolubility" [@Pou74] or "isosolubility" [@Hel64 and Garrels and Christ, 1965].
+
+Composite diagrams are often drawn with multiple solubility contours in order to show the dependence of solubility on pH, redox, or other variables.
+See examples of Eh-pH composite diagrams in `demo("Pourbaix")`.
+
+You could loop over constant activities to make a series of solubility contours (see the [above example for Mn](#when-to-use-add-true)).
+An easier solution is to use `solubility()` to visualize multiple solubility contours in one go.
+The basic idea is to first load the mineral(s) containing a single metal as the formed `species()`.
+Then, list the aqueous species with that metal as the first argument to `solubility()`.
+The remaining arguments to the function define the plot variables, just as in `affinity()` and `mosaic()`.
+
+Let's put together #8-10 to make a set of diagrams for a single metal.
+The example here uses Fe; try changing it to Cu, Zn, Pb, Au, or something else!
+
+```{r solubility, echo=FALSE, fig.cap="Mineral stability diagram; aqueous species predominance diagram; composite diagram with one solubility contour; diagram with multiple solubility contours", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3}
+par(mfrow = c(1, 4))
+
+# System definition
+metal <- "Fe"
+# The concentration to be used for a single solubility contour
+logm_metal <- -6
+T <- 150
+P <- "Psat"
+Stot <- 1e-3
+wt_percent_NaCl <- 10
+# Plot variables
+res <- 300
+pH <- c(0, 14, res)
+O2 <- c(-55, -35, res)
+
+# Work out NaCl molality from weight percent
+# Convert to permil to get parts out of 1000 g (1 kg) of solution
+wt_permil_NaCl <- wt_percent_NaCl * 10
+# Divide by molecular weight to get moles of NaCl in 1000 g of solution
+moles_NaCl <- wt_permil_NaCl / mass("NaCl")
+# Subtract from 1000 g to get mass of H2O
+grams_H2O <- 1000 - wt_permil_NaCl
+# This gives the moles of NaCl added to 1 kg of H2O
+m_NaCl <- 1000 * moles_NaCl / grams_H2O
+# Now calculate ionic strength and molality of Cl-
+NaCl_res <- NaCl(m_NaCl, T = T, P = P)
+IS = NaCl_res$IS
+m_Clminus = NaCl_res$m_Clminus
+
+# Set up basis species
+basis(c(metal, "H2S", "Cl-", "oxygen", "H2O", "H+"))
+basis("H2S", log10(Stot))
+basis("Cl-", log10(m_Clminus))
+# Define basis species to change for mosaic calculation
+bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+
+# Git minerals and aqueous species
+icr <- retrieve(metal, c("Cl", "S", "O"), state = "cr")
+iaq <- retrieve(metal, c("Cl", "S", "O"), state = "aq")
+
+# Make diagram for minerals
+species(icr)
+mcr <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = IS)
+diagram(mcr$A.species, bold = TRUE, fill = "#FAEBD788")
+diagram(mcr$A.bases, lty = 2, col = 4, col.names = 4, italic = TRUE, add = TRUE)
+title(paste(metal, "minerals"), font.main = 1)
+# Add a legend
+leg_list <- c(
+  lTP(T, P),
+  lNaCl(m_NaCl),
+  lS(Stot)
+)
+leg_expr <- lex(leg_list)
+legend("topright", legend = leg_expr, bty = "n")
+
+# Make diagram for aqueous species
+species(iaq)
+maq <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = IS)
+diagram(maq$A.species, fill = "#F0F8FF88")
+title(paste(metal, "aqueous species"), font.main = 1)
+
+# Make diagram for minerals and aqueous species
+species(icr)
+species(iaq, logm_metal, add = TRUE)
+m <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = IS)
+diagram(m$A.species, bold = species()$state == "cr")
+diagram(m$A.bases, lty = 2, col = 4, col.names = 4, italic = TRUE, add = TRUE)
+main = bquote("One solubility contour for" ~ log ~ italic(m)*.(metal)*"(aq)" == .(logm_metal))
+title(main, font.main = 1)
+
+# Make solubility contours
+species(icr)
+s <- solubility(iaq, bases = bases, pH = pH, O2 = O2, T = T, P = P, IS = IS, in.terms.of = metal)
+levels <- seq(-12, 9, 3)
+diagram(s, levels = levels, contour.method = "flattest")
+title("Multiple solubility contours", font.main = 1)
+```
+
+<button id="B-solubility" onclick="ToggleDiv('solubility')">Show code</button>
+<div id="D-solubility" style="display: none">
+```{r solubility, eval=FALSE}
+```
+</div>
+
+11. Use the transect mode of affinity() for synchronized variables
 12. Choose non-default balancing constraints in diagram()
 13. Extract lines and image data from the output of diagram()
 14. Use the output of subcrt() to format reactions for diagrams
 15. Calculate affinity values (opposite of Gibbs energy of reaction) with subcrt()
 16. On-demand database updates with mod.OBIGT() and logK.to.OBIGT()
-17. More about mosaic()
+17. More use cases for mosaic()
 
 ## Further Resources
 

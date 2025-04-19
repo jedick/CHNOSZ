@@ -41,7 +41,7 @@ Then, both \code{bases} \emph{and} \code{species1} (the stable species at each p
 
 Note that \code{basis} has aqueous S species in the examples provided, and \code{species1} consists of minerals and/or aqueous species with a single metal (e.g. Fe).
 \code{species2} has minerals and/or aqueous species with a second metal (e.g. Cu), and \code{species12} has bimetallic minerals.
-For \dQuote{mixed} diagrams (where \code{species1} or \code{species2} has both minerals and aqueous species), use \code{loga_aq} to set the logarithms of activities of aqueous species.
+For \dQuote{composite} diagrams (where \code{species1} or \code{species2} has both minerals and aqueous species), use \code{loga_aq} to set the logarithms of activities of aqueous species.
 Here, only a single value of \code{loga_aq} is needed, unlike in \code{\link{mosaic}}, where a value for each set of basis species is required.
 
 The plot parameters \code{col}, \code{col.names}, \code{fill}, \code{dx}, \code{dy}, \code{srt}, \code{lwd}, and \code{lty} should be length-3 lists (not vectors).
