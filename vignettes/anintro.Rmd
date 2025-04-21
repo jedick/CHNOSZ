@@ -170,6 +170,9 @@ species(c("CH4", "acetate"))
 subcrt(c("CH4", "acetate"), c("aq", "aq"), c(1, -1), T = 25)
 ```
 
+There are some keywords (e.g. `CHNOS+`, `CHNOSe` and `QEC`) for loading predefined sets of basis species.
+See the help page (`?basis`) for more information.
+
 ## Chemical Affinity and Stability Diagrams
 
 ```{r figure-setup, include = FALSE}
@@ -425,7 +428,7 @@ First, in `species()` to add species not already in the list.
 Without `add = TRUE`, any existing species are discarded.
 Second, in `diagram()` to add to an existing plot.
 
-Let's put items #4-6 together to make a Pourbaix (Eh-pH) diagram for Al with two solubility contours.
+Let's put items #4-7 together to make a Pourbaix (Eh-pH) diagram for Al with two solubility contours.
 
 ```{r Pourbaix_Mn, fig.cap = "Pourbaix diagram for Mn with two solubility contours"}
 basis(c("Mn+2", "H+", "H2O", "e-"))
@@ -456,7 +459,8 @@ We use `water.lines()` here to plot the water stability limits with dotted lines
 ### 8. Set grid resolution and constant T, P, or IS in affinity()
 
 After defining the basis species and formed species (and their constant activities), you have some choices about what variables to put on the plot, the grid resolution, and values for a few other variables.
-`affinity()` accepts one or more named arguments of the form `(min, max)` or `(min, max, res)`; the number of such arguments is the dimensionality of the final plot.
+`affinity()` accepts one or more named arguments that specifying ranges of variables using the default grid resolution of 256 (`c(min, max)`) or ranges and a custom grid resolution (`c(min, max, res)`).
+The number of such arguments is the dimensionality of the final plot.
 The grid resolution (`res`) defaults to 256 and can be different for each variable.
 The names of the variables can be the formulas of any of the basis species, or `T`, `P`, or `IS` for temperature, pressure, or ionic strength.
 These last three default to 25 °C, `Psat` (1 bar below 100 °C and saturation pressure at higher temperatures), and 0 mol/kg.
@@ -502,7 +506,7 @@ The remaining arguments to the function define the plot variables, just as in `a
 Let's put together #8-10 to make a set of diagrams for a single metal.
 The example here uses Fe; try changing it to Cu, Zn, Pb, Au, or something else!
 
-```{r solubility, echo=FALSE, fig.cap="Mineral stability diagram; aqueous species predominance diagram; composite diagram with one solubility contour; diagram with multiple solubility contours", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3}
+```{r solubility, echo=FALSE, fig.cap="Mineral stability diagram; aqueous species predominance diagram; composite diagram with one solubility contour; diagram with multiple solubility contours in units of log *m*", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3, cache=TRUE}
 par(mfrow = c(1, 4))
 
 # System definition
@@ -583,17 +587,139 @@ title("Multiple solubility contours", font.main = 1)
 
 <button id="B-solubility" onclick="ToggleDiv('solubility')">Show code</button>
 <div id="D-solubility" style="display: none">
-```{r solubility, eval=FALSE}
+```{r solubility, eval=FALSE, cache=FALSE}
 ```
 </div>
 
-11. Use the transect mode of affinity() for synchronized variables
-12. Choose non-default balancing constraints in diagram()
-13. Extract lines and image data from the output of diagram()
-14. Use the output of subcrt() to format reactions for diagrams
-15. Calculate affinity values (opposite of Gibbs energy of reaction) with subcrt()
-16. On-demand database updates with mod.OBIGT() and logK.to.OBIGT()
-17. More use cases for mosaic()
+### 11. Use convert() for common unit conversions
+
+The `convert()` function offers several unit conversions.
+It implements reciprocal conversion between pairs of units, so only the destination unit needs to be specified.
+Some simple uses are to convert temperature, pressure, or energy values:
+
+```{r convert}
+# Convert 100 degrees C to value in Kelvin
+convert(100, "K")
+# Convert 273.15 K to value in degrees C
+convert(273.15, "C")
+# Convert 1 bar to value in MPa
+convert(1, "MPa")
+# Convert 100 MPa to value in bar
+convert(100, "bar")
+# Convert 1 cal/mol to value in J/mol
+convert(1, "J")
+# Convert 10 J/mol to value in cal/mol
+convert(10, "cal")
+```
+
+Another use of `convert()` is to convert the output of `solubility()` from log activity to ppm, ppb, log ppm, or log ppb.
+The following code continues from the example above:
+
+```{r convert_ppm, fig.cap = "Solubility in units of ppm"}
+sppm <- convert(s, "ppm")
+levels <- c(1e-6, 1e-3, 1e0, 1e3)
+diagram(sppm, levels = levels)
+```
+
+### 12. Use the transect mode of affinity() for synchronized variables
+
+Specify 4 or more values for one or more variables (each variable should have the same number of values, or be set to a constant) to activate the *transect* mode of `affinity()`.
+The *transect* mode allows defining an arbitrary path in multidimensional space.
+
+Here's a simple example:
+
+```{r transect_setup}
+basis("CHNOSe")
+species(c("NO3-", "NO2-", "NH4+", "NH3"))
+a <- affinity(pH = c(6, 8, 6, 8), Eh = c(0.5, 0.5, -0.5, -0.5))
+```
+```{r transect_results, results="show", cache=FALSE}
+# Print pH and Eh values used for calculation
+a$vals
+# Print affinity values calculated for each species
+a$values
+```
+
+Note that `affinity()` returns dimensionless values of affinity (i.e., *A*/2.303*RT*).
+Below we'll see how to convert these to energetic units.
+
+### 13. Choose non-default balancing constraints in diagram()
+
+`diagram()` looks for the first basis species that has non-zero coefficients in each of the formed species.
+This is called the conserved basis species in the documentation.
+The affinity values are then divided by the coefficients of the conserved basis species to give normalized affinities.
+This is how "balancing on a metal" is implemented.
+
+- The conserved basis species requires an activity to be assign to calculate affinities.
+  For the purposes of stability or predominance diagrams, this is a placeholder value, since the conserved basis species has the same stoichiometry in each normalized formation reaction.
+- However, choosing a different conserved basis species can greatly affect the geometry of diagrams, owing to a different normalization vector.
+- Also, choosing a balancing constraint is important for comparing affinity (or its opposite, Gibbs energy of reaction) of different reactions.
+
+Let's put together #11-13 to calculate affinities of organic synthesis reactions in mixed seawater and hydrothermal fluid from the Rainbow vent field using speciation results from @SC10:
+
+```{r rainbow, echo=FALSE, fig.cap="Affinities of organic synthesis reactions per mole of C, H2, or formed species", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE}
+basis(c("CO2", "H2", "NH4+", "H2O", "H2S", "H+"))
+# Constant activity of CH4 is a simplification of the model
+species("CH4", -3)
+# Add other organic species with lower activity
+species(c("propanoic acid", "adenine", "leucine", "deoxyribose"), -6, add = TRUE)
+# Read file with variable conditions
+file <- system.file("extdata/misc/SC10_Rainbow.csv", package = "CHNOSZ")
+# Use `check.names = FALSE` to preserve the `NH4+` column name
+df <- read.csv(file, check.names = FALSE)
+# Reverse the rows to get increasing T
+df <- df[rev(rownames(df)), ]
+# Change six variables on a transect
+a <- affinity(T = df$T, CO2 = df$CO2, H2 = df$H2,
+              `NH4+` = df$`NH4+`, H2S = df$H2S, pH = df$pH)
+# Get T in Kelvin to make unit conversions
+T <- convert(a$vals[[1]], "K")
+# Convert dimensionless affinity to Gibbs energy in units of J/mol
+# nb. this is the same as converting logK to ΔG of reaction
+a$values <- lapply(a$values, convert, "G", T)
+# Convert J/mol to cal/mol
+a$values <- lapply(a$values, convert, "cal")
+# Convert cal/mol to kcal/mol
+a$values <- lapply(a$values, `*`, -0.001)
+# Setup figure
+par(mfrow = c(1, 3))
+par(cex = 0.9)
+# First plot: balance on C
+ylab = quote(italic(A)~"(kcal/mol) per C")
+diagram(a, ylim = c(-20, 40), ylab  = ylab, col = 1:5)
+abline(h = 0, lty = 2, lwd = 2)
+# Second plot: balance on H2
+ylab = quote(italic(A)~"(kcal/mol) per H2")
+diagram(a, balance = "H2", ylim = c(-15, 10), ylab = ylab, col = 1:5)
+abline(h = 0, lty = 2, lwd = 2)
+# Third plot: no balancing
+ylab <- quote(italic(A)~"(kcal/mol) per species")
+diagram(a, balance = 1, ylim = c(-100, 100), ylab = ylab, col = 1:5)
+abline(h = 0, lty = 2, lwd = 2)
+```
+
+<button id="B-rainbow" onclick="ToggleDiv('rainbow')">Show code</button>
+<div id="D-rainbow" style="display: none">
+```{r rainbow, eval=FALSE, cache=FALSE}
+```
+</div>
+
+Although `affinity()` uses all of the variables in the transect, `diagram()` treats a transect like a system of one variable, so we get a plot of affinity vs. the first variable (temperature).
+We obtain three plots:
+
+  1. The reactions are balanced on the first basis species with non-zero coefficients, CO2.
+     This is the same as normalizing on C, because no other basis species has C.
+  2. Balance on a different species, H2.
+  3. No balancing constraint (`balance = 1`).
+     This just shows the affinity of each reaction as given (that is, per mole of formed species), which is how the results were presented by Shock and Canovas (2010).
+
+### 14. Calculate Gibbs energy of reaction (opposite of affinity) with subcrt()
+### 15. Use the output of subcrt() to format reactions for diagrams
+### 16. Extract lines and image data from the output of diagram()
+### 17. On-demand database updates with mod.OBIGT() and logK.to.OBIGT()
+### 18. A brief introduction to buffers
+### 19. A brief introduction to proteins
+### 20. More use cases for mosaic()
 
 ## Further Resources
 
