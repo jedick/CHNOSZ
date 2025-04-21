@@ -54,13 +54,6 @@ expect_equal(length(a$vals[[2]]), 256, info = info)
 a129 <- affinity(pH = pH, Eh = c(Eh, 129))
 expect_equal(length(a129$vals[[2]]), 129, info = info)
 
-## TODO: a transect of hotter, more oxidizing and more acidic
-## has not been working since at least 0.9-7
-##T <- c(25, 50, 100, 125, 150)
-##Eh <- c(-1, -0.5, 0, 0.5, 1)
-##pH <- c(10, 8, 6, 4, 2)
-##a <- affinity(T = T, Eh = Eh, pH = pH)
-
 info <- "affinity() in 3D returns values consistent with manual calculation"
 # Our "manual" calculation will be for H2(aq) + 0.5O2(aq) = H2O(l)
 # The equilibrium constants at 25 and 100 degrees C
@@ -204,3 +197,25 @@ basis("CHNOS+")
 species("CO2")
 a <- affinity(return.sout = TRUE)
 expect_equal(names(a), c("species", "out"), info = info)
+
+# Test added 20250421
+info <- "Using Eh works in transect mode of affinity()"
+basis("CHNOSe")
+species(c("NO3-", "NO2-", "NH4+", "NH3"))
+T <- c(25, 50, 100, 125, 150)
+Eh <- c(-1, -0.5, 0, 0.5, 1)
+pH <- c(10, 8, 6, 4, 2)
+# Calculate values on transect
+a <- affinity(T = T, Eh = Eh, pH = pH)
+# Calculate values at first point on transect
+basis("Eh", -1)
+basis("pH", 10)
+a1 <- affinity(T = 25)
+expect_equal(sapply(a$values, "[", 1), unlist(a1$values), info = info)
+# Calculate values at last point on transect
+# nb. we can't use basis("Eh", 1) because that uses pe at T = 25 C
+pe <- convert(1, "pe", T = convert(150, "K"))
+basis("pe", pe)
+basis("pH", 2)
+a5 <- affinity(T = 150)
+expect_equal(sapply(a$values, "[", 5), unlist(a5$values), info = info)

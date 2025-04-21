@@ -182,8 +182,7 @@ energy <- function(what, vars, vals, lims, T = 298.15, P = "Psat", IS = 0, sout 
   # To get logK or subcrt props or other values into the dimensions we are using
   dim.fun <- function(x, idim = NULL) {
     if(is.null(idim)) {
-      if(transect) idim <- 1
-      else if(is.null(grid)) {
+      if(is.null(grid)) {
         # One of T, P, IS
         ivar <- which(vars %in% c("T", "P", "IS"))
         if(length(ivar) == 0) ivar <- 1
@@ -195,6 +194,8 @@ energy <- function(what, vars, vals, lims, T = 298.15, P = "Psat", IS = 0, sout 
         idim <- ivars(ivar2, ivars(ivar1))
       }
     }
+    # For working Eh in transect mode, this should not be nested in the above if(is.null(idim)) 20250421
+    if(transect) idim <- 1
     return(aperm(array(x, mydim[idim]), idim))
   }
   # Properties of all species
