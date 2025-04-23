@@ -19,7 +19,7 @@
     "contour", "sphalerite", "minsol", "Shh", "saturation",
     "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
     "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity",
-    "uranyl", "sum_S"),
+    "uranyl", "sum_S", "MgATP"),
     save.png = FALSE)
 }
 
@@ -68,6 +68,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{yttrium}{\code{\link{logK.to.OBIGT}} fits at 800 and 1000 bar and Y speciation in \code{\link{NaCl}} solution at varying pH (Guan et al., 2020)}
     \item{uranyl}{Total (carbonate|sulfate)-pH diagrams for uranyl species (Migdisov et al., 2024)}
     \item{sum_S}{Summed molality of S species and solubility contours for iron and gold (Skirrow and Walshe, 2002)}
+    \item{MgATP}{Speciation of ATP with H+ and Mg+2 (Alberty, 2003)}
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
@@ -98,6 +99,8 @@ Akinfiev, N. N. and Tagirov, B. R. (2014) Zn in hydrothermal systems: Thermodyna
 Akinfiev, N. N. and Zotov, A. V. (2001) Thermodynamic description of chloride, hydrosulfide, and hydroxo complexes of Ag(I), Cu(I), and Au(I) at temperatures of 25-500\degC and pressures of 1-2000 bar. \emph{Geochem. Int.} \bold{39}, 990--1006.
 
 Aksu, S. and Doyle, F. M. (2001) Electrochemistry of copper in aqueous glycine solutions. \emph{J. Electrochem. Soc.} \bold{148}, B51--B57.
+
+Alberty, R. A. (2003) \emph{Thermodynamics of Biochemical Reactions}, John Wiley & Sons, Hoboken, New Jersey, 397 p. \url{https://www.worldcat.org/oclc/51242181}
 
 Amend, J. P. and Shock, E. L. (1998) Energetics of amino acid synthesis in hydrothermal ecosystems. \emph{Science} \bold{281}, 1659--1662. \doi{10.1126/science.281.5383.1659}
 

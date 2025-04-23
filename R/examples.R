@@ -34,7 +34,8 @@ demos <- function(which = c("references", "protein.equil", "affinity", "NaCl", "
   "ORP", "ionize", "buffer", "protbuff", "glycinate",
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "minsol",
   "Shh", "saturation", "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum",
-  "AD", "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity", "uranyl", "sum_S"),
+  "AD", "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity", "uranyl",
+  "sum_S", "MgATP"),
   save.png = FALSE) {
   # Run one or more demos from CHNOSZ with ask = FALSE, and return the value of the last one
   out <- NULL

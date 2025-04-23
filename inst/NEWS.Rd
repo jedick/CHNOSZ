@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-53 (2025-04-21)}{
+\section{Changes in CHNOSZ version 2.1.0-56 (2025-04-23)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -87,7 +87,8 @@
   \subsection{DOCUMENTATION}{
     \itemize{
 
-      \item Revise and shorten \file{anintro.Rmd} with AI assistance.
+      \item Revise \file{anintro.Rmd}. Text before \dQuote{Building Up} was
+      revised and shortened with AI assistance.
 
       \item Add FAQ question: Why are mineral stability boundaries curved on
       mosaic diagrams?
@@ -101,6 +102,11 @@
 
       \item Revise \file{demo/sum_S.R} for log \emph{f}O\s{2} - log \emph{m} ΣS
       diagram and add solubility contours for Fe and Au.
+
+      \item Add \file{demo/MgATP.R}: speciation of ATP with H\S{+} and
+      Mg\S{+2}, based on
+      \href{https://search.worldcat.org/title/51242181}{Alberty (2003)}
+      (example moved here from \file{anintro.Rmd}).
 
       \item Update \file{demo/contour.R} to use conditions taken from
       \href{https://doi.org/10.1016/j.oregeorev.2022.105231}{Ding et al.

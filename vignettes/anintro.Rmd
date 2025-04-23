@@ -806,6 +806,11 @@ You can also use `demos()` to run all the demos or just one (e.g. `demos("mosaic
   - `TCA`: Citric acid cycle energetics
   - `comproportionation`: Using a color scale (image map)
 
+*Calculations using the output of `diagram()`*
+
+  - `buffer`: Place labels next to lines
+  - `MgATP`: Calculate number of protons bound per ATP molecule
+
 *Activity buffers*
 
   - `buffer`: Plotting buffers as a function of temperature
