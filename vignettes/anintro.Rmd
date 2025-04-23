@@ -65,8 +65,6 @@ color_block = function(color) {
 knit_hooks$set(warning = color_block('magenta'), error = color_block('red'), message = color_block('blue'))
 ```
 
-# CHNOSZ: An Introduction to Thermodynamic Calculations in R
-
 This vignette introduces CHNOSZ, an R package for thermodynamic calculations relevant to geochemistry and geobiochemistry. CHNOSZ provides functions and a thermodynamic database for calculating properties of reactions involving minerals, aqueous species, and gases across a range of temperatures and pressures.
 
 ## Getting Started
@@ -194,12 +192,14 @@ species(c("SO4-2", "HSO4-", "HS-", "H2S"))
 # Calculate affinities on an Eh-pH grid
 a <- affinity(pH = c(0, 14), Eh = c(-0.8, 1.2))
 # Create an Eh-pH (Pourbaix) diagram
-diagram(a, fill = "terrain")
+diagram(a, col = 4, col.names = 4, italic = TRUE)
 ```
+
+Note that `diagram()` automatically adds shading to represent where water is not stable with respect to O2 or H2.
 
 For more sophisticated diagrams involving speciation of basis species, use the `mosaic()` function:
 
-```{r mosaic, fig.cap = "Cu-S-Cl-H2O mosaic diagram"}
+```{r mosaic, fig.cap = "Mosaic diagram showing effect of aqueous S speciation on the relative stabilities of Cu minerals and aqueous species"}
 # Create a mosaic diagram for Cu-S-Cl-H2O system
 basis(c("Cu", "H2S", "Cl-", "H2O", "H+", "e-"))
 basis("H2S", -6)
@@ -212,6 +212,8 @@ diagram(m$A.species, lwd = 2, bold = species()$state == "cr")
 diagram(m$A.bases, add = TRUE, col = 4, col.names = 4, italic = TRUE)
 water.lines(m$A.species, lty = 3, col = 8)
 ```
+
+Here we've added dotted lines to help visualize the water stability limits.
 
 ## Equilibrium Calculations
 
@@ -713,23 +715,135 @@ We obtain three plots:
   3. No balancing constraint (`balance = 1`).
      This just shows the affinity of each reaction as given (that is, per mole of formed species), which is how the results were presented by Shock and Canovas (2010).
 
-### 14. Calculate Gibbs energy of reaction (opposite of affinity) with subcrt()
+### 14. Calculate adjusted and non-standard Gibbs energy with subcrt()
+
+In normal use, `subcrt()` returns *standard* molal properties (G, H, S, Cp, and V) for species in their standard states, referenced as unit activity or fugacity.
+Two deviations from this default setting are possible: *non-standard* properties for specified activity, and *adjusted* properties for activity coefficients.
+
+First let's look at how *adjusted* properties depend on activity coefficients.
+This example uses a particular nonideality model based on @Alb03:
+
+```{r subcrt_nonideal, results = "show"}
+# Set the nonideality model
+old_ni <- nonideal("Alberty")
+# Calculate standard and adjusted Gibbs energy at 25 °C
+species <- c("MgH2ATP", "MgHATP-", "MgATP-2")
+subcrt(species, T = 25, IS = c(0, 0.25), property = "G")$out
+# Restore the original nonideality model
+nonideal(old_ni)
+```
+
+Notice how logarithms of the activity coefficients (loggam) are more negative for the higher-charged species.
+The activity coefficients have a stabilizing effect: *adjusted* Gibbs energies (at *I* > 0) are less than the *standard* Gibbs energies (at *I* = 0).
+
+Now let's change the activities to get *non-standard* properties.
+
+```{r subcrt_affinity, results = "show"}
+species <- c("Mg+2", "ATP-4", "MgATP-2")
+coeffs <- c(-1, -1, 1)
+T <- c(25, 50, 100)
+# Drop some columns for more compact output
+idrop <- c(2:4, 6:9)
+# Unit activity: affinity is opposite of standard Gibbs energy
+subcrt(species, coeffs, T = T, logact = c(0, 0, 0))$out[, -idrop]
+# Non-unit activity: affinity is opposite of non-standard Gibbs energy
+subcrt(species, coeffs, T = T, logact = c(-5, -4, -3))$out[, -idrop]
+```
+
+Note that:
+
+- The logK, G, H, S, V, and Cp columns in the output of subcrt() always correspond to *standard* or *adjusted* thermodynamic properties, not non-standard ones.
+- Columns for logQ and A are added if the `logact` argument is provided.
+- The `logact` argument specifies the activities of species in the same order as the first argument.
+- A in the output of subcrt() has the same units as G (J/mol by default); this differs from the output of affinity(), which uses dimensionless values (A/2.303RT).
+
+The first call above specifies unit activities of all the species in the reaction.
+
+- Only for the case of unit activities of all species, the affinity values (A in the output) are the opposite of the standard Gibbs energy (G in the output).
+
+The second call specifies non-unit activities of the species.
+
+- The result shows that affinity values in general are *not* the opposite of the standard Gibbs energy.
+- Instead, they are the opposite of the *non-standard* (or overall) Gibbs energy.
+
 ### 15. Use the output of subcrt() to format reactions for diagrams
 ### 16. Extract lines and image data from the output of diagram()
-### 17. On-demand database updates with mod.OBIGT() and logK.to.OBIGT()
+### 17. Counting elements and summing and writing formulas with makeup() and as.chemical.formula()
 ### 18. A brief introduction to buffers
-### 19. A brief introduction to proteins
-### 20. More use cases for mosaic()
+### 19. A brief introduction to proteins and groupwise relative stabilities
 
 ## Further Resources
 
+### Help Pages
+
 - Browse the package documentation with `help(package = "CHNOSZ")`
 - See function-specific help: `?info`, `?subcrt`, etc.
-- Explore demos with `demo(package = "CHNOSZ")`
+
+### Demos
+
+Explore demos with `demo(package = "CHNOSZ")`.
+You can also use `demos()` to run all the demos or just one (e.g. `demos("mosaic")`).
+
+*More use cases for `mosaic()`*
+
+  - `mosaic`: Speciating more than one set of basis species
+  - `sum_S`, `uranyl`: Using summed activities of speciated basis species
+  - `comproportionation`: Gibbs energy of reaction with speciated basis species
+  - `arsenic`, `copper`: More examples of Eh-pH diagrams
+  - `sphalerite`, `contour`, `minsol`: Solubility calculations with speciated basis species
+
+*Solubility contours with `solubility()`*
+
+  - `Pourbaix`: Isosolubility lines for various metals (try Fe, Cu, Mn)
+  - `contour`: Solubility contours for gold
+  - `minsol` Solubility contours for multiple minerals
+  - `solubility`: CO2 and calcite
+
+*Other contour plots*
+
+  - `saturation`: Saturation lines (where affinity = 0) and labels for activity ratios
+  - `ionize`: Protein ionization properties
+  - `TCA`: Citric acid cycle energetics
+  - `comproportionation`: Using a color scale (image map)
+
+*Activity buffers*
+
+  - `buffer`: Plotting buffers as a function of temperature
+  - `DEW`: Applying calculated values of logfO2 in `affinity()`
+  - `gold`: Settting pH and fO2 buffers in `basis()` for solubility of gold
+  - `protbuff`: Using proteins as buffer species
+
+*Other thermodynamic models*
+
+  - `DEW`: Deep Earth Water model (extension of HKF to high pressures)
+  - `AD`: Akinfiev-Diamond model for aqueous nonelectrolytes
+
+*Calculations with proteins*
+
+  - `Shh`: Affinities of transcription factors
+  - `carboxylase`: Predicted rank abundance with varying temperature and redox
+  - `rank.affinity`: Affinity ranking for groupwise stability comparisons
+
+## Other Vignettes
 
 Additional vignettes cover:
 
+### Frequently asked questions
+
+The [FAQ](FAQ.html) is a non-comprehensive collection of questions and answers about CHNOSZ.
+Please use the [Discussions forum on GitHub](https://github.com/jedick/CHNOSZ/discussions) for new questions.
+
 ### OBIGT thermodynamic database
+
+The [OBIGT](OBIGT.html) vignette is generated from reference information in the database and lists all literature citations for species arranged by default and optional data files.
+
+### Customizing the thermodynamic database
+
+The [custom_data](custom_data.html) vignette describes `add.OBIGT()` for adding data from files, `mod.OBIGT()` for updating or adding parameters of particular species, and `logK.to.OBIGT()` for generating parameters from logK values.
+
+### Fitting thermodynamic data
+
+The [EOSregress](EOSregress.html) vignette shows how to fit experimental data (volume and heat capacity) using constructed equation-of-state models.
 
 ### Creating multi-metal diagrams (aside: why affinity?)
 
@@ -741,16 +855,15 @@ The reaction-based method, used for making diagrams by hand, looks at reactions 
 The grid-based method, used in CHNOSZ, looks at reactions to compose individual species from the basis species (let's call them formation reactions), then selects the most stable species according to their affinity values.
 
 Affinity is just the opposite of non-standard Gibbs energy of reaction.
-"Standard Gibbs energy of reaction" and "Gibbs energy of reaction" - which are two very different things - have unfortunately similar names except for an optional [depending on the author, e.g. @AL19;@STK19] "overall" or "non-standard" in front of the latter.
+"Standard Gibbs energy of reaction" and "Gibbs energy of reaction" - which are two different things - have unfortunately similar names except for an optional [depending on the author, e.g. @AL19;@STK19] "overall" or "non-standard" in front of the latter.
 "Non-standard Gibbs energy of reaction" doesn't lend itself to a short, unambiguous function name, which is why its opposite, "affinity", is used in CHNOSZ.
 
-In the reaction-based method, transformation reactions are "balanced on" a metal, while in the grid based method, formation reactions are normalized on that metal.
-The grid-based method in CHNOSZ is called the "maximum affinity method" for making relative stability diagrams and produces equivalent resuls to the reaction-based method.
-It also has the same limitations: every mineral or other formed species must have that "balanced on" (or "conserved") metal in their formula.
+In the reaction-based method, transformation reactions are said to be "balanced on" a metal.
+The grid-based method implements this balancing constraint by dividing the affinities of formation reactions by the coefficients of a basis species.
+CHNOSZ uses these normalized affinities for making relative stability diagrams, referred to as the *maximum affinity method*.
+Both the reaction- and grid-based method have the same limitation: every candidate species must have non-zero stoichiometry of a given metal (or of a basis species with that metal).
 
-The multi-metal vignette has some techniques for overcoming this limitation of balancing reactions on a single metal.
-
-### Customizing the thermodynamic database
+The [multi-metal](multi-metal.html) vignette has some techniques for overcoming this limitation of balancing reactions on a single metal.
 
 ## References
 
@@ -763,6 +876,8 @@ thermo.refs()
 # Return data frame with references for one or more species
 thermo.refs(info("CH4", c("aq", "gas")))
 ```
+
+For citing CHNOSZ itself, see "How should CHNOSZ be cited?" in the [FAQ](FAQ.html).
 
 ## Document history
 
