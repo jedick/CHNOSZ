@@ -18,13 +18,17 @@ bases <- list(c("H2S", "HS-"), c("SO4-2", "HSO4-"))
 m <- mosaic(bases, T = c(0, 100), pH = c(0, 7))
 a <- m$A.species
 
-# Get plot values
+# Get grid values for variables
 T <- a$vals[[1]]
 pH <- a$vals[[2]]
 # The affinity as a function of T (rows) and pH (columns)
 A <- a$values[[1]]
-# Convert dimensionless affinity (A/2.303RT) to delta G (kJ / mol)
+# Get values of Kelvin along the temperature scale
 TK <- convert(T, "K")
+## NOTE: If T was in the columns of A, we would need to transpose to get T into the rows of A
+## (i.e., the first indexed dimension), then transpose again to get back to the original dimensions
+#G.J <- t(convert(t(A), "G", T = TK))
+# Since T is in the rows of A (first indexed dimension), no transposition is needed here
 G.J <- convert(A, "G", T = TK)
 G.kJ <- G.J / 1000
 # Multiply by 4

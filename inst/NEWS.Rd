@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-56 (2025-04-23)}{
+\section{Changes in CHNOSZ version 2.1.0-57 (2025-04-28)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -340,9 +340,9 @@
 
       \item Merge \file{biotic_aq.csv} into \file{organic_aq.csv}.
 
-      \item \samp{OBIGT/inorganic_cr.csv}: Add cobalt monoxide (CoO), guite
-      (Co\s{3}O\s{4}), and zinc from \href{https://doi.org/10.3133/b2131}{Robie
-        and Hemingway (1995)}.
+      \item \samp{OBIGT/inorganic_cr.csv}: Add aluminum (Al), cobalt monoxide
+      (CoO), guite (Co\s{3}O\s{4}), and zinc from
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
 
       \item \samp{OBIGT/inorganic_cr.csv}: Modify linnaeite (Co\s{3}S\s{4}) to
       use 25 \degC parameters from \href{https://doi.org/10.3133/b2131}{Robie

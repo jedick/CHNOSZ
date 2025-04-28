@@ -508,6 +508,10 @@ The remaining arguments to the function define the plot variables, just as in `a
 Let's put together #8-10 to make a set of diagrams for a single metal.
 The example here uses Fe; try changing it to Cu, Zn, Pb, Au, or something else!
 
+CHNOSZ emits warning messages about being above the Cp limits for various iron oxyhydroxides.
+If you see warning messages like this, it's a good idea not to ignore them; instead, consider whether you might be pushing extrapolations of the Cp equation too far.
+For the present calculation, the warnings are probably harmless because the set of stable minerals on the diagram (pyrite, pyrrhotite, magnetite, and hematite) is consistent with many previous publications.
+
 ```{r solubility, echo=FALSE, fig.cap="Mineral stability diagram; aqueous species predominance diagram; composite diagram with one solubility contour; diagram with multiple solubility contours in units of log *m*", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3, cache=TRUE}
 par(mfrow = c(1, 4))
 
@@ -546,8 +550,8 @@ basis("Cl-", log10(m_Clminus))
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 
 # Git minerals and aqueous species
-icr <- retrieve(metal, c("Cl", "S", "O"), state = "cr")
-iaq <- retrieve(metal, c("Cl", "S", "O"), state = "aq")
+icr <- retrieve(metal, c("Cl", "S", "O", "H"), state = "cr")
+iaq <- retrieve(metal, c("Cl", "S", "O", "H"), state = "aq")
 
 # Make diagram for minerals
 species(icr)
