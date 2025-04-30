@@ -6,6 +6,7 @@ output:
   tufte::tufte_html:
     tufte_features: ["background"]
     toc: true
+    toc_depth: 4
     mathjax: null
 vignette: >
   %\VignetteIndexEntry{An Introduction to CHNOSZ}
@@ -669,7 +670,7 @@ This is how "balancing on a metal" is implemented.
 - The conserved basis species requires an activity to be assign to calculate affinities.
   For the purposes of stability or predominance diagrams, this is a placeholder value, since the conserved basis species has the same stoichiometry in each normalized formation reaction.
 - However, choosing a different conserved basis species can greatly affect the geometry of diagrams, owing to a different normalization vector.
-- Also, choosing a balancing constraint is important for comparing affinity (or its opposite, Gibbs energy of reaction) of different reactions.
+- Also, choosing a balancing constraint is important for comparing affinity (or its opposite, non-standard Gibbs energy of reaction) of different reactions.
 
 Let's put together #11-13 to calculate affinities of organic synthesis reactions in mixed seawater and hydrothermal fluid from the Rainbow vent field using speciation results from @SC10:
 
@@ -773,20 +774,92 @@ NOTE:
 
 The first call above specifies unit activities of all the species in the reaction.
 
-- Only for the case of unit activities of all species, the affinity values (A in the output) are the opposite of the standard Gibbs energy (G in the output).
+- Only if *all species have unit activities*, then the affinity values (A in the output) are the opposite of the *standard* Gibbs energy (G in the output).
 
 The second call specifies non-unit activities of the species.
 
-- The result shows that affinity values in general are *not* the opposite of the standard Gibbs energy.
-- Instead, they are the opposite of the *non-standard* (or overall) Gibbs energy.
+- The result shows that affinity values in general are *not the opposite* of standard Gibbs energy.
+- Instead, they are the opposite of *non-standard* (or overall) Gibbs energy.
 
-### 15. Use the output of subcrt() to format reactions for diagrams
+### 15. Calculate non-standard Gibbs energy with `affinity()`
+
+#### And swap basis species, remove formed species, and label reactions
+
+Above we used `subcrt()` to calculate non-standard Gibbs energy, but doing it with `affinity()` can be more convenient for making diagrams.
+This example plots non-standard Gibbs energies for hydrogenotrophic methanogenesis, acetate oxidation, and acetate oxidation, and is based on Fig. 4b of @MDS_13.
+We combine some of the features described above with new ones for swapping basis species and removing formed species:
+
+- `swap.basis()`: Changes one species for another in an existing basis definition
+- `species()` with `delete = TRUE`: Removes one or more species from the set of formed species
+- `describe.reaction()`: Formats reactions for plots using the output of `subcrt()`
+- `names` and `srt` arguments of `diagram()`: Use supplied reaction labels with rotation
+
+```{r organic, echo=FALSE, fig.cap="Non-standard Gibbs energies of organic reactions as a function of CO2 fugacity", cache=TRUE}
+# Format reactions with describe.reaction()
+basis(c("CO2", "H2", "H2O", "H+"))
+reactions <- c(
+  # hydrogenotrophic methanogenesis
+  describe.reaction(subcrt("CH4", 1)$reaction),
+  # acetate oxidation
+  describe.reaction(subcrt("acetate", -1)$reaction),
+  # acetoclastic methanogenesis
+  describe.reaction(subcrt(c("acetate", "CH4"), c(-1, 1))$reaction)
+)
+
+# System 1: one C species in basis; two C species in formation reactions
+basis(c("CO2", "H2", "H2O", "H+"))
+# Change CO2 and H2 to gas
+basis(c("CO2", "H2"), "gas")
+# Set H2 (log fugacity) and pH
+basis(c("H2", "pH"), c(-3.92, 7.3))
+# Write reactions to form methane (gas) and acetate (aq) at given activity and fugacity
+species(c("methane", "acetate"), c(-0.18, -3.4))
+# Calculate affinities of formation reactions with varying log fugacity of CO2
+a1 <- affinity(CO2 = c(-3, 3), T = 55, P = 50)
+
+# System 2: two C species in basis; three C species in formation reactions
+# Swap H2 for CH4 and set fugacity
+swap.basis("H2", "CH4")
+basis("CH4", "gas")
+basis("CH4", -0.18)
+# Remove methane as formed species - we only want acetate now
+species(1, delete = TRUE)
+a2 <- affinity(CO2 = c(-3, 3), T = 55, P = 50)
+
+# Convert from dimensionless affinity to Gibbs energy in kJ/mol
+TK <- convert(55, "K")
+a1$values[[1]] <- convert(a1$values[[1]], "G", T = TK) / 1000
+# Negate to reverse reaction (acetate as a reactant)
+a1$values[[2]] <- -convert(a1$values[[2]], "G", T = TK) / 1000
+a2$values[[1]] <- -convert(a2$values[[1]], "G", T = TK) / 1000
+
+# Make diagram without balancing constraint (no normalization by C)
+diagram(a1, balance = 1, lty = 1, lwd = 2, col = c(4, 2), names = reactions[1:2], ylab = axis.label("DG", prefix = "k"), srt = c(-14, 26))
+diagram(a2, balance = 1, lwd = 2, col = 3, names = reactions[3], srt = 14, add = TRUE)
+abline(h = 0, lty = 2, col = 8)
+```
+
+<button id="B-organic" onclick="ToggleDiv('organic')">Show code</button>
+<div id="D-organic" style="display: none">
+```{r organic, eval=FALSE, cache=FALSE}
+```
+</div>
+
+After running the code to make the diagram, we can print the formation reactions for each of the species.
+This shows how the two acetate reactions (acetate oxidation and acetoclastic methanogenesis) are implemented by swapping H2 and CH4 in the basis species.
+```{r organic_reactions, results="show"}
+a1$species
+a2$species
+```
+
+NOTE: This example uses `balance = 1` in the call to `diagram()` to prevent normalizating the reactions by a balancing constraint (i.e., normalization by number of C) in order to reproduce the calculations of Mayumi et al. (2013). In most other cases (especially for making relative stability diagrams), this argument should not be used.
+
 ### 16. Extract results from the output of diagram()
 
 Sometimes it's useful to make further computations on the results of a `diagram()` call.
 For example, a system might dominated by a few stable species, but you'd rather visualize the relative stabilities of less stable (i.e., metastable) species.
-Here we do this for all the aqueous S species in the OBIGT database, accessed using `retrieve()`
-We use `plot.it = FALSE` to suppress the first plot, because it just shows the most stable species (see "Eh-pH (Pourbaix) diagram for S" above).
+Here we do this for all the aqueous S species in the OBIGT database, accessed using `retrieve()`.
+We use `plot.it = FALSE` to suppress the first plot, because it just shows the most stable species (see the [Eh-pH diagram for S](#chemical-affinity-and-stability-diagrams) above).
 However, we save the output with `d <- diagram()` to identify the stable species in `d$predominant`.
 After removing these stable species from the system, we recalculate affinities for the remaining metastable species and make a diagram for them.
 
@@ -813,7 +886,7 @@ Other possibly useful parts of the `diagram()` output are:
 - `namesx`, `namesy`: Locations for labels
 - `linesout`: x, y coordinates of boundary lines between stability fields
 
-NOTE: If diagram was passed the output of `equilibrate()` or `solubility()`, then the output contains activities instead of affinities.
+NOTE: If `diagram()` was passed the output of `equilibrate()` or `solubility()`, then its output contains activities instead of affinities.
 
 ### 17. Counting elements and summing and writing formulas with makeup() and as.chemical.formula()
 ### 18. A brief introduction to buffers
@@ -835,7 +908,7 @@ You can also use `demos()` to run all the demos or just one (e.g. `demos("mosaic
 
   - `mosaic`: Speciating more than one set of basis species
   - `sum_S`, `uranyl`: Using summed activities of speciated basis species
-  - `comproportionation`: Gibbs energy of reaction with speciated basis species
+  - `comproportionation`: Non-standard Gibbs energy of reaction with speciated basis species
   - `arsenic`, `copper`: More examples of Eh-pH diagrams
   - `sphalerite`, `contour`, `minsol`: Solubility calculations with speciated basis species
 
