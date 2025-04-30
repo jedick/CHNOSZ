@@ -162,10 +162,18 @@ subcrt(c("CO2", "CO2"), c("gas", "aq"), c(-1, 1), T = 25)
 
 Reactions can be automatically balanced using basis species:
 
-```{r basis}
+- Here, the defined basis species are used to balance a reaction with `subcrt()` for calculating standard thermodynamic properties.
+
+```{r basis_subcrt}
+basis(c("CO2", "H2O", "H+", "e-"))
+subcrt(c("CH4", "acetate"), c("aq", "aq"), c(1, -1), T = 25)
+```
+
+- Here, the defined basis species are used to compose the formed species with `species()` for calculating affinities and making diagrams.
+
+```{r basis_species}
 basis(c("CO2", "H2O", "H+", "e-"))
 species(c("CH4", "acetate"))
-subcrt(c("CH4", "acetate"), c("aq", "aq"), c(1, -1), T = 25)
 ```
 
 There are some keywords (e.g. `CHNOS+`, `CHNOSe` and `QEC`) for loading predefined sets of basis species.
@@ -195,7 +203,7 @@ a <- affinity(pH = c(0, 14), Eh = c(-0.8, 1.2))
 diagram(a, col = 4, col.names = 4, italic = TRUE)
 ```
 
-Note that `diagram()` automatically adds shading to represent where water is not stable with respect to O2 or H2.
+NOTE: `diagram()` automatically adds shading to represent where water is not stable with respect to O2 or H2.
 
 For more sophisticated diagrams involving speciation of basis species, use the `mosaic()` function:
 
@@ -291,6 +299,7 @@ CO2 <- subcrt(c("CO2", "CO2"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
 CO <- subcrt(c("CO", "CO"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
 CH4 <- subcrt(c("CH4", "CH4"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
 logK <- data.frame(T, CO2, CO, CH4)
+par(mar = c(5, 5, 1, 1))
 matplot(logK[, 1], logK[, -1], type = "l", col = 1, lty = 1,
         xlab = axis.label("T"), ylab = axis.label("logK"))
 text(80, -1.7, expr.species("CO2"))
@@ -549,7 +558,7 @@ basis("Cl-", log10(m_Clminus))
 # Define basis species to change for mosaic calculation
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 
-# Git minerals and aqueous species
+# Get minerals and aqueous species
 icr <- retrieve(metal, c("Cl", "S", "O", "H"), state = "cr")
 iaq <- retrieve(metal, c("Cl", "S", "O", "H"), state = "aq")
 
@@ -646,7 +655,8 @@ a$vals
 a$values
 ```
 
-Note that `affinity()` returns dimensionless values of affinity (i.e., *A*/2.303*RT*).
+NOTE: `affinity()` returns dimensionless values of affinity (i.e., *A*/2.303*RT*).
+
 Below we'll see how to convert these to energetic units.
 
 ### 13. Choose non-default balancing constraints in diagram()
@@ -754,9 +764,9 @@ subcrt(species, coeffs, T = T, logact = c(0, 0, 0))$out[, -idrop]
 subcrt(species, coeffs, T = T, logact = c(-5, -4, -3))$out[, -idrop]
 ```
 
-Note that:
+NOTE:
 
-- The logK, G, H, S, V, and Cp columns in the output of subcrt() always correspond to *standard* or *adjusted* thermodynamic properties, not non-standard ones.
+- The logK, G, H, S, V, and Cp columns in the output of `subcrt()` are always *standard* or *adjusted* thermodynamic properties, not non-standard ones.
 - Columns for logQ and A are added if the `logact` argument is provided.
 - The `logact` argument specifies the activities of species in the same order as the first argument.
 - A in the output of subcrt() has the same units as G (J/mol by default); this differs from the output of affinity(), which uses dimensionless values (A/2.303RT).
@@ -771,7 +781,40 @@ The second call specifies non-unit activities of the species.
 - Instead, they are the opposite of the *non-standard* (or overall) Gibbs energy.
 
 ### 15. Use the output of subcrt() to format reactions for diagrams
-### 16. Extract lines and image data from the output of diagram()
+### 16. Extract results from the output of diagram()
+
+Sometimes it's useful to make further computations on the results of a `diagram()` call.
+For example, a system might dominated by a few stable species, but you'd rather visualize the relative stabilities of less stable (i.e., metastable) species.
+Here we do this for all the aqueous S species in the OBIGT database, accessed using `retrieve()`
+We use `plot.it = FALSE` to suppress the first plot, because it just shows the most stable species (see "Eh-pH (Pourbaix) diagram for S" above).
+However, we save the output with `d <- diagram()` to identify the stable species in `d$predominant`.
+After removing these stable species from the system, we recalculate affinities for the remaining metastable species and make a diagram for them.
+
+```{r metastable_sulfur, fig.cap = "Eh-pH diagram for metastable S species"}
+basis("CHNOSe")
+iaq <- retrieve("S", c("H", "O"), state = "aq")
+species(iaq)
+a <- affinity(pH = c(0, 14), Eh = c(-0.8, 1.2))
+# Save results but don't plot the first diagram
+d <- diagram(a, plot.it = FALSE)
+# Remove the stable species
+istable <- unique(as.numeric(d$predominant))
+species(istable, delete = TRUE)
+# Make a diagram for the metastable species
+a <- affinity(pH = c(0, 14), Eh = c(-0.8, 1.2))
+d <- diagram(a, col = 4, col.names = 4, italic = TRUE)
+```
+
+Other possibly useful parts of the `diagram()` output are:
+
+- `plotvals`: Affinity for each species, after normalizing by the balancing constraint
+- `predominant.values`: Normalized affinity for the predominant species at each point on the diagram
+- `names`: Names used for labeling lines or fields (includes formatting for chemical formulas)
+- `namesx`, `namesy`: Locations for labels
+- `linesout`: x, y coordinates of boundary lines between stability fields
+
+NOTE: If diagram was passed the output of `equilibrate()` or `solubility()`, then the output contains activities instead of affinities.
+
 ### 17. Counting elements and summing and writing formulas with makeup() and as.chemical.formula()
 ### 18. A brief introduction to buffers
 ### 19. A brief introduction to proteins and groupwise relative stabilities
