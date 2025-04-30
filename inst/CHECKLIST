@@ -75,5 +75,5 @@ Making vignettes for website (https://chnosz.net)
 
 - Build package after setting CHNOSZ_BUILD_LARGE_VIGNETTES environment variable.
 
-- Install the package and run doc/mklinks.sh within the installation directory.
+- Install the package and run doc/postprocess.sh within the installation directory.
   (this adds links to the HTML renditions of Rd files)

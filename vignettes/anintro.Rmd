@@ -26,6 +26,13 @@ pre {
   margin: 0;
   padding: 0;
 }
+.highlight {
+  background-color: #F27121cc;
+  border-radius: 6px;
+  padding: 0px 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+}
 ```
 
 ```{js, echo=FALSE}
@@ -78,7 +85,7 @@ library(CHNOSZ)
 
 This makes the thermodynamic database and functions available in your R session. To restore default settings at any point, use `reset()`.
 
-## Core Functionality
+## Basic Functionality
 
 CHNOSZ offers several primary functions for thermodynamic analysis:
 
@@ -96,7 +103,7 @@ CHNOSZ offers several primary functions for thermodynamic analysis:
 * `species()`: Set species of interest and their activities
 * `reset()`: Reset database and system settings to defaults
 
-## Querying the Thermodynamic Database
+### Querying the Thermodynamic Database
 
 The `info()` function provides access to the OBIGT thermodynamic database.
 
@@ -128,7 +135,7 @@ You can access fuzzy search functionality by using partial names:
 info("ribose+")
 ```
 
-## Calculating Thermodynamic Properties
+### Calculating Thermodynamic Properties
 
 The `subcrt()` function [named after SUPCRT; @JOH92] calculates standard thermodynamic properties:
 
@@ -152,7 +159,7 @@ subcrt("CH4", T = 25)
 reset()  # Restore defaults
 ```
 
-## Working with Reactions
+### Working with Reactions
 
 Define reactions with species names, states (optional), and coefficients:
 
@@ -178,9 +185,9 @@ species(c("CH4", "acetate"))
 ```
 
 There are some keywords (e.g. `CHNOS+`, `CHNOSe` and `QEC`) for loading predefined sets of basis species.
-See the help page (`?basis`) for more information.
+See the help page of `basis()` for more information.
 
-## Chemical Affinity and Stability Diagrams
+### Chemical Affinity and Stability Diagrams
 
 ```{r figure-setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -204,7 +211,7 @@ a <- affinity(pH = c(0, 14), Eh = c(-0.8, 1.2))
 diagram(a, col = 4, col.names = 4, italic = TRUE)
 ```
 
-NOTE: `diagram()` automatically adds shading to represent where water is not stable with respect to O2 or H2.
+NOTE: `diagram()` automatically adds shading to regions of water instability with respect to O2 or H2.
 
 For more sophisticated diagrams involving speciation of basis species, use the `mosaic()` function:
 
@@ -224,7 +231,7 @@ water.lines(m$A.species, lty = 3, col = 8)
 
 Here we've added dotted lines to help visualize the water stability limits.
 
-## Equilibrium Calculations
+### Equilibrium Calculations
 
 Calculate equilibrium distributions of species:
 
@@ -255,7 +262,7 @@ diagram(s, type = "loga.equil", add = TRUE)
 legend("topright", c("25 °C", "1 bar"), bty = "n")
 ```
 
-## Activity Coefficients
+### Activity Coefficients
 
 Incorporate non-ideal behavior using the extended Debye-Hückel equation by setting the ionic strength parameter `IS`:
 
@@ -276,11 +283,42 @@ legend("topright", c("25 °C", "1 bar"), bty = "n")
 Functions that have the `IS` parameter are `subcrt()`, `affinity()`, `mosaic()`, and `solubility()`.
 When a value for `IS` is specified, inputs and outputs labeled as activities are actually interpreted or reported as molalities.
 
-## Building Up
+### References
+
+The CHNOSZ package incorporates data and methods from various sources. Use `thermo.refs()` to view citation information for data sources:
+
+```{r refs, eval = FALSE}
+# Return data frame with references for one or more species
+thermo.refs(info("CH4", c("aq", "gas")))
+# View all references in a browser
+thermo.refs()
+```
+
+For citing CHNOSZ itself, see "How should CHNOSZ be cited?" in the [FAQ](FAQ.html).
+
+## Interlude: Affinity, Formation Reactions, and Balancing
+
+The idea for creating stability diagrams in CHNOSZ came from Prof. Harold Helgeson's geochemistry course at UC Berkeley.
+There, we constructed diagrams that were "balanced on" a metal.
+For instance, in a system balanced on aluminum, Al is only present in the minerals on both sides of the reaction and is not free as an ion.
+
+The reaction-based method, used for making diagrams by hand, looks at reactions between pairs of species (let's call them transformation reactions), then draws a line between stability fields where the non-standard Gibbs energy of reaction is zero.
+The grid-based method, used in CHNOSZ, looks at reactions to compose individual species from the basis species (let's call them formation reactions), then selects the most stable species according to their affinity values.
+
+Affinity is just the opposite of non-standard Gibbs energy of reaction.
+"Standard Gibbs energy of reaction" and "Gibbs energy of reaction" - which are two different things - have unfortunately similar names except for an optional [depending on the author, e.g. @AL19;@STK19] "overall" or "non-standard" in front of the latter.
+"Non-standard Gibbs energy of reaction" doesn't lend itself to a short, unambiguous function name, which is why its opposite, "affinity", is used in CHNOSZ.
+
+In the reaction-based method, transformation reactions are said to be "balanced on" a metal.
+The grid-based method implements this balancing constraint by dividing the affinities of formation reactions by the coefficients of a basis species.
+CHNOSZ uses these normalized affinities for making relative stability diagrams, referred to as the *maximum affinity method*.
+Both the reaction- and grid-based method have the same limitation: every candidate species must have non-zero stoichiometry of a given metal (or of a basis species with that metal).
+
+## Advanced Uses
 
 Having seen basic examples of the main features of CHNOSZ, here are some ideas for building more complex calculations and diagrams.
 
-### 1. Use helper functions to create formatted logK and other labels for diagrams
+### 1. Use helper functions to create formatted labels for diagrams
 
 Labeling diagrams is an importan part of creating publication-ready figures, and chemical formulas and reactions can be diffcult for beginners and experienced R coders alike.
 See the documentation for R's `plotmath()` for formatting mathematical expressions.
@@ -310,7 +348,7 @@ text(300, -2.57, expr.species("CH4"))
 
 See the help pages in CHNOSZ for additional functions for labeling diagrams, including `describe.reaction()` to format a chemical reaction from the output of `subcrt()`, and `lT()` and related functions for compact representations of temperature and other variables for plot legends.
 
-### 2. Use retrieve() to search species by elements
+### 2. Use <span style="color:green;font-family:monospace;">retrieve()</span> to search species by elements
 
 Want to find all the Al complexes in the database?
 List them by calling `retrieve()` with the main element optionally followed by the ligand elements and state.
@@ -333,11 +371,11 @@ species(iaq)
 species(names(iaq))  # same as above
 ```
 
-### 3. Load optional data with add.OBIGT()
+### 3. Load optional data with <span style="color:red;font-family:monospace;">add.OBIGT()</span>
 
 Perhaps you'd like to use data from older databases that have been superseded by later updates.
 The OBIGT vignette briefly summarizes the superseded data for [SUPCRT92](OBIGT.html#optional-SUPCRT92) and [SLOP98](OBIGT.html#optional-SLOP98) [@SLOP98].
-Use add.OBIGT() to load these old data entries.
+Use `add.OBIGT()` to load these old data entries.
 
 ```{r add_OBIGT_SLOP98, results = "show"}
 add.OBIGT("SLOP98")
@@ -351,10 +389,10 @@ For example, AlO2- in SLOP98 corresponds to Al(OH)4- in the default database (se
 They are effectively the same species, which is why only the latter [taken from a more extensive compilation for Al species properties; @TS01] is used in the default database.
 Unless you have a specific reason to compare them, redundant species should not be used in the same equilibrium calculation.
 
-### 4. Use OBIGT() or reset() to restore the default database and settings
+### 4. Use <span style="color:red;font-family:monospace;">OBIGT()</span> and <span style="color:red;font-family:monospace;">reset()</span> to restore the default database and settings
 
-`OBIGT()` restores just the database, without affecting other settings (e.g. `E.units()`, `basis()` and `species()`).
-`reset()` resets all settings in CHNOSZ, including the database.
+`OBIGT()` restores the default database without affecting other settings.
+`reset()` restores the default database and all other settings in CHNOSZ.
 These functions are useful for both interactive use and scripts that compare different versions of data or plots for different systems or conditions.
 
 Let's put items #1-3 together to remake the corundum solubility plot using only species available in SLOP98.
@@ -380,7 +418,7 @@ legend("topright", c("25 °C", "1 bar"), bty = "n")
 reset()
 ```
 
-### 5. Use `basis()` species to select compositional variables to plot
+### 5. Use <span style="color:red;font-family:monospace;">basis()</span> species to select compositional variables to plot
 
 A common question is: what are the basis species used for?
 The basis species define the compositional variables that can be added to a diagram.
@@ -412,7 +450,7 @@ basis(c("Al+3", "F-", "H+", "H2O", "oxygen"))
 basis(c("Al+3", "F-", "H+", "H2O", "e-"))
 ```
 
-### 6. Set activities of formed `species()` to define a single solubility contour
+### 6. Set activities of formed <span style="color:red;font-family:monospace;">species()</span> to define a single solubility contour
 
 In order to make a diagram with stability fields for different species, CHNOSZ needs to know about the activities of all the species in the reaction.
 The activities of the basis species start with constant values as shown in the output above (`logact` column).
@@ -433,7 +471,7 @@ species(iaq, -6)
 
 This value for `logact` defines a solubility contour, as we'll see below.
 
-### 7. When to use add = TRUE
+### 7. When to use <span style="font-family:monospace;">add = TRUE</span>
 
 There are two places where you might see `add = TRUE`.
 First, in `species()` to add species not already in the list.
@@ -468,7 +506,7 @@ legend("bottomleft", legend = c(-3, -4), lty = c(2, 1), title = title, bty = "n"
 The shaded areas in the diagram represent water instability regions and are automatically added by `diagram()`.
 We use `water.lines()` here to plot the water stability limits with dotted lines.
 
-### 8. Set grid resolution and constant T, P, or IS in affinity()
+### 8. Set grid resolution and constant T, P, or IS in <span style="color:green;font-family:monospace;">affinity()</span>
 
 After defining the basis species and formed species (and their constant activities), you have some choices about what variables to put on the plot, the grid resolution, and values for a few other variables.
 `affinity()` accepts one or more named arguments that specifying ranges of variables using the default grid resolution of 256 (`c(min, max)`) or ranges and a custom grid resolution (`c(min, max, res)`).
@@ -479,13 +517,13 @@ These last three default to 25 °C, `Psat` (1 bar below 100 °C and saturation p
 
 I often start with a low grid resolution to quickly iterate a calculation, then switch to a higher resolution when I'm satisfied with the result.
 
-### 9. Use NaCl() to estimate ionic strength from NaCl concentration
+### 9. Use <span style="color:green;font-family:monospace;">NaCl()</span> to estimate ionic strength from NaCl concentration
 
 Sodium chloride (NaCl) solutions are commonly used reference points for geochemical models.
 The `NaCl()` function provides a quick-and-dirty way to estimate ionic strength and activity of chloride (Cl-) for a given total amount of NaCl added to 1 kg of H2O.
 These values can then be used in setting up a calculation that involves these variables.
 
-This function does not use either the basis() or species() definitions.
+This function does not use either the `basis()` or `species()` definitions.
 The following example runs a calculation for 0.8 mol/kg NaCl and given T, P, and pH.
 See `demo('sum_S')` for the fully worked-out example that uses this code [based on a diagram in @SW02].
 
@@ -500,7 +538,7 @@ print(paste("Ionic strength (mol/kg):", NaCl$IS))
 print(paste("Chloride concentration (mol/kg):", NaCl$m_Clminus))
 ```
 
-### 10. Use solubility() to draw multiple solubility contours
+### 10. Use <span style="color:green;font-family:monospace;">solubility()</span> to draw multiple solubility contours
 
 There are many uses for "composite diagrams" [@GC65], where stability fields for minerals and predominance fields for aqueous species are both present.
 As mentioned above (#6), setting the activities of formed aqueous species defines a single solubility contour.
@@ -518,11 +556,11 @@ The remaining arguments to the function define the plot variables, just as in `a
 Let's put together #8-10 to make a set of diagrams for a single metal.
 The example here uses Fe; try changing it to Cu, Zn, Pb, Au, or something else!
 
-CHNOSZ emits warning messages about being above the Cp limits for various iron oxyhydroxides.
+CHNOSZ generates warning messages about being above the Cp limits for various iron oxyhydroxides.
 If you see warning messages like this, it's a good idea not to ignore them; instead, consider whether you might be pushing extrapolations of the Cp equation too far.
 For the present calculation, the warnings are probably harmless because the set of stable minerals on the diagram (pyrite, pyrrhotite, magnetite, and hematite) is consistent with many previous publications.
 
-```{r solubility, echo=FALSE, fig.cap="Mineral stability diagram; aqueous species predominance diagram; composite diagram with one solubility contour; diagram with multiple solubility contours in units of log *m*", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3, cache=TRUE}
+```{r solubility, echo=FALSE, fig.cap="Mineral stability diagram; aqueous species predominance diagram; composite diagram with one solubility contour; diagram with multiple solubility contours in units of log *m*", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3, cache=TRUE, dpi=72}
 par(mfrow = c(1, 4))
 
 # System definition
@@ -607,7 +645,7 @@ title("Multiple solubility contours", font.main = 1)
 ```
 </div>
 
-### 11. Use convert() for common unit conversions
+### 11. Use <span style="color:green;font-family:monospace;">convert()</span> for common unit conversions
 
 The `convert()` function offers several unit conversions.
 It implements reciprocal conversion between pairs of units, so only the destination unit needs to be specified.
@@ -637,7 +675,7 @@ levels <- c(1e-6, 1e-3, 1e0, 1e3)
 diagram(sppm, levels = levels)
 ```
 
-### 12. Use the transect mode of affinity() for synchronized variables
+### 12. Use the transect mode of <span style="color:green;font-family:monospace;">affinity()</span> for synchronized variables
 
 Specify 4 or more values for one or more variables (each variable should have the same number of values, or be set to a constant) to activate the *transect* mode of `affinity()`.
 The *transect* mode allows defining an arbitrary path in multidimensional space.
@@ -660,7 +698,7 @@ NOTE: `affinity()` returns dimensionless values of affinity (i.e., *A*/2.303*RT*
 
 Below we'll see how to convert these to energetic units.
 
-### 13. Choose non-default balancing constraints in diagram()
+### 13. Choose non-default balancing constraints in <span style="color:green;font-family:monospace;">diagram()</span>
 
 `diagram()` looks for the first basis species that has non-zero coefficients in each of the formed species.
 This is called the conserved basis species in the documentation.
@@ -674,7 +712,7 @@ This is how "balancing on a metal" is implemented.
 
 Let's put together #11-13 to calculate affinities of organic synthesis reactions in mixed seawater and hydrothermal fluid from the Rainbow vent field using speciation results from @SC10:
 
-```{r rainbow, echo=FALSE, fig.cap="Affinities of organic synthesis reactions per mole of C, H2, or formed species", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE}
+```{r rainbow, echo=FALSE, fig.cap="Affinities of organic synthesis reactions per mole of C, H2, or formed species", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=72}
 basis(c("CO2", "H2", "NH4+", "H2O", "H2S", "H+"))
 # Constant activity of CH4 is a simplification of the model
 species("CH4", -3)
@@ -730,9 +768,9 @@ We obtain three plots:
   3. No balancing constraint (`balance = 1`).
      This just shows the affinity of each reaction as given (that is, per mole of formed species), which is how the results were presented by Shock and Canovas (2010).
 
-### 14. Calculate adjusted and non-standard Gibbs energy with subcrt()
+### 14. Calculate adjusted and non-standard Gibbs energy with <span style="color:green;font-family:monospace;">subcrt()</span>
 
-In normal use, `subcrt()` returns *standard* molal properties (G, H, S, Cp, and V) for species in their standard states, referenced as unit activity or fugacity.
+In normal use, `subcrt()` returns *standard* molal properties (G, H, S, Cp, and V) for species in their standard states, defined as unit activity or fugacity.
 Two deviations from this default setting are possible: *non-standard* properties for specified activity, and *adjusted* properties for activity coefficients.
 
 First let's look at how *adjusted* properties depend on activity coefficients.
@@ -770,18 +808,18 @@ NOTE:
 - The logK, G, H, S, V, and Cp columns in the output of `subcrt()` are always *standard* or *adjusted* thermodynamic properties, not non-standard ones.
 - Columns for logQ and A are added if the `logact` argument is provided.
 - The `logact` argument specifies the activities of species in the same order as the first argument.
-- A in the output of subcrt() has the same units as G (J/mol by default); this differs from the output of affinity(), which uses dimensionless values (A/2.303RT).
+- A in the output of `subcrt()` has the same units as G (J/mol by default); this differs from the output of `affinity()`, which uses dimensionless values (A/2.303RT).
 
 The first call above specifies unit activities of all the species in the reaction.
 
-- Only if *all species have unit activities*, then the affinity values (A in the output) are the opposite of the *standard* Gibbs energy (G in the output).
+- **Only** if all species have *unit activities*, then the affinity values (A in the output) are the opposite of the *standard* Gibbs energy (G in the output).
 
 The second call specifies non-unit activities of the species.
 
-- The result shows that affinity values in general are *not the opposite* of standard Gibbs energy.
+- The result shows that affinity values **in general** are *not the opposite* of standard Gibbs energy.
 - Instead, they are the opposite of *non-standard* (or overall) Gibbs energy.
 
-### 15. Calculate non-standard Gibbs energy with `affinity()`
+### 15. Calculate non-standard Gibbs energy with <span style="color:green;font-family:monospace;">affinity()</span>
 
 #### And swap basis species, remove formed species, and label reactions
 
@@ -854,7 +892,7 @@ a2$species
 
 NOTE: This example uses `balance = 1` in the call to `diagram()` to prevent normalizating the reactions by a balancing constraint (i.e., normalization by number of C) in order to reproduce the calculations of Mayumi et al. (2013). In most other cases (especially for making relative stability diagrams), this argument should not be used.
 
-### 16. Extract results from the output of diagram()
+### 16. Extract results from the output of <span style="color:green;font-family:monospace;">diagram()</span>
 
 Sometimes it's useful to make further computations on the results of a `diagram()` call.
 For example, a system might dominated by a few stable species, but you'd rather visualize the relative stabilities of less stable (i.e., metastable) species.
@@ -888,21 +926,16 @@ Other possibly useful parts of the `diagram()` output are:
 
 NOTE: If `diagram()` was passed the output of `equilibrate()` or `solubility()`, then its output contains activities instead of affinities.
 
-### 17. Counting elements and summing and writing formulas with makeup() and as.chemical.formula()
+### 17. Count elements with <span style="color:green;font-family:monospace;">makeup()</span> and sum and write chemical formulas
 ### 18. A brief introduction to buffers
 ### 19. A brief introduction to proteins and groupwise relative stabilities
 
 ## Further Resources
 
-### Help Pages
-
-- Browse the package documentation with `help(package = "CHNOSZ")`
-- See function-specific help: `?info`, `?subcrt`, etc.
-
 ### Demos
 
 Explore demos with `demo(package = "CHNOSZ")`.
-You can also use `demos()` to run all the demos or just one (e.g. `demos("mosaic")`).
+You can also use `demos()` to run all the demos without pausing or just one (e.g. `demos("mosaic")`).
 
 *More use cases for `mosaic()`*
 
@@ -956,7 +989,6 @@ Additional vignettes cover:
 ### Frequently asked questions
 
 The [FAQ](FAQ.html) is a non-comprehensive collection of questions and answers about CHNOSZ.
-Please use the [Discussions forum on GitHub](https://github.com/jedick/CHNOSZ/discussions) for new questions.
 
 ### OBIGT thermodynamic database
 
@@ -968,47 +1000,35 @@ The [custom_data](custom_data.html) vignette describes `add.OBIGT()` for adding 
 
 ### Fitting thermodynamic data
 
-The [EOSregress](EOSregress.html) vignette shows how to fit experimental data (volume and heat capacity) using constructed equation-of-state models.
+The [eos-regress](eos-regress.html) vignette shows how to fit experimental data (volume and heat capacity) using constructed equation-of-state models.
 
-### Creating multi-metal diagrams (aside: why affinity?)
+### Creating multi-metal diagrams
 
-The idea for creating stability diagrams in CHNOSZ came from Harold Helgeson's geochemistry course.
-There, we constructed diagrams that were "balanced on" a metal.
-For instance, in a system balanced on Al, Al is only present in the minerals on both sides of the reaction and is not free as an ion.
+The [multi-metal](multi-metal.html) vignette has some techniques for overcoming the limitation of balancing reactions on a single metal.
 
-The reaction-based method, used for making diagrams by hand, looks at reactions between pairs of species (let's call them transformation reactions), then draws a line between stability fields where the non-standard Gibbs energy of reaction is zero.
-The grid-based method, used in CHNOSZ, looks at reactions to compose individual species from the basis species (let's call them formation reactions), then selects the most stable species according to their affinity values.
+## Getting Help
 
-Affinity is just the opposite of non-standard Gibbs energy of reaction.
-"Standard Gibbs energy of reaction" and "Gibbs energy of reaction" - which are two different things - have unfortunately similar names except for an optional [depending on the author, e.g. @AL19;@STK19] "overall" or "non-standard" in front of the latter.
-"Non-standard Gibbs energy of reaction" doesn't lend itself to a short, unambiguous function name, which is why its opposite, "affinity", is used in CHNOSZ.
+R provides convenient access to documentation in a local browser:
 
-In the reaction-based method, transformation reactions are said to be "balanced on" a metal.
-The grid-based method implements this balancing constraint by dividing the affinities of formation reactions by the coefficients of a basis species.
-CHNOSZ uses these normalized affinities for making relative stability diagrams, referred to as the *maximum affinity method*.
-Both the reaction- and grid-based method have the same limitation: every candidate species must have non-zero stoichiometry of a given metal (or of a basis species with that metal).
+- If you haven't installed CHNOSZ yet, run `install.packages("CHNOSZ")`
+- Run `help.start()` to open a browser window for the R help system
+- Choose "Packages" followed by "CHNOSZ"
+- Select the help topic for any function to see detailed documentation and examples
+- Follow the links at the top of the main page for *demos* (longer examples) and *vignettes* (more in-depth documentation; this document is a vignette)
 
-The [multi-metal](multi-metal.html) vignette has some techniques for overcoming this limitation of balancing reactions on a single metal.
+You can also:
 
-## References
+- Browse the package documentation with `help(package = "CHNOSZ")`
+  - See function-specific help: `?info`, `?subcrt`, etc.
+- Use the [Discussions forum on GitHub](https://github.com/jedick/CHNOSZ/discussions) for questions about CHNOSZ
+- Contact the maintainer for bug reports or feature requests
+  - Use `maintainer("CHNOSZ")` to get contact info
 
-The CHNOSZ package incorporates data and methods from various sources. To view citation information for data sources:
-
-```{r refs, eval = FALSE}
-# View all references in a browser
-thermo.refs()
-
-# Return data frame with references for one or more species
-thermo.refs(info("CH4", c("aq", "gas")))
-```
-
-For citing CHNOSZ itself, see "How should CHNOSZ be cited?" in the [FAQ](FAQ.html).
-
-## Document history
+## Document History
 
 - 2010-09-30 First version, titled "Getting started with CHNOSZ".
 - 2017-02-15 Rewritten and switched from Sweave to [knitr](https://yihui.org/knitr/).
-- 2025-04-07 Revised and shortened with AI assistance (except for [Building Up](#building-up)).
+- 2025-04-07 Revised and shortened with AI assistance (mostly in [Basic Functionality](#basic-functionality)).
 
 <p>
 ```{r the_end}
