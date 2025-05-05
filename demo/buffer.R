@@ -12,7 +12,7 @@ b.logact <- c(0, 1, 0, 0, 0, 0, 0)
 basis(b.species, b.state, b.logact)
 xlim <- c(0, 350)
 thermo.plot.new(xlim = xlim, ylim = c(-4, 4), xlab = axis.label("T"), ylab = axis.label("H2"))
-# Method 1: in buffer(), assign name of buffer to basis species
+# Method 1: in basis(), assign name of buffer to basis species
 bufferline <- function(buffer, ixlab) {
   basis("H2", buffer)
   a <- affinity(T = xlim, P = 300, return.buffer = TRUE, exceed.Ttr = TRUE)

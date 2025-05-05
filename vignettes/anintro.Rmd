@@ -1,7 +1,6 @@
 ---
 title: "An Introduction to CHNOSZ"
 author: "Jeffrey M. Dick"
-date: "`r Sys.Date()`"
 output:
   tufte::tufte_html:
     tufte_features: ["background"]
@@ -75,6 +74,8 @@ knit_hooks$set(warning = color_block('magenta'), error = color_block('red'), mes
 
 This vignette introduces CHNOSZ, an R package for thermodynamic calculations relevant to geochemistry and geobiochemistry. CHNOSZ provides functions and a thermodynamic database for calculating properties of reactions involving minerals, aqueous species, and gases across a range of temperatures and pressures.
 
+This vignette was compiled on `r Sys.Date()` with CHNOSZ `r packageDescription("CHNOSZ")$Version`.
+
 ## Getting Started
 
 After installing CHNOSZ from CRAN, load the package:
@@ -89,7 +90,7 @@ This makes the thermodynamic database and functions available in your R session.
 
 CHNOSZ offers several primary functions for thermodynamic analysis:
 
-### Functions Without Side Effects (Return Values)
+### Functions without side effects (return values)
 
 * `info()`: Search the thermodynamic database
 * `subcrt()`: Calculate thermodynamic properties of species and reactions
@@ -97,13 +98,13 @@ CHNOSZ offers several primary functions for thermodynamic analysis:
 * `equilibrate()`: Calculate equilibrium chemical activities
 * `diagram()`: Plot the results
 
-### Functions With Side Effects (Modify System State)
+### Functions with side effects (modify system state)
 
 * `basis()`: Set basis species and their chemical activities
 * `species()`: Set species of interest and their activities
 * `reset()`: Reset database and system settings to defaults
 
-### Querying the Thermodynamic Database
+### Querying the thermodynamic database
 
 The `info()` function provides access to the OBIGT thermodynamic database.
 
@@ -135,7 +136,7 @@ You can access fuzzy search functionality by using partial names:
 info("ribose+")
 ```
 
-### Calculating Thermodynamic Properties
+### Calculating thermodynamic properties
 
 The `subcrt()` function [named after SUPCRT; @JOH92] calculates standard thermodynamic properties:
 
@@ -159,7 +160,7 @@ subcrt("CH4", T = 25)
 reset()  # Restore defaults
 ```
 
-### Working with Reactions
+### Working with reactions
 
 Define reactions with species names, states (optional), and coefficients:
 
@@ -187,7 +188,7 @@ species(c("CH4", "acetate"))
 There are some keywords (e.g. `CHNOS+`, `CHNOSe` and `QEC`) for loading predefined sets of basis species.
 See the help page of `basis()` for more information.
 
-### Chemical Affinity and Stability Diagrams
+### Chemical affinity and stability diagrams
 
 ```{r figure-setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -231,7 +232,7 @@ water.lines(m$A.species, lty = 3, col = 8)
 
 Here we've added dotted lines to help visualize the water stability limits.
 
-### Equilibrium Calculations
+### Equilibrium calculations
 
 Calculate equilibrium distributions of species:
 
@@ -262,7 +263,7 @@ diagram(s, type = "loga.equil", add = TRUE)
 legend("topright", c("25 °C", "1 bar"), bty = "n")
 ```
 
-### Activity Coefficients
+### Activity coefficients
 
 Incorporate non-ideal behavior using the extended Debye-Hückel equation by setting the ionic strength parameter `IS`:
 
@@ -306,13 +307,13 @@ The reaction-based method, used for making diagrams by hand, looks at reactions 
 The grid-based method, used in CHNOSZ, looks at reactions to compose individual species from the basis species (let's call them formation reactions), then selects the most stable species according to their affinity values.
 
 Affinity is just the opposite of non-standard Gibbs energy of reaction.
-"Standard Gibbs energy of reaction" and "Gibbs energy of reaction" - which are two different things - have unfortunately similar names except for an optional [depending on the author, e.g. @AL19;@STK19] "overall" or "non-standard" in front of the latter.
+"Standard Gibbs energy of reaction" and "Gibbs energy of reaction" - which are two different things - have unfortunately similar names except for an optional "overall" or "non-standard" in front of the latter [the word choice varies among authors, e.g. @AL19;@STK19].
 "Non-standard Gibbs energy of reaction" doesn't lend itself to a short, unambiguous function name, which is why its opposite, "affinity", is used in CHNOSZ.
 
 In the reaction-based method, transformation reactions are said to be "balanced on" a metal.
 The grid-based method implements this balancing constraint by dividing the affinities of formation reactions by the coefficients of a basis species.
 CHNOSZ uses these normalized affinities for making relative stability diagrams, referred to as the *maximum affinity method*.
-Both the reaction- and grid-based method have the same limitation: every candidate species must have non-zero stoichiometry of a given metal (or of a basis species with that metal).
+Both the reaction- and grid-based methods have the same limitation: every candidate species must have non-zero stoichiometry of a given metal (or of a basis species with that metal).
 
 ## Advanced Uses
 
@@ -320,12 +321,8 @@ Having seen basic examples of the main features of CHNOSZ, here are some ideas f
 
 ### 1. Use helper functions to create formatted labels for diagrams
 
-Labeling diagrams is an importan part of creating publication-ready figures, and chemical formulas and reactions can be diffcult for beginners and experienced R coders alike.
-See the documentation for R's `plotmath()` for formatting mathematical expressions.
-My go-to function for building expressions programmatically is `bquote()`, which allows substituting variables into a formula:
-
-```{r bquote}
-```
+Labeling diagrams is an important but often difficult step for creating publication-ready figures.
+For general information on formatting mathematical expressions in R, see the documentation for `plotmath()` as well as `bquote()`, which allows substituting variables into an equation.
 
 CHNOSZ has several helper functions for creating labels.
 `axis.label()` and `expr.species()` are used to create formatted axis labels and chemical formulas.
@@ -395,7 +392,7 @@ Unless you have a specific reason to compare them, redundant species should not 
 `reset()` restores the default database and all other settings in CHNOSZ.
 These functions are useful for both interactive use and scripts that compare different versions of data or plots for different systems or conditions.
 
-Let's put items #1-3 together to remake the corundum solubility plot using only species available in SLOP98.
+Let's put items #1-4 together to remake the corundum solubility plot using only species available in SLOP98.
 To do this, we use `add.OBIGT()` followed by `retrieve()` to gather the species indices for all Al species, then taken only those species sourced from @SSWS97.
 
 ```{r corundum_solubility_2, fig.cap="Corundum solubility with species from SLOP98"}
@@ -456,6 +453,8 @@ In order to make a diagram with stability fields for different species, CHNOSZ n
 The activities of the basis species start with constant values as shown in the output above (`logact` column).
 Selected basis species can be assigned to plot axes (with a range of values) in `affinity()`.
 
+NOTE: `logact` is the logarithm of *activity* for aqueous species, solids, and liquids, or logarithm of *fugacity* for gases.
+
 How about the formed species in the system - that is, the species whose stability fields we want to visualize?
 We both list the species and set their activities using `species()`.
 The function defaults to activities of 1e-3 (`logact` of -3) for aqueous species and unit activity (`logact` = 0) for minerals, gases, and liquids.
@@ -478,7 +477,7 @@ First, in `species()` to add species not already in the list.
 Without `add = TRUE`, any existing species are discarded.
 Second, in `diagram()` to add to an existing plot.
 
-Let's put items #4-7 together to make a Pourbaix (Eh-pH) diagram for Al with two solubility contours.
+Let's put items #5-7 together to make a Pourbaix (Eh-pH) diagram for Al with two solubility contours.
 
 ```{r Pourbaix_Mn, fig.cap = "Pourbaix diagram for Mn with two solubility contours"}
 basis(c("Mn+2", "H+", "H2O", "e-"))
@@ -558,7 +557,7 @@ The example here uses Fe; try changing it to Cu, Zn, Pb, Au, or something else!
 
 CHNOSZ generates warning messages about being above the Cp limits for various iron oxyhydroxides.
 If you see warning messages like this, it's a good idea not to ignore them; instead, consider whether you might be pushing extrapolations of the Cp equation too far.
-For the present calculation, the warnings are probably harmless because the set of stable minerals on the diagram (pyrite, pyrrhotite, magnetite, and hematite) is consistent with many previous publications.
+For the present calculation, the warnings are probably harmless because the predicted set of stable minerals (pyrite, pyrrhotite, magnetite, and hematite) is consistent with many published diagrams.
 
 ```{r solubility, echo=FALSE, fig.cap="Mineral stability diagram; aqueous species predominance diagram; composite diagram with one solubility contour; diagram with multiple solubility contours in units of log *m*", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3, cache=TRUE, dpi=72}
 par(mfrow = c(1, 4))
@@ -724,7 +723,7 @@ file <- system.file("extdata/misc/SC10_Rainbow.csv", package = "CHNOSZ")
 df <- read.csv(file, check.names = FALSE)
 # Reverse the rows to get increasing T
 df <- df[rev(rownames(df)), ]
-# Change six variables on a transect
+# Define six variables on a transect
 a <- affinity(T = df$T, CO2 = df$CO2, H2 = df$H2,
               `NH4+` = df$`NH4+`, H2S = df$H2S, pH = df$pH)
 # Get T in Kelvin to make unit conversions
@@ -924,20 +923,18 @@ Other possibly useful parts of the `diagram()` output are:
 - `namesx`, `namesy`: Locations for labels
 - `linesout`: x, y coordinates of boundary lines between stability fields
 
-NOTE: If `diagram()` was passed the output of `equilibrate()` or `solubility()`, then its output contains activities instead of affinities.
+NOTE: If `diagram()` was passed the output of `equilibrate()` or `solubility()`, then its output contains logarithms of activities instead of dimensionless affinities.
 
 ### 17. Count elements with <span style="color:green;font-family:monospace;">makeup()</span> and sum and write chemical formulas
 ### 18. A brief introduction to buffers
 ### 19. A brief introduction to proteins and groupwise relative stabilities
 
-## Further Resources
-
-### Demos
+## Further Resources - Demos
 
 Explore demos with `demo(package = "CHNOSZ")`.
 You can also use `demos()` to run all the demos without pausing or just one (e.g. `demos("mosaic")`).
 
-*More use cases for `mosaic()`*
+### More use cases for <span style="color:green;font-family:monospace;">mosaic()</span>
 
   - `mosaic`: Speciating more than one set of basis species
   - `sum_S`, `uranyl`: Using summed activities of speciated basis species
@@ -945,44 +942,44 @@ You can also use `demos()` to run all the demos without pausing or just one (e.g
   - `arsenic`, `copper`: More examples of Eh-pH diagrams
   - `sphalerite`, `contour`, `minsol`: Solubility calculations with speciated basis species
 
-*Solubility contours with `solubility()`*
+### Solubility contours with <span style="color:green;font-family:monospace;">solubility()</span>
 
   - `Pourbaix`: Isosolubility lines for various metals (try Fe, Cu, Mn)
   - `contour`: Solubility contours for gold
   - `minsol` Solubility contours for multiple minerals
   - `solubility`: CO2 and calcite
 
-*Other contour plots*
+### Other contour plots
 
   - `saturation`: Saturation lines (where affinity = 0) and labels for activity ratios
   - `ionize`: Protein ionization properties
   - `TCA`: Citric acid cycle energetics
   - `comproportionation`: Using a color scale (image map)
 
-*Calculations using the output of `diagram()`*
+### Calculations using the output of <span style="color:green;font-family:monospace;">diagram()</span>
 
   - `buffer`: Place labels next to lines
   - `MgATP`: Calculate number of protons bound per ATP molecule
 
-*Activity buffers*
+### Activity buffers
 
   - `buffer`: Plotting buffers as a function of temperature
   - `DEW`: Applying calculated values of logfO2 in `affinity()`
   - `gold`: Settting pH and fO2 buffers in `basis()` for solubility of gold
   - `protbuff`: Using proteins as buffer species
 
-*Other thermodynamic models*
+### Other thermodynamic models
 
   - `DEW`: Deep Earth Water model (extension of HKF to high pressures)
   - `AD`: Akinfiev-Diamond model for aqueous nonelectrolytes
 
-*Calculations with proteins*
+### Calculations with proteins
 
   - `Shh`: Affinities of transcription factors
   - `carboxylase`: Predicted rank abundance with varying temperature and redox
   - `rank.affinity`: Affinity ranking for groupwise stability comparisons
 
-## Other Vignettes
+## Further Resources - Vignettes
 
 Additional vignettes cover:
 

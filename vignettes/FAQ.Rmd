@@ -585,7 +585,7 @@ water(oldwat)
 OBIGT()
 ```
 
-The blocks of code are commented here:
+The blocks of code are described here:
 
 1. Set temperature, pressure, and resolution.
 2. Calculate molality of S from given weight percent [this is rather tedious and could be condensed to fewer lines of code].

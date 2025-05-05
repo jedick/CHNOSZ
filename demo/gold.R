@@ -5,7 +5,7 @@
 library(CHNOSZ)
 
 # Set up system
-# Use H2S here: it's the predominant species at the pH of the QMK buffer -- see sulfur()
+# Use H2S here: it's the predominant species at the pH of the KMQ buffer -- see sulfur()
 basis(c("Au", "Al2O3", "quartz", "Fe", "K+", "Cl-", "H2S", "H2O", "oxygen", "H+"))
 # set molality of K+ in completely dissociated 0.5 molal KCl
 # NOTE: This value is used only for making the legend;
@@ -13,7 +13,7 @@ basis(c("Au", "Al2O3", "quartz", "Fe", "K+", "Cl-", "H2S", "H2O", "oxygen", "H+"
 basis("K+", log10(0.5))
 
 # Create a pH buffer
-mod.buffer("QMK", c("quartz", "muscovite", "K-feldspar"), "cr", 0)
+mod.buffer("KMQ", c("quartz", "muscovite", "K-feldspar"), "cr", 0)
 
 # Define colors for Au(HS)2-, AuHS, AuOH, AuCl2-
 # after Williams-Jones et al., 2009
@@ -31,9 +31,9 @@ sulfur <- function() {
   for(i in 1:4) {
     a <- affinity(pH = c(0, 14), O2 = c(O2min[i], O2max[i]), T = T[i], P = 1000)
     diagram(a)
-    basis("H+", "QMK")
-    pH_QMK <- -affinity(T = T[i], P = P, return.buffer = TRUE)$`H+`
-    abline(v = pH_QMK, lty = 2)
+    basis("H+", "KMQ")
+    pH_KMQ <- -affinity(T = T[i], P = P, return.buffer = TRUE)$`H+`
+    abline(v = pH_KMQ, lty = 2)
     basis("O2", "HM")
     O2_HM <- affinity(T = T[i], P = P, return.buffer = TRUE)$O2
     abline(h = O2_HM, lty = 2, col = "blue")
@@ -116,8 +116,8 @@ Au_T1 <- function() {
   # Apply PPM buffer for fO2 and aH2S
   basis("O2", "PPM")
   basis("H2S", "PPM")
-  # Apply QMK buffer for pH
-  basis("H+", "QMK")
+  # Apply KMQ buffer for pH
+  basis("H+", "KMQ")
   # Estimate solution composition for 1.5 m NaCl and 0.5 m KCl
   chl <- chloride(T = seq(150, 550, 10), P = 1000, m_NaCl = 1.5, m_KCl = 0.5)
   # Calculate solubility of gold
@@ -147,8 +147,8 @@ Au_T2 <- function() {
   basis("H2S", -2)
   # Apply HM buffer for fO2
   basis("O2", "HM")
-  # Apply QMK buffer for pH
-  basis("H+", "QMK")
+  # Apply KMQ buffer for pH
+  basis("H+", "KMQ")
   # Estimate solution composition for 1.5 m NaCl and 0.5 m KCl
   chl <- chloride(T = seq(150, 550, 10), P = 1000, m_NaCl = 1.5, m_KCl = 0.5)
   # Calculate solubility of gold
