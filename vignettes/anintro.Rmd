@@ -151,7 +151,7 @@ subcrt("CH4")
 subcrt("H2O", T = c(400, 500), P = c(250, 300))
 ```
 
-Unit conversions are handled by `T.units()`, `P.units()`, and `E.units()`:
+Unit settings for `subcrt()` are handled by `T.units()`, `P.units()`, and `E.units()`:
 
 ```{r E.units}
 # Change energy units from Joules to calories
@@ -926,8 +926,271 @@ Other possibly useful parts of the `diagram()` output are:
 NOTE: If `diagram()` was passed the output of `equilibrate()` or `solubility()`, then its output contains logarithms of activities instead of dimensionless affinities.
 
 ### 17. Count elements with <span style="color:green;font-family:monospace;">makeup()</span> and sum and write chemical formulas
-### 18. A brief introduction to buffers
-### 19. A brief introduction to proteins and groupwise relative stabilities
+### 18. A brief introduction to proteins and groupwise relative stabilities
+### 19: Accessing and changing settings with <span style="color:red;font-family:monospace;">thermo()</span>
+
+## Buffers
+
+Buffers are assemblages of one or more species whose presence constrains the chemical activities (or fugacities) of basis species in a thermodynamic system.
+Buffers play a critical role in geochemical modeling by providing realistic constraints on system variables like pH and oxidation state.
+This section explores the implementation and application of buffers in CHNOSZ.
+
+### 1. Defining buffers with <span style="color:red;font-family:monospace;">mod.buffer()</span>
+
+The `mod.buffer()` function defines or modifies buffers by specifying the species that constitute the buffer and their activities:
+
+```{r buffer_1}
+# View available buffers
+thermo()$buffer
+# Define a new buffer or modify an existing one
+mod.buffer("PPM", c("pyrite", "pyrrhotite", "magnetite"), "cr", 0)
+# Buffer made of one species (acetic acid with log activity = -10)
+mod.buffer("AC", "acetic acid", "aq", -10)
+```
+
+### 2. Retrieving buffered activities with <span style="color:green;font-family:monospace;">affinity(return.buffer = TRUE)</span>
+
+Use `basis()` to associate one or more basis species with a buffer (all the elements in the buffer must be present in the basis species).
+Then use `affinity(return.buffer = TRUE)` to calculate and retrieve the buffered activities or fugacities of basis species:
+
+```{r buffer_2}
+# Specify basis species
+basis(c("FeCHNOS"))
+# Associate O2 with the PPM buffer
+basis("O2", "PPM")
+# Calculate and retrieve the buffered fugacity of O2
+a <- affinity(T = 200, P = 2000, return.buffer = TRUE)
+# Access the buffered O2 fugacity (logfO2)
+log_fO2 <- a$O2  # -44.28
+# Calculate buffered fugacities across temperature range
+a <- affinity(T = c(200, 400, 11), P = 2000, return.buffer = TRUE)
+```
+
+### 3. Working with multiple buffered species (e.g., H2S and O2 in PPM)
+
+Some buffers constrain multiple basis species simultaneously:
+
+```{r buffer_3}
+# Set up basis species
+basis(c("FeS2", "H2S", "O2", "H2O"), c(0, -10, -50, 0))
+# Associate both H2S and O2 with the PPM buffer
+basis(c("H2S", "O2"), c("PPM", "PPM"))
+# Retrieve values for both buffered species
+buffer_values <- affinity(T = 300, P = 2000, return.buffer = TRUE)
+log_aH2S <- buffer_values$H2S  #  -2.57
+log_fO2 <- buffer_values$O2    # -37.16
+```
+
+### 4. Using <span style="color:green;font-family:monospace;">diagram(type = )</span> to display buffered activities
+
+The `diagram()` function with the `type` argument can solve for and display activities of basis species.
+This example reproduces part of Fig. 6 in @SS95:
+
+```{r buffer_4, fig.cap = "Equilibrium log H2 fugacity for 10^-6^ activity of HCN or formaldehyde with water, 1 bar of N2 and 10 bar of CO2"}
+# Set up a system in terms of gases and liquid water
+basis(c("hydrogen", "carbon dioxide", "nitrogen", "water"))
+# Use 10 bar of CO2 and 1 bar of other gases (default)
+basis("CO2", 1)
+# Load aqueous species with given log activity
+species(c("HCN", "formaldehyde"), c(-6, -6))
+# Calculate affinities to form aqueous species from basis species
+a <- affinity(T = c(0, 350), P = 300)
+# Create diagram showing H2 activity where affinity = 0
+d <- diagram(a, type = "H2", lty = c(2, 3))
+legend("bottomright", c("HCN", "formaldehyde"), lty = c(2, 3))
+```
+
+See `demo("buffer")` for a fully worked-out example based on the figure in Schulte and Shock (1995).
+
+NOTE: This feature works independently from buffers defined in `thermo()$buffer`, but produces equivalent results for certain systems; see `test-diagram.R` in the package test directory.
+
+### 5. Using fO2 Buffers in downstream calculations
+
+Redox buffers like QFM, HM, and PPM can be used as inputs for subsequent calculations:
+
+```{r buffer_5, fig.cap = "Gold solubility at 300 °C with PPM buffer for fO2 and aH2S"}
+# Set up system for gold solubility calculation
+basis(c("Au", "Fe", "H2S", "H2O", "oxygen", "H+"))
+# Apply PPM buffer for fO2 and H2S
+basis("O2", "PPM")
+basis("H2S", "PPM")
+# Calculate gold solubility using the buffered values
+species("Au")
+iaq <- info(c("Au(HS)2-", "AuHS", "AuOH"))
+s <- solubility(iaq, pH = c(2, 8), T = 300, P = 1000)
+# Create solubility diagram
+diagram(s, ylim = c(-10, -5))
+col <- c("#ED4037", "#F58645", "#0F9DE2")  # Au(HS)2-, AuHS, AuOH
+diagram(s, type = "loga.equil", add = TRUE, col = col, lwd = 2)
+```
+
+### 6. Using buffer calculations in transects with <span style="color:green;font-family:monospace;">affinity()</span>
+
+Buffers can be used in transect calculations to model changes across gradients.
+An interesting application is to add a delta to values obtained with `return.buffer = TRUE`:
+
+```{r buffer_6}
+# Set basis species
+basis(c("Fe", "SiO2", "CO3-2", "H2O", "oxygen", "H+"))
+# Calculate logfO2 in QFM buffer across temperature range
+basis("O2", "QFM")
+T <- seq(600, 1000, 100)
+buf <- affinity(T = T, P = 5000, return.buffer = TRUE)
+# Use buffered fO2 values in downstream calculations
+species(c("CH4", "CO2", "HCO3-", "CO3-2"))
+# Set values of pH for transect
+pH <- seq(3.8, 4.3, length.out = length(T))
+# Adding 2 log units below QFM buffer
+a <- affinity(T = T, O2 = buf$O2 - 2, pH = pH, P = 5000)
+```
+
+### 7. Calculating the neutral pH of water
+
+Neutral pH at various temperatures and pressures can be determined from the dissociation constant of water:
+
+```{r buffer_7}
+# Calculate neutral pH at 300°C and 1000 bar
+T <- 300
+P <- 1000
+neutral_pH <- -subcrt(c("H2O", "H+", "OH-"), c(-1, 1, 1), T = T, P = P)$out$logK/2
+```
+
+### 8. Working with mineral pH buffers
+
+Mineral assemblages like K-feldspar–muscovite–quartz (KMQ) can buffer pH:
+
+```{r buffer_8}
+# Define the KMQ buffer
+mod.buffer("KMQ", c("quartz", "muscovite", "K-feldspar"), "cr", 0)
+# Set up the system
+basis(c("Al2O3", "quartz", "K+", "H2O", "oxygen", "H+"))
+# Set K+ molality for KCl solution
+basis("K+", log10(0.5))
+# Associate H+ with the KMQ buffer
+basis("H+", "KMQ")
+# Calculate buffered pH
+pH_KMQ <- -affinity(T = 300, P = 1000, return.buffer = TRUE)$`H+`
+```
+
+### Comprehensive example: Ore formation environments
+
+Mineral buffers constrain both pH and redox state in geological systems, which in turn control metal solubility and transport in ore-forming fluids.
+This example illustrates how different buffers affect gold solubility in hydrothermal systems.
+
+```{r buffer_gold, echo=FALSE, fig.cap="Effects of different buffers on gold solubility", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=72}
+# Setup the system
+basis(c("Au", "Al2O3", "quartz", "Fe", "K+", "Cl-", "H2S", "H2O", "oxygen", "H+"))
+# Set log activities for 0.5 m NaCl + 0.1 m KCl solution (assuming ideality for now)
+basis("Cl-", log10(0.6))
+basis("K+", log10(0.1))
+# Set 0.01 m H2S
+basis("H2S", -2)
+# Setup the KMQ pH buffer
+mod.buffer("KMQ", c("quartz", "muscovite", "K-feldspar"), "cr", 0)
+basis("H+", "KMQ")
+# Define colors for gold species
+col <- c("#ED4037", "#F58645", "#0F9DE2", "#22CC88")  # Au(HS)2-, AuHS, AuOH, AuCl2-
+# Create temperature transect with HM and PPM redox buffers
+temps <- seq(200, 500, 10)
+P <- 1000
+# Initialize plot layout
+par(mfrow = c(1, 4), mar = c(4, 4, 3, 1), font.main = 1, cex.main = 1.1)
+
+# 1. Compare gold species distribution under HM buffer
+basis("O2", "HM")
+species("Au")
+iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
+s_HM <- solubility(iaq, T = temps, P = P)
+diagram(s_HM, xlab = "Temperature (°C)", ylab = "log activity",
+        ylim = c(-10, -4), main = "Solubility vs T (KMQ: pH, HM: fO2)")
+diagram(s_HM, type = "loga.equil", col = col, lwd = 2, add = TRUE)
+
+# 2. Compare gold species distribution under PPM buffer
+basis("O2", "PPM")
+basis("H2S", "PPM")
+s_PPM <- solubility(iaq, T = temps, P = P)
+diagram(s_PPM, xlab = "Temperature (°C)", ylab = "log activity",
+        ylim = c(-10, -4), main = "Solubility vs T (KMQ: pH, PPM: fO2 and aH2S)")
+diagram(s_PPM, type = "loga.equil", col = col, lwd = 2, add = TRUE)
+
+# 3. Gold solubility as function of pH at 350°C under PPM buffer
+# Remove KMQ buffer
+basis("H+", 0)
+T_fixed <- 350
+# Calculate solubility across pH range
+s_pH <- solubility(iaq, pH = c(2, 8), T = T_fixed, P = P)
+diagram(s_pH, xlab = "pH", ylab = "log activity", ylim = c(-10, -4), 
+        main = "Solubility vs pH (350 °C, PPM: fO2 and aH2S)")
+diagram(s_pH, type = "loga.equil", col = col, lwd = 2, add = TRUE)
+# Get neutral pH at this temperature
+neutral_pH <- -subcrt(c("H2O", "H+", "OH-"), c(-1, 1, 1), T = T_fixed, P = P)$out$logK/2
+# Add neutral pH line
+abline(v = neutral_pH, lty = 2)
+text(neutral_pH + 0.2, -5.5, "neutral pH", srt = 90, cex = 0.8)
+# Add KMQ pH buffer line
+basis("H+", "KMQ")
+pH_KMQ <- -affinity(T = T_fixed, P = P, return.buffer = TRUE)$`H+`
+abline(v = pH_KMQ, lty = 3, col = 4)
+text(pH_KMQ - 0.2, -5.5, "KMQ", srt = 90, col = 4, cex = 0.8)
+
+# 4. Logf(O2)-pH diagram with dominant gold species at 350°C
+# Remove KMQ pH buffer
+basis("H+", 0)
+# Remove PPM fO2 buffer
+basis("O2", 0)
+# Use constant aH2S from PPM buffer
+a <- affinity(pH = c(2, 8), T = T, P = P, return.buffer = TRUE)
+log_aH2S <- unique(a$H2S)
+basis("H2S", log_aH2S)
+# Load aqueous species for relative stability calculation
+species(iaq)
+# Define basis species to swap through for mosaic calculation
+bases <- c("H2S", "HS-", "SO4-2", "HSO4-")
+m <- mosaic(bases = bases, pH = c(2, 8), O2 = c(-32, -24), T = T_fixed, P = P)
+a <- m$A.species
+fill <- adjustcolor(col, alpha.f = 0.5)
+d <- diagram(a, fill = fill, main = "Predominance fO2 vs pH (350°C, PPM: aH2S)")
+water.lines(d, lty = 3)
+# Add mineral buffer lines
+# PPM buffer line
+basis("O2", "PPM")
+O2_PPM <- affinity(T = T_fixed, P = P, return.buffer = TRUE)$O2
+abline(h = O2_PPM, lty = 2, col = "darkred")
+text(2.5, O2_PPM, "PPM", adj = c(0, -0.5), col = "darkred", cex = 0.8)
+# HM buffer line
+basis("O2", "HM")
+O2_HM <- affinity(T = T_fixed, P = P, return.buffer = TRUE)$O2
+abline(h = O2_HM, lty = 2, col = "darkred")
+text(2.5, O2_HM, "HM", adj = c(0, -0.5), col = "darkred", cex = 0.8)
+# Add KMQ pH buffer line and neutral pH
+abline(v = neutral_pH, lty = 2)
+text(neutral_pH + 0.2, -28, "neutral pH", srt = 90, cex = 0.8)
+abline(v = pH_KMQ, lty = 2, col = 4)
+text(pH_KMQ - 0.2, -28, "KMQ", srt = 90, col = 4, cex = 0.8)
+```
+
+<button id="B-buffer_gold" onclick="ToggleDiv('buffer_gold')">Show code</button>
+<div id="D-buffer_gold" style="display: none">
+```{r buffer_gold, eval=FALSE, cache=FALSE}
+```
+</div>
+
+The diagrams show:
+
+1. Temperature dependence of gold species distribution under the hematite-magnetite (HM) buffer [cf. Fig. 2A in @WBM09]
+2. Temperature dependence under the pyrite-pyrrhotite-magnetite (PPM) buffer (cf. Fig. 2B in Williams-Jones et al., 2009)
+3. pH dependence under PPM at fixed temperature, with neutral pH and KMQ buffer lines [cf. Fig. 7 in @AZ01]
+4. Species predominance in log fO2-pH space with redox and pH buffer lines
+
+Note the following limitation:
+
+- `mosaic()` calculations currently aren't support for basis species that are associated with a buffer.
+- Because of this, for the last diagram we precomputed the value of log aH2S from the PPM buffer then assigned that value in `basis()` to use in the mosaic calculation.
+
+See also:
+
+- `demo("gold")` for chloride and ionic strength effects (plots show molality instead of activity)
+- The FAQ for handling the K/Cl activity ratio for the KMQ buffer
 
 ## Further Resources - Demos
 
@@ -1025,7 +1288,7 @@ You can also:
 
 - 2010-09-30 First version, titled "Getting started with CHNOSZ".
 - 2017-02-15 Rewritten and switched from Sweave to [knitr](https://yihui.org/knitr/).
-- 2025-04-07 Revised and shortened with AI assistance (mostly in [Basic Functionality](#basic-functionality)).
+- 2025-04-07 Revised with AI assistance (mostly in [Basic Functionality](#basic-functionality) and [Buffers](#buffers)).
 
 <p>
 ```{r the_end}

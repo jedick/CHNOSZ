@@ -18,6 +18,7 @@ sed -i 's/<code>equilibrate()/<code><a href="..\/html\/equilibrate.html" style="
 sed -i 's/<code>solubility()/<code><a href="..\/html\/solubility.html" style="background-image:none;color:green;">solubility()<\/a>/g' anintro.html
 sed -i 's/<code>diagram()/<code><a href="..\/html\/diagram.html" style="background-image:none;color:green;">diagram()<\/a>/g' anintro.html
 sed -i 's/<code>NaCl()/<code><a href="..\/html\/NaCl.html" style="background-image:none;color:green;">NaCl()<\/a>/g' anintro.html
+sed -i 's/<code>affinity(return.buffer\ =\ TRUE)/<code><a href="..\/html\/affinity.html" style="background-image:none;color:green;">affinity(return.buffer\ =\ TRUE)<\/a>/g' anintro.html
 
 # Functions with side effects (red)
 sed -i 's/<code>basis()/<code><a href="..\/html\/basis.html" style="background-image:none;color:red;">basis()<\/a>/g' anintro.html
@@ -27,6 +28,8 @@ sed -i 's/<code>OBIGT()/<code><a href="..\/html\/OBIGT.html" style="background-i
 sed -i 's/<code>add.OBIGT()/<code><a href="..\/html\/add.OBIGT.html" style="background-image:none;color:red;">add.OBIGT()<\/a>/g' anintro.html
 sed -i 's/<code>logK.to.OBIGT()/<code><a href="..\/html\/logK.to.OBIGT.html" style="background-image:none;color:red;">logK.to.OBIGT()<\/a>/g' anintro.html
 sed -i 's/<code>reset()/<code><a href="..\/html\/reset.html" style="background-image:none;color:red;">reset()<\/a>/g' anintro.html
+sed -i 's/<code>thermo()/<code><a href="..\/html\/thermo.html" style="background-image:none;color:red;">thermo()<\/a>/g' anintro.html
+sed -i 's/<code>mod.buffer()/<code><a href="..\/html\/mod.buffer.html" style="background-image:none;color:red;">mod.buffer()<\/a>/g' anintro.html
 
 # Functions with different target page from function name
 sed -i 's/<code>demos()/<code><a href="..\/html\/examples.html" style="background-image:none;color:green;">demos()<\/a>/g' anintro.html
