@@ -138,7 +138,7 @@ info("ribose+")
 
 ### Calculating thermodynamic properties
 
-The `subcrt()` function [named after SUPCRT; @JOH92] calculates standard thermodynamic properties:
+The `subcrt()` function [loosely named after SUPCRT; @JOH92] calculates standard thermodynamic properties:
 
 ```{r subcrt_CH4}
 # Properties of aqueous methane at default T and P
@@ -393,7 +393,7 @@ Unless you have a specific reason to compare them, redundant species should not 
 These functions are useful for both interactive use and scripts that compare different versions of data or plots for different systems or conditions.
 
 Let's put items #1-4 together to remake the corundum solubility plot using only species available in SLOP98.
-To do this, we use `add.OBIGT()` followed by `retrieve()` to gather the species indices for all Al species, then taken only those species sourced from @SSWS97.
+To do this, we use `add.OBIGT()` followed by `retrieve()` to gather the species indices for all Al species, then take only those species sourced from @SSWS97.
 
 ```{r corundum_solubility_2, fig.cap="Corundum solubility with species from SLOP98"}
 # Add superseded species from SLOP98
@@ -896,8 +896,8 @@ NOTE: This example uses `balance = 1` in the call to `diagram()` to prevent norm
 Sometimes it's useful to make further computations on the results of a `diagram()` call.
 For example, a system might dominated by a few stable species, but you'd rather visualize the relative stabilities of less stable (i.e., metastable) species.
 Here we do this for all the aqueous S species in the OBIGT database, accessed using `retrieve()`.
-We use `plot.it = FALSE` to suppress the first plot, because it just shows the most stable species (see the [Eh-pH diagram for S](#chemical-affinity-and-stability-diagrams) above).
-However, we save the output with `d <- diagram()` to identify the stable species in `d$predominant`.
+We use `plot.it = FALSE` to suppress the first plot (which would look like the [Eh-pH diagram for S](#chemical-affinity-and-stability-diagrams) above),
+but save the output with `d <- diagram()` to access the identified stable species in `d$predominant`.
 After removing these stable species from the system, we recalculate affinities for the remaining metastable species and make a diagram for them.
 
 ```{r metastable_sulfur, fig.cap = "Eh-pH diagram for metastable S species"}
@@ -929,8 +929,7 @@ NOTE: If `diagram()` was passed the output of `equilibrate()` or `solubility()`,
 
 `makeup()` is used internally by some functions in CHNOSZ but is also available for the user.
 
-### 18. A brief introduction to proteins and groupwise relative stabilities
-### 19: Accessing and changing settings with <span style="color:red;font-family:monospace;">thermo()</span>
+### 18: Accessing and changing settings with <span style="color:red;font-family:monospace;">thermo()</span>
 
 ## Buffers
 
@@ -1195,6 +1194,291 @@ See also:
 - `demo("gold")` for chloride and ionic strength effects (plots show molality instead of activity)
 - The FAQ for handling the K/Cl activity ratio for the KMQ buffer
 
+## Proteins
+
+Proteins in CHNOSZ are treated differently from other chemical species.
+Instead of direct thermodynamic data, CHNOSZ uses amino acid group additivity to calculate the thermodynamic properties of proteins.
+This approach requires knowledge of the amino acid composition of each protein.
+
+### 1. Identifying proteins
+
+In CHNOSZ, protein identifiers have a specific format that combines the protein name and organism with an underscore separator,
+modeled after UniProt names (e.g., `LYSC_CHICK` for chicken lysozyme C).
+This naming convention uniquely identifies each protein in the database.
+
+```{r protein_1}
+# Search by name in thermo()$protein
+ip1 <- pinfo("LYSC_CHICK")       # Using protein_organism format
+ip2 <- pinfo("LYSC", "CHICK")    # Using separate arguments
+# Search for the same protein in different organisms
+ip3 <- pinfo("MYG", c("HORSE", "PHYCA"))
+```
+
+### 2. Adding proteins from FASTA or CSV files
+
+CHNOSZ has a built-in database of amino acid compositions for selected proteins, but you can expand this by adding proteins from FASTA or CSV files.
+
+```{r protein_2}
+# Reading amino acid compositions from a CSV file
+file <- system.file("extdata/protein/POLG.csv", package = "CHNOSZ")
+aa <- read.csv(file)
+# Add the proteins to CHNOSZ and get their indices
+iprotein <- add.protein(aa)
+
+# For FASTA files, use the canprot package
+fasta_file <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
+aa <- canprot::read_fasta(fasta_file)
+# This is how you could read your own file
+# aa <- canprot::read_fasta("proteins.fasta")
+iprotein <- add.protein(aa)
+```
+
+The `add.protein()` function adds the amino acid compositions to the database and returns the row indices of the added proteins.
+
+### 3. Calculating protein properties
+
+Once proteins are added to the database, you can calculate various properties such as length, formula, and thermodynamic properties.
+
+#### Protein length and formula
+
+```{r protein_3, results = "show"}
+# Get protein length (number of amino acids)
+pl <- protein.length("LYSC_CHICK")
+# Get chemical formula
+pf <- protein.formula("LYSC_CHICK")
+# Display results
+list(length = pl, formula = pf)
+```
+
+#### Carbon oxidation state
+
+The average oxidation state of carbon, calculated with `ZC()`, provides insight into the redox state of protein sequences:
+
+```{r protein_4}
+# Calculate ZC for a protein
+ZC_value <- ZC(protein.formula("LYSC_CHICK"))
+# For multiple proteins
+proteins <- c("LYSC_CHICK", "MYG_HORSE", "RNAS1_BOVIN")
+ZC_values <- ZC(protein.formula(proteins))
+```
+
+### 4. Thermodynamic calculations for proteins
+
+CHNOSZ provides several functions for calculating thermodynamic properties of proteins.
+
+#### Standard thermodynamic properties
+
+Calculate standard thermodynamic properties of non-ionized proteins using `subcrt()`:
+
+```{r protein_5, results = "show"}
+# Properties of non-ionized protein
+subcrt("LYSC_CHICK")$out[[1]][1:6, ]
+```
+
+#### Ionization effects
+
+For more accurate calculations, especially in biological systems, protein ionization must be considered [@DLH06].
+CHNOSZ handles this through the `ionize.aa()` function, which allows specifying the temperature, pressure and pH conditions:
+
+```{r protein_6}
+# Calculate ionization properties
+aa <- pinfo(pinfo("LYSC_CHICK"))
+charge <- ionize.aa(aa, pH = c(4, 7, 9))
+# Calculate heat capacity of ionization
+Cp_ionization <- ionize.aa(aa, property = "Cp", pH = 7, T = c(25, 100))
+```
+
+### 5. Setting up a chemical system with proteins
+
+To include proteins in a chemical system, first define the basis species, then add proteins to the system:
+
+```{r protein_7}
+# Define the basis species with H+
+basis("CHNOS+")
+# Add proteins to the system
+species(c("LYSC_CHICK", "MYG_HORSE", "RNAS1_BOVIN"))
+```
+
+### 6. Calculating affinities and equilibrium distributions
+
+#### Affinities of formation reactions
+
+The `affinity()` function accounts for ionization effects when calculating affinities of formation reactions:
+
+```{r protein_8}
+# Calculate affinity as a function of pH
+basis("CHNOS+")
+species(c("LYSC_CHICK", "MYG_HORSE", "RNAS1_BOVIN"))
+a1 <- affinity(pH = c(0, 14))
+```
+
+For performance optimization, use protein indices directly with the `iprotein` argument to `affinity()`.
+This doesn't require proteins to be added with `species()`:
+
+```{r protein_9}
+species(delete = TRUE)
+ip <- pinfo(c("LYSC_CHICK", "MYG_HORSE", "RNAS1_BOVIN"))
+# Set logarithm of activity with loga.protein
+a2 <- affinity(pH = c(0, 14), iprotein = ip, loga.protein = -3)
+
+# Check that both methods produce equivalent results
+for(i in 1:3) stopifnot(all.equal(a1$values[[i]], a2$values[[i]]))
+```
+
+#### Equilibrium distributions
+
+Calculate the relative abundance of proteins in metastable equilibrium using `equilibrate()`.
+This example uses averaged amino acid compositions of protein sequences in metagenomes from a temperature and chemical gradient in a hot spring [@DS11]:
+
+```{r protein_10, fig.cap = "Metastable equilibrium of proteins from hot-spring metagenomes"}
+# Calculate equilibrium distribution as a function of Eh
+basis("CHNOSe")
+proteins <- paste("overall", paste0("bison", c("N", "S", "R", "Q", "P")), sep = "_")
+ip <- pinfo(proteins)
+a <- affinity(Eh = c(-0.35, -0.15), iprotein = ip)
+# Normalize by protein length to get residue-equivalent distribution
+# Set loga.balance to distribute proteins with total activity of residues equal to 1
+e <- equilibrate(a, normalize = TRUE, loga.balance = 0)
+col <- c("darkred", "red", "darkgray", "blue", "darkblue")
+diagram(e, ylim = c(-4, -2.5), col = col, lwd = 2)
+legend("bottomleft", c("High-T reducing", NA, NA, NA, "Low-T oxidizing"),
+  lty = 1:5, col = col, title = "Environmental Conditions", inset = c(0.1, 0))
+```
+
+The `normalize = TRUE` option is important for proteins because their large size leads to extreme separation of activities in metastable equilibrium.
+Normalizing by protein length (calculating per-residue equivalents) compresses the range of relative abundances to be more experimentally realistic.
+
+#### Scaling protein abundances
+
+Use `unitize()` to scale abundances of proteins so that number of residues sums to unity:
+
+```{r protein_11}
+# Sample protein data from YeastGFP study
+protein <- c("YDL195W", "YHR098C", "YLR208W", "YNL049C", "YPL085W")
+abundance <- c(1840, 12200, 21400, 1720, 358)
+# Find protein indices in CHNOSZ database
+ip <- match(protein, thermo()$protein$protein)
+# Get protein lengths
+pl <- protein.length(ip)
+# Scale protein abundance so total abundance of residues is unity
+scaled_abundance <- 10^unitize(log10(abundance), pl)
+# Check that sum for residues is unity
+stopifnot(sum(scaled_abundance * pl) == 1)
+```
+
+Unit total activity of residues is set by `equilibrate(loga.balance = 0)`, allowing comparison between experimental and predicted abundances:
+
+```{r protein_12, fig.cap = "Unoptimized predicted abundances of proteins compared to experimental abundances, both scaled to unit total activity of residues; dashed line is 1:1 line"}
+basis("CHNOSe")
+# Make a guess for Eh
+basis("Eh", -0.5)
+a <- affinity(iprotein = ip)
+e <- equilibrate(a, normalize = TRUE, loga.balance = 0)
+# Check for unit total abundance of residues
+predicted_abundance <- 10^unlist(e$loga.equil)
+stopifnot(all.equal(sum(predicted_abundance * pl), 1))
+plot(log10(scaled_abundance), log10(predicted_abundance), pch = 19)
+# Show 1:1 line
+lims <- range(par("usr"))
+lines(c(lims[1], lims[2]), c(lims[1], lims[2]), lty = 2)
+MAE <- mean(abs(log10(scaled_abundance) - log10(predicted_abundance)))
+title(paste("MAE =", round(MAE, 2)))
+```
+
+### 7. Additional protein analysis
+
+The **canprot** package provides a different interface for calculating Zc and other chemical analyses of proteins from their amino acid composition:
+
+```{r protein_13}
+# Load canprot package
+library(canprot)
+# Get amino acid compositions
+ip <- pinfo(c("LYSC_CHICK", "MYG_HORSE", "RNAS1_BOVIN"))
+aa <- pinfo(ip)
+# canprot has Zc(); CHNOSZ has ZC()
+Zc(aa)
+# Stoichiometric oxygen and water content
+nO2(aa)
+nH2O(aa)
+# Isoelectric point and GRAVY
+pI(aa)
+GRAVY(aa)
+```
+
+### Comprehensive example: Parameter optimization to fit experimental protein abundances
+
+Let's analyze the relative abundances of proteins from the ER-to-Golgi location in *S. cerevisiae* (yeast) and compare theoretical predictions with experimental measurements from the YeastGFP study [@GHB_03]:
+
+```{r protein_optimization, echo=FALSE, fig.cap = "Optimizing redox potential to fit experimental protein abundances", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=72}
+# Protein data from YeastGFP study
+protein <- c("YDL195W", "YHR098C", "YLR208W", "YNL049C", "YPL085W")
+abundance <- c(1840, 12200, 21400, 1720, 358)
+# Find protein indices in CHNOSZ database
+ip <- match(protein, thermo()$protein$protein)
+# Calculate protein lengths
+pl <- protein.length(ip)
+# Scale experimental abundances to unit total abundance of residues
+scaled_logabundance <- unitize(log10(abundance), pl)
+
+# Assign colors from low to high oxidation state (red to blue)
+col_in <- c("darkred", "red", "darkgray", "blue", "darkblue")
+aa <- pinfo(ip)
+Zc_values <- canprot::Zc(aa)
+col <- col_in[rank(Zc_values)]
+
+# Set up chemical system with H+ and e-
+basis("CHNOSe")
+# Calculate affinities as a function of redox potential
+a <- affinity(Eh = c(-0.6, 0), iprotein = ip)
+
+# Calculate equilibrium distributions without normalization
+e <- equilibrate(a, loga.balance = 0)
+# Plot results
+par(mfrow = c(1, 4))
+diagram(e, ylim = c(-5, -2), col = col, lwd = 2, main = "Without normalization")
+
+# With normalization
+e_norm <- equilibrate(a, normalize = TRUE, loga.balance = 0)
+diagram(e_norm, ylim = c(-5, -2.5), col = col, lwd = 2, main = "With normalization")
+
+# Calculate and plot mean absolute error as a function of Eh
+predicted_logabundances <- sapply(e_norm$loga.equil, c)
+MAE <- apply(abs(t(predicted_logabundances) - scaled_logabundance), 2, mean)
+par(xaxs = "r", yaxs = "r")
+plot(a$vals$Eh, MAE)
+imin <- which.min(MAE)
+abline(v = a$vals$Eh[imin], lty = 2)
+title("Optimized model Eh")
+
+# Show calculated and experimental abundances
+optimized_logabundance <- predicted_logabundances[imin, ]
+plot(scaled_logabundance, optimized_logabundance, pch = 19, col = col)
+# Show 1:1 line
+lims <- range(par("usr"))
+lines(c(lims[1], lims[2]), c(lims[1], lims[2]), lty = 2)
+title(paste("MAE =", round(MAE[imin], 2)))
+# Add legend for colors
+legend("bottomright", c("High Zc", NA, NA, NA, "Low Zc"), pch = 19, col = rev(col_in))
+```
+
+<button id="B-protein_optimization" onclick="ToggleDiv('protein_optimization')">Show code</button>
+<div id="D-protein_optimization" style="display: none">
+```{r protein_optimization, eval=FALSE, cache=FALSE}
+```
+</div>
+
+The diagrams show:
+
+1. Theoretical abundances of proteins calculated with `normalize = FALSE` are highly divergent.
+2. The normalization step compresses the range of abundances, making the comparison with experimental data more meaningful.
+3. Mean absolute error between logarithms of experimental and predicted abundances, both scaled to unit total abundance of residues. The MAE minimizes at the Eh indicated by the vertical line.
+4. Comparison of experimental and optimized theoretical relative abundances of proteins (with normalization).
+
+The correspondence between theoretical predictions and experimental measurements depends on normalization of protein formulas and optimizing physicochemical parameters.
+The metastable equilibrium model provides a framework for predicting how chemical conditions influence relative protein abundances.
+
+### One more thing: Groupwise relative stabilities
+
 ## Further Resources - Demos
 
 Explore demos with `demo(package = "CHNOSZ")`.
@@ -1241,7 +1525,7 @@ You can also use `demos()` to run all the demos without pausing or just one (e.g
 
 ### Calculations with proteins
 
-  - `Shh`: Affinities of transcription factors
+  - `Shh`: Relative stabilities of transcription factors along redox and water activity gradient
   - `carboxylase`: Predicted rank abundance with varying temperature and redox
   - `rank.affinity`: Affinity ranking for groupwise stability comparisons
 
@@ -1291,7 +1575,7 @@ You can also:
 
 - 2010-09-30 First version, titled "Getting started with CHNOSZ".
 - 2017-02-15 Rewritten and switched from Sweave to [knitr](https://yihui.org/knitr/).
-- 2025-04-07 Reworked entire vignette; used AI assistance for [Basic Functionality](#basic-functionality) and [Buffers](#buffers).
+- 2025-04-07 Major revision; used AI assistance for [Basic Functionality](#basic-functionality), [Buffers](#buffers), and [Proteins](#proteins).
 
 <p>
 ```{r the_end}
