@@ -925,7 +925,10 @@ Other possibly useful parts of the `diagram()` output are:
 
 NOTE: If `diagram()` was passed the output of `equilibrate()` or `solubility()`, then its output contains logarithms of activities instead of dimensionless affinities.
 
-### 17. Count elements with <span style="color:green;font-family:monospace;">makeup()</span> and sum and write chemical formulas
+### 17. Writing chemical formulas and counting and summing elements with <span style="color:green;font-family:monospace;">makeup()</span>
+
+`makeup()` is used internally by some functions in CHNOSZ but is also available for the user.
+
 ### 18. A brief introduction to proteins and groupwise relative stabilities
 ### 19: Accessing and changing settings with <span style="color:red;font-family:monospace;">thermo()</span>
 
@@ -1288,7 +1291,7 @@ You can also:
 
 - 2010-09-30 First version, titled "Getting started with CHNOSZ".
 - 2017-02-15 Rewritten and switched from Sweave to [knitr](https://yihui.org/knitr/).
-- 2025-04-07 Revised with AI assistance (mostly in [Basic Functionality](#basic-functionality) and [Buffers](#buffers)).
+- 2025-04-07 Reworked entire vignette; used AI assistance for [Basic Functionality](#basic-functionality) and [Buffers](#buffers).
 
 <p>
 ```{r the_end}
