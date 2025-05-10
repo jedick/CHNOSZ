@@ -21,6 +21,8 @@ sed -i 's/<code>NaCl()/<code><a href="..\/html\/NaCl.html" style="background-ima
 sed -i 's/<code>affinity(return.buffer\ =\ TRUE)/<code><a href="..\/html\/affinity.html" style="background-image:none;color:green;">affinity(return.buffer\ =\ TRUE)<\/a>/g' anintro.html
 sed -i 's/<code>ionize.aa()/<code><a href="..\/html\/ionize.aa.html" style="background-image:none;color:green;">ionize.aa()<\/a>/g' anintro.html
 sed -i 's/<code>equilibrate(loga.balance\ =\ 0)/<code><a href="..\/html\/equilibrate.html" style="background-image:none;color:green;">equilibrate(loga.balance\ =\ 0)<\/a>/g' anintro.html
+sed -i 's/<code>makeup()/<code><a href="..\/html\/makeup.html" style="background-image:none;color:green;">makeup()<\/a>/g' anintro.html
+sed -i 's/<code>Berman()/<code><a href="..\/html\/Berman.html" style="background-image:none;color:green;">Berman()<\/a>/g' anintro.html
 
 # Functions with side effects (red)
 sed -i 's/<code>basis()/<code><a href="..\/html\/basis.html" style="background-image:none;color:red;">basis()<\/a>/g' anintro.html
@@ -33,6 +35,7 @@ sed -i 's/<code>reset()/<code><a href="..\/html\/reset.html" style="background-i
 sed -i 's/<code>thermo()/<code><a href="..\/html\/thermo.html" style="background-image:none;color:red;">thermo()<\/a>/g' anintro.html
 sed -i 's/<code>mod.buffer()/<code><a href="..\/html\/mod.buffer.html" style="background-image:none;color:red;">mod.buffer()<\/a>/g' anintro.html
 sed -i 's/<code>add.protein()/<code><a href="..\/html\/add.protein.html" style="background-image:none;color:red;">add.protein()<\/a>/g' anintro.html
+sed -i 's/<code>nonideal()/<code><a href="..\/html\/nonideal.html" style="background-image:none;color:red;">nonideal()<\/a>/g' anintro.html
 
 # Functions with different target page from function name
 sed -i 's/<code>demos()/<code><a href="..\/html\/examples.html" style="background-image:none;color:green;">demos()<\/a>/g' anintro.html
@@ -49,6 +52,7 @@ sed -i 's/<code>P.units()/<code><a href="..\/html\/util.units.html" style="backg
 sed -i 's/<code>E.units()/<code><a href="..\/html\/util.units.html" style="background-image:none;color:red;">E.units()<\/a>/g' anintro.html
 sed -i 's/<code>ZC()/<code><a href="..\/html\/util.formula.html" style="background-image:none;color:green;">ZC()<\/a>/g' anintro.html
 sed -i 's/<code>unitize()/<code><a href="..\/html\/util.misc.html" style="background-image:none;color:green;">unitize()<\/a>/g' anintro.html
+sed -i 's/<code>as.chemical.formula()/<code><a href="..\/html\/util.formula.html" style="background-image:none;color:green;">as.chemical.formula()<\/a>/g' anintro.html
 
 # Help topics
 sed -i 's/?info/<a href="..\/html\/info.html" style="background-image:none;color:green;">?info<\/a>/g' anintro.html
