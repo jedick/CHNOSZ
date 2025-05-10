@@ -35,3 +35,6 @@ rank.affinity   Affinity ranking for proteins in yeast nutrient limitation
 yttrium         logK.to.OBIGT fits at 800 and 1000 bar and Y speciation in NaCl solution at varying pH
 uranyl          Total (carbonate|sulfate)-pH diagrams for uranyl species
 MgATP           Speciation of ATP with H+ and Mg+2
+protein_Cp      Compare calculated and experimental Cp of proteins
+protein_A       Affinity of ionization of proteins
+rubisco_Zc      Zc of Rubisco vs optimal growth temperature

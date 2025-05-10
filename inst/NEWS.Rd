@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-65 (2025-05-10)}{
+\section{Changes in CHNOSZ version 2.1.0-67 (2025-05-10)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -116,6 +116,10 @@
       \item Move \file{equilibrium.Rmd} from CHNOSZ to
       \file{CHNOSZ_equilibrium.Rmd} in the [JMDplots
       package](https://github.com/jedick/JMDplots).
+
+      \item Add \file{demo/protein_A.R}, \file{demo/protein_Cp.R}, and
+      \file{demo/rubisco_Zc.R}, extracted from old version of
+      \file{anintro.Rmd}.
 
     }
   }
