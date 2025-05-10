@@ -113,7 +113,7 @@ cat("\n")
 cat("```")
 ```
 
-Basic diagrams in CHNOSZ are made for reactions that are *balanced on an element* (see [Equilibrium in CHNOSZ](equilibrium.html)) and therefore represent minerals or aqueous species that all have one element, often a metal, in common.
+Basic diagrams in CHNOSZ are made for reactions that are *balanced on an element* and therefore represent minerals or aqueous species that all have one element, often a metal, in common.
 The package documentation has many examples of diagrams for a single metal appearing in different minerals or complexed with different ligands, but a common request is to make diagrams for multiple metals.
 This vignette describes some methods for constructing diagrams for multi-metal minerals and other multi-element systems.
 The methods are **mashing**, **mixing**, **mosaic stacking**, and **secondary balancing**.

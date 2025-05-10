@@ -74,11 +74,6 @@ sed -i 's/add.OBIGT(/<a href="..\/html\/add.OBIGT.html" style="color:\ red;">add
 sed -i 's/water(/<a href="..\/html\/water.html" style="color:\ green;">water<\/a>(/g' OBIGT.html
 sed -i 's/demo(/<a href="..\/demo">demo<\/a>(/g' OBIGT.html
 
-# Add links to equilibrium.html 20200710
-sed -i 's/equilibrate()/<a href="..\/html\/equilibrate.html">equilibrate()<\/a>/g' equilibrium.html
-sed -i 's/solubility()/<a href="..\/html\/solubility.html">solubility()<\/a>/g' equilibrium.html
-sed -i 's/add.OBIGT()/<a href="..\/html\/add.OBIGT.html">add.OBIGT()<\/a>/g' equilibrium.html
-
 # Add links to multi-metal.html 20200716
 sed -i 's/affinity()/<a href="..\/html\/affinity.html">affinity()<\/a>/g' multi-metal.html
 sed -i 's/mash()/<a href="..\/html\/mix.html">mash()<\/a>/g' multi-metal.html

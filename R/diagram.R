@@ -211,9 +211,9 @@ diagram <- function(
     # Some additional steps for affinity values, but not for equilibrated activities
     if(eout.is.aout) {
       for(i in 1:length(pv)) {
-        # TODO: The equilibrium.Rmd vignette shows predominance diagrams using
-        #   'normalize' and 'as.residue' settings that are consistent with equilibrate(),
-        #   but what is the derivation of these equations?
+        # NOTE: CHNOSZ_equilibrium.Rmd in JMDplots shows predominance diagrams using
+        #   'normalize' and 'as.residue' settings that are consistent with equilibrate()
+        # TODO: what is the derivation of these equations?
         if(normalize) pv[[i]] <- (pv[[i]] + eout$species$logact[i] / n.balance[i]) - log10(n.balance[i])
         else if(as.residue) pv[[i]] <- pv[[i]] + eout$species$logact[i] / n.balance[i]
       }
