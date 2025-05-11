@@ -28,7 +28,7 @@ export(
   "ratlab",
   "EOSregress", "EOScoeffs", "EOSplot", "EOSvar",
 # demos
-  "protein.equil", "palply",
+  "palply",
   "label.plot",
   "basis.logact",
   "label.figure", "syslab",

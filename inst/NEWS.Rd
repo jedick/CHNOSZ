@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-67 (2025-05-10)}{
+\section{Changes in CHNOSZ version 2.1.0-68 (2025-05-11)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -117,9 +117,9 @@
       \file{CHNOSZ_equilibrium.Rmd} in the [JMDplots
       package](https://github.com/jedick/JMDplots).
 
-      \item Add \file{demo/protein_A.R}, \file{demo/protein_Cp.R}, and
-      \file{demo/rubisco_Zc.R}, extracted from old version of
+      \item \file{demo/rubisco_Zc.R} extracted from old version of
       \file{anintro.Rmd}.
+
 
     }
   }
@@ -193,12 +193,15 @@
     \itemize{
 
       \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to
-      canprot package with different names.
+      the canprot package with different names.
 
       \item Remove \code{seq2aa()}.
 
       \item Remove \code{add.alpha()}. Instead, \code{grDevices::adjustcolor()}
       is now used in \code{stack_mosaic()} to add transparency.
+
+      \item Move \code{protein.equil()} to JMDplots; the associated demo has
+      been moved to the \file{CHNOSZ_equilibrium.Rmd} vignette in that package.
 
     }
   }

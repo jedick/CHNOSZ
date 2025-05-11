@@ -6,8 +6,6 @@
 
 - diagram(): produce error or warning for NA values of affinity
 
-- Move protein.equil() example (previously in equilibrium.Rnw) to JMDplots.
-
 - Add elements from Robie and Hemingway (1995).
 
 - Add check to mosaic() that 'stable' values have the right dimensions.

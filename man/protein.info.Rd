@@ -6,7 +6,6 @@
 \alias{protein.formula}
 \alias{protein.OBIGT}
 \alias{protein.basis}
-\alias{protein.equil}
 \title{Summaries of thermodynamic properties of proteins}
 
 \description{
@@ -19,7 +18,6 @@
   protein.formula(protein, organism = NULL, residue = FALSE)
   protein.OBIGT(protein, organism = NULL, state=thermo()$opt$state)
   protein.basis(protein, T = 25, normalize = FALSE)
-  protein.equil(protein, T=25, loga.protein = 0, digits = 4)
 }
 
 \arguments{
@@ -30,8 +28,6 @@
   \item{normalize}{logical, return per-residue values (those of the proteins divided by their lengths)?}
   \item{state}{character, physical state}
   \item{T}{numeric, temperature in \degC}
-  \item{loga.protein}{numeric, decimal logarithms of reference activities of proteins}
-  \item{digits}{integer, number of significant digits (see \code{\link{signif}})}
 }
 
 \details{
@@ -62,10 +58,13 @@ The following functions also depend on an existing definition of the basis speci
 
 \code{protein.basis} calculates the numbers of the basis species (i.e. opposite of the coefficients in the formation reactions) that can be combined to form the composition of each of the proteins.
 The basis species must be present in \code{thermo()$basis}, and if \samp{H+} is among the basis species, the ionization states of the proteins are included.
-The ionization state of the protein is calculated at the pH defined in \code{thermo()$basis} and at the temperature specified by the \code{T} argument.
+The ionization state of the protein is calculated using \code{\link{ionize.aa}} at the pH defined in \code{thermo()$basis} and at the temperature specified by the \code{T} argument.
 If \code{normalize} is TRUE, the coefficients on the basis species are divided by the lengths of the proteins. 
 
-  \code{protein.equil} produces a series of messages showing step-by-step a calculation of the chemical activities of proteins in metastable equilibrium. For the first protein, it shows the standard Gibbs energies of the reaction to form the nonionized protein from the basis species and of the ionization reaction of the protein (if \samp{H+} is in the basis), then the standard Gibbs energy/RT of the reaction to form the (possibly ionized) protein per residue. The per-residue values of \samp{logQstar} and \samp{Astar/RT} are also shown for the first protein. Equilibrium calculations are then performed, only if more than one protein is specified. This calculation applies the Boltzmann distribution to the calculation of the equilibrium degrees of formation of the residue equivalents of the proteins, then converts them to activities of proteins taking account of \code{loga.protein} and protein length. If the \code{protein} argument is numeric (indicating rownumbers in \code{thermo()$protein}), the values of \samp{Astar/RT} are compared with the output of \code{\link{affinity}}, and those of the equilibrium degrees of formation of the residues and the chemical activities of the proteins with the output of \code{\link{diagram}}. If the values in any of these tests are are not \code{\link{all.equal}} an error is produced indicating a bug. 
+}
+
+\seealso{
+  \code{\link{ionize.aa}}
 }
 
 \examples{\dontshow{reset()}

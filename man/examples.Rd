@@ -13,13 +13,13 @@
 
 \usage{
   examples(save.png = FALSE)
-  demos(which = c("references", "protein.equil", "affinity", "NaCl",
+  demos(which = c("references", "affinity", "NaCl",
     "density", "ORP", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "minsol", "Shh", "saturation",
     "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
     "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity",
-    "uranyl", "sum_S", "MgATP", "protein_Cp", "protein_A", "rubisco_Zc"),
+    "uranyl", "sum_S", "MgATP", "rubisco_Zc"),
     save.png = FALSE)
 }
 
@@ -33,7 +33,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
 
   \describe{
     \item{references}{Cross-check the references in refs.csv with the thermodynamic database}
-    \item{protein.equil}{Chemical activities of two proteins in metastable equilibrium (Dick and Shock, 2011)}
     \item{affinity}{Affinities of metabolic reactions and amino acid synthesis (Amend and Shock, 1998, 2001)}
     \item{NaCl}{Equilibrium constant for aqueous NaCl dissociation (Shock et al., 1992)}
     \item{density}{Density of \H2O, inverted from IAPWS-95 equations (\code{\link{rho.IAPWS95}})}
@@ -69,8 +68,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{uranyl}{Total (carbonate|sulfate)-pH diagrams for uranyl species (Migdisov et al., 2024)}
     \item{sum_S}{Summed molality of S species and solubility contours for iron and gold (Skirrow and Walshe, 2002)}
     \item{MgATP}{Speciation of ATP with H+ and Mg+2 (Alberty, 2003)}
-    \item{protein_Cp}{Compare calculated and experimental Cp of proteins (Privalov and Makhatadze, 1990)}
-    \item{protein_A}{Affinity of ionization of proteins}
     \item{rubisco_Zc}{Zc of Rubisco vs optimal growth temperature}
   }
 
@@ -142,8 +139,6 @@ Manning, C. E., Shock, E. L. and Sverjensky, D. A. (2013) The chemistry of carbo
 Migdisov, A., Bastrakov, E., Alcorn C., Reece M., Boukhalfa H., Caporuscio, F. A. and Jove-Colon, C. (2024) A spectroscopic study of the stability of uranyl-carbonate complexes at 25--150 \degC and re-visiting the data available for uranyl-chloride, uranyl-sulfate, and uranyl-hydroxide species. \emph{Geochim. Cosmochim. Acta}. \doi{10.1016/j.gca.2024.04.023}
 
 Pourbaix, M. (1974) \emph{Atlas of Electrochemical Equilibria in Aqueous Solutions}, NACE, Houston, TX and CEBELCOR, Brussels. \url{https://www.worldcat.org/oclc/563921897}
-
-Privalov, P. L. and Makhatadze, G. I. (1990) Heat capacity of proteins. II. Partial molar heat capacity of the unfolded polypeptide chain of proteins: Protein unfolding effects. \emph{J. Mol. Biol.} \bold{213}, 385--391. \doi{10.1016/S0022-2836(05)80198-6}
 
 Schulte, M. D. and Shock, E. L. (1995) Thermodynamics of Strecker synthesis in hydrothermal systems. \emph{Orig. Life Evol. Biosph.} \bold{25}, 161--173. \doi{10.1007/BF01581580}
 
