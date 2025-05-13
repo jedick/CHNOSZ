@@ -169,16 +169,15 @@ suppressWarnings(subcrt("alanine", T = seq(0, 5000, by = 1000)))
 # Compare calculated values of heat capacity of iron with
 # values from Robie and Hemingway, 1995
 T.units("K")
-# We set pressure here otherwise subcrt uses Psat (saturation 
-# vapor pressure of H2O above 100 degrees C) which can't be 
+# We need to set a finite value for P because Psat can't be
 # calculated above the critical point of H2O (~647 K)
-s <- subcrt("Fe", T=seq(300, 1800, 20), P=1)
-plot(s$out[[1]]$T, s$out[[1]]$Cp, type="l",
-  xlab=axis.label("T"), ylab=axis.label("Cp"))
+s <- subcrt("Fe", T = seq(300, 1800, 20), P = 1)
+plot(s$out[[1]]$T, s$out[[1]]$Cp, type = "l",
+  xlab = axis.label("T"), ylab = axis.label("Cp"))
 # Add points from RH95
-RH95 <- read.csv(system.file("extdata/misc/RH95.csv", package="CHNOSZ"))
+RH95 <- read.csv(system.file("extdata/misc/RH95.csv", package = "CHNOSZ"))
 points(RH95[,1], RH95[,2])
-title(main=paste("Heat capacity of Fe(cr)\n",
+title(main = paste("Heat capacity of Fe(cr)\n",
   "(points - Robie and Hemingway, 1995)"))
 # Reset the units to default values
 T.units("C")

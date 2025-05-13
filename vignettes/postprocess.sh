@@ -44,7 +44,11 @@ sed -i 's/<code>water.lines()/<code><a href="..\/html\/util.plot.html" style="ba
 sed -i 's/<code>axis.label()/<code><a href="..\/html\/util.expression.html" style="background-image:none;color:green;">axis.label()<\/a>/g' anintro.html
 sed -i 's/<code>expr.species()/<code><a href="..\/html\/util.expression.html" style="background-image:none;color:green;">expr.species()<\/a>/g' anintro.html
 sed -i 's/<code>describe.reaction()/<code><a href="..\/html\/util.expression.html" style="background-image:none;color:green;">describe.reaction()<\/a>/g' anintro.html
+sed -i 's/<code>describe.property()/<code><a href="..\/html\/util.expression.html" style="background-image:none;color:green;">describe.property()<\/a>/g' anintro.html
+sed -i 's/<code>describe.basis()/<code><a href="..\/html\/util.expression.html" style="background-image:none;color:green;">describe.basis()<\/a>/g' anintro.html
 sed -i 's/<code>lT()/<code><a href="..\/html\/util.legend.html" style="background-image:none;color:green;">lT()<\/a>/g' anintro.html
+sed -i 's/<code>lP()/<code><a href="..\/html\/util.legend.html" style="background-image:none;color:green;">lP()<\/a>/g' anintro.html
+sed -i 's/<code>lTP()/<code><a href="..\/html\/util.legend.html" style="background-image:none;color:green;">lTP()<\/a>/g' anintro.html
 sed -i 's/<code>thermo.refs()/<code><a href="..\/html\/util.data.html" style="background-image:none;color:green;">thermo.refs()<\/a>/g' anintro.html
 sed -i 's/<code>mod.OBIGT()/<code><a href="..\/html\/add.OBIGT.html" style="background-image:none;color:red;">mod.OBIGT()<\/a>/g' anintro.html
 sed -i 's/<code>T.units()/<code><a href="..\/html\/util.units.html" style="background-image:none;color:red;">T.units()<\/a>/g' anintro.html
@@ -66,6 +70,9 @@ sed -i 's/<code>install.packages/<code><a href="..\/..\/utils\/html\/install.pac
 sed -i 's/<code>help(/<code><a href="..\/..\/utils\/html\/help.html">help(<\/a>/g' anintro.html
 sed -i 's/<code>help.start/<code><a href="..\/..\/utils\/html\/help.start.html">help.start<\/a>/g' anintro.html
 sed -i 's/<code>maintainer/<code><a href="..\/..\/utils\/html\/maintainer.html">maintainer<\/a>/g' anintro.html
+sed -i 's/<code>as.expression/<code><a href="..\/..\/base\/html\/expression.html">as.expression<\/a>/g' anintro.html
+sed -i 's/<code>legend/<code><a href="..\/..\/graphics\/html\/legend.html">legend<\/a>/g' anintro.html
+sed -i 's/<code>log10()/<code><a href="..\/..\/base\/html\/Log.html">log10()<\/a>/g' anintro.html
 
 ### End processing anintro.html
 

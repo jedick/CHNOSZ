@@ -15,7 +15,7 @@
   \item{aa}{data frame, amino acid composition in the format of \code{thermo()$protein}}
   \item{property}{character, property to calculate}
   \item{T}{numeric, temperature in \degC}
-  \item{P}{numeric, pressure in bar, or \samp{Psat} for vapor pressure of \H2O above 100 \degC}
+  \item{P}{numeric, pressure in bar, or \samp{Psat} for the greater of 1 bar or the vapor-liquid saturation pressure for \H2O}
   \item{pH}{numeric, pH}
   \item{ret.val}{character, return the indicated value from intermediate calculations}
   \item{suppress.Cys}{logical, suppress (ignore) the ionization of the cysteine groups?}

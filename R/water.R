@@ -113,7 +113,8 @@ water.SUPCRT92 <- function(property = NULL, T = 298.15, P = 1, P1 = TRUE) {
       if(identical(P, "Psat")) {
         w.P <- H2O[[2]][2]
         w.P[w.P == 0] <- NA
-        # Psat specifies P = 1 below 100 degC
+        # By default, the value of Psat is floored at 1 bar; P1 = FALSE means
+        # that we want the actual values of vapor-liquid saturation pressure
         if(P1) w.P[w.P < 1] <- 1
         P.out[i] <- w.P
       }

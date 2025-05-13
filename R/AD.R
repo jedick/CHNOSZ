@@ -120,7 +120,7 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
   GH2O_P <- water("G", T = T, P = P)$G
   GH2O_1 <- water("G", T = T, P = 1)$G
   f1 <- exp ( (GH2O_P - GH2O_1) / (8.31441 * T) )
-  # For Psat, calculate the real liquid-vapor curve (not 1 bar below 100 degC)
+  # For Psat, calculate the real liquid-vapor curve (not floored at 1 bar)
   if(isPsat) {
     P <- water("Psat", T = T, P = "Psat", P1 = FALSE)$Psat
     f1[P < 1] <- P[P < 1]
