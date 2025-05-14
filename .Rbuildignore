@@ -3,3 +3,4 @@ vignettes/clean.sh
 LICENSE
 ^\.github$
 inst/extdata/src
+tests/.*.pdf

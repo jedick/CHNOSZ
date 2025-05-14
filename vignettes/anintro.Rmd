@@ -53,23 +53,37 @@ function ToggleDiv(ID) {
 ```{r setup, include=FALSE}
 library(knitr)
 
-## From "Tufte Handout" example dated 2016-12-27
-# Invalidate cache when the tufte version changes
-opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
-options(htmltools.dir.version = FALSE)
-
-## Setup pngquant to optimize PNG images
-knit_hooks$set(pngquant = hook_pngquant)
-pngquant <- "--speed=1 --quality=0-25"
-# pngquant isn't available on R-Forge ...
-if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL 
-
-## Colorize messages 20171031
-## Adapted from https://gist.github.com/yihui/2629886#file-knitr-color-msg-rnw
+# Function to colorize messages 20171031
+# Adapted from https://gist.github.com/yihui/2629886#file-knitr-color-msg-rnw
 color_block = function(color) {
   function(x, options) sprintf('<pre style="color:%s">%s</pre>', color, x)
 }
-knit_hooks$set(warning = color_block('magenta'), error = color_block('red'), message = color_block('blue'))
+# Set knitr hooks
+knit_hooks$set(
+  warning = color_block('magenta'),
+  error = color_block('red'),
+  message = color_block('blue'),
+  # Use pngquant to optimize PNG images
+  pngquant = hook_pngquant
+)
+
+# Define variables used below
+basedpi = if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) 60 else 40
+pngquant <- "--quality=0-25"
+# Avoid errors if pngquant isn't available (perhaps on R-Forge?)
+if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL 
+
+# Set chunk options
+opts_chunk$set(
+  tidy = FALSE,
+  # Figure options
+  fig.margin = TRUE, fig.width = 6, fig.height = 4,
+  out.width = "100%", dpi = basedpi,
+  cache = TRUE, pngquant = pngquant,
+  # From "Tufte Handout" example dated 2016-12-27
+  # Invalidate cache when the tufte version changes
+  cache.extra = packageVersion('tufte')
+)
 ```
 
 This vignette introduces CHNOSZ, an R package for thermodynamic calculations relevant to geochemistry and geochemical biology.
@@ -207,12 +221,10 @@ See the help page of `basis()` for more information.
 
 ### Chemical affinity and stability diagrams
 
-```{r figure-setup, include = FALSE}
-knitr::opts_chunk$set(
-  fig.margin=TRUE, fig.width=6, fig.height=4, out.width="100%", results="hide",
-  message=FALSE, cache=TRUE, pngquant=pngquant,
-  # Set dpi 20231129
-  dpi = if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) 72 else 50
+```{r setup2, include = FALSE}
+# Change the default options for the following chunks to hide results and messages
+opts_chunk$set(
+  results="hide", message=FALSE
 )
 ```
 
@@ -516,7 +528,7 @@ stopifnot(all(info(iaq)$ref1 == "TS01"))
 species(iaq, -6)
 ```
 
-This value for `logact` defines a solubility contour, as we'll see below.
+This value of `logact` passed to `species()` defines a solubility contour, as we'll see below.
 
 ### 7. When to use <span style="font-family:monospace;">add = TRUE</span>
 
@@ -607,13 +619,13 @@ Let's put together #8-10 to make a set of diagrams for a single metal.
 The example here uses Fe; try changing it to Cu, Zn, Pb, Au, or something else!
 
 CHNOSZ generates warning messages about being above the Cp limits for various iron oxyhydroxides.
-For the present calculation, the warnings are probably harmless because the predicted set of stable minerals (pyrite, pyrrhotite, magnetite, and hematite)
-is consistent with many published diagrams.
+For the present calculation, the warnings are probably harmless because the predicted set of stable minerals
+(pyrite, pyrrhotite, magnetite, and hematite) is consistent with published diagrams.
 
 NOTE: If you see warning messages like this, it's a good idea not to ignore them,
 but to consider whether you might be pushing the extrapolations of the Cp equation too far.
 
-```{r solubility, echo=FALSE, fig.cap="Mineral stability diagram; aqueous species predominance diagram; composite diagram with one solubility contour; diagram with multiple solubility contours in units of log *m*", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3, cache=TRUE, dpi=72}
+```{r solubility, echo=FALSE, fig.cap="Mineral stability diagram; aqueous species predominance diagram; composite diagram with one solubility contour; diagram with multiple solubility contours in units of log *m*", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3, cache=TRUE, dpi=1.2*basedpi}
 par(mfrow = c(1, 4))
 
 # System definition
@@ -768,7 +780,7 @@ This is how "balancing on a metal" is implemented.
 Let's put together #11-13 to calculate affinities of organic synthesis reactions in mixed seawater and hydrothermal fluid from the Rainbow vent field
 using speciation results from @SC10:
 
-```{r rainbow, echo=FALSE, fig.cap="Affinities of organic synthesis reactions per mole of C, H2, or formed species", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=72}
+```{r rainbow, echo=FALSE, fig.cap="Affinities of organic synthesis reactions per mole of C, H2, or formed species", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=1.2*basedpi}
 basis(c("CO2", "H2", "NH4+", "H2O", "H2S", "H+"))
 # Constant activity of CH4 is a simplification of the model
 species("CH4", -3)
@@ -1211,7 +1223,7 @@ pH_KMQ <- -affinity(T = 300, P = 1000, return.buffer = TRUE)$`H+`
 Mineral buffers constrain both pH and redox state in geological systems, which in turn control metal solubility and transport in ore-forming fluids.
 This example illustrates how different buffers affect gold solubility in hydrothermal systems.
 
-```{r buffer_gold, echo=FALSE, fig.cap="Effects of different buffers on gold solubility", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=72}
+```{r buffer_gold, echo=FALSE, fig.cap="Effects of different buffers on gold solubility", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=1.2*basedpi}
 # Setup the system
 basis(c("Au", "Al2O3", "quartz", "Fe", "K+", "Cl-", "H2S", "H2O", "oxygen", "H+"))
 # Set log activities for 0.5 m NaCl + 0.1 m KCl solution (assuming ideality for now)
@@ -1543,7 +1555,7 @@ GRAVY(aa)
 Let's analyze the relative abundances of proteins from the ER-to-Golgi location in *S. cerevisiae* (yeast)
 and compare theoretical predictions with experimental measurements from the YeastGFP study [@GHB_03]:
 
-```{r protein_optimization, echo=FALSE, fig.cap = "Optimizing redox potential to fit experimental protein abundances", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=72}
+```{r protein_optimization, echo=FALSE, fig.cap = "Optimizing redox potential to fit experimental protein abundances", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=1.2*basedpi}
 # Protein data from YeastGFP study
 protein <- c("YDL195W", "YHR098C", "YLR208W", "YNL049C", "YPL085W")
 abundance <- c(1840, 12200, 21400, 1720, 358)
