@@ -29,6 +29,31 @@ expect_equal(round(as.numeric(water.IAPWS95(c("G", "H", "S", "Cp")))), round(G.H
 # We can't do it for DEW because it needs higher pressure
 #expect_equal(round(as.numeric(water.DEW(c("G", "H", "S", "Cp")))), round(G.H.S.Cp_ref), info = info)
 
+# Added 20250514
+info <- "IAPWS95 respects Psat_floor setting"
+water("IAPWS95")
+TC <- seq(99.5, 99.7, 0.01)
+T <- convert(TC, "K")
+# Psat floored at 1 bar is the default
+Psat_floored <- water("Psat", T = T)$Psat
+# Remove the floor
+Psat <- water("Psat", T = T, Psat_floor = NULL)$Psat
+# Psat_floored is higher than Psat up to about 99.60 degrees C
+Tmax <- TC[max(which(Psat_floored > Psat))]
+expect_equal(Tmax, 99.60, info = info)
+
+info <- "SUPCRT92 respects Psat_floor setting"
+water("SUPCRT92")
+TC <- seq(99.5, 99.7, 0.01)
+T <- convert(TC, "K")
+# Psat floored at 1 bar is the default
+Psat_floored <- water("Psat", T = T)$Psat
+# Remove the floor
+Psat <- water("Psat", T = T, Psat_floor = NULL)$Psat
+# Psat_floored is higher than Psat up to about 99.63 degrees C
+Tmax <- TC[max(which(Psat_floored > Psat))]
+expect_equal(Tmax, 99.63, info = info)
+
 # Reference
 
 # Fine, R. A. and Millero, F. J. (1973)

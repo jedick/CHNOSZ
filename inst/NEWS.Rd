@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-68 (2025-05-11)}{
+\section{Changes in CHNOSZ version 2.1.0-71 (2025-05-14)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -156,6 +156,9 @@
       \item Fix using Eh in transect mode of \code{affinity()} (feature was not
       working since at least version 0.9-7).
 
+      \item \code{water()} with the IAPWS95 model now respects the value of
+      \strong{Psat_floor}, making it possible to remove the floor of 1 bar.
+
     }
   }
 
@@ -185,6 +188,9 @@
 
       \item Merge \file{extdata/adds} and \file{extdata/cpetc} into
       \file{extdata/misc}.
+
+      \item In \code{water()}, rename \strong{P1} logical argument to
+      \strong{Psat_floor} numeric argument.
 
     }
   }

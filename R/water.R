@@ -2,7 +2,7 @@
 # Calculate thermodynamic and electrostatic properties of H2O
 # 20061016 jmd
 
-water <- function(property = NULL, T = 298.15, P = "Psat", P1 = TRUE) {
+water <- function(property = NULL, T = 298.15, P = "Psat", Psat_floor = 1) {
   # Calculate the properties of liquid H2O as a function of T and P
   # T in Kelvin, P in bar
   if(is.null(property)) return(get("thermo", CHNOSZ)$opt$water)
@@ -34,11 +34,11 @@ water <- function(property = NULL, T = 298.15, P = "Psat", P1 = TRUE) {
     # Change 273.15 K to 273.16 K (needed for water.SUPCRT92 at Psat)
     if(identical(P, "Psat")) T[T == 273.15] <- 273.16
     # Get properties using SUPCRT92
-    w.out <- water.SUPCRT92(property, T, P, P1)
+    w.out <- water.SUPCRT92(property, T, P, Psat_floor)
   }
   if(grepl("IAPWS", wopt)) {
     # Get properties using IAPWS-95 
-    w.out <- water.IAPWS95(property, T, P)
+    w.out <- water.IAPWS95(property, T, P, Psat_floor)
   }
   if(grepl("DEW", wopt)) {
     # Use the Deep Earth Water (DEW) model
@@ -47,7 +47,7 @@ water <- function(property = NULL, T = 298.15, P = "Psat", P1 = TRUE) {
   w.out
 }
 
-water.SUPCRT92 <- function(property = NULL, T = 298.15, P = 1, P1 = TRUE) {
+water.SUPCRT92 <- function(property = NULL, T = 298.15, P = 1, Psat_floor = 1) {
   ### Interface to H2O92D.f: FORTRAN subroutine taken from 
   ### SUPCRT92 for calculating the thermodynamic and 
   ### electrostatic properties of H2O. 
@@ -113,9 +113,9 @@ water.SUPCRT92 <- function(property = NULL, T = 298.15, P = 1, P1 = TRUE) {
       if(identical(P, "Psat")) {
         w.P <- H2O[[2]][2]
         w.P[w.P == 0] <- NA
-        # By default, the value of Psat is floored at 1 bar; P1 = FALSE means
-        # that we want the actual values of vapor-liquid saturation pressure
-        if(P1) w.P[w.P < 1] <- 1
+        # Use Psat_floor to NULL or NA to get the actual values of vapor-liquid saturation pressure
+        # (not floored at 1 bar)
+        if(is.numeric(Psat_floor)) w.P[w.P < Psat_floor] <- Psat_floor
         P.out[i] <- w.P
       }
     }
@@ -162,7 +162,7 @@ water.SUPCRT92 <- function(property = NULL, T = 298.15, P = 1, P1 = TRUE) {
   w.out
 }
 
-water.IAPWS95 <- function(property = NULL, T = 298.15, P = 1) {
+water.IAPWS95 <- function(property = NULL, T = 298.15, P = 1, Psat_floor = 1) {
   available_properties <- c("A", "G", "S", "U", "H", "Cv", "Cp",
     "Speed", "epsilon",
     "YBorn", "QBorn", "XBorn", "NBorn", "UBorn",
@@ -176,7 +176,8 @@ water.IAPWS95 <- function(property = NULL, T = 298.15, P = 1) {
   # Psat stuff
   Psat <- function() {
     P <- WP02.auxiliary("P.sigma", T)
-    P[T < 373.124] <- 0.1
+    # Convert Psat_floor from bar to MPa
+    if(is.numeric(Psat_floor)) P[P < Psat_floor / 10] <- Psat_floor / 10
     return(convert(P, "bar"))
   }
   ## Thermodynamic properties
