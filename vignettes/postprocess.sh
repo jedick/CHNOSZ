@@ -4,6 +4,19 @@
 
 ### Start processing anintro.html
 
+# Merge adjoining pre blocks:
+# <pre>
+# </pre ...>
+# Explanation:
+# :a - Creates a label named 'a'.
+# N - Appends the next line into the pattern space.
+# $!ba - If not the last line, branch (go to) label 'a'.
+# [^>] simulates non-greedy behavior.
+#sed -i ':a;N;$!ba;s/<\/pre>\n<pre[^>]*>//g' anintro.html
+
+# This still mangles some output, so let's be specific for the one block we need:
+sed -i ':a;N;$!ba;s/<\/pre>\n<pre\ style="color:magenta">//g' anintro.html
+
 # Highlight NOTE in all caps
 sed -i 's/NOTE/<span class="highlight">NOTE<\/span>/g' anintro.html
 
@@ -28,16 +41,16 @@ sed -i 's/<code>Berman()/<code><a href="..\/html\/Berman.html" style="background
 sed -i 's/<code>basis()/<code><a href="..\/html\/basis.html" style="background-image:none;color:red;">basis()<\/a>/g' anintro.html
 sed -i 's/<code>swap.basis()/<code><a href="..\/html\/swap.basis.html" style="background-image:none;color:red;">swap.basis()<\/a>/g' anintro.html
 sed -i 's/<code>species()/<code><a href="..\/html\/species.html" style="background-image:none;color:red;">species()<\/a>/g' anintro.html
-sed -i 's/<code>OBIGT()/<code><a href="..\/html\/OBIGT.html" style="background-image:none;color:red;">OBIGT()<\/a>/g' anintro.html
 sed -i 's/<code>add.OBIGT()/<code><a href="..\/html\/add.OBIGT.html" style="background-image:none;color:red;">add.OBIGT()<\/a>/g' anintro.html
 sed -i 's/<code>logK.to.OBIGT()/<code><a href="..\/html\/logK.to.OBIGT.html" style="background-image:none;color:red;">logK.to.OBIGT()<\/a>/g' anintro.html
-sed -i 's/<code>reset()/<code><a href="..\/html\/reset.html" style="background-image:none;color:red;">reset()<\/a>/g' anintro.html
 sed -i 's/<code>thermo()/<code><a href="..\/html\/thermo.html" style="background-image:none;color:red;">thermo()<\/a>/g' anintro.html
 sed -i 's/<code>mod.buffer()/<code><a href="..\/html\/mod.buffer.html" style="background-image:none;color:red;">mod.buffer()<\/a>/g' anintro.html
 sed -i 's/<code>add.protein()/<code><a href="..\/html\/add.protein.html" style="background-image:none;color:red;">add.protein()<\/a>/g' anintro.html
 sed -i 's/<code>nonideal()/<code><a href="..\/html\/nonideal.html" style="background-image:none;color:red;">nonideal()<\/a>/g' anintro.html
 
 # Functions with different target page from function name
+sed -i 's/<code>reset()/<code><a href="..\/html\/thermo.html" style="background-image:none;color:red;">reset()<\/a>/g' anintro.html
+sed -i 's/<code>OBIGT()/<code><a href="..\/html\/thermo.html" style="background-image:none;color:red;">OBIGT()<\/a>/g' anintro.html
 sed -i 's/<code>demos()/<code><a href="..\/html\/examples.html" style="background-image:none;color:green;">demos()<\/a>/g' anintro.html
 sed -i 's/<code>convert()/<code><a href="..\/html\/util.units.html" style="background-image:none;color:green;">convert()<\/a>/g' anintro.html
 sed -i 's/<code>water.lines()/<code><a href="..\/html\/util.plot.html" style="background-image:none;color:green;">water.lines()<\/a>/g' anintro.html

@@ -50,6 +50,24 @@ function ToggleDiv(ID) {
 }
 ```
 
+```{r HTML, include=FALSE}
+#logfO2 <- "log<i>f</i><sub>O<sub>2</sub></sub>"
+#zc <- "<i>Z</i><sub>C</sub>"
+#o2 <- "O<sub>2</sub>"
+#h2o <- "H<sub>2</sub>O"
+#sio2 <- "SiO<sub>2</sub>"
+#ch4 <- "CH<sub>4</sub>"
+
+# Some frequently used HTML expressions
+# Use lowercase because some of these are used as variables in the examples
+h2o <- "H<sub>2</sub>O"
+h2 <- "H<sub>2</sub>"
+o2 <- "O<sub>2</sub>"
+co2 <- "CO<sub>2</sub>"
+h2s <- "H<sub>2</sub>S"
+Psat <- "<i>P</i><sub>sat</sub>"
+```
+
 ```{r setup, include=FALSE}
 library(knitr)
 
@@ -167,14 +185,14 @@ info("ribose+")
 
 The `subcrt()` function [loosely named after SUPCRT; @JOH92] calculates standard thermodynamic properties.
 
-The default conditions are 0.01-350 °C along the Psat curve (here, Psat is the greater of 1 bar or the vapor-liquid saturation pressure for H2O):
+The default conditions are 0.01--350 °C along the `r Psat` curve (defined here as the greater of 1 bar or the vapor-liquid saturation pressure for `r h2o`):
 
 ```{r subcrt_CH4}
 # Properties of aqueous methane at default T and P
 subcrt("CH4")
 ```
 
-You can customize the T-P grid by passing the appropriate arguments:
+You can customize the *T*-*P* grid by passing the appropriate arguments:
 
 <p></p>
 ```{r subcrt_TP}
@@ -221,16 +239,16 @@ See the help page of `basis()` for more information.
 
 ### Chemical affinity and stability diagrams
 
-```{r setup2, include = FALSE}
+```{r setup2, include = FALSE, cache = FALSE}
 # Change the default options for the following chunks to hide results and messages
 opts_chunk$set(
   results="hide", message=FALSE
 )
 ```
 
-The `affinity()` function calculates chemical affinities over ranges of T, P, and activities:
+The `affinity()` function calculates chemical affinities over ranges of *T*, *P*, and activities:
 
-```{r diagram, fig.cap = "Eh-pH (Pourbaix) diagram for S"}
+```{r diagram, fig.cap = "Eh--pH (Pourbaix) diagram for S"}
 # Set up the C-H-N-O-S basis system with electron
 basis("CHNOSe")
 # Define aqueous sulfur species
@@ -245,7 +263,7 @@ legend <- c(describe.property("T", TC), quote(italic(P) == "1 bar"))
 legend("topright", legend = legend, bty = "n")
 ```
 
-NOTE: `diagram()` automatically adds shading to regions of water instability with respect to O2 or H2.
+NOTE: `diagram()` automatically adds shading to regions of water instability with respect to `r o2` or `r h2`.
 
 For more sophisticated diagrams involving speciation of basis species, use the `mosaic()` function:
 
@@ -305,7 +323,7 @@ legend("topright", c("25 °C", "1 bar"), bty = "n")
 
 ### Activity coefficients
 
-Incorporate non-ideal behavior using the extended Debye-Hückel equation by setting the ionic strength parameter `IS`:
+Incorporate non-ideal behavior using the extended Debye--Hückel equation by setting the ionic strength parameter `IS`:
 
 ```{r corundum_solubility_IS, fig.cap="Solubility of corundum dependent on ionic strength"}
 # Corundum solubility again
@@ -368,15 +386,15 @@ Having seen basic examples of the main features of CHNOSZ, here are some ideas f
 Labeling diagrams is an important but often difficult step for creating publication-ready figures.
 
 CHNOSZ provides the `axis.label()` and `expr.species()` functions to create formatted axis labels and chemical formulas.
-Let's revisit the CO2 dissolution example seen earlier and add two other gases (carbon monoxide and methane).
+Let's revisit the `r co2` dissolution example seen earlier and add two other gases (carbon monoxide and methane).
 This plot is similar to Figure 18 of @MSS13.
 
 ```{r dissolution_logK, fig.cap="Equilibrium constants of dissolution reactions"}
 T <- seq(0, 350, 10)
-CO2 <- subcrt(c("CO2", "CO2"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
-CO <- subcrt(c("CO", "CO"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
-CH4 <- subcrt(c("CH4", "CH4"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
-logK <- data.frame(T, CO2, CO, CH4)
+CO2_logK <- subcrt(c("CO2", "CO2"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
+CO_logK <- subcrt(c("CO", "CO"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
+CH4_logK <- subcrt(c("CH4", "CH4"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
+logK <- data.frame(T, CO2_logK, CO_logK, CH4_logK)
 par(mar = c(5, 5, 1, 1))
 matplot(logK[, 1], logK[, -1], type = "l", col = 1, lty = 1,
         xlab = axis.label("T"), ylab = axis.label("logK"))
@@ -438,11 +456,12 @@ iaq_all <- retrieve("Al", ligands = c("F", "H", "O"), state = "aq")
 info(setdiff(iaq_all, iaq))
 ```
 
-NOTE: The convention for SUPCRT-family databases is to use anhydrous species.
-For example, AlO2- in SLOP98 corresponds to Al(OH)4- in the default database (see output above).
-They are effectively the same species, which is why only the latter [taken from a more extensive compilation for Al species properties; @TS01]
-is used in the default database.
-Unless you have a specific reason to compare them, redundant species should not be used in the same equilibrium calculation.
+NOTE: Anhydrous species are commonly used for the revised Helgeson-Kirkham-Flowers (HKF) model.
+For example, @SSWS97 reported the properties of AlO~2~^&minus;^, which is available in the optional SLOP98 database.
+This species is the anhydrous form of Al(OH)~4~^&minus;^, which is present in the default database (see output above)
+using parameters from a more recent compilation for Al species [@TS01].
+Because they are effectively the same species, only one form of this species is listed in the default database.
+Unless you have a specific reason to compare them, redundant species should not be considered together in an equilibrium calculation.
 
 ### 4. Use <span style="color:red;font-family:monospace;">OBIGT()</span> and <span style="color:red;font-family:monospace;">reset()</span> to restore the default database and settings
 
@@ -450,8 +469,8 @@ Unless you have a specific reason to compare them, redundant species should not 
 `reset()` restores the default database and all other settings in CHNOSZ.
 These functions are useful for both interactive use and scripts that compare different versions of data or plots for different systems or conditions.
 
-Let's put items #1-4 together to remake the corundum solubility plot using only species available in SLOP98.
-To do this, we use `add.OBIGT()` followed by `retrieve()` to gather the species indices for all Al species, then take only those species sourced from @SSWS97.
+Let's put items #1--4 together to remake the corundum solubility plot using only species available in SLOP98.
+To do this, we use `add.OBIGT()` followed by `retrieve()` to gather the species indices for all Al species, then take only those species sourced from Shock et al. (1997).
 
 ```{r corundum_solubility_2, fig.cap="Corundum solubility with species from SLOP98"}
 # Add superseded species from SLOP98
@@ -488,7 +507,7 @@ basis(c("Al+3", "F-", "OH-"))
 ```
 
 According to the message, we don't have enough basis species for the number of elements.
-Since hydroxide (OH-) is just water minus a proton, we could try this instead:
+Since the composition of hydroxide is water minus a proton (i.e., OH^&minus;^&nbsp;=&nbsp;`r h2o` &minus; H^+^), we could try this instead:
 
 ```{r basis_Al_F_OH_2, error=TRUE}
 basis(c("Al+3", "F-", "H+", "H2O"))
@@ -500,7 +519,7 @@ even if there are no redox reactions between the formed species.
 Here are two possible basis definitions that do not give an error.
 
 ```{r basis_Al_F_OH_3}
-# Use "oxygen" to get oxygen gas (for logfO2 diagrams)
+# Use "oxygen" to get oxygen gas (for log fO2 diagrams)
 basis(c("Al+3", "F-", "H+", "H2O", "oxygen"))
 # Use "e-" to get aqueous electron (for Eh diagrams)
 basis(c("Al+3", "F-", "H+", "H2O", "e-"))
@@ -517,8 +536,8 @@ All logarithms in CHNOSZ are common logarithms (R function: `log10()`) unless in
 
 How about the formed species in the system - that is, the species whose stability fields we want to visualize?
 We both list the species and set their activities using `species()`.
-The function defaults to activities of 1e-3 (`logact` of -3) for aqueous species and unit activity (`logact` = 0) for minerals, gases, and liquids.
-Let's change this to activities of 1e-6 for the formed species.
+The function defaults to activities of 10^-3^ (`logact` of -3) for aqueous species and unit activity (`logact` = 0) for minerals, gases, and liquids.
+Let's change this to activities of 10^-6^ for the formed species.
 
 ```{r species_logact}
 basis(c("Al+3", "F-", "H+", "H2O", "e-"))
@@ -537,7 +556,7 @@ First, in `species()` to add species not already in the list.
 Without `add = TRUE`, any existing species are discarded.
 Second, in `diagram()` to add to an existing plot.
 
-Let's put items #5-7 together to make a Pourbaix (Eh-pH) diagram for Al with two solubility contours.
+Let's put items #5--7 together to make a Pourbaix (Eh--pH) diagram for Al with two solubility contours.
 
 ```{r Pourbaix_Mn, fig.cap = "Pourbaix diagram for Mn with two solubility contours"}
 basis(c("Mn+2", "H+", "H2O", "e-"))
@@ -565,28 +584,28 @@ legend("bottomleft", legend = c(-3, -4), lty = c(2, 1), title = title, bty = "n"
 The shaded areas in the diagram represent water instability regions and are automatically added by `diagram()`.
 We use `water.lines()` here to plot the water stability limits with dotted lines.
 
-### 8. Set grid resolution and constant T, P, or IS in <span style="color:green;font-family:monospace;">affinity()</span>
+### 8. Set grid resolution and constant *T*, *P*, or ionic strength in <span style="color:green;font-family:monospace;">affinity()</span>
 
 After defining the basis species and formed species (and their constant activities), you have some choices about what variables to put on the plot,
 the grid resolution, and values for a few other variables.
-`affinity()` accepts one or more named arguments that specifying ranges of variables using the default grid resolution of 256 (`c(min, max)`)
-or ranges and a custom grid resolution (`c(min, max, res)`).
+`affinity()` accepts one or more named arguments that specify ranges of variables as `c(min, max)` using the default grid resolution of 256,
+or ranges and a custom grid resolution as `c(min, max, res)`.
 The number of such arguments is the dimensionality of the final plot.
 The grid resolution (`res`) defaults to 256 and can be different for each variable.
 The names of the variables can be the formulas of any of the basis species, or `T`, `P`, or `IS` for temperature, pressure, or ionic strength.
-These last three default to 25 °C, `Psat` (the greater of 1 bar or the vapor-liquid saturation pressure for H2O), and 0 mol/kg.
+These last three default to 25 °C, `r Psat` (the greater of 1 bar or the vapor-liquid saturation pressure for `r h2o`), and 0 mol/kg.
 
 I often start with a low grid resolution to quickly iterate a calculation, then switch to a higher resolution when I'm satisfied with the result.
 
 ### 9. Use <span style="color:green;font-family:monospace;">NaCl()</span> to estimate ionic strength from NaCl concentration
 
 Sodium chloride (NaCl) solutions are commonly used reference points for geochemical models.
-The `NaCl()` function provides a quick-and-dirty way to estimate ionic strength and activity of chloride (Cl-) for a given total amount of NaCl added to 1 kg of H2O.
+The `NaCl()` function provides a quick-and-dirty way to estimate ionic strength and activity of chloride (Cl^&minus;^) for a given total amount of NaCl added to 1 kg of `r h2o`.
 These values can then be used in setting up a calculation that involves these variables.
 
 This function does not use either the `basis()` or `species()` definitions.
-The following example runs a calculation for 0.8 mol/kg NaCl and given T, P, and pH.
-See `demo('sum_S')` for the fully worked-out example that uses this code [based on a diagram in @SW02].
+The following example runs a calculation for 0.8 mol/kg NaCl and given *T*, *P*, and pH.
+See `demo('sum_S')` for a more fully worked-out example that uses this code [based on a diagram in @SW02].
 
 ```{r NaCl, results = "show"}
 T <- 300
@@ -607,7 +626,7 @@ This represents a concentration-dependent boundary between minerals and aqueous 
 "equisolubility" [@Pou74] or "isosolubility" [@Hel64 and Garrels and Christ, 1965].
 
 Composite diagrams are often drawn with multiple solubility contours in order to show the dependence of solubility on pH, redox, or other variables.
-See examples of Eh-pH composite diagrams in `demo("Pourbaix")`.
+See examples of Eh--pH composite diagrams in `demo("Pourbaix")`.
 
 You could loop over constant activities to make a series of solubility contours (see the [above example for Mn](#when-to-use-add-true)).
 An easier solution is to use `solubility()` to visualize multiple solubility contours in one go.
@@ -615,7 +634,7 @@ The basic idea is to first load the mineral(s) containing a single metal as the 
 Then, list the aqueous species with that metal as the first argument to `solubility()`.
 The remaining arguments to the function define the plot variables, just as in `affinity()` and `mosaic()`.
 
-Let's put together #8-10 to make a set of diagrams for a single metal.
+Let's put items #8--10 together to make a set of diagrams for a single metal.
 The example here uses Fe; try changing it to Cu, Zn, Pb, Au, or something else!
 
 CHNOSZ generates warning messages about being above the Cp limits for various iron oxyhydroxides.
@@ -706,7 +725,7 @@ title("Multiple solubility contours", font.main = 1)
 
 <button id="B-solubility" onclick="ToggleDiv('solubility')">Show code</button>
 <div id="D-solubility" style="display: none">
-```{r solubility, eval=FALSE, cache=FALSE}
+```{r solubility, eval=FALSE, cache=FALSE, merge_next=TRUE}
 ```
 </div>
 
@@ -731,7 +750,7 @@ convert(1, "J")
 convert(10, "cal")
 ```
 
-Another use of `convert()` is to convert the output of `solubility()` from log activity to ppm, ppb, log ppm, or log ppb.
+Another use of `convert()` is to convert the output of `solubility()` from log activity to ppm, ppb, log&nbsp;ppm, or log&nbsp;ppb.
 The following code continues from the example above:
 
 ```{r convert_ppm, fig.cap = "Solubility in units of ppm"}
@@ -777,10 +796,10 @@ This is how "balancing on a metal" is implemented.
 - However, choosing a different conserved basis species can greatly affect the geometry of diagrams, owing to a different normalization vector.
 - Also, choosing a balancing constraint is important for comparing affinity (or its opposite, non-standard Gibbs energy of reaction) of different reactions.
 
-Let's put together #11-13 to calculate affinities of organic synthesis reactions in mixed seawater and hydrothermal fluid from the Rainbow vent field
+Let's put items #11--13 together to calculate affinities of organic synthesis reactions in mixed seawater and hydrothermal fluid from the Rainbow vent field
 using speciation results from @SC10:
 
-```{r rainbow, echo=FALSE, fig.cap="Affinities of organic synthesis reactions per mole of C, H2, or formed species", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=1.2*basedpi}
+```{r rainbow, echo=FALSE, fig.cap="Affinities of organic synthesis reactions per mole of C, H<sub>2</sub>, or formed species", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=3, cache=TRUE, dpi=1.2*basedpi}
 basis(c("CO2", "H2", "NH4+", "H2O", "H2S", "H+"))
 # Constant activity of CH4 is a simplification of the model
 species("CH4", -3)
@@ -830,9 +849,9 @@ abline(h = 0, lty = 2, lwd = 2)
 Although `affinity()` uses all of the variables in the transect, `diagram()` labels the x-axis with only the first variable (temperature).
 We obtain three plots:
 
-  1. The reactions are balanced on the first basis species with non-zero coefficients, CO2.
+  1. The reactions are balanced on the first basis species with non-zero coefficients, `r co2`.
      This is the same as normalizing on C, because no other basis species has C.
-  2. Balance on a different species, H2.
+  2. Balance on a different species, `r h2`.
   3. No balancing constraint (`balance = 1`).
      This just shows the affinity of each reaction as given (that is, per mole of formed species),
      which is how the results were presented by Shock and Canovas (2010).
@@ -874,14 +893,14 @@ subcrt(species, coeffs, T = T, logact = c(-5, -4, -3))$out[, -idrop]
 
 NOTE:
 
-- The logK, G, H, S, V, and Cp columns in the output of `subcrt()` are always *standard* or *adjusted* thermodynamic properties, not non-standard ones.
-- Columns for logQ and A are added if the `logact` argument is provided.
+- The `logK`, `G`, `H`, `S`, `V`, and `Cp` columns in the output of `subcrt()` are always *standard* or *adjusted* thermodynamic properties, not non-standard ones.
+- Columns for `logQ` and `A` are added if the `logact` argument is provided.
 - The `logact` argument specifies the activities of species in the same order as the first argument.
-- A in the output of `subcrt()` has the same units as G (J/mol by default); this differs from the output of `affinity()`, which uses dimensionless values (A/2.303RT).
+- `A` in the output of `subcrt()` has the same units as `G` (J/mol by default); this differs from `affinity()`, which outputs dimensionless values (*A*/2.303*RT*).
 
 The first call above specifies unit activities of all the species in the reaction.
 
-- **Only** if all species have *unit activities*, then the affinity values (A in the output) are the opposite of the *standard* Gibbs energy (G in the output).
+- **Only** if all species have *unit activities*, then the affinity values (`A` in the output) are the opposite of the *standard* Gibbs energy (`G` in the output).
 
 The second call specifies non-unit activities of the species.
 
@@ -901,7 +920,7 @@ We combine some of the features described above with new ones for swapping basis
 - `describe.reaction()`: Formats reactions for plots using the output of `subcrt()`
 - `names` and `srt` arguments of `diagram()`: Use supplied reaction labels with rotation
 
-```{r organic, echo=FALSE, fig.cap="Non-standard Gibbs energies of organic reactions as a function of CO2 fugacity", cache=TRUE}
+```{r organic, echo=FALSE, fig.cap="Non-standard Gibbs energies of organic reactions as a function of CO<sub>2</sub> fugacity", cache=TRUE}
 # Format reactions with describe.reaction()
 basis(c("CO2", "H2", "H2O", "H+"))
 reactions <- c(
@@ -953,7 +972,7 @@ abline(h = 0, lty = 2, col = 8)
 </div>
 
 After running the code to make the diagram, we can print the formation reactions for each of the species.
-This shows how the two acetate reactions (acetate oxidation and acetoclastic methanogenesis) are implemented by swapping H2 and CH4 in the basis species.
+This shows how the two acetate reactions (acetate oxidation and acetoclastic methanogenesis) are implemented by swapping `r h2` and CH~4~ in the basis species.
 ```{r organic_reactions, results="show"}
 a1$species
 a2$species
@@ -968,11 +987,11 @@ In most other cases (especially for making relative stability diagrams), this ar
 Sometimes it's useful to make further computations on the results of a `diagram()` call.
 For example, a system might dominated by a few stable species, but you'd rather visualize the relative stabilities of less stable (i.e., metastable) species.
 Here we do this for all the aqueous S species in the OBIGT database, accessed using `retrieve()`.
-We use `plot.it = FALSE` to suppress the first plot (which would look like the [Eh-pH diagram for S](#chemical-affinity-and-stability-diagrams) above),
+We use `plot.it = FALSE` to suppress the first plot (which would look like the [Eh--pH diagram for S](#chemical-affinity-and-stability-diagrams) above),
 but save the output with `d <- diagram()` to access the identified stable species in `d$predominant`.
 After removing these stable species from the system, we recalculate affinities for the remaining metastable species and make a diagram for them.
 
-```{r metastable_sulfur, fig.cap = "Eh-pH diagram for metastable S species"}
+```{r metastable_sulfur, fig.cap = "Eh--pH diagram for metastable S species"}
 basis("CHNOSe")
 iaq <- retrieve("S", c("H", "O"), state = "aq")
 species(iaq)
@@ -996,7 +1015,7 @@ Other possibly useful parts of the `diagram()` output are:
 - `linesout`: x, y coordinates of boundary lines between stability fields
 
 NOTE: If `diagram()` was passed the output of `equilibrate()` or `solubility()`,
-then its output contains base-10 logarithms of activities instead of dimensionless affinities.
+then its output contains logarithms of activities instead of dimensionless affinities.
 
 ### 17. Writing chemical formulas and counting and summing elements with <span style="color:green;font-family:monospace;">makeup()</span>
 
@@ -1021,7 +1040,7 @@ as.chemical.formula(summed_elements)
 
 All the data used by CHNOSZ - from the thermodynamic data in OBIGT to the basis species defined by the user -
 are stored in an object named `thermo` in the package environment.
-Although not usually modified directly by the user, sometimes it's useful to peek inside CHNOSZ's memory banks.
+Sometimes it's useful to peek inside CHNOSZ's memory banks, or more rarely to directly modify them.
 The `thermo()` function returns the current value of this object and can also update it.
 Here we display the first level structure of `thermo`, then show the structure of the database (`thermo()$OBIGT`) in more detail.
 
@@ -1051,8 +1070,8 @@ By contrast, the `bgamma` model uses an extended term parameter that is derived 
 The `Alberty` model uses parameters listed in Chapter 3 of @Alb03, which are applicable to relatively low-temperature biochemical reactions.
 Choose from these models with `nonideal()`.
 
-NOTE: By default, H+ is assumed to have unit activity coefficient for any ionic strength.
-Enable calculations of activity coefficients for H+ by running `thermo("opt$ideal.H" = FALSE)`.
+NOTE: By default, H^+^ is assumed to have unit activity coefficient for any ionic strength.
+Enable calculations of activity coefficients for H^+^ by running `thermo("opt$ideal.H" = FALSE)`.
 
 Invoke calculations of activity coefficients by setting the `IS` argument in `subcrt()`, `affinity()`, `mosaic()`, or `solubility()`.
 This has the effect of transforming activity to molality in the CHNOSZ workflow.
@@ -1072,7 +1091,7 @@ Key variables affected by this transformation are listed here:
     + `loga.equil` (logarithm of molality of each species).
 
 Because function arguments have static names, we're stuck with `logact` even when it means log molality.
-However, `diagram()` automatically changes labels from "log *a*" to "log *m*" when run on the output of `affinity()` with a non-NULL value for `IS`.
+However, `diagram()` automatically changes labels from "log&nbsp;*a*" to "log&nbsp;*m*" when run on the output of `affinity()` with a non-NULL value for `IS`.
 
 ## Buffers
 
@@ -1105,13 +1124,13 @@ basis(c("FeCHNOS"))
 basis("O2", "PPM")
 # Calculate and retrieve the buffered fugacity of O2
 a <- affinity(T = 200, P = 2000, return.buffer = TRUE)
-# Access the buffered O2 fugacity (logfO2)
+# Access the buffered O2 fugacity (log fO2)
 log_fO2 <- a$O2  # -44.28
 # Calculate buffered fugacities across temperature range
 a <- affinity(T = c(200, 400, 11), P = 2000, return.buffer = TRUE)
 ```
 
-### 3. Working with multiple buffered species (e.g., H2S and O2 in PPM)
+### 3. Working with multiple buffered species (e.g., `r h2s` and `r o2` in PPM)
 
 Some buffers constrain multiple basis species simultaneously:
 
@@ -1131,7 +1150,7 @@ log_fO2 <- buffer_values$O2    # -37.16
 The `diagram()` function with the `type` argument can solve for and display activities of basis species.
 This example reproduces part of Fig. 6 in @SS95:
 
-```{r buffer_4, fig.cap = "Equilibrium log H2 fugacity for 10^-6^ activity of HCN or formaldehyde with water, 1 bar of N2 and 10 bar of CO2"}
+```{r buffer_4, fig.cap = "Equilibrium log&nbsp;H<sub>2</sub> fugacity for 10^-6^ activity of HCN or formaldehyde with water, 1 bar of N<sub>2</sub> and 10 bar of CO<sub>2</sub>"}
 # Set up a system in terms of gases and liquid water
 basis(c("hydrogen", "carbon dioxide", "nitrogen", "water"))
 # Use 10 bar of CO2 and 1 bar of other gases (default)
@@ -1150,11 +1169,11 @@ See `demo("buffer")` for a fully worked-out example based on the figure in Schul
 NOTE: This feature works independently from buffers defined in `thermo()$buffer`, but produces equivalent results for certain systems;
 see `test-diagram.R` in the package test directory.
 
-### 5. Using fO2 Buffers in downstream calculations
+### 5. Using *f*`r o2` Buffers in downstream calculations
 
 Redox buffers like QFM, HM, and PPM can be used as inputs for subsequent calculations:
 
-```{r buffer_5, fig.cap = "Gold solubility at 300 °C with PPM buffer for fO2 and aH2S"}
+```{r buffer_5, fig.cap = "Gold solubility at 300 °C with PPM buffer for *f*O<sub>2</sub> and *a*H<sub>2</sub>S"}
 # Set up system for gold solubility calculation
 basis(c("Au", "Fe", "H2S", "H2O", "oxygen", "H+"))
 # Apply PPM buffer for fO2 and H2S
@@ -1178,7 +1197,7 @@ An interesting application is to add a delta to values obtained with `return.buf
 ```{r buffer_6}
 # Set basis species
 basis(c("Fe", "SiO2", "CO3-2", "H2O", "oxygen", "H+"))
-# Calculate logfO2 in QFM buffer across temperature range
+# Calculate log fO2 in QFM buffer across temperature range
 basis("O2", "QFM")
 T <- seq(600, 1000, 100)
 buf <- affinity(T = T, P = 5000, return.buffer = TRUE)
@@ -1203,7 +1222,7 @@ neutral_pH <- -subcrt(c("H2O", "H+", "OH-"), c(-1, 1, 1), T = T, P = P)$out$logK
 
 ### 8. Working with mineral pH buffers
 
-Mineral assemblages like K-feldspar–muscovite–quartz (KMQ) can buffer pH:
+Mineral assemblages like K-feldspar--muscovite--quartz (KMQ) can buffer pH:
 
 ```{r buffer_8}
 # Define the KMQ buffer
@@ -1279,7 +1298,7 @@ pH_KMQ <- -affinity(T = T_fixed, P = P, return.buffer = TRUE)$`H+`
 abline(v = pH_KMQ, lty = 3, col = 4)
 text(pH_KMQ - 0.2, -5.5, "KMQ", srt = 90, col = 4, cex = 0.8)
 
-# 4. Logf(O2)-pH diagram with dominant gold species at 350°C
+# 4. log fO2-pH diagram with dominant gold species at 350°C
 # Remove KMQ pH buffer
 basis("H+", 0)
 # Remove PPM fO2 buffer
@@ -1326,12 +1345,12 @@ The diagrams show:
 1. Temperature dependence of gold species distribution under the hematite-magnetite (HM) buffer [cf. Fig. 2A in @WBM09]
 2. Temperature dependence under the pyrite-pyrrhotite-magnetite (PPM) buffer (cf. Fig. 2B in Williams-Jones et al., 2009)
 3. pH dependence under PPM at fixed temperature, with neutral pH and KMQ buffer lines [cf. Fig. 7 in @AZ01]
-4. Species predominance in log fO2-pH space with redox and pH buffer lines
+4. Species predominance in log&nbsp;*f*`r o2`--pH space with redox and pH buffer lines
 
 Note the following limitation:
 
 - `mosaic()` calculations currently aren't support for basis species that are associated with a buffer.
-- Because of this, for the last diagram we precomputed the value of log aH2S from the PPM buffer then assigned that value in `basis()`
+- Because of this, for the last diagram we precomputed the value of log&nbsp;*a*`r h2s` from the PPM buffer then assigned that value in `basis()`
   to use in the mosaic calculation.
 
 See also:
@@ -1532,7 +1551,7 @@ title(paste("MAE =", round(MAE, 2)))
 
 ### 7. Additional protein analysis
 
-The **canprot** package provides a different interface for calculating Zc and other chemical analyses of proteins from their amino acid composition:
+The **canprot** package provides a different interface for calculating *Z*~C~ and other chemical analyses of proteins from their amino acid composition:
 
 ```{r protein_13}
 # Load canprot package
@@ -1637,7 +1656,7 @@ You can also use `demos()` to run all the demos without pausing or just one (e.g
   - `mosaic`: Speciating more than one set of basis species
   - `sum_S`, `uranyl`: Using summed activities of speciated basis species
   - `comproportionation`: Non-standard Gibbs energy of reaction with speciated basis species
-  - `arsenic`, `copper`: More examples of Eh-pH diagrams
+  - `arsenic`, `copper`: More examples of Eh--pH diagrams
   - `sphalerite`, `contour`, `minsol`: Solubility calculations with speciated basis species
 
 ### Solubility contours with <span style="color:green;font-family:monospace;">solubility()</span>
@@ -1645,7 +1664,7 @@ You can also use `demos()` to run all the demos without pausing or just one (e.g
   - `Pourbaix`: Isosolubility lines for various metals (try Fe, Cu, Mn)
   - `contour`: Solubility contours for gold
   - `minsol` Solubility contours for multiple minerals
-  - `solubility`: CO2 and calcite
+  - `solubility`: `r co2` and calcite
 
 ### Other contour plots
 
@@ -1662,8 +1681,8 @@ You can also use `demos()` to run all the demos without pausing or just one (e.g
 ### Activity buffers
 
   - `buffer`: Plotting buffers as a function of temperature
-  - `DEW`: Applying calculated values of logfO2 in `affinity()`
-  - `gold`: Settting pH and fO2 buffers in `basis()` for solubility of gold
+  - `DEW`: Applying calculated values of log&nbsp;*f*`r o2` in `affinity()`
+  - `gold`: Settting pH and *f*`r o2` buffers in `basis()` for solubility of gold
   - `protbuff`: Using proteins as buffer species
 
 ### Other thermodynamic models

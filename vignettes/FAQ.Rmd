@@ -939,7 +939,7 @@ water.lines(d)
 
 This result suggests two improvements to Fig. 5A in @CBLM00.
 First, the triangular area above the water stability limit should be labeled as part of the siderite field (which is interrupted by the pyrite wedge), not as pyrrhotite.
-Second, the boundary between pyrite and magnetite has one kink, not two.
+Second, the boundary between pyrite and magnetite should have one bend, not two.
 
 *Added on 2024-04-01.*
 
