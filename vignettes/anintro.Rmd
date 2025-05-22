@@ -158,7 +158,7 @@ The `info()` function provides access to the OBIGT thermodynamic database.
 info("CH4")
 ```
 
-When searching by formula, aqueous species are returned if they are available.
+Searching by formula returns the aqueous species if it is available.
 Use a species name or add the state to get a particular physical state - `aq`, `cr`, `gas`, or `liq`:
 
 ```{r info_methane}
@@ -211,7 +211,9 @@ reset()  # Restore defaults
 
 ### Working with reactions
 
-Define reactions with species names, states (optional), and coefficients:
+Define reactions with species names or formulas, states (optional), and coefficients:
+
+NOTE: Reaction coefficients are negative for reactants and positive for products.
 
 ```{r subcrt_CO2_reaction}
 # CO2 dissolution reaction

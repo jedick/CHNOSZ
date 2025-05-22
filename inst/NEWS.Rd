@@ -15,10 +15,16 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-71 (2025-05-14)}{
+\section{Changes in CHNOSZ version 2.1.0-73 (2025-05-21)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
+
+      \item Add tantalum species from
+      \href{https://doi.org/10.1016/j.gca.2024.10.019}{Hu et al. (2024)}.
+
+      \item Add Pd(HS)\s{4}\S{-2} and Pt(HS)\s{4}\S{-2} from
+      \href{https://doi.org/10.1016/j.gca.2024.12.019}{Laskar et al. (2024)}.
 
       \item Add aqueous uranyl complexes from
       \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}
@@ -33,28 +39,22 @@
       \item Add alkylamines, benzylamines, and aminiums from
       \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
 
-      \item Add tantalum species from
-      \href{https://doi.org/10.1016/j.gca.2024.10.019}{Hu et al. (2024)}.
-
-      \item Add Pd(HS)\s{4}\S{-2} and Pt(HS)\s{4}\S{-2} from
-      \href{https://doi.org/10.1016/j.gca.2024.12.019}{Laskar et al. (2024)}.
-
       \item Add Sn chloride complexes and updated parameters for Sn\S{+2} and
       Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
         (2023)}.
 
-      \item Move americium complexes from \file{SLOP98.csv} back to
-      \file{inorganic_aq.csv} (entropy of the element Am has been available for
-      checking GHS self-consistency since version 1.4.0).
+      \item Add cerianite (CeO\s{2}), chromite (FeCr\s{2}O\s{4}), and
+      cassiterite (SnO\s{2}) from \href{https://doi.org/10.3133/b2131}{Robie
+        and Hemingway (1995)}.
 
-      \item \file{inorganic_cr.csv}: Add cerianite (CeO\s{2}), chromite
-      (FeCr\s{2}O\s{4}), and cassiterite (SnO\s{2}) from
-      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
+      \item Move americium complexes from \file{SLOP98.csv} (entropy of the
+      element Am has been available for checking GHS self-consistency since
+      version 1.4.0).
 
-      \item Fix sign of \emph{c} parameter for nesquehonite. Thanks to
-      James Leong and Grayson Boyer.
+      \item Fix sign of \emph{c} parameter for nesquehonite. Thanks to James
+      Leong and Grayson Boyer.
 
-      \item Restore steam (H\s{2}O,g) in \file{inorganic_gas.csv}.
+      \item Restore steam (H\s{2}O,g).
 
     }
   }
@@ -66,20 +66,20 @@
       for testing, including \file{SiO2.csv} (renamed from \file{AS04.csv}) and
       \file{GEMSFIT.csv} in addition to those listed below.
 
+      \item Add \file{testing/GA.csv}: Germanium, indium, gallium, and cadmium
+      species from \href{https://doi.org/10.1080/08120099.2024.2423772}{Huston
+        and Bastrakov (2024)}.
+
       \item Add \file{testing/IGEM.csv}: Au and Cu complexes and
       SO\s{4}\S{-2}-bearing species from researchers at IGEM RAS.
-      
-      \item Add \file{testing/Sandia.csv}: Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
-      \href{https://doi.org/10.1016/j.apgeochem.2024.106032}{Knight et al.
-        (2024)}.
 
       \item Add \file{testing/REE.csv}: REE(III) fluoride and chloride complexes from
       \href{https://doi.org/10.1016/j.gca.2009.08.023}{Migdisov et al. (2009)}
       (previously available in CHNOSZ verisons 0.9-5 to 1.0.8).
 
-      \item Add \file{testing/GA.csv}: Germanium, indium, gallium, and cadmium
-      species from \href{https://doi.org/10.1080/08120099.2024.2423772}{Huston
-        and Bastrakov (2024)}.
+      \item Add \file{testing/Sandia.csv}: Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
+      \href{https://doi.org/10.1016/j.apgeochem.2024.106032}{Knight et al.
+        (2024)}.
 
     }
   }
@@ -87,51 +87,38 @@
   \subsection{DOCUMENTATION}{
     \itemize{
 
-      \item Revise \file{anintro.Rmd}. Text before \dQuote{Building Up} was
-      revised and shortened with AI assistance.
-
-      \item Add FAQ question: Why are mineral stability boundaries curved on
-      mosaic diagrams?
-
-      \item Add \file{demo/total_S.R}: total activity of S--pH diagram for
-      Fe-S-O-C minerals.
-
-      \item Add \file{demo/uranyl.R}: total (carbonate|sulfate)-pH diagrams
-      for uranyl species, after
-      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
-
-      \item Revise \file{demo/sum_S.R} for log \emph{f}O\s{2} - log \emph{m} ΣS
-      diagram and add solubility contours for Fe and Au.
+      \item Major revision of \file{anintro.Rmd}.
 
       \item Add \file{demo/MgATP.R}: speciation of ATP with H\S{+} and
       Mg\S{+2}, based on
-      \href{https://search.worldcat.org/title/51242181}{Alberty (2003)}
-      (example moved here from \file{anintro.Rmd}).
+      \href{https://search.worldcat.org/title/51242181}{Alberty (2003)} (moved
+      from \file{anintro.Rmd}).
 
       \item Update \file{demo/contour.R} to use conditions taken from
       \href{https://doi.org/10.1016/j.oregeorev.2022.105231}{Ding et al.
         (2023)} and optional data for Au species from IGEM RAS, including
       polynuclear Au\s{2}S\s{2}\S{-2}.
 
-      \item Move \file{equilibrium.Rmd} from CHNOSZ to
-      \file{CHNOSZ_equilibrium.Rmd} in the [JMDplots
-      package](https://github.com/jedick/JMDplots).
+      \item Add \file{demo/rubisco_Zc.R}, moved from \file{anintro.Rmd}.
 
-      \item \file{demo/rubisco_Zc.R} extracted from old version of
-      \file{anintro.Rmd}.
+      \item Add \file{demo/sum_S.R}: log \emph{f}O\s{2}--log \emph{m} ΣS
+      diagram for Fe-S-O-C minerals with solubility contours for Fe and Au.
 
+      \item Add \file{demo/uranyl.R}: total (carbonate|sulfate)-pH diagrams for
+      uranyl species, after
+      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
+
+      \item Add FAQ question: Why are mineral stability boundaries curved on
+      mosaic diagrams?
+
+      \item Move \file{equilibrium.Rmd} to
+      \href{https://github.com/jedick/JMDplots}{JMDplots}.
 
     }
   }
 
   \subsection{NEW FEATURES}{
     \itemize{
-
-      \item Rename \code{logB.to.OBIGT()} to \code{logK.to.OBIGT()} and add a
-      \strong{state} argument which accepts \samp{aq} (aqueous species using
-      heat capacity parameters in the \samp{HKF} model; the previous method and
-      current default) or \samp{cr} (minerals using the Maier-Kelley equation
-      in the \samp{CGL} model; a new method)).
 
       \item \code{OBIGT} now uses \samp{CGL_Ttr} as the \code{model} for
       species whose \code{T} value denotes a phase stability limit above which
@@ -146,6 +133,12 @@
       \item \code{check.EOS()} now uses values of Born coefficients \emph{X}
       and \emph{Q} that are consistent with either SUPCRT92 or DEW, depending
       on the \code{model} defined in OBIGT (HKF or DEW, respectively).
+
+      \item Rename \code{logB.to.OBIGT()} to \code{logK.to.OBIGT()} and add a
+      \strong{state} argument which accepts \samp{aq} (aqueous species using
+      heat capacity parameters in the \samp{HKF} model; the previous method and
+      current default) or \samp{cr} (minerals using the Maier-Kelley equation
+      in the \samp{CGL} model; a new method)).
 
     }
   }
@@ -199,15 +192,17 @@
     \itemize{
 
       \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to
-      the canprot package with different names.
+      [canprot](https://cran.r-project.org/package=canprot) with different
+      names.
 
       \item Remove \code{seq2aa()}.
 
-      \item Remove \code{add.alpha()}. Instead, \code{grDevices::adjustcolor()}
-      is now used in \code{stack_mosaic()} to add transparency.
+      \item Remove \code{add.alpha()}. Instead of this function,
+      \code{grDevices::adjustcolor()} is now used in \code{stack_mosaic()} to
+      add transparency.
 
       \item Move \code{protein.equil()} to JMDplots; the associated demo has
-      been moved to the \file{CHNOSZ_equilibrium.Rmd} vignette in that package.
+      been moved to the \file{equilibrium.Rmd} vignette in that package.
 
     }
   }
