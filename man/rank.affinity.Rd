@@ -7,19 +7,22 @@ Affinity rankings for groups of species.
 }
 
 \usage{
-  rank.affinity(aout, groups, percent = TRUE)
+  rank.affinity(aout, groups, rescale = TRUE, percent = FALSE)
 }
 
 \arguments{
   \item{aout}{list, output of \code{\link{affinity}}}
-  \item{groups}{named list of indices (integer or numeric) for species in each group}
-  \item{percent}{return average rank percentage for each group}
+  \item{groups}{named list of indices (integer or logical) for species in each group}
+  \item{rescale}{logical, rescale average ranks for each group to have the same bounds?}
+  \item{percent}{logical, take percentages of average ranks for each group (after rescaling)?}
 }
 
 \details{
-The affinities for all species are \code{\link{rank}}ed, then the mean ranking for the species in each group is calculated.
-The mean rankings of groups are converted to a percentage, or returned as-is if \code{percent} is FALSE.
-Note that the calculations are applied to each set of conditions individually (i.e., each grid point in the affinity \code{\link{affinity}} calculation).
+The affinities for all species are \code{\link{rank}}ed, then the average rank for the species in each group is calculated.
+The calculations are applied to each set of conditions individually (i.e., each grid point in the affinity \code{\link{affinity}} calculation).
+
+Unless \code{rescale} is FALSE, the average rank of each group is rescaled to have the same bounds (from 1 to the total number of species).
+If \code{percent} is TRUE, the average ranks of groups (after rescaling) are converted to percentages.
 }
 
 \value{

@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-73 (2025-05-21)}{
+\section{Changes in CHNOSZ version 2.1.0-74 (2025-05-22)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -139,6 +139,9 @@
       heat capacity parameters in the \samp{HKF} model; the previous method and
       current default) or \samp{cr} (minerals using the Maier-Kelley equation
       in the \samp{CGL} model; a new method)).
+
+      \item \code{rank.affinity()} now rescales average ranks of groups to the
+      same bounds.
 
     }
   }
