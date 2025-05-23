@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-74 (2025-05-22)}{
+\section{Changes in CHNOSZ version 2.1.0-75 (2025-05-23)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -54,7 +54,7 @@
       \item Fix sign of \emph{c} parameter for nesquehonite. Thanks to James
       Leong and Grayson Boyer.
 
-      \item Restore steam (H\s{2}O,g).
+      \item Restore steam (H\s{2}O gas).
 
     }
   }
@@ -120,28 +120,70 @@
   \subsection{NEW FEATURES}{
     \itemize{
 
+      \item \code{axis.label()} now uses summation symbol (Σ) for total
+      activity or molality of basis species used as a plotting variable in
+      \code{mosaic()}.
+
+      \item Restore \code{lines} to the output of \code{diagram()} with the the
+      x and y coordinates of stability field boundaries.
+
+      \item \code{check.EOS()} now uses values of Born coefficients \emph{X}
+      and \emph{Q} that are consistent with either SUPCRT92 or DEW, depending
+      on the \code{model} defined in OBIGT (HKF or DEW, respectively).
+
+      \item \code{rank.affinity()} now rescales average ranks of groups to the
+      same bounds.
+
+    }
+  }
+
+  \subsection{CHANGES TO NAMES AND DEFAULTS}{
+    \itemize{
+
+      \item In \code{diagram()}, the default for the \strong{type} argument
+      when using the output from \code{solubility()} is now \code{loga.balance}
+      (sum of activities of aqueous species) rather than \code{loga.equil}
+      (activities of individual aqueous species).
+
+      \item In \code{NaCl()}, rename argument \strong{m_tot} to \strong{m_NaCl}
+      (moles of of NaCl added to 1 kg H\s{2}O) and rename output with
+      \samp{m_Naplus}, \samp{m_Clminus}, \samp{m_NaCl0}, and \samp{m_HCl0}
+      (molalities of aqueous species).
+
+      \item In \code{water()}, rename \strong{P1} logical argument to
+      \strong{Psat_floor} numeric argument.
+
       \item \code{OBIGT} now uses \samp{CGL_Ttr} as the \code{model} for
       species whose \code{T} value denotes a phase stability limit above which
       \code{subcrt()} returns NA values, in contrast to \samp{CGL}, for which
       the value of \code{T} is a Cp equation limit that only produces a
       warning. This replaces the use of signed values of \code{T}.
 
-      \item Adjust \code{axis.label()} to show sum symbol (Σ) for total
-      activity or molality of basis species used as a plotting variable in
-      \code{mosaic()}.
-
-      \item \code{check.EOS()} now uses values of Born coefficients \emph{X}
-      and \emph{Q} that are consistent with either SUPCRT92 or DEW, depending
-      on the \code{model} defined in OBIGT (HKF or DEW, respectively).
-
       \item Rename \code{logB.to.OBIGT()} to \code{logK.to.OBIGT()} and add a
       \strong{state} argument which accepts \samp{aq} (aqueous species using
-      heat capacity parameters in the \samp{HKF} model; the previous method and
-      current default) or \samp{cr} (minerals using the Maier-Kelley equation
-      in the \samp{CGL} model; a new method)).
+      heat capacity parameters in the \samp{HKF} model; the default) or
+      \samp{cr} (minerals using the Maier-Kelley equation in the \samp{CGL}
+      model; a new option).
 
-      \item \code{rank.affinity()} now rescales average ranks of groups to the
-      same bounds.
+    }
+  }
+
+
+  \subsection{OTHER CHANGES}{
+    \itemize{
+
+      \item For better readability, formulas of species are no longer
+      subscripted by \code{expr.species()}. An example of the new formatting
+      is \dQuote{log \emph{f}O\s{2}}. 
+      
+      \item Add scripts and data files in \code{extdata/protein/Cas} for amino
+      acid compositions of CRISPR-Cas proteins in different classes and
+      subtypes listed by
+      \href{https://doi.org/10.1038/s41579-019-0299-x}{Makarova et al. (2020)}.
+
+
+      \item Remove \code{ispecies} from output of \code{check.OBIGT()} to avoid
+      superfluous diffs.
 
     }
   }
@@ -158,44 +200,12 @@
     }
   }
 
-  \subsection{OTHER CHANGES}{
-    \itemize{
-
-      \item Restore \code{lines} to the output of \code{diagram()} for the x
-      and y values of predominance field boundaries.
-
-      \item In \code{diagram()}, the default for the \strong{type} argument
-      when using the output from \code{solubility()} is now \code{loga.balance}
-      (sum of activities of aqueous species) rather than \code{loga.equil}
-      (activities of individual aqueous species).
-
-      \item For better readability, formulas of species are no longer
-      subscripted by \code{axis.label()} (via \code{expr.species()}). An
-      example of the new formatting is log \emph{f}O\s{2}. Similar formatting
-      for other expressions has been used in the vignettes.
-
-      \item In \code{NaCl()}, rename argument \strong{m_tot} to \strong{m_NaCl}
-      (moles of of NaCl added to 1 kg H\s{2}O) and rename output with
-      \samp{m_Naplus}, \samp{m_Clminus}, \samp{m_NaCl0}, and \samp{m_HCl0}
-      (molalities of aqueous species).
-
-      \item Remove \code{ispecies} from output of \code{check.OBIGT()} to avoid
-      superfluous diffs.
-
-      \item Merge \file{extdata/adds} and \file{extdata/cpetc} into
-      \file{extdata/misc}.
-
-      \item In \code{water()}, rename \strong{P1} logical argument to
-      \strong{Psat_floor} numeric argument.
-
-    }
-  }
 
   \subsection{REMOVED FEATURES}{
     \itemize{
 
       \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to
-      [canprot](https://cran.r-project.org/package=canprot) with different
+      \href{https://cran.r-project.org/package=canprot}{canprot} with different
       names.
 
       \item Remove \code{seq2aa()}.

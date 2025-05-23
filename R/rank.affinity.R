@@ -40,18 +40,12 @@ rank.affinity <- function(aout, groups, rescale = TRUE, percent = FALSE) {
       margin <- min - min1
       # Lower and upper bounds are symmetric, so we subtract the margin from total number of species to get the max
       max <- ntot - margin
-      ## Factor to rescale average ranks from an n-species group to a 1-species group
-      #scaling_factor <- (max1 - min1) / (max - min)
-      ## To center the range, we have to subtract the margin on both sides
-      #(rank_avg - 2 * margin) * scaling_factor
-
       # Build a linear model mapping from x (bounds of group with n species) to y (bounds of group with 1 species)
       x <- c(min, max)
       y <- c(min1, max1)
       rescale_lm <- lm(y ~ x)
       # Rescale average ranks with the linear model
       rank_avg <- predict(rescale_lm, data.frame(x = rank_avg))
-
     } else {
       rank_avg
     }
