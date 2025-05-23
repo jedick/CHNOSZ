@@ -36,6 +36,7 @@ sed -i 's/<code>ionize.aa()/<code><a href="..\/html\/ionize.aa.html" style="back
 sed -i 's/<code>equilibrate(loga.balance\ =\ 0)/<code><a href="..\/html\/equilibrate.html" style="background-image:none;color:green;">equilibrate(loga.balance\ =\ 0)<\/a>/g' anintro.html
 sed -i 's/<code>makeup()/<code><a href="..\/html\/makeup.html" style="background-image:none;color:green;">makeup()<\/a>/g' anintro.html
 sed -i 's/<code>Berman()/<code><a href="..\/html\/Berman.html" style="background-image:none;color:green;">Berman()<\/a>/g' anintro.html
+sed -i 's/<code>rank.affinity()/<code><a href="..\/html\/rank.affinity.html" style="background-image:none;color:green;">rank.affinity()<\/a>/g' anintro.html
 
 # Functions with side effects (red)
 sed -i 's/<code>basis()/<code><a href="..\/html\/basis.html" style="background-image:none;color:red;">basis()<\/a>/g' anintro.html

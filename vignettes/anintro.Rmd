@@ -51,13 +51,6 @@ function ToggleDiv(ID) {
 ```
 
 ```{r HTML, include=FALSE}
-#logfO2 <- "log<i>f</i><sub>O<sub>2</sub></sub>"
-#zc <- "<i>Z</i><sub>C</sub>"
-#o2 <- "O<sub>2</sub>"
-#h2o <- "H<sub>2</sub>O"
-#sio2 <- "SiO<sub>2</sub>"
-#ch4 <- "CH<sub>4</sub>"
-
 # Some frequently used HTML expressions
 # Use lowercase because some of these are used as variables in the examples
 h2o <- "H<sub>2</sub>O"
@@ -66,6 +59,7 @@ o2 <- "O<sub>2</sub>"
 co2 <- "CO<sub>2</sub>"
 h2s <- "H<sub>2</sub>S"
 Psat <- "<i>P</i><sub>sat</sub>"
+zc <- "<i>Z</i><sub>C</sub>"
 ```
 
 ```{r setup, include=FALSE}
@@ -1553,7 +1547,7 @@ title(paste("MAE =", round(MAE, 2)))
 
 ### 7. Additional protein analysis
 
-The **canprot** package provides a different interface for calculating *Z*~C~ and other chemical analyses of proteins from their amino acid composition:
+The **canprot** package provides a different interface for calculating `r zc` and other chemical analyses of proteins from their amino acid composition:
 
 ```{r protein_13}
 # Load canprot package
@@ -1646,7 +1640,162 @@ The correspondence between theoretical predictions and experimental measurements
 normalization of protein formulas and optimizing physicochemical parameters.
 The metastable equilibrium model provides a theoretical framework for predicting how chemical conditions influence relative protein abundances.
 
-### One more thing: Groupwise relative stabilities
+### Comparing evolutionary branches: Groupwise relative stabilities of CRISPR-associated (Cas) proteins
+
+CRISPR-associated proteins (Cas) have important functions in microbial immunity to viruses and in biotechnology for gene editing.
+Plotting their relative stabilities could relate their evolution to environmental variables.
+
+Unlike minerals or inorganic aqueous species, the scope of interest is not single molecules but rather sets of related sequences that belong to evolutionary classes or types.
+For example, each type of CRISPR-Cas system (numbered I--VI) is represented by various numbers of genomes in the classification presented by @MWI_20.
+This is visualized in the following diagram, showing the `r zc` and number of amino acids in the effector modules.
+(The effector module combines with CRISPR RNA (crRNA) to form the effector complex that targets a specific DNA sequence.)
+The larger size of effector modules of many Class 1 systems is associated with multiple Cas proteins, which were combined to calculate `r zc`.
+
+```{r Cas_Zc, echo=FALSE, fig.cap = "Carbon oxidation state and size of CRISPR-Cas effector complexes", cache=TRUE}
+# Read data table
+file <- system.file("extdata/protein/Cas/Cas_uniprot.csv", package = "CHNOSZ")
+dat <- read.csv(file)
+# Use UniProt ID as the file name
+ID <- dat$UniProt
+# In case UniProt ID is missing, use alternate ID
+ID[ID == ""] <- dat$Protein[ID == ""]
+# Store ID in data frame
+dat$ID <- ID
+# Remove missing IDs
+dat <- subset(dat, ID != "")
+# Keep proteins in effector complexes
+dat <- subset(dat, Effector)
+
+# Read amino acid compositions
+aafile <- system.file("extdata/protein/Cas/Cas_aa.csv", package = "CHNOSZ")
+aa <- read.csv(aafile)
+
+# Loop over subtypes (I-A, I-B etc.)
+subtypes <- unique(dat$Subtype)
+effector_aa_list <- lapply(subtypes, function(subtype) {
+  # Get the IDs for this subtype
+  idat <- dat$Subtype == subtype
+  ID <- dat$ID[idat]
+  # Sum the amino acid compositions of all effector proteins in this subtype
+  iaa <- aa$ref %in% ID
+  all_aa <- aa[iaa, ]
+  summed_aa <- sum_aa(all_aa)
+  # Put in all gene names and IDs
+  summed_aa$protein <- paste(all_aa$protein, collapse = ",")
+  summed_aa$ref <- paste(all_aa$ref, collapse = ",")
+  # Put in the subtype
+  summed_aa$abbrv <- subtype
+  # Return the amino acid composition for this subtype
+  summed_aa
+})
+# Make a data frame of amino acid compositions of effector proteins
+effector_aa <- do.call(rbind, effector_aa_list)
+
+# List each type (I to VI)
+type_names <- c("I", "II", "III", "IV", "V", "VI")
+# Find which subtypes belong to each type
+subtype_type <- sapply(strsplit(effector_aa$abbrv, "-"), "[", 1)
+# Get class for each subtype
+class <- ifelse(subtype_type %in% c("I", "III", "IV"), 1, 2)
+
+# Assign colors for classes
+col1 <- hcl.colors(5, "Peach")[1:3]
+col2 <- hcl.colors(5, "Purp")[1:3]
+type_col <- c(
+  # Class 1
+  I = col1[1], III = col1[2], IV = col1[3],
+  # Class 2
+  II = col2[1], V = col2[2], VI = col2[3]
+)
+# Assign point size for classes
+type_cex <- c(
+  I = 1, III = 1.5, IV = 2,
+  II = 1, V = 1.5, VI = 2
+)
+# Get colors and sizes for subtypes
+subtype_col <- type_col[subtype_type]
+subtype_cex <- type_cex[subtype_type]
+
+# Calculate Zc and number of amino acids in effector complexes
+Zc <- canprot::Zc(effector_aa)
+naa <- protein.length(effector_aa)
+# Make plot
+par(mar = c(5, 5, 1, 1))
+plot(naa, Zc, pch = class + 20, cex = subtype_cex, col = subtype_col, bg = subtype_col, xlab = "Number of amino acids", ylab = quote(italic(Z)[C]))
+legend("topright", c("I               ", "III", "IV"), pch = 21, pt.cex = type_cex[1:3], col = col1, pt.bg = col1, title = "Class 1               ", cex = 0.95)
+legend("topright", c("II", "V", "VI"), pch = 22, pt.cex = type_cex[4:6], col = col2, pt.bg = col2, title = "Class 2", bty = "n", cex = 0.95)
+```
+
+<button id="B-Cas_Zc" onclick="ToggleDiv('Cas_Zc')">Show code</button>
+<div id="D-Cas_Zc" style="display: none">
+```{r Cas_Zc, eval=FALSE, cache=FALSE}
+```
+</div>
+
+Plotting the relative stabilies of Cas effector modules from all `r length(Zc)` genomes
+(the number of points in the previous diagram) would result in a complex, hard-to-interpret diagram.
+Instead, here we visualize relative stabilities of groups, one for each of the CRISPR-Cas types (I--VI).
+This is done by first calculating the formation affinities for all effector modules, ranking them, then finding the average rank for each type.
+
+The function used for this, `rank.affinity()`, includes a rescaling step to handle groups with different numbers of members.
+We can see that rescaling is necessary because the average rank of a group with one member is bounded by 1 and 42,
+but the average rank of a group with three members is bounded by 2 (the average of 1, 2, and 3) and 41 (the average of 40, 41, and 42).
+Instead of representing maximum affinity as in previous diagrams, the stability fields here represent maximum average rank of affinity after rescaling.
+
+```{r Cas_stability, echo=FALSE, fig.cap = "Groupwise relative stabilities of Cas effector modules in different types of CRISPR-Cas systems as a function of Eh and temperature; dashed line is water stability limit", cache=TRUE}
+# Setup plot
+par(mfrow = c(1, 2))
+
+# Load amino acid compositions to CHNOSZ
+iprotein <- add.protein(effector_aa)
+# Calculate affinities as a function of Eh and T
+basis("QEC+")
+swap.basis("O2", "e-")
+aout <- affinity(T = c(0, 120), Eh = c(-0.8, 0), iprotein = iprotein)
+
+# Identify types
+types <- lapply(type_names, `==`, subtype_type)
+names(types) <- type_names
+# Calculate average rank for each type
+arank <- rank.affinity(aout, groups = types)
+# Make first diagram
+d <- diagram(arank, fill = type_col[type_names])
+water.lines(d, lty = 2)
+title("Stable types", font.main = 1)
+
+# Take out stable types
+istable <- unique(as.numeric(d$predominant))
+stable_type_names <- type_names[istable]
+itype_stable <- subtype_type %in% stable_type_names
+
+# Get metastable types and subtypes
+type_names <- type_names[-istable]
+effector_aa <- effector_aa[!itype_stable, ]
+subtype_type <- sapply(strsplit(effector_aa$abbrv, "-"), "[", 1)
+types <- lapply(type_names, `==`, subtype_type)
+names(types) <- type_names
+
+# Make second diagram
+iprotein <- add.protein(effector_aa)
+aout <- affinity(T = c(0, 120), Eh = c(-0.8, 0), iprotein = iprotein)
+arank <- rank.affinity(aout, groups = types)
+d <- diagram(arank, fill = type_col[type_names])
+water.lines(d, lty = 2)
+title("Metastable types", font.main = 1)
+```
+
+<button id="B-Cas_stability" onclick="ToggleDiv('Cas_stability')">Show code</button>
+<div id="D-Cas_stability" style="display: none">
+```{r Cas_stability, eval=FALSE, cache=FALSE}
+```
+</div>
+
+The first diagram shows the stable types.
+These were then removed to show the metastable types in the second diagram.
+
+An interesting result is the relative stability of Type III effector modules at reducing conditions (low Eh).
+Notably, the Type III system was proposed to have evolved first in Class 1 [@MWK22].
+Taken together, these observations support the notion of adaptation of Type III Cas sequences to reducing conditions on early Earth.
 
 ## Further Resources - Demos
 

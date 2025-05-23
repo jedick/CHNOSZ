@@ -31,7 +31,7 @@
     \item \code{TBD+05.csv} lists genes with transcriptomic expression changes in carbon limitation stress response experiments in yeast (Tai et al., 2005).
     \item \code{TBD+05_aa.csv} has the amino acid compositions of proteins coded by those genes.
       The last two files are used in \code{demo{"rank.affinity"}}.
-    \item \code{Cas} has scripts and data files for amino acid compositions of CRISPR-Cas proteins.
+    \item \code{Cas} has scripts and data files for amino acid compositions of CRISPR associated (Cas) proteins.
     \itemize{
       \item \file{Cas_uniprot.csv}: class, subtype, organism, locus tag, gene names, and effector proteins from Makarova et al. (2020); UniProt IDs found by searching databases.
       \item \file{download.R}: script to download sequences in FASTA format from UniProt and UniParc.

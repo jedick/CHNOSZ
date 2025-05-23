@@ -87,7 +87,7 @@
   \subsection{DOCUMENTATION}{
     \itemize{
 
-      \item Major revision of \file{anintro.Rmd}.
+      \item Major revision of \viglink{anintro}.
 
       \item Add \file{demo/MgATP.R}: speciation of ATP with H\S{+} and
       Mg\S{+2}, based on
@@ -177,8 +177,8 @@
       is \dQuote{log \emph{f}O\s{2}}. 
       
       \item Add scripts and data files in \code{extdata/protein/Cas} for amino
-      acid compositions of CRISPR-Cas proteins in different classes and
-      subtypes listed by
+      acid compositions of CRISPR-associated (Cas) proteins in different
+      classes and subtypes listed by
       \href{https://doi.org/10.1038/s41579-019-0299-x}{Makarova et al. (2020)}.
 
 
