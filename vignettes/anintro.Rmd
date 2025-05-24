@@ -7,6 +7,7 @@ output:
     toc: true
     toc_depth: 4
     mathjax: null
+    margin_references: false
 vignette: >
   %\VignetteIndexEntry{An Introduction to CHNOSZ}
   %\VignetteEngine{knitr::rmarkdown}
@@ -65,6 +66,8 @@ zc <- "<i>Z</i><sub>C</sub>"
 ```{r setup, include=FALSE}
 library(knitr)
 
+options(width = 180)
+
 # Function to colorize messages 20171031
 # Adapted from https://gist.github.com/yihui/2629886#file-knitr-color-msg-rnw
 color_block = function(color) {
@@ -78,6 +81,13 @@ knit_hooks$set(
   # Use pngquant to optimize PNG images
   pngquant = hook_pngquant
 )
+
+# Define a custom hook to use smaller plot margins
+knit_hooks$set(small_mar = function(before, options, envir) {
+  if(before) {
+    par(mar = c(5, 5, 1, 1))
+  }
+})
 
 # Define variables used below
 basedpi = if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) 60 else 40
@@ -385,13 +395,12 @@ CHNOSZ provides the `axis.label()` and `expr.species()` functions to create form
 Let's revisit the `r co2` dissolution example seen earlier and add two other gases (carbon monoxide and methane).
 This plot is similar to Figure 18 of @MSS13.
 
-```{r dissolution_logK, fig.cap="Equilibrium constants of dissolution reactions"}
+```{r dissolution_logK, fig.cap="Equilibrium constants of dissolution reactions", small_mar = TRUE}
 T <- seq(0, 350, 10)
 CO2_logK <- subcrt(c("CO2", "CO2"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
 CO_logK <- subcrt(c("CO", "CO"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
 CH4_logK <- subcrt(c("CH4", "CH4"), c("gas", "aq"), c(-1, 1), T = T)$out$logK
 logK <- data.frame(T, CO2_logK, CO_logK, CH4_logK)
-par(mar = c(5, 5, 1, 1))
 matplot(logK[, 1], logK[, -1], type = "l", col = 1, lty = 1,
         xlab = axis.label("T"), ylab = axis.label("logK"))
 text(80, -1.7, expr.species("CO2"))
@@ -466,7 +475,7 @@ Unless you have a specific reason to compare them, redundant species should not 
 These functions are useful for both interactive use and scripts that compare different versions of data or plots for different systems or conditions.
 
 Let's put items #1--4 together to remake the corundum solubility plot using only species available in SLOP98.
-To do this, we use `add.OBIGT()` followed by `retrieve()` to gather the species indices for all Al species, then take only those species sourced from Shock et al. (1997).
+To do this, we use `add.OBIGT()` followed by `retrieve()` to gather the species indices for all Al species, then take only those species sourced from @SSWS97.
 
 ```{r corundum_solubility_2, fig.cap="Corundum solubility with species from SLOP98"}
 # Add superseded species from SLOP98
@@ -617,14 +626,14 @@ print(paste("Chloride concentration (mol/kg):", NaCl$m_Clminus))
 ### 10. Use <span style="color:green;font-family:monospace;">solubility()</span> to draw multiple solubility contours
 
 There are many uses for "composite diagrams" [@GC65], where stability fields for minerals and predominance fields for aqueous species are both present.
-As mentioned above (#6), setting the activities of formed aqueous species defines a single solubility contour.
+As [mentioned above](#set-activities-of-formed-species-to-define-a-single-solubility-contour), setting the activities of formed aqueous species defines a single solubility contour.
 This represents a concentration-dependent boundary between minerals and aqueous species on a composite diagram, a concept referred to either as
-"equisolubility" [@Pou74] or "isosolubility" [@Hel64 and Garrels and Christ, 1965].
+"equisolubility" [@Pou74] or "isosolubility" [@Hel64;@GC65].
 
 Composite diagrams are often drawn with multiple solubility contours in order to show the dependence of solubility on pH, redox, or other variables.
 See examples of Eh--pH composite diagrams in `demo("Pourbaix")`.
 
-You could loop over constant activities to make a series of solubility contours (see the [above example for Mn](#when-to-use-add-true)).
+You could loop over constant activities to make a series of solubility contours (see the [example for Mn above](#when-to-use-add-true)).
 An easier solution is to use `solubility()` to visualize multiple solubility contours in one go.
 The basic idea is to first load the mineral(s) containing a single metal as the formed `species()`.
 Then, list the aqueous species with that metal as the first argument to `solubility()`.
@@ -720,8 +729,8 @@ title("Multiple solubility contours", font.main = 1)
 ```
 
 <button id="B-solubility" onclick="ToggleDiv('solubility')">Show code</button>
-<div id="D-solubility" style="display: none">
-```{r solubility, eval=FALSE, cache=FALSE, merge_next=TRUE}
+<div id="D-solubility" style="display: none;">
+```{r solubility, eval=FALSE, cache=FALSE}
 ```
 </div>
 
@@ -837,7 +846,7 @@ abline(h = 0, lty = 2, lwd = 2)
 ```
 
 <button id="B-rainbow" onclick="ToggleDiv('rainbow')">Show code</button>
-<div id="D-rainbow" style="display: none">
+<div id="D-rainbow" style="display: none;">
 ```{r rainbow, eval=FALSE, cache=FALSE}
 ```
 </div>
@@ -850,7 +859,7 @@ We obtain three plots:
   2. Balance on a different species, `r h2`.
   3. No balancing constraint (`balance = 1`).
      This just shows the affinity of each reaction as given (that is, per mole of formed species),
-     which is how the results were presented by Shock and Canovas (2010).
+     which is how the results were presented by @SC10.
 
 ### 14. Calculate adjusted and non-standard Gibbs energy with <span style="color:green;font-family:monospace;">subcrt()</span>
 
@@ -962,7 +971,7 @@ abline(h = 0, lty = 2, col = 8)
 ```
 
 <button id="B-organic" onclick="ToggleDiv('organic')">Show code</button>
-<div id="D-organic" style="display: none">
+<div id="D-organic" style="display: none;">
 ```{r organic, eval=FALSE, cache=FALSE}
 ```
 </div>
@@ -975,7 +984,7 @@ a2$species
 ```
 
 NOTE: This example uses `balance = 1` in the call to `diagram()` to prevent normalizating the reactions by a balancing constraint
-(i.e., normalization by number of C) in order to reproduce the calculations of Mayumi et al. (2013).
+(i.e., normalization by number of C) in order to reproduce the calculations of @MDS_13.
 In most other cases (especially for making relative stability diagrams), this argument should not be used.
 
 ### 16. Extract results from the output of <span style="color:green;font-family:monospace;">diagram()</span>
@@ -983,7 +992,7 @@ In most other cases (especially for making relative stability diagrams), this ar
 Sometimes it's useful to make further computations on the results of a `diagram()` call.
 For example, a system might dominated by a few stable species, but you'd rather visualize the relative stabilities of less stable (i.e., metastable) species.
 Here we do this for all the aqueous S species in the OBIGT database, accessed using `retrieve()`.
-We use `plot.it = FALSE` to suppress the first plot (which would look like the [Eh--pH diagram for S](#chemical-affinity-and-stability-diagrams) above),
+We use `plot.it = FALSE` to suppress the first plot (which would look like the [Eh--pH diagram above for S](#chemical-affinity-and-stability-diagrams)),
 but save the output with `d <- diagram()` to access the identified stable species in `d$predominant`.
 After removing these stable species from the system, we recalculate affinities for the remaining metastable species and make a diagram for them.
 
@@ -1062,8 +1071,8 @@ which are stored outside of the OBIGT database.
 
 The default model for activity coefficients uses the extended Debye--Hückel equation with parameters for NaCl-dominated solutions from @HKF81.
 The species-species parameters are charge and (for the default `Bdot` model) ion-size parameters used in the HCh program [@SB99].
-By contrast, the `bgamma` model uses an extended term parameter that is derived from data of @Hel69, Helgeson et al. (1981), and high-P extrapolations of @MSS13.
-The `Alberty` model uses parameters listed in Chapter 3 of @Alb03, which are applicable to relatively low-temperature biochemical reactions.
+By contrast, the `bgamma` model uses an extended term parameter that is derived from data of @Hel69, @HKF81, and high-P extrapolations of @MSS13.
+The `Alberty` model uses parameters listed in Chapter 3 of @Alb03, which are applicable to relatively low temperatures.
 Choose from these models with `nonideal()`.
 
 NOTE: By default, H^+^ is assumed to have unit activity coefficient for any ionic strength.
@@ -1160,7 +1169,7 @@ d <- diagram(a, type = "H2", lty = c(2, 3))
 legend("bottomright", c("HCN", "formaldehyde"), lty = c(2, 3))
 ```
 
-See `demo("buffer")` for a fully worked-out example based on the figure in Schulte and Shock (1995).
+See `demo("buffer")` for a fully worked-out example based on the figure in @SS95.
 
 NOTE: This feature works independently from buffers defined in `thermo()$buffer`, but produces equivalent results for certain systems;
 see `test-diagram.R` in the package test directory.
@@ -1331,7 +1340,7 @@ text(pH_KMQ - 0.2, -28, "KMQ", srt = 90, col = 4, cex = 0.8)
 ```
 
 <button id="B-buffer_gold" onclick="ToggleDiv('buffer_gold')">Show code</button>
-<div id="D-buffer_gold" style="display: none">
+<div id="D-buffer_gold" style="display: none;">
 ```{r buffer_gold, eval=FALSE, cache=FALSE}
 ```
 </div>
@@ -1339,13 +1348,13 @@ text(pH_KMQ - 0.2, -28, "KMQ", srt = 90, col = 4, cex = 0.8)
 The diagrams show:
 
 1. Temperature dependence of gold species distribution under the hematite-magnetite (HM) buffer [cf. Fig. 2A in @WBM09]
-2. Temperature dependence under the pyrite-pyrrhotite-magnetite (PPM) buffer (cf. Fig. 2B in Williams-Jones et al., 2009)
+2. Temperature dependence under the pyrite-pyrrhotite-magnetite (PPM) buffer [cf. Fig. 2B in @WBM09]
 3. pH dependence under PPM at fixed temperature, with neutral pH and KMQ buffer lines [cf. Fig. 7 in @AZ01]
 4. Species predominance in log&nbsp;*f*`r o2`--pH space with redox and pH buffer lines
 
 Note the following limitation:
 
-- `mosaic()` calculations currently aren't support for basis species that are associated with a buffer.
+- `mosaic()` calculations currently aren't supported for basis species that are associated with a buffer.
 - Because of this, for the last diagram we precomputed the value of log&nbsp;*a*`r h2s` from the PPM buffer then assigned that value in `basis()`
   to use in the mosaic calculation.
 
@@ -1528,7 +1537,7 @@ stopifnot(sum(scaled_abundance * pl) == 1)
 
 Unit total activity of residues is set by `equilibrate(loga.balance = 0)`, allowing comparison between experimental and predicted abundances:
 
-```{r protein_12, fig.cap = "Unoptimized predicted abundances of proteins compared to experimental abundances, both scaled to unit total activity of residues; dashed line is 1:1 line"}
+```{r protein_12, fig.cap = "Unoptimized predicted abundances of proteins compared to experimental abundances, both scaled to unit total activity of residues; dashed line is 1:1 line", small_mar = TRUE}
 basis("CHNOSe")
 # Make a guess for Eh
 basis("Eh", -0.5)
@@ -1542,7 +1551,7 @@ plot(log10(scaled_abundance), log10(predicted_abundance), pch = 19)
 lims <- range(par("usr"))
 lines(c(lims[1], lims[2]), c(lims[1], lims[2]), lty = 2)
 MAE <- mean(abs(log10(scaled_abundance) - log10(predicted_abundance)))
-title(paste("MAE =", round(MAE, 2)))
+legend("topleft", paste("MAE =", round(MAE, 2)), bty = "n")
 ```
 
 ### 7. Additional protein analysis
@@ -1617,13 +1626,14 @@ plot(scaled_logabundance, optimized_logabundance, pch = 19, col = col)
 # Show 1:1 line
 lims <- range(par("usr"))
 lines(c(lims[1], lims[2]), c(lims[1], lims[2]), lty = 2)
-title(paste("MAE =", round(MAE[imin], 2)))
-# Add legend for colors
+title("Predicted vs experimental abundance")
+# Add legends
+legend("topleft", paste("MAE =", round(MAE[imin], 2)), bty = "n")
 legend("bottomright", c("High Zc", NA, NA, NA, "Low Zc"), pch = 19, col = rev(col_in))
 ```
 
 <button id="B-protein_optimization" onclick="ToggleDiv('protein_optimization')">Show code</button>
-<div id="D-protein_optimization" style="display: none">
+<div id="D-protein_optimization" style="display: none;">
 ```{r protein_optimization, eval=FALSE, cache=FALSE}
 ```
 </div>
@@ -1642,16 +1652,16 @@ The metastable equilibrium model provides a theoretical framework for predicting
 
 ### Comparing evolutionary branches: Groupwise relative stabilities of CRISPR-associated (Cas) proteins
 
-CRISPR-associated proteins (Cas) have important functions in microbial immunity to viruses and in biotechnology for gene editing.
-Plotting their relative stabilities could relate their evolution to environmental variables.
+CRISPR-associated (Cas) proteins have important functions in microbial immunity to viruses and in biotechnology for gene editing.
+Plotting their relative stabilities is a way of relating their evolution to environmental variables.
 
-Unlike minerals or inorganic aqueous species, the scope of interest is not single molecules but rather sets of related sequences that belong to evolutionary classes or types.
-For example, each type of CRISPR-Cas system (numbered I--VI) is represented by various numbers of genomes in the classification presented by @MWI_20.
+Here, the scope of the comparison is not single molecules but rather sets of related sequences that belong to evolutionary classes or types.
+Specifically, each type of CRISPR-Cas system (numbered I--VI) is represented by various numbers of genomes in the classification presented by @MWI_20.
 This is visualized in the following diagram, showing the `r zc` and number of amino acids in the effector modules.
 (The effector module combines with CRISPR RNA (crRNA) to form the effector complex that targets a specific DNA sequence.)
 The larger size of effector modules of many Class 1 systems is associated with multiple Cas proteins, which were combined to calculate `r zc`.
 
-```{r Cas_Zc, echo=FALSE, fig.cap = "Carbon oxidation state and size of CRISPR-Cas effector complexes", cache=TRUE}
+```{r Cas_Zc, echo=FALSE, fig.cap = "Carbon oxidation state and size of CRISPR effector modules (Cas proteins)", cache=TRUE, small_mar = TRUE}
 # Read data table
 file <- system.file("extdata/protein/Cas/Cas_uniprot.csv", package = "CHNOSZ")
 dat <- read.csv(file)
@@ -1720,14 +1730,13 @@ subtype_cex <- type_cex[subtype_type]
 Zc <- canprot::Zc(effector_aa)
 naa <- protein.length(effector_aa)
 # Make plot
-par(mar = c(5, 5, 1, 1))
 plot(naa, Zc, pch = class + 20, cex = subtype_cex, col = subtype_col, bg = subtype_col, xlab = "Number of amino acids", ylab = quote(italic(Z)[C]))
 legend("topright", c("I               ", "III", "IV"), pch = 21, pt.cex = type_cex[1:3], col = col1, pt.bg = col1, title = "Class 1               ", cex = 0.95)
 legend("topright", c("II", "V", "VI"), pch = 22, pt.cex = type_cex[4:6], col = col2, pt.bg = col2, title = "Class 2", bty = "n", cex = 0.95)
 ```
 
 <button id="B-Cas_Zc" onclick="ToggleDiv('Cas_Zc')">Show code</button>
-<div id="D-Cas_Zc" style="display: none">
+<div id="D-Cas_Zc" style="display: none;">
 ```{r Cas_Zc, eval=FALSE, cache=FALSE}
 ```
 </div>
@@ -1740,7 +1749,7 @@ This is done by first calculating the formation affinities for all effector modu
 The function used for this, `rank.affinity()`, includes a rescaling step to handle groups with different numbers of members.
 We can see that rescaling is necessary because the average rank of a group with one member is bounded by 1 and 42,
 but the average rank of a group with three members is bounded by 2 (the average of 1, 2, and 3) and 41 (the average of 40, 41, and 42).
-Instead of representing maximum affinity as in previous diagrams, the stability fields here represent maximum average rank of affinity after rescaling.
+Rather than representing maximum affinity as in previous diagrams, the stability fields here represent maximum average rank of affinity after rescaling.
 
 ```{r Cas_stability, echo=FALSE, fig.cap = "Groupwise relative stabilities of Cas effector modules in different types of CRISPR-Cas systems as a function of Eh and temperature; dashed line is water stability limit", cache=TRUE}
 # Setup plot
@@ -1785,7 +1794,7 @@ title("Metastable types", font.main = 1)
 ```
 
 <button id="B-Cas_stability" onclick="ToggleDiv('Cas_stability')">Show code</button>
-<div id="D-Cas_stability" style="display: none">
+<div id="D-Cas_stability" style="display: none;">
 ```{r Cas_stability, eval=FALSE, cache=FALSE}
 ```
 </div>
@@ -1795,7 +1804,7 @@ These were then removed to show the metastable types in the second diagram.
 
 An interesting result is the relative stability of Type III effector modules at reducing conditions (low Eh).
 Notably, the Type III system was proposed to have evolved first in Class 1 [@MWK22].
-Taken together, these observations support the notion of adaptation of Type III Cas sequences to reducing conditions on early Earth.
+The result is therefore consistent with the possibility that amino acid compositions of Type III Cas sequences were shaped by reducing conditions on early Earth.
 
 ## Further Resources - Demos
 
@@ -1905,8 +1914,10 @@ You can also:
 ```
 </p>
 
-<!-- for finding what versions of packages are on R-Forge and winbuilder
-```{r sessionInfo}
-sessionInfo()
+```{r sessionInfo, echo = FALSE}
+## For finding what versions of packages are on R-Forge and winbuilder
+#sessionInfo()
 ```
--->
+
+## References
+
