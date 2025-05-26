@@ -255,7 +255,7 @@ opts_chunk$set(
 The `affinity()` function calculates chemical affinities over ranges of *T*, *P*, and activities:
 
 ```{r diagram, fig.cap = "Eh--pH (Pourbaix) diagram for S"}
-# Set up the C-H-N-O-S basis system with electron
+# Setup the C-H-N-O-S basis system with electron
 basis("CHNOSe")
 # Define aqueous sulfur species
 species(c("SO4-2", "HSO4-", "HS-", "H2S"))
@@ -679,7 +679,7 @@ NaCl_res <- NaCl(m_NaCl, T = T, P = P)
 IS = NaCl_res$IS
 m_Clminus = NaCl_res$m_Clminus
 
-# Set up basis species
+# Setup basis species
 basis(c(metal, "H2S", "Cl-", "oxygen", "H2O", "H+"))
 basis("H2S", log10(Stot))
 basis("Cl-", log10(m_Clminus))
@@ -1140,7 +1140,7 @@ a <- affinity(T = c(200, 400, 11), P = 2000, return.buffer = TRUE)
 Some buffers constrain multiple basis species simultaneously:
 
 ```{r buffer_3}
-# Set up basis species
+# Setup basis species
 basis(c("FeS2", "H2S", "O2", "H2O"), c(0, -10, -50, 0))
 # Associate both H2S and O2 with the PPM buffer
 basis(c("H2S", "O2"), c("PPM", "PPM"))
@@ -1156,7 +1156,7 @@ The `diagram()` function with the `type` argument can solve for and display acti
 This example reproduces part of Fig. 6 in @SS95:
 
 ```{r buffer_4, fig.cap = "Equilibrium log&nbsp;H<sub>2</sub> fugacity for 10^-6^ activity of HCN or formaldehyde with water, 1 bar of N<sub>2</sub> and 10 bar of CO<sub>2</sub>"}
-# Set up a system in terms of gases and liquid water
+# Setup a system in terms of gases and liquid water
 basis(c("hydrogen", "carbon dioxide", "nitrogen", "water"))
 # Use 10 bar of CO2 and 1 bar of other gases (default)
 basis("CO2", 1)
@@ -1179,7 +1179,7 @@ see `test-diagram.R` in the package test directory.
 Redox buffers like QFM, HM, and PPM can be used as inputs for subsequent calculations:
 
 ```{r buffer_5, fig.cap = "Gold solubility at 300 °C with PPM buffer for *f*O<sub>2</sub> and *a*H<sub>2</sub>S"}
-# Set up system for gold solubility calculation
+# Setup system for gold solubility calculation
 basis(c("Au", "Fe", "H2S", "H2O", "oxygen", "H+"))
 # Apply PPM buffer for fO2 and H2S
 basis("O2", "PPM")
@@ -1232,7 +1232,7 @@ Mineral assemblages like K-feldspar--muscovite--quartz (KMQ) can buffer pH:
 ```{r buffer_8}
 # Define the KMQ buffer
 mod.buffer("KMQ", c("quartz", "muscovite", "K-feldspar"), "cr", 0)
-# Set up the system
+# Setup the system
 basis(c("Al2O3", "quartz", "K+", "H2O", "oxygen", "H+"))
 # Set K+ molality for KCl solution
 basis("K+", log10(0.5))
@@ -1596,7 +1596,7 @@ aa <- pinfo(ip)
 Zc_values <- canprot::Zc(aa)
 col <- col_in[rank(Zc_values)]
 
-# Set up chemical system with H+ and e-
+# Setup chemical system with H+ and e-
 basis("CHNOSe")
 # Calculate affinities as a function of redox potential
 a <- affinity(Eh = c(-0.6, 0), iprotein = ip)
@@ -1650,18 +1650,26 @@ The correspondence between theoretical predictions and experimental measurements
 normalization of protein formulas and optimizing physicochemical parameters.
 The metastable equilibrium model provides a theoretical framework for predicting how chemical conditions influence relative protein abundances.
 
-### Comparing evolutionary branches: Groupwise relative stabilities of CRISPR-associated (Cas) proteins
+### Environmental controls on protein evolution: A case study with CRISPR-Cas systems
 
-CRISPR-associated (Cas) proteins have important functions in microbial immunity to viruses and in biotechnology for gene editing.
-Plotting their relative stabilities is a way of relating their evolution to environmental variables.
+Evolution doesn't happen in a vacuum&nbsp;– organisms and their molecular machinery must cope with changing environmental conditions over geological time.
+Just as geochemists use relative stability diagrams to predict which minerals are stable under different temperature and pressure conditions,
+we can apply similar thermodynamic principles to understand protein evolution.
+The central hypothesis is that environmental variables, particularly temperature and redox conditions (Eh),
+have shaped the amino acid compositions of proteins throughout Earth's history.
+This approach becomes especially powerful when comparing not individual proteins, but entire evolutionary lineages.
 
-Here, the scope of the comparison is not single molecules but rather sets of related sequences that belong to evolutionary classes or types.
-Specifically, each type of CRISPR-Cas system (numbered I--VI) is represented by various numbers of genomes in the classification presented by @MWI_20.
-This is visualized in the following diagram, showing the `r zc` and number of amino acids in the effector modules.
-(The effector module combines with CRISPR RNA (crRNA) to form the effector complex that targets a specific DNA sequence.)
-The larger size of effector modules of many Class 1 systems is associated with multiple Cas proteins, which were combined to calculate `r zc`.
+CRISPR-Cas systems are molecular scissors that bacteria and archaea use as immune systems against viruses,
+and which biotechnologists have adapted for precise gene editing.
+These systems evolved into six major types (I--VI), each representing an evolutionary branch with multiple representatives across different genomes [@MWI_20].
 
-```{r Cas_Zc, echo=FALSE, fig.cap = "Carbon oxidation state and size of CRISPR effector modules (Cas proteins)", cache=TRUE, small_mar = TRUE}
+Rather than comparing individual proteins, we can ask:
+which types of CRISPR-Cas systems would be most thermodynamically stable under different environmental conditions?
+The following diagram introduces the players by showing the carbon oxidation state (`r zc`) and size of the effector modules;
+the effector module combines with CRISPR RNA (crRNA) to form the effector complex that does the actual cutting work on a target DNA sequence.
+Class 1 systems tend to have larger effector modules made up of multiple proteins, which were combined to calculate `r zc`.
+
+```{r Cas_Zc, echo=FALSE, fig.cap = "Carbon oxidation state and size of CRISPR-Cas effector modules", cache=TRUE, small_mar = TRUE}
 # Read data table
 file <- system.file("extdata/protein/Cas/Cas_uniprot.csv", package = "CHNOSZ")
 dat <- read.csv(file)
@@ -1673,63 +1681,63 @@ ID[ID == ""] <- dat$Protein[ID == ""]
 dat$ID <- ID
 # Remove missing IDs
 dat <- subset(dat, ID != "")
-# Keep proteins in effector complexes
+# Keep proteins in effector complexes - the functional units that cut DNA
 dat <- subset(dat, Effector)
 
 # Read amino acid compositions
 aafile <- system.file("extdata/protein/Cas/Cas_aa.csv", package = "CHNOSZ")
 aa <- read.csv(aafile)
 
-# Loop over subtypes (I-A, I-B etc.)
+# Loop over evolutionary subtypes (I-A, I-B etc.)
 subtypes <- unique(dat$Subtype)
 effector_aa_list <- lapply(subtypes, function(subtype) {
-  # Get the IDs for this subtype
+  # Get the IDs for this evolutionary subtype
   idat <- dat$Subtype == subtype
   ID <- dat$ID[idat]
-  # Sum the amino acid compositions of all effector proteins in this subtype
+  # Combine amino acid compositions of all effector proteins in this subtype
   iaa <- aa$ref %in% ID
   all_aa <- aa[iaa, ]
   summed_aa <- sum_aa(all_aa)
-  # Put in all gene names and IDs
+  # Store gene names and IDs for reference
   summed_aa$protein <- paste(all_aa$protein, collapse = ",")
   summed_aa$ref <- paste(all_aa$ref, collapse = ",")
-  # Put in the subtype
+  # Label with the evolutionary subtype
   summed_aa$abbrv <- subtype
-  # Return the amino acid composition for this subtype
+  # Return the combined amino acid composition for this evolutionary branch
   summed_aa
 })
-# Make a data frame of amino acid compositions of effector proteins
+# Create data frame of amino acid compositions for each evolutionary branch
 effector_aa <- do.call(rbind, effector_aa_list)
 
-# List each type (I to VI)
+# Identify the six major evolutionary types (I to VI)
 type_names <- c("I", "II", "III", "IV", "V", "VI")
-# Find which subtypes belong to each type
+# Map subtypes to their parent types
 subtype_type <- sapply(strsplit(effector_aa$abbrv, "-"), "[", 1)
-# Get class for each subtype
+# Assign evolutionary classes (1 or 2) based on system architecture
 class <- ifelse(subtype_type %in% c("I", "III", "IV"), 1, 2)
 
-# Assign colors for classes
+# Color scheme to distinguish evolutionary classes
 col1 <- hcl.colors(5, "Peach")[1:3]
 col2 <- hcl.colors(5, "Purp")[1:3]
 type_col <- c(
-  # Class 1
+  # Class 1 - multi-protein complexes
   I = col1[1], III = col1[2], IV = col1[3],
-  # Class 2
+  # Class 2 - single-protein effectors
   II = col2[1], V = col2[2], VI = col2[3]
 )
-# Assign point size for classes
+# Point sizes to show types in each class
 type_cex <- c(
   I = 1, III = 1.5, IV = 2,
   II = 1, V = 1.5, VI = 2
 )
-# Get colors and sizes for subtypes
+# Apply colors and sizes to subtypes
 subtype_col <- type_col[subtype_type]
 subtype_cex <- type_cex[subtype_type]
 
-# Calculate Zc and number of amino acids in effector complexes
+# Calculate chemical features of effector complexes
 Zc <- canprot::Zc(effector_aa)
 naa <- protein.length(effector_aa)
-# Make plot
+# Plot chemical features
 plot(naa, Zc, pch = class + 20, cex = subtype_cex, col = subtype_col, bg = subtype_col, xlab = "Number of amino acids", ylab = quote(italic(Z)[C]))
 legend("topright", c("I               ", "III", "IV"), pch = 21, pt.cex = type_cex[1:3], col = col1, pt.bg = col1, title = "Class 1               ", cex = 0.95)
 legend("topright", c("II", "V", "VI"), pch = 22, pt.cex = type_cex[4:6], col = col2, pt.bg = col2, title = "Class 2", bty = "n", cex = 0.95)
@@ -1741,50 +1749,53 @@ legend("topright", c("II", "V", "VI"), pch = 22, pt.cex = type_cex[4:6], col = c
 ```
 </div>
 
-Plotting the relative stabilies of Cas effector modules from all `r length(Zc)` genomes
-(the number of points in the previous diagram) would result in a complex, hard-to-interpret diagram.
-Instead, here we visualize relative stabilities of groups, one for each of the CRISPR-Cas types (I--VI).
-This is done by first calculating the formation affinities for all effector modules, ranking them, then finding the average rank for each type.
+Each type (I--VI) represents an evolutionary branch containing multiple genome representatives&nbsp;– some branches have just a few members, others have more.
+This creates a methodological challenge: how do we fairly assess the relative stability of groups with unequal membership?
 
-The function used for this, `rank.affinity()`, includes a rescaling step to handle groups with different numbers of members.
-We can see that rescaling is necessary because the average rank of a group with one member is bounded by 1 and 42,
+The solution lies in CHNOSZ's `rank.affinity()` function, which calculates formation energies for all individual proteins,
+ranks them, then finds the average rank for each evolutionary group.
+A rescaling step ensures that groups with different numbers of members can be compared fairly.
+To see why rescaling is necessary, consider that the average rank of a group with one member is bounded by 1 and `r length(Zc)`
+(the total number of genomes in this calculation),
 but the average rank of a group with three members is bounded by 2 (the average of 1, 2, and 3) and 41 (the average of 40, 41, and 42).
-Rather than representing maximum affinity as in previous diagrams, the stability fields here represent maximum average rank of affinity after rescaling.
 
-```{r Cas_stability, echo=FALSE, fig.cap = "Groupwise relative stabilities of Cas effector modules in different types of CRISPR-Cas systems as a function of Eh and temperature; dashed line is water stability limit", cache=TRUE}
-# Setup plot
+Rather than representing maximum affinity as in previous diagrams, the resulting stability fields represent maximum average rank of formation affinity after rescaling.
+This provides a thermodynamic framework for predicting which CRISPR-Cas types would predominate under different environmental conditions.
+
+```{r Cas_stability, echo=FALSE, fig.cap = "Groupwise relative stabilities of effector modules in different types of CRISPR-Cas systems as a function of Eh and temperature; dashed line is lower water stability limit", cache=TRUE}
+# Setup figure
 par(mfrow = c(1, 2))
 
-# Load amino acid compositions to CHNOSZ
+# Load amino acid compositions into CHNOSZ thermodynamic database
 iprotein <- add.protein(effector_aa)
-# Calculate affinities as a function of Eh and T
+# Calculate formation affinities across environmental gradients
 basis("QEC+")
 swap.basis("O2", "e-")
 aout <- affinity(T = c(0, 120), Eh = c(-0.8, 0), iprotein = iprotein)
 
-# Identify types
+# Group proteins by evolutionary type for comparative analysis
 types <- lapply(type_names, `==`, subtype_type)
 names(types) <- type_names
-# Calculate average rank for each type
+# Calculate average rank of formation affinity for each evolutionary group
 arank <- rank.affinity(aout, groups = types)
-# Make first diagram
+# Create stability diagram showing thermodynamically favored types
 d <- diagram(arank, fill = type_col[type_names])
 water.lines(d, lty = 2)
 title("Stable types", font.main = 1)
 
-# Take out stable types
+# Identify and remove dominant types to reveal secondary patterns
 istable <- unique(as.numeric(d$predominant))
 stable_type_names <- type_names[istable]
 itype_stable <- subtype_type %in% stable_type_names
 
-# Get metastable types and subtypes
+# Focus on metastable evolutionary branches
 type_names <- type_names[-istable]
 effector_aa <- effector_aa[!itype_stable, ]
 subtype_type <- sapply(strsplit(effector_aa$abbrv, "-"), "[", 1)
 types <- lapply(type_names, `==`, subtype_type)
 names(types) <- type_names
 
-# Make second diagram
+# Generate second diagram for metastable types
 iprotein <- add.protein(effector_aa)
 aout <- affinity(T = c(0, 120), Eh = c(-0.8, 0), iprotein = iprotein)
 arank <- rank.affinity(aout, groups = types)
@@ -1799,12 +1810,15 @@ title("Metastable types", font.main = 1)
 ```
 </div>
 
-The first diagram shows the stable types.
-These were then removed to show the metastable types in the second diagram.
+The stability diagrams reveal a compelling pattern: Type III systems dominate at reducing conditions (low Eh), particularly at higher temperatures.
+This finding gains evolutionary significance when we consider that Type III was likely the first CRISPR-Cas system to evolve in Class 1 [@MWK22].
+The thermodynamic preference for reducing conditions aligns with the hypothesis that these ancient immune systems arose
+when Earth's atmosphere and oceans were more reducing than today.
 
-An interesting result is the relative stability of Type III effector modules at reducing conditions (low Eh).
-Notably, the Type III system was proposed to have evolved first in Class 1 [@MWK22].
-The result is therefore consistent with the possibility that amino acid compositions of Type III Cas sequences were shaped by reducing conditions on early Earth.
+The key innovation here&nbsp;– using `rank.affinity()` to compare groups rather than individuals&nbsp;–
+opens up possibilities for analyzing any system where evolutionary lineages contain multiple representatives, from enzyme families to entire metabolic pathways.
+This groupwise approach to relative stability analysis enriches the geobiologist's toolkit with methods 
+for mapping the environmental niches where different protein families achieve maximum thermodynamic stability.
 
 ## Further Resources - Demos
 
