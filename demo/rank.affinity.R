@@ -1,8 +1,9 @@
 # CHNOSZ/demo/rank.affinity.R
-## Affinity ranking for proteins coded by differentially expressed
-## genes in response to carbon limitation in yeast
+# Affinity ranking for proteins coded by differentially expressed
+# genes in response to carbon limitation in yeast
 # Demo written on 20220620
 # Adapted from an example previously in read.expr.Rd (CHNOSZ 1.1.0) and yeast.Rd (CHNOSZ 1.2.0-1.3.0)
+
 library(CHNOSZ)
 
 # Experimental data are from Tai et al. (2005)

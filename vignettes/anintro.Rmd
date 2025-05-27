@@ -1397,8 +1397,6 @@ iprotein <- add.protein(aa)
 # For FASTA files, use the canprot package
 fasta_file <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
 aa <- canprot::read_fasta(fasta_file)
-# This is how you could read your own file
-# aa <- canprot::read_fasta("proteins.fasta")
 iprotein <- add.protein(aa)
 ```
 
@@ -1697,7 +1695,7 @@ effector_aa_list <- lapply(subtypes, function(subtype) {
   # Combine amino acid compositions of all effector proteins in this subtype
   iaa <- aa$ref %in% ID
   all_aa <- aa[iaa, ]
-  summed_aa <- sum_aa(all_aa)
+  summed_aa <- canprot::sum_aa(all_aa)
   # Store gene names and IDs for reference
   summed_aa$protein <- paste(all_aa$protein, collapse = ",")
   summed_aa$ref <- paste(all_aa$ref, collapse = ",")

@@ -1,5 +1,8 @@
 # CHNOSZ/demo/reference.R
-## Cross-checking references
+# Cross-checking references
+# 20121231 first version (sources.R)
+# 20241225 renamed to references.R
+
 library(CHNOSZ)
 
 # The available reference keys

@@ -30,7 +30,7 @@ examples <- function(save.png = FALSE) {
   cat("Time elapsed: ", proc.time() - .ptime, "\n")
 }
 
-demos <- function(which = c("references", "affinity", "NaCl", "density", 
+demos <- function(which = c("references", "dehydration", "affinity", "NaCl", "density", 
   "ORP", "ionize", "buffer", "protbuff", "glycinate",
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "minsol",
   "Shh", "saturation", "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum",
@@ -42,18 +42,13 @@ demos <- function(which = c("references", "affinity", "NaCl", "density",
   for(i in 1:length(which)) {
     # A message so the user knows where we are
     message("------------")
-    if(which[i] == "dehydration" & !save.png) {
-      message("demos: skipping dehydration demo as save.png is FALSE")
-      next 
-    } else message(paste("demos: running '", which[i], "'", sep = ""))
-    if(save.png & !which[i] == "dehydration") {
-      width <- 500
-      height <- 500
-      if(which[i] == "comproportionation") width <- 600
-      png(paste(which[i], "%d.png", sep = ""), width = width, height = height, pointsize = 12)
-    }
+    message(paste("demos: running '", which[i], "'", sep = ""))
+    width <- 500
+    height <- 500
+    if(which[i] == "comproportionation") width <- 600
+    if(save.png) png(paste(which[i], "%d.png", sep = ""), width = width, height = height, pointsize = 12)
     out <- demo(which[i], package = "CHNOSZ", character.only = TRUE, echo = FALSE, ask = FALSE)
-    if(save.png & !which[i] == "dehydration") dev.off()
+    if(save.png) dev.off()
   }
   return(invisible(out))
 }

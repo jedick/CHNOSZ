@@ -4,10 +4,10 @@
 
 library(CHNOSZ)
 
-datfile <- system.file("extdata/misc/rubisco.csv", package = "CHNOSZ")
-fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
+datfile <- system.file("extdata/protein/rubisco.csv", package = "CHNOSZ")
+aafile <- system.file("extdata/protein/rubisco_aa.csv", package = "CHNOSZ")
 dat <- read.csv(datfile)
-aa <- canprot::read_fasta(fastafile)
+aa <- read.csv(aafile)
 Topt <- (dat$T1 + dat$T2) / 2
 idat <- match(dat$ID, substr(aa$protein, 4, 9))
 aa <- aa[idat, ]
@@ -25,13 +25,13 @@ title("Average oxidation state of carbon in Rubisco vs.\noptimal growth temperat
 
 # The old code for making the SVG image
 # - RSVGTipsDevice is no longer on CRAN: https://cran.r-project.org/web/packages/RSVGTipsDevice/index.html
-# - I got a compilation error trying to install it with remotes::install_github("cran/RSVGTipsDevice")
+# - I got a compilation error trying to install it with remotes::install_github("cran/RSVGTipsDevice") 20250510
 
 if(require(RSVGTipsDevice, quietly = TRUE)) {
-  datfile <- system.file("extdata/misc/rubisco.csv", package = "CHNOSZ")
-  fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
+  datfile <- system.file("extdata/protein/rubisco.csv", package = "CHNOSZ")
+  aafile <- system.file("extdata/protein/rubisco_aa.csv", package = "CHNOSZ")
   dat <- read.csv(datfile)
-  aa <- canprot::read_fasta(fastafile)
+  aa <- read.csv(aafile)
   Topt <- (dat$T1 + dat$T2) / 2
   idat <- match(dat$ID, substr(aa$protein, 4, 9))
   aa <- aa[idat, ]

@@ -1,6 +1,7 @@
 # CHNOSZ/demo/sphalerite.R
 # Sphalerite solubility after Akinfiev and Tagirov, 2014, Fig. 13
 # 20190526 jmd initial version
+
 library(CHNOSZ)
 opar <- par(no.readonly = TRUE)
 

@@ -41,10 +41,10 @@ Because balancing on a basis species (i.e., dividing by its reaction coefficient
 
 \examples{
 \dontshow{reset()}# Compare Rubisco proteins from three domains
-datfile <- system.file("extdata/misc/rubisco.csv", package = "CHNOSZ")
-fastafile <- system.file("extdata/protein/rubisco.fasta", package = "CHNOSZ")
+datfile <- system.file("extdata/protein/rubisco.csv", package = "CHNOSZ")
+aafile <- system.file("extdata/protein/rubisco_aa.csv", package = "CHNOSZ")
 dat <- read.csv(datfile)
-aa <- canprot::read_fasta(fastafile)
+aa <- read.csv(aafile)
 groups <- sapply(c("A", "B", "E"), "==", dat$domain, simplify = FALSE)
 names(groups) <- c("Archaea", "Bacteria", "Eukaryota")
 ip <- add.protein(aa, as.residue = TRUE)
@@ -54,7 +54,7 @@ arank <- rank.affinity(aout, groups = groups)
 nspecies <- sapply(groups, sum)
 names <- paste0(names(groups), " (", nspecies, ")")
 diagram(arank, fill = "terrain", font = 2, names = names, format.names = FALSE)
-title("Average affinity ranking of Rubisco proteins")
+title("Average rank of affinity for Rubisco in different domains")
 }
 
 \concept{Extended workflow}

@@ -127,7 +127,7 @@ diagram <- function(
     plotvar <- eout$property
     if(efun == "rank.affinity") {
       plotvar <- "rank.affinity"
-      message(paste("diagram: plotting average affinity ranking for", length(plotvals), "groups"))
+      message(paste("diagram: plotting average rank of affinity for", length(plotvals), "groups"))
     } else if(plotvar == "A") {
       # We change 'A' to 'A/(2.303RT)' so the axis label is made correctly
       # 20171027 use parentheses to avoid ambiguity about order of operations
@@ -367,7 +367,7 @@ diagram <- function(
         if(missing(xlab)) xlab <- axis.label(getlabel(1), basis = eout$basis, molality = molality)
         if(missing(ylab)) {
           ylab <- axis.label(plotvar, units = "", molality = molality)
-          if(plotvar == "rank.affinity") ylab <- "Average affinity ranking"
+          if(plotvar == "rank.affinity") ylab <- "Average rank of affinity"
           # Use ppb, ppm, ppt (or log ppb etc.) for converted values of solubility 20190526
           if(grepl("solubility.", eout$fun, fixed = TRUE)) {
             ylab <- strsplit(eout$fun, ".", fixed = TRUE)[[1]][2]

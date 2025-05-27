@@ -13,7 +13,7 @@
 
 \usage{
   examples(save.png = FALSE)
-  demos(which = c("references", "affinity", "NaCl",
+  demos(which = c("references", "dehydration", "affinity", "NaCl",
     "density", "ORP", "ionize", "buffer", "protbuff",
     "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
     "contour", "sphalerite", "minsol", "Shh", "saturation",
@@ -34,6 +34,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
   \describe{
     \item{references}{Cross-check the references in refs.csv with the thermodynamic database}
     \item{affinity}{Affinities of metabolic reactions and amino acid synthesis (Amend and Shock, 1998, 2001)}
+    \item{dehydration}{\logK of dehydration reactions}
     \item{NaCl}{Equilibrium constant for aqueous NaCl dissociation (Shock et al., 1992)}
     \item{density}{Density of \H2O, inverted from IAPWS-95 equations (\code{\link{rho.IAPWS95}})}
     \item{ORP}{Temperature dependence of oxidation-reduction potential for redox standards}
@@ -49,7 +50,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{contour}{Gold solubility contours on a log fO2 - pH diagram (Ding et al., 2023)}
     \item{sphalerite}{Solubility of sphalerite (Akinfiev and Tagirov, 2014)}
     \item{minsol}{Solubilities of multiple minerals}
-    \item{dehydration}{\logK of dehydration reactions; SVG file contains tooltips and links}
     \item{Shh}{Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015)}
     \item{saturation}{Equilibrium activity diagram showing activity ratios and mineral saturation limits (Bowers et al., 1984)}
     \item{adenine}{HKF regression of heat capacity and volume of aqueous adenine (Lowe et al., 2017)}
@@ -74,7 +74,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
 
 Two of the demos have external dependencies and are not automatically run by \code{demos}.
-\samp{dehydration} creates an interactive SVG file; this demo depends on \CRANpkg{RSVGTipsDevice}, which is not available for Windows.
 \samp{carboxylase} creates an animated GIF; this demo requires that the ImageMagick \code{convert} commmand be available on the system (tested on Linux and Windows).
 
 \samp{carboxylase} animates diagrams showing rankings of calculated chemical activities along a combined \T and \logaH2 gradient, or makes a single plot on the default device (without conversion to animated GIF) if a single temperature (\code{T}) is specified in the code.

@@ -2,6 +2,8 @@
 # Speciation of ATP with H+ and Mg+2
 # 20250423 Moved from anintro.Rmd
 
+library(CHNOSZ)
+
 # Speciation plots, similar to Figures 1.2-1.5 in Alberty (2003).
 # These figures show the distribution of differently charged species of
 # adenosine triphosphate (ATP) as a function of pH,

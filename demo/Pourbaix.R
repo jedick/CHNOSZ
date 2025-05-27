@@ -4,6 +4,7 @@
 # 20210301 jmd first version
 
 library(CHNOSZ)
+
 # Load OBIGT database without organic species
 # (speeds up and reduces memory needed for C diagram)
 OBIGT(no.organics = TRUE)

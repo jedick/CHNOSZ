@@ -1,8 +1,7 @@
 # CHNOSZ/demo/protbuff.R
-## Buffer + ionization: Metastablilities of
-## thiol peroxidases from model bactera
-## (ECOLI, BACSU mesophile; AQUAE thermophile,
-## THIDA acidophile, BACHD alkaliphile)
+# Buffer + ionization: Metastablilities of thiol peroxidases from model bactera
+# (ECOLI, BACSU mesophile; AQUAE thermophile, THIDA acidophile, BACHD alkaliphile)
+
 library(CHNOSZ)
 
 basis("CHNOS+")

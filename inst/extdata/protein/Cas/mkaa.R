@@ -15,7 +15,7 @@ dat <- subset(dat, ID != "")
 # Get amino acid composition for each protein
 aalist <- lapply(1:nrow(dat), function(iID) {
   file <- file.path("fasta", paste0(dat$ID[iID], ".fasta"))
-  aa <- read_fasta(file)
+  aa <- canprot::read_fasta(file)
   # Store systematic name and ID
   aa$protein <- dat$Systematic[iID]
   aa$ref <- dat$ID[iID]

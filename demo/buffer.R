@@ -1,6 +1,7 @@
 # CHNOSZ/demo/buffer.R
 # Calculate buffered activities of basis species using two methods
-# Ater Figure 6 of Schulte and Shock, 1995 (doi:10.1007/BF01581580)
+# After Figure 6 of Schulte and Shock, 1995 (doi:10.1007/BF01581580)
+
 library(CHNOSZ)
 
 # Use Helgeson et al. (1978) minerals for closer reproduction 20201110

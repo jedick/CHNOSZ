@@ -1,10 +1,12 @@
 # CHNOSZ/demo/NaCl.R
-## NaCl dissocation logK f(T,P)
-## after Shock et al., 1992, Fig. 1
-## (Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) 
-##  Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: 
-##  Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 degrees C and 5 kbar. 
-##  J. Chem. Soc. Faraday Trans. 88, 803-826. https://doi.org/10.1039/FT9928800803 )
+# NaCl dissocation logK f(T,P)
+# after Shock et al., 1992, Fig. 1
+#   Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) 
+#   Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: 
+#   Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 degrees C and 5 kbar. 
+#   J. Chem. Soc. Faraday Trans. 88, 803-826. https://doi.org/10.1039/FT9928800803
+# 20121111 first version
+
 library(CHNOSZ)
 
 ## Uncomment these lines to make the plot with the g-function disabled

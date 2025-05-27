@@ -1,6 +1,8 @@
-# CHNOSZ/demo/solubility.R: solubility of CO2 and calcite
+# CHNOSZ/demo/solubility.R
+# Solubility of CO2 and calcite
 # 20150306 jmd first version; used uniroot() to find zero affinity
 # 20181031 use new vectorized, non-uniroot solubility(); add T-pH plots
+
 library(CHNOSZ)
 
 # For comparison with published CO2 solubility plot, see Fig. 4.5 in

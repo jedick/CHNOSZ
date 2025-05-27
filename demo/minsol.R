@@ -6,6 +6,7 @@
 # 20220715 Allow to change metals (renamed from zinc.R to minsol.R)
 
 library(CHNOSZ)
+
 opar <- par(no.readonly = TRUE)
 par(mfrow = c(2, 2))
 
