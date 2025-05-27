@@ -1651,9 +1651,9 @@ The metastable equilibrium model provides a theoretical framework for predicting
 ### Environmental controls on protein evolution: A case study with CRISPR-Cas systems
 
 Evolution doesn't happen in a vacuum&nbsp;– organisms and their molecular machinery must cope with changing environmental conditions over geological time.
-Just as geochemists use relative stability diagrams to predict which minerals are stable under different temperature and pressure conditions,
+Just as geochemists use relative stability diagrams to predict which minerals are stable under different physicochemical conditions,
 we can apply similar thermodynamic principles to understand protein evolution.
-The central hypothesis is that environmental variables, particularly temperature and redox conditions (Eh),
+The central hypothesis is that environmental variables, such as pH and redox conditions (Eh),
 have shaped the amino acid compositions of proteins throughout Earth's history.
 This approach becomes especially powerful when comparing not individual proteins, but entire evolutionary lineages.
 
@@ -1665,7 +1665,8 @@ Rather than comparing individual proteins, we can ask:
 which types of CRISPR-Cas systems would be most thermodynamically stable under different environmental conditions?
 The following diagram introduces the players by showing the carbon oxidation state (`r zc`) and size of the effector modules;
 the effector module combines with CRISPR RNA (crRNA) to form the effector complex that does the actual cutting work on a target DNA sequence.
-Class 1 systems tend to have larger effector modules made up of multiple proteins, which were combined to calculate `r zc`.
+Class 1 systems tend to have larger effector modules made up of multiple proteins,
+which were combined with the `sum_aa()` function from **canprot** before calculating `r zc`.
 
 ```{r Cas_Zc, echo=FALSE, fig.cap = "Carbon oxidation state and size of CRISPR-Cas effector modules", cache=TRUE, small_mar = TRUE}
 # Read data table
@@ -1760,46 +1761,38 @@ but the average rank of a group with three members is bounded by 2 (the average 
 Rather than representing maximum affinity as in previous diagrams, the resulting stability fields represent maximum average rank of formation affinity after rescaling.
 This provides a thermodynamic framework for predicting which CRISPR-Cas types would predominate under different environmental conditions.
 
-```{r Cas_stability, echo=FALSE, fig.cap = "Groupwise relative stabilities of effector modules in different types of CRISPR-Cas systems as a function of Eh and temperature; dashed line is lower water stability limit", cache=TRUE}
+NOTE: This code normalizes proteins to single residue equivalents *before* calling `affinity()` by using the `as.residue = TRUE` argument in `add.protein()`.
+If we didn't do that, then larger effector complexes would have higher affinity rankings just because of their size.
+
+```{r Cas_stability, echo=FALSE, fig.cap = "Groupwise relative stabilities of effector modules in different types of CRISPR-Cas systems as a function of Eh and pH at 25 °C; dashed lines are water stability limits", cache=TRUE}
 # Setup figure
 par(mfrow = c(1, 2))
 
-# Load amino acid compositions into CHNOSZ thermodynamic database
-iprotein <- add.protein(effector_aa)
-# Calculate formation affinities across environmental gradients
+# Setup basis species to represent chemical variables
 basis("QEC+")
 swap.basis("O2", "e-")
-aout <- affinity(T = c(0, 120), Eh = c(-0.8, 0), iprotein = iprotein)
 
+# Load amino acid compositions normalized to one residue equivalent
+iprotein <- add.protein(effector_aa, as.residue = TRUE)
+
+# Calculate formation affinities for Class 1 effectors across environmental gradients
+aout <- affinity(pH = c(0, 14), Eh = c(-0.8, 0.8), iprotein = iprotein[class == 1])
 # Group proteins by evolutionary type for comparative analysis
-types <- lapply(type_names, `==`, subtype_type)
-names(types) <- type_names
+class_1_groups <- sapply(c("I", "III", "IV"), `==`, subtype_type[class == 1], simplify = FALSE)
 # Calculate average rank of formation affinity for each evolutionary group
-arank <- rank.affinity(aout, groups = types)
+arank <- rank.affinity(aout, groups = class_1_groups)
 # Create stability diagram showing thermodynamically favored types
-d <- diagram(arank, fill = type_col[type_names])
+d <- diagram(arank, fill = col1)
 water.lines(d, lty = 2)
-title("Stable types", font.main = 1)
+title("Class 1", font.main = 1)
 
-# Identify and remove dominant types to reveal secondary patterns
-istable <- unique(as.numeric(d$predominant))
-stable_type_names <- type_names[istable]
-itype_stable <- subtype_type %in% stable_type_names
-
-# Focus on metastable evolutionary branches
-type_names <- type_names[-istable]
-effector_aa <- effector_aa[!itype_stable, ]
-subtype_type <- sapply(strsplit(effector_aa$abbrv, "-"), "[", 1)
-types <- lapply(type_names, `==`, subtype_type)
-names(types) <- type_names
-
-# Generate second diagram for metastable types
-iprotein <- add.protein(effector_aa)
-aout <- affinity(T = c(0, 120), Eh = c(-0.8, 0), iprotein = iprotein)
-arank <- rank.affinity(aout, groups = types)
-d <- diagram(arank, fill = type_col[type_names])
+# Generate second diagram for Class 2
+aout <- affinity(pH = c(0, 14), Eh = c(-0.8, 0.8), iprotein = iprotein[class == 2])
+class_2_groups <- sapply(c("II", "V", "VI"), `==`, subtype_type[class == 2], simplify = FALSE)
+arank <- rank.affinity(aout, groups = class_2_groups)
+d <- diagram(arank, fill = col2)
 water.lines(d, lty = 2)
-title("Metastable types", font.main = 1)
+title("Class 2", font.main = 1)
 ```
 
 <button id="B-Cas_stability" onclick="ToggleDiv('Cas_stability')">Show code</button>
@@ -1808,10 +1801,16 @@ title("Metastable types", font.main = 1)
 ```
 </div>
 
-The stability diagrams reveal a compelling pattern: Type III systems dominate at reducing conditions (low Eh), particularly at higher temperatures.
+The stability diagrams reveal a compelling pattern: Type III systems dominate at reducing conditions (low Eh).
 This finding gains evolutionary significance when we consider that Type III was likely the first CRISPR-Cas system to evolve in Class 1 [@MWK22].
 The thermodynamic preference for reducing conditions aligns with the hypothesis that these ancient immune systems arose
 when Earth's atmosphere and oceans were more reducing than today.
+
+Another interesting result is that Type I systems appear to be less stable compared to others in Class 1 at low pH.
+This could be due to lower frequencies of acidic amino acids in Type I effector modules.
+Furthermore, Type II systems (in Class 2) are not visualized as stable relative to other Class 2 systems in this chemical space.
+Changes to other physicochemical variables&nbsp;– represented by some combination of `r h2o` and the elements C, N, and O,
+as well as temperature and pressure&nbsp;– might be needed to stabilize this group.
 
 The key innovation here&nbsp;– using `rank.affinity()` to compare groups rather than individuals&nbsp;–
 opens up possibilities for analyzing any system where evolutionary lineages contain multiple representatives, from enzyme families to entire metabolic pathways.

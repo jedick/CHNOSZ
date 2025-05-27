@@ -20,6 +20,9 @@ rank.affinity <- function(aout, groups, rescale = TRUE, percent = FALSE) {
   min1 <- 1
   max1 <- ntot
 
+  # Keep track of empty groups
+  is_empty_group <- logical()
+
   # Get the average rank for species in each group
   grank <- sapply(groups, function(group) {
 
@@ -31,26 +34,45 @@ rank.affinity <- function(aout, groups, rescale = TRUE, percent = FALSE) {
     # Sum the ranks and divide by number of species
     rank_avg <- colSums(arank[group, , drop = FALSE]) / n
 
-    if(rescale) {
-      # Rescale ranks 20250522
-      # Get the bounds of average ranks for a group with n species
-      # Minimum is the average of 1..n for n species
-      min <- sum(1:n) / n
-      # The margin is the difference between the minimum and 1
-      margin <- min - min1
-      # Lower and upper bounds are symmetric, so we subtract the margin from total number of species to get the max
-      max <- ntot - margin
-      # Build a linear model mapping from x (bounds of group with n species) to y (bounds of group with 1 species)
-      x <- c(min, max)
-      y <- c(min1, max1)
-      rescale_lm <- lm(y ~ x)
-      # Rescale average ranks with the linear model
-      rank_avg <- predict(rescale_lm, data.frame(x = rank_avg))
-    } else {
+    # Skip rescaling and remember empty group 20250527
+    if(n == 0) {
+
+      is_empty_group <<- c(is_empty_group, TRUE)
       rank_avg
+
+    } else {
+
+      is_empty_group <<- c(is_empty_group, FALSE)
+      if(rescale) {
+        # Rescale ranks 20250522
+        # Get the bounds of average ranks for a group with n species
+        # Minimum is the average of 1..n for n species
+        min <- sum(1:n) / n
+        # The margin is the difference between the minimum and 1
+        margin <- min - min1
+        # Lower and upper bounds are symmetric, so we subtract the margin from total number of species to get the max
+        max <- ntot - margin
+        # Build a linear model mapping from x (bounds of group with n species) to y (bounds of group with 1 species)
+        x <- c(min, max)
+        y <- c(min1, max1)
+        rescale_lm <- lm(y ~ x)
+        # Rescale average ranks with the linear model
+        rank_avg <- predict(rescale_lm, data.frame(x = rank_avg))
+      } else {
+        rank_avg
+      }
+
     }
 
   })
+
+  # Remove empty groups 20250527
+  if(any(is_empty_group)) {
+    grank <- grank[, !is_empty_group, drop = FALSE]
+    empty_groups <- names(groups)[is_empty_group]
+    message(paste("rank.affinity: removing empty groups:", paste(empty_groups, collapse = ", ")))
+    groups <- groups[!is_empty_group, drop = FALSE]
+  }
 
   # Calculate average rank percentage 20240106
   if(percent) grank <- grank / rowSums(grank) * 100
