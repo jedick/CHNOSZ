@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-75 (2025-05-23)}{
+\section{Changes in CHNOSZ version 2.1.0-78 (2025-05-26)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -25,6 +25,10 @@
 
       \item Add Pd(HS)\s{4}\S{-2} and Pt(HS)\s{4}\S{-2} from
       \href{https://doi.org/10.1016/j.gca.2024.12.019}{Laskar et al. (2024)}.
+
+      \item Add Sn chloride complexes and updated parameters for Sn\S{+2} and
+      Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
+        (2023)}.
 
       \item Add aqueous uranyl complexes from
       \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}
@@ -38,10 +42,6 @@
 
       \item Add alkylamines, benzylamines, and aminiums from
       \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
-
-      \item Add Sn chloride complexes and updated parameters for Sn\S{+2} and
-      Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
-        (2023)}.
 
       \item Add cerianite (CeO\s{2}), chromite (FeCr\s{2}O\s{4}), and
       cassiterite (SnO\s{2}) from \href{https://doi.org/10.3133/b2131}{Robie

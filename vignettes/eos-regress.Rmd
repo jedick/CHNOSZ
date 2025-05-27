@@ -9,12 +9,7 @@ output:
     toc: true
     mathjax: null
     highlight: null
-  tufte::tufte_handout:
-    citation_package: natbib
-    latex_engine: xelatex
-  tufte::tufte_book:
-    citation_package: natbib
-    latex_engine: xelatex
+    margin_references: false
 vignette: >
   %\VignetteIndexEntry{Regressing thermodynamic data}
   %\VignetteEngine{knitr::rmarkdown}
@@ -443,17 +438,19 @@ legend("topright", legend = c("calc-H4SiO4 (this vignette)",
 text(225, 1000, describe.reaction(s1$reaction))
 ```
 
-Let's compare `H4SiO4` from Stef&aacute;nsson (2001) and the `calc-H4SiO4` we just made with the calculated properties of `r sio2` + 2 `r h2o` as a function of temperature:
+Let's compare `H4SiO4` from @Ste01 and the `calc-H4SiO4` we just made with the calculated properties of `r sio2` + 2 `r h2o` as a function of temperature:
 ```{r subcrt_H4SiO4, eval=FALSE}
 ```
 
 Ideally, the lines would be horizontal with a _y_-interecept of 0.
-However, both the `calc-H4SiO4` we made here and the `H4SiO4` from Stef&aacute;nsson (2001) show deviations that increase at higher temperatures.
+However, both the `calc-H4SiO4` we made here and the `H4SiO4` from @Ste01 show deviations that increase at higher temperatures.
 While they are not quite negligible, these deviations are comparatively small.
 For example, the almost 800 J/mol offset in &Delta;<i>G</i>&deg; at 350 &deg;C corresponds to a difference in log<i>K</i> of only -0.07.
 
-The following example uses the `H4SiO4` from Stef&aacute;nsson (2001) to make an activity diagram for the K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O system.
-This is similar to the diagram on p. 361 of [Garrels and Christ, 1965](https://www.worldcat.org/oclc/517586), but is quantitatively a closer match to the diagram in the [User's Guide to PHREEQC](https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/html/final-75.html).
+The following example uses the `H4SiO4` from @Ste01 to make an activity diagram for the
+K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O system.
+This is similar to the diagram on p. 361 of @GC65, but the positions of the stability boundaries
+are closer to those shown on p. 316 of the User's Guide for PHRREQC v3 [@PA13].
 
 ```{r activity_diagram, fig.margin=TRUE, fig.width=4, fig.height=4, small.mar=TRUE, echo=TRUE, results="hide", message=FALSE, out.width="100%", cache=TRUE, fig.cap="Activity diagram for K<sub>2</sub>O-Al<sub>2</sub>O<sub>3</sub>-SiO<sub>2</sub>-H<sub>2</sub>O.", pngquant=pngquant}
 basis(c("Al+3", "H4SiO4", "K+", "H2O", "H+", "O2"))
@@ -462,3 +459,5 @@ a <- affinity(H4SiO4 = c(-8, 0, 300), `K+` = c(-1, 8, 300))
 diagram(a, ylab = ratlab("K+"), fill = "terrain", yline = 1.7)
 legend("bottomleft", describe.property(c("T", "P"), c(25, 1)), bty = "n")
 ```
+
+## References

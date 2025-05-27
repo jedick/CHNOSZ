@@ -1532,7 +1532,7 @@ pl <- protein.length(ip)
 # Scale protein abundance so total abundance of residues is unity
 scaled_abundance <- 10^unitize(log10(abundance), pl)
 # Check that sum for residues is unity
-stopifnot(sum(scaled_abundance * pl) == 1)
+stopifnot(all.equal(sum(scaled_abundance * pl), 1))
 ```
 
 Unit total activity of residues is set by `equilibrate(loga.balance = 0)`, allowing comparison between experimental and predicted abundances:
