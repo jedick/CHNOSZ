@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-78 (2025-05-26)}{
+\section{Changes in CHNOSZ version 2.1.0-82 (2025-05-30)}{
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -43,9 +43,12 @@
       \item Add alkylamines, benzylamines, and aminiums from
       \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
 
-      \item Add cerianite (CeO\s{2}), chromite (FeCr\s{2}O\s{4}), and
-      cassiterite (SnO\s{2}) from \href{https://doi.org/10.3133/b2131}{Robie
-        and Hemingway (1995)}.
+      \item Add REE minerals from the compilation of
+      \href{https://doi.org/10.1016/j.chemgeo.2016.06.005}{Migdisov et al.
+        (2016)} with modifications.
+
+      \item Add chromite (FeCr\s{2}O\s{4}), and cassiterite (SnO\s{2}) from
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
 
       \item Move americium complexes from \file{SLOP98.csv} (entropy of the
       element Am has been available for checking GHS self-consistency since

@@ -1865,7 +1865,7 @@ You can also use `demos()` to run all the demos without pausing or just one (e.g
 
   - `Shh`: Relative stabilities of transcription factors along redox and water activity gradient
   - `carboxylase`: Predicted rank abundance with varying temperature and redox
-  - `rank.affinity`: Affinity ranking for groupwise stability comparisons
+  - `rank.affinity`: Average rank of affinity for groupwise stability comparisons
 
 ## Further Resources - Vignettes
 

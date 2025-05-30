@@ -64,7 +64,7 @@ OC95,"P. A. G. O'Hare and L. A. Curtiss",1995,"J. Chem. Thermodynamics 27, 643-6
 HSS95,"J. R. Haas, E. L. Shock and D. C. Sassani",1995,"Geochim. Cosmochim. Acta 59, 4329-4350","complexes of rare earth elements",https://doi.org/10.1016/0016-7037(95)00314-P
 PH95,"V. A. Pokrovskii and H. C. Helgeson",1995,"Am. J. Sci. 295, 1255-1342","aluminum species",https://doi.org/10.2475/ajs.295.10.1255
 PK95,"V. B. Parker and I. L. Khodakovskii",1995,"J. Phys. Chem. Ref. Data 24, 1699-1745",melanterite,https://doi.org/10.1063/1.555964
-RH95,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","aluminum, bixbyite, cassiterite, cattierite, cerianite, chromite, cobalt, cobalt monoxide, guite, gypsum, hausmannite, huebnerite, linnaeite, manganese, manganosite, pyrolusite, willemite, wustite, zinc",https://doi.org/10.3133/b2131
+RH95,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","aluminum, bixbyite, cassiterite, cattierite, chromite, cobalt, cobalt monoxide, guite, gypsum, hausmannite, huebnerite, linnaeite, manganese, manganosite, pyrolusite, willemite, wustite, zinc",https://doi.org/10.3133/b2131
 RH95.1,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","hydrogen fluoride and hydrogen chloride",https://doi.org/10.3133/b2131
 RH95.2,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","dawsonite: Cp coefficients corrected in @TKSS14; Cp value at 25 &deg;C from @BPAH07, citing @FSR76",https://doi.org/10.3133/b2131
 RH95.3,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","almandine, dickite, glaucophane, grunerite, halloysite, pyrope: GHS and Cp at 25 &deg;C",https://doi.org/10.3133/b2131
@@ -104,6 +104,7 @@ SSB97.1,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 
 TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976","humic acid, microflora, and plants",https://doi.org/10.1016/S1251-8050(97)83981-X
 TZA97,"B. R. Tagirov, A. V. Zotov and N. N. Akinfiev",2007,"Geochim. Cosmochim. Acta 61, 4267-4280","aqueous HCl",https://doi.org/10.1016/S0016-7037(97)00274-3
 ST97,"D. Shvedov and P. R. Tremaine",1997,"J. Solution Chem. 26, 1113-1143","dimethylammonium chloride HKF parameters",https://doi.org/10.1023/A:1022977006327
+DRT98,"I. I. Diakonov et al.",1998,"Chem. Geol. 151, 327-347","REE hydroxides",https://doi.org/10.1016/S0009-2541(98)00088-6
 proton,OBIGT,1997,"Hydrogen-ion convention","""The conventional standard molal properties of the hydrogen ion are zero at any pressure and temperature"" [@JOH92]",https://chnosz.net
 HOKR98,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00219-6
 HOKR98.1,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","amino acids",https://doi.org/10.1016/S0016-7037(97)00219-6
@@ -142,12 +143,14 @@ VPT01,"O. Vidal, T. Parra and F. Trotet",2001,"Am. J. Sci. 301, 557-592","daphni
 GKL02,"R. N. Goldberg et al.",2002,"J. Phys. Chem. Ref. Data 31, 231-370","glycine, diglycine, and triglycine (+1 and -1 ions) GHS",https://doi.org/10.1063/1.1416902
 AD03.1,"N. N. Akinfiev and L. W. Diamond",2003,"Geochim. Cosmochim. Acta 67, 613-629","dissolved gas species; parameters estimated from the experimental Henry's constant",https://doi.org/10.1016/S0016-7037(02)01141-9
 AD03.2,"N. N. Akinfiev and L. W. Diamond",2003,"Geochim. Cosmochim. Acta 67, 613-629","dissolved gas species; parameters estimated from standard-state properties at 25 &deg; C",https://doi.org/10.1016/S0016-7037(02)01141-9
+KK03,"R. J. M. Konings and A. Kovács",2003,"Thermodynamic properties of the lanthanide(III) halides, in Handbook on the Physics and Chemistry of Rare Earths","REE chlorides and fluorides",https://doi.org/10.1016/S0168-1273(02)33003-4
 MGN03,"J. Majzlan, K.-D. Grevel and A. Navrotsky",2003,"Am. Mineral. 88, 855-859","goethite, lepidocrocite, and maghemite GHS",https://doi.org/10.2138/am-2003-5-614
 NA03,"D. K. Nordstrom and D. G. Archer",2003,"Arsenic thermodynamic data and environmental geochemistry. In Arsenic in Groundwater, eds. Welch and Stollenwerk, Kluwer","As oxide and sulfide minerals",
 NA03.1,"D. K. Nordstrom and D. G. Archer",2003,"Arsenic thermodynamic data and environmental geochemistry. In Arsenic in Groundwater, eds. Welch and Stollenwerk, Kluwer","aqueous As oxides and sulfides",
 MLS+03,"J. Majzlan, B. E. Lang et al.",2003,"Am. Mineral. 88, 846-854","goethite, lepidocrocite, and maghemite Cp",https://doi.org/10.2138/am-2003-5-613
 AS04,"J. Apps and N. Spycher",2004,"Data qualification for thermodynamic data used to support THC calculations. Bechtel SAIC Company, LLC. ANL-NBS-HS-000043 REV 00 (DOC.20041118.0004)","aqueous SiO<sub>2</sub>",
 Got04,"M. Gottschalk",2004,"Rev. Mineral. Geochem. 56, 83-124","zoisite, clinozoisite, and epidote",https://doi.org/10.2138/gsrmg.56.1.83
+MK04,"L. R. Morse and R. J. M. Konings",2004,"Thermochemistry of binary rare earth oxides, in Binary Rare Earth Oxides",Y<sub>2</sub>O<sub>3</sub>,https://doi.org/10.1007/1-4020-2569-6_7
 MSB+04,"J. Majzlan, R. Stevens et al.",2004,"Phys. Chem. Mineral. 31, 518-531","hydronium jarosite",https://doi.org/10.1007/s00269-004-0405-z
 SR04,"M. D. Schulte and K. L. Rogers",2004,"Geochim. Cosmochim. Acta 68, 1087-1097","alkane thiols",https://doi.org/10.1016/j.gca.2003.06.001
 VPV05,"O. Vidal, T. Parra and P. Viellard",2005,"Am. Mineral. 90, 347-358",Fe-amesite,https://doi.org/10.2138/am.2005.1554
@@ -170,6 +173,7 @@ DLH06.5,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 31
 LEB+06,"W. Liu et al.",2006,"Chem. Geol. 231, 326-349","FeCl<sub>2</sub><sup>+</sup>, FeCl<sub>3</sub>, FeCl<sub>4</sub><sup>-</sup>",https://doi.org/10.1016/j.chemgeo.2006.02.005
 LMR06,"D. Langmuir et al.",2006,"Geochim. Cosmochim. Acta 70, 2942-2956","scorodite and amorphous ferric arsenate: G",https://doi.org/10.1016/j.gca.2006.03.006
 MNM+06,"J. Majzlan, A. Navrotsky et al.",2006,"Eur. J. Mineral. 18, 175-186","coquimbite, ferricopiapite, and rhomboclase",https://doi.org/10.1127/0935-1221/2006/0018-0175
+PK06,"K. Popa and R.J.M. Konings",2006,"Thermochim. Acta 445, 49-52","REE phosphates (monazites) [different G than @MWBC16]",https://doi.org/10.1016/j.tca.2006.03.023
 SGX+06,"A. V. Sharygin et al.",2006,"Geochim. Cosmochim. Acta 70, 5169-5182",KSO<sub>4</sub><sup>-</sup>,https://doi.org/10.1016/j.gca.2006.07.034
 Dic07,"J. M. Dick",2007,"Ph.D. Dissertation, Univ. of California","glutathione, cystine, and cystine sidechain",
 MA07,"L. Marini and M. Accornero",2007,"Environ. Geol. 52, 1343-1363","metal-arsenate and metal-arsenite complexes; linked to properties of arsenate and arsenite from @SSWS97",https://doi.org/10.1007/s00254-006-0578-5
@@ -205,6 +209,7 @@ AT14,"N. N. Akinfiev and B. R. Tagirov",2014,"Geochem. Int. 52, 197-214","Zn<sup
 FDM+14,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","CO<sub>2</sub>, HCO<sub>3</sub><sup>-</sup>, CO<sub>3</sub><sup>-2</sup>, CaCO<sub>3</sub>, Ca<sup>+2</sup>",https://doi.org/10.1016/j.gca.2014.01.030
 FDM+14.1,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","aragonite; source of data: `berman.dat`",https://doi.org/10.1016/j.gca.2014.01.030
 Kit14,"N. Kitadai",2014,"J. Mol. Evol. 78, 171-187","glycine, diglycine, and triglycine (zwitterions and ions); diketopiperazine, [Gly] and [UPBB] groups",https://doi.org/10.1007/s00239-014-9616-1
+KBK+14,"R. J. M. Konings et al.",2014,"J. Phys. Chem. Ref. Data 43, Article 013101","REE oxides",https://doi.org/10.1063/1.4825256
 PAB+14,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","corrected H of AuHS",https://doi.org/10.1144/SP402.4
 SBS14,"A. Stefánsson, P. Benézéth and J. Schott",2014,"Geochim. Cosmochim. Acta 138, 21-31",Mg(HCO<sub>3</sub>)<sup>+</sup>,https://doi.org/10.1016/j.gca.2014.04.008
 SHA14,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","SiO<sub>2</sub> and Si<sub>2</sub>O<sub>4</sub>",https://doi.org/10.1016/j.gca.2013.12.019
@@ -212,10 +217,13 @@ SHA14.1,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","
 SHA14.2,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","BO(OH): Revised May 2013",https://doi.org/10.1016/j.gca.2013.12.019
 SHA14.3,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","Fitted to @HP97 data with a<sub>1</sub> pred. from the sum of the ions and used to predict the volume",https://doi.org/10.1016/j.gca.2013.12.019
 SHA14.4,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","BO<sub>2</sub><sup>-</sup>: revised a<sub>1</sub>-a<sub>4</sub> using delkappan for BO<sub>2</sub><sup>-</sup> instead of B(OH)<sub>4</sub><sup>-</sup> used by @SH88; @SSWS97",https://doi.org/10.1016/j.gca.2013.12.019
+GHFW16,"A. P. Gysi et al.",2016,"Thermochim. Acta 627–629, 61-67","REE phosphates (xenotimes) [different S for DyPO<sub>4</sub> than @MWBC16]",https://doi.org/10.1016/j.tca.2016.01.016
 Kit15,"N. Kitadai",2015,"Origins Life Evol. Biospheres 45, 377-409","charged amino acids",https://doi.org/10.1007/s11084-015-9428-3
 Kit15.1,"N. Kitadai",2015,"Origins Life Evol. Biospheres 45, 377-409","charged amino acids GHS (Arg<sup>+</sup>, Arg<sup>-</sup>, Asp<sup>-</sup>, Glu<sup>-</sup>, His<sup>+</sup>, Lys<sup>+</sup>, Lys<sup>-</sup>, and Tyr<sup>-</sup>)",https://doi.org/10.1007/s11084-015-9428-3
+NLM+15,"A. Navrotsky et al.",2015,"J. Chem. Thermodyn.","REE phosphates (xenotimes) [different G than @MWBC16]",https://doi.org/10.1016/j.jct.2015.04.008
 PD15,"G. S. Pokrovski and J. Dubessy",2015,"Earth Planet. Sci. Lett. 411, 298-309","trisulfur radical ion",https://doi.org/10.1016/j.epsl.2014.11.035
 LA16,"D. E. LaRowe and J. P. Amend",2016,"ISME J. 10, 1285-1295","fatty acids, saccharides, and other species",https://doi.org/10.1038/ismej.2015.227
+MWBC16,"A. A. Migdisov et al.",2016,"Chem. Geol. 439, 13-42","Compilation of data for REE minerals with modifications for OBIGT",https://doi.org/10.1016/j.chemgeo.2016.06.005
 SLOP16.1,"E. L. Shock et al.",2016,"slop16.dat computer data file","&quot;Enthalpy changed to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements.&quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP16.2,"E. L. Shock et al.",2016,"slop16.dat computer data file","Zn(Ac)<sub>3</sub><sup>-</sup>: &quot;Enthalpy changed to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements. See footnote h in table 2 of @SSH97.&quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP16.3,"E. L. Shock et al.",2016,"slop16.dat computer data file","formaldehyde: &quot;Entropy corrected to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements. See footnote i in table 2 of @SS93.&quot;",https://doi.org/10.5281/zenodo.2630820
