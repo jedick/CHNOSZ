@@ -223,7 +223,7 @@ Kit15.1,"N. Kitadai",2015,"Origins Life Evol. Biospheres 45, 377-409","charged a
 NLM+15,"A. Navrotsky et al.",2015,"J. Chem. Thermodyn.","REE phosphates (xenotimes) [different G than @MWBC16]",https://doi.org/10.1016/j.jct.2015.04.008
 PD15,"G. S. Pokrovski and J. Dubessy",2015,"Earth Planet. Sci. Lett. 411, 298-309","trisulfur radical ion",https://doi.org/10.1016/j.epsl.2014.11.035
 LA16,"D. E. LaRowe and J. P. Amend",2016,"ISME J. 10, 1285-1295","fatty acids, saccharides, and other species",https://doi.org/10.1038/ismej.2015.227
-MWBC16,"A. A. Migdisov et al.",2016,"Chem. Geol. 439, 13-42","Compilation of data for REE minerals with modifications for OBIGT",https://doi.org/10.1016/j.chemgeo.2016.06.005
+MWBC16,"A. A. Migdisov et al.",2016,"Chem. Geol. 439, 13-42","REE minerals: compilation of data with modifications for OBIGT",https://doi.org/10.1016/j.chemgeo.2016.06.005
 SLOP16.1,"E. L. Shock et al.",2016,"slop16.dat computer data file","&quot;Enthalpy changed to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements.&quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP16.2,"E. L. Shock et al.",2016,"slop16.dat computer data file","Zn(Ac)<sub>3</sub><sup>-</sup>: &quot;Enthalpy changed to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements. See footnote h in table 2 of @SSH97.&quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP16.3,"E. L. Shock et al.",2016,"slop16.dat computer data file","formaldehyde: &quot;Entropy corrected to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements. See footnote i in table 2 of @SS93.&quot;",https://doi.org/10.5281/zenodo.2630820

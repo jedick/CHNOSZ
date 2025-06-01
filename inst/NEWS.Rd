@@ -15,7 +15,21 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-82 (2025-05-30)}{
+\section{Changes in CHNOSZ version 2.1.0-83 (2025-06-01)}{
+
+  \subsection{OBIGT DATABASE FORMAT}{
+    \itemize{
+
+      \item Mineral species whose \code{T} value is a Cp equation limit or
+      phase stability limit are indicated by \samp{CGL} or \samp{CGL_Ttr},
+      respectively, in \code{model}. At conditions above the \code{T} limit,
+      \code{subcrt()} extrapolates values and produces a warning for \samp{CGL}
+      species or returns NA values for \samp{CGL_Ttr} species. The addition of
+      \samp{CGL_Ttr} replaces the previous strategy of using signed values of
+      \code{T}.
+
+    }
+  }
 
   \subsection{OBIGT DEFAULT DATA}{
     \itemize{
@@ -26,33 +40,37 @@
       \item Add Pd(HS)\s{4}\S{-2} and Pt(HS)\s{4}\S{-2} from
       \href{https://doi.org/10.1016/j.gca.2024.12.019}{Laskar et al. (2024)}.
 
-      \item Add Sn chloride complexes and updated parameters for Sn\S{+2} and
-      Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
-        (2023)}.
-
       \item Add aqueous uranyl complexes from
       \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}
       and related U-bearing minerals from
-      \href{https://doi.org/10.1787/bf86a907-en}{Grenthe et al. (2020)}.
-
-      \item For compatibility with the above change, aqueous uranium species
-      other than HUO\s{4}\S{-} from
-      \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al. (1997)}
-      have been moved to optional data (\file{SLOP98.csv}).
+      \href{https://doi.org/10.1787/bf86a907-en}{Grenthe et al. (2020)}. Move
+      aqueous uranium species from
+      \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al.
+        (1997)} (except for HUO\s{4}\S{-}) to optional data.
 
       \item Add alkylamines, benzylamines, and aminiums from
       \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
+
+      \item Add Sn chloride complexes and updated parameters for Sn\S{+2} and
+      Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
+        (2023)}.
 
       \item Add REE minerals from the compilation of
       \href{https://doi.org/10.1016/j.chemgeo.2016.06.005}{Migdisov et al.
         (2016)} with modifications.
 
-      \item Add chromite (FeCr\s{2}O\s{4}), and cassiterite (SnO\s{2}) from
+      \item Add REE fluoride and chloride complexes from
+      \href{https://doi.org/10.1016/j.gca.2009.08.023}{Migdisov et al. (2009)}
+      (previously available in CHNOSZ 0.9-5 to 1.0.8). Move aqueous REE species
+      from \href{https://doi.org/10.1016/0016-7037(95)00314-P}{Haas et al.
+        (1995)} to optional data.
+
+      \item Add chromite (FeCr\s{2}O\s{4}) and cassiterite (SnO\s{2}) from
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
 
-      \item Move americium complexes from \file{SLOP98.csv} (entropy of the
-      element Am has been available for checking GHS self-consistency since
-      version 1.4.0).
+      \item Move americium complexes from optional to default data. Entropy of
+      the element Am has been available for checking GHS self-consistency since
+      CHNOSZ 1.4.0.
 
       \item Fix sign of \emph{c} parameter for nesquehonite. Thanks to James
       Leong and Grayson Boyer.
@@ -75,10 +93,6 @@
 
       \item Add \file{testing/IGEM.csv}: Au and Cu complexes and
       SO\s{4}\S{-2}-bearing species from researchers at IGEM RAS.
-
-      \item Add \file{testing/REE.csv}: REE(III) fluoride and chloride complexes from
-      \href{https://doi.org/10.1016/j.gca.2009.08.023}{Migdisov et al. (2009)}
-      (previously available in CHNOSZ verisons 0.9-5 to 1.0.8).
 
       \item Add \file{testing/Sandia.csv}: Mg(OH)\s{2}-MgCl\s{2}-H\s{2}O phases from
       \href{https://doi.org/10.1016/j.apgeochem.2024.106032}{Knight et al.
@@ -114,9 +128,6 @@
       \item Add FAQ question: Why are mineral stability boundaries curved on
       mosaic diagrams?
 
-      \item Move \file{equilibrium.Rmd} to
-      \href{https://github.com/jedick/JMDplots}{JMDplots}.
-
     }
   }
 
@@ -132,7 +143,8 @@
 
       \item \code{check.EOS()} now uses values of Born coefficients \emph{X}
       and \emph{Q} that are consistent with either SUPCRT92 or DEW, depending
-      on the \code{model} defined in OBIGT (HKF or DEW, respectively).
+      on the \code{model} listed for the species in OBIGT (HKF or DEW,
+      respectively).
 
       \item \code{rank.affinity()} now rescales average ranks of groups to the
       same bounds.
@@ -153,31 +165,38 @@
       \samp{m_Naplus}, \samp{m_Clminus}, \samp{m_NaCl0}, and \samp{m_HCl0}
       (molalities of aqueous species).
 
-      \item In \code{water()}, rename \strong{P1} logical argument to
-      \strong{Psat_floor} numeric argument.
-
-      \item \code{OBIGT} now uses \samp{CGL_Ttr} as the \code{model} for
-      species whose \code{T} value denotes a phase stability limit above which
-      \code{subcrt()} returns NA values, in contrast to \samp{CGL}, for which
-      the value of \code{T} is a Cp equation limit that only produces a
-      warning. This replaces the use of signed values of \code{T}.
-
       \item Rename \code{logB.to.OBIGT()} to \code{logK.to.OBIGT()} and add a
       \strong{state} argument which accepts \samp{aq} (aqueous species using
       heat capacity parameters in the \samp{HKF} model; the default) or
       \samp{cr} (minerals using the Maier-Kelley equation in the \samp{CGL}
       model; a new option).
 
+      \item In \code{water()}, rename \strong{P1} logical argument to
+      \strong{Psat_floor} numeric argument.
+
     }
   }
 
+  \subsection{BUG FIXES}{
+    \itemize{
+
+      \item \code{water()} with the IAPWS95 model now respects the value of
+      \strong{Psat_floor}, making it possible to remove the floor of 1 bar.
+
+      \item Fix using Eh in transect mode of \code{affinity()} (feature was not
+      working since at least version 0.9-7).
+
+    }
+  }
 
   \subsection{OTHER CHANGES}{
     \itemize{
 
-      \item For better readability, formulas of species are no longer
-      subscripted by \code{expr.species()}. An example of the new formatting
-      is \dQuote{log \emph{f}O\s{2}}. 
+      \item \code{expr.species()} no longer subscripts formulas after a
+      variable (activity, fugacity, or molality: \emph{a}, \emph{f}, or
+      \emph{m}). This avoids readability issues with double subscripting of
+      elements' coefficients. An example of the new formatting is \dQuote{log
+        \emph{f}O\s{2}}. 
       
       \item Add scripts and data files in \code{extdata/protein/Cas} for amino
       acid compositions of CRISPR-associated (Cas) proteins in different
@@ -186,39 +205,26 @@
 
 
       \item Remove \code{ispecies} from output of \code{check.OBIGT()} to avoid
-      superfluous diffs.
+      trivial diffs.
 
     }
   }
-
-  \subsection{BUG FIXES}{
-    \itemize{
-
-      \item Fix using Eh in transect mode of \code{affinity()} (feature was not
-      working since at least version 0.9-7).
-
-      \item \code{water()} with the IAPWS95 model now respects the value of
-      \strong{Psat_floor}, making it possible to remove the floor of 1 bar.
-
-    }
-  }
-
 
   \subsection{REMOVED FEATURES}{
     \itemize{
-
-      \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to
-      \href{https://cran.r-project.org/package=canprot}{canprot} with different
-      names.
-
-      \item Remove \code{seq2aa()}.
 
       \item Remove \code{add.alpha()}. Instead of this function,
       \code{grDevices::adjustcolor()} is now used in \code{stack_mosaic()} to
       add transparency.
 
-      \item Move \code{protein.equil()} to JMDplots; the associated demo has
-      been moved to the \file{equilibrium.Rmd} vignette in that package.
+      \item Remove \code{seq2aa()}.
+
+      \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to
+      \href{https://cran.r-project.org/package=canprot}{canprot} with different
+      names.
+
+      \item Move \file{equilibrium.Rmd} and \code{protein.equil()} to
+      \href{https://github.com/jedick/JMDplots}{JMDplots}.
 
     }
   }

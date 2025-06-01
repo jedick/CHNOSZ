@@ -220,7 +220,7 @@ Any secondary references (`ref2`) are listed with bullet points under the primar
 Each citation is followed by the number of species, and a note taken from `extdata/thermo/refs.csv`.
 Additional comments (from this vignette) are present for some sections.
 
-Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthalpy, entropy), Cp (heat capacity), V (volume), HKF (<abbr title="Tanger and Helgeson, 1988">revised</abbr> <abbr title="Helgeson et al., 1981">Helgeson-Kirkham-Flowers</abbr> equations).
+Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthalpy, entropy), Cp (standard heat capacity), V (standard volume), HKF (<abbr title="Tanger and Helgeson, 1988">revised</abbr> <abbr title="Helgeson et al., 1981">Helgeson-Kirkham-Flowers</abbr> equations).
 
 <!-- All buttons at top -->
 
@@ -356,9 +356,8 @@ optused <- c(optused, filerefs(csvfile))
 
 <div id="D-optional-SLOP98" style="display: none">
 ## <a id="optional-SLOP98" class="anchor"></a> `r setfile("SLOP98.csv")`
-These species, which were taken from or are linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default database, including aqueous Al species [@TS01], As species [@NA03], Au, Ag, and Cu species [@AZ01; @AZ10], Pd species [@TBZ+13], Zn species [@AT14], Pt species [@TBB15], Nb species [@AKK+20], and CoCl<sub>2</sub><sup>+</sup> [@LBT+11].
-
-Except for HUO<sub>4</sub><sup>-</sup>, aqueous uranium species from @SSB97 have been moved here to avoid possible inconsistencies with uranyl complexes from @MBA+24.
+These species, whose parameters were listed in or are otherwise linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default database.
+The references for the superseding data for aqueous complexes are as follows: Al [@TS01], As [@NA03], Au, Ag, and Cu [@AZ01; @AZ10], Pd [@TBZ+13], Zn [@AT14], Pt [@TBB15], Nb [@AKK+20], CoCl<sub>2</sub><sup>+</sup> [@LBT+11], U (except for HUO<sub>4</sub><sup>-</sup>) [@MBA+24], REE [@MWW09].
 
 Use `add.OBIGT("SLOP98")` to load the data.
 
@@ -404,10 +403,6 @@ Load the data with e.g. `add.OBIGT("GEMSFIT")`.
 Aqueous SiO<sub>2</sub> from @AS04 and HSiO<sub>3</sub><sup>-</sup> modified to be consistent with it.
 This file also has H<sub>4</sub>SiO<sub>4</sub> from an earlier publication [@Ste01] that is roughly consistent with the SiO<sub>2</sub> here.
 See `demo(aluminum)` and the vignette [<span style="color:blue">*Regressing thermodynamic data*</span>](eos-regress.html) for examples.
-
-<h3>REE</h3>
-
-Rare earth element (REE(III)) fluoride and chloride complexes [@MWW09].
 
 <h3>GEMSFIT</h3>
 
