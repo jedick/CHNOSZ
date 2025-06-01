@@ -4,7 +4,7 @@ Kel60.2,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","iron Cp",https://
 Kel60.3,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gypsum Cp",https://www.worldcat.org/oclc/693388901
 Pan70,"L. B. Pankratz",1970,"U. S. Bureau of Mines Report of Investigations 7430",chlorargyrite,https://www.worldcat.org/oclc/14154245
 PK70,"L. B. Pankratz and E. G. King",1970,"U. S. Bureau of Mines Report of Investigations 7435","bornite and chalcopyrite",https://www.worldcat.org/oclc/14154292
-NRK74,"Naumov, G. B., Ryzhenko, B. N., & Khodakovsky, I. L.",1974,"Handbook of Thermodynamic Data (U.S. Geol. Surv.)",GeS<sub>2</sub>,https://www.worldcat.org/oclc/8139446
+NRK74,"Naumov, G. B., Ryzhenko, B. N., & Khodakovsky, I. L.",1974,"Handbook of Thermodynamic Data (U.S. Geol. Surv.)","GeS<sub>2</sub> and beta-Nb<sub>2</sub>O<sub>5</sub>",https://www.worldcat.org/oclc/8139446
 RH72,"R. A. Robie and B. S. Hemingway",1972,"Am. Mineral. 57, 1768-1781","nesquehonite Cp",https://pubs.geoscienceworld.org/msa/ammin/article-pdf/57/11-12/1768/4256711/am-1972-1768.pdf
 BKK77,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","willemite Cp",https://www.worldcat.org/oclc/695258
 BKK77.1,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","Ga<sub>2</sub>S<sub>3</sub> and In<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>",https://www.worldcat.org/oclc/695258
@@ -187,6 +187,7 @@ GM09,"K.-D. Grevel and J. Majzlan",2009,"Geochim. Cosmochim. Acta 73, 6805-6815"
 HRMNS09,"H. C. Helgeson, L. Richard et al.",2009,"Geochim. Cosmochim. Acta 73, 594-695","kerogens (C128, C292, C406, C415, C515) and pyrobitumen (C<sub>54</sub>H<sub>42</sub>)",https://doi.org/10.1016/j.gca.2008.03.004
 LRB09,"K. H. Lemke, R. J. Rosenbauer and D. K. Bird",2009,"Astrobiology 9, 141-146","diglycine and diketopiperazine",https://doi.org/10.1089/ast.2008.0166
 MWW09,"A. A. Migdisov, A. E. Williams-Jones and T. Wagner",2009,"Geochim. Cosmochim. Acta 73, 7087-7109","REE F<sup>-</sup> and Cl<sup>-</sup> complexes",https://doi.org/10.1016/j.gca.2009.08.023
+JSW09,"K. T. Jacob et al.",2009,"J. Chem. Thermodynamics 41, 748-753",beta-Ta<sub>2</sub>O<sub>5</sub>,https://doi.org/10.1016/j.jct.2008.12.006
 BZA10,"E. F. Bazarkina, A. V. Zotov and N. N. Akinfiev",2010,"Geol. Ore Deposits 52, 167-178","Cd chloride complexes",https://doi.org/10.1134/S1075701510020054
 AML10,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","metal-chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
 AML10.1,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","Np- and Am-chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
@@ -306,6 +307,7 @@ HS19,"F. Huang and D. A. Sverjensky",2019,"Geochim. Cosmochim. Acta 254, 192-230
 LA19,"D. E. LaRowe and J. P. Amend",2019,"Geomicrobiol. J. 36, 492-505","dimethylamine, trimethylamine, resorcinol, phloroglucinol, cyclohexane carboxylate, and cyclohexane carboxylic acid",https://doi.org/10.1080/01490451.2019.1573278
 SPD+19,"B. St Clair et al.",2019,"ACS Earth Space Chem 3, 905-921","metal carbonate and bicarbonate complexes and FeSO<sub>4</sub>",https://doi.org/10.1021/acsearthspacechem.9b00016
 AKK+20,"N. N. Akinfiev et al.",2020,"Geochim. Cosmochim. Acta 280, 102-115","Nb and Ta species",https://doi.org/10.1016/j.gca.2020.04.009
+AKK+20.1,"N. N. Akinfiev et al.",2020,"Geochim. Cosmochim. Acta 280, 102-115","V of beta-Nb<sub>2</sub>O<sub>5</sub> and beta-Ta<sub>2</sub>O<sub>5</sub>",https://doi.org/10.1016/j.gca.2020.04.009
 LX20,"Liu and Xiao",2020,"Ore Geol. Rev. 117, 103289","huebnerite Cp",https://doi.org/10.1016/j.oregeorev.2019.103289
 NEA20,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium","rutherfordine, beta-UO<sub>2</sub>(OH)<sub>2</sub>, and Na<sub>2</sub>U<sub>2</sub>O<sub>7</sub>",https://doi.org/10.1787/bf86a907-en
 NEA20.1,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium",UO<sub>3</sub>,https://doi.org/10.1787/bf86a907-en

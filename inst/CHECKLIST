@@ -27,16 +27,18 @@ Updating data in OBIGT
 
 - Rebuild extdata/thermo/stoich.csv.xz after all data updates
   (used in retrieve() to search the databse by element):
-  formula <- thermo()$OBIGT$formula
-  stoich <- i2A(formula)
-  write.csv(stoich, "stoich.csv")
-  system("xz -f stoich.csv")
+
+formula <- thermo()$OBIGT$formula
+stoich <- i2A(formula)
+write.csv(stoich, "stoich.csv")
+system("xz -f stoich.csv")
 
 - Rebuild extdata/misc/OBIGT_check.csv after all data updates:
   (not used elsewhere in CHNOSZ, but helpful to see which
   species entries have self inconsistencies):
-  co <- check.OBIGT()
-  write.csv(co, "OBIGT_check.csv", row.names = FALSE, na = "")
+
+co <- check.OBIGT()
+write.csv(co, "OBIGT_check.csv", row.names = FALSE, na = "")
 
 ***************
 R compatibility

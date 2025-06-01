@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-84 (2025-06-01)}{
+\section{Changes in CHNOSZ version 2.1.0-85 (2025-06-01)}{
 
   \subsection{OBIGT DATABASE FORMAT}{
     \itemize{
@@ -68,15 +68,22 @@
       from \href{https://doi.org/10.1016/0016-7037(95)00314-P}{Haas et al.
         (1995)} to optional data.
 
+      \item Add beta-Ta\s{2}O\s{5} from
+      \href{https://doi.org/10.1016/j.jct.2008.12.006}{Jacob et al. (2009)}.
+
       \item Add chromite (FeCr\s{2}O\s{4}) and cassiterite (SnO\s{2}) from
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}. Move
       cassiterite from
       \href{https://doi.org/10.2113/gsecongeo.80.5.1365}{Jackson and Helgeson
         (1985)} to optional data.
 
+      \item Add beta-Nb\s{2}O\s{5} from
+      \href{https://www.worldcat.org/oclc/8139446}{Naumov et al. (1974)}. A PDF
+      of this book is available from the
+      \href{https://ntrl.ntis.gov/NTRL/}{National Technical Reports Library}.
+
       \item Move americium complexes from optional to default data. Entropy of
-      the element Am has been available for checking GHS self-consistency since
-      CHNOSZ 1.4.0.
+      the element Am has been listed in \file{element.csv} since CHNOSZ 1.4.0.
 
       \item Fix sign of \emph{c} parameter for nesquehonite. Thanks to James
       Leong and Grayson Boyer.
