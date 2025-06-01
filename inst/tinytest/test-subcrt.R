@@ -42,11 +42,11 @@ expect_true(all(sb$`Na+`$G < sb$water$G), info = info)
 # Clean up
 water(oldwat)
 
-info <- "Phase stability limits give expected results"
+info <- "Phase transition temperatures give expected results"
 expect_message(subcrt("gold", T = c(1300, 1350), P = 1, convert = FALSE), "subcrt: setting G to NA for gold\\(cr\\)", info = info)
 # The reaction coefficients in the output should be unchanged 20171214
 expect_equal(subcrt(c("bunsenite", "nickel", "oxygen"), c(-1, 1, 0.5))$reaction$coeff, c(-1, 1, 0.5), info = info) 
-# Properties are NA only above (not at) the temperature limit for phase stability 20191111
+# Properties are NA only above (not at) the phase transition temperature 20191111
 sout <- subcrt("covellite", T = seq(780, 781, 0.5), P = 1, convert = FALSE)$out[[1]]
 expect_equal(is.na(sout$G), c(FALSE, FALSE, TRUE), info = info)
 

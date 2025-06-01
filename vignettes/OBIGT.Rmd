@@ -342,9 +342,10 @@ Thermodynamic properties for these minerals are listed as NA in `thermo()$OBIGT`
 
 <div id="D-optional-SUPCRT92" style="display: none">
 ## <a id="optional-SUPCRT92" class="anchor"></a> `r setfile("SUPCRT92.csv")`
-These minerals and aqueous species, taken from the SUPCRT92 database, were present in earlier versions of CHNOSZ but have since been superseded by @Ber88 (minerals) and @NA03 (H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>).
+These minerals, taken from the SUPCRT92 database, were present in earlier versions of CHNOSZ but have since been superseded by data from @Ber88 (most minerals) or @RH95 (cassiterite).
 The thermodynamic properties and parameters are kept here as optional data for reproducing published calculations and making comparisons with newer data.
-The minerals here include all of the silicates and Al-bearing minerals from @HDNB78, as well as calcite, dolomite, hematite, and magnetite.
+The minerals here include all of the silicates and Al- and Ti-bearing minerals from @HDNB78, as well as calcite, dolomite, hematite, and magnetite.
+
 Use `add.OBIGT("SUPCRT92")` to load the data.
 
 **NOTE:** Other minerals from SUPCRT92, including native elements, sulfides, halides, sulfates, and selected carbonates and oxides that do not duplicate those in the Berman dataset, are still present in the default database (**inorganic_cr.csv**).
@@ -357,11 +358,11 @@ optused <- c(optused, filerefs(csvfile))
 <div id="D-optional-SLOP98" style="display: none">
 ## <a id="optional-SLOP98" class="anchor"></a> `r setfile("SLOP98.csv")`
 These species, whose parameters were listed in or are otherwise linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default database.
-The references for the superseding data for aqueous complexes are as follows: Al [@TS01], As [@NA03], Au, Ag, and Cu [@AZ01; @AZ10], Pd [@TBZ+13], Zn [@AT14], Pt [@TBB15], Nb [@AKK+20], CoCl<sub>2</sub><sup>+</sup> [@LBT+11], U (except for HUO<sub>4</sub><sup>-</sup>) [@MBA+24], REE [@MWW09].
+The superseding data for aqueous species include: Al [@TS01], As [@NA03], Au, Ag, and Cu(I) [@AZ01; @AZ10], REE [@MWW09], Co [@LBT+11], Pd [@TBZ+13], Zn [@AT14], Pt [@TBB15], Nb [@AKK+20], U(IV) [@MBA+24].
 
 Use `add.OBIGT("SLOP98")` to load the data.
 
-**NOTE:** Many other species found in slop98.dat and later versions are still present in the default database.
+**NOTE:** Other species listed in slop98.dat and later versions are still present in the default database.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```
@@ -428,7 +429,7 @@ Germanium, indium, gallium, and cadmium species from researchers at Geoscience A
 
 <hr>
 
-<b>Total count of species</b>: References were found for `r length(used)` of `r nrow(thermo()$OBIGT)` species in the default OBIGT database and `r length(optused)` optional species.
+<b>Total count of species</b>: References were found for `r length(used)` of `r nrow(thermo()$OBIGT)` species in default data files and `r length(optused)` species in optional data files.
 
 # References
 

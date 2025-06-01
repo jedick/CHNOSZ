@@ -4,7 +4,7 @@ Kel60.2,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","iron Cp",https://
 Kel60.3,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gypsum Cp",https://www.worldcat.org/oclc/693388901
 Pan70,"L. B. Pankratz",1970,"U. S. Bureau of Mines Report of Investigations 7430",chlorargyrite,https://www.worldcat.org/oclc/14154245
 PK70,"L. B. Pankratz and E. G. King",1970,"U. S. Bureau of Mines Report of Investigations 7435","bornite and chalcopyrite",https://www.worldcat.org/oclc/14154292
-NRH74,"Naumov, G. B., Ryzhenko, B. N., & Khodakovsky, I. L.",1974,"Handbook of Thermodynamic Data (U.S. Geol. Surv.)","GeS<sub>2</sub>",https://www.worldcat.org/oclc/8139446
+NRK74,"Naumov, G. B., Ryzhenko, B. N., & Khodakovsky, I. L.",1974,"Handbook of Thermodynamic Data (U.S. Geol. Surv.)",GeS<sub>2</sub>,https://www.worldcat.org/oclc/8139446
 RH72,"R. A. Robie and B. S. Hemingway",1972,"Am. Mineral. 57, 1768-1781","nesquehonite Cp",https://pubs.geoscienceworld.org/msa/ammin/article-pdf/57/11-12/1768/4256711/am-1972-1768.pdf
 BKK77,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","willemite Cp",https://www.worldcat.org/oclc/695258
 BKK77.1,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","Ga<sub>2</sub>S<sub>3</sub> and In<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>",https://www.worldcat.org/oclc/695258
@@ -60,7 +60,7 @@ SK93.1,"E. L. Shock and C. M. Koretsky",1993,"Geochim. Cosmochim. Acta 57, 4899-
 SM93,"E. L. Shock and W. B. McKinnon",1993,"Icarus 106, 464-477","CO, HCN, urea",https://doi.org/10.1006/icar.1993.1185
 SS93,"M. D. Schulte and E. L. Shock",1993,"Geochim. Cosmochim. Acta 57, 3835-3846",aldehydes,https://doi.org/10.1016/0016-7037(93)90337-V
 HDM+94,"A. W. Hakin et al.",1994,"J. Chem. Soc., Faraday Trans. 90, 2027-2035","glutamic acid",https://doi.org/10.1039/FT9949002027
-OC95,"P. A. G. O'Hare and L. A. Curtiss",1995,"J. Chem. Thermodynamics 27, 643-662","GeS",https://doi.org/10.1006/jcht.1995.0066
+OC95,"P. A. G. O'Hare and L. A. Curtiss",1995,"J. Chem. Thermodynamics 27, 643-662",GeS,https://doi.org/10.1006/jcht.1995.0066
 HSS95,"J. R. Haas, E. L. Shock and D. C. Sassani",1995,"Geochim. Cosmochim. Acta 59, 4329-4350","complexes of rare earth elements",https://doi.org/10.1016/0016-7037(95)00314-P
 PH95,"V. A. Pokrovskii and H. C. Helgeson",1995,"Am. J. Sci. 295, 1255-1342","aluminum species",https://doi.org/10.2475/ajs.295.10.1255
 PK95,"V. B. Parker and I. L. Khodakovskii",1995,"J. Phys. Chem. Ref. Data 24, 1699-1745",melanterite,https://doi.org/10.1063/1.555964
@@ -71,7 +71,7 @@ RH95.3,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 213
 RH95.4,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","fluorphlogopite (Al/Si disordered) (G and H not in SUPCRT92)",https://doi.org/10.3133/b2131
 RH95.5,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","larnite (G and H not in SUPCRT92); Cp from @Kel60",https://doi.org/10.3133/b2131
 RH95.6,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","bromellite (melting temperature and G and H not in SUPCRT92)",https://doi.org/10.3133/b2131
-RH95.7,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","phase stability limit",https://doi.org/10.3133/b2131
+RH95.7,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","phase transition temperature",https://doi.org/10.3133/b2131
 RH95.8,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","brucite V",https://doi.org/10.3133/b2131
 RH95.9,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","germanium, cadmium, and greenockite (CdS)",https://doi.org/10.3133/b2131
 SK95,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","metal-organic acid complexes",https://doi.org/10.1016/0016-7037(95)00058-8
@@ -202,6 +202,7 @@ LD12.1,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","
 LD12.2,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","methionine GHS",https://doi.org/10.1016/j.gca.2011.11.041
 LD12.3,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","methionine sidechain GHS",https://doi.org/10.1016/j.gca.2011.11.041
 DEH+13,"J. M. Dick, K. A. Evans et al.",2013,"Geochim. Cosmochim. Acta 122, 247-266","phenanthrene and methylphenanthrene isomers",https://doi.org/10.1016/j.gca.2013.08.020
+LMW+13,"A. Loges, A. A. Migdisov et al.",2013,"Geochim. Cosmochim. Acta 123, 403-415","YF<sup>+2</sup> and YF<sub>2</sub><sup>+</sup>",https://doi.org/10.1016/j.gca.2013.07.031
 SBS13,"A. Stefánsson, P. Benézéth and J. Schott",2013,"Geochim. Cosmochim. Acta 120, 600-611",NaCO<sub>3</sub><sup>-</sup>,https://doi.org/10.1016/j.gca.2013.04.023
 TBZ+13,"B. R. Tagirov et al.",2013,"Geochim. Cosmochim. Acta 117, 348-373","Pd<sup>+2</sup> and complexes",https://doi.org/10.1016/j.gca.2013.03.047
 AP14,"N. N. Akinfiev and A. V. Plyasunov",2014,"Geochim. Cosmochim. Acta 126, 338-351","B(OH)<sub>3</sub>, Si(OH)<sub>4</sub>, and As(OH)<sub>3</sub>",https://doi.org/10.1016/j.gca.2013.11.013

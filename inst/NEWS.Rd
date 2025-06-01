@@ -15,13 +15,13 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-83 (2025-06-01)}{
+\section{Changes in CHNOSZ version 2.1.0-84 (2025-06-01)}{
 
   \subsection{OBIGT DATABASE FORMAT}{
     \itemize{
 
       \item Mineral species whose \code{T} value is a Cp equation limit or
-      phase stability limit are indicated by \samp{CGL} or \samp{CGL_Ttr},
+      phase transition temperature are indicated by \samp{CGL} or \samp{CGL_Ttr},
       respectively, in \code{model}. At conditions above the \code{T} limit,
       \code{subcrt()} extrapolates values and produces a warning for \samp{CGL}
       species or returns NA values for \samp{CGL_Ttr} species. The addition of
@@ -45,7 +45,7 @@
       and related U-bearing minerals from
       \href{https://doi.org/10.1787/bf86a907-en}{Grenthe et al. (2020)}. Move
       aqueous uranium species from
-      \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock et al.
+      \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock, Sassani and Betz
         (1997)} (except for HUO\s{4}\S{-}) to optional data.
 
       \item Add alkylamines, benzylamines, and aminiums from
@@ -58,6 +58,9 @@
       \item Add REE minerals from the compilation of
       \href{https://doi.org/10.1016/j.chemgeo.2016.06.005}{Migdisov et al.
         (2016)} with modifications.
+      
+      \item Add yttrium fluoride complexes (YF\S{+2} and YF\s{2}\S{+}) from
+      \href{https://doi.org/10.1016/j.gca.2013.07.031}{Loges et al. (2013)}.
 
       \item Add REE fluoride and chloride complexes from
       \href{https://doi.org/10.1016/j.gca.2009.08.023}{Migdisov et al. (2009)}
@@ -66,7 +69,10 @@
         (1995)} to optional data.
 
       \item Add chromite (FeCr\s{2}O\s{4}) and cassiterite (SnO\s{2}) from
-      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}. Move
+      cassiterite from
+      \href{https://doi.org/10.2113/gsecongeo.80.5.1365}{Jackson and Helgeson
+        (1985)} to optional data.
 
       \item Move americium complexes from optional to default data. Entropy of
       the element Am has been available for checking GHS self-consistency since
