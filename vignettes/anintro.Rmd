@@ -322,7 +322,7 @@ basis(c("Al+3", "H2O", "H+", "e-"))
 species("corundum")
 iaq <- info(c("Al(OH)4-", "Al(OH)3", "Al(OH)2+", "AlOH+2", "Al+3"))
 s <- solubility(iaq, pH = c(2, 10), in.terms.of = "Al+3")
-diagram(s, col = 3, lwd = 2, ylim = c(-10, -2))
+diagram(s, col = "green4", lwd = 2, ylim = c(-10, -2))
 diagram(s, type = "loga.equil", add = TRUE)
 legend("topright", c("25 °C", "1 bar"), bty = "n")
 ```
@@ -340,8 +340,8 @@ iaq <- info(c("Al(OH)4-", "Al(OH)3", "Al(OH)2+", "AlOH+2", "Al+3"))
 s0 <- solubility(iaq, pH = c(2, 10))
 s1 <- solubility(iaq, pH = c(2, 10), IS = 1)
 diagram(s1, col = 4, lwd = 3, ylim = c(-8, -2))
-diagram(s0, col = 3, lwd = 2, add = TRUE)
-legend("topleft", legend = c(1, 0), lwd = c(3, 2), col = c(4, 3), title = "I (mol/kg)", bty = "n")
+diagram(s0, col = "green4", lwd = 2, add = TRUE)
+legend("topleft", legend = c(1, 0), lwd = c(3, 2), col = c(4, "green4"), title = "I (mol/kg)", bty = "n")
 legend("topright", c("25 °C", "1 bar"), bty = "n")
 ```
 
@@ -383,7 +383,7 @@ CHNOSZ uses these normalized affinities for making relative stability diagrams, 
 The line- and grid-based methods both have the same limitation: every species considered in the relative stability calculation
 must have non-zero stoichiometry of the metal the transformation reactions are balanced on (or equivalently of the *conserved* basis species that has that metal).
 
-## Warning: Quasisolubility contours on predominance diagrams underestimate total solubility
+## Caution: Quasisolubility contours on predominance diagrams underestimate total solubility
 
 A useful technique in geochemical modeling is to construct "composite diagrams" [@GC65],
 where stability fields for minerals and predominance fields for aqueous species are both displayed on the same plot.
@@ -395,10 +395,10 @@ CHNOSZ provides two distinct approaches for calculating isosolubility lines:
 
 **First approach (quasisolubility contours):** This method loads multiple aqueous species with identical activities,
 then constructs the predominance diagram using the maximum affinity method.
-However, isosolubility lines calculated this way represent the reaction between a *single mineral and single aqueous species*.
-We term these "quasisolubility contours" because they provide only a partial view of mineral solubility.
+However, isosolubility lines calculated this way represent the reaction between the most stable mineral and *a single aqueous species* at each point on the diagram.
+These can be called "quasisolubility contours" because they provide only a partial view of mineral solubility.
 
-**Second approach (total solubility):** This method sums the activities of all candidate aqueous species in equilibrium with a mineral,
+**Second approach (total solubility):** This method sums the activities of all candidate aqueous species in equilibrium with the most stable mineral,
 providing isosolubility lines that represent the contribution from *all relevant aqueous species*.
 
 The first approach is implemented in CHNOSZ by setting the activities of formed aqueous species,
@@ -408,20 +408,104 @@ In essence, quasisolubility contours on predominance diagrams are equivalent to 
 The term "quasisolubility" emphasizes that these contours provide only first-order estimates of solubility, considering just one aqueous species at a time.
 
 CHNOSZ offers a second approach that improves upon the maximum affinity method by accounting for contributions from multiple aqueous species to total solubility.
-This approach is implemented in the `solubility()` function.
-[See below](#use-solubility-to-draw-total-solubility-contours).
+This approach is implemented in the `solubility()` function ([see below](#use-solubility-to-draw-total-solubility-contours)).
 
 The following example demonstrates the difference between these two approaches:
-[Insert code block here]
 
-This comparison illustrates how quasisolubility boundaries on classical predominance diagrams
-(generated using `affinity()` or `mosaic()` followed by `diagram()`) systematically underestimate mineral solubility.
+```{r quasisolubility, echo=FALSE, fig.cap="The total solubility contour (green) at log *m*Fe = -6 lies inside the quasisolubility contour (boundary between blue and tan areas), showing that the latter underestimates solubility; the largest contributions to total solubility are from Fe^+2^ and FeCl^+^ at low pH and FeO~2~^-^ and HFeO~2~^-^ at high pH", fig.margin=FALSE, fig.width=12, fig.height=4.2, cache=TRUE}
+par(mfrow = c(1, 2))
+
+# System definition
+metal <- "Fe"
+# The concentration to be used for the quasisolubility contour
+logm_metal <- -6
+T <- 150
+P <- "Psat"
+Stot <- 1e-3
+# Approximate chloride molality and ionic strength for mNaCl = 1.9
+m_Clminus <- IS <- 1.5
+# Plot variables
+res <- 300
+pH <- c(2, 12, res)
+O2 <- c(-55, -40, res)
+
+# Setup basis species
+basis(c(metal, "H2S", "Cl-", "oxygen", "H2O", "H+"))
+basis("H2S", log10(Stot))
+basis("Cl-", log10(m_Clminus))
+# Define basis species to swap through for mosaic calculation
+bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+
+# Get minerals and aqueous species
+icr <- info(c("hematite", "magnetite", "pyrite", "pyrrhotite"))
+iaq <- retrieve(metal, c("Cl", "S", "O", "H"), state = "aq")
+
+## First plot: predominance diagram (quasisolubility) overlaid with total solubility contours
+species(icr)
+species(iaq, logm_metal, add = TRUE)
+m <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = IS)
+diagram(m$A.species, bold = species()$state == "cr")
+
+# Make total solubility contours
+species(icr)
+s <- solubility(iaq, bases = bases, pH = pH, O2 = O2, T = T, P = P, IS = IS, in.terms.of = metal)
+levels <- seq(-9, -3, 3)
+diagram(s, levels = levels, contour.method = "flattest", add = TRUE, col = "green4", lwd = 2)
+# Add a legend
+leg_list <- c(
+  lTP(T, P),
+  lNaCl(1.9),
+  lS(Stot)
+)
+leg_expr <- lex(leg_list)
+legend("bottomleft", legend = leg_expr, bg = "white")
+title("Total solubility is higher than quasisolubility", font.main = 1)
+
+## Second plot: activities of aqueous species in solubility calculation
+basis("O2", -46)
+s <- solubility(iaq, bases = bases, pH = pH, T = T, P = P, IS = IS, in.terms.of = metal)
+diagram(s, col = "green4", lwd = 2, ylim = c(-10, -6))
+# Locate the stability boundary between pyrite and magnetite along the the pH axis 
+ipH <- which.min(abs(s$loga.equil[[3]] - s$loga.equil[[2]]))
+# Show py-mag stability boundary
+pH_py_mag <- s$vals$pH[ipH]
+abline(v = pH_py_mag, col = 8)
+text(pH_py_mag, -6, "pyrite", adj = c(1.2, 1.5), font = 2)
+text(pH_py_mag, -6, "magnetite", adj = c(-0.1, 1.5), font = 2)
+
+# Consider each mineral separately to get activities of aqueous speices
+species("pyrite")
+s_py <- solubility(iaq, bases = bases, pH = pH, T = T, P = P, IS = IS, in.terms.of = metal)
+species("magnetite")
+s_mag <- solubility(iaq, bases = bases, pH = pH, T = T, P = P, IS = IS, in.terms.of = metal)
+# Merge activities for stable regions of each mineral
+loga.equil_both <- lapply(1:length(s_py$loga.equil), function(ispecies) {
+  c(s_py$loga.equil[[ispecies]][1:(ipH-1)], s_mag$loga.equil[[ispecies]][ipH:res])
+})
+# Put merged activities into new object for plotting
+s_both <- s_py
+s_both$loga.equil <- loga.equil_both
+diagram(s_both, type = "loga.equil", add = TRUE)
+
+leg_expr <- expr.species("O2", "gas", value = -46, log = TRUE)
+legend("bottomleft", legend = leg_expr, bg = "white")
+title("Species contributing to total solubility", font.main = 1)
+```
+
+<button id="B-quasisolubility" onclick="ToggleDiv('quasisolubility')">Show code</button>
+<div id="D-quasisolubility" style="display: none;">
+```{r quasisolubility, eval=FALSE, cache=FALSE}
+```
+</div>
+
+
+This comparison illustrates how quasisolubility boundaries on classical predominance diagrams systematically underestimate mineral solubility.
 The discrepancy between quasisolubility and total solubility is minimized when one aqueous species strongly predominates over all others.
 However, in systems where multiple aqueous species contribute significantly to solubility, this mismatch becomes more pronounced.
 For such systems, `solubility()` provides more accurate estimates of isosolubility contours.
 
 It is important to note that neither approach satisfies overall mass balance constraints in complex multicomponent systems.
-For applications requiring rigorous mass-balance solutions, more sophisticated techniques not currently implemented in CHNOSZ should be considered [@Hua16, @DK21].
+For applications requiring rigorous mass-balance solutions, more sophisticated techniques not currently implemented in CHNOSZ should be considered [@PEHB18; @DK21].
 
 ## Advanced Uses
 
@@ -530,7 +614,7 @@ species("corundum")
 s <- solubility(iaq, pH = c(2, 10), in.terms.of = "Al+3")
 ## Alternatively, we could use the species names
 #s <- solubility(names(iaq), pH = c(2, 10), in.terms.of = "Al+3")
-diagram(s, col = 3, lwd = 2, ylim = c(-10, -2))
+diagram(s, col = "green4", lwd = 2, ylim = c(-10, -2))
 diagram(s, type = "loga.equil", add = TRUE)
 legend("topright", c("25 °C", "1 bar"), bty = "n")
 # Reset the database for subsequent calculations
@@ -594,7 +678,7 @@ species(iaq, -6)
 
 NOTE: The value of `logact` passed to `species()` defines a quasisolubility contour,
 which is less than the total solubility to the extent that more than one aqueous species is abundant
-([see above](#warning-quasisolubility-contours-on-predominance-diagrams-underestimate-total-solubility)).
+([see above](#admonition-quasisolubility-contours-on-predominance-diagrams-underestimate-total-solubility)).
 
 ### 7. When to use <span style="font-family:monospace;">add = TRUE</span>
 
@@ -717,7 +801,7 @@ m_Clminus = NaCl_res$m_Clminus
 basis(c(metal, "H2S", "Cl-", "oxygen", "H2O", "H+"))
 basis("H2S", log10(Stot))
 basis("Cl-", log10(m_Clminus))
-# Define basis species to change for mosaic calculation
+# Define basis species to swap through for mosaic calculation
 bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
 
 # Get minerals and aqueous species
@@ -758,7 +842,7 @@ title(main, font.main = 1)
 species(icr)
 s <- solubility(iaq, bases = bases, pH = pH, O2 = O2, T = T, P = P, IS = IS, in.terms.of = metal)
 levels <- seq(-12, 9, 3)
-diagram(s, levels = levels, contour.method = "flattest")
+diagram(s, levels = levels, contour.method = "flattest", col = "green4")
 title("Total solubility contours", font.main = 1)
 ```
 
@@ -767,6 +851,9 @@ title("Total solubility contours", font.main = 1)
 ```{r solubility, eval=FALSE, cache=FALSE}
 ```
 </div>
+
+NOTE: As [explained above](#admonition-quasisolubility-contours-on-predominance-diagrams-underestimate-total-solubility),
+total solubility is higher than quasisolubility.
 
 There are further examples of Eh--pH composite diagrams (denoting quasisolubility) overlaid with total solubility contours in `demo("Pourbaix")`.
 
@@ -797,7 +884,7 @@ The following code continues from the example above:
 ```{r convert_ppm, fig.cap = "Solubility in units of ppm"}
 sppm <- convert(s, "ppm")
 levels <- c(1e-6, 1e-3, 1e0, 1e3)
-diagram(sppm, levels = levels)
+diagram(sppm, levels = levels, col = "green4")
 ```
 
 ### 12. Use the transect mode of <span style="color:green;font-family:monospace;">affinity()</span> for synchronized variables
@@ -1225,9 +1312,9 @@ species("Au")
 iaq <- info(c("Au(HS)2-", "AuHS", "AuOH"))
 s <- solubility(iaq, pH = c(2, 8), T = 300, P = 1000)
 # Create solubility diagram
-diagram(s, ylim = c(-10, -5))
+diagram(s, ylim = c(-10, -5), col = "green4", lwd = 2)
 col <- c("#ED4037", "#F58645", "#0F9DE2")  # Au(HS)2-, AuHS, AuOH
-diagram(s, type = "loga.equil", add = TRUE, col = col, lwd = 2)
+diagram(s, type = "loga.equil", add = TRUE, col = col)
 ```
 
 ### 6. Using buffer calculations in transects with <span style="color:green;font-family:monospace;">affinity()</span>
@@ -1307,17 +1394,17 @@ basis("O2", "HM")
 species("Au")
 iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
 s_HM <- solubility(iaq, T = temps, P = P)
-diagram(s_HM, xlab = "Temperature (°C)", ylab = "log activity",
-        ylim = c(-10, -4), main = "Solubility vs T (KMQ: pH, HM: fO2)")
-diagram(s_HM, type = "loga.equil", col = col, lwd = 2, add = TRUE)
+diagram(s_HM, xlab = "Temperature (°C)", ylab = "log activity", ylim = c(-10, -4),
+        col = "green4", lwd = 2, main = "Solubility vs T (KMQ: pH, HM: fO2)")
+diagram(s_HM, type = "loga.equil", col = col, add = TRUE)
 
 # 2. Compare gold species distribution under PPM buffer
 basis("O2", "PPM")
 basis("H2S", "PPM")
 s_PPM <- solubility(iaq, T = temps, P = P)
-diagram(s_PPM, xlab = "Temperature (°C)", ylab = "log activity",
-        ylim = c(-10, -4), main = "Solubility vs T (KMQ: pH, PPM: fO2 and aH2S)")
-diagram(s_PPM, type = "loga.equil", col = col, lwd = 2, add = TRUE)
+diagram(s_PPM, xlab = "Temperature (°C)", ylab = "log activity", ylim = c(-10, -4),
+        col = "green4", lwd = 2, main = "Solubility vs T (KMQ: pH, PPM: fO2 and aH2S)")
+diagram(s_PPM, type = "loga.equil", col = col, add = TRUE)
 
 # 3. Gold solubility as function of pH at 350°C under PPM buffer
 # Remove KMQ buffer
@@ -1325,9 +1412,9 @@ basis("H+", 0)
 T_fixed <- 350
 # Calculate solubility across pH range
 s_pH <- solubility(iaq, pH = c(2, 8), T = T_fixed, P = P)
-diagram(s_pH, xlab = "pH", ylab = "log activity", ylim = c(-10, -4), 
-        main = "Solubility vs pH (350 °C, PPM: fO2 and aH2S)")
-diagram(s_pH, type = "loga.equil", col = col, lwd = 2, add = TRUE)
+diagram(s_pH, xlab = "pH", ylab = "log activity", ylim = c(-10, -4),
+        col = "green4", lwd = 2, main = "Solubility vs pH (350 °C, PPM: fO2 and aH2S)")
+diagram(s_pH, type = "loga.equil", col = col, add = TRUE)
 # Get neutral pH at this temperature
 neutral_pH <- -subcrt(c("H2O", "H+", "OH-"), c(-1, 1, 1), T = T_fixed, P = P)$out$logK/2
 # Add neutral pH line

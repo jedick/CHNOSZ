@@ -422,6 +422,8 @@ diagram <- function(
             # If this line has any of the overall maximum values, use only those values
             # (useful for labeling straight-line affinity comparisons 20170221)
             is.max <- myvals == maxvals
+            # Handle NA values 20250602
+            is.max[is.na(is.max)] <- FALSE
             if(any(is.max) & plotvar != "alpha") {
               # Put labels on the median x-position
               imax <- median(which(is.max))
