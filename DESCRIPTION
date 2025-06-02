@@ -1,6 +1,6 @@
-Date: 2025-06-01
+Date: 2025-06-02
 Package: CHNOSZ
-Version: 2.1.0-85
+Version: 2.1.0-86
 Title: Thermodynamic Calculations and Diagrams for Geochemistry
 Authors@R: c(
     person("Jeffrey", "Dick", , "j3ffdick@gmail.com", role = c("aut", "cre"),

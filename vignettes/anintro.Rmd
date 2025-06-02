@@ -365,9 +365,9 @@ For citing CHNOSZ itself, see "[How should CHNOSZ be cited?](FAQ.html#how-should
 
 The idea for creating stability diagrams in CHNOSZ came from Prof. Harold Helgeson's geochemistry course at UC Berkeley.
 There, the students constructed diagrams that were "balanced on" a metal.
-For instance, in a system balanced on aluminum, Al is only present in the minerals on both sides of the reaction and is not free as an ion.
+For instance, in a reaction between two minerals balanced on aluminum, Al is only present in the minerals on either side of the reaction and not as an ion.
 
-The reaction-based method, used for making diagrams by hand, looks at reactions between pairs of species (let's call them transformation reactions),
+The line-based method, used for making diagrams by hand, looks at reactions between pairs of species (let's call them transformation reactions),
 then draws a line between stability fields where the non-standard Gibbs energy of reaction is zero.
 The grid-based method, used in CHNOSZ, looks at reactions to compose individual species from the basis species (let's call them formation reactions),
 then selects the most stable species according to their affinity values.
@@ -377,11 +377,51 @@ Affinity is just the opposite of non-standard Gibbs energy of reaction.
 an optional *overall* or *non-standard* in front of the latter [the word choice varies among authors, e.g. @AL19;@STK19].
 "Non-standard Gibbs energy of reaction" doesn't lend itself to a short, unambiguous function name, which is why its opposite, *affinity*, is used in CHNOSZ.
 
-In the reaction-based method, transformation reactions are said to be *balanced on* a metal.
+In the line-based method, transformation reactions are said to be *balanced on* a metal.
 The grid-based method implements this balancing constraint by dividing the affinities of formation reactions by the stoichiometric coefficients of a basis species.
 CHNOSZ uses these normalized affinities for making relative stability diagrams, a technique referred to as the maximum affinity method [@Dic19].
-The reaction- and grid-based methods both have the same limitation: every species considered in the relative stability calculation
+The line- and grid-based methods both have the same limitation: every species considered in the relative stability calculation
 must have non-zero stoichiometry of the metal the transformation reactions are balanced on (or equivalently of the *conserved* basis species that has that metal).
+
+## Warning: Quasisolubility contours on predominance diagrams underestimate total solubility
+
+A useful technique in geochemical modeling is to construct "composite diagrams" [@GC65],
+where stability fields for minerals and predominance fields for aqueous species are both displayed on the same plot.
+Because mineral activities are assumed to be unity while aqueous species activities can vary,
+the choice of aqueous species activity defines a concentration-dependent boundary between mineral and aqueous stability fields on composite diagrams.
+These solubility boundaries between minerals and aqueous species are referred to as either "equisolubility" [@Pou74] or "isosolubility" [@Hel64;@GC65] lines.
+
+CHNOSZ provides two distinct approaches for calculating isosolubility lines:
+
+**First approach (quasisolubility contours):** This method loads multiple aqueous species with identical activities,
+then constructs the predominance diagram using the maximum affinity method.
+However, isosolubility lines calculated this way represent the reaction between a *single mineral and single aqueous species*.
+We term these "quasisolubility contours" because they provide only a partial view of mineral solubility.
+
+**Second approach (total solubility):** This method sums the activities of all candidate aqueous species in equilibrium with a mineral,
+providing isosolubility lines that represent the contribution from *all relevant aqueous species*.
+
+The first approach is implemented in CHNOSZ by setting the activities of formed aqueous species,
+then creating a predominance diagram with the maximum affinity method using `diagram()`.
+[See below](#set-activities-of-formed-species-to-define-a-quasisolubility-contour) for an example of this method.
+In essence, quasisolubility contours on predominance diagrams are equivalent to previously described "solubility limits" on activity diagrams [@OB79].
+The term "quasisolubility" emphasizes that these contours provide only first-order estimates of solubility, considering just one aqueous species at a time.
+
+CHNOSZ offers a second approach that improves upon the maximum affinity method by accounting for contributions from multiple aqueous species to total solubility.
+This approach is implemented in the `solubility()` function.
+[See below](#use-solubility-to-draw-total-solubility-contours).
+
+The following example demonstrates the difference between these two approaches:
+[Insert code block here]
+
+This comparison illustrates how quasisolubility boundaries on classical predominance diagrams
+(generated using `affinity()` or `mosaic()` followed by `diagram()`) systematically underestimate mineral solubility.
+The discrepancy between quasisolubility and total solubility is minimized when one aqueous species strongly predominates over all others.
+However, in systems where multiple aqueous species contribute significantly to solubility, this mismatch becomes more pronounced.
+For such systems, `solubility()` provides more accurate estimates of isosolubility contours.
+
+It is important to note that neither approach satisfies overall mass balance constraints in complex multicomponent systems.
+For applications requiring rigorous mass-balance solutions, more sophisticated techniques not currently implemented in CHNOSZ should be considered [@Hua16, @DK21].
 
 ## Advanced Uses
 
@@ -530,7 +570,7 @@ basis(c("Al+3", "F-", "H+", "H2O", "oxygen"))
 basis(c("Al+3", "F-", "H+", "H2O", "e-"))
 ```
 
-### 6. Set activities of formed <span style="color:red;font-family:monospace;">species()</span> to define a single solubility contour
+### 6. Set activities of formed <span style="color:red;font-family:monospace;">species()</span> to define a quasisolubility contour
 
 In order to make a diagram with stability fields for different species, CHNOSZ needs to know about the activities of all the species in the reaction.
 The activities of the basis species start with constant values as shown in the output above (`logact` column).
@@ -552,7 +592,9 @@ stopifnot(all(info(iaq)$ref1 == "TS01"))
 species(iaq, -6)
 ```
 
-This value of `logact` passed to `species()` defines a solubility contour, as we'll see below.
+NOTE: The value of `logact` passed to `species()` defines a quasisolubility contour,
+which is less than the total solubility to the extent that more than one aqueous species is abundant
+([see above](#warning-quasisolubility-contours-on-predominance-diagrams-underestimate-total-solubility)).
 
 ### 7. When to use <span style="font-family:monospace;">add = TRUE</span>
 
@@ -561,9 +603,9 @@ First, in `species()` to add species not already in the list.
 Without `add = TRUE`, any existing species are discarded.
 Second, in `diagram()` to add to an existing plot.
 
-Let's put items #5--7 together to make a Pourbaix (Eh--pH) diagram for Al with two solubility contours.
+Let's put items #5--7 together to make a Pourbaix (Eh--pH) diagram for Al with two quasisolubility contours.
 
-```{r Pourbaix_Mn, fig.cap = "Pourbaix diagram for Mn with two solubility contours"}
+```{r Pourbaix_Mn, fig.cap = "Pourbaix diagram for Mn with two quasisolubility contours"}
 basis(c("Mn+2", "H+", "H2O", "e-"))
 icr <- retrieve("Mn", ligands = c("H", "O"), state = "cr")
 iaq <- retrieve("Mn", ligands = c("H", "O"), state = "aq")
@@ -623,18 +665,10 @@ print(paste("Ionic strength (mol/kg):", NaCl$IS))
 print(paste("Chloride concentration (mol/kg):", NaCl$m_Clminus))
 ```
 
-### 10. Use <span style="color:green;font-family:monospace;">solubility()</span> to draw multiple solubility contours
+### 10. Use <span style="color:green;font-family:monospace;">solubility()</span> to draw total solubility contours
 
-There are many uses for "composite diagrams" [@GC65], where stability fields for minerals and predominance fields for aqueous species are both present.
-As [mentioned above](#set-activities-of-formed-species-to-define-a-single-solubility-contour), setting the activities of formed aqueous species defines a single solubility contour.
-This represents a concentration-dependent boundary between minerals and aqueous species on a composite diagram, a concept referred to either as
-"equisolubility" [@Pou74] or "isosolubility" [@Hel64;@GC65].
-
-Composite diagrams are often drawn with multiple solubility contours in order to show the dependence of solubility on pH, redox, or other variables.
-See examples of Eh--pH composite diagrams in `demo("Pourbaix")`.
-
-You could loop over constant activities to make a series of solubility contours (see the [example for Mn above](#when-to-use-add-true)).
-An easier solution is to use `solubility()` to visualize multiple solubility contours in one go.
+It's possible to to make a series of quasisolubility contours by setting activities of aqueous species (see the [example for Mn above](#when-to-use-add-true)).
+A more refined solution that accounts for multiple aqueous species is to use `solubility()` to visualize total solubility contours.
 The basic idea is to first load the mineral(s) containing a single metal as the formed `species()`.
 Then, list the aqueous species with that metal as the first argument to `solubility()`.
 The remaining arguments to the function define the plot variables, just as in `affinity()` and `mosaic()`.
@@ -649,12 +683,12 @@ For the present calculation, the warnings are probably harmless because the pred
 NOTE: If you see warning messages like this, it's a good idea not to ignore them,
 but to consider whether you might be pushing the extrapolations of the Cp equation too far.
 
-```{r solubility, echo=FALSE, fig.cap="Mineral stability diagram; aqueous species predominance diagram; composite diagram with one solubility contour; diagram with multiple solubility contours in units of log *m*", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3, cache=TRUE, dpi=1.2*basedpi}
+```{r solubility, echo=FALSE, fig.cap="Stability diagram for minerals; predominance diagram for aqueous species; composite diagram with quasisolubility contour; diagram with total solubility contours in units of log *m*", fig.margin=FALSE, fig.fullwidth=TRUE, fig.width=16, fig.height=3, cache=TRUE, dpi=1.2*basedpi}
 par(mfrow = c(1, 4))
 
 # System definition
 metal <- "Fe"
-# The concentration to be used for a single solubility contour
+# The concentration to be used for the quasisolubility contour
 logm_metal <- -6
 T <- 150
 P <- "Psat"
@@ -717,15 +751,15 @@ species(iaq, logm_metal, add = TRUE)
 m <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = IS)
 diagram(m$A.species, bold = species()$state == "cr")
 diagram(m$A.bases, lty = 2, col = 4, col.names = 4, italic = TRUE, add = TRUE)
-main = bquote("One solubility contour for" ~ log ~ italic(m)*.(metal)*"(aq)" == .(logm_metal))
+main = bquote("Quasisolubility contour for" ~ log ~ italic(m)*.(metal)*"(aq)" == .(logm_metal))
 title(main, font.main = 1)
 
-# Make solubility contours
+# Make total solubility contours
 species(icr)
 s <- solubility(iaq, bases = bases, pH = pH, O2 = O2, T = T, P = P, IS = IS, in.terms.of = metal)
 levels <- seq(-12, 9, 3)
 diagram(s, levels = levels, contour.method = "flattest")
-title("Multiple solubility contours", font.main = 1)
+title("Total solubility contours", font.main = 1)
 ```
 
 <button id="B-solubility" onclick="ToggleDiv('solubility')">Show code</button>
@@ -733,6 +767,8 @@ title("Multiple solubility contours", font.main = 1)
 ```{r solubility, eval=FALSE, cache=FALSE}
 ```
 </div>
+
+There are further examples of Eh--pH composite diagrams (denoting quasisolubility) overlaid with total solubility contours in `demo("Pourbaix")`.
 
 ### 11. Use <span style="color:green;font-family:monospace;">convert()</span> for common unit conversions
 
