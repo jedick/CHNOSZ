@@ -114,7 +114,7 @@ options(width = 80)
 # Use pngquant to optimize PNG images
 library(knitr)
 knit_hooks$set(pngquant = hook_pngquant)
-pngquant <- "--speed=1 --quality=0-25"
+pngquant <- if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) "--speed=1 --quality=0-25" else "--speed=1 --quality=0-10"
 if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
 # To make warnings appear in text box 20230619
 # https://selbydavid.com/2017/06/18/rmarkdown-alerts/

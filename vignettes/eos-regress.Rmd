@@ -71,12 +71,9 @@ knit_hooks$set(small.mar = function(before, options, envir) {
 })
 # Use pngquant to optimize PNG images
 knit_hooks$set(pngquant = hook_pngquant)
+pngquant <- if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) "--speed=1 --quality=0-25" else "--speed=1 --quality=0-10"
 # pngquant isn't available on R-Forge ...
-if (!nzchar(Sys.which("pngquant"))) {
-  pngquant <- NULL 
-} else {
-  pngquant <- "--speed=1 --quality=0-50"
-}
+if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL 
 
 ## Colorize messages 20171031
 ## Adapted from https://gist.github.com/yihui/2629886#file-knitr-color-msg-rnw

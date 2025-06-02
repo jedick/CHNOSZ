@@ -90,8 +90,8 @@ knit_hooks$set(small_mar = function(before, options, envir) {
 })
 
 # Define variables used below
-basedpi = if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) 60 else 40
-pngquant <- "--quality=0-25"
+basedpi <- if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) 60 else 40
+pngquant <- if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) "--speed=1 --quality=0-25" else "--speed=1 --quality=0-10"
 # Avoid errors if pngquant isn't available (perhaps on R-Forge?)
 if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL 
 

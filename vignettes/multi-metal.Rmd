@@ -66,7 +66,7 @@ basedpi = if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) 100 else 70
 ## Use pngquant to optimize PNG images
 knit_hooks$set(pngquant = hook_pngquant)
 ## Set chunk options
-pngquant <- "--quality=0-25"
+pngquant <- if(nzchar(Sys.getenv("CHNOSZ_BUILD_LARGE_VIGNETTES"))) "--speed=1 --quality=0-25" else "--speed=1 --quality=0-10"
 if (!nzchar(Sys.which("pngquant"))) pngquant <- NULL
 opts_chunk$set(dpi = basedpi, pngquant = pngquant)
 
