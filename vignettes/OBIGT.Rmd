@@ -290,8 +290,6 @@ This would be incompatible with group additivity of cations and anions to give a
 
 <div id="D-solid-inorganic" style="display: none">
 ## <a id="solid-inorganic" class="anchor"></a> `r setfile("inorganic_cr.csv")`
-Chamosite,7A and witherite were present in sprons92.dat but not in slop98.dat or later files, and are not included in CHNOSZ.
-The source of parameters used here for goethite is different from that in the slop files ([Shock, 2009](https://doi.org/10.2113/gsecongeo.104.8.1235)).
 
 ```{r reflist, results="asis", echo=FALSE}
 ```

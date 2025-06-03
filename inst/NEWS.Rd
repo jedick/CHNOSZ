@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-89 (2025-06-03)}{
+\section{Changes in CHNOSZ version 2.1.0-90 (2025-06-04)}{
 
   \subsection{OBIGT DATABASE FORMAT}{
     \itemize{
@@ -38,12 +38,15 @@
       \href{https://doi.org/10.1016/j.gca.2024.10.019}{Hu et al. (2024)}.
 
       \item Add germanium, indium, gallium, and cadmium minerals and aqueous
-      species from \href{https://doi.org/10.1080/08120099.2024.2423772}{Huston
-        and Bastrakov (2024)} and references therein. Move Cd and In chloride,
-      In fluoride, and Ga hydroxide complexes from
-      \href{https://doi.org/10.1016/S0016-7037(96)00339-0}{Shock et al. (1997)}
-      and \href{https://doi.org/10.1016/S0016-7037(97)00009-4}{Sverjensky et
-        al. (1997)} to optional data.
+      species from the compilation of
+      \href{https://doi.org/10.1080/08120099.2024.2423772}{Huston and Bastrakov
+        (2024)}. Move Cd and In chloride, In fluoride, and Ga hydroxide
+      complexes from \href{https://doi.org/10.1016/S0016-7037(96)00339-0}{Shock
+        et al. (1997)} and
+      \href{https://doi.org/10.1016/S0016-7037(97)00009-4}{Sverjensky et al.
+        (1997)} to optional data. Thanks to Evgeniy Bastrakov for providing
+      data files for these species and for Co, Ta, Nb, U, and REE minerals and
+      uranyl complexes mentioned below.
 
       \item Add palladium and platinum hydrosulfide complexes
       (Pd(HS)\s{4}\S{-2} and Pt(HS)\s{4}\S{-2}) from
@@ -80,15 +83,22 @@
       \item Add beta-Ta\s{2}O\s{5} from
       \href{https://doi.org/10.1016/j.jct.2008.12.006}{Jacob et al. (2009)}.
 
+      \item Add Co(OH)\s{2} from
+      \href{https://pid.geoscience.gov.au/dataset/ga/25473}{Shvarov and
+        Bastrakov, 1999}.
+
       \item Add chromite (FeCr\s{2}O\s{4}) and cassiterite (SnO\s{2}) from
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}. Move
       cassiterite from
       \href{https://doi.org/10.2113/gsecongeo.80.5.1365}{Jackson and Helgeson
         (1985)} to optional data.
 
-      \item Add beta-Nb\s{2}O\s{5} from
+      \item Add spherocobaltite (CoCO<sub>3</sub>) from
+      \href{https://doi.org/10.1007/978-3-662-02293-1}{Barin et al. (1977)}.
+
+      \item Add CoSO\s{4} and beta-Nb\s{2}O\s{5} from
       \href{https://www.worldcat.org/oclc/8139446}{Naumov et al. (1974)}. A PDF
-      of this book is available from the
+      of this publication is available from the
       \href{https://ntrl.ntis.gov/NTRL/}{National Technical Reports Library}.
 
       \item Move americium complexes from optional to default data. Entropy of
