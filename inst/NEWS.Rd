@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-85 (2025-06-01)}{
+\section{Changes in CHNOSZ version 2.1.0-89 (2025-06-03)}{
 
   \subsection{OBIGT DATABASE FORMAT}{
     \itemize{
@@ -37,7 +37,16 @@
       \item Add tantalum species from
       \href{https://doi.org/10.1016/j.gca.2024.10.019}{Hu et al. (2024)}.
 
-      \item Add Pd(HS)\s{4}\S{-2} and Pt(HS)\s{4}\S{-2} from
+      \item Add germanium, indium, gallium, and cadmium minerals and aqueous
+      species from \href{https://doi.org/10.1080/08120099.2024.2423772}{Huston
+        and Bastrakov (2024)} and references therein. Move Cd and In chloride,
+      In fluoride, and Ga hydroxide complexes from
+      \href{https://doi.org/10.1016/S0016-7037(96)00339-0}{Shock et al. (1997)}
+      and \href{https://doi.org/10.1016/S0016-7037(97)00009-4}{Sverjensky et
+        al. (1997)} to optional data.
+
+      \item Add palladium and platinum hydrosulfide complexes
+      (Pd(HS)\s{4}\S{-2} and Pt(HS)\s{4}\S{-2}) from
       \href{https://doi.org/10.1016/j.gca.2024.12.019}{Laskar et al. (2024)}.
 
       \item Add aqueous uranyl complexes from
@@ -51,7 +60,7 @@
       \item Add alkylamines, benzylamines, and aminiums from
       \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
 
-      \item Add Sn chloride complexes and updated parameters for Sn\S{+2} and
+      \item Add tin chloride complexes and updated parameters for Sn\S{+2} and
       Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
         (2023)}.
 
@@ -99,10 +108,6 @@
       \item Make new directory \file{OBIGT/testing} to hold optional data files
       for testing, including \file{SiO2.csv} (renamed from \file{AS04.csv}) and
       \file{GEMSFIT.csv} in addition to those listed below.
-
-      \item Add \file{testing/GA.csv}: Germanium, indium, gallium, and cadmium
-      species from \href{https://doi.org/10.1080/08120099.2024.2423772}{Huston
-        and Bastrakov (2024)}.
 
       \item Add \file{testing/IGEM.csv}: Au and Cu complexes and
       SO\s{4}\S{-2}-bearing species from researchers at IGEM RAS.

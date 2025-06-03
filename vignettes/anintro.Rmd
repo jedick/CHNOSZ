@@ -412,7 +412,7 @@ This approach is implemented in the `solubility()` function ([see below](#use-so
 
 The following example demonstrates the difference between these two approaches:
 
-```{r quasisolubility, echo=FALSE, fig.cap="The total solubility contour (green) at log *m*Fe = -6 lies inside the quasisolubility contour (boundary between blue and tan areas), showing that the latter underestimates solubility; the largest contributions to total solubility are from Fe^+2^ and FeCl^+^ at low pH and FeO~2~^-^ and HFeO~2~^-^ at high pH", fig.margin=FALSE, fig.width=12, fig.height=4.2, cache=TRUE}
+```{r quasisolubility, echo=FALSE, fig.cap="The total solubility contour (green) at log *m*Fe = -6 lies inside the quasisolubility contour (boundary between tan and blue areas), showing that the latter underestimates solubility; the largest contributions to total solubility are from Fe^+2^ and FeCl^+^ at low pH and FeO~2~^-^ and HFeO~2~^-^ at high pH", fig.margin=FALSE, fig.width=12, fig.height=4.2, cache=TRUE}
 par(mfrow = c(1, 2))
 
 # System definition
@@ -678,7 +678,7 @@ species(iaq, -6)
 
 NOTE: The value of `logact` passed to `species()` defines a quasisolubility contour,
 which is less than the total solubility to the extent that more than one aqueous species is abundant
-([see above](#admonition-quasisolubility-contours-on-predominance-diagrams-underestimate-total-solubility)).
+([see above](#caution-quasisolubility-contours-on-predominance-diagrams-underestimate-total-solubility)).
 
 ### 7. When to use <span style="font-family:monospace;">add = TRUE</span>
 
@@ -852,7 +852,7 @@ title("Total solubility contours", font.main = 1)
 ```
 </div>
 
-NOTE: As [explained above](#admonition-quasisolubility-contours-on-predominance-diagrams-underestimate-total-solubility),
+NOTE: As [explained above](#caution-quasisolubility-contours-on-predominance-diagrams-underestimate-total-solubility),
 total solubility is higher than quasisolubility.
 
 There are further examples of Eh--pH composite diagrams (denoting quasisolubility) overlaid with total solubility contours in `demo("Pourbaix")`.
@@ -1059,6 +1059,8 @@ reactions <- c(
   # acetoclastic methanogenesis
   describe.reaction(subcrt(c("acetate", "CH4"), c(-1, 1))$reaction)
 )
+# Add space before "CO2" to avoid getting cut off to "O2" by the plot limits
+reactions[[1]][2][[1]][[2]][[2]][[2]][[3]] <- "       CO"
 
 # System 1: one C species in basis; two C species in formation reactions
 basis(c("CO2", "H2", "H2O", "H+"))
@@ -1088,7 +1090,7 @@ a1$values[[2]] <- -convert(a1$values[[2]], "G", T = TK) / 1000
 a2$values[[1]] <- -convert(a2$values[[1]], "G", T = TK) / 1000
 
 # Make diagram without balancing constraint (no normalization by C)
-diagram(a1, balance = 1, lty = 1, lwd = 2, col = c(4, 2), names = reactions[1:2], ylab = axis.label("DG", prefix = "k"), srt = c(-14, 26))
+diagram(a1, balance = 1, lty = 1, lwd = 2, col = c(4, 2), names = reactions[1:2], ylab = axis.label("DG", prefix = "k"), srt = c(-13.5, 26))
 diagram(a2, balance = 1, lwd = 2, col = 3, names = reactions[3], srt = 14, add = TRUE)
 abline(h = 0, lty = 2, col = 8)
 ```

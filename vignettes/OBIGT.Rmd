@@ -358,7 +358,20 @@ optused <- c(optused, filerefs(csvfile))
 <div id="D-optional-SLOP98" style="display: none">
 ## <a id="optional-SLOP98" class="anchor"></a> `r setfile("SLOP98.csv")`
 These species, whose parameters were listed in or are otherwise linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default database.
-The superseding data for aqueous species include: Al [@TS01], As [@NA03], Au, Ag, and Cu(I) [@AZ01; @AZ10], REE [@MWW09], Co [@LBT+11], Pd [@TBZ+13], Zn [@AT14], Pt [@TBB15], Nb [@AKK+20], U(IV) [@MBA+24].
+The elements with updated data for at least some aqueous species, and the corresponding references, include:
+HCl [@TZA97],
+Al [@TS01],
+Au, Ag, and Cu(I) [@AZ01; @AZ10],
+As [@NA03],
+REE [@MWW09],
+Cd [@BZA10],
+Co [@LBT+11],
+Pd [@TBZ+13],
+Zn [@AT14],
+Pt [@TBB15],
+Nb [@AKK+20],
+Ga and In [@HB24], and
+U(IV) [@MBA+24].
 
 Use `add.OBIGT("SLOP98")` to load the data.
 
@@ -416,10 +429,6 @@ Updates for Au and Cu complexes and SO<sub>4</sub><sup>-2</sup>-bearing species 
 <h3>Sandia</h3>
 
 Model for the Mg(OH)<sub>2</sub>-MgCl<sub>2</sub>-H<sub>2</sub>O system at 25 to 150 &deg;C from researchers at Sandia National Laboratories [@KBJ24].
-
-<h3>GA</h3>
-
-Germanium, indium, gallium, and cadmium species from researchers at Geoscience Australia [@HB24].
 
 <h3>Citations</h3>
 
