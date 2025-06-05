@@ -185,7 +185,7 @@ filerefs <- function(csvfile, dat=NULL, message=FALSE) {
     if(!identical(note, "")) note <- paste0(" *", note, "* ")
     # Use bullets for ref2
     if(whichref=="ref2") bullet <- "- " else bullet <- ""
-    # Convert key (e.g. LD12.2) to ref in OBIGT.bib (e.g. LD12)
+    # Convert key with subreference (e.g. LD12.2) to reference in OBIGT.bib (e.g. LD12)
     thisref <- gsub("\\..*$", "", thiskey)
     # Replace SLOP98 with slop98.dat, etc.
     # (we don't actually cite them here to keep the year from showing -- it's annoying to see e.g. "slop98.dat (1998)")
@@ -398,7 +398,7 @@ The following species are present in the spreadsheet, but are not used here beca
 Besides using `add.OBIGT("DEW")` to load these data, you should also run `water("DEW")` to activate the DEW equations in CHNOSZ.
 See `demo(DEW)` for some examples.
 
-Most of the comments below were transcribed from the DEW spreadsheet. (Comments in parentheses were added by JMD.)
+Most of the comments below were transcribed from the DEW spreadsheet. Comments in parentheses were added by JMD.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```

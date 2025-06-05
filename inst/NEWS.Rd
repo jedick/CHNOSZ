@@ -15,18 +15,18 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-90 (2025-06-04)}{
+\section{Changes in CHNOSZ version 2.1.0-91 (2025-06-05)}{
 
   \subsection{OBIGT DATABASE FORMAT}{
     \itemize{
 
       \item Mineral species whose \code{T} value is a Cp equation limit or
-      phase transition temperature are indicated by \samp{CGL} or \samp{CGL_Ttr},
-      respectively, in \code{model}. At conditions above the \code{T} limit,
-      \code{subcrt()} extrapolates values and produces a warning for \samp{CGL}
-      species or returns NA values for \samp{CGL_Ttr} species. The addition of
-      \samp{CGL_Ttr} replaces the previous strategy of using signed values of
-      \code{T}.
+      phase transition temperature are indicated by \samp{CGL} or
+      \samp{CGL_Ttr}, respectively, in \code{model}. At temperatures above the
+      \code{T} limit, \code{subcrt()} extrapolates values and produces a
+      warning for \samp{CGL} species or returns NA values for \samp{CGL_Ttr}
+      species. The addition of \samp{CGL_Ttr} replaces the previous strategy of
+      using signed values of \code{T}.
 
     }
   }
@@ -93,16 +93,22 @@
       \href{https://doi.org/10.2113/gsecongeo.80.5.1365}{Jackson and Helgeson
         (1985)} to optional data.
 
-      \item Add spherocobaltite (CoCO<sub>3</sub>) from
+      \item Add spherocobaltite (CoCO\s{3}) from
       \href{https://doi.org/10.1007/978-3-662-02293-1}{Barin et al. (1977)}.
 
       \item Add CoSO\s{4} and beta-Nb\s{2}O\s{5} from
       \href{https://www.worldcat.org/oclc/8139446}{Naumov et al. (1974)}. A PDF
       of this publication is available from the
       \href{https://ntrl.ntis.gov/NTRL/}{National Technical Reports Library}.
-
+      
       \item Move americium complexes from optional to default data. Entropy of
       the element Am has been listed in \file{element.csv} since CHNOSZ 1.4.0.
+
+      \item Corrected Δ\emph{H}°\s{f} by -7335 cal/mol to maintain GHS
+      consistency for In\s{+3} and derived species. This is in addition to the
+      correction for S° previously noted by
+      \href{https://doi.org/10.1016/0016-7037(88)90181-0}{Shock and Helgeson
+        (1988)}.
 
       \item Fix sign of \emph{c} parameter for nesquehonite. Thanks to James
       Leong and Grayson Boyer.

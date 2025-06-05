@@ -35,6 +35,7 @@ SH88.1,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-
 SH88.2,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.3,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",Ag<sup>+</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.4,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","K<sup>+</sup>, Na<sup>+</sup>, Ca<sup>+2</sup>, Mg<sup>+2</sup>, Cl<sup>-</sup>, and OH<sup>-</sup>",https://doi.org/10.1016/0016-7037(88)90181-0
+SH88.5,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","values of GHS; corrected H for In<sup>+3</sup> [@OBIGT25]",https://doi.org/10.1016/0016-7037(88)90181-0
 SHS89,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","inorganic neutral species",https://doi.org/10.1016/0016-7037(89)90341-4
 SHS89.1,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183",SiO<sub>2</sub>,https://doi.org/10.1016/0016-7037(89)90341-4
 Ber90,"R. G. Berman",1990,"Am. Mineral. 75, 328-344",annite,http://ammin.geoscienceworld.org/content/75/3-4/328
@@ -247,14 +248,6 @@ ZZL+16,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","data listed in sprons
 ZZL+16.1,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","As(&alpha;): V listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.2,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","Cp parameters listed in spronsbl.dat",https://doi.org/10.1016/j.cageo.2016.02.013
 ZZL+16.3,"K. Zimmer et al.",2016,"Comp. Geosci. 90, 97-111","dawsonite GHS",https://doi.org/10.1016/j.cageo.2016.02.013
-OBIGT.1,"J. M. Dick",2017,"OBIGT database in CHNOSZ","GHS (T<sub>r</sub>) of the polymorph that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the polymorphs that are stable at higher temperatures.",https://chnosz.net
-OBIGT.3,"J. M. Dick",2017,"OBIGT database in CHNOSZ","AuCl<sub>4</sub><sup>-</sup> renamed to AuCl<sub>4</sub><sup>-3</sup>",https://chnosz.net
-OBIGT.4,"J. M. Dick",2017,"OBIGT database in CHNOSZ","charge of NpO<sub>2</sub>(Oxal), La(Succ)<sup>+</sup>, NH<sub>4</sub>(Succ)<sup>-</sup>, and NpO<sub>2</sub>(Succ) as listed by @PSK99",https://chnosz.net
-OBIGT.5,"J. M. Dick",2017,"OBIGT database in CHNOSZ","Incorrect values of HKF a<sub>1</sub>--a<sub>4</sub> parameters for [-CH<sub>2</sub>NH<sub>2</sub>] were printed in Table 6 of @DLH06; corrected values are used here.",https://chnosz.net
-OBIGT.6,"J. M. Dick",2019,"OBIGT database in CHNOSZ","recalculated values of Cp (those in @AKAE19 appear to be calculated using wrong sign on &omega;) and enthalpy (using &Delta;G=&Delta;H-T&Delta;S and the entropies of the elements)",https://chnosz.net
-OBIGT.7,"J. M. Dick",2019,"OBIGT database in CHNOSZ","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: change Ti to Tl",https://chnosz.net
-OBIGT.8,"J. M. Dick",2019,"OBIGT database in CHNOSZ","GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",https://chnosz.net
-OBIGT.9,"J. M. Dick",2021,"OBIGT database in CHNOSZ","diaminopimelic acid, putrescine and spermidine: parameters recalculated to account for a missing [-CH2NH2] group in the group additivity equations",https://chnosz.net
 Bla17,"P. Blanc",2017,"Thermoddem: Update for the 2017 version","monteponite, Cd(OH)<sub>2</sub>, CdSO<sub>4</sub>, otavite, and GaOOH",https://thermoddem.brgm.fr/page/brgm-reports
 Bla17.1,"P. Blanc",2017,"Thermoddem: Update for the 2017 version","Ga-hydroxide complexes",https://thermoddem.brgm.fr/page/brgm-reports
 LCT17,"A. R. Lowe, J. S. Cox and P. R. Tremaine",2017,"J. Chem. Thermodynamics 112, 129-145","adenine HKF parameters",https://doi.org/10.1016/j.jct.2017.04.005
@@ -265,6 +258,7 @@ DEW17.04,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(A
 DEW17.05,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","(Al<sup>+3</sup>: parameters in DEW spreadsheet are the same as in @SSWS97)",http://www.dewcommunity.org
 DEW17.1,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","revised with new predicted a<sub>1</sub> for ions",http://www.dewcommunity.org
 DEW17.2,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","revised with new predicted a<sub>1</sub> for cations",http://www.dewcommunity.org
+DEW17.201,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","revised with new predicted a<sub>1</sub> for cations [corrected H for In<sup>+3</sup>; @OBIGT25]",http://www.dewcommunity.org
 DEW17.3,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","revised with new predicted a<sub>1</sub> for complex species",http://www.dewcommunity.org
 DEW17.4,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","revised with a<sub>1</sub> equal to the sum of the ions",http://www.dewcommunity.org
 DEW17.5,"D. A. Sverjensky et al.",2017,"Deep Earth Water (DEW) spreadsheet","BaCl<sup>+</sup>, CaCl<sup>+</sup>, CaCl<sup>2</sup>: with new V from the sum of a<sub>1</sub> values of ions",http://www.dewcommunity.org
@@ -321,14 +315,15 @@ NEA20.1,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of U
 LXW21,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488",H<sub>2</sub>WO<sub>4</sub>,https://doi.org/10.1016/j.chemgeo.2021.120488
 LXW21.1,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488","scheelite Cp",https://doi.org/10.1016/j.chemgeo.2021.120488
 WV22,"A. E. Williams-Jones and O. V. Vasyukova",2022,"Econ. Geol. 117, 513-528","data compilation for Co minerals",https://doi.org/10.5382/econgeo.4895
-BS23,"G. Boyer and E. Shock",2023,"The Complicator (prototype) (v0.0.2)","In complexes",https://doi.org/10.5281/zenodo.8206644
+BS23,"G. Boyer and E. Shock",2023,"The Complicator (prototype) (v0.0.2)","In complexes; corrected H [@OBIGT25]",https://doi.org/10.5281/zenodo.8206644
 AZ23,"N. N. Akinfiev and A. V. Zotov",2023,"Geol. Ore Deposits 65, 1-10","Cu<sup>+</sup> and CuO<sup>-</sup>",https://doi.org/10.1134/S1075701523010026
 LYX23,"X. Liu, P. Yu and C. Xiao",2023,"Geosci. Front. 14, 101624","Sn<sup>+2</sup>, Th<sup>+4</sup>, and Sn chloride complexes",https://doi.org/10.1016/j.gsf.2023.101624
 TTA+23,"N. D. Trofimov, B. R. Tagirov et al.",2023,"Chem. Geol. 625, 121413","Cu hydrosulfide and chloride complexes",https://doi.org/10.1016/j.chemgeo.2023.121413
 HDR+24,"B. P. von der Heyden et al.",2024,"Can. J. Mineral. Petrol. 62, 77-93",carrollite,https://doi.org/10.3749/2300028
 HET+24,"B. Hu, B. Etschmann et al.",2024,"Geochim. Cosmochim. Acta","Ta(OH)<sub>3</sub>F<sub>3</sub><sup>-</sup> and TaF<sub>7</sub><sup>-2</sup>",https://doi.org/10.1016/j.gca.2024.10.019
 HB24,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","data compilation for Cd, Ga, Ge, and In minerals and aqueous species",https://doi.org/10.1080/08120099.2024.2423772
-HB24.1,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","Ga and In sulfate complexes [algorithms based on @SSH97]",https://doi.org/10.1080/08120099.2024.2423772
+HB24.1,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","Ga sulfate complexes [algorithms based on @SSH97]",https://doi.org/10.1080/08120099.2024.2423772
+HB24.2,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","In sulfate complexes [algorithms based on @SSH97]; corrected H [@OBIGT25]",https://doi.org/10.1080/08120099.2024.2423772
 KBJ24,"A. W. Knight, C. R. Bryan and C. F. Jové-Colón",2024,"Appl. Geochem. 169, 106032","Mg(OH)<sub>2</sub>-MgCl<sub>2</sub>-H<sub>2</sub>O phases",https://doi.org/10.1016/j.apgeochem.2024.106032
 LBP24,"C. Laksar et al.",2024,"Geochim. Cosmochim. Acta","Pd(HS)<sub>4</sub><sup>-2</sup> and Pt(HS)<sub>4</sub><sup>-2</sup>",https://doi.org/10.1016/j.gca.2024.12.019
 MBA+24,"A. Migdisov, E. Bastrakov et al.",2024,"Geochim. Cosmochim. Acta","uranyl carbonate, chloride, sulfate, and hydroxide complexes",https://doi.org/10.1016/j.gca.2024.04.023
@@ -336,3 +331,12 @@ RSS+24,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","alkylami
 RSS+24.1,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","corrected V for tripropylaminium",https://doi.org/10.1016/j.gca.2024.03.013
 TAT+24,"B. R. Tagirov, N. N. Akinfiev et al.",2024,"Geochim. Cosmochim. Acta","Au-(hydro)sulfide species and SO<sub>4</sub><sup>-2</sup>-bearing species",https://doi.org/10.1016/j.gca.2024.08.022
 TAZ24,"B. R. Tagirov, N. N. Akinfiev and A. V. Zotov",2024,"Geol. Ore Deposits 66, 581--597","Au hydroxide and chloride complexes",https://doi.org/10.1134/S1075701524600403
+OBIGT25,OBIGT,2025,"OBIGT database in CHNOSZ","corrected H by -7335 cal/mol to maintain GHS consistency for In<sup>+3</sup> and derived species",https://chnosz.net
+OBIGT.1,"J. M. Dick",2017,"OBIGT database in CHNOSZ","GHS (T<sub>r</sub>) of the polymorph that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the polymorphs that are stable at higher temperatures.",https://chnosz.net
+OBIGT.3,"J. M. Dick",2017,"OBIGT database in CHNOSZ","AuCl<sub>4</sub><sup>-</sup> renamed to AuCl<sub>4</sub><sup>-3</sup>",https://chnosz.net
+OBIGT.4,"J. M. Dick",2017,"OBIGT database in CHNOSZ","charge of NpO<sub>2</sub>(Oxal), La(Succ)<sup>+</sup>, NH<sub>4</sub>(Succ)<sup>-</sup>, and NpO<sub>2</sub>(Succ) as listed by @PSK99",https://chnosz.net
+OBIGT.5,"J. M. Dick",2017,"OBIGT database in CHNOSZ","incorrect values of HKF a<sub>1</sub>--a<sub>4</sub> parameters for [-CH<sub>2</sub>NH<sub>2</sub>] were printed in Table 6 of @DLH06; corrected values are used here.",https://chnosz.net
+OBIGT.6,"J. M. Dick",2019,"OBIGT database in CHNOSZ","recalculated values of Cp (those in @AKAE19 appear to be calculated using wrong sign on &omega;) and enthalpy (using &Delta;G=&Delta;H-T&Delta;S and the entropies of the elements)",https://chnosz.net
+OBIGT.7,"J. M. Dick",2019,"OBIGT database in CHNOSZ","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: change Ti to Tl",https://chnosz.net
+OBIGT.8,"J. M. Dick",2019,"OBIGT database in CHNOSZ","GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",https://chnosz.net
+OBIGT.9,"J. M. Dick",2021,"OBIGT database in CHNOSZ","diaminopimelic acid, putrescine and spermidine: parameters recalculated to account for a missing [-CH2NH2] group in the group additivity equations",https://chnosz.net

@@ -28,7 +28,6 @@
 "OBIGT","WO4-2","aq","cal",,,19984
 "OBIGT","PO4-3","aq","cal",,-1.72,
 "OBIGT","UO2+2","aq","cal",-1.1,,
-"OBIGT","In+3","aq","cal",,,7335
 "OBIGT","P2O7-4","aq","cal",,-2.11,
 "OBIGT","HP2O7-3","aq","cal",,-1.42,
 "OBIGT","SO3-2","aq","cal",,-1.02,
@@ -124,17 +123,8 @@
 "OBIGT","Ga(OH)4-","aq","J",-3.75,,
 "OBIGT","GaSO4+","aq","cal",2.05,,
 "OBIGT","Ga(SO4)2-","aq","cal",-19.44,-36.42,
-"OBIGT","InCl+2","aq","cal",,,7343
-"OBIGT","InCl2+","aq","cal",,,7350
-"OBIGT","InCl3","aq","cal",,,7358
-"OBIGT","InF+2","aq","cal",,,7346
-"OBIGT","InF2+","aq","cal",,,7357
-"OBIGT","InF3","aq","cal",,,7367
-"OBIGT","InF4-","aq","cal",,,7378
-"OBIGT","InSO4+","aq","cal",3.64,,7358
-"OBIGT","In(SO4)2-","aq","cal",-19.05,-33.6,7380
-"OBIGT","InHS+2","aq","cal",,,7362
-"OBIGT","In(HS)2+","aq","cal",,,7389
+"OBIGT","InSO4+","aq","cal",3.64,,
+"OBIGT","In(SO4)2-","aq","cal",-19.05,-33.6,
 "OBIGT","CH4","aq","cal",-2.61,,
 "OBIGT","hexane","aq","cal",1.43,3.21,
 "OBIGT","ethylene","aq","cal",6.12,-3.82,
@@ -361,7 +351,6 @@
 "DEW","HCN","aq","cal",,,907
 "DEW","Hg2+2","aq","cal",,,9334
 "DEW","HPO4-2","aq","cal",,-1.02,
-"DEW","In+3","aq","cal",,,7335
 "DEW","KOH","aq","cal",,,-71448
 "DEW","MgHCO3+","aq","cal",,,686
 "DEW","MgOH+","aq","cal",,,11274
@@ -398,11 +387,9 @@
 "SLOP98","PtCl4-2","aq","cal",-13.86,,
 "SLOP98","Pt(SO4)3-4","aq","cal",,-1.79,-2915
 "SLOP98","UO4-2","aq","cal",,-1.11,
-"SLOP98","InCl+2","aq","cal",,,7342
 "SLOP98","ZnCl3-","aq","cal",,,2264
 "SLOP98","Zn(Ac)+","aq","cal",,,-4547
 "SLOP98","Zn(Ac)3-","aq","cal",,,-13968
-"SLOP98","InF+2","aq","cal",,,7347
 "SLOP98","Al+3","aq","cal",1.74,,
 "SLOP98","Th+4","aq","cal",,-1.14,
 "SLOP98","AsO4-3","aq","cal",,-1.65,
