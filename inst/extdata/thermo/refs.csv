@@ -16,12 +16,13 @@ RHF78,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Sur
 RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",iron,https://doi.org/10.3133/b1452
 RHF78.3,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","gibbsite GHS",https://doi.org/10.3133/b1452
 RHF78.4,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","rutile and titanite",https://doi.org/10.3133/b1452
+Den81,"K. Denbigh",1981,"The Principles of Chemical Equilibrium","hydrogen ion convention",https://doi.org/10.1017/CBO9781139167604
 Pan82,"L. B. Pankratz",1987,"Thermodynamic Properties of Elements and Oxides (U.S. Bureau of Mines Bull. 672)","gallium, Ga<sub>2</sub>O<sub>3</sub>, indium, In<sub>2</sub>O<sub>3</sub>",https://catalog.hathitrust.org/Record/102119912
 PB82,"L. N. Plummer and E. Busenberg",1982,"Geochim. Cosmochim. Acta 46, 1011-1040","aragonite and calcite",https://doi.org/10.1016/0016-7037(82)90056-4
 WEP+82,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","gases GHS",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
 WEP+82.1,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","Mn(OH)<sub>2</sub> (amorphous) and MgSO<sub>4</sub>",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
 BH83,"T. S. Bowers and H. C. Helgeson",1983,"Geochim. Cosmochim. Acta 47, 1247-1275",rutile,https://doi.org/10.1016/0016-7037(83)90066-2
-HGK84,"L. Haar and J. S. Gallagher and G. S. Kell",1984,"NBS/NRC Steam Tables",H<sub>2</sub>O,https://www.worldcat.org/oclc/858456124
+HGK84,"L. Haar and J. S. Gallagher and G. S. Kell",1984,"NBS/NRC Steam Tables",thermodynamic properties of H<sub>2</sub>O outside of the critical region,https://www.worldcat.org/oclc/858456124
 Hel85,"H. C. Helgeson",1985,"Am. J. Sci. 285, 845-855","ferrosilite and siderite",https://doi.org/10.2475/ajs.285.9.845
 JH85,"K. J. Jackson and H. C. Helgeson",1985,"Econ. Geol. 80, 1365-1378","Sn minerals",https://doi.org/10.2113/gsecongeo.80.5.1365
 PMW87,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","cattierite, linnaeite, and Co-pentlandite",https://www.worldcat.org/oclc/16131757
@@ -49,7 +50,7 @@ SHD91,"D. A. Sverjensky, J. J. Hemley and W. M. D'Angelo",1991,"Geochim. Cosmoch
 SHD91.1,"D. A. Sverjensky, J. J. Hemley and W. M. D'Angelo",1991,"Geochim. Cosmochim. Acta 55, 989-1004","phlogopite: H and S modified by @Ber90, followed by G and H revision for K-bearing silicates [after @SHD91]",https://doi.org/10.1016/0016-7037(89)90341-4
 SHD91.2,"D. A. Sverjensky, J. J. Hemley and W. M. D'Angelo",1991,"Geochim. Cosmochim. Acta 55, 989-1004","annite: G and H revision for K-bearing silicates [after @SHD91]",https://doi.org/10.1016/0016-7037(89)90341-4
 JUN92,"C. de Capitani",1992,"JUN92.bs database supplied with Theriak/Domino software","data as listed in `JUN92.bs` data file",http://titan.minpet.unibas.ch/minpet/theriak/theruser.html
-JOH92,"J. W. Johnson and E. H. Oelkers and H. C. Helgeson",1992,"Comp. Geosci. 18, 899-947",H<sub>2</sub>O,https://doi.org/10.1016/0098-3004(92)90029-Q
+JOH92,"J. W. Johnson and E. H. Oelkers and H. C. Helgeson",1992,"Comp. Geosci. 18, 899-947","thermodynamic and electrostatic properties of H<sub>2</sub>O calculated using HO92D.f source file from SUPCRT92 modified for use in CHNOSZ",https://doi.org/10.1016/0098-3004(92)90029-Q
 Joh92,"J. W. Johnson",1992,"Personal calculation","steam: &quot;Parameters given provide smooth metastable extrapolation of one-bar steam properties predicted by the @HGK84 equation of state to temperatures < the saturation temperature (99.632 C).&quot;",
 SPRONS92.1,"H. C. Helgeson et al.",1992,"sprons92.dat computer data file","titanite: @BH83 + &quot;Gibbs free energies and enthalpies were corrected to be consistent with updated values of Gibbs free energies of Ca<sup>2+</sup> and CO<sub>3</sub><sup>2-</sup> [@SH88] together with the solubilities of calcite and aragonite reported by @PB82 &quot;",
 SPRONS92.2,"H. C. Helgeson et al.",1992,"sprons92.dat computer data file","Ca-bearing minerals; &quot;Gibbs free energies and enthalpies were corrected to be consistent with updated values of Gibbs free energies of Ca<sup>2+</sup> and CO<sub>3</sub><sup>2-</sup> [@SH88] together with the solubilities of calcite and aragonite reported by @PB82 &quot;",
@@ -108,7 +109,6 @@ TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976
 TZA97,"B. R. Tagirov, A. V. Zotov and N. N. Akinfiev",2007,"Geochim. Cosmochim. Acta 61, 4267-4280","aqueous HCl",https://doi.org/10.1016/S0016-7037(97)00274-3
 ST97,"D. Shvedov and P. R. Tremaine",1997,"J. Solution Chem. 26, 1113-1143","dimethylammonium chloride HKF parameters",https://doi.org/10.1023/A:1022977006327
 DRT98,"I. I. Diakonov et al.",1998,"Chem. Geol. 151, 327-347","REE hydroxides",https://doi.org/10.1016/S0009-2541(98)00088-6
-proton,OBIGT,1997,"Hydrogen-ion convention","""The conventional standard molal properties of the hydrogen ion are zero at any pressure and temperature"" [@JOH92]",https://chnosz.net
 HOKR98,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00219-6
 HOKR98.1,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","amino acids",https://doi.org/10.1016/S0016-7037(97)00219-6
 PS98,"G. S. Pokrovski and J. Schott",1998,"Geochim. Cosmochim. Acta 62, 1631-1642","GeO<sub>2</sub> (hex) and (tetr) (augite)",https://doi.org/10.1016/S0016-7037(98)00081-7
@@ -160,7 +160,7 @@ MSB+04,"J. Majzlan, R. Stevens et al.",2004,"Phys. Chem. Mineral. 31, 518-531","
 SR04,"M. D. Schulte and K. L. Rogers",2004,"Geochim. Cosmochim. Acta 68, 1087-1097","alkane thiols",https://doi.org/10.1016/j.gca.2003.06.001
 VPV05,"O. Vidal, T. Parra and P. Viellard",2005,"Am. Mineral. 90, 347-358",Fe-amesite,https://doi.org/10.2138/am.2005.1554
 ZZX+05,"Y. Zhu et al.",2005,"J. Hazard. Mater. A120, 37-44","barium arsenate and barium hydrogen arsenate: G",https://doi.org/10.1016/j.jhazmat.2004.12.025
-electron,OBIGT,2006,"See CHNOSZ vignette OBIGT.Rmd for more information","Non-zero entropy of the electron based on the hydrogen-ion convention",https://chnosz.net
+OBIGT06,OBIGT,2006,"See CHNOSZ vignette OBIGT.Rmd for more information","non-zero entropy of the electron based on the hydrogen ion convention",https://chnosz.net
 ARHB06,"C. Akilan et al.",2006,"ChemPhysChem 7, 2319-2330",MgSO<sub>4</sub>,https://doi.org/10.1002/cphc.200600342
 AVZP06,"N. N. Akinfiev et al.",2006,"Geochem. Int. 44, 867-878",AgCl<sub>3</sub><sup>-2</sup>,https://doi.org/10.1134/S0016702906090035
 BL06,"A. V. Bandura and S. N. Lvov",2006,"J. Phys. Chem. Ref. Data 35, 15-30",OH<sup>-</sup>,https://doi.org/10.1063/1.1928231

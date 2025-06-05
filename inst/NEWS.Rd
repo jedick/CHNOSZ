@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-91 (2025-06-05)}{
+\section{Changes in CHNOSZ version 2.1.0-92 (2025-06-05)}{
 
   \subsection{OBIGT DATABASE FORMAT}{
     \itemize{
@@ -104,8 +104,13 @@
       \item Move americium complexes from optional to default data. Entropy of
       the element Am has been listed in \file{element.csv} since CHNOSZ 1.4.0.
 
-      \item Corrected Δ\emph{H}°\s{f} by -7335 cal/mol to maintain GHS
-      consistency for In\s{+3} and derived species. This is in addition to the
+      \item Cite \href{https://doi.org/10.1017/CBO9781139167604}{Denbigh
+        (1981)} for the hydrogen ion convention.
+
+      \item Due to an apparent typo in
+      \href{https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf}{Wagman et al. (1982)},
+      Δ\emph{H}°\s{f} for In\s{+3} and derived species was corrected by -7335
+      cal/mol to maintain GHS consistency. This is in addition to the
       correction for S° previously noted by
       \href{https://doi.org/10.1016/0016-7037(88)90181-0}{Shock and Helgeson
         (1988)}.
