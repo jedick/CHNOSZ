@@ -167,6 +167,9 @@
       \item Add FAQ question: Why are mineral stability boundaries curved on
       mosaic diagrams?
 
+      \item Add FAQ question: Where do the names CHNOSZ, OBIGT, and subcrt come
+      from?
+
     }
   }
 
