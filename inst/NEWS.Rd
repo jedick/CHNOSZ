@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-92 (2025-06-05)}{
+\section{Changes in CHNOSZ version 2.1.0-94 (2025-06-06)}{
 
   \subsection{OBIGT DATABASE FORMAT}{
     \itemize{
@@ -66,6 +66,11 @@
       \item Add tin chloride complexes and updated parameters for Sn\S{+2} and
       Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
         (2023)}.
+
+      \item Add Fe-bearing serpentinization-relevant minerals (ferrous
+      hydroxide, ferrotremolite, greenalite, minnesotaite, Mg-cronstedtite, and
+      hisingerite) from \href{https://doi.org/10.2475/03.2020.01}{Leong and
+        Shock (2020)}.
 
       \item Add REE minerals from the compilation of
       \href{https://doi.org/10.1016/j.chemgeo.2016.06.005}{Migdisov et al.
