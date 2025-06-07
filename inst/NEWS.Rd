@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-94 (2025-06-06)}{
+\section{Changes in CHNOSZ version 2.1.0-95 (2025-06-07)}{
 
   \subsection{OBIGT DATABASE FORMAT}{
     \itemize{
@@ -169,11 +169,17 @@
       uranyl species, after
       \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
 
-      \item Add FAQ question: Why are mineral stability boundaries curved on
-      mosaic diagrams?
+      \item Add FAQ questions:
+     
+      \itemize{
+        
+        \item Why are mineral stability boundaries curved on mosaic diagrams?
 
-      \item Add FAQ question: Where do the names CHNOSZ, OBIGT, and subcrt come
-      from?
+        \item Where do the names CHNOSZ, OBIGT, and subcrt come from?
+
+        \item What are the main limitations of CHNOSZ?
+
+      }
 
     }
   }

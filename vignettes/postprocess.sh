@@ -145,3 +145,4 @@ sed -i 's/<code>check.GHS()<\/code>/<code><a href="..\/html\/util.data.html" sty
 sed -i 's/<code>affinity()<\/code>/<code><a href="..\/html\/affinity.html" style="color:\ green;">affinity()<\/a><\/code>/g' FAQ.html
 sed -i 's/<code>diagram()<\/code>/<code><a href="..\/html\/diagram.html" style="color:\ green;">diagram()<\/a><\/code>/g' FAQ.html
 sed -i 's/<code>mosaic()<\/code>/<code><a href="..\/html\/mosaic.html" style="color:\ green;">mosaic()<\/a><\/code>/g' FAQ.html
+sed -i 's/<code>solubility()<\/code>/<code><a href="..\/html\/solubility.html" style="color:\ green;">solubility()<\/a><\/code>/g' FAQ.html

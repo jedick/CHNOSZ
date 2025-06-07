@@ -218,7 +218,7 @@ CHNOSZ and [schnoz](https://en.wiktionary.org/wiki/schnozz) are homophones.
 ## Where do the names CHNOSZ, OBIGT, and subcrt come from?
 
 CHNOSZ has the symbols for five elements (carbon, hydrogen, nitrogen, oxygen, and sulfur) and charge (Z).
-These letters appear as the column names in the stoichiometric matrix for ionized proteins, which were the subject of JMD's PhD thesis.
+These letters appear as the column names in the stoichiometric matrix of basis species for ionized proteins, which were the subject of JMD's PhD thesis.
 
 OBIGT was originally an abbreviation for the OrganoBioGeoTherm software package written by John Donovan,
 a Windows interface to SUPCRT92 that was first mentioned in print by @RH98.
@@ -271,6 +271,27 @@ reset()
 * A related adjustment is available to convert standard Gibbs energies for gases from the 1 bar standard state used in SUPCRT92 to a variable-pressure standard state [@AC93,Ch.12].
 
 *Added to <https://chnosz.net/> website on 2018-11-13; moved to FAQ on 2023-05-27; added references for **revised** HKF on 2023-11-17.*
+
+## What are the main limitations of CHNOSZ?
+
+- **No phase diagrams:** CHNOSZ does not implement phase diagrams (*).
+  - This includes diagrams with different numbers of coexisting phases and/or phases that don't all have an element in common.
+  - Some types of diagrams that CHNOSZ can't make: binary mixing diagrams, ternary phase diagrams, pseudosections.
+  - Suggested terminology for diagrams that CHNOSZ can make: *stability diagrams* for minerals,
+    *predominance or speciation diagrams* for aqueous species, *activity or fugacity diagrams* to refer to the axis variables,
+    *solubility diagrams* made using the `solubility()` function.
+- **No Gibbs energy minimization:** CHNOSZ does not implement Gibbs energy minimization or other general-purpose equilibrium speciation.
+- **Shared element limitation:**
+  - CHNOSZ makes diagrams for minerals and/or aqueous species that are *balanced on an element*,
+    so every point on the diagram has one mineral or aqueous species with that element.
+  - CHNOSZ can calculate equilibrium concentrations of aqueous species *balanced on an element*, but not for multicomponent systems in general.
+  - [Diagrams with multiple metals](multi-metal.html) are possible but are limited by data availability and have not been tested for more than two metals.
+- Limitations imposed by the **revised HKF model** (or DEW for higher pressures) and **extended Debye-H&uuml;ckel equation**.
+  Highly concentrated solutions (brines) or temperatures below about -20 °C are not supported.
+
+(*) Any diagram with different minerals is technically a phase diagram, but "phase diagram" usually has a more specific meaning depending on the context.
+
+*Added on 2025-06-07.*
 
 ## When and why do equal-activity boundaries depend on total activity?
 
