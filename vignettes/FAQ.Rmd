@@ -228,7 +228,7 @@ The name of the `subcrt()` function is loosely based on the SUPCRT92 software pa
 SUPCRT is an abbreviation for supercritical [@JOH92], but `subcrt()` is just a different name and is not limited to subcritical conditions.
 
 I would like to acknowledge Jan Amend for the suggestion to use a different function name than SUPCRT
-and for possibly being the first person to try to pronounce CHNOSZ while looking at the program's output.
+and for being possibly the first person to try to pronounce CHNOSZ while looking at the program's output.
 That interaction at the 2007 Goldschmidt conference led me to use CHNOSZ as the name for the package.
 
 *Added on 2025-06-05.*

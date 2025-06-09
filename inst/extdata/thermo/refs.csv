@@ -17,6 +17,7 @@ RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological S
 RHF78.3,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","gibbsite GHS",https://doi.org/10.3133/b1452
 RHF78.4,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","rutile and titanite",https://doi.org/10.3133/b1452
 Den81,"K. Denbigh",1981,"The Principles of Chemical Equilibrium","hydrogen ion convention",https://doi.org/10.1017/CBO9781139167604
+Hem82,"B. S. Hemingway",1982,"U. S. Geological Survey Open-File Report 82-619","Cp values of rutherfordine used to obtain parameters of Maier-Kelley equation",https://doi.org/10.3133/ofr82619
 Pan82,"L. B. Pankratz",1987,"Thermodynamic Properties of Elements and Oxides (U.S. Bureau of Mines Bull. 672)","gallium, Ga<sub>2</sub>O<sub>3</sub>, indium, In<sub>2</sub>O<sub>3</sub>",https://catalog.hathitrust.org/Record/102119912
 PB82,"L. N. Plummer and E. Busenberg",1982,"Geochim. Cosmochim. Acta 46, 1011-1040","aragonite and calcite",https://doi.org/10.1016/0016-7037(82)90056-4
 WEP+82,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","gases GHS",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
@@ -104,7 +105,6 @@ SSH97.4,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmoc
 SSH97.5,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","NaHSiO<sub>3</sub>, CaHSiO<sub>3</sub><sup>+</sup>, and MgHSiO<sub>3</sub><sup>+</sup>",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.6,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","In fluoride complex",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSB97,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266","uranium species",https://doi.org/10.1016/S0016-7037(97)00240-8
-SSB97.1,"E. L. Shock, D. C. Sassani and H. Betz",1997,"Geochim. Cosmochim. Acta 61, 4245-4266",uraninite,https://doi.org/10.1016/S0016-7037(97)00240-8
 TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976","humic acid, microflora, and plants",https://doi.org/10.1016/S1251-8050(97)83981-X
 TZA97,"B. R. Tagirov, A. V. Zotov and N. N. Akinfiev",2007,"Geochim. Cosmochim. Acta 61, 4267-4280","aqueous HCl",https://doi.org/10.1016/S0016-7037(97)00274-3
 ST97,"D. Shvedov and P. R. Tremaine",1997,"J. Solution Chem. 26, 1113-1143","dimethylammonium chloride HKF parameters",https://doi.org/10.1023/A:1022977006327
@@ -311,7 +311,7 @@ AKK+20.1,"N. N. Akinfiev et al.",2020,"Geochim. Cosmochim. Acta 280, 102-115","V
 AKK+20.2,"N. N. Akinfiev et al.",2020,"Geochim. Cosmochim. Acta 280, 102-115","V of beta-Nb<sub>2</sub>O<sub>5</sub>",https://doi.org/10.1016/j.gca.2020.04.009
 LS20,"J. A. M. Leong and E. L. Shock",2020,"Am. J. Sci. 320, 185-235","Fe-bearing serpentinization-relevant minerals",https://doi.org/10.2475/03.2020.01
 LX20,"X. Liu and C. Xiao",2020,"Ore Geol. Rev. 117, 103289","huebnerite Cp",https://doi.org/10.1016/j.oregeorev.2019.103289
-NEA20,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium","rutherfordine, beta-UO<sub>2</sub>(OH)<sub>2</sub>, and Na<sub>2</sub>U<sub>2</sub>O<sub>7</sub>",https://doi.org/10.1787/bf86a907-en
+NEA20,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium","uranium, uraninite (UO<sub>2</sub>), beta-UO<sub>2.25</sub>, UO<sub>2.25</sub>, alpha-UO<sub>2.3333</sub>, beta-UO<sub>2.3333</sub>, UO<sub>2.6667</sub>, gamma-UO<sub>3</sub>, rutherfordine (UO</sub>2</sub>CO<sub>3</sub>), beta-UO<sub>2</sub>(OH)<sub>2</sub>, and Na<sub>2</sub>U<sub>2</sub>O<sub>7</sub>",https://doi.org/10.1787/bf86a907-en
 NEA20.1,"Grenthe et al.",2020,"Second Update on the Chemical Thermodynamics of Uranium, Neptunium, Plutonium, Americium and Technetium",UO<sub>3</sub>,https://doi.org/10.1787/bf86a907-en
 LXW21,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488",H<sub>2</sub>WO<sub>4</sub>,https://doi.org/10.1016/j.chemgeo.2021.120488
 LXW21.1,"X. Liu, C. Xiao and Y. Wang",2021,"Chem. Geol. 584, 120488","scheelite Cp",https://doi.org/10.1016/j.chemgeo.2021.120488

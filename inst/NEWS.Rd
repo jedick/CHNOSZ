@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.1.0-95 (2025-06-07)}{
+\section{Changes in CHNOSZ version 2.1.0-96 (2025-06-09)}{
 
   \subsection{OBIGT DATABASE FORMAT}{
     \itemize{
@@ -53,12 +53,10 @@
       \href{https://doi.org/10.1016/j.gca.2024.12.019}{Laskar et al. (2024)}.
 
       \item Add aqueous uranyl complexes from
-      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}
-      and related U-bearing minerals from
-      \href{https://doi.org/10.1787/bf86a907-en}{Grenthe et al. (2020)}. Move
-      aqueous uranium species from
-      \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock, Sassani and Betz
-        (1997)} (except for HUO\s{4}\S{-}) to optional data.
+      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
+      Move aqueous uranium species from
+      \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock, Sassani and
+        Betz (1997)} (except for HUO\s{4}\S{-}) to optional data.
 
       \item Add alkylamines, benzylamines, and aminiums from
       \href{https://doi.org/10.1016/j.gca.2024.03.013}{Robinson et al. (2024)}.
@@ -66,6 +64,12 @@
       \item Add tin chloride complexes and updated parameters for Sn\S{+2} and
       Th\S{+4} from \href{https://doi.org/10.1016/j.gsf.2023.101624}{Liu et al.
         (2023)}.
+
+      \item Add uranium, uraninite (UO\s{2}), beta-UO\s{2.25}, UO\s{2.25},
+      alpha-UO\s{2.3333}, beta-UO\s{2.3333}, UO\s{2.6667}, gamma-UO\s{3},
+      rutherfordine (UO\s{2}CO\s{3}), beta-UO\s{2}(OH)\s{2}, and
+      Na\s{2}U\s{2}O\s{7} from
+      \href{https://doi.org/10.1787/bf86a907-en}{Grenthe et al. (2020)}.
 
       \item Add Fe-bearing serpentinization-relevant minerals (ferrous
       hydroxide, ferrotremolite, greenalite, minnesotaite, Mg-cronstedtite, and
