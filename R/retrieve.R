@@ -117,7 +117,7 @@ retrieve <- function(elements = NULL, ligands = NULL, state = NULL, T = NULL, P 
 
   # Require non-NA Delta G0 at specific temperature 20200825
   if(!is.null(T)) {
-    G <- sapply(suppressMessages(subcrt(ispecies, T = T, P = P))$out, "[[", "G")
+    G <- sapply(suppressWarnings(suppressMessages(subcrt(ispecies, T = T, P = P)))$out, "[[", "G")
     ispecies <- ispecies[!is.na(G)]
   }
 

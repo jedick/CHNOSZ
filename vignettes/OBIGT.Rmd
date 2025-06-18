@@ -272,6 +272,8 @@ All other calculations in CHNOSZ obtain the elemental makeup, including the corr
 <div id="D-aqueous-inorganic" style="display: none">
 ## <a id="aqueous-inorganic" class="anchor"></a> `r setfile("inorganic_aq.csv")`
 
+**NOTE:** Aqueous U species from @SSB97 (with the exception of HUO<sub>4</sub><sup>-</sup>) have been moved to the SLOP98 optional data file due to incompatibility with more recent data [@MBA+24]. Because the latter source includes only uranyl species, the set of data for aqueous uranium species in the default database is currently incomplete.
+
 ```{r reflist, results="asis", echo=FALSE}
 ```
 </div>
@@ -356,7 +358,7 @@ optused <- c(optused, filerefs(csvfile))
 <div id="D-optional-SLOP98" style="display: none">
 ## <a id="optional-SLOP98" class="anchor"></a> `r setfile("SLOP98.csv")`
 These species, whose parameters were listed in or are otherwise linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default database.
-The elements with updated data for at least some aqueous species, and the corresponding references, include:
+The elements with updated data for at least some aqueous species include:
 HCl [@TZA97],
 Al [@TS01],
 Au, Ag, and Cu(I) [@AZ01; @AZ10],
@@ -369,7 +371,7 @@ Zn [@AT14],
 Pt [@TBB15],
 Nb [@AKK+20],
 Ga and In [@HB24], and
-U(IV) [@MBA+24].
+U [@MBA+24].
 
 Use `add.OBIGT("SLOP98")` to load the data.
 
