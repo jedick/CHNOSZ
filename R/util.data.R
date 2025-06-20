@@ -60,6 +60,7 @@ thermo.refs <- function(key = NULL, keep.duplicates = FALSE) {
                 "http://www.w3.org/TR/html4/strict.dtd">\n', file = con)
     .cat("<html>")
     .cat("<head>")
+    .cat('<meta charset="UTF-8">')
     .cat("<title>", title, "</title>")
     # sorttable.js is "Blocked for security reasons" in Gmail 20170317
     #.cat("<script src=sorttable.js type='text/javascript'></script>")

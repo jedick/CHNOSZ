@@ -101,7 +101,7 @@ It loops over each element of \code{main} and places it on a separate margin lin
 The spacing of the last (bottom) line from the edge of the plot is specified by \code{line}.
 This function exists to facilitate using \code{\link{expression}}s in multiline titles.
 
-\code{ZC.col} uses \CRANpkg{colorspace}) to generate colors from a diverging palette (red - light grey - blue) corresponding to the values in \code{z}.
+\code{ZC.col} uses \CRANpkg{colorspace} to generate colors from a diverging palette (red - light grey - blue) corresponding to the values in \code{z}.
 Red is associated with lower values of \code{z}.
 This function is intended to generate colors for distinguishing average oxidation state of carbon \code{\link{ZC}}, but any numeric values can be supplied.
 }

@@ -44,7 +44,7 @@ Ber90,"R. G. Berman",1990,"Am. Mineral. 75, 328-344",annite,http://ammin.geoscie
 Ber90.1,"R. G. Berman",1990,"Am. Mineral. 75, 328-344","almandine and ilmenite: modified H and/or S",http://ammin.geoscienceworld.org/content/75/3-4/328
 Eva90,"B. W. Evans",1990,"Lithos 25, 3-23","glaucophane and pumpellyite",https://doi.org/10.1016/0024-4937(90)90003-J
 Pol90,"D. A. Polya",1990,"Trans. Inst. Min. Metall. 99, B120-B124","ferberite G, S and Cp (Cp coefficients multiplied by 4.184 to convert to J, as listed in @WS00, but who give a 2nd term that is off by a factor of 10). Cp at 25 &deg;C is from @LW74.",
-OH90,"E. H. Oelkers and H. C. Helgeson",1990,"Geochim. Cosmochim. Acta 54, 727-738","Debye-Hückel extended term parameter (<i>b</i><sub>$\gamma$</sub>)",https://doi.org/10.1016/0016-7037(90)90368-U
+OH90,"E. H. Oelkers and H. C. Helgeson",1990,"Geochim. Cosmochim. Acta 54, 727-738","Debye-Hückel extended term parameter (<i>b</i><sub>&gamma;</sub>)",https://doi.org/10.1016/0016-7037(90)90368-U
 SH90,"E. L. Shock and H. C. Helgeson",1990,"Geochim. Cosmochim. Acta 54, 915-945","organic species",https://doi.org/10.1016/0016-7037(90)90429-O
 HRA91,"B. S. Hemingway et al.",1991,"Am. Mineral. 76, 445-457",boehmite,https://pubs.usgs.gov/publication/70016664
 SHD91,"D. A. Sverjensky, J. J. Hemley and W. M. D'Angelo",1991,"Geochim. Cosmochim. Acta 55, 989-1004","G and H revisions for K- and Al-bearing silicates",https://doi.org/10.1016/0016-7037(89)90341-4
@@ -178,7 +178,7 @@ DLH06.5,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 31
 LEB+06,"W. Liu et al.",2006,"Chem. Geol. 231, 326-349","FeCl<sub>2</sub><sup>+</sup>, FeCl<sub>3</sub>, FeCl<sub>4</sub><sup>-</sup>",https://doi.org/10.1016/j.chemgeo.2006.02.005
 LMR06,"D. Langmuir et al.",2006,"Geochim. Cosmochim. Acta 70, 2942-2956","scorodite and amorphous ferric arsenate: G",https://doi.org/10.1016/j.gca.2006.03.006
 MNM+06,"J. Majzlan, A. Navrotsky et al.",2006,"Eur. J. Mineral. 18, 175-186","coquimbite, ferricopiapite, and rhomboclase",https://doi.org/10.1127/0935-1221/2006/0018-0175
-PK06,"K. Popa and R.J.M. Konings",2006,"Thermochim. Acta 445, 49-52","REE phosphates (monazites) [different G than @MWBC16]",https://doi.org/10.1016/j.tca.2006.03.023
+PK06,"K. Popa and R. J. M. Konings",2006,"Thermochim. Acta 445, 49-52","REE phosphates (monazites) [different G than @MWBC16]",https://doi.org/10.1016/j.tca.2006.03.023
 SGX+06,"A. V. Sharygin et al.",2006,"Geochim. Cosmochim. Acta 70, 5169-5182",KSO<sub>4</sub><sup>-</sup>,https://doi.org/10.1016/j.gca.2006.07.034
 Dic07,"J. M. Dick",2007,"Ph.D. Dissertation, Univ. of California","glutathione, cystine, and cystine sidechain",
 MA07,"L. Marini and M. Accornero",2007,"Environ. Geol. 52, 1343-1363","metal arsenate and arsenite complexes; linked to properties of arsenate and arsenite from @SSWS97",https://doi.org/10.1007/s00254-006-0578-5
@@ -202,7 +202,7 @@ DS10,"J. Delgado Martin and A. Soler i Gil",2010,"Eur. J. Mineral. 22, 363-380",
 MA10,"L. Marini and M. Accornero",2010,"Environ. Earth Sci. 59, 1601-1606","corrected values",https://doi.org/10.1007/s12665-009-0369-x
 Sch10,"M. Schulte",2010,"Aquat. Geochem. 16, 621-637","organic sulfides",https://doi.org/10.1007/s10498-010-9102-3
 LBT+11,"W. Liu et al.",2011,"Geochim. Cosmochim. Acta 75, 1227-1248","Co chloride complexes",https://doi.org/10.1016/j.gca.2010.12.002
-MMO+11,"Jiří Málek, Takefumi Mitsuhashi et al.",2011,"J. Chem. Thermodynamics 43, 405-409","GeS<sub>2</sub> (alpha)",https://doi.org/10.1016/j.jct.2010.10.011
+MMO+11,"J. Málek, T. Mitsuhashi et al.",2011,"J. Chem. Thermodynamics 43, 405-409","GeS<sub>2</sub> (alpha)",https://doi.org/10.1016/j.jct.2010.10.011
 RG11,"L. Richard and X. Gaona",2011,"Geochim. Cosmochim. Acta 75, 7304-7350","organic iodine compounds",https://doi.org/10.1016/j.gca.2011.07.030
 LD12,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","4-hydroxyproline, 5-hydroxylysine, 4 dipeptides, and sidechain and backbone groups in proteins",https://doi.org/10.1016/j.gca.2011.11.041
 LD12.1,"D. E. LaRowe and J. M. Dick",2012,"Geochim. Cosmochim. Acta 80, 70-91","updated and corrected parameters for cysteine, glycine, leucine, and methionine",https://doi.org/10.1016/j.gca.2011.11.041
@@ -217,7 +217,7 @@ AT14,"N. N. Akinfiev and B. R. Tagirov",2014,"Geochem. Int. 52, 197-214","Zn<sup
 FDM+14,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","CO<sub>2</sub>, HCO<sub>3</sub><sup>-</sup>, CO<sub>3</sub><sup>-2</sup>, CaCO<sub>3</sub>, Ca<sup>+2</sup>",https://doi.org/10.1016/j.gca.2014.01.030
 FDM+14.1,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","aragonite; source of data: `berman.dat`",https://doi.org/10.1016/j.gca.2014.01.030
 Kit14,"N. Kitadai",2014,"J. Mol. Evol. 78, 171-187","glycine, diglycine, and triglycine (zwitterions and ions); diketopiperazine, [Gly] and [UPBB] groups",https://doi.org/10.1007/s00239-014-9616-1
-KBK+14,"R. J. M. Konings et al.",2014,"J. Phys. Chem. Ref. Data 43, Article 013101","REE oxides",https://doi.org/10.1063/1.4825256
+KBK+14,"R. J. M. Konings et al.",2014,"J. Phys. Chem. Ref. Data 43, Article 013101","REE oxides",https://doi.org/10.1063/1.4825256
 PAB+14,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","corrected H of AuHS",https://doi.org/10.1144/SP402.4
 SBS14,"A. Stefánsson, P. Benézéth and J. Schott",2014,"Geochim. Cosmochim. Acta 138, 21-31",Mg(HCO<sub>3</sub>)<sup>+</sup>,https://doi.org/10.1016/j.gca.2014.04.008
 SHA14,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","SiO<sub>2</sub> and Si<sub>2</sub>O<sub>4</sub>",https://doi.org/10.1016/j.gca.2013.12.019
@@ -225,7 +225,7 @@ SHA14.1,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","
 SHA14.2,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","BO(OH): Revised May 2013",https://doi.org/10.1016/j.gca.2013.12.019
 SHA14.3,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","Fitted to @HP97 data with a<sub>1</sub> pred. from the sum of the ions and used to predict the volume",https://doi.org/10.1016/j.gca.2013.12.019
 SHA14.4,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","BO<sub>2</sub><sup>-</sup>: revised a<sub>1</sub>-a<sub>4</sub> using delkappan for BO<sub>2</sub><sup>-</sup> instead of B(OH)<sub>4</sub><sup>-</sup> used by @SH88; @SSWS97",https://doi.org/10.1016/j.gca.2013.12.019
-GHFW16,"A. P. Gysi et al.",2016,"Thermochim. Acta 627–629, 61-67","REE phosphates (xenotimes) [different S for DyPO<sub>4</sub> than @MWBC16]",https://doi.org/10.1016/j.tca.2016.01.016
+GHFW16,"A. P. Gysi et al.",2016,"Thermochim. Acta 627-629, 61-67","REE phosphates (xenotimes) [different S for DyPO<sub>4</sub> than @MWBC16]",https://doi.org/10.1016/j.tca.2016.01.016
 Kit15,"N. Kitadai",2015,"Origins Life Evol. Biospheres 45, 377-409","charged amino acids",https://doi.org/10.1007/s11084-015-9428-3
 Kit15.1,"N. Kitadai",2015,"Origins Life Evol. Biospheres 45, 377-409","charged amino acids GHS (Arg<sup>+</sup>, Arg<sup>-</sup>, Asp<sup>-</sup>, Glu<sup>-</sup>, His<sup>+</sup>, Lys<sup>+</sup>, Lys<sup>-</sup>, and Tyr<sup>-</sup>)",https://doi.org/10.1007/s11084-015-9428-3
 NLM+15,"A. Navrotsky et al.",2015,"J. Chem. Thermodyn.","REE phosphates (xenotimes) [different G than @MWBC16]",https://doi.org/10.1016/j.jct.2015.04.008
@@ -321,13 +321,13 @@ AZ23,"N. N. Akinfiev and A. V. Zotov",2023,"Geol. Ore Deposits 65, 1-10","Cu<sup
 LYX23,"X. Liu, P. Yu and C. Xiao",2023,"Geosci. Front. 14, 101624","Sn<sup>+2</sup>, Th<sup>+4</sup>, and Sn chloride complexes",https://doi.org/10.1016/j.gsf.2023.101624
 TTA+23,"N. D. Trofimov, B. R. Tagirov et al.",2023,"Chem. Geol. 625, 121413","Cu hydrosulfide and chloride complexes",https://doi.org/10.1016/j.chemgeo.2023.121413
 HDR+24,"B. P. von der Heyden et al.",2024,"Can. J. Mineral. Petrol. 62, 77-93",carrollite,https://doi.org/10.3749/2300028
-HET+24,"B. Hu, B. Etschmann et al.",2024,"Geochim. Cosmochim. Acta","Ta(OH)<sub>3</sub>F<sub>3</sub><sup>-</sup> and TaF<sub>7</sub><sup>-2</sup>",https://doi.org/10.1016/j.gca.2024.10.019
-HB24,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","data compilation for Cd, Ga, Ge, and In minerals and aqueous species",https://doi.org/10.1080/08120099.2024.2423772
-HB24.1,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","Ga sulfate complexes [algorithms based on @SSH97]",https://doi.org/10.1080/08120099.2024.2423772
-HB24.2,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","In sulfate complexes [algorithms based on @SSH97]; corrected H [@OBIGT25]",https://doi.org/10.1080/08120099.2024.2423772
+HET+24,"B. Hu, B. Etschmann et al.",2024,"Geochim. Cosmochim. Acta","Ta(OH)<sub>3</sub>F<sub>3</sub><sup>-</sup> and TaF<sub>7</sub><sup>-2</sup>",https://doi.org/10.1016/j.gca.2024.10.019
+HB24,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","data compilation for Cd, Ga, Ge, and In minerals and aqueous species",https://doi.org/10.1080/08120099.2024.2423772
+HB24.1,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","Ga sulfate complexes [algorithms based on @SSH97]",https://doi.org/10.1080/08120099.2024.2423772
+HB24.2,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","In sulfate complexes [algorithms based on @SSH97]; corrected H [@OBIGT25]",https://doi.org/10.1080/08120099.2024.2423772
 KBJ24,"A. W. Knight, C. R. Bryan and C. F. Jové-Colón",2024,"Appl. Geochem. 169, 106032","Mg(OH)<sub>2</sub>-MgCl<sub>2</sub>-H<sub>2</sub>O phases",https://doi.org/10.1016/j.apgeochem.2024.106032
 LBP24,"C. Laksar et al.",2024,"Geochim. Cosmochim. Acta","Pd(HS)<sub>4</sub><sup>-2</sup> and Pt(HS)<sub>4</sub><sup>-2</sup>",https://doi.org/10.1016/j.gca.2024.12.019
-MBA+24,"A. Migdisov, E. Bastrakov et al.",2024,"Geochim. Cosmochim. Acta","uranyl carbonate, chloride, sulfate, and hydroxide complexes",https://doi.org/10.1016/j.gca.2024.04.023
+MBA+24,"A. Migdisov, E. Bastrakov et al.",2024,"Geochim. Cosmochim. Acta","uranyl carbonate, chloride, sulfate, and hydroxide complexes",https://doi.org/10.1016/j.gca.2024.04.023
 RSS+24,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","alkylamines, benzylamines, and aminiums",https://doi.org/10.1016/j.gca.2024.03.013
 RSS+24.1,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","corrected V for tripropylaminium",https://doi.org/10.1016/j.gca.2024.03.013
 TAT+24,"B. R. Tagirov, N. N. Akinfiev et al.",2024,"Geochim. Cosmochim. Acta","Au-(hydro)sulfide species and SO<sub>4</sub><sup>-2</sup>-bearing species",https://doi.org/10.1016/j.gca.2024.08.022
