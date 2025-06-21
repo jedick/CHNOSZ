@@ -15,6 +15,18 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
+\section{Changes in CHNOSZ version 2.2.0-2 (2025-06-21)}{
+
+    \itemize{
+
+      \item \code{label.plot()} and \code{label.figure()} now handle
+      logarithmic scales for x and y axes.
+
+    }
+
+}
+
+
 \section{Changes in CHNOSZ version 2.2.0 (2025-06-20)}{
 
   \subsection{OBIGT DATABASE FORMAT}{

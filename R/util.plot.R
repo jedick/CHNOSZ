@@ -37,15 +37,19 @@ thermo.plot.new <- function(xlim,ylim,xlab,ylab,cex = par('cex'),mar = NULL,lwd 
   if(4 %in% side) thermo.axis(NULL,side = 4,lwd = lwd, plot.line = !plot.box)
 }
 
-label.plot <- function(x, xfrac = 0.07, yfrac = 0.93, paren = FALSE, italic = FALSE, ...) {
+label.plot <- function(label, xfrac = 0.07, yfrac = 0.93, paren = FALSE, italic = FALSE, ...) {
   # Make a text label e.g., "(a)" in the corner of a plot
   # xfrac, yfrac: fraction of axis where to put label (default top right)
   # paren: put a parenthesis around the text, and italicize it?
-  if(italic) x <- substitute(italic(a), list(a = x))
-  if(paren) x <- substitute(group('(', a, ')'), list(a = x))
-  if(italic | paren) x <- as.expression(x)
+  if(italic) label <- bquote(italic(.(label)))
+  if(paren) label <- bquote(group("(", .(label), ")"))
   pu <- par('usr')
-  text(pu[1]+xfrac*(pu[2]-pu[1]), pu[3]+yfrac*(pu[4]-pu[3]), labels = x, ...)
+  x <- pu[1]+xfrac*(pu[2]-pu[1])
+  y <- pu[3]+yfrac*(pu[4]-pu[3])
+  # Conversion for logarithmic axes
+  if(par("xlog")) x <- 10^x
+  if(par("ylog")) y <- 10^y
+  text(x, y, labels = label, ...)
 }
 
 usrfig <- function() {
@@ -60,15 +64,20 @@ usrfig <- function() {
   return(list(x = xfig, y = yfig))
 }
 
-label.figure <- function(x, xfrac = 0.05, yfrac = 0.95, paren = FALSE, italic = FALSE, ...) {
+label.figure <- function(label, xfrac = 0.05, yfrac = 0.95, paren = FALSE, italic = FALSE, ...) {
   # Function to add labels outside of the plot region  20151020
   f <- usrfig()
   # Similar to label.plot(), except we have to set xpd here
   opar <- par(xpd = NA)
-  if(italic) x <- substitute(italic(a), list(a = x))
-  if(paren) x <- substitute(group('(',a,')'), list(a = x))
-  if(italic | paren) x <- as.expression(x)
-  text(f$x[1]+xfrac*(f$x[2]-f$x[1]), f$y[1]+yfrac*(f$y[2]-f$y[1]), labels = x, ...)
+  if(italic) label <- bquote(italic(.(label)))
+  if(paren) label <- bquote(group("(", .(label), ")"))
+  # Calculate location for label
+  x <- f$x[1] + xfrac * (f$x[2] - f$x[1])
+  y <- f$y[1] + yfrac * (f$y[2] - f$y[1])
+  # Conversion for logarithmic axes
+  if(par("xlog")) x <- 10^x
+  if(par("ylog")) y <- 10^y
+  text(x, y, labels = label, ...)
   par(opar)
 }
 

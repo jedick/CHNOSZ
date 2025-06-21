@@ -24,10 +24,10 @@
   thermo.axis(lab = NULL, side = 1:4, line = 1.5, cex = par("cex"),
     lwd = par("lwd"), col = par("col"), grid = "", col.grid = "gray",
     plot.line = FALSE)
-  label.plot(x, xfrac = 0.07, yfrac = 0.93, paren = FALSE,
+  label.plot(label, xfrac = 0.07, yfrac = 0.93, paren = FALSE,
     italic = FALSE, ...)
   usrfig()
-  label.figure(x, xfrac = 0.05, yfrac = 0.95, paren = FALSE,
+  label.figure(label, xfrac = 0.05, yfrac = 0.95, paren = FALSE,
     italic = FALSE, ...)
   water.lines(eout, which = c("oxidation","reduction"),
     lty = 2, lwd = 1, col = par("fg"), plot.it = TRUE)
@@ -58,7 +58,7 @@
   \item{...}{further arguments passed to \code{par} or \code{mtext}}
   \item{lab}{character, axis label}
   \item{line}{numeric, margin line on which to place axis label or plot title}
-  \item{x}{character, label to place on plot}
+  \item{label}{character, label to place on plot}
   \item{xfrac}{numeric, fractional location on \eqn{x}{x}-axis for placement of label}
   \item{yfrac}{numeric, fractional location on \eqn{y}{y}-axis for placement of label}
   \item{paren}{logical, add parentheses around label text?}
@@ -90,8 +90,9 @@ The value of \code{swapped} in the output reflects whether pH, \T, or \P is on t
 \code{NA} is returned for any diagram for variables that can not be processed (including diagrams with more than 2 variables).
 
 \code{label.plot} and \code{label.figure} add identifying text within the plot region and figure region.
-The value given for \code{x} is made into a label, optionally italicized and with parentheses (like \ifelse{latex}{\eqn{(a)}}{\ifelse{html}{\out{(<i>a</i>)}}{(a)}}).
-The location of the label is controlled by \code{xfrac} and \code{yfrac} (the fractional coordinates of either the plot or figure region), and \code{...} can include other parameters such as \code{cex} and \code{adj} that are passed to \code{\link{text}}.
+The value given for \code{label} is used, optionally italicized and with parentheses (like \ifelse{latex}{\eqn{(a)}}{\ifelse{html}{\out{(<i>a</i>)}}{(a)}}).
+The location of the label is controlled by \code{xfrac} and \code{yfrac} (the fractional coordinates of either the plot or figure region),
+and \code{...} can include other parameters such as \code{cex} and \code{adj} that are passed to \code{\link{text}}.
 
 \code{usrfig} returns the limits of the figure region in \dQuote{user} coordinates (i.e. the limits of the plot region, from \code{\link{par}("usr")}).
 It is a supporting function for \code{label.figure} but is also useful for other circumstances where information must be added at a particular location in a figure.
