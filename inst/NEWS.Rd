@@ -130,7 +130,7 @@
 
       \item Due to an apparent typo in
       \href{https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf}{Wagman et al. (1982)},
-      Δ\emph{H}°\s{f} for In\s{+3} and derived species was corrected by -7335
+      Δ\emph{H}°\s{f} for In\S{+3} and derived species was corrected by -7335
       cal/mol to maintain GHS consistency. This is in addition to the
       correction for S° previously noted by
       \href{https://doi.org/10.1016/0016-7037(88)90181-0}{Shock and Helgeson
