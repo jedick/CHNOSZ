@@ -152,3 +152,17 @@ Adiff <- A - (m$A.species$values[[2]] - m$A.species$values[[5]])
 #title(main = "A(single basis species) - A(all basis species)")
 #legend("topleft", legend = describe.reaction(s1$reaction))
 expect_equivalent(as.numeric(Adiff), rep(0, length(Adiff)), info = info)
+
+# Test added on 20250801
+info <- "mosaic() can be used to form H2O"
+# This wasn't working because a call to species(1) (for the species index of H2O)
+# failed to replace pre-existing specie definition (for the basis species).
+# Now mosaic() uses species(delete = TRUE) to always start with a new species definition.
+basis(c("H3PO4", "H4P2O7", "O2", "H+"))
+bases <- list(
+  c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
+  c("H4P2O7", "H3P2O7-", "H2P2O7-2", "HP2O7-3", "P2O7-4")
+)
+species("H2O")
+m <- mosaic(bases)
+expect_identical(m$A.species$species$name, "water", info = info)

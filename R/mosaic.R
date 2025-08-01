@@ -47,7 +47,7 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
   if(length(stable) == 2) {
     # Use only predominant basis species for mosaic stacking 20220723
     stable2.orig <- stable2 <- stable[[2]]
-    # Why c(1, ?
+    # Why c(1, ...) ?
     # The first basis species should always be included (because it has to be swapped out for the others)
     istable2 <- sort(unique(c(1, as.numeric(stable2))))
     for(i in seq_along(istable2)) stable2[stable2.orig == istable2[i]] <- i
@@ -152,6 +152,7 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
     }
     put.basis(allbases[i, ], thislogact)
     # Load the formed species using the current basis
+    species(delete = TRUE)
     species(species0$ispecies, species0$logact)
 
     # If mosaic() changes variables on the diagram, argument names for affinity() also have to be changed 20230809

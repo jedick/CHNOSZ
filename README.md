@@ -1,5 +1,5 @@
 <!-- badges: start -->
-[![CRAN/METACRAN Version](https://img.shields.io/cran/v/CHNOSZ?label=CRAN&color=4bc51e)](https://cran.r-project.org/package=CHNOSZ)
+[![CRAN status](https://www.r-pkg.org/badges/version/CHNOSZ)](https://CRAN.R-project.org/package=CHNOSZ)
 [![R-CMD-check](https://github.com/jedick/CHNOSZ/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jedick/CHNOSZ/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 

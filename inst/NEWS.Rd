@@ -22,6 +22,8 @@
       \item \code{label.plot()} and \code{label.figure()} now handle
       logarithmic scales for x and y axes.
 
+      \item Fix bug preventing \code{mosaic()} from being used to form \H2O.
+
     }
 
 }
