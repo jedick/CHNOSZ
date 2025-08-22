@@ -176,6 +176,8 @@ water.IAPWS95 <- function(property = NULL, T = 298.15, P = 1, Psat_floor = 1) {
   # Psat stuff
   Psat <- function() {
     P <- WP02.auxiliary("P.sigma", T)
+    # Add 0.1 bar (0.01 MPa) to Psat for stability of Born functions 20250821
+    P[P > 0.1] <- P[P > 0.1] + 0.01
     # Convert Psat_floor from bar to MPa
     if(is.numeric(Psat_floor)) P[P < Psat_floor / 10] <- Psat_floor / 10
     return(convert(P, "bar"))

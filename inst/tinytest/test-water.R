@@ -54,6 +54,17 @@ Psat <- water("Psat", T = T, Psat_floor = NULL)$Psat
 Tmax <- TC[max(which(Psat_floored > Psat))]
 expect_equal(Tmax, 99.63, info = info)
 
+# Added 20250821
+info <- "IAPWS95 produces expected results for aqueous species (Born function) at Psat"
+water("SUPCRT92")
+sout_ref <- subcrt("H2")$out[[1]]
+water("IAPWS95")
+sout_test <- subcrt("H2")$out[[1]]
+expect_equal(sout_test$H, sout_ref$H, tolerance = 500, scale = 1, info = info)
+expect_equal(sout_test$S, sout_ref$S, tolerance = 1, scale = 1, info = info)
+expect_equal(sout_test$V, sout_ref$V, tolerance = 1, scale = 1, info = info)
+expect_equal(sout_test$Cp, sout_ref$Cp, tolerance = 40, scale = 1, info = info)
+
 # Reference
 
 # Fine, R. A. and Millero, F. J. (1973)

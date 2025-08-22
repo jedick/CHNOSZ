@@ -106,7 +106,9 @@ A primary check is still enforced (Tbtm), giving a minimum valid temperature of 
 \code{water.IAPWS95} provides for calculations at specific temperature and pressure; density, needed for \code{IAPWS95}, is inverted from pressure using \code{rho.IAPWS95}.
 The function also contains routines for calculating the Born functions as numerical derivatives of the static dielectric constant (from \code{water.AW90}).
 For compatibility with geochemical modeling conventions, the values of Gibbs energy, enthalpy and entropy output by \code{IAPWS95} are converted by \code{water.IAPWS95} to the triple point reference state adopted in \code{SUPCRT92} (Johnson and Norton, 1991; Helgeson and Kirkham, 1974).
+
 \code{water.IAPWS95} also accepts setting \code{P} to \samp{Psat}, with the saturation pressure calculated from \code{\link{WP02.auxiliary}}; by default the returned properties are for the liquid, but this can be changed to the vapor in \code{\link{thermo}()$opt$IAPWS.sat}.
+NOTE: 0.1 bar (0.01 MPa) is added to values of \samp{Psat} > 1 bar computed from \code{WP02.auxiliary()} to prevent Born functions, which are calculated as finite difference derivatives, from exploding.
 
 \code{A_DH} and \code{B_DH} are solvent parameters in the \dQuote{B-dot} (extended Debye-Huckel) equation (Helgeson, 1969; Manning, 2013).
 }

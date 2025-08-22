@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-2 (2025-06-21)}{
+\section{Changes in CHNOSZ version 2.2.0-4 (2025-08-21)}{
 
     \itemize{
 
@@ -23,6 +23,10 @@
       logarithmic scales for x and y axes.
 
       \item Fix bug preventing \code{mosaic()} from being used to form \H2O.
+      
+      \item For IAPWS95 water model, add 0.1 bar (0.01 MPa) to values of Psat >
+      1 bar computed from \code{WP02.auxiliary()} to prevent Born functions,
+      which are calculated as finite difference derivatives, from exploding.
 
     }
 
