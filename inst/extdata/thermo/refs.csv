@@ -326,12 +326,12 @@ HB24,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","d
 HB24.1,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","Ga sulfate complexes [algorithms based on @SSH97]",https://doi.org/10.1080/08120099.2024.2423772
 HB24.2,"D. L. Huston and E. Bastrakov",2024,"Aust. J. Earth Sci. 71, 1125-1155","In sulfate complexes [algorithms based on @SSH97]; corrected H [@OBIGT25]",https://doi.org/10.1080/08120099.2024.2423772
 KBJ24,"A. W. Knight, C. R. Bryan and C. F. Jové-Colón",2024,"Appl. Geochem. 169, 106032","Mg(OH)<sub>2</sub>-MgCl<sub>2</sub>-H<sub>2</sub>O phases",https://doi.org/10.1016/j.apgeochem.2024.106032
-LBP24,"C. Laksar et al.",2024,"Geochim. Cosmochim. Acta","Pd(HS)<sub>4</sub><sup>-2</sup> and Pt(HS)<sub>4</sub><sup>-2</sup>",https://doi.org/10.1016/j.gca.2024.12.019
-MBA+24,"A. Migdisov, E. Bastrakov et al.",2024,"Geochim. Cosmochim. Acta","uranyl carbonate, chloride, sulfate, and hydroxide complexes",https://doi.org/10.1016/j.gca.2024.04.023
+LBP25,"C. Laksar et al.",2025,"Geochim. Cosmochim. Acta 406, 134-147","Pd(HS)<sub>4</sub><sup>-2</sup> and Pt(HS)<sub>4</sub><sup>-2</sup>",https://doi.org/10.1016/j.gca.2024.12.019
+MBA+25,"A. Migdisov, E. Bastrakov et al.",2025,"Geochim. Cosmochim. Acta 406, 326-339","uranyl carbonate, chloride, sulfate, and hydroxide complexes",https://doi.org/10.1016/j.gca.2024.04.023
 RSS+24,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","alkylamines, benzylamines, and aminiums",https://doi.org/10.1016/j.gca.2024.03.013
 RSS+24.1,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","corrected V for tripropylaminium",https://doi.org/10.1016/j.gca.2024.03.013
-TAT+24,"B. R. Tagirov, N. N. Akinfiev et al.",2024,"Geochim. Cosmochim. Acta","Au-(hydro)sulfide species and SO<sub>4</sub><sup>-2</sup>-bearing species",https://doi.org/10.1016/j.gca.2024.08.022
-TAZ24,"B. R. Tagirov, N. N. Akinfiev and A. V. Zotov",2024,"Geol. Ore Deposits 66, 581--597","Au hydroxide and chloride complexes",https://doi.org/10.1134/S1075701524600403
+TAT+25,"B. R. Tagirov, N. N. Akinfiev et al.",2025,"Geochim. Cosmochim. Acta 406, 285-304","Au-(hydro)sulfide species and SO<sub>4</sub><sup>-2</sup>-bearing species",https://doi.org/10.1016/j.gca.2024.08.022
+TAZ24,"B. R. Tagirov, N. N. Akinfiev and A. V. Zotov",2024,"Geol. Ore Deposits 66, 581-597","Au hydroxide and chloride complexes",https://doi.org/10.1134/S1075701524600403
 OBIGT25,OBIGT,2025,"OBIGT database in CHNOSZ","corrected H by -7335 cal/mol to maintain GHS consistency for In<sup>+3</sup> and derived species",https://chnosz.net
 OBIGT.1,"J. M. Dick",2017,"OBIGT database in CHNOSZ","GHS (T<sub>r</sub>) of the polymorph that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the polymorphs that are stable at higher temperatures.",https://chnosz.net
 OBIGT.3,"J. M. Dick",2017,"OBIGT database in CHNOSZ","AuCl<sub>4</sub><sup>-</sup> renamed to AuCl<sub>4</sub><sup>-3</sup>",https://chnosz.net

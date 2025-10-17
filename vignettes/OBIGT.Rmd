@@ -272,7 +272,7 @@ All other calculations in CHNOSZ obtain the elemental makeup, including the corr
 <div id="D-aqueous-inorganic" style="display: none">
 ## <a id="aqueous-inorganic" class="anchor"></a> `r setfile("inorganic_aq.csv")`
 
-**NOTE:** Aqueous U species from @SSB97 (with the exception of HUO<sub>4</sub><sup>-</sup>) have been moved to the SLOP98 optional data file due to incompatibility with more recent data [@MBA+24]. Because the latter source includes only uranyl species, the set of data for aqueous uranium species in the default database is currently incomplete.
+**NOTE:** Aqueous U species from @SSB97 (with the exception of HUO<sub>4</sub><sup>-</sup>) have been moved to the SLOP98 optional data file due to incompatibility with more recent data [@MBA+25]. Because the latter source includes only uranyl species, the set of data for aqueous uranium species in the default database is currently incomplete.
 
 ```{r reflist, results="asis", echo=FALSE}
 ```
@@ -371,7 +371,7 @@ Zn [@AT14],
 Pt [@TBB15],
 Nb [@AKK+20],
 Ga and In [@HB24], and
-U [@MBA+24].
+U [@MBA+25].
 
 Use `add.OBIGT("SLOP98")` to load the data.
 
@@ -424,7 +424,7 @@ Internally consistent dataset for aqueous species in the system Ca-Mg-Na-K-Al-Si
 
 <h3>IGEM</h3>
 
-Updates for Au and Cu complexes and SO<sub>4</sub><sup>-2</sup>-bearing species from researchers at the Institute of Geology of Ore Deposits, Petrography, Mineralogy, and Geochemistry, Russian Academy of Sciences (IGEM RAS) [@AZ23;@TTA+23;@TAT+24;@TAZ24].
+Updates for Au and Cu complexes and SO<sub>4</sub><sup>-2</sup>-bearing species from researchers at the Institute of Geology of Ore Deposits, Petrography, Mineralogy, and Geochemistry, Russian Academy of Sciences (IGEM RAS) [@AZ23;@TTA+23;@TAT+25;@TAZ24].
 
 <h3>Sandia</h3>
 

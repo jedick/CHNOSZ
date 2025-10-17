@@ -68,10 +68,10 @@
 
       \item Add palladium and platinum hydrosulfide complexes
       (Pd(HS)\s{4}\S{-2} and Pt(HS)\s{4}\S{-2}) from
-      \href{https://doi.org/10.1016/j.gca.2024.12.019}{Laskar et al. (2024)}.
+      \href{https://doi.org/10.1016/j.gca.2024.12.019}{Laskar et al. (2025)}.
 
       \item Add aqueous uranyl complexes from
-      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
+      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2025)}.
       Move aqueous uranium species from
       \href{https://doi.org/10.1016/S0016-7037(97)00240-8}{Shock, Sassani and
         Betz (1997)} (except for HUO\s{4}\S{-}) to optional data.
@@ -189,7 +189,7 @@
 
       \item Add \file{demo/uranyl.R}: total (carbonate|sulfate)-pH diagrams for
       uranyl species, after
-      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2024)}.
+      \href{https://doi.org/10.1016/j.gca.2024.04.023}{Migdisov et al. (2025)}.
 
       \item Add FAQ questions:
      
