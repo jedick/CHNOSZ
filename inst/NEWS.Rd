@@ -28,6 +28,9 @@
       1 bar computed from \code{WP02.auxiliary()} to prevent Born functions,
       which are calculated as finite difference derivatives, from exploding.
 
+      \item Add stibnite (Sb\s{2}S\s{3}) from
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
+
     }
 
 }
