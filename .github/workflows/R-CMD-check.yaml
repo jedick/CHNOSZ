@@ -31,12 +31,16 @@ jobs:
       # Install remotes and development version of canprot 20240228
       # https://stackoverflow.com/questions/76642914/use-a-github-package-for-a-r-github-action
       
-      - name: Install remotes
-        run: |
-          Rscript -e "install.packages('remotes', repos='https://ftp.belnet.be/mirror/CRAN')"
+      # 20251111 This is now commented as:
+      # 1) the belnet mirror is not available
+      # 2) development version of canprot is not needed
+      
+      #- name: Install remotes
+      #  run: |
+      #    Rscript -e "install.packages('remotes', repos='https://ftp.belnet.be/mirror/CRAN')"
 
-      - name: Install development version of canprot
-        run: |
-          Rscript -e "remotes::install_github('jedick/canprot')"
+      #- name: Install development version of canprot
+      #  run: |
+      #    Rscript -e "remotes::install_github('jedick/canprot')"
 
       - uses: r-lib/actions/check-r-package@v2
