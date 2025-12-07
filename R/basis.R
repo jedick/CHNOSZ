@@ -96,7 +96,10 @@ basis <- function(species = NULL, state = NULL, logact = NULL, delete = FALSE, a
     # We don't accept any of those
     if(is.list(ispecies)) ina <- ina | sapply(ispecies,length) > 1
   }
-  if(any(ina)) stop(paste("species not available:", paste(species[ina], "(", state[ina], ")", sep = "", collapse = " ")))
+  if(any(ina)) {
+    if(is.null(state)) stop(paste("species not available:", paste(species[ina], sep = "", collapse = " ")))
+    else stop(paste("species not available:", paste(species[ina], "(", state[ina], ")", sep = "", collapse = " ")))
+  }
 
   # Are we adding a species to an existing basis definition? 20220208
   if(add) {

@@ -60,7 +60,9 @@ export(
 # added 20220416
   "rank.affinity",
 # added 20220620
-  "stack_mosaic"
+  "stack_mosaic",
+# added 20251207
+  "phosphorylate"
 )
 
 # Load shared objects
