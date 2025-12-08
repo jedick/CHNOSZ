@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-7 (2025-12-07)}{
+\section{Changes in CHNOSZ version 2.2.0-9 (2025-12-08)}{
 
     \itemize{
 
@@ -33,6 +33,9 @@
 
       \item Add \code{phosphorylate()} to calculate affinity of phosphorylation
       reactions with pH-dependent speciation.
+
+      \item Add \code{hyphen.in.pdf()} for replacing minus signs with
+      hyphens in text added to PDF plots.
 
     }
 

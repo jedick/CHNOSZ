@@ -35,11 +35,11 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
     # Basic reaction: acetic acid + P = acetylphosphate + H2O
     # Load initial species for mosaic reaction (uncharged species)
     basis(c("acetic acid", "H3PO4", "acetylphosphate0", "O2", "H+"))
-    # The basis species we will swap through for mosaic
+    # The basis species we will speciate using mosaic()
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
-      c("acetylphosphate0", "acetylphosphate-1", "acetylphosphate-2", "acetylphosphate-3"),
-      c("acetic acid", "acetate")
+      c("acetic acid", "acetate"),
+      c("acetylphosphate0", "acetylphosphate-1", "acetylphosphate-2", "acetylphosphate-3")
     )
   } else if(reactant == "glycerol") {
     # Basic reaction: glycerol + P = 1-glycerolphosphate + H2O
@@ -90,6 +90,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
     # Basic reaction: AMP + P = ADP + H2O
     basis(c("H2AMP", "H3PO4", "H3ADP", "N2", "O2", "H+"))
     bases <- list(
+      c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
       c("H2AMP", "HAMP-", "AMP-2"),
       c("H3ADP", "H2ADP-", "HADP-2", "ADP-3")
     )
@@ -97,6 +98,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
     # Basic reaction: ADP + P = ATP + H2O
     basis(c("H3ADP", "H3PO4", "H4ATP", "N2", "O2", "H+"))
     bases <- list(
+      c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
       c("H3ADP", "H2ADP-", "HADP-2", "ADP-3"),
       c("H4ATP", "H3ATP-", "H2ATP-2", "HATP-3", "ATP-4")
     )
@@ -112,12 +114,15 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
     basis(c("pyruvic acid", "H3PO4", "phosphoenolpyruvate", "O2", "H+"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
-      c("phosphoenolpyruvate", "phosphoenolpyruvate-1", "phosphoenolpyruvate-2", "phosphoenolpyruvate-3"),
-      c("pyruvic acid", "pyruvate")
+      c("pyruvic acid", "pyruvate"),
+      c("phosphoenolpyruvate", "phosphoenolpyruvate-1", "phosphoenolpyruvate-2", "phosphoenolpyruvate-3")
     )
   } else {
     stop(paste("unrecognized reactant:", reactant))
   }
+
+  # Make sure we are speciating H3PO4 (in addition to the other reactants)
+  stopifnot(bases[[1]][1] == "H3PO4")
 
   # Set activity of H3PO4
   # Basic reaction: H3PO4 is the P_source
