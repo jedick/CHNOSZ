@@ -19,7 +19,7 @@
     "contour", "sphalerite", "minsol", "Shh", "saturation",
     "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
     "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity",
-    "uranyl", "sum_S", "MgATP", "rubisco_Zc"),
+    "uranyl", "sum_S", "MgATP", "rubisco_Zc", "phosphorylate"),
     save.png = FALSE)
 }
 
@@ -69,6 +69,7 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{sum_S}{Summed molality of S species and solubility contours for iron and gold (Skirrow and Walshe, 2002)}
     \item{MgATP}{Speciation of ATP with H+ and Mg+2 (Alberty, 2003)}
     \item{rubisco_Zc}{Zc of Rubisco vs optimal growth temperature}
+    \item{phosphorylate}{Phosphorylation model for Gibbs energy of nucleotide polymerization into RNA (LaRowe and Dick, 2025)}
   }
 
 For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
@@ -128,6 +129,8 @@ Guan, Q., Mei, Y., Etschmann, B., Testemale, D., Louvel, M. and Brugger, J. (202
 Johnson, J. W., Oelkers, E. H. and Helgeson, H. C. (1992) SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000\degC. \emph{Comp. Geosci.} \bold{18}, 899--947. \doi{10.1016/0098-3004(92)90029-Q}
 
 LaRowe, D. E. and Amend, J. P. (2016) The energetics of anabolism in natural settings. \emph{ISME J.} \bold{10}, 1285--1295. \doi{10.1038/ismej.2015.227}
+
+LaRowe, D. E. and Dick, J. M. (2025) Physicochemical constraints on the abiotic polymerization of nucleotides into RNA. \emph{JGR Biogeosci.} \bold{130}, e2025JG009095. \doi{10.1029/2025JG009095}
 
 Lowe, A. R., Cox, J. S. and Tremaine, P. R. (2017) Thermodynamics of aqueous adenine: Standard partial molar volumes and heat capacities of adenine, adeninium chloride, and sodium adeninate from \emph{T} = 278.15 K to 393.15 K. \emph{J. Chem. Thermodyn.} \bold{112}, 129--145. \doi{10.1016/j.jct.2017.04.005}
 

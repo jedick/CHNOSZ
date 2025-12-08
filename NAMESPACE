@@ -62,7 +62,7 @@ export(
 # added 20220620
   "stack_mosaic",
 # added 20251207
-  "phosphorylate"
+  "phosphorylate", "phospho_plot"
 )
 
 # Load shared objects
@@ -75,7 +75,7 @@ importFrom("grDevices", "dev.cur", "dev.off", "extendrange",
   "contourLines", "col2rgb", "rgb", "adjustcolor")
 importFrom("graphics", "abline", "axTicks", "axis", "barplot", "box",
   "contour", "image", "legend", "lines", "mtext", "par", "plot",
-  "plot.new", "plot.window", "points", "rect", "text", "title")
+  "plot.new", "plot.window", "points", "rect", "text", "title", "layout")
 importFrom("stats", "D", "as.formula", "cor", "lm", "loess.smooth",
   "na.omit", "predict.lm", "qqline", "qqnorm", "sd", "splinefun",
   "uniroot", "median", "predict", "smooth.spline", "optimize", "formula")

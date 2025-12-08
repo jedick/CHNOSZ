@@ -35,3 +35,4 @@ yttrium         logK.to.OBIGT fits at 800 and 1000 bar and Y speciation in NaCl 
 uranyl          Total (carbonate|sulfate)-pH diagrams for uranyl species
 MgATP           Speciation of ATP with H+ and Mg+2
 rubisco_Zc      Zc of Rubisco vs optimal growth temperature
+phosphorylate   Phosphorylation model for Gibbs energy of nucleotide polymerization into RNA

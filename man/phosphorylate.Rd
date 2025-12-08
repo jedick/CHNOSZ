@@ -1,5 +1,6 @@
 \name{phosphorylate}
 \alias{phosphorylate}
+\alias{phospho_plot}
 \title{Calculate affinity of phosphorylation reactions with pH-dependent speciation}
 \description{
   Calculate the affinity and Gibbs energy of phosphorylation reactions accounting for pH-dependent speciation of reactants, products, and phosphate sources using the mosaic approach.
@@ -8,12 +9,13 @@
 \usage{
 phosphorylate(reactant, P_source, loga_reactant = 0, loga_product = 0, 
                 loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, ...)
+phospho_plot(reactant, P_source)
 }
 \arguments{
   \item{reactant}{
     character, the compound to be phosphorylated.
     Options include \code{"acetic acid"}, \code{"glycerol"}, \code{"adenosine_to_AMP"}, \code{"adenosine_to_cAMP"},
-    \code{"ribose"}, \code{"uridine"}, \code{"AMP"}, \code{"ADP"}, \code{"glucose"}, or \code{"pyruvic acid"}.}
+    \code{"adenosine_for_RNA"}, \code{"ribose"}, \code{"uridine"}, \code{"AMP"}, \code{"ADP"}, \code{"glucose"}, or \code{"pyruvic acid"}.}
   \item{P_source}{
     character, the source of phosphate.
     Use \code{"P"} for basic reactions with inorganic phosphate,
@@ -29,6 +31,7 @@ phosphorylate(reactant, P_source, loga_reactant = 0, loga_product = 0,
 }
 
 \details{
+
   This function calculates the affinity of phosphorylation reactions by summing the affinities of component reactions
   while accounting for pH-dependent speciation of all complex species (reactants, products, and phosphate forms).
   Complex species are those that exist in multiple ionization states depending on pH.
@@ -51,7 +54,15 @@ phosphorylate(reactant, P_source, loga_reactant = 0, loga_product = 0,
   then call this function with \code{P_source} as a named argument to avoid conflicting assignments due to partial argument matching.
   
   The function returns affinity values that can be converted to standard transformed Gibbs energy using \code{\link{convert}}.
+
+  \code{phospho_plot} creates a set of \T-pH and \P-pH plots showing Gibbs energy of phosphorylation reactions (contour labels are kJ/mol).
+  It uses \code{loga_P_source = loga_P_remainder = -3}, \code{loga_product = -6}, and \code{loga_reactant} equal to -6, -4, and -2.
+  However, if \code{reactant} is \samp{adenosine_for_RNA}, then \code{loga_P_source} is made equal to \code{loga_reactant} in each plot.
+  The \samp{adenosine_for_RNA} reactant uses only protonated species (i.e., no AMP\S{-2} or PO\s{4}\S{-3})
+  to model RNA formation from monophosphate nucleotides as described in LaRowe and Dick (2025).
+
 }
+
 \section{Warning}{
   This function depends on thermodynamic data for phosphorylated species that have not yet been added to OBIGT (2025-12-07).
   The data for glucose-6-phosphate used in the examples are provisional and are known to produce inaccurate results for the Gibbs energy of phosphorylation
@@ -72,7 +83,6 @@ phosphorylate(reactant, P_source, loga_reactant = 0, loga_product = 0,
 }
 
 \examples{
-\dontshow{data(thermo)}
 # Calculate standard transformed Gibbs energy (DeltaG°') for 
 # glucose + ATP = glucose-6-phosphate + ADP at pH 7, 25 °C
 
@@ -81,8 +91,8 @@ mod.OBIGT("glucose-6-phosphate-2", formula = "C6H11O9P-2", G = -1763940)
 mod.OBIGT("glucose-6-phosphate-1", formula = "C6H12O9P-", G = -1800590)
 # Alberty (2003) doesn't have DeltaG° for neutral glucose-6-phosphate,
 # so we calculate it from pKa1 = 1.5 (Degani and Halmann, 1966)
-DG0_G6P <- -1800590 + convert(1.5, "G")
-mod.OBIGT("glucose-6-phosphate", formula = "C6H13O9P", G = DG0_G6P)
+G_G6P <- -1800590 + convert(1.5, "G")
+mod.OBIGT("glucose-6-phosphate", formula = "C6H13O9P", G = G_G6P)
 
 # Calculate affinity at pH 7 with unit activities (loga = 0)
 result <- phosphorylate("glucose", "ATP", const_pH = 7)
@@ -116,6 +126,9 @@ print(paste("DeltaG at pH 7 with non-unit activities:",
 
   Degani C and Halmann M. (1966) Solvolysis of phosphoric acid esters. Hydrolysis of glucose 6-phosphate. Kinetic and tracer studies.
   \emph{J Am Chem Soc} \bold{88}:4075-4082. \doi{10.1021/ja00969a033}
+
+  LaRowe DE and Dick JM (2025) Physicochemical constraints on the abiotic polymerization of nucleotides into RNA.
+  \emph{JGR Biogeosci} \bold{130}:e2025JG009095. \doi{10.1029/2025JG009095}
 }
 
 \concept{Thermodynamic calculations}

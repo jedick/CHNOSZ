@@ -35,7 +35,7 @@ demos <- function(which = c("references", "dehydration", "affinity", "NaCl", "de
   "mosaic", "copper", "arsenic", "solubility", "gold", "contour", "sphalerite", "minsol",
   "Shh", "saturation", "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum",
   "AD", "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity", "uranyl",
-  "sum_S", "MgATP", "rubisco_Zc"),
+  "sum_S", "MgATP", "rubisco_Zc", "phosphorylate"),
   save.png = FALSE) {
   # Run one or more demos from CHNOSZ with ask = FALSE, and return the value of the last one
   out <- NULL
@@ -45,8 +45,10 @@ demos <- function(which = c("references", "dehydration", "affinity", "NaCl", "de
     message(paste("demos: running '", which[i], "'", sep = ""))
     width <- 500
     height <- 500
+    pointsize <- 12
     if(which[i] == "comproportionation") width <- 600
-    if(save.png) png(paste(which[i], "%d.png", sep = ""), width = width, height = height, pointsize = 12)
+    if(which[i] == "phosphorylate") {width <- 800; height <- 600; pointsize <- 16}
+    if(save.png) png(paste(which[i], "%d.png", sep = ""), width = width, height = height, pointsize = pointsize)
     out <- demo(which[i], package = "CHNOSZ", character.only = TRUE, echo = FALSE, ask = FALSE)
     if(save.png) dev.off()
   }
