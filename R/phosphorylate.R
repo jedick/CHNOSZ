@@ -378,8 +378,8 @@ phospho_plot <- function(reactant, P_source) {
   #use.name[formula == "H3PO4"] <- FALSE
   #use.name[formula == "H2P4O7"] <- FALSE
   iname <- which(use.name)
-  ## Change minus signs to short hyphens
-  #for(i in iname) reaction$name[i] <- hyphen.in.pdf(reaction$name[i])
+  # Change minus signs to short hyphens
+  for(i in iname) reaction$name[i] <- hyphen.in.pdf(reaction$name[i])
   # Get expression for reaction 
   reaction_expr <- describe.reaction(reaction, iname = iname)
   # Add reaction to plot

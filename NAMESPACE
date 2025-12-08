@@ -62,7 +62,7 @@ export(
 # added 20220620
   "stack_mosaic",
 # added 20251207
-  "phosphorylate", "phospho_plot"
+  "phosphorylate", "phospho_plot", "hyphen.in.pdf"
 )
 
 # Load shared objects

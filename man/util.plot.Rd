@@ -1,29 +1,20 @@
 \encoding{UTF-8}
 \name{util.plot}
 \alias{util.plot}
-\alias{thermo.plot.new}
-\alias{thermo.axis}
 \alias{label.plot}
 \alias{usrfig}
 \alias{label.figure}
 \alias{water.lines}
 \alias{mtitle}
 \alias{ZC.col}
-\title{Functions to create and modify plots}
+\alias{hyphen.in.pdf}
+\title{Utility functions for plots}
 
 \description{
-  Initialize a new plot window using preset parameters, add an axis or title to a plot, generate labels for axes and subplots, add stability lines for water, get colors for a set of numeric values.
+  Label plots and figures, generate labels for axes and subplots, add stability lines for water, or get colors for a set of numeric values.
 }
 
 \usage{
-  thermo.plot.new(xlim, ylim, xlab, ylab, cex = par("cex"),
-    mar = NULL, lwd = par("lwd"), side = c(1,2,3,4), 
-    mgp = c(1.7, 0.3, 0), cex.axis = par("cex"), col = par("col"),
-    yline = NULL, axs = "i", plot.box = TRUE, las = 1,
-    xline = NULL, grid = "", col.grid = "gray", ...)
-  thermo.axis(lab = NULL, side = 1:4, line = 1.5, cex = par("cex"),
-    lwd = par("lwd"), col = par("col"), grid = "", col.grid = "gray",
-    plot.line = FALSE)
   label.plot(label, xfrac = 0.07, yfrac = 0.93, paren = FALSE,
     italic = FALSE, ...)
   usrfig()
@@ -33,54 +24,30 @@
     lty = 2, lwd = 1, col = par("fg"), plot.it = TRUE)
   mtitle(main, line = 0, spacing = 1, ...)
   ZC.col(z)
+  hyphen.in.pdf(x)
 }
 
 \arguments{
-  \item{xlim}{numeric, limits of the \eqn{x}{x}-axis}
-  \item{ylim}{numeric, limits of the \eqn{y}{y}-axis}
-  \item{xlab}{character, \eqn{x}{x}-axis label}
-  \item{ylab}{character, \eqn{y}{y}-axis label}
-  \item{cex}{numeric, character expansion factor for labels}
-  \item{mar}{numeric, width (number of lines) of margins on each side of plot}
-  \item{lwd}{numeric, line width}
-  \item{side}{numeric, which sides of plot to draw axes}
-  \item{mgp}{numeric, sizes of margins of plot}
-  \item{cex.axis}{numeric, character expansion factor for names of axes}
-  \item{col}{character, color}
-  \item{yline}{numeric, margin line on which to plot \eqn{y}{y}-axis name}
-  \item{axs}{character, setting for axis limit calculation}
-  \item{plot.box}{logical, draw a box around the plot?}
-  \item{las}{numeric, style for axis labels}
-  \item{xline}{numeric, margin line on which to plot \eqn{x}{x}-axis name}
-  \item{grid}{character, type of grid (\samp{major}, \samp{minor}, or \samp{both})}
-  \item{col.grid}{character, color of the grid lines}
-  \item{plot.line}{logical, draw axis lines?}
-  \item{...}{further arguments passed to \code{par} or \code{mtext}}
-  \item{lab}{character, axis label}
-  \item{line}{numeric, margin line on which to place axis label or plot title}
   \item{label}{character, label to place on plot}
   \item{xfrac}{numeric, fractional location on \eqn{x}{x}-axis for placement of label}
   \item{yfrac}{numeric, fractional location on \eqn{y}{y}-axis for placement of label}
   \item{paren}{logical, add parentheses around label text?}
+  \item{...}{further arguments passed to \code{text} or \code{mtext}}
   \item{italic}{logical, italicize label text?}
   \item{eout}{data frame, output of \code{\link{affinity}}, \code{\link{equilibrate}}, or \code{\link{diagram}}}
   \item{which}{character, which of oxidation/reduction lines to plot}
   \item{lty}{numeric, line type}
+  \item{lwd}{numeric, line width}
+  \item{col}{character, color}
   \item{plot.it}{logical, plot the lines?}
   \item{main}{character, text for plot title}
+  \item{line}{numeric, margin line on which to place plot title}
   \item{spacing}{numeric, spacing between multiple lines}
   \item{z}{numeric, set of values}
+  \item{x}{character, any text object}
 }
 
 \details{
-
-\code{thermo.plot.new} sets parameters for a new plot, creates a new plot using \code{\link{plot.new}}, and adds the axes tick marks to the plot.
-Plot parameters (see \code{\link{par}}) including \code{cex}, \code{mar}, \code{lwd}, \code{mgp} and \code{axs} can be given, as well as a numeric vector in \code{side} identifying which sides of the plot receive tick marks.
-\code{yline}, if present, denotes the margin line (default \code{\link{par}('mgp')[1]}) where the y-axis name is plotted.
-\code{thermo.axis} is the function that actually adds the axes, including inward-pointing major and minor tick marks (often used for thermodynamic property diagrams).
-
-Use \code{grid} to add a grid to the plot, corresponding to either the major ticks (solid lines), minor ticks (dashed lines), or both.
-The grid can be made by adding \code{grid} argument to \code{\link{diagram}}, or by calling \code{thermo.axis} after \code{diagram} (see example).
 
 \code{water.lines} plots lines representing the oxidation and reduction stability limits of water on Eh/pe/\logfO2/\logfH2 vs pH/\T/\P diagrams.
 The x- and y-variables and their ranges are taken from \code{eout}.
@@ -105,10 +72,9 @@ This function exists to facilitate using \code{\link{expression}}s in multiline 
 \code{ZC.col} uses \CRANpkg{colorspace} to generate colors from a diverging palette (red - light grey - blue) corresponding to the values in \code{z}.
 Red is associated with lower values of \code{z}.
 This function is intended to generate colors for distinguishing average oxidation state of carbon \code{\link{ZC}}, but any numeric values can be supplied.
-}
 
-\seealso{
-\code{\link{diagram}} uses \code{thermo.plot.new} to set up a new plot, unless the argument \code{tplot} is set to FALSE in \code{diagram}.
+If a PDF device is active, \code{hyphen.in.pdf} replaces all instances of ASCII hyphen (\verb{-}) in \code{x} with the Unicode hyphen (\verb{\uad}).
+This is done so that hyphens don't get displayed as minus signs in R graphics output, but it only works for the PDF device.
 }
 
 \examples{
