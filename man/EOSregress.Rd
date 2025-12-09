@@ -90,7 +90,7 @@ If the \code{property} is \samp{V}, the data frame has column names of \samp{(In
 Here, \eqn{\sigma}{sigma} and \eqn{\xi}{xi} are calculated from a1, a2, a3 and a4 in \code{thermo()$OBIGT} at the pressure indicated by \code{P} (default 1 bar).
 
 The original motivation for writing these functions was to explore alternatives or possible modifications to the revised Helgeson-Kirkham-Flowers equations applied to aqueous nonelectrolytes.
-As pointed out by Schulte et al., 2001, the functional forms of the equations do not permit retrieving values of the solvation parameter (\eqn{\omega}{omega}) that closely represent the observed trends in both heat capacity and volume at high temperatures (above ca. 200 \degC).
+As pointed out by Schulte et al. (2001), the functional forms of the equations do not permit retrieving values of the solvation parameter (\eqn{\omega}{omega}) that closely represent the observed trends in both heat capacity and volume at high temperatures (above ca. 200 \degC).
 
 The examples below assume that the \eqn{\omega}{omega} parameter in the HKF functions is a constant (does not depend on T and P), as is appropriate for nonelectrolytes.
 For charged species, the variables \code{Cp_s_var} and \code{V_s_var} can be used in the regressions.
@@ -111,9 +111,9 @@ The vignette \viglink{eos-regress} has more references and examples, including a
 }
 
 \references{
-  Hnědkovský, L. and Wood, R. H. (1997) Apparent molar heat capacities of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 304 K to 704 K at a pressure of 28 MPa. \emph{J. Chem. Thermodyn.} \bold{29}, 731--747. \doi{10.1006/jcht.1997.0192}
+Hnědkovský L, Wood RH. 1997. Apparent molar heat capacities of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 304 K to 704 K at a pressure of 28 MPa. \emph{J Chem Thermodyn} \bold{29}: 731--747. \doi{10.1006/jcht.1997.0192}
 
-  Schulte, M. D., Shock, E. L. and Wood, R. H. (1995) The temperature dependence of the standard-state thermodynamic properties of aqueous nonelectrolytes. \emph{Geochim. Cosmochim. Acta} \bold{65}, 3919--3930. \doi{10.1016/S0016-7037(01)00717-7}
+Schulte MD, Shock EL, Wood RH. 2001. The temperature dependence of the standard-state thermodynamic properties of aqueous nonelectrolytes. \emph{Geochim Cosmochim Acta} \bold{65}: 3919--3930. \doi{10.1016/S0016-7037(01)00717-7}
 }
 
 

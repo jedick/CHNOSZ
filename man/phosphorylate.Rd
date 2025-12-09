@@ -122,13 +122,11 @@ print(paste("DeltaG at pH 7 with non-unit activities:",
 }
 
 \references{
-  Alberty RA (2003) \emph{Thermodynamics of Biochemical Reactions}. John Wiley & Sons, Hoboken, New Jersey, 397 p. \url{https://www.worldcat.org/oclc/51242181}
+Alberty RA. 2003. \emph{Thermodynamics of Biochemical Reactions}. Hoboken, NJ: John Wiley & Sons. 397 p. \url{https://www.worldcat.org/oclc/51242181}
 
-  Degani C and Halmann M. (1966) Solvolysis of phosphoric acid esters. Hydrolysis of glucose 6-phosphate. Kinetic and tracer studies.
-  \emph{J Am Chem Soc} \bold{88}:4075-4082. \doi{10.1021/ja00969a033}
+Degani C, Halmann M. 1966. Solvolysis of phosphoric acid esters. Hydrolysis of glucose 6-phosphate. Kinetic and tracer studies. \emph{J Am Chem Soc} \bold{88}: 4075--4082. \doi{10.1021/ja00969a033}
 
-  LaRowe DE and Dick JM (2025) Physicochemical constraints on the abiotic polymerization of nucleotides into RNA.
-  \emph{JGR Biogeosci} \bold{130}:e2025JG009095. \doi{10.1029/2025JG009095}
+LaRowe DE, Dick JM. 2025. Physicochemical constraints on the abiotic polymerization of nucleotides into RNA. \emph{JGR Biogeosci} \bold{130}: e2025JG009095. \doi{10.1029/2025JG009095}
 }
 
 \concept{Thermodynamic calculations}

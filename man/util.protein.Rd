@@ -31,7 +31,7 @@ Those authors provided values of heat capacity at six points between 5 and 125 \
 }
 
 \references{
-  Makhatadze, G. I. and Privalov, P. L. (1990) Heat capacity of proteins. 1. Partial molar heat capacity of individual amino acid residues in aqueous solution: Hydration effect \emph{J. Mol. Biol.} \bold{213}, 375--384. \doi{10.1016/S0022-2836(05)80197-4}
+Makhatadze GI, Privalov PL. 1990. Heat capacity of proteins. 1. Partial molar heat capacity of individual amino acid residues in aqueous solution: Hydration effect. \emph{J Mol Biol} \bold{213}: 375--384. \doi{10.1016/S0022-2836(05)80197-4}
 }
 
 \concept{Protein properties}

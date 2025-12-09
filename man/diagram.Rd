@@ -315,23 +315,21 @@ points(Ttp, Ptp, pch = 10, cex = 5)
 }
 
 \references{
+Aksu S, Doyle FM. 2001. Electrochemistry of copper in aqueous glycine solutions. \emph{J Electrochem Soc} \bold{148}: B51--B57. \doi{10.1149/1.1344532}
 
-Aksu, S. and Doyle, F. M. (2001) Electrochemistry of copper in aqueous glycine solutions. \emph{J. Electrochem. Soc.} \bold{148}, B51--B57.
+Dick JM. 2019. CHNOSZ: Thermodynamic calculations and diagrams for geochemistry. \emph{Front Earth Sci} \bold{7}: 180. \doi{10.3389/feart.2019.00180}
 
-Dick, J. M. (2019) CHNOSZ: Thermodynamic calculations and diagrams for geochemistry. \emph{Front. Earth Sci.} \bold{7}:180. \doi{10.3389/feart.2019.00180}
+Dick JM, Shock EL. 2011. Calculation of the relative chemical stabilities of proteins as a function of temperature and redox chemistry in a hot spring. \emph{PLOS One} \bold{6}: e22782. \doi{10.1371/journal.pone.0022782}
 
-Dick, J. M. and Shock, E. L. (2011) Calculation of the relative chemical stabilities of proteins as a function of temperature and redox chemistry in a hot spring. \emph{PLOS One} \bold{6}, e22782. \doi{10.1371/journal.pone.0022782}
+Helgeson HC. 1970. A chemical and thermodynamic model of ore deposition in hydrothermal systems. \emph{Mineral Soc Am Spec Pap} \bold{3}: 155--186. \url{https://www.worldcat.org/oclc/583263}
 
-Helgeson, H. C. (1970) A chemical and thermodynamic model of ore deposition in hydrothermal systems. \emph{Mineral. Soc. Amer. Spec. Pap.} \bold{3}, 155--186. \url{https://www.worldcat.org/oclc/583263}
+Helgeson HC, Delany JM, Nesbitt HW, Bird DK. 1978. Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am J Sci} \bold{278-A}: 1--229. \url{https://www.worldcat.org/oclc/13594862}
 
-Helgeson, H. C., Delany, J. M., Nesbitt, H. W. and Bird, D. K. (1978) Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am. J. Sci.} \bold{278-A}, 1--229. \url{https://www.worldcat.org/oclc/13594862}
+LaRowe DE, Helgeson HC. 2007. Quantifying the energetics of metabolic reactions in diverse biogeochemical systems: electron flow and ATP synthesis. \emph{Geobiology} \bold{5}: 153--168. \doi{10.1111/j.1472-4669.2007.00099.x}
 
-LaRowe, D. E. and Helgeson, H. C. (2007) Quantifying the energetics of metabolic reactions in diverse biogeochemical systems: electron flow and ATP synthesis. \emph{Geobiology} \bold{5}, 153--168. \doi{10.1111/j.1472-4669.2007.00099.x}
+Majzlan J, Navrotsky A, McClesky RB, Alpers CN. 2006. Thermodynamic properties and crystal structure refinement of ferricopiapite, coquimbite, rhomboclase, and Fe\s{2}(SO\s{4})\s{3}(H\s{2}O)\s{5}. \emph{Eur J Mineral} \bold{18}: 175--186. \doi{10.1127/0935-1221/2006/0018-0175}
 
-Majzlan, J., Navrotsky, A., McClesky, R. B. and Alpers, C. N. (2006) Thermodynamic properties and crystal structure refinement of ferricopiapite, coquimbite, rhomboclase, and Fe\s{2}(SO\s{4})\s{3}(H\s{2}O)\s{5}. \emph{Eur. J. Mineral.} \bold{18}, 175--186. \doi{10.1127/0935-1221/2006/0018-0175}
-
-Tagirov, B. and Schott, J. (2001) Aluminum speciation in crustal fluids revisited. \emph{Geochim. Cosmochim. Acta} \bold{65}, 3965--3992. \doi{10.1016/S0016-7037(01)00705-0}
-
+Tagirov B, Schott J. 2001. Aluminum speciation in crustal fluids revisited. \emph{Geochim Cosmochim Acta} \bold{65}: 3965--3992. \doi{10.1016/S0016-7037(01)00705-0}
 }
 
 \concept{Main workflow}

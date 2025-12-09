@@ -117,9 +117,9 @@ legend("topleft", legend, pch = c(19, NA), lty = c(0, 1), col = c(1, 4), pt.cex 
 }
 
 \references{
-Migdisov, Art. A., Zezin, D. and Williams-Jones, A. E. (2011) An experimental study of Cobalt (II) complexation in Cl\S{-} and H\s{2}S-bearing hydrothermal solutions. \emph{Geochim. Cosmochim. Acta} \bold{75}, 4065--4079. \doi{10.1016/j.gca.2011.05.003}
+Migdisov AA, Zezin D, Williams-Jones AE. 2011. An experimental study of Cobalt (II) complexation in Cl\S{-} and H\s{2}S-bearing hydrothermal solutions. \emph{Geochim Cosmochim Acta} \bold{75}: 4065--4079. \doi{10.1016/j.gca.2011.05.003}
 
-Mei, Y., Sherman, D. M., Liu, W., Etschmann, B., Testemale, D. and Brugger, J. (2015) Zinc complexation in chloride-rich hydrothermal fluids (25--600 \degC): A thermodynamic model derived from \emph{ab initio} molecular dynamics. \emph{Geochim. Cosmochim. Acta} \bold{150}, 264--284. \doi{10.1016/j.gca.2014.09.023}
+Mei Y, Sherman DM, Liu W, Etschmann B, Testemale D, Brugger J. 2015. Zinc complexation in chloride-rich hydrothermal fluids (25--600°C): A thermodynamic model derived from \emph{ab initio} molecular dynamics. \emph{Geochim Cosmochim Acta} \bold{150}: 264--284. \doi{10.1016/j.gca.2014.09.023}
 
-Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \doi{10.1039/FT9928800803}
+Shock EL, Oelkers EH, Johnson JW, Sverjensky DA, Helgeson HC. 1992. Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 °C and 5 kbar. \emph{J Chem Soc Faraday Trans} \bold{88}: 803--826. \doi{10.1039/FT9928800803}
 }

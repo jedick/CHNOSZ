@@ -96,7 +96,7 @@ RH2OBIGT()
 }
 
 \references{
-Richard, L. and Helgeson, H. C. (1998) Calculation of the thermodynamic properties at elevated temperatures and pressures of saturated and aromatic high molecular weight solid and liquid hydrocarbons in kerogen, bitumen, petroleum, and other organic matter of biogeochemical interest. \emph{Geochim. Cosmochim. Acta} \bold{62}, 3591--3636. \doi{10.1016/S0016-7037(97)00345-1}
+Richard L, Helgeson HC. 1998. Calculation of the thermodynamic properties at elevated temperatures and pressures of saturated and aromatic high molecular weight solid and liquid hydrocarbons in kerogen, bitumen, petroleum, and other organic matter of biogeochemical interest. \emph{Geochim Cosmochim Acta} \bold{62}: 3591--3636. \doi{10.1016/S0016-7037(97)00345-1}
 }
 
 \concept{Thermodynamic data}

@@ -49,7 +49,7 @@ If there is any doubt about the accuracy or suitability of data for a particular
 }
 
 \references{
-Johnson, J. W., Oelkers, E. H. and Helgeson, H. C. (1992) SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000\degC. \emph{Comp. Geosci.} \bold{18}, 899--947. \doi{10.1016/0098-3004(92)90029-Q}
+Johnson JW, Oelkers EH, Helgeson HC. 1992. SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000°C. \emph{Comput Geosci} \bold{18}: 899--947. \doi{10.1016/0098-3004(92)90029-Q}
 }
 
 \keyword{package}

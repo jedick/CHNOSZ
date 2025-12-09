@@ -223,23 +223,23 @@ nonideal("Bdot")  # or reset()
 }
 
 \references{
-Alberty, R. A. (2001) Effect of temperature on standard transformed Gibbs energies of formation of reactants at specified pH and ionic strength and apparent equilibrium constants of biochemical reactions. \emph{J. Phys. Chem. B} \bold{105}, 7865--7870. \doi{10.1021/jp011308v}
+Alberty RA. 2001. Effect of temperature on standard transformed Gibbs energies of formation of reactants at specified pH and ionic strength and apparent equilibrium constants of biochemical reactions. \emph{J Phys Chem B} \bold{105}: 7865--7870. \doi{10.1021/jp011308v}
 
-Alberty, R. A. (2003) \emph{Thermodynamics of Biochemical Reactions}, John Wiley & Sons, Hoboken, New Jersey, 397 p. \url{https://www.worldcat.org/oclc/51242181}
+Alberty RA. 2003. \emph{Thermodynamics of Biochemical Reactions}. Hoboken, NJ: John Wiley & Sons. 397 p. \url{https://www.worldcat.org/oclc/51242181}
 
-Clarke, E. C. W. and Glew, D. N. (1980) Evaluation of Debye-Hückel limiting slopes for water between 0 and 150 °C. \emph{J. Chem. Soc. Faraday Trans.} \bold{76}, 1911--1916. \doi{10.1039/f19807601911}
+Clarke ECW, Glew DN. 1980. Evaluation of Debye-Hückel limiting slopes for water between 0 and 150°C. \emph{J Chem Soc Faraday Trans} \bold{76}: 1911--1916. \doi{10.1039/f19807601911}
 
-Helgeson, H. C. (1969) Thermodynamics of hydrothermal systems at elevated temperatures and pressures. \emph{Am. J. Sci.} \bold{267}, 729--804. \doi{10.2475/ajs.267.7.729}
+Helgeson HC. 1969. Thermodynamics of hydrothermal systems at elevated temperatures and pressures. \emph{Am J Sci} \bold{267}: 729--804. \doi{10.2475/ajs.267.7.729}
 
-Helgeson, H. C., Kirkham, D. H. and Flowers, G. C. (1981) Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures. IV. Calculation of activity coefficients, osmotic coefficients, and apparent molal and standard and relative partial molal properties to 600\degC and 5 Kb. \emph{Am. J. Sci.} \bold{281}, 1249--1516. \doi{10.2475/ajs.281.10.1249}
+Helgeson HC, Kirkham DH, Flowers GC. 1981. Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures. IV. Calculation of activity coefficients, osmotic coefficients, and apparent molal and standard and relative partial molal properties to 600°C and 5 Kb. \emph{Am J Sci} \bold{281}: 1249--1516. \doi{10.2475/ajs.281.10.1249}
 
-Hörbrand, T., Baumann, T. and Moog, H. C. (2018) Validation of hydrogeochemical databases for problems in deep geothermal energy. \emph{Geotherm. Energy} \bold{6}, 20. \doi{10.1186/s40517-018-0106-3}
+Hörbrand T, Baumann T, Moog HC. 2018. Validation of hydrogeochemical databases for problems in deep geothermal energy. \emph{Geotherm Energy} \bold{6}: 20. \doi{10.1186/s40517-018-0106-3}
 
-Manning, C. E. (2013) Thermodynamic modeling of fluid-rock interaction at mid-crustal to upper-mantle conditions. \emph{Rev. Mineral. Geochem.} \bold{76}, 135--164. \doi{10.2138/rmg.2013.76.5}
+Manning CE. 2013. Thermodynamic modeling of fluid-rock interaction at mid-crustal to upper-mantle conditions. \emph{Rev Mineral Geochem} \bold{76}: 135--164. \doi{10.2138/rmg.2013.76.5}
 
-Manning, C. E., Shock, E. L. and Sverjensky, D. A. (2013) The chemistry of carbon in aqueous fluids at crustal and upper-mantle conditions: Experimental and theoretical constraints. \emph{Rev. Mineral. Geochem.} \bold{75}, 109--148. \doi{10.2138/rmg.2013.75.5}
+Manning CE, Shock EL, Sverjensky DA. 2013. The chemistry of carbon in aqueous fluids at crustal and upper-mantle conditions: Experimental and theoretical constraints. \emph{Rev Mineral Geochem} \bold{75}: 109--148. \doi{10.2138/rmg.2013.75.5}
 
-Shvarov, Y. and Bastrakov, E. (1999) HCh: A software package for geochemical equilibrium modelling. User's Guide. \emph{Australian Geological Survey Organisation} \bold{1999/25}. \url{https://pid.geoscience.gov.au/dataset/ga/25473}
+Shvarov Y, Bastrakov E. 1999. HCh: A software package for geochemical equilibrium modelling. User's Guide. \emph{Australian Geological Survey Organisation} \bold{1999/25}. \url{https://pid.geoscience.gov.au/dataset/ga/25473}
 }
 
 \concept{Thermodynamic calculations}

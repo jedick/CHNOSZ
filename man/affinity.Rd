@@ -102,7 +102,7 @@ affinity(T = c(25, 110, 115, 215), P = c(11, 335, 500, 1450))
 }
 
 \references{
-Helgeson, H. C., Richard, L, McKenzie, W. F., Norton, D. L. and Schmitt, A. (2009) A chemical and thermodynamic model of oil generation in hydrocarbon source rocks. \emph{Geochim. Cosmochim. Acta} \bold{73}, 594--695. \doi{10.1016/j.gca.2008.03.004}
+Helgeson HC, Richard L, McKenzie WF, Norton DL, Schmitt A. 2009. A chemical and thermodynamic model of oil generation in hydrocarbon source rocks. \emph{Geochim Cosmochim Acta} \bold{73}: 594--695. \doi{10.1016/j.gca.2008.03.004}
 }
 
 \concept{Main workflow}

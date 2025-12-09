@@ -96,7 +96,7 @@ legend("bottomleft", c("log(act_Fe) = -4", "log(act_Fe) = -6"), lwd = c(2, 1), b
 }
 
 \references{
-  Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibria}, Harper & Row, New York, 450 p. \url{https://www.worldcat.org/oclc/517586}
+Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://www.worldcat.org/oclc/517586}
 }
 
 \concept{Extended workflow}

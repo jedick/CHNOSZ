@@ -51,9 +51,9 @@ calculateQ(density, temperature)
 }
 
 \references{
-Sverjensky, D. A., Harrison, B. and Azzolini, D. (2014) Water in the deep Earth: The dielectric constant and the solubilities of quartz and corundum to 60 kb and 1,200 \degC. \emph{Geochim. Cosmochim. Acta} \bold{129}, 125--145. \doi{10.1016/j.gca.2013.12.019}
+Sverjensky DA, Harrison B, Azzolini D. 2014. Water in the deep Earth: The dielectric constant and the solubilities of quartz and corundum to 60 kb and 1,200°C. \emph{Geochim Cosmochim Acta} \bold{129}: 125--145. \doi{10.1016/j.gca.2013.12.019}
 
-Zhang, Z. and Duan, Z. (2005) Prediction of the \emph{PVT} properties of water over wide range of temperatures and pressures from molecular dynamics simulation. \emph{Phys. Earth Planet. Inter.} \bold{149}, 335--354. \doi{10.1016/j.pepi.2004.11.003}
+Zhang Z, Duan Z. 2005. Prediction of the \emph{PVT} properties of water over wide range of temperatures and pressures from molecular dynamics simulation. \emph{Phys Earth Planet Inter} \bold{149}: 335--354. \doi{10.1016/j.pepi.2004.11.003}
 }
 
 \concept{Water properties}

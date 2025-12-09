@@ -77,9 +77,9 @@ Returns the value of \code{thermo()$basis} after any modifications; or, if \code
 }
 
 \references{
-Dick, J. M. (2016) Proteomic indicators of oxidation and hydration state in colorectal cancer. \emph{PeerJ} \bold{4}:e2238. \doi{10.7717/peerj.2238}
+Dick JM. 2016. Proteomic indicators of oxidation and hydration state in colorectal cancer. \emph{PeerJ} \bold{4}: e2238. \doi{10.7717/peerj.2238}
 
-Dick, J. M. (2017) Chemical composition and the potential for proteomic transformation in cancer, hypoxia, and hyperosmotic stress. \emph{PeerJ} \bold{5}:e3421 \doi{10.7717/peerj.3421}
+Dick JM. 2017. Chemical composition and the potential for proteomic transformation in cancer, hypoxia, and hyperosmotic stress. \emph{PeerJ} \bold{5}: e3421. \doi{10.7717/peerj.3421}
 }
 
 \examples{

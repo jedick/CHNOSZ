@@ -229,15 +229,15 @@ thermo("opt$varP" = FALSE)
 }
 
 \references{
-  Anderson, G. M. and Crerar, D. A. (1993) \emph{Thermodynamics in Geochemistry: The Equilibrium Model}, Oxford University Press. \url{https://www.worldcat.org/oclc/803272549}
+Anderson GM, Crerar DA. 1993. \emph{Thermodynamics in Geochemistry: The Equilibrium Model}. New York: Oxford University Press. \url{https://www.worldcat.org/oclc/803272549}
 
-  Johnson, J. W., Oelkers, E. H. and Helgeson, H. C. (1992) SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000\degC. \emph{Comp. Geosci.} \bold{18}, 899--947. \doi{10.1016/0098-3004(92)90029-Q}
+Johnson JW, Oelkers EH, Helgeson HC. 1992. SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000°C. \emph{Comput Geosci} \bold{18}: 899--947. \doi{10.1016/0098-3004(92)90029-Q}
 
-  Helgeson, H. C., Owens, C. E., Knox, A. M. and Richard, L. (1998) Calculation of the standard molal thermodynamic properties of crystalline, liquid, and gas organic molecules at high temperatures and pressures. \emph{Geochim. Cosmochim. Acta} \bold{62}, 985--1081. \doi{10.1016/S0016-7037(97)00219-6}
+Helgeson HC, Owens CE, Knox AM, Richard L. 1998. Calculation of the standard molal thermodynamic properties of crystalline, liquid, and gas organic molecules at high temperatures and pressures. \emph{Geochim Cosmochim Acta} \bold{62}: 985--1081. \doi{10.1016/S0016-7037(97)00219-6}
 
-  LaRowe, D. E. and Helgeson, H. C. (2007) Quantifying the energetics of metabolic reactions in diverse biogeochemical systems: electron flow and ATP synthesis. \emph{Geobiology} \bold{5}, 153--168. \doi{10.1111/j.1472-4669.2007.00099.x}
+LaRowe DE, Helgeson HC. 2007. Quantifying the energetics of metabolic reactions in diverse biogeochemical systems: electron flow and ATP synthesis. \emph{Geobiology} \bold{5}: 153--168. \doi{10.1111/j.1472-4669.2007.00099.x}
 
-  Shock, E. L., Oelkers, E. H., Johnson, J. W., Sverjensky, D. A. and Helgeson, H. C. (1992) Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 \degC and 5 kbar. \emph{J. Chem. Soc. Faraday Trans.} \bold{88}, 803--826. \doi{10.1039/FT9928800803}
+Shock EL, Oelkers EH, Johnson JW, Sverjensky DA, Helgeson HC. 1992. Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 °C and 5 kbar. \emph{J Chem Soc Faraday Trans} \bold{88}: 803--826. \doi{10.1039/FT9928800803}
 }
 
 \concept{Main workflow}

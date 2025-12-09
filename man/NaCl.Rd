@@ -85,7 +85,7 @@ title(main="H2O + NaCl; HCh (points) and 'NaCl()' (lines)")
 }
 
 \references{
-Shvarov, Y. and Bastrakov, E. (1999) HCh: A software package for geochemical equilibrium modelling. User's Guide. \emph{Australian Geological Survey Organisation} \bold{1999/25}. \url{https://pid.geoscience.gov.au/dataset/ga/25473}
+Shvarov Y, Bastrakov E. 1999. HCh: A software package for geochemical equilibrium modelling. User's Guide. \emph{Australian Geological Survey Organisation} \bold{1999/25}. \url{https://pid.geoscience.gov.au/dataset/ga/25473}
 }
 
 \concept{Extended workflow}

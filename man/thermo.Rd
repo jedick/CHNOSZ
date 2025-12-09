@@ -289,13 +289,13 @@ reset()
 }
 
 \references{
-Cox, J. D., Wagman, D. D. and Medvedev, V. A., eds. (1989) \emph{CODATA Key Values for Thermodynamics}. Hemisphere Publishing Corporation, New York, 271 p. \url{https://www.worldcat.org/oclc/18559968}
+Cox JD, Wagman DD, Medvedev VA, eds. 1989. \emph{CODATA Key Values for Thermodynamics}. New York: Hemisphere Publishing Corporation. 271 p. \url{https://www.worldcat.org/oclc/18559968}
 
-Garrels, R. M. and Christ, C. L. (1965) \emph{Solutions, Minerals, and Equilibria}, Harper & Row, New York, 450 p. \url{https://www.worldcat.org/oclc/517586}
+Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://www.worldcat.org/oclc/517586}
 
-Thoenen, T., Hummel, W., Berner, U. and Curti, E. (2014) \emph{The PSI/Nagra Chemical Thermodynamic Database 12/07}. Paul Scherrer Institut. \url{https://www.psi.ch/en/les/database}
+Thoenen T, Hummel W, Berner U, Curti E. 2014. \emph{The PSI/Nagra Chemical Thermodynamic Database 12/07}. Villigen, Switzerland: Paul Scherrer Institut. \url{https://www.psi.ch/en/les/database}
 
-Wagman, D. D., Evans, W. H., Parker, V. B., Schumm, R. H., Halow, I., Bailey, S. M., Churney, K. L. and Nuttall, R. L. (1982) The NBS tables of chemical thermodynamic properties. Selected values for inorganic and C\s{1} and C\s{2} organic substances in SI units. \emph{J. Phys. Chem. Ref. Data} \bold{11} (supp. 2), 1--392. \url{https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf}
+Wagman DD, Evans WH, Parker VB, Schumm RH, Halow I, Bailey SM, Churney KL, Nuttall RL. 1982. The NBS tables of chemical thermodynamic properties. Selected values for inorganic and C\s{1} and C\s{2} organic substances in SI units. \emph{J Phys Chem Ref Data} \bold{11}(supp. 2): 1--392. \url{https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf}
 }
 
 \concept{Thermodynamic data}
