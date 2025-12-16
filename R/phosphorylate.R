@@ -237,17 +237,13 @@ phospho_plot <- function(reactant, P_source) {
   res <- 50
 
   # Define which contour levels to show
-  levels <- c(-1e6, seq(-100, -20, 10), seq(-15, 15, 5), seq(20, 100, 10), 1e6)
-  # Use solid lines for 10s and dashed lines for 5s
-  lty <- ifelse(levels %% 10 == 0, 1, 2)
+  levels <- c(-1e6, seq(-100, 100, 10), 1e6)
   # Use thick line for 0
   lwd <- ifelse(levels == 0, 2, 1)
   # Use shades of blue for exergonic, white for endergonic
   # Take away the 2 lightest and 1 darkest shades for better readability
   blues <- hcl.colors(14, "Blues")[2:12]
-  # Repeat colors so breaks at 5s don't change color
-  blues <- c(blues[1:9], rep(blues[10:11], each = 2))
-  col <- c(blues, rep("#FFFFFF", 13))
+  col <- c(blues, rep("#FFFFFF", 11))
 
   # Use the top row (panel 7) for the reaction label
   top <- t(matrix(rep(7, 3)))
@@ -322,7 +318,7 @@ phospho_plot <- function(reactant, P_source) {
       # Add color image
       image(a$vals$pH, a$vals[[yvar]], G.kJ, col = col, breaks = levels, add = TRUE)
       # Add contour lines
-      contour(a$vals$pH, a$vals[[yvar]], G.kJ, levels = levels, labcex = 0.9, add = TRUE, method = method, lty = lty, lwd = lwd)
+      contour(a$vals$pH, a$vals[[yvar]], G.kJ, levels = levels, labcex = 0.9, add = TRUE, method = method, lwd = lwd)
 
       # Replot tick marks
       thermo.axis()
@@ -331,8 +327,11 @@ phospho_plot <- function(reactant, P_source) {
       legend(legend.x, legend.expr, bty = "n")
       # Replot border
       box()
-      # Add title - use e.g. adenosine instead of adenosine_to_AMP
+      # Add title
+      # Use e.g. adenosine instead of adenosine_to_AMP
       short_reactant <- strsplit(reactant, "_")[[1]][1]
+      # Change pyruvic acid to pyruvate
+      short_reactant[short_reactant == "pyruvic acid"] <- "pyruvate"
       main <- bquote(log~italic(a)[.(short_reactant)]==.(loga_reactant))
       title(main, cex.main = 1.3)
       # Add panel label - outside x range
