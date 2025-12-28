@@ -1,8 +1,9 @@
 # Calculate affinity of phosphorylation reactions taking account of speciation
 # 20251206 first version (extracted from sugars paper script) jmd
 # 20251208 add phospho_plot()
+# 20251224 add Mg species
 
-phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 0, loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, ...) {
+phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 0, loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, loga_Mg = -999, ...) {
 
   # Affinity is calculated by summing:
   # 1) reactant + P = product + H2O (m1) 
@@ -34,7 +35,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
   if(reactant == "acetic acid") {
     # Basic reaction: acetic acid + P = acetylphosphate + H2O
     # Load initial species for mosaic reaction (uncharged species)
-    basis(c("acetic acid", "H3PO4", "acetylphosphate0", "O2", "H+"))
+    basis(c("acetic acid", "H3PO4", "acetylphosphate0", "O2", "H+", "Mg+2"))
     # The basis species we will speciate using mosaic()
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
@@ -43,75 +44,75 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
     )
   } else if(reactant == "glycerol") {
     # Basic reaction: glycerol + P = 1-glycerolphosphate + H2O
-    basis(c("glycerol", "H3PO4", "3-phosphoglycerol", "O2", "H+"))
+    basis(c("glycerol", "H3PO4", "3-phosphoglycerol", "O2", "H+", "Mg+2"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
       c("3-phosphoglycerol", "3-phosphoglycerol-1", "3-phosphoglycerol-2")
     )
   } else if(reactant == "adenosine_to_AMP") {
     # Basic reaction: adenosine + P = AMP + H2O
-    basis(c("adenosine", "H3PO4", "H2AMP", "N2", "O2", "H+"))
+    basis(c("adenosine", "H3PO4", "H2AMP", "N2", "O2", "H+", "Mg+2"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
-      c("H2AMP", "HAMP-", "AMP-2")
+      c("H2AMP", "HAMP-", "AMP-2", "MgAMP")
     )
   } else if(reactant == "adenosine_for_RNA") {
     # Basic reaction: adenosine + P = AMP + H2O
     # To reproduce calculations from LaRowe and Dick (2025):
     # PO4-3 is not included because monophosphate nucleotides can't have a -3 charge 20250426
     # AMP-2 is not included because the repeating unit in RNA can't have this charge 20250424
-    basis(c("adenosine", "H3PO4", "H2AMP", "N2", "O2", "H+"))
+    basis(c("adenosine", "H3PO4", "H2AMP", "N2", "O2", "H+", "Mg+2"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2"),
       c("H2AMP", "HAMP-")
     )
   } else if(reactant == "adenosine_to_cAMP") {
     # Basic reaction: adenosine + P = cAMP + H2O
-    basis(c("adenosine", "H3PO4", "cyclic-HAMP", "N2", "O2", "H+"))
+    basis(c("adenosine", "H3PO4", "cyclic-HAMP", "N2", "O2", "H+", "Mg+2"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
       c("cyclic-HAMP", "cyclic-AMP-1")
     )
   } else if(reactant == "ribose") {
     # Basic reaction: ribose + P = ribose-5-phosphate + H2O
-    basis(c("ribose", "H3PO4", "ribose-5-phosphate", "O2", "H+"))
+    basis(c("ribose", "H3PO4", "ribose-5-phosphate", "O2", "H+", "Mg+2"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
       c("ribose-5-phosphate", "ribose-5-phosphate-1", "ribose-5-phosphate-2")
     )
   } else if(reactant == "uridine") {
     # Basic reaction: uridine + P = UMP + H2O
-    basis(c("uridine", "H3PO4", "H2UMP", "N2", "O2", "H+"))
+    basis(c("uridine", "H3PO4", "H2UMP", "N2", "O2", "H+", "Mg+2"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
       c("H2UMP", "HUMP-", "UMP-2")
     )
   } else if(reactant == "AMP") {
     # Basic reaction: AMP + P = ADP + H2O
-    basis(c("H2AMP", "H3PO4", "H3ADP", "N2", "O2", "H+"))
+    basis(c("H2AMP", "H3PO4", "H3ADP", "N2", "O2", "H+", "Mg+2"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
-      c("H2AMP", "HAMP-", "AMP-2"),
-      c("H3ADP", "H2ADP-", "HADP-2", "ADP-3")
+      c("H2AMP", "HAMP-", "AMP-2", "MgAMP"),
+      c("H3ADP", "H2ADP-", "HADP-2", "ADP-3", "Mg2ADP+", "MgHADP", "MgADP-")
     )
   } else if(reactant == "ADP") {
     # Basic reaction: ADP + P = ATP + H2O
-    basis(c("H3ADP", "H3PO4", "H4ATP", "N2", "O2", "H+"))
+    basis(c("H3ADP", "H3PO4", "H4ATP", "N2", "O2", "H+", "Mg+2"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
-      c("H3ADP", "H2ADP-", "HADP-2", "ADP-3"),
-      c("H4ATP", "H3ATP-", "H2ATP-2", "HATP-3", "ATP-4")
+      c("H3ADP", "H2ADP-", "HADP-2", "ADP-3", "Mg2ADP+", "MgHADP", "MgADP-"),
+      c("H4ATP", "H3ATP-", "H2ATP-2", "HATP-3", "ATP-4", "Mg2ATP", "MgH2ATP", "MgHATP-", "MgATP-2")
     )
   } else if(reactant == "glucose") {
     # Basic reaction: glucose + P = glucose-6-phosphate + H2O
-    basis(c("glucose", "H3PO4", "glucose-6-phosphate", "O2", "H+"))
+    basis(c("glucose", "H3PO4", "glucose-6-phosphate", "O2", "H+", "Mg+2"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
       c("glucose-6-phosphate", "glucose-6-phosphate-1", "glucose-6-phosphate-2")
     )
   } else if(reactant == "pyruvic acid") {
     # Basic reaction: pyruvic acid + P = phosphoenolpyruvate + H2O
-    basis(c("pyruvic acid", "H3PO4", "phosphoenolpyruvate", "O2", "H+"))
+    basis(c("pyruvic acid", "H3PO4", "phosphoenolpyruvate", "O2", "H+", "Mg+2"))
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
       c("pyruvic acid", "pyruvate"),
@@ -137,6 +138,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
   formula_product <- rownames(basis())[3]
   basis(formula_product, loga_product)
   basis("pH", const_pH)
+  basis("Mg+2", loga_Mg)
   # This is used for changing the activity of the reactant
   formula_reactant <- rownames(basis())[1]
   basis(formula_reactant, loga_reactant)
@@ -164,7 +166,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
     # Mosaic for opposite of reaction 2:
     if(P_source == "PP") {
       # Form H2O from H4P2O7 and H3PO4
-      basis(c("H4P2O7", "H3PO4", "O2", "H+"))
+      basis(c("H4P2O7", "H3PO4", "O2", "H+", "Mg+2"))
       basis("H4P2O7", loga_P_source)
       basis("H3PO4", loga_P_remainder)
       bases <- list(
@@ -173,7 +175,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
       )
     } else if(P_source == "acetylphosphate") {
       # Form H2O from acetylphosphate and acetic acid
-      basis(c("acetylphosphate0", "acetic acid", "H3PO4", "O2", "H+"))
+      basis(c("acetylphosphate0", "acetic acid", "H3PO4", "O2", "H+", "Mg+2"))
       basis("C2H5O5P", loga_P_source)
       basis("C2H4O2", loga_P_remainder)
       bases <- list(
@@ -183,17 +185,18 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
       )
     } else if(P_source == "ATP") {
       # Form H2O from ADP and ATP
-      basis(c("H4ATP", "H3ADP", "H3PO4", "N2", "O2", "H+"))
+      basis(c("H4ATP", "H3ADP", "H3PO4", "N2", "O2", "H+", "Mg+2"))
       basis("C10H16N5O13P3", loga_P_source)
       basis("C10H15N5O10P2", loga_P_remainder)
       bases <- list(
-        c("H4ATP", "H3ATP-", "H2ATP-2", "HATP-3", "ATP-4"),
-        c("H3ADP", "H2ADP-", "HADP-2", "ADP-3"),
+        c("H4ATP", "H3ATP-", "H2ATP-2", "HATP-3", "ATP-4", "Mg2ATP", "MgH2ATP", "MgHATP-", "MgATP-2"),
+        c("H3ADP", "H2ADP-", "HADP-2", "ADP-3", "Mg2ADP+", "MgHADP", "MgADP-"),
         c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3")
       )
     }
-    species("H2O")
     basis("pH", const_pH)
+    basis("Mg+2", loga_Mg)
+    species("H2O")
     # Use the bases defined above and take the other arguments (e.g. pH, T, and P) from m1
     m_args <- m1$args
     m_args[["bases"]] <- bases
@@ -215,7 +218,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
 } # end of phosphorylate()
 
 # Define a function to make the plots for a given reaction
-phospho_plot <- function(reactant, P_source) {
+phospho_plot <- function(reactant, P_source, loga_Mg = -999) {
 
   # Reaction-independent settings (activities of species)
   # The product (phosphorylated species)
@@ -268,7 +271,7 @@ phospho_plot <- function(reactant, P_source) {
       # Perform calculations and define diagram settings for temperature or pressure
       if(yvar == "T") {
         # Calculate affinity of forming product from predominant basis species as a function of pH and temperature
-        result <- phosphorylate(reactant, P_source, loga_reactant, loga_product, loga_P_source, loga_P_remainder, pH = c(pH, res), T = c(T, res))
+        result <- phosphorylate(reactant, P_source, loga_reactant, loga_product, loga_P_source, loga_P_remainder, pH = c(pH, res), T = c(T, res), loga_Mg = loga_Mg)
         # Method for labeling contour lines
         method <- "flattest"
         # Legend placement, space, and expression
@@ -280,7 +283,7 @@ phospho_plot <- function(reactant, P_source) {
       }
       if(yvar == "P") {
         # Use P_source=P_source to avoid argument collision with 'P' (pressure)
-        result <- phosphorylate(reactant, P_source=P_source, loga_reactant, loga_product, loga_P_source, loga_P_remainder, pH = c(pH, res), P = c(P, res))
+        result <- phosphorylate(reactant, P_source=P_source, loga_reactant, loga_product, loga_P_source, loga_P_remainder, pH = c(pH, res), P = c(P, res), loga_Mg = loga_Mg)
         method <- "edge"
         legend.x <- "bottomright"
         legend.space <- "      "
@@ -386,6 +389,8 @@ phospho_plot <- function(reactant, P_source) {
   for(i in iname) reaction$name[i] <- hyphen.in.pdf(reaction$name[i])
   # Get expression for reaction 
   reaction_expr <- describe.reaction(reaction, iname = iname)
+  # Add loga_Mg if given
+  if(!missing(loga_Mg)) reaction_expr <- bquote(.(reaction_expr) ~ "(" * log ~ italic(a) * Mg^"+2" == .(loga_Mg) * ")")
   # Add reaction to plot
   opar <- par(mar = c(0, 0, 0, 0))
   plot.new()
@@ -393,7 +398,7 @@ phospho_plot <- function(reactant, P_source) {
   par(opar)
 
   # After we're done with the plot, calculate standard transformed Gibbs energy (ΔG°') at pH 7
-  result <- phosphorylate(reactant, P_source, const_pH = 7)
+  result <- phosphorylate(reactant, P_source, const_pH = 7, loga_Mg = loga_Mg)
   # The affinity of the overall reaction
   A <- result$a12
   # Convert to Delta G

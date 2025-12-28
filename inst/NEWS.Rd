@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-11 (2025-12-09)}{
+\section{Changes in CHNOSZ version 2.2.0-13 (2025-12-28)}{
 
     \itemize{
 
@@ -32,7 +32,7 @@
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
 
       \item Add \code{phosphorylate()} to calculate affinity of phosphorylation
-      reactions with pH-dependent speciation.
+      reactions with pH-dependent speciation, including Mg-complexed species.
 
       \item Add \code{hyphen.in.pdf()} for replacing minus signs with
       hyphens in text added to PDF plots.
@@ -40,6 +40,8 @@
       \item Use \href{https://online.ucpress.edu/elementa}{Elementa} reference
       style (like \href{https://www.csemanual.org}{CSE} name-year style but all
       authors are listed) in Rd files.
+
+      \item Add colors to \code{demo/NaCl.R}.
 
     }
 

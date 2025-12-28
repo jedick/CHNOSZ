@@ -8,8 +8,8 @@
 
 \usage{
 phosphorylate(reactant, P_source, loga_reactant = 0, loga_product = 0, 
-                loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, ...)
-phospho_plot(reactant, P_source)
+  loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, loga_Mg = -999, ...)
+phospho_plot(reactant, P_source, loga_Mg = -999)
 }
 \arguments{
   \item{reactant}{
@@ -20,11 +20,12 @@ phospho_plot(reactant, P_source)
     character, the source of phosphate.
     Use \code{"P"} for basic reactions with inorganic phosphate,
     or \code{"PP"}, \code{"acetylphosphate"}, or \code{"ATP"} for extended reactions with other phosphate donors.}
-  \item{loga_reactant}{numeric, logarithm of activity of the reactant. Default: 0}
-  \item{loga_product}{numeric, logarithm of activity of the product. Default: 0}
-  \item{loga_P_source}{numeric, logarithm of activity of the phosphate source. Default: 0}
-  \item{loga_P_remainder}{numeric, logarithm of activity of the phosphate remainder (e.g., Pi when PP is the source). Default: 0}
-  \item{const_pH}{numeric, pH value for the calculation. Default: 7}
+  \item{loga_reactant}{numeric, logarithm of activity of the reactant.}
+  \item{loga_product}{numeric, logarithm of activity of the product.}
+  \item{loga_P_source}{numeric, logarithm of activity of the phosphate source.}
+  \item{loga_P_remainder}{numeric, logarithm of activity of the phosphate remainder (e.g., Pi when PP is the source).}
+  \item{const_pH}{numeric, pH value for the calculation.}
+  \item{loga_Mg}{numeric, logarithm of activity of Mg\S{+2}. With the default of -999, effectively no Mg-complexed species are formed.}
   \item{\dots}{
     additional arguments passed to \code{\link{mosaic}},
     such as \code{pH}, \code{T} (temperature), or \code{P} (pressure) ranges for multi-dimensional calculations.}
