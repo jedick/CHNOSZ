@@ -6,7 +6,7 @@
 library(CHNOSZ)
 
 # Define temperature (degrees C), pressure (bar), grid resolution
-res <- 500
+res <- 400
 T <- 25
 P <- 1
 # Change this to FALSE to make sharp transitions between the basis species,
@@ -24,7 +24,7 @@ species(c(iaq, icr))
 species(1:length(iaq), -5)
 
 # The possible S-bearing basis species
-bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 # Calculate affinties of formation reactions using the speciated S basis species
 m <- mosaic(bases, pH = c(0, 14, res), Eh = c(-0.8, 0.8, res), T = T, P = 1, blend = blend)
 # Adjust name of realgar

@@ -64,7 +64,7 @@ A list of length two containing the output of each of the \code{\link{diagram}} 
 # Define temperature (degrees C), pressure (bar), pH and logfO2 ranges
 T <- 200
 P <- "Psat"
-res <- 200
+res <- 150
 pH <- c(0, 14, res)
 O2 <- c(-48, -33, res)
 
@@ -78,7 +78,7 @@ NaCl <- NaCl(m_NaCl = 1, T = T, P = P)
 basis("Cl-", log10(NaCl$m_Clminus))
 
 # Define arguments for stack_mosaic: Speciate aqueous sulfur
-bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 # Calculate stabilities of Fe-bearing minerals first
 species1 <- c("pyrite", "pyrrhotite", "magnetite", "hematite")
 # Calculate stabilities of Cu-bearing and FeCu-bearing minerals second

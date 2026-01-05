@@ -258,7 +258,7 @@ The `affinity()` function calculates chemical affinities over ranges of *T*, *P*
 # Setup the C-H-N-O-S basis system with electron
 basis("CHNOSe")
 # Define aqueous sulfur species
-species(c("SO4-2", "HSO4-", "HS-", "H2S"))
+species(c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2"))
 # Calculate affinities on an Eh-pH grid
 a <- affinity(pH = c(0, 14), Eh = c(-0.8, 1.2))
 # Create an Eh-pH (Pourbaix) diagram
@@ -280,7 +280,7 @@ basis("H2S", -6)
 basis("Cl-", -1)
 species(c("CuCl", "CuCl2-", "CuCl3-2", "CuCl+", "CuCl2", "CuCl3-", "CuCl4-2"))
 species(c("chalcocite", "tenorite", "cuprite", "copper"), add = TRUE)
-bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 m <- mosaic(bases, pH = c(0, 12), Eh = c(-1, 1), T = 200)
 a <- m$A.species
 diagram(a, lwd = 2, bold = species()$state == "cr")
@@ -434,7 +434,7 @@ basis(c(metal, "H2S", "Cl-", "oxygen", "H2O", "H+"))
 basis("H2S", log10(Stot))
 basis("Cl-", log10(m_Clminus))
 # Define basis species to swap through for mosaic calculation
-bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 
 # Get minerals and aqueous species
 icr <- info(c("hematite", "magnetite", "pyrite", "pyrrhotite"))
@@ -802,7 +802,7 @@ basis(c(metal, "H2S", "Cl-", "oxygen", "H2O", "H+"))
 basis("H2S", log10(Stot))
 basis("Cl-", log10(m_Clminus))
 # Define basis species to swap through for mosaic calculation
-bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 
 # Get minerals and aqueous species
 icr <- retrieve(metal, c("Cl", "S", "O", "H"), state = "cr")
@@ -1440,7 +1440,7 @@ basis("H2S", log_aH2S)
 # Load aqueous species for relative stability calculation
 species(iaq)
 # Define basis species to swap through for mosaic calculation
-bases <- c("H2S", "HS-", "SO4-2", "HSO4-")
+bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 m <- mosaic(bases = bases, pH = c(2, 8), O2 = c(-32, -24), T = T_fixed, P = P)
 a <- m$A.species
 fill <- adjustcolor(col, alpha.f = 0.5)

@@ -79,7 +79,7 @@ This is done so that hyphens don't get displayed as minus signs in R graphics ou
 
 \examples{
 basis(c("H2S", "H2O", "H+", "e-"))
-species(c("HS-", "H2S", "HSO4-", "SO4-2"))
+species(c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2"))
 a <- affinity(pH = c(0, 12), Eh = c(-1, 1), T = 200)
 opar <- par(mfrow = c(2, 2))
 diagram(a, grid = "both")

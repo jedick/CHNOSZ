@@ -569,7 +569,7 @@ logm_S <- log10(molality_S)
 
 ## BLOCK 3
 basis(c("Ni", "SiO2", "Fe2O3", "H2S", "H2O", "oxygen", "H+"))
-species(c("H2S", "HS-", "SO2", "HSO4-", "SO4-2", "S3-"))
+species(c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2"))
 a <- affinity(pH = c(2, 10, res), O2 = c(-34, -22, res), T = T, P = P)
 e <- equilibrate(a, loga.balance = logm_S)
 diagram(e)
@@ -692,7 +692,7 @@ At the end, reset the water model and OBIGT database.
 # The first four lines are stand-ins to make this block runnable and get the right output from info();
 # the diagram actually shown in the vignette is made using the 'trisulfur' block above
 b <- basis("CHNOS+")
-s <- species(c("H2S", "HS-", "SO2", "HSO4-", "SO4-2", "S3-"))
+s <- species(c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2"))
 res <- 10
 wt_percent_S <- logm_S <- 0
 ######## End of stand-in code ########
@@ -966,11 +966,11 @@ An example of one is in Figure 5 of @CBLM00.
 The code below makes a diagram for the minerals shown in that figure:
 
 ```{r Fe-S-O-C, message = FALSE, results = "hide", fig.width = 5, fig.height = 5, out.width = "60%", fig.align = "center", pngquant = pngquant, cache = TRUE}
-basis(c("FeO", "SO4-2", "CO3-2", "H2O", "H+", "oxygen"))
-basis("SO4-2", -3)
+basis(c("FeO", "H2S", "CO3-2", "H2O", "H+", "oxygen"))
+basis("H2S", -3)
 basis("CO3-2", -0.6)
 species(c("hematite", "pyrite", "pyrrhotite", "magnetite", "siderite"))
-bases <- list( c("SO4-2", "HSO4-", "HS-", "H2S"), c("CO3-2", "HCO3-", "CO2") )
+bases <- list( c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2"), c("CO3-2", "HCO3-", "CO2") )
 m <- mosaic(bases, pH = c(0, 14, 500), O2 = c(-57, -35, 500), T = 150, IS = 0.77)
 d <- diagram(m$A.species, fill = "terrain", dx = c(0, 0, 0, 0, 0.3))
 water.lines(d)

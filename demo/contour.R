@@ -10,7 +10,7 @@
 library(CHNOSZ)
 
 # Define plot resolution
-res <- 600
+res <- 300
 # Define temperature (degrees C), pressure (bar)
 T <- 250
 P <- 300
@@ -39,7 +39,7 @@ for(i in 1:2) {
   NaCl <- NaCl(m_NaCl = m_NaCl, T = T, P = P)
   basis("Cl-", log10(NaCl$m_Clminus))
   # Calculate affinity with changing basis species across diagram
-  bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+  bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
   m <- mosaic(bases, pH = c(pH, res), O2 = c(O2, res), T = T, P = P, IS = NaCl$IS, blend = blend)
   # Show predominance fields for S-species
   diagram(m$A.bases, col = 8, col.names = 8, lty = 3, italic = TRUE)

@@ -29,7 +29,7 @@ basis("Cl-", log10(NaCl$m_Clminus))
 species(c("pyrrhotite", "pyrite", "hematite", "magnetite"))
 
 # List basis species to swap through
-bases <- list( c("SO4-2", "HSO4-", "HS-", "H2S") )
+bases <- list( c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2") )
 # Calculate mosaic for Fe minerals
 m <- mosaic(bases, "SO4-2" = loga_S, O2 = logf_O2, T = T, P = P, IS = IS)
 

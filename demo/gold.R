@@ -23,7 +23,7 @@ col <- c("#ED4037", "#F58645", "#0F9DE2", "#22CC88")
 
 # Sulfur logfO2-pH diagrams showing redox and pH buffers at four temperatures 20181031
 sulfur <- function() {
-  species(c("H2S", "HS-", "HSO4-", "SO4-2"))
+  species(c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2"))
   T <- c(200, 300, 400, 500)
   P <- 1000
   O2min <- c(-50, -40, -30, -25)
@@ -157,7 +157,7 @@ Au_T2 <- function() {
   iaq <- info(c("Au(HS)2-", "AuHS", "AuOH", "AuCl2-"))
   s <- solubility(iaq, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Clminus), `K+` = log10(chl$m_Kplus), P = 1000, IS = chl$IS)
 #  # Uncomment to calculate solubility considering speciation of sulfur
-#  bases <- c("H2S", "HS-", "SO4-2", "HSO4-")
+#  bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 #  s <- solubility(iaq, bases = bases, T = seq(150, 550, 10), `Cl-` = log10(chl$m_Clminus), `K+` = log10(chl$m_Kplus), P = 1000, IS = chl$IS)
   # Make diagram and show total log molality
   diagram(s, type = "loga.equil", ylim = c(-10, -3), col = col, lwd = 2, lty = 1)

@@ -66,33 +66,35 @@ To calculate mineral solubilities with mosaic calculations that account for liga
 
 \examples{
 \dontshow{reset()}# Fe-minerals and aqueous species in Fe-S-O-H system
-# Speciate SO4-2, HSO4-, HS-, and H2S as a function of Eh and pH
+# Account for aqueous S speciation as a function of Eh and pH
 # After Garrels and Christ, 1965 Figure 7.20
 pH <- c(0, 14)
 Eh <- c(-1, 1)
 T <- 25
-basis(c("FeO", "SO4-2", "H2O", "H+", "e-"))
-basis("SO4-2", -6)
+basis(c("FeO", "H2S", "H2O", "H+", "e-"))
+basis("H2S", -6)
 species(c("Fe+2", "Fe+3"), -6)
 species(c("pyrrhotite", "pyrite", "hematite", "magnetite"), add = TRUE)
 # The basis species we'll swap through
-bases <- c("SO4-2", "HSO4-", "HS-", "H2S")
+bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 # Calculate affinities using the relative abundances of the basis species
 # NOTE: set blend = FALSE for sharp transitions between the basis species
 # (looks more like the diagram in GC65)
-m1 <- mosaic(bases, pH = pH, Eh = Eh, T = T)
+res <- 120
+m1 <- mosaic(bases, pH = c(pH, res), Eh = c(Eh, res), T = T)
 # Make a diagram and add water stability lines
-d <- diagram(m1$A.species, lwd = 2)
+col <- ifelse(species()$state == "aq", 4, 1)
+d <- diagram(m1$A.species, lwd = 2, col = col, col.names = col)
 water.lines(d, col = "seagreen", lwd = 1.5)
 # Show lines for Fe(aq) = 10^-4 M
 species(c("Fe+2", "Fe+3"), -4)
 m2 <- mosaic(bases, pH = pH, Eh = Eh, T = T)
-diagram(m2$A.species, add = TRUE, names = FALSE)
+diagram(m2$A.species, add = TRUE, names = FALSE, fill = NA)
 title(main=paste("Iron oxides and sulfides in water, log(total S) = -6",
   "After Garrels and Christ, 1965", sep="\n"))
 legend("bottomleft", c("log(act_Fe) = -4", "log(act_Fe) = -6"), lwd = c(2, 1), bty = "n")
-# We could overlay the predominance fields for the basis species
-#diagram(m1$A.bases, add = TRUE, col = "blue", col.names = "blue", lty = 3)
+# Overlay the predominance fields for the basis species
+diagram(m1$A.bases, add = TRUE, col = 8, col.names = 8, lty = 3)
 }
 
 \references{

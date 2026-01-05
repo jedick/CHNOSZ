@@ -38,7 +38,7 @@ species(icr)
 species(iaq, logm_metal, add = TRUE)
 
 # Calculate affinities and make diagram
-bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 m <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = NaCl$IS)
 d <- diagram(m$A.species, bold = TRUE)
 diagram(m$A.bases, add = TRUE, col = 8, col.names = 8, lty = 3, italic = TRUE)

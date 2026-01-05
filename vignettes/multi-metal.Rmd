@@ -134,7 +134,7 @@ basis("CHNOS+")
 species(c("CH4", "CO2", "HCO3-", "CO3-2"))
 aC <- affinity(pH = c(0, 14), O2 = c(-75, -60))
 dC <- diagram(aC, dx = c(0, 1, 0, 0), dy = c(0, 1, 0, 0))
-species(c("H2S", "HS-", "HSO4-", "SO4-2"))
+species(c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2"))
 aS <- affinity(aC)  # argument recall
 dS <- diagram(aS, add = TRUE, col = 4, col.names = 4, dx = c(0, -0.5, 0, 0))
 aCS <- mash(dC, dS)
