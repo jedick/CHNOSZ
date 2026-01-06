@@ -78,7 +78,9 @@ NaCl <- NaCl(m_NaCl = 1, T = T, P = P)
 basis("Cl-", log10(NaCl$m_Clminus))
 
 # Define arguments for stack_mosaic: Speciate aqueous sulfur
-bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "SO2", "HSO4-", "SO4-2")
+# Uncomment to include the trisulfur radical ion (slower)
+# bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 # Calculate stabilities of Fe-bearing minerals first
 species1 <- c("pyrite", "pyrrhotite", "magnetite", "hematite")
 # Calculate stabilities of Cu-bearing and FeCu-bearing minerals second

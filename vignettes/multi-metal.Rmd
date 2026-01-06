@@ -134,7 +134,9 @@ basis("CHNOS+")
 species(c("CH4", "CO2", "HCO3-", "CO3-2"))
 aC <- affinity(pH = c(0, 14), O2 = c(-75, -60))
 dC <- diagram(aC, dx = c(0, 1, 0, 0), dy = c(0, 1, 0, 0))
-species(c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2"))
+species(c("H2S", "HS-", "SO2", "HSO4-", "SO4-2"))
+# Uncomment to include the trisulfur radical ion (slower)
+# species(c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2"))
 aS <- affinity(aC)  # argument recall
 dS <- diagram(aS, add = TRUE, col = 4, col.names = 4, dx = c(0, -0.5, 0, 0))
 aCS <- mash(dC, dS)
@@ -478,7 +480,9 @@ pH <- c(0, 14, res2)
 O2 <- c(-48, -33, res2)
 basis(c("Cu+", "pyrite", "H2S", "oxygen", "H2O", "H+"))
 basis("H2S", logaH2S)
-S.aq <- c("H2S", "HS-", "HSO4-", "SO4-2")
+S.aq <- c("H2S", "HS-", "SO2", "HSO4-", "SO4-2")
+# Uncomment to include the trisulfur radical ion (slower)
+# S.aq <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 Fe.cr <- c("pyrite", "pyrrhotite", "magnetite", "hematite")
 Fe.abbrv <- c("Py", "Po", "Mag", "Hem")
 ```
@@ -544,7 +548,9 @@ logmS <- -2
 m_NaCl <- 0.1
 logm_aq <- -6 # for both Fe- and Cu-bearing aq species
 # Basis species
-S.aq <- c("H2S", "HS-", "HSO4-", "SO4-2")
+S.aq <- c("H2S", "HS-", "SO2", "HSO4-", "SO4-2")
+# Uncomment to include the trisulfur radical ion (slower)
+# S.aq <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 # Minerals
 Fe.cr <- c("pyrite", "pyrrhotite", "magnetite", "hematite")
 Fe.abbrv <- c("Py", "Po", "Mag", "Hem")

@@ -434,7 +434,9 @@ basis(c(metal, "H2S", "Cl-", "oxygen", "H2O", "H+"))
 basis("H2S", log10(Stot))
 basis("Cl-", log10(m_Clminus))
 # Define basis species to swap through for mosaic calculation
-bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "SO2", "HSO4-", "SO4-2")
+# Uncomment to include the trisulfur radical ion (slower)
+# bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 
 # Get minerals and aqueous species
 icr <- info(c("hematite", "magnetite", "pyrite", "pyrrhotite"))
@@ -801,7 +803,9 @@ basis(c(metal, "H2S", "Cl-", "oxygen", "H2O", "H+"))
 basis("H2S", log10(Stot))
 basis("Cl-", log10(m_Clminus))
 # Define basis species to swap through for mosaic calculation
-bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "SO2", "HSO4-", "SO4-2")
+# Uncomment to include the trisulfur radical ion (slower)
+# bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 
 # Get minerals and aqueous species
 icr <- retrieve(metal, c("Cl", "S", "O", "H"), state = "cr")
@@ -1438,7 +1442,9 @@ basis("H2S", log_aH2S)
 # Load aqueous species for relative stability calculation
 species(iaq)
 # Define basis species to swap through for mosaic calculation
-bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "SO2", "HSO4-", "SO4-2")
+# Uncomment to include the trisulfur radical ion (slower)
+# bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 m <- mosaic(bases = bases, pH = c(2, 8), O2 = c(-32, -24), T = T_fixed, P = P)
 a <- m$A.species
 fill <- adjustcolor(col, alpha.f = 0.5)

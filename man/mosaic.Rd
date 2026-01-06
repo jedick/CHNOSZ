@@ -76,12 +76,13 @@ basis("H2S", -6)
 species(c("Fe+2", "Fe+3"), -6)
 species(c("pyrrhotite", "pyrite", "hematite", "magnetite"), add = TRUE)
 # The basis species we'll swap through
-bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
+bases <- c("H2S", "HS-", "SO2", "HSO4-", "SO4-2")
+# Uncomment to include the trisulfur radical ion (slower)
+# bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 # Calculate affinities using the relative abundances of the basis species
 # NOTE: set blend = FALSE for sharp transitions between the basis species
 # (looks more like the diagram in GC65)
-res <- 120
-m1 <- mosaic(bases, pH = c(pH, res), Eh = c(Eh, res), T = T)
+m1 <- mosaic(bases, pH = c(pH), Eh = c(Eh), T = T)
 # Make a diagram and add water stability lines
 col <- ifelse(species()$state == "aq", 4, 1)
 d <- diagram(m1$A.species, lwd = 2, col = col, col.names = col)
