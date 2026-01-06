@@ -6,7 +6,6 @@
 \alias{lT}
 \alias{lP}
 \alias{lTP}
-\alias{lex}
 \title{Functions to make legend text}
 \description{Generate expressions describing system conditions that can be added to legends of plots.}
 
@@ -16,14 +15,12 @@
   lT(x, digits = 0)
   lP(x, digits = 0)
   lTP(x, y, digits = 0)
-  lex(...)
 }
 
 \arguments{
   \item{x}{numeric, value of the property}
   \item{digits}{numeric, digits for rounding}
   \item{y}{numeric, value of pressure}
-  \item{...}{language, objects to combine in an expression}
 }
 
 \details{
@@ -31,9 +28,6 @@ These functions are used to make expressions for common chemical system variable
 \code{lNaCl} describe the molality of NaCl, and \code{lS} the total molality of sulfur.
 \code{lT} and \code{lP} describe the temperature and pressure.
 \code{lTP} describe the temperature and pressure together, separated by a comma.
-
-The above functions return language objects, which can be combined with \code{lex} to make an expression that when used in \code{\link{legend}} appears on multiple lines.
-
 }
 
 \seealso{
@@ -42,8 +36,8 @@ The above functions return language objects, which can be combined with \code{le
 
 \examples{
 plot.new()
-l <- lex(lTP(100, "Psat"), lNaCl(1), lS(1e-3))
-legend("center", l)
+l <- c(lTP(100, "Psat"), lNaCl(1), lS(1e-3))
+legend("center", legend = l)
 }
 
 \concept{Utility functions}

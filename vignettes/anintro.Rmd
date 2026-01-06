@@ -457,8 +457,7 @@ leg_list <- c(
   lNaCl(1.9),
   lS(Stot)
 )
-leg_expr <- lex(leg_list)
-legend("bottomleft", legend = leg_expr, bg = "white")
+legend("bottomleft", legend = leg_list, bg = "white")
 title("Total solubility is higher than quasisolubility", font.main = 1)
 
 ## Second plot: activities of aqueous species in solubility calculation
@@ -820,8 +819,7 @@ leg_list <- c(
   lNaCl(m_NaCl),
   lS(Stot)
 )
-leg_expr <- lex(leg_list)
-legend("topright", legend = leg_expr, bty = "n")
+legend("topright", legend = leg_list, bty = "n")
 
 # Make diagram for aqueous species
 species(iaq)

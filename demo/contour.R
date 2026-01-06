@@ -56,8 +56,8 @@ for(i in 1:2) {
   diagram(s, levels = c(1, 10, 100, 1000), col = 1, add = TRUE)
   # Add legend and title
   dP <- describe.property(c("T", "P"), c(T, P))
-  lexpr <- lex(dP, lNaCl(m_NaCl), lS(sum_S))
-  legend("topright", lexpr, bty = "n")
+  lexpr <- c(dP, lNaCl(m_NaCl), lS(sum_S))
+  legend("topright", legend = lexpr, bty = "n")
   if(i == 1) title(main = ("Gold solubility (ppb), after Ding et al., 2023 (default data)"), font.main = 1)
   if(i == 2) title(main = ("Gold solubility (ppb), after Ding et al., 2023 (optional data)"), font.main = 1)
 

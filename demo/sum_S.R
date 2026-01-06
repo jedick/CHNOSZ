@@ -5,7 +5,7 @@
 library(CHNOSZ)
 
 # Define conditions
-res <- 500
+res <- 300
 loga_S <- c(-6, 0, res)
 logf_O2 <- c(-45, -20, res)
 pH <- 5
@@ -22,7 +22,7 @@ IS <- NaCl$IS
 
 # Setup chemical system
 # Use oxygen instead of O2 to get the gas
-basis(c("Fe", "SO4-2", "oxygen", "H+", "Cl-", "H2O"))
+basis(c("Fe", "H2S", "oxygen", "H+", "Cl-", "H2O"))
 basis("pH", pH)
 basis("Cl-", log10(NaCl$m_Clminus))
 # Add minerals as formed species
@@ -31,7 +31,7 @@ species(c("pyrrhotite", "pyrite", "hematite", "magnetite"))
 # List basis species to swap through
 bases <- list( c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2") )
 # Calculate mosaic for Fe minerals
-m <- mosaic(bases, "SO4-2" = loga_S, O2 = logf_O2, T = T, P = P, IS = IS)
+m <- mosaic(bases, "H2S" = loga_S, O2 = logf_O2, T = T, P = P, IS = IS)
 
 # Loop over metals for solubility contours
 for(metal in c("Fe", "Au")) {
@@ -44,7 +44,7 @@ for(metal in c("Fe", "Au")) {
 
   if(metal == "Au") {
     # Put Au as the first basis species for solubility() calculation
-    basis(c("Au", "SO4-2", "oxygen", "H+", "Cl-", "H2O"))
+    basis(c("Au", "H2S", "oxygen", "H+", "Cl-", "H2O"))
     basis("pH", pH)
     # This is the species whose solubility we want to calculate
     species("Au")
@@ -60,7 +60,7 @@ for(metal in c("Fe", "Au")) {
     cols <- c(2, 2)
   }
   # Calculate solubility and convert log molality to ppb
-  s <- solubility(iaq, bases = bases, "SO4-2" = loga_S, O2 = logf_O2, T = T, P = P, IS = IS, in.terms.of = metal)
+  s <- solubility(iaq, bases = bases, "H2S" = loga_S, O2 = logf_O2, T = T, P = P, IS = IS, in.terms.of = metal)
   sp <- convert(s, "ppb")
   # Plot twice to get deeper colors
   for(col in cols) {
@@ -70,7 +70,7 @@ for(metal in c("Fe", "Au")) {
   # Add legend and title
   T_P <- describe.property(c("T", "P"), c(T, P))
   P_Cl <- c(bquote(pH == .(pH)), bquote(NaCl == .(m_NaCl)~mol~kg^-1))
-  legend <- lex(T_P, P_Cl)
+  legend <- c(T_P, P_Cl)
   legend("topright", legend, bty = "n")
   main <- paste("Fe minerals with summed aq species: S (x-axis) and ppb", metal, "(contours)")
   title(main, font.main = 1)

@@ -118,7 +118,7 @@ s2 <- solubility(iaq, O2 = c(-56, -46), T = 125, in.terms.of = "S")
 S_ <- expr.species("SO2", "gas", -20, TRUE)
 pH_ <- quote(pH == 6)
 T_ <- lT(125)
-lexpr <- lex(S_, pH_, T_)
+lexpr <- c(S_, pH_, T_)
 
 # Make diagrams from the results of solubility calculations
 layout(matrix(c(1, 3, 2, 3), nrow = 2))

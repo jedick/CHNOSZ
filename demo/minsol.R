@@ -52,7 +52,7 @@ l <- c(
   lNaCl(mNaCl),
   lS(Stot)
 )
-legend("topleft", legend = lex(l), bty = "n", cex = 1.5)
+legend("topleft", legend = l, bty = "n", cex = 1.5)
 # Describe steps
 par(xpd = NA)
 legend("bottomleft", c("Predominance diagram: molality of aqueous", "species defines one solubility contour.",

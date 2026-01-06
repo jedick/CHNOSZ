@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-14 (2026-01-05)}{
+\section{Changes in CHNOSZ version 2.2.0-15 (2026-01-06)}{
 
     \itemize{
 
@@ -46,6 +46,9 @@
       \item Add aqueous SO\s{2} and S\s{3}\S{-} to basis species for mosaic
       calculations in examples, demos, and vignettes. Thanks to Evgeniy
       Bastrakov for suggesting this change.
+
+      \item Remove \code{lex()}, which only wrapped its argument in
+      \code{as.expression(c())}.
 
     }
 

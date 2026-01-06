@@ -993,7 +993,7 @@ title(bquote("Fe and/or Cu; 2° balance:" ~ .(expr.species("H+"))))
 label.plot("E")
 
 db <- describe.basis(3)
-leg <- lex(lTP(400, 2000), db)
+leg <- c(lTP(400, 2000), db)
 legend("bottomleft", legend = leg, bty = "n")
 ```
 </div>

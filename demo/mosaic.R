@@ -76,15 +76,13 @@ SC <- c(
   bquote(sum("S(aq)") == 10^.(loga_S)~m),
   bquote(sum("C(aq)") == 10^.(loga_C)~m)
 )
-legend1 <- lex(TP, SC)
-legend("topright", legend1, bty = "n")
+legend("topright", legend = c(TP, SC), bty = "n")
 
 Fe <- c(
   bquote(10^-4~"m Fe"),
   bquote(10^-6~"m Fe")
 )
-legend2 <- lex(Fe)
-legend("bottomleft", legend2, lty = c(3, 1), bty = "n")
+legend("bottomleft", legend = Fe, lty = c(3, 1), bty = "n")
 
 title(main = paste("Iron oxides, sulfides, and carbonate in water,",
   "after Garrels and Christ, 1965, Figure 7.21", sep = "\n"), font.main = 1)

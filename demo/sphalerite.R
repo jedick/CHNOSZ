@@ -32,7 +32,7 @@ plotfun <- function(T = 400, P = 500, m_NaCl = 0.1, pHmin = 4, logppmmax = 3) {
   abline(v = pKw / 2, lty = 2, lwd = 2, col = "blue1")
 
   # Add legend
-  l <- lex(lNaCl(m_NaCl), lTP(T, P))
+  l <- c(lNaCl(m_NaCl), lTP(T, P))
   legend("topright", legend = l, bty = "n")
 }
 
