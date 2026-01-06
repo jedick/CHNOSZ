@@ -16,12 +16,6 @@
 *** Abandoned:  8 November 1991
 ***
 ***********************************************************************
-***
-*** NOTE: Unused code paths in CHNOSZ were removed by jmd on 2026-01-06
-*** - See also previous changes in comments by jmd
-*** The original version of this file is in the inst/src directory
-***   of the CHNOSZ repo on GitHub.
-***
 *
 *   specs  - Input unit, triple point, saturation, and option specs:
 *
@@ -93,7 +87,15 @@
       END IF
 
 
-      IF (.NOT. useLVS) THEN
+      IF (useLVS) THEN
+           Dens(1) = states(3)
+           CALL LVSeqn(specs(6),specs(7),specs(5),
+     1                 states(1),states(2),Dens,specs(9))
+           Dens(1) = Dens(1) / 1.0d3
+           IF (specs(6) .EQ. 1) THEN
+                Dens(2) = Dens(2) / 1.0d3
+           END IF
+      ELSE
            Dens(1) = states(3) / 1.0d3
            CALL HGKeqn(specs(6),specs(7),specs(5),
      1                 states(1),states(2),Dens,specs(9))
@@ -249,7 +251,7 @@
       RETURN
       END
 
-*****************************************************************
+************************************************************************
 
 *** HGKcon - Constant parameters for the H2O equation of state 
 *            given by  Haar, Gallagher, & Kell (1984): 
@@ -523,7 +525,14 @@
                      IF (llim .AND. ulim) THEN
                           crtreg = .TRUE.
                      ELSE
-                          crtreg = .FALSE.
+                          IF (llim .AND. (T .LE. Tmin2)) THEN
+                               isat1 = 1
+                               ddummy = 0.0d0
+                               Pstest = Pfind(isat1,T,ddummy)
+                               crtreg = (P .LE. Pstest)
+                          ELSE
+                               crtreg = .FALSE.
+                          END IF
                      END IF
                 END IF
            END IF
@@ -1390,6 +1399,1044 @@
       RETURN
       END
 
+***************************************************************
+
+*** LVSeqn - Computes thermodynamic and transport properties of 
+*            critical region H2O (369.85-419.85 degC, 
+*            0.20-0.42 gm/cm3) from the fundamental equation given 
+*            by Levelt Sengers, et al (1983): J.Phys.Chem.Ref.Data,
+*            V.12, No.1, pp.1-28.
+
+      SUBROUTINE LVSeqn(isat,iopt,itripl,T,P,Dens,epseqn)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      PARAMETER (NPROP = 23)
+
+      DOUBLE PRECISION  wprops(NPROP), wpliq(NPROP), Dens(2)
+      LOGICAL           cpoint
+      INTEGER           epseqn
+
+      COMMON /coefs/  a(20), q(20), x(11)
+      COMMON /crits/  Tc, rhoc, Pc, Pcon, Ucon, Scon, dPcon
+      COMMON /therm/  AE, GE, U, H, Entrop, Cp, Cv, betaw, alphw,
+     1                heat, Speed
+      COMMON /satur/  Dliq, Dvap, DH2O, iphase
+      COMMON /param/  r1, th1
+      COMMON /units/  ft, fd, fvd, fvk, fs, fp, fh, fst, fc
+      COMMON /wpvals/ wprops, wpliq
+
+      SAVE
+
+
+      cpoint = .FALSE.
+      DH2O = Dens(1)
+
+ 10   CALL LVSsat(iopt,isat,T,P,DH2O)
+
+      IF ((isat .NE. 0) .OR. (iopt .NE. 1))  CALL denLVS(isat,T,P)
+
+      IF (isat .EQ. 0) THEN
+           Dens(1) = DH2O
+      ELSE
+           Dens(1) = Dliq
+           Dens(2) = Dvap
+      END IF
+                 
+      IF (isat .EQ. 0) THEN
+           CALL thmLVS(isat,T,r1,th1)
+           CALL dimLVS(isat,itripl,th1,T,P*1.0d1,dl,dv,wprops,epseqn)
+      ELSE
+           th1 = -1.0d0
+           CALL thmLVS(isat,T,r1,th1)
+           CALL dimLVS(isat,itripl,th1,T,P*1.0d1,dl,dv,wprops,epseqn)
+           th1 =  1.0d0
+           CALL thmLVS(isat,T,r1,th1)
+           CALL dimLVS(isat,itripl,th1,T,P*1.0d1,dl,dv,wpliq,epseqn)
+           IF (dl .EQ. dv) THEN
+                cpoint = .TRUE.
+                cdens = dl
+                T = 647.0670000003d0
+                P =  22.0460000008d0
+                ioptsv = iopt
+                iopt = 2
+                isat = 0
+                GO TO 10 
+           END IF
+      END IF
+
+      END
+
+*********************************************************************
+
+*** LVSsat - If  isat=1,  computes  Psat(T) or Tsat(P) (iopt=1,2).
+*            If  isat=0,  checks whether  T-D or T-P (iopt=1,2)
+*            falls on or within  TOL  of the liq-vap surface; if so,
+*            isat <- 1  and  T <- Tsat.
+
+      SUBROUTINE LVSsat(iopt,isat,T,P,D)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      COMMON /tolers/ TTOL, PTOL, DTOL, XTOL, EXPTOL, FPTOL
+      COMMON /crits/  Tc, rhoc, Pc, Pcon, Ucon, Scon, dPcon
+
+      SAVE
+
+      DATA ERRTOL, TCTOL / 1.0d-12, 1.0d-2 /
+
+
+      IF (isat .EQ. 1) THEN
+           IF (iopt .EQ. 1) THEN
+                P = Pfind(isat,T,D)
+           END IF
+           T = TsLVS(isat,P)
+      ELSE
+           IF (iopt .EQ. 1) THEN
+                P = Pfind(isat,T,D)
+           END IF
+           IF (P-ERRTOL .GT. Pc) THEN
+                RETURN
+           ELSE
+                CALL backup
+                Tsat = TsLVS(isat,P)
+                IF (DABS(Tsat-T) .LT. TCTOL) THEN
+                     T = Tsat
+                     isat = 1
+                ELSE
+                     CALL restor
+                END IF
+           END IF
+      END IF
+
+      RETURN
+      END
+
+*********************************************************************
+
+*** denLVS - Calculates  DH2O(T,P)  or  Dvap,Dliq(T,P) from the 
+*            Levelt Sengers, et al (1983) critical region 
+*            equation of state.
+
+      SUBROUTINE denLVS(isat,T,P)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      DOUBLE PRECISION s(2), sd(2)
+
+      COMMON /coefs/ a(20), q(20), x(11)
+      COMMON /crits/ Tc, rhoc, Pc, Pcon, Ucon, Scon, dPcon
+      COMMON /satur/ Dliq, Dvap, DH2O, iphase
+      COMMON /therm/ AE, GE, U, H, Entrop, Cp, Cv, betaw, alphw,
+     1               heat, Speed
+      COMMON /param/ r1, th1
+      COMMON /deri2/ dPdD, dPdT
+
+      SAVE
+
+      EQUIVALENCE (Dmin, x(4)), (Dmax, x(5)), (pw11, q(9)),  
+     1            (xk0,  a(7)), (xk1,  a(12))
+      
+      IF (isat .EQ. 0) THEN
+           DH2O = rhoc
+           DO 10 i=1,20
+                Pnext = Pfind(isat,T,DH2O)
+                Pdif  = Pnext - P
+                IF (iphase .EQ. 2) THEN
+                     IF (DABS(Pdif) .LE. 0.0d0) THEN
+                          RETURN
+                     ELSE
+                     END IF
+                     IF (Pdif .LT. 0.0d0) THEN
+                          DH2O = Dmax
+                     ELSE
+                          DH2O = Dmin
+                     END IF
+                ELSE
+                     delD  = -Pdif/dPdD
+                     DH2O = DH2O + delD
+                     IF (DH2O .LT. Dmin)  DH2O = Dmin
+                     IF (DH2O .GT. Dmax)  DH2O = Dmax
+                     IF (DABS(delD/DH2O) .LT. 1.0d-6)  RETURN
+                END IF
+ 10        CONTINUE
+      ELSE
+           Tw   = -Tc/T
+           dTw  = 1.0d0 + Tw
+
+           CALL ss(r1,th1,s,sd)
+           rho1 = 1.0d0+pw11*dTw+a(1)*(s(1)+s(2))
+           rho2 = xk0*power(r1,a(6)) + xk1*power(r1,q(16))
+
+           Dvap = rhoc * (rho1 - rho2)
+           Dliq = rhoc * (rho1 + rho2)
+
+           RETURN
+      END IF
+
+      RETURN
+      END
+
+*********************************************************************
+
+*** TsLVS - Returns saturation T(P) 
+
+      DOUBLE PRECISION FUNCTION TsLVS(isat,P)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      COMMON /therm/ AE, GE, U, H, Entrop, Cp, Cv, betaw, alphw,
+     1               heat, Speed
+      COMMON /satur/ Dliq, Dvap, DH2O, iphase
+      COMMON /crits/ Tc, rhoc, Pc, Pcon, Ucon, Scon, dPcon
+      COMMON /deri2/ dPdD, dPdT
+
+      SAVE
+
+      
+      TsLVS2 = Tc - 1.0d0
+      D = rhoc
+
+      DO 10 i=1,20
+           Pnext = Pfind(isat,TsLVS2,D)
+           dT = (Pnext - P)/dPdT
+           TsLVS2 = TsLVS2 - dT
+           IF (TsLVS2 .GT. Tc) THEN
+                TsLVS2 = Tc
+           ELSE
+                IF (DABS(dT/TsLVS2) .LT. 1.0d-8) THEN
+                     GO TO 20
+                ELSE
+                END IF
+           END IF
+ 10   CONTINUE
+
+ 20   TsLVS = TsLVS2
+
+      RETURN
+      END
+
+*********************************************************************
+
+*** Pfind - Returns P(T,D).  Computes (dP/dD)T when invoked by SUB 
+*           Dfind (isat=0) and (dP/dT)D when invoked by SUB TsLVS 
+*           (isat=1).  Also computes 1st & 2nd partial derivatives 
+*           the singular part of the potential (Delta P tilde) that
+*           are used in SUB thmLVS.
+
+      DOUBLE PRECISION FUNCTION Pfind(isat,T,D)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      DOUBLE PRECISION s(2), xk(2), sd(2)
+
+      COMMON /coefs/ a(20), q(20), x(11)
+      COMMON /crits/ Tc, rhoc, Pc, Pcon, Ucon, Scon, dPcon
+      COMMON /satur/ Dliq, Dvap, DH2O, iphase
+      COMMON /therm/ AE, GE, U, H, Entrop, Cp, Cv, betaw, alphw,
+     1               heat, Speed
+      COMMON /param/ r1, th1
+      COMMON /tolers/ TTOL, PTOL, DTOL, XTOL, EXPTOL, FPTOL
+      COMMON /deriv/ amu, s, Pw, Tw, dTw, dM0dT, dP0dT,
+     1               d2PdM2, d2PdMT, d2PdT2, p0th, p1th, xk
+      COMMON /deri2/ dPdD, dPdT
+***************************************
+      COMMON /abc2/  r, th
+***************************************
+
+      SAVE
+
+      EQUIVALENCE (Pw1, a(5)),   (Pw2, a(4)),   (Pw3,  a(2)),
+     1            (amc, a(13)),  (am1, a(14)),  (am2,  a(15)),
+     2            (am3, a(16)),  (p00, q(11)),  (p20,  q(12)),
+     3            (p40, q(13)),  (p01, q(18)),  (p21,  q(19)),
+     4            (p41, q(20)),  (aa,  a(10)),  (xk0,  a(7)),
+     5            (xk1, a(12)),  (pw11,q(9)),   (alpha,q(10)),
+     6            (alhi,q(15)),  (besq,a(9))
+
+      xk(1) = xk0
+      xk(2) = xk1
+      IF (DABS(T-Tc) .LT. FPTOL)  T = Tc
+      Tee   = (T-Tc)/Tc
+      Tw    = -Tc/T
+      dTw   = 1.0d0 + Tw
+
+      IF (isat .EQ. 0) THEN
+           rho = D / rhoc
+           CALL conver(rho,Tee,amu,th1,r1,rho1,s,rhodi,err)
+      ELSE
+           th1 = -1.0d0
+           th  = th1
+           r1  = dTw/(1.0d0-besq)
+           r   = r1
+           CALL ss(r1,th1,s,sd)
+           rho = th1 * (xk0*power(r1,a(6)) + 
+     1           xk1*power(r1,q(16))) +
+     2           a(1)*(s(1)+s(2))
+           rho = 1.0d0+pw11*dTw+rho
+           amu = 0.0d0
+           D = rho * rhoc
+      END IF
+
+      tt1 = th1*th1
+      tt2 = tt1*tt1
+
+      Pw0  = 1.0d0+dTw*(Pw1+dTw*(Pw2+dTw*Pw3))
+
+      IF (isat .EQ. 0) THEN
+           Pwmu = amu*rhodi
+      ELSE
+           Pwmu = 0.0d0
+      END IF
+
+      p0th = p00+p20*tt1+p40*tt2
+      p1th = p01+p21*tt1+p41*tt2
+
+      dPw0 = xk0*p0th*power(r1,2.0d0-alpha)
+      dPw1 = xk1*p1th*power(r1,2.0d0-alhi)
+      dPw  = aa*(dPw0+dPw1)
+
+      Pw   = Pw0 + Pwmu + dPw
+
+      Pfind = Pw * Pcon * T
+
+      IF (DABS(th1) .LT. 1.0d0) THEN
+           iphase = 1
+      ELSE
+           iphase = 2
+
+           dP0dT = Pw1+dTw*(2.0d0*Pw2+3.0d0*Pw3*dTw)
+           dM0dT = am1+dTw*(2.0d0*am2+3.0d0*am3*dTw)
+           Uw    = dP0dT-rho*dM0dT+pw11*amu+s(1)+s(2)
+
+           dPdTcd = Uw + rho*dM0dT
+           dPwdTw = Pw - Tw*dPdTcd
+
+           dPdT   = Pcon * dPwdTw
+
+      END IF
+
+      CALL aux(r1,th1,d2PdT2,d2PdMT,d2PdM2,aa,xk,sd,Cvcoex)
+
+      IF (iphase .EQ. 1) dPdD = dPcon * D * T / d2PdM2
+
+      RETURN
+      END
+
+***************************************************************
+
+*** aux - Calculates some second derivatives of the 
+*         anomalous part of the equation of state.
+
+      SUBROUTINE aux(r1,th1,d2PdT2,d2PdMT,d2PdM2,aa,xk,sd,Cvcoex)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      DOUBLE PRECISION xk(2), s(2), sd(2), w(2), y(2), z(2), coex(2)
+
+      COMMON /coefs/ a(20), q(20), x(11)
+
+      SAVE
+
+      EQUIVALENCE (cc,   a(1)),  (beta, a(6)),  (besq,a(9)),
+     1            (delta,a(11)), (alpha,q(10)), (s00, a(17)),
+     2            (s20,  a(18)), (s01,  a(19)), (s21, a(20))
+
+
+      deli  = 0.0d0
+      s(1)   = s00+s20*th1*th1
+      s(2)   = s01+s21*th1*th1
+      sd(1)  = 2.0*th1*s20
+      sd(2)  = 2.0*th1*s21
+      ww     = 0.0d0
+      yy     = 0.0d0
+      zz     = 0.0d0
+      gamma  = beta*(delta-1.0d0)
+      tt1    = th1*th1
+      ter    = 2.0d0*beta*delta-1.0d0
+      g      = (1.0+(besq*ter-3.0)*tt1 - besq*(ter-2.0)*tt1*tt1)
+      Cvcoex = 0.0d0
+
+      DO 30 i=1,2
+           alhi    = alpha - deli
+           beti    = beta + deli
+           gami    = gamma - deli
+           IF (r1 .NE. 0.0d0) THEN
+                w(i)    = (1.0-alhi)*(1.0-3.0*tt1)*s(i) - 
+     1                    beta*delta*(1.0-tt1)*th1*sd(i)
+                w(i)    = (w(i)*power(r1,-alhi))/g
+                w(i)    = w(i) * xk(i)
+                ww      = ww + w(i)
+
+                y(i)    = beti*(1.0d0-3.0d0*tt1)*th1 - 
+     1                    beta*delta*(1.0d0-tt1)*th1
+                y(i)    = (y(i)*power(r1,beti-1.0d0)) * xk(i) / g
+                yy      = yy + y(i)
+
+                z(i)    = 1.0d0-besq*(1.0d0-(2.0d0*beti))*tt1
+                z(i)    = (z(i)*power(r1,-gami)) * xk(i) / g
+                zz      = zz + z(i)
+
+                a1 = (beta*(delta-3.0d0)-3.0d0*deli-besq*alhi*gami) / 
+     1               (2.0d0*besq*besq*(2.0d0-alhi)*(1.0d0-alhi)*alhi)
+                a2 = 1+((beta*(delta-3.0d0)-3.0d0*deli-besq*alhi*ter) /
+     1                  (2.0d0*besq*(1.0d0-alhi)*alhi))
+                a2 = -a2
+       
+                a4 = 1.0d0+((ter-2.0d0)/(2.0d0*alhi))
+                f1 = a1 + a2 + a4
+           
+                coex(i) = ((2.0d0-alhi)*(1.0d0-alhi)*power(r1,-alhi) * 
+     1                    f1*xk(i))
+                Cvcoex  = Cvcoex + coex(i)
+           END IF
+           deli    = 0.5d0
+ 30   CONTINUE
+
+      d2PdT2 = aa * ww
+      d2PdMT = yy + aa*cc*ww
+      d2PdM2 = zz/aa + 2.0d0*cc*yy + cc*cc*aa*ww
+
+      RETURN
+      END
+
+***************************************************************
+
+*** conver - Transforms  T,D  to  parametric variables  r,theta 
+*            according to the revised and scaled equations.
+
+      SUBROUTINE conver(rho,Tee,amu,th1,r1,rho1s,s1,rhodi,error1)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+    
+      DOUBLE PRECISION s1(2), sd(2)
+
+      COMMON /coefs/ a(20), q(20), x(11)
+      COMMON /crits/ Tc, rhoc, Pc, Pcon, Ucon, Scon, dPcon
+**************************************************************
+      COMMON /abc2/  r, th
+**************************************************************
+
+      SAVE
+
+      EQUIVALENCE (beta,a(6)),  (delta,a(11)),  (xk1,  a(12)),
+     1            (cc,  a(1)),  (alhi, q(15)),  (alpha,q(10)),
+     2            (besq,a(9)),  (p11,  q(9)),   (deli, q(14)),
+     3            (p1w, q(18)), (p2w,  q(19)),  (p4w,  q(20)),
+     4            (aa,  a(10)), (xk0,  a(7)),   (s00,  a(17)),
+     5            (s20, a(18)), (betai,q(16))
+
+
+      Tstar  = Tee + 1.0d0
+      dtstin = 1.0d0 - (1.0d0 / Tstar)
+      r1     = dtstin
+     
+      IF (dtstin .LE. 0.0d0)  THEN
+           r1  = dtstin/(1.0d0-besq)
+           th1 = 1.0d0
+      ELSE
+           th1 = 0.0d0
+      END IF
+
+      CALL ss(r1,th1,s1,sd)
+
+      rhodi  = 1.0d0 + p11*dtstin
+      rhodit = rhodi + cc*s1(1) + cc*s1(2)
+      drho   = rho - rhodit
+      amu    = 0.0d0
+
+      IF (dtstin .LE. 0.0d0) THEN
+           rho1co = xk0*power(r1,beta) + xk1*power(r1,betai)
+           twofaz = rho1co
+           IF (DABS(drho) .LE. twofaz) THEN
+                rho1s  = DSIGN(rho1co,drho) + cc*s1(1)
+                th1    = DSIGN(1.00d0,drho)
+                error1 = 1.0d0
+                r = r1
+                th = th1
+                RETURN
+           END IF
+      END IF
+
+      IF (drho .EQ. 0.0d0) THEN
+           th1   = 0.0d0
+           r1    = dtstin
+           rho1s = cc*s1(1)
+      END IF 
+
+*** rule for first pass ***
+
+      y1   = dtstin      
+      den1 = rho - rhodit
+ 
+      CALL rtheta(r1,th1,den1,y1)
+
+      tt   = th1*th1
+      amu  = aa*power(r1,beta*delta)*th1*(1.0d0-tt)
+      y1   = dtstin + cc*amu
+
+      CALL ss(r1,th1,s1,sd)
+
+      rhoweg = xk1*power(r1,betai)*th1 + cc*s1(2)      
+      rho1s  = den1 + cc*s1(1) + rhoweg
+      error1 = rho - rhodi - rho1s
+      r  = r1
+      th = th1
+
+      IF (DABS(error1) .LT. 1.0d-5) THEN
+           RETURN
+      END IF
+
+*** rule for second pass ***
+
+      den12 = rho - rhodi - cc*s1(1) + rhoweg
+      
+      IF (den12 .EQ. den1) den12 = den1 - 1.0d-6
+   
+      CALL rtheta(r1,th1,den12,y1)
+
+      tt  = th1*th1
+      amu = aa*power(r1,beta*delta)*th1*(1.0d0-tt)
+      y1  = dtstin + cc*amu
+
+      CALL ss(r1,th1,s1,sd)
+
+      rhoweg = xk1*power(r1,betai)*th1 + cc*s1(2)
+      rho1s2 = den12 + cc*s1(1) + rhoweg
+      error2 = rho - rhodi - rho1s2
+
+      IF (DABS(error2) .LE. 1.0d-5) THEN
+           r  = r1
+           th = th1
+           error1 = error2
+           rho1s  = rho1s2
+           RETURN      
+      END IF
+
+*** rule for nth pass ***
+
+      den2   = den12
+      
+      DO 44 isig=1,10
+           slope  = (error2-error1)/(den2-den1)
+           hold   = den2
+           den2   = den1 - (error1/slope)
+           
+           CALL rtheta(r1,th1,den2,y1)
+
+           tt  = th1*th1
+           amu = aa*power(r1,beta*delta)*th1*(1.0d0-tt)
+           y1  = dtstin + cc*amu
+
+           CALL ss(r1,th1,s1,sd)
+
+           rhoweg = xk1*power(r1,betai)*th1 + cc*s1(2)
+           rho1s  = den2 + cc*s1(1) + rhoweg
+           error1 = error2
+           error2 = rho - rhodi - rho1s
+           r  = r1
+           th = th1
+
+           IF (DABS(error2) .LT. 1.0d-6) RETURN
+  
+           den1 = hold
+
+ 44   CONTINUE
+
+      RETURN
+      END
+
+*********************************************************************
+
+*** rtheta - Fits data for  1.0 < theta < 1.000001.
+*            Solves:
+*                     rho = em*theta*(r**beta)
+*                     Tee = r*(1.0d0-besq*theta*theta)
+*
+*   Routine given by Moldover (1978): Jour. Res. NBS, v. 84, n. 4,
+*   p. 329 - 334.
+
+
+      SUBROUTINE rtheta(r,theta,rho,Tee)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      COMMON /coefs/ a(20), q(20), x(11)
+
+      SAVE
+
+      EQUIVALENCE (beta,a(6)), (em,a(7)), (besq,a(9))
+
+
+      IF (em .LE. 0.0d0  .OR.  besq .LE. 1.0d0) GO TO 600
+
+      absrho = DABS(rho)
+
+      IF (absrho .LT. 1.0d-12) GO TO 600
+
+      bee = DSQRT(besq)
+
+      IF (DABS(Tee) .LT. 1.0d-12) GO TO 495
+      IF (Tee .LT. 0.0d0) THEN
+           z = 1.0d0-(1.0d0-bee)*Tee/(1.0d0-besq) * 
+     1         power(em/absrho,1.0d0/beta)
+      ELSE
+           z = power(1.0d0+Tee*power(em/bee/absrho,1.0d0/beta),
+     1         -beta)
+      END IF
+      IF (z .GT. 1.00234d0*bee) GO TO 496
+
+      c = -rho*bee/em/power(DABS(Tee),beta)
+      z = DSIGN(z,rho)
+
+      DO 500 n=1,16
+           z2 = z*z
+           z3 = 1.0d0 - z2
+           dz = z3*(z+c*power(DABS(z3),beta))/(z3+2.0d0*beta*z2)
+           z  = z - dz
+
+           IF (DABS(dz/z) .LT. 1.0d-12) GO TO 498
+
+ 500  CONTINUE
+
+ 601  IF (DABS(theta) .GT. 1.0001d0) theta = theta/DABS(theta)
+      RETURN
+
+ 498  theta = z/bee
+      r     = Tee/(1.0d0-z*z)
+      r     = DABS(r)
+      RETURN
+
+ 495  theta = DSIGN(1.0d0,rho)/bee
+      r     = power(rho/(em*theta),1.0d0/beta)
+      RETURN
+
+ 496  theta = DSIGN(1.0d0,rho)
+      r     = Tee/(1.0d0-besq)
+      r     = DABS(r)
+      RETURN
+
+ 600  IF (DABS(Tee) .LT. 1.0d-12) GO TO 601
+
+      IF (Tee .LT. 0.0d0) GO TO 496
+
+      theta = 1.0d-12
+      r     = Tee
+      RETURN
+
+      END
+
+*********************************************************************
+
+*** ss - Computes terms of the summation that defines  dPotl/dT
+*        and the 1st derivative of the theta (s) square polynomial.
+
+      SUBROUTINE ss(r,th,s,sd)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      DOUBLE PRECISION s(2), sd(2), sx(2)
+    
+      COMMON /coefs/ a(20), q(20), x(11)
+***************************************************************
+      COMMON /abc1/  dPdM
+***************************************************************
+
+      SAVE
+
+      EQUIVALENCE (alpha,q(10)),  (beta,a(6)),  (besq,a(9)),
+     1            (delta,a(11)),  (deli,q(14)), (alhi,q(15)),
+     2            (beti, q(16)),  (gami,q(17)), (p00, q(11)),
+     3            (p01,  q(18)),  (s00, a(17)), (s20, a(18)),
+     4            (s01,  a(19)),  (s21,  a(20))
+
+      tt    = th*th
+      sx(1)  = s00 + s20*tt
+      sd(1) = 2.0d0*s20*th
+      sx(2)  = s01 + s21*tt
+      sd(2) = 2.0d0*s21*th
+      s(1)  = sx(1)*a(10)*a(7)*power(r,1.0d0-alpha)
+      s(2)  = sx(2)*a(10)*a(12)*power(r,1.0d0-alhi)
+
+      dPdM  = power(r,beta)*a(7)*th  + a(1)*power(r,1.0d0-alpha)*
+     1        a(10)*a(7)*sx(1) +
+     2        power(r,beti)*a(12)*th + a(1)*power(r,1.0d0-alhi)*
+     3        a(10)*a(12)*sx(2)
+
+      RETURN
+      END
+
+*****************************************************************
+
+*** thmLVS - Calculates thermodynamic and transport properties
+*            of critical region H2O using the Levelt Sengers, et al
+*            (1983) equation of state.
+
+      SUBROUTINE thmLVS(isat,T,r1,th1)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      DOUBLE PRECISION s(2), xk(2), sd(2)
+
+      COMMON /coefs/ a(20), q(20), x(11)
+      COMMON /crits/ Tc, rhoc, Pc, Pcon, Ucon, Scon, dPcon
+      COMMON /therm/ AE, GE, U, H, Entrop, Cp, Cv, betaw, alphw,
+     1               heat, Speed
+      COMMON /satur/ Dliq, Dvap, DH2O, iphase
+      COMMON /deriv/ amu, s, Pw, Tw, dTw, dM0dT, dP0dT,
+     1               d2PdM2, d2PdMT, d2PdT2, p0th, p1th, xk
+      COMMON /deri2/ dPdD, dPdT
+*************************************************************
+      COMMON /abc1/  dPdM
+      COMMON /abc3/  dPdTcd
+*************************************************************
+
+      SAVE
+
+      EQUIVALENCE (pw2, a(4)),   (pw3, a(2)),  (besq,  a(9)),
+     1            (amc, a(13)),  (am1, a(14)), (am2,   a(15)),
+     2            (aa,  a(10)),  (xk0, a(7)),  (am3,   a(16)),
+     3            (xk1, a(12)),  (pw11,q(9)),  (alpha, q(10)),
+     4            (alhi,q(15)),  (pw1, a(5))
+
+      d2P0dT = 2.0d0*pw2 + 6.0d0*pw3*dTw
+      d2M0dT = 2.0d0*am2 + 6.0d0*am3*dTw
+
+      dP0dT  = pw1+dTw*(2.0d0*pw2+3.0d0*pw3*dTw)
+      dM0dT  = am1+dTw*(2.0d0*am2+3.0d0*am3*dTw)
+
+      IF (isat .EQ. 0) THEN
+           rho    = DH2O / rhoc
+           Uw     = dP0dT-rho*dM0dT+pw11*amu+s(1)+s(2)
+      ELSE
+           rho    = th1 * (xk0*power(r1,a(6)) + xk1*power(r1,q(16)))
+     1              + a(1)*(s(1)+s(2))
+           rho    = 1.0d0+pw11*dTw+rho
+           Uw     = dP0dT-rho*dM0dT+pw11*amu+s(1)+s(2)
+           DH2O   = rho * rhoc
+           dPdT2  = Pw - Tw*(Uw+rho*dM0dT)
+           heat   = 1.0d3*T*(Pcon*dPdT2)*(1.0d0/Dvap-1.0d0/Dliq)
+
+           CALL ss(r1,th1,s,sd)
+           CALL aux(r1,th1,d2PdT2,d2PdMT,d2PdM2,aa,xk,sd,Cvcoex)
+           IF (r1 .NE. 0.0d0) THEN
+                dPdD = dPcon * DH2O * T / d2PdM2
+           END IF
+      END IF
+
+      IF (r1 .NE. 0.0d0) THEN
+           dPdTcd = dP0dT+pw11*(amu-rho/d2PdM2)+s(1)+s(2) - 
+     1              d2PdMT*rho/d2PdM2
+           dPwdTw = Pw - Tw*dPdTcd
+           dPdTal = Pcon * dPwdTw
+
+           CviTw2 = d2P0dT - rho*d2M0dT + d2PdT2 - 
+     1              (pw11+d2PdMT)*(pw11+d2PdMT)/d2PdM2
+           Cvw    = CviTw2 * Tw*Tw
+           Cpw    = Cvw + d2PdM2*dPwdTw*dPwdTw / (rho*rho)
+           betaw  = 1.0d0 / (DH2O*dPdD)
+           alphw  = betaw * dPdTal
+           Speed   = 1.0d3 * DSQRT(Cpw/Cvw*dPdD)
+      ELSE
+           Cvw   = 1.0d0
+           Cpw   = 1.0d0
+           betaw = 1.0d0
+           alphw = 1.0d0
+           Speed = 0.0d0
+      END IF
+
+      Hw = Pw - Tw*Uw
+      Sw = Hw - rho*(amu+amc+dTw*(am1+dTw*(am2+dTw*am3)))
+
+      Scond  = Scon/DH2O
+
+      U      = Uw * Ucon/DH2O
+      H      = Hw * Scond * T
+      entrop = Sw * Scond
+      AE     = U - T * entrop
+      GE     = H - T * entrop
+      Cv     = Cvw * Scond
+      Cp     = Cpw * Scond
+
+      RETURN
+      END
+
+********************************************************
+
+*** dalLVS - Computes/returns (d(alpha)/dt)p(D,T,alpha) 
+*            for the Levelt Sengers et al. (1983) 
+*            equation of state.  Note that D (kg/m**3),
+*            T (degK), P (MPa), alpha (degK**-1).
+
+                
+      DOUBLE PRECISION FUNCTION dalLVS(D,T,P,alpha)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      DOUBLE PRECISION sss(2), xk(2), s(2), dsdT(2), sp(2), dspdT(2),
+     1                 k(2), calpha(2), cbeta(2), cgamma(2),
+     2                 u(2), v(2), w(2), dudT(2), dvdT(2), dwdT(2)
+
+      COMMON /coefs/ aa(20), qq(20), xx(11)
+      COMMON /crits/ Tc, Dc, Pc, Pcon, Ucon, Scon, dPcon
+      COMMON /deriv/ amu, sss, Pw, Tw, dTw, dM0dT, dP0dT,
+     1               d2PdM2, d2PdMT, d2PdT2, p0th, p1th, xk
+      COMMON /deri2/ dPdD, dPdT
+*************************************************************
+      COMMON /abc1/  dPdM
+      COMMON /abc2/  r,th
+      COMMON /abc3/  dPdTcd
+*************************************************************
+
+      SAVE
+
+      EQUIVALENCE (a,   aa(10)), (c,   aa(1)),  (delta,  aa(11)), 
+     1            (bsq, aa(9)),  (P11, qq(9)),  (Delta1, qq(14)),
+     2            (P1,  aa(5)),  (P2,  aa(4)),  (P3,     aa(2)),
+     3            (s00, aa(17)), (s01, aa(19)), (s20,    aa(18)), 
+     4            (s21, aa(20))
+ 
+
+      IF (r .EQ. 0.0d0) THEN
+           dalLVS = 1.0d6
+           RETURN
+      END IF
+
+      k(1)      = aa(7)
+      k(2)      = aa(12)
+      calpha(1) = qq(10)
+      calpha(2) = qq(15)
+      cbeta(1)  = aa(6)
+      cbeta(2)  = qq(16)
+      cgamma(1) = cbeta(1)*(delta - 1.0d0)
+      cgamma(2) = cgamma(1) - Delta1
+      delT      = (T - Tc) / T
+
+      s(1)      = s00 + s20*th**2
+      s(2)      = s01 + s21*th**2
+      sp(1)     = 2.0d0*s20*th
+      sp(2)     = 2.0d0*s21*th
+      
+*********************************************************************
+***
+*** Compute drdT and d0dT from solution of the linear system
+***
+***                      ax = b
+***
+*** d(dPdM)/dT = -D/Dc*alpha - P11*Tc/T**2 = ar1*drdT + a01*d0dT = b1
+*** d(delT)/dT =           Tc/T**2         = ar2*drdT + a02*d0dT = b2
+***
+
+      b1 = -D/Dc*alpha - P11*Tc/T/T
+      b2 =  Tc/T**2   
+
+      ar1 = 0.0d0                 
+      a01 = 0.0d0
+      DO 10 i = 1,2
+           ar1 = ar1 + k(i) * (cbeta(i)*th*power(r,cbeta(i)-1.0d0) + 
+     1           a*c*(1.0d0 - calpha(i))*power(r,-calpha(i))*s(i))
+           a01 = a01 + k(i) * (power(r,cbeta(i)) + a*c*sp(i)*
+     1           power(r,1.0d0-calpha(i)))
+ 10        CONTINUE
+      
+      ar2 = 1.0d0 - bsq*th**2 - a*c*cbeta(1)*delta*
+     1      (1.0d0 - th**2)*th*power(r,(cbeta(1)*delta - 1.0d0))
+      a02 = 3.0d0*a*c*th**2*power(r,cbeta(1)*delta) - 
+     1      2.0d0*bsq*r*th - a*c*power(r,cbeta(1)*delta)
+
+*********************************************************************
+*** solve the linear system with simplistic GE w/ partial pivoting
+*********************************************************************
+
+      IF (DABS(ar1) .GT. DABS(ar2)) THEN 
+           amult = -ar2 / ar1
+           d0dT  = (b2 + amult*b1) / (a02 + amult*a01)
+           drdT  = (b1 - a01*d0dT) / ar1
+      ELSE
+           amult = -ar1 / ar2
+           d0dT  = (b1 + amult*b2) / (a01 + amult*a02)
+           drdT  = (b2 - a02*d0dT) / ar2
+      END IF
+
+*********************************************************************
+***
+*** Compute theta polynomials and their tempertaure derivatives
+***
+
+      dsdT(1)   = 2.0d0*s20*th*d0dT
+      dsdT(2)   = 2.0d0*s21*th*d0dT
+      dspdT(1)  = 2.0d0*s20*d0dT
+      dspdT(2)  = 2.0d0*s21*d0dT
+
+      q     = 1.0d0 + (bsq*(2.0d0*cbeta(1)*delta - 1.0d0) - 3.0d0)*
+     1        th**2 - bsq*(2.0d0*cbeta(1)*delta - 3.0d0)*th**4
+
+      dqdT  = 2.0d0*(bsq*(2.0d0*cbeta(1)*delta - 1.0d0) - 3.0d0)*
+     1        th*d0dT - 4.0d0*bsq*(2.0d0*cbeta(1)*delta - 3.0d0)*
+     2        th**3*d0dT
+
+      DO 20 i = 1,2
+           u(i)    = (1.0d0 - bsq*(1.0d0 - 2.0d0*cbeta(i))*th**2) / q
+           dudT(i) = (-2.0d0*bsq*(1.0d0 - 2.0d0*cbeta(i))*th*d0dT - 
+     1               u(i)*dqdT) / q
+           v(i)    = ((cbeta(i) - cbeta(1)*delta)*th + 
+     1               (cbeta(1)*delta - 3.0d0*cbeta(i))*th**3) / q
+           dvdT(i) = ((cbeta(i) - cbeta(1)*delta)*d0dT + 
+     1               3.0d0*(cbeta(1)*delta - 3.0d0*cbeta(i))*
+     2               th**2*d0dT - v(i)*dqdT) / q
+           w(i)    = ((1.0d0 - calpha(i))*(1.0d0 - 3.0d0*th**2)*
+     1               s(i) - cbeta(1)*delta*(th - th**3)*sp(i)) / q
+           dwdT(i) = ((1.0d0 - calpha(i))*((1.0d0 - 3.0d0*th**2)*
+     1               dsdT(i) - 6.0d0*th*s(i)*d0dT) - cbeta(1)*
+     2               delta*((th - th**3)*dspdT(i) + sp(i)*
+     3               (d0dT - 3.0d0*th**2*d0dT)) - w(i)*dqdT) / q
+ 20        CONTINUE
+
+*********************************************************************
+***
+*** Compute dP0dTT, ddelMT, dPdTT, dPdMMT, dPdMTT, dPPTT
+***
+
+      dP0dTT = Tc/T**2 * (2.0d0*P2 + 6.0d0*P3*delT) 
+
+      ddelMT = a*power(r,cbeta(1)*delta)* (cbeta(1)*delta*th/r*
+     1         (1.0d0 - th**2)*drdT + (1.0d0 - 3.0d0*th**2)*d0dT)
+
+      dPdTT  = 0.0d0
+      dPdMMT = 0.0d0
+      dPdMTT = 0.0d0
+      DO 30 i = 1,2
+           dPdTT  = dPdTT + a*k(i) * (power(r,1.0d0-calpha(i))*
+     1              dsdT(i) + s(i)*(1.0d0 - calpha(i))*
+     2              power(r,-calpha(i))*drdT)
+        
+           dPdMMT = dPdMMT + k(i) * ((power(r,-cgamma(i))*dudT(i) -
+     1              u(i)*cgamma(i)*power(r,-1.0d0-cgamma(i))*drdT) /
+     2              a + 2.0d0*c*(power(r,cbeta(i)-1.0d0)*dvdT(i) + 
+     3              v(i)*(cbeta(i) - 1.0d0)*power(r,cbeta(i)-2.0d0)*
+     4              drdT) + a*c**2*(power(r,-calpha(i))*dwdT(i) - 
+     5              calpha(i)*w(i)*power(r,-1.0d0-calpha(i))*drdT))
+
+           dPdMTT = dPdMTT + k(i) * (power(r,cbeta(i)-1.0d0)*dvdT(i) +
+     1              v(i)*(cbeta(i) - 1.0d0)*power(r,cbeta(i)-2.0d0)*
+     2              drdT + a*c*(power(r,-calpha(i))*dwdT(i) - 
+     3              calpha(i)*power(r,-1.0d0-calpha(i))*drdT*w(i)))
+
+ 30        CONTINUE
+
+      dPPTT = dP0dTT + dPdTT + P11*ddelMT - D/Dc*dPdMTT/d2PdM2 +
+     1        (P11 + d2PdMT)*(D/Dc*alpha/d2PdM2 + 
+     2        D/Dc*dPdMMT/d2PdM2**2)
+
+      pterm = P/Pc + dPdTcd
+
+*** compute (d(alpha)/dT)P
+
+      dalLVS  = Tc*Dc**2/D**2/T**2 * (-2.0d0/T*d2PdM2*pterm + 
+     1          2.0d0*alpha*d2PdM2*pterm + pterm*dPdMMT +
+     2          d2PdM2*dPPTT)
+
+      RETURN
+
+      END
+
+*********************************************************************
+
+*** backup - Save Pfind COMMON values during saturation check.
+
+      SUBROUTINE backup
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      DOUBLE PRECISION s(2), xk(2)
+
+      COMMON /satur/ Dliq, Dvap, DH2O, iphase
+      COMMON /param/ r1, th1
+      COMMON /deriv/ amu, s, Pw, Tw, dTw, dM0dT, dP0dT,
+     1               d2PdM2, d2PdMT, d2PdT2, p0th, p1th, xk
+      COMMON /deri2/ dPdD, dPdT
+      COMMON /store/ sav2, sav3, sav4, sav5, sav6, sav7, sav8, 
+     1               sav9, sav10, sav11, sav12, sav13, sav14, sav15, 
+     2               sav16, sav17, sav18, sav19, isav1
+
+      SAVE
+
+
+      isav1 = iphase
+      
+      sav2  = r1
+      sav3  = th1
+
+      sav4  = amu
+      sav5  = s(1)
+      sav6  = s(2)
+      sav7  = Pw
+      sav8  = Tw
+      sav9  = dTw
+      sav10 = dM0dT
+      sav11 = dP0dT
+      sav12 = d2PdM2
+      sav13 = d2PdMT
+      sav14 = d2PdT2
+      sav15 = p0th
+      sav16 = p1th
+      sav17 = xk(1)
+      sav18 = xk(2)
+
+      sav19 = dPdD
+
+      RETURN
+      END
+
+*********************************************************************
+
+*** restor - Restore Pfind COMMON values after saturation check.
+
+
+      SUBROUTINE restor
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      DOUBLE PRECISION s(2), xk(2)
+
+      COMMON /satur/ Dliq, Dvap, DH2O, iphase
+      COMMON /param/ r1, th1
+      COMMON /deriv/ amu, s, Pw, Tw, dTw, dM0dT, dP0dT,
+     1               d2PdM2, d2PdMT, d2PdT2, p0th, p1th, xk
+      COMMON /deri2/ dPdD, dPdT
+      COMMON /store/ sav2, sav3, sav4, sav5, sav6, sav7, sav8, 
+     1               sav9, sav10, sav11, sav12, sav13, sav14, sav15, 
+     2               sav16, sav17, sav18, sav19, isav1
+
+      SAVE
+
+       
+      iphase = isav1
+
+      r1     = sav2
+      th1    = sav3
+    
+      amu    = sav4
+      s(1)   = sav5
+      s(2)   = sav6
+      Pw     = sav7
+      Tw     = sav8
+      dTw    = sav9
+      dM0dT  = sav10
+      dP0dT  = sav11
+      d2PdM2 = sav12
+      d2PdMT = sav13
+      d2PdT2 = sav14
+      p0th   = sav15
+      p1th   = sav16
+      xk(1)  = sav17
+      xk(2)  = sav18
+
+      dPdD   = sav19
+
+      RETURN
+      END
+
 **********************************************************************
 
 *** load - Load thermodynamic and transport property values from
@@ -1682,6 +2729,95 @@
       END 
 
 *****************************************************************************
+
+*** dimLVS - Dimension critical region properties per user-specs
+*            and load into tprops.
+
+      SUBROUTINE dimLVS(isat,itripl,theta,T,Pbars,dl,dv,tprops,epseqn)
+
+      IMPLICIT DOUBLE PRECISION (a-h,o-z)
+
+      PARAMETER (NPROP = 23)
+
+      DOUBLE PRECISION  tprops(NPROP)
+      INTEGER   aw, gw, sw, uw, hw, cvw, cpw, vsw, alw, bew,
+     1          diw, viw, tcw, stw, tdw, Prw, vikw, albew,
+     2          ZBw, YBw, QBw, dalwdT, XBw
+      INTEGER  epseqn
+
+
+      COMMON /therm/   AE, GE, U, H, Entrop, Cp, Cv, betaw, alphw,
+     1                 heat, Speed
+      COMMON /satur/   Dliq, Dvap, DH2O, iphase
+      COMMON /units/   ft, fd, fvd, fvk, fs, fp, fh, fst, fc
+*****************************************************************
+      COMMON /abc2/    r, th
+*****************************************************************
+
+      SAVE
+
+      DATA aw, gw, sw, uw, hw, cvw, cpw, vsw, alw, bew, diw, viw,
+     1     tcw, stw, tdw, Prw, vikw, albew, ZBw, YBw, QBw,
+     2     dalwdT, XBw
+     3   /  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12,  
+     4     13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 /
+
+  
+      IF (isat .EQ. 1) THEN
+          dv   = Dvap
+          dl   = Dliq
+      END IF
+
+      tprops(aw)  = AE * fh
+      tprops(gw)  = GE * fh
+      tprops(sw)  = Entrop * fh * ft
+      tprops(uw)  = U * fh
+      tprops(hw)  = H * fh
+      tprops(cvw) = Cv * fh * ft
+      tprops(cpw) = Cp * fh * ft
+      tprops(vsw) = Speed * fs
+      tprops(bew) = betaw / fp
+      tprops(alw) = alphw
+*****************************************************************
+      th = theta
+      tprops(dalwdT) = dalLVS(DH2O,T,Pbars/1.0d1,tprops(alw))
+*****************************************************************
+
+      CpJKkg  = Cp * 1.0d3
+      betaPa  = betaw / 1.0d6
+      betab   = betaw / 1.0d1
+
+      IF (DABS(theta) .NE. 1.0d0) THEN
+           dkgm3 = DH2O
+           tprops(stw) = 0.0d0
+      ELSE
+           IF (theta .LT. 0.0d0) THEN
+                dkgm3 = Dvap
+                tprops(stw) = 0.0d0
+           ELSE
+                dkgm3 = Dliq
+                dkgm3 = Dliq
+                tprops(stw) = surten(T) * fst
+           END IF
+      END IF
+
+      CALL Born92(T,Pbars,dkgm3/1.0d3,betab,tprops(alw),tprops(dalwdT),
+     1            tprops(diw),tprops(ZBw),tprops(QBw),tprops(YBw),
+     2            tprops(XBw),epseqn)
+
+      tprops(viw)  = viscos(T,Pbars,dkgm3,betaPa) * fvd
+      tprops(tcw)  = thcond(T,Pbars,dkgm3,tprops(alw),betaPa) * fc * ft
+
+      tprops(tdw)  = tprops(tcw)/fc/ft  / (dkgm3 * CpJKkg) * fvk
+      tprops(Prw)  = tprops(viw)/fvd * CpJKkg / (tprops(tcw)/fc/ft)
+      tprops(vikw) = tprops(viw)/fvd / dkgm3 * fvk
+      tprops(albew) = tprops(alw) / tprops(bew)
+
+      IF (itripl .EQ. 1)  CALL triple(T,tprops)
+
+      END      
+
+**********************************************************************
 
 *** tran88 - Set of FORTRAN77 functions that compute transport
 *            properties of fluid H2O.  Input state parameters 

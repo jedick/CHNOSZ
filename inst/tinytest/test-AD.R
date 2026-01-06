@@ -13,6 +13,14 @@ expect_equal(unique(info(iaq)$model), "AD", info = info)
 igas <- info(info(iAD)$name, "gas")
 expect_true(!any(is.na(igas)), info = info)
 
+# Test added on 20260106
+# NOTE: This and the analogous code in demo/AD.R appears to be
+# the only code in CHNOSZ that uses LVSeqn, LVSsat, etc. in H2O92D.f
+info <- "We can get close to the critical point without NAs"
+expect_silent(sres <- subcrt("CO2", "aq", T = 370:373, P = "Psat"), info = info)
+expect_false(any(is.na(sres$out$CO2$G)), info = info)
+expect_equal(round(sres$out$CO2$G[4], 1), -459810.9, info = info)
+
 # First version of tests used a circular reference (values previously calculated in CHNOSZ) 20190220
 # Tests now use values calculated with the AD_full program provided by N. Akinfiev and E. Bastrakov 20210206
 info <- "AD produces correct values for CO2 along saturation curve"
@@ -100,3 +108,4 @@ expect_equal(CHNOSZ:::.d2rho1_dT2(298.15, 1, FALSE), -0.000009503, tolerance = 0
 if(identical(.Platform$OS.type, "windows")) exit_file("Skipping test on Windows")
 # This one fails on Windows (tolerance = 9 works) 20220208
 expect_equal(sout1$Cp[1:3], Cp_ref1[1:3], tolerance = 3, scale = 1, info = "AD produces correct values for CO2 along saturation curve")
+

@@ -123,7 +123,9 @@ AD <- function(property = NULL, parameters = NULL, T = 298.15, P = 1, isPsat = T
   # For Psat, calculate the real liquid-vapor curve (not floored at 1 bar)
   if(isPsat) {
     P <- water("Psat", T = T, P = "Psat", Psat_floor = NULL)$Psat
-    f1[P < 1] <- P[P < 1]
+    Plow <- P < 1
+    Plow[is.na(Plow)] <- FALSE
+    f1[Plow] <- P[Plow]
   }
   f1
 }
