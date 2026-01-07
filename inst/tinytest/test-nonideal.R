@@ -169,3 +169,14 @@ expect_equivalent(a_T.IS$values[[2]][, 3], as.numeric(a250$values[[2]]), info = 
 # IS-T grid
 a_IS.T <- affinity(T = c(190, 310, 5), IS = c(0, 1, 6))
 expect_equivalent(a_IS.T$values[[2]][3, ], as.numeric(a250$values[[2]]), info = info)
+
+# Tests added on 20260107
+info <- "bgamma() runs without error"
+# Save plot to a temporary PNG file
+pngfile <- tempfile(fileext = ".png")
+png(pngfile)
+expect_silent(bgamma(showsplines = "T"), info = info)
+expect_silent(bgamma(showsplines = "P"), info = info)
+# Close the graphics device and remove the temporary PNG file
+dev.off()
+file.remove(pngfile)

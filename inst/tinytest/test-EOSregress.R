@@ -2,12 +2,13 @@
 reset()
 
 info <- "EOSvar stops with unknown variables"
+if(exists("TX")) rm("TX")
 expect_error(EOSvar("TX", T = 25, P = 1), "can't find a variable named TX", info = info)
-# Why can't the test find these?
+# TOOD: Why aren't these variables visible to the test runner?
 #TX <- 2
 #expect_error(EOSvar("TX", T = 25, P = 1), "an object named TX is not a function", info = info)
 #TX <- function(T) 2
-#expect_error(EOSvar("TX", T = 25, P = 1), "the arguments of TX\\(\\) are not T, P", info = info)
+#expect_error(EOSvar("TX", T = 25, P = 1), "the arguments of TX\\(\\) do not contain T and P", info = info)
 
 info <- "Regressions return known HKF parameters (neutral species)"
 # Regress computed values of heat capacity and volume of CH4(aq)
@@ -43,3 +44,41 @@ expect_equivalent(V.coeff[3], CH4.par$a3, info = info)
 expect_equivalent(V.coeff[4], CH4.par$a4, info = info)
 # omega (from V)
 expect_equivalent(V.coeff[5], CH4.par$omega, info = info)
+
+# Tests added on 20260107
+
+info <- "Cp_s_var and V_s_var give expected values"
+# This should work for any omega.PrTr != 0
+expect_equal(Cp_s_var(omega.PrTr = 1), water("XBorn")[[1]] * 298.15, tolerance = 1e-7, scale = 1)
+expect_equal(V_s_var(omega.PrTr = 1), -water("QBorn")[[1]], tolerance = 1e-9, scale = 1)
+
+info <- "EOScalc() and EOScoeffs() run without error"
+
+# Calculate the Cp at some temperature and pressure
+expect_silent(EOScalc(Cp.lm$coefficients, 298.15, 1), info = info)
+# Get the database values of c1, c2 and omega for CH4(aq)
+expect_silent(Cp_coeffs <- EOScoeffs("CH4", "Cp"), info = info)
+# Volume parameters
+expect_silent(V_coeffs <- EOScoeffs("CH4", "V"), info = info)
+
+info <- "EOSplot() runs without error"
+
+## Make plots comparing the regressions
+## with the accepted EOS parameters of CH4
+# Read the data from Hnedkovsky and Wood, 1997
+f <- system.file("extdata/misc/HW97_Cp.csv", package = "CHNOSZ")
+d <- read.csv(f)
+# Use data for CH4
+d <- d[d$species == "CH4", ]
+d <- d[, -1]
+# Convert J to cal and MPa to bar
+d$Cp <- convert(d$Cp, "cal")
+d$P <- convert(d$P, "bar")
+
+# Save plot to a temporary PNG file
+pngfile <- tempfile(fileext = ".png")
+png(pngfile)
+expect_silent(EOSplot(d, T.max = 600), info = info)
+# Close the graphics device and remove the temporary PNG file
+dev.off()
+file.remove(pngfile)

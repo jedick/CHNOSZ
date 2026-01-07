@@ -46,9 +46,9 @@ expect_silent(phospho_plot("adenosine_to_AMP", "PP", loga_Mg = -5, res = 50), in
 dev.off()
 file.remove(pngfile)
 
-info <- "Tests for more species"
+## Tests for more species
 
-# Acetate phosphorylation: circular reference
+info <- "Acetate phosphorylation"
 # Delta G0 from Table 3.2 of Alberty (2003)
 mod.OBIGT("acetylphosphate0", formula = "C2H5O5P", G = -1298260)
 mod.OBIGT("acetylphosphate-1", formula = "C2H4O5P-", G = -1268080)
@@ -57,62 +57,72 @@ mod.OBIGT("acetylphosphate-2", formula = "C2H3O5P-2", G = -1219390)
 mod.OBIGT("acetylphosphate-3", formula = "C2H2O5P-3", G = 0)
 # This is the dimensionless affinity (A/2.303RT) of the reaction
 affinity_nodim <- as.numeric(phosphorylate("acetic acid", "P")$a12)
-expect_equal(affinity_nodim, -6.20, tolerance = 0.01, scale = 1)
+# This is a circular reference value (calculated with CHNOSZ, not from an outside source)
+expect_equal(affinity_nodim, -6.20, tolerance = 0.01, scale = 1, info = info)
 
-# Glycerol phosphorylation: reference value from p. 295 of Alberty (2003)
+info <- "Glycerol phosphorylation"
 mod.OBIGT("3-phosphoglycerol", formula = "C3H9O6P", G = 0)
 mod.OBIGT("3-phosphoglycerol-1", formula = "C3H8O6P-", G = -1397040)
 mod.OBIGT("3-phosphoglycerol-2", formula = "C3H7O6P-2", G = -1358960)
 affinity_nodim <- as.numeric(phosphorylate("glycerol", "P")$a12)
-expect_equal(convert(affinity_nodim, "G"), -1780.75, tolerance = 1200, scale = 1)
+# Reference value from p. 295 of Alberty (2003)
+expect_equal(convert(affinity_nodim, "G"), -1780.75, tolerance = 1200, scale = 1, info = info)
 
-# Adenosine phosphorylation (to AMP): reference value from p. 295 of Alberty (2003)
+info <- "Adenosine phosphorylation (to AMP)"
 affinity_nodim <- as.numeric(phosphorylate("adenosine_to_AMP", "P")$a12)
-expect_equal(convert(affinity_nodim, "G"), 12969.6, tolerance = 500, scale = 1)
+# Reference value from p. 295 of Alberty (2003)
+expect_equal(convert(affinity_nodim, "G"), 12969.6, tolerance = 500, scale = 1, info = info)
 
-# Adenosine phosphorylation (model 2)
+info <- "Adenosine phosphorylation (model 2)"
 # adenosine_for_RNA excludes PO4-3 and AMP-2 (polymerization model from LaRowe and Dick, 2025)
 affinity_nodim <- as.numeric(phosphorylate("adenosine_for_RNA", "P")$a12)
 # For this let's use the same reference value as above, but with a greater expected difference
-expect_equal(convert(affinity_nodim, "G"), 12969.6, tolerance = 7000, scale = 1)
+expect_equal(convert(affinity_nodim, "G"), 12969.6, tolerance = 7000, scale = 1, info = info)
 
-# Adenosine phosphorylation (to cAMP): circular reference
+info <- "Adenosine phosphorylation (to cAMP)"
 # Delta G0 are placeholder values
 mod.OBIGT("cyclic-HAMP", formula = "C10H12N5O6P", G = 0)
 mod.OBIGT("cyclic-AMP-1", formula = "C10H11N5O6P-", G = 0)
 affinity_nodim <- as.numeric(phosphorylate("adenosine_to_cAMP", "P")$a12)
-expect_equal(affinity_nodim, -149.20, tolerance = 0.01, scale = 1)
+# Circular reference
+expect_equal(affinity_nodim, -149.20, tolerance = 0.01, scale = 1, info = info)
 
-# Ribose phosphorylation: circular reference
+info <- "Ribose phosphorylation"
 affinity_nodim <- as.numeric(phosphorylate("ribose", "P")$a12)
-expect_equal(affinity_nodim, -3.75, tolerance = 0.01, scale = 1)
+# Circular reference
+expect_equal(affinity_nodim, -3.75, tolerance = 0.01, scale = 1, info = info)
 
-# Uridine phosphorylation: circular reference
+info <- "Uridine phosphorylation"
 affinity_nodim <- as.numeric(phosphorylate("uridine", "P")$a12)
-expect_equal(affinity_nodim, -2.24, tolerance = 0.01, scale = 1)
+# Circular reference
+expect_equal(affinity_nodim, -2.24, tolerance = 0.01, scale = 1, info = info)
 
-# AMP phosphorylation: circular reference
+info <- "AMP phosphorylation"
 affinity_nodim <- as.numeric(phosphorylate("AMP", "P")$a12)
-expect_equal(affinity_nodim, -5.83, tolerance = 0.01, scale = 1)
+# Circular reference
+expect_equal(affinity_nodim, -5.83, tolerance = 0.01, scale = 1, info = info)
 
-# ADP phosphorylation: circular reference
+info <- "ADP phosphorylation"
 affinity_nodim <- as.numeric(phosphorylate("ADP", "P")$a12)
-expect_equal(affinity_nodim, -6.52, tolerance = 0.01, scale = 1)
+# Circular reference
+expect_equal(affinity_nodim, -6.52, tolerance = 0.01, scale = 1, info = info)
 
-# Pyruvate phosphorylation with ATP: reference value from p. 224 of Alberty (2003)
+info <- "Pyruvate phosphorylation with ATP"
 mod.OBIGT("phosphoenolpyruvate", formula = "C3H5O6P", G = 0)
 mod.OBIGT("phosphoenolpyruvate-1", formula = "C3H4O6P-", G = 0)
 mod.OBIGT("phosphoenolpyruvate-2", formula = "C3H3O6P-2", G = -1303610)
 mod.OBIGT("phosphoenolpyruvate-3", formula = "C3H2O6P-3", G = -1263650)
 affinity_nodim <- as.numeric(phosphorylate("pyruvic acid", "ATP")$a12)
-expect_equal(convert(affinity_nodim, "G"), 30622.4, tolerance = 4000, scale = 1)
+# Reference value from p. 224 of Alberty (2003)
+expect_equal(convert(affinity_nodim, "G"), 30622.4, tolerance = 4000, scale = 1, info = info)
 
-# Pyruvate phosphorylation with acetylphosphate: circular reference
+info <- "Pyruvate phosphorylation with acetylphosphate"
 affinity_nodim <- as.numeric(phosphorylate("pyruvic acid", "acetylphosphate")$a12)
-expect_equal(affinity_nodim, -5.06, tolerance = 0.01, scale = 1)
+# Circular reference
+expect_equal(affinity_nodim, -5.06, tolerance = 0.01, scale = 1, info = info)
 
 info <- "Error produced with unknown reactant or P_source"
 # reactant should be pyruvic acid, not pyruvate
-expect_error(phosphorylate("pyruvate", "acetylphosphate"), "unrecognized reactant")
+expect_error(phosphorylate("pyruvate", "acetylphosphate"), "unrecognized reactant", info = info)
 # acetyphosphate is missing an "l"
-expect_error(phosphorylate("pyruvic acid", "acetyphosphate"), "unrecognized P_source")
+expect_error(phosphorylate("pyruvic acid", "acetyphosphate"), "unrecognized P_source", info = info)
