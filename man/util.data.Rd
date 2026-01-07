@@ -14,7 +14,7 @@ Check self consistency of individual entries in database.
 }
 
 \usage{
-  thermo.refs(key = NULL, keep.duplicates = FALSE)
+  thermo.refs(key = NULL, keep.duplicates = FALSE, browser = getOption("browser"))
   check.EOS(eos, model, prop, return.difference = TRUE)
   check.GHS(ghs, return.difference = TRUE)
   check.OBIGT()
@@ -26,6 +26,7 @@ Check self consistency of individual entries in database.
 \arguments{
   \item{key}{character, numeric, or list; bibliographic reference key(s)}
   \item{keep.duplicates}{logical, keep duplicated references?}
+  \item{browser}{character, name of browser to use (see \code{\link{browseURL}})}
   \item{eos}{dataframe, equations-of-state parameters in the format of \code{thermo()$OBIGT}}
   \item{model}{character, thermodynamic model (see \code{\link{thermo}})}
   \item{prop}{character, property of interest (\samp{Cp} or \samp{V})}

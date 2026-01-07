@@ -6,7 +6,7 @@
 #source("util.data.R")
 #source("util.character.R")
 
-thermo.refs <- function(key = NULL, keep.duplicates = FALSE) {
+thermo.refs <- function(key = NULL, keep.duplicates = FALSE, browser = getOption("browser")) {
   ## Return references for thermodynamic data.
   ## 20110615 browse.refs() first version
   ## 20170212 thermo.refs() remove browsing (except for table of all sources)
@@ -128,8 +128,8 @@ thermo.refs <- function(key = NULL, keep.duplicates = FALSE) {
     .cat("</table></body></html>")
     ### End adaptation from print.findFn
     # Show table in browser
-    browseURL(File)
-    cat("thermo.refs: table of references is shown in browser\n")
+    browseURL(File, browser = browser)
+    message("thermo.refs: table of references is shown in browser")
   } else if(is.character(key)) {
     # Return citation information for the given source(s)
     # We omit the [S92] in "HDNB78 [S92]" etc.

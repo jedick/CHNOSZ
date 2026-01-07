@@ -137,3 +137,29 @@ expect_error(add.OBIGT(file), "XXX is not a file and doesn't match any files in 
 #   temperatures and pressures of saturated and aromatic high molecular weight solid and liquid 
 #   hydrocarbons in kerogen, bitumen, petroleum, and other organic matter of biogeochemical interest. 
 #   Geochim. Cosmochim. Acta 62, 3591--3636. https://doi.org/10.1016/S0016-7037(97)00345-1
+
+# Tests added on 20260107
+
+info <- "thermo.refs() creates HTML table without error"
+# Create the HTML but divert the output to a NULL connection
+expect_silent(thermo.refs(browser = sink), info = info)
+# Turn off the connection
+sink()
+
+info <- "thermo.refs() returns reference for source key"
+expect_equal(thermo.refs("HDNB78")$key, "HDNB78", info = info)
+
+info <- "thermo.refs() returns reference for species index"
+expect_equal(thermo.refs(info("SiO2"))$key, "SHS89", info = info)
+
+info <- "thermo.refs() returns references for subcrt() species output"
+expect_equal(thermo.refs(subcrt("carrollite"))$key, "HDR+24", info = info)
+
+info <- "thermo.refs() returns references for subcrt() reaction output"
+expect_equal(thermo.refs(subcrt(c("oxygen", "O2"), c(-1, 1)))$key, c("WEP+82", "SHS89", "Kel60"), info = info)
+
+info <- "check.OBIGT() runs without error"
+expect_silent(out <- check.OBIGT(), info = info)
+
+info <- "dumpdata() runs without error"
+expect_silent(dd <- dumpdata(), info = info)
