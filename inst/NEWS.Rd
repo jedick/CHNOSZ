@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-17 (2026-01-06)}{
+\section{Changes in CHNOSZ version 2.2.0-20 (2026-01-07)}{
 
     \itemize{
 
@@ -51,6 +51,10 @@
 
       \item Remove \code{lex()}, which only wrapped its argument in
       \code{as.expression(c())}.
+
+      \item Remove unused subroutines in \file{src/H2O92D.f}: \code{valTD},
+      \code{Psublm}, \code{TsHGK}, \code{TdPsdT}, \code{tcorr}, and
+      \code{cpswap}.
 
     }
 

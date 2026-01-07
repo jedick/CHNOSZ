@@ -193,6 +193,8 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
         c("H3ADP", "H2ADP-", "HADP-2", "ADP-3", "Mg2ADP+", "MgHADP", "MgADP-"),
         c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3")
       )
+    } else {
+      stop(paste("unrecognized P_source:", P_source))
     }
     basis("pH", const_pH)
     basis("Mg+2", loga_Mg)
@@ -218,7 +220,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
 } # end of phosphorylate()
 
 # Define a function to make the plots for a given reaction
-phospho_plot <- function(reactant, P_source, loga_Mg = -999) {
+phospho_plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
 
   # Reaction-independent settings (activities of species)
   # The product (phosphorylated species)
@@ -237,7 +239,6 @@ phospho_plot <- function(reactant, P_source, loga_Mg = -999) {
   pH <- c(0, 12)
   T <- c(0, 200)
   P <- c(1, 5000)
-  res <- 50
 
   # Define which contour levels to show
   levels <- c(-1e6, seq(-100, 100, 10), 1e6)

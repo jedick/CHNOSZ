@@ -9,7 +9,7 @@
 \usage{
 phosphorylate(reactant, P_source, loga_reactant = 0, loga_product = 0, 
   loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, loga_Mg = -999, ...)
-phospho_plot(reactant, P_source, loga_Mg = -999)
+phospho_plot(reactant, P_source, loga_Mg = -999, res = 50)
 }
 \arguments{
   \item{reactant}{
@@ -29,6 +29,7 @@ phospho_plot(reactant, P_source, loga_Mg = -999)
   \item{\dots}{
     additional arguments passed to \code{\link{mosaic}},
     such as \code{pH}, \code{T} (temperature), or \code{P} (pressure) ranges for multi-dimensional calculations.}
+  \item{res}{numeric, plot resolution}
 }
 
 \details{
