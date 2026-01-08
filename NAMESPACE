@@ -13,7 +13,7 @@ export(
   "unitize",
   "thermo.refs", "mod.OBIGT",
 # examples
-  "examples", "demos", "mtitle",
+  "mtitle",
   "list2array", "slice", "dimSums", "slice.affinity",
   "add.OBIGT", "RH2OBIGT",
   "expr.property", "expr.units",

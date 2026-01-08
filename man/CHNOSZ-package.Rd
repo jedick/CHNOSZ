@@ -8,11 +8,11 @@ CHNOSZ is a package for thermodynamic calculations, primarily with applications 
 It can be used to calculate the standard molal thermodynamic properties and chemical affinities of reactions relevant to geobiochemical processes, and to visualize the equilibrium activities of species on chemical speciation and predominance diagrams.
 }
 
-\section{Warm Tips}{
+\section{Tips}{
   \itemize{
     \item To view the manual, run \code{help.start()} then select \sQuote{Packages} and \sQuote{CHNOSZ}. Examples in the function help pages can be run by pasting the code block into the \R console.
     \item Also check out the vignette \viglink{anintro} (\emph{An Introduction to CHNOSZ}).
-    \item Run the command \code{\link{examples}()} to run all of the examples provided in CHNOSZ. This should take about a minute.
+    \item See \code{\link{examples}()} to run all of the examples and demos in the package.
   }
 }
 

@@ -1,9 +1,11 @@
 ****************************
 Release checklist for CHNOSZ
-   (updated 2024-12-25)
+   (updated 2026-01-08)
 ****************************
 
-- Run examples() and demos() and inspect their output (especially plots)
+- Run all examples and demos and inspect their output (especially plots):
+  demo(examples_png, ask = FALSE) 
+  demo(demos_png, ask = FALSE) 
 
 - Run the package tests with:
   suppressMessages(tinytest::test_package("CHNOSZ", at_home = TRUE))

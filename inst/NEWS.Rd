@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-20 (2026-01-07)}{
+\section{Changes in CHNOSZ version 2.2.0-23 (2026-01-07)}{
 
     \itemize{
 
@@ -55,6 +55,13 @@
       \item Remove unused subroutines in \file{src/H2O92D.f}: \code{valTD},
       \code{Psublm}, \code{TsHGK}, \code{TdPsdT}, \code{tcorr}, and
       \code{cpswap}.
+
+      \item Add CI workflow for Codecov.
+
+      \item Move \code{demos()} and \code{examples()} functions to demos. These
+      "meta-demos" show output on screen (\file{demo/demos.R},
+      \file{demo/examples.R}) or save to PNG files (\file{demo/demos_png.R},
+      \file{demo/examples_png.R})
 
     }
 

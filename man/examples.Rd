@@ -2,34 +2,20 @@
 \name{examples}
 \alias{examples}
 \alias{demos}
-\title{Run examples from the documentation}
+\title{Run package examples and demos}
 \description{
-  Run the examples contained in each of the documentation topics. }
-
-\arguments{
-  \item{save.png}{logical, generate PNG image files for the plots?}
-  \item{which}{character, which example to run}
-}
-
-\usage{
-  examples(save.png = FALSE)
-  demos(which = c("references", "dehydration", "affinity", "NaCl",
-    "density", "ORP", "ionize", "buffer", "protbuff",
-    "glycinate", "mosaic", "copper", "arsenic", "solubility", "gold",
-    "contour", "sphalerite", "minsol", "Shh", "saturation",
-    "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum", "AD",
-    "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity",
-    "uranyl", "sum_S", "MgATP", "rubisco_Zc", "phosphorylate"),
-    save.png = FALSE)
+  Run examples and demos in the package, showing output on screen or saved to PNG files.
 }
 
 \details{
 
-\code{examples} runs all the examples in the help pages for the package. 
-\code{\link{example}} is called for each topic with \code{ask} set to \code{FALSE} (so all of the figures are shown without prompting the user).
+\code{examples} and \code{demos} are meta-demos that run all the examples (from the help pages) and other demos in the package.
+Run these demos with \code{ask = FALSE} to proceed without asking the user.
 
-\code{demos} runs all the \code{\link{demo}s} in the package.
-The demo(s) to run is/are specified by \code{which}; the default is to run them in the order of the list below.
+\code{examples_png} and \code{demos_png} run all the examples and demos, saving output to PNG files.
+The plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
+
+The package demos are described below.
 
   \describe{
     \item{references}{Cross-check the references in refs.csv with the thermodynamic database}
@@ -72,7 +58,6 @@ The demo(s) to run is/are specified by \code{which}; the default is to run them 
     \item{phosphorylate}{Phosphorylation model for Gibbs energy of nucleotide polymerization into RNA (LaRowe and Dick, 2025)}
   }
 
-For either function, if \code{save.png} is TRUE, the plots are saved in \code{\link{png}} files whose names begin with the names of the help topics or demos.
 
 Two of the demos have external dependencies and are not automatically run by \code{demos}.
 \samp{carboxylase} creates an animated GIF; this demo requires that the ImageMagick \code{convert} commmand be available on the system (tested on Linux and Windows).
@@ -171,10 +156,11 @@ Zimmer K, Zhang Y, Lu P, Chen Y, Zhang G, Dalkilic M, Zhu C. 2016. SUPCRTBL: A r
 
 
 \examples{
-\dontshow{reset()}
-\dontshow{opar <- par(no.readonly = TRUE)}
-demos(c("ORP", "NaCl"))
-\dontshow{par(opar)}
+# Run all the examples (about 20 s)
+\dontrun{demo(examples, ask = FALSE)}
+
+# Run all the demos (about 4 min)
+\dontrun{demo(demos, ask = FALSE)}
 }
 
 \concept{Other tools}

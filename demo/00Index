@@ -1,3 +1,7 @@
+demos           Meta-demo that runs all other demos (screen output)
+demos_png       Meta-demo that runs all other demos (PNG output)
+examples        Demo that runs all examples in the package (screen output)
+examples_png    Demo that runs all examples in the package (PNG output)
 references      Cross-check the references in refs.csv with the thermodynamic database
 affinity        Affinities of metabolic reactions and amino acid synthesis
 NaCl            Equilibrium constant for aqueous NaCl dissociation
@@ -36,3 +40,4 @@ uranyl          Total (carbonate|sulfate)-pH diagrams for uranyl species
 MgATP           Speciation of ATP with H+ and Mg+2
 rubisco_Zc      Zc of Rubisco vs optimal growth temperature
 phosphorylate   Phosphorylation model for Gibbs energy of nucleotide polymerization into RNA
+
