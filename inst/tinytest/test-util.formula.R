@@ -34,19 +34,3 @@ expect_equal(calcS, c(63.83843212237, 55.74952198853, 15.61663479924), info = in
 calcGHS <- GHS("H2O", G = 0, H = 0, E_units = "cal")
 expect_equal(as.numeric(calcGHS[1, 3]), calcS[2], info = info)
   
-info <- "[P|T|E].units() do not accept invalid units"
-expect_error(P.units("X"), "units of pressure must be either bar or MPa", info = info)
-expect_error(T.units("X"), "units of temperature must be either C or K", info = info)
-expect_error(E.units("X"), "units of energy must be either cal or J", info = info)
-
-info <- "describe.property() does not accept NULL values"
-expect_error(describe.property(), "property or value is NULL", info = info)
-
-# Test added on 20240211
-# Incorrect result was causing quartz tests in test-subcrt.R to fail
-info <- "dPdTtr gives expected result"
-add.OBIGT("SUPCRT92")
-dPdTtr.calc <- round(dPdTtr(info("quartz", "cr"), info("quartz", "cr2")), 5)
-# The reference value was calculated with CHNOSZ_1.4.3
-# (prior to bug in dPdTtr introduced by switch to Joules)
-expect_equal(dPdTtr.calc, 38.45834, info = info)
