@@ -139,12 +139,17 @@ ana <- as.numeric(unlist(a.buffer[[1]]))
 expect_equal(ana, and, info = info)
 
 # Tests added on 20260106
-info <- "Function works with 'dotted', 'lty.aq', and 'lty.cr' arguments"
+info <- "No error with 'dotted', 'lty.aq', and 'lty.cr' arguments"
 basis(c("Fe", "H2O", "H+", "e-"))
 species(c("Fe+2", "Fe+3", "magnetite", "hematite"))
 a <- affinity(pH = c(0, 12, 50), Eh = c(-1, 1, 50))
 expect_silent(diagram(a, dotted = 3), info = info)
 expect_silent(diagram(a, lty.cr = 2, lty.aq = 3), info = info)
+
+# Test added on 20260110
+info <- "No error with reversed axes"
+a <- affinity(pH = c(12, 0, 50), Eh = c(1, -1, 50))
+expect_silent(diagram(a), info = info)
 
 # Close the graphics device and remove the temporary PNG file
 dev.off()
