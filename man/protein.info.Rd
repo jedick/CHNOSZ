@@ -13,7 +13,7 @@
 }
 
 \usage{
-  pinfo(protein, organism=NULL, residue=FALSE, regexp=FALSE)
+  pinfo(protein, organism=NULL, residue=FALSE)
   protein.length(protein, organism = NULL)
   protein.formula(protein, organism = NULL, residue = FALSE)
   protein.OBIGT(protein, organism = NULL, state=thermo()$opt$state)
@@ -24,7 +24,6 @@
   \item{protein}{character, names of proteins; numeric, species index of proteins; data frame; amino acid composition of proteins}
   \item{organism}{character, names of organisms}
   \item{residue}{logical, return per-residue values (those of the proteins divided by their lengths)?}
-  \item{regexp}{logical, find matches using regular expressions?}
   \item{normalize}{logical, return per-residue values (those of the proteins divided by their lengths)?}
   \item{state}{character, physical state}
   \item{T}{numeric, temperature in \degC}
@@ -34,9 +33,6 @@
 For character \code{protein}, \code{pinfo} returns the rownumber(s) of \code{thermo()$protein} that match the protein names.
 The names can be supplied in the single \code{protein} argument (with an underscore, denoting protein_organism) or as pairs of \code{protein}s and \code{organism}s.
 NA is returned for any unmatched proteins, including those for which no \code{organism} is given or that do not have an underscore in \code{protein}.
-
-Alternatively, if \code{regexp} is TRUE, the \code{protein} argument is used as a pattern (regular expression); rownumbers of all matches of \code{thermo()$protein$protein} to this pattern are returned.
-When using \code{regexp}, the \code{organism} can optionally be provided to return only those entries that also match \code{thermo()$protein$organism}.
 
 For numeric \code{protein}, \code{pinfo} returns the corresponding row(s) of \code{thermo()$protein}.
 Set \code{residue} to TRUE to return the per-residue composition (i.e. amino acid composition of the protein divided by total number of residues).

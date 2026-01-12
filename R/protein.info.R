@@ -7,7 +7,7 @@
 # protein.OBIGT: perform group additivity calculations
 # protein.basis: coefficients of basis species in formation reactions of [ionized] proteins [residues]
 
-pinfo <- function(protein, organism = NULL, residue = FALSE, regexp = FALSE) {
+pinfo <- function(protein, organism = NULL, residue = FALSE) {
   # Return the `protein` (possibly per residue) for:
   #   dataframe `protein`
   # Return the rownumber(s) of thermo()$protein for:
@@ -29,19 +29,11 @@ pinfo <- function(protein, organism = NULL, residue = FALSE, regexp = FALSE) {
     if(residue) out[, 5:25] <- out[, 5:25]/rowSums(out[, 6:25])
   } else {
     t_p <- get("thermo", CHNOSZ)$protein
-    # Search for protein by regular expression
-    if(regexp) {
-      iprotein <- grepl(protein, t_p$protein)
-      iorganism <- iprotein
-      if(!is.null(organism)) iorganism <- grepl(organism, t_p$organism)
-      iprotein <- which(iprotein & iorganism)
-    } else {
-      # Search for protein or protein_organism in thermo()$protein
-      t_p_names <- paste(t_p$protein, t_p$organism, sep = "_")
-      if(is.null(organism)) my_names <- protein
-      else my_names <- paste(protein, organism, sep = "_")
-      iprotein <- match(my_names, t_p_names)
-    }
+    # Search for protein or protein_organism in thermo()$protein
+    t_p_names <- paste(t_p$protein, t_p$organism, sep = "_")
+    if(is.null(organism)) my_names <- protein
+    else my_names <- paste(protein, organism, sep = "_")
+    iprotein <- match(my_names, t_p_names)
     out <- iprotein
   }
   out
