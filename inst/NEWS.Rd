@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-23 (2026-01-07)}{
+\section{Changes in CHNOSZ version 2.2.0-31 (2026-02-17)}{
 
     \itemize{
 
@@ -30,6 +30,9 @@
 
       \item Add stibnite (Sb\s{2}S\s{3}) from
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
+
+      \item Add skutterudite (CoAs\s{2.92}) and heazlewoodite (Ni\s{3}S\s{2})
+      from \href{https://doi.org/10.2138/am-2022-8337}{Majzlan et al. (2022)}.
 
       \item Add \code{phosphorylate()} to calculate affinity of phosphorylation
       reactions with pH-dependent speciation, including Mg-complexed species.
