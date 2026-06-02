@@ -182,6 +182,7 @@ logK <- "log&thinsp;<i>K</i>"
 Hplus <- "H<sup>+</sup>"
 HCO2_ <- "HCO<sub>2</sub><sup>−</sup>"
 HCO3_ <- "HCO<sub>3</sub><sup>−</sup>"
+CO3__ <- "CO<sub>3</sub><sup>−2</sup>"
 O2 <- "O<sub>2</sub>"
 S2 <- "S<sub>2</sub>"
 log <- "log&thinsp;"
@@ -983,5 +984,132 @@ First, the triangular area above the water stability limit should be labeled as 
 Second, the boundary between pyrite and magnetite should have one bend, not two.
 
 *Added on 2024-04-01.*
+
+## How is the *sum of activities* of basis species defined for mosaic diagrams?
+
+Short answer:
+
+- `basis(..., log_activity)` before `mosaic()` defines the **sum of activities** of the set of basis species starting with `...` in the `bases` argument to `mosaic()`.
+- `basis(..., log_activity)` before `affinity()` defines the **activity** of the single basis species identified by `...`.
+
+Longer explanation:
+
+The purpose of `mosaic()` is to *speciate the basis species*; that is, to allow an element such as S to be distributed among different candidate basis species,
+which in turn are used to construct the formation reactions of species for relative stability calculations.
+Let's take `r H2S` as the starting basis species for S.
+If we define a *constant activity of `r H2S`*, then the distribution of S-bearing basis species looks like the plot on the left.
+If we define a *constant sum of activities* of S-bearing species, we get the plot on the right.
+
+<button id="B-H2S_plot" onclick="ToggleDiv('H2S_plot')">Show code</button>
+<div id="D-H2S_plot" style="display: none">
+```{r H2S_plot, eval = FALSE}
+par(mfrow = c(1, 2))
+
+# The basis species we are speciating
+bases <- c("H2S", "HS-", "HSO4-", "SO4-2")
+# The basis species defining the system
+# Note 1: for mosaic(), the first species in 'bases' must be in this list
+# Note 2: for solubility(), the first species in this list must contain S
+basis(c("H2S", "CO2", "H2O", "O2", "H+"))
+# Define a low fO2 so reduced sulfur dominates over most of the pH range
+basis("O2", -75)
+# The pH range we'll look at
+pH <- c(0, 14)
+# The logarithm of activity used for aH2S or sum(S)
+log_activity <- -2
+
+# Left-hand plot: Constant log aH2S, variable sum(S)
+# Set it up as a solubility calculation
+# Define a single log aH2S
+species("H2S", log_activity)
+# Specify the aqueous species in equilibrium with H2S
+iaq <- info(bases)
+# Run the calculation to calculate all species' activities
+s <- solubility(iaq, pH = c(0, 14))
+# Diagram individual activities then total activity
+diagram(s, type = "loga.equil", ylim = c(-15, 10))
+diagram(s, lwd = 2, col = 4, add = TRUE)
+title(quote("Constant"~italic(a)*H[2]*S))
+
+# Right-hand plot: Constant sum(S), variable log aH2S
+# Start by loading all the candidate species with preset activities
+species(bases)
+# Calculate affinities of formation reactions
+a <- affinity(pH = pH)
+# Equilibrate the species for a total activity of S
+e <- equilibrate(a, loga.balance = log_activity)
+# Diagram individual activities then total activity
+diagram(e, ylim = c(-15, 10))
+diagram(e, lwd = 2, col = 4, add = TRUE, type = "loga.balance")
+title(quote("Constant total activity of S ("*sum(italic(a)*S)*")"))
+```
+</div>
+
+```{r H2S_plot, echo = FALSE, message = FALSE, results = "hide", fig.width = 9, fig.height = 4.5, out.width = "100%", fig.align = "center", pngquant = pngquant, cache = TRUE}
+```
+
+The right-hand plot is how `mosaic()` interprets the value defined in `basis("H2S", log_activity)`.
+If `log_activity` is -2, then the formation reactions see these activities of `r H2S`:
+
+- log *a*`r H2S` = -2 at pH 0
+- log *a*`r H2S` = -11 at pH 14
+
+`r H2S` practically disappears at pH 14 and is replaced by `r SO4__` with a log activity of -2.
+Thus, for the purposes of `mosaic()`, `basis("H2S", -2)` defines a constant sum of activity of all S-bearing basis species, not a constant activity of `r H2S`.
+
+What does this mean in practice?
+It means that the affinities to form minerals or aqueous species are sensitive to the speciation of basis species.
+Let's set up a simple system to compare the affinities of forming calcite (CaCO~3~) and anhydrite (CaSO~4~) as a function of pH.
+If we define constant activities of carbonate (`r CO3__`) and sulfate (`r SO4__`), we get the plot on the left.
+The flat lines are suspicious; the protonated forms of these ions are are stabilized by acidic conditions, and changing the basis species should change the affinities.
+
+<button id="B-CO3SO4_plot" onclick="ToggleDiv('CO3SO4_plot')">Show code</button>
+<div id="D-CO3SO4_plot" style="display: none">
+```{r CO3SO4_plot, eval = FALSE}
+par(mfrow = c(1, 2))
+
+# Look at the stabilities of calcite and anhydrite
+basis(c("Ca+2", "CO3-2", "SO4-2", "H2O", "O2", "H+"))
+basis("Ca+2", -3)
+# For afffinity(), these are single activities
+# For mosaic(), these are total activities for groups of species in the 'bases' list
+basis("CO3-2", -3)
+basis("SO4-2", -3)
+species(c("calcite", "anhydrite"))
+
+# affinity() calculation
+a <- affinity(pH = pH)
+diagram(a, ylim = c(-5, 3))
+title(quote("affinity(): constant"~italic(a)*CO[3]^"-2"~and~italic(a)*SO[4]^"-2"))
+
+# mosaic() calculation
+bases <- list(
+  c("CO3-2", "HCO3-", "CO2"),
+  c("SO4-2", "HSO4-")
+)
+m <- mosaic(bases, pH = pH)
+diagram(m$A.species, ylim = c(-5, 3))
+title(quote("mosaic(): constant"~sum(italic(a)*C)~and~sum(italic(a)*S)))
+```
+</div>
+
+```{r CO3SO4_plot, echo = FALSE, message = FALSE, results = "hide", fig.width = 9, fig.height = 4.5, out.width = "100%", fig.align = "center", pngquant = pngquant, cache = TRUE}
+```
+
+The key idea is to speciate the basis species by listing the candatate basis species in the `bases` argument of `mosaic()`:
+
+```r
+bases <- list(
+  c("CO3-2", "HCO3-", "CO2"),
+  c("SO4-2", "HSO4-")
+)
+m <- mosaic(bases, pH = pH)
+```
+
+This underlies the diagram on the right.
+The lower affinity at lower pH makes sense because the activities of `r CO3__` and `r SO4__` are becoming depleted as the protonated forms become more stable.
+In both cases the total activity of C and S in the sets of basis species defined by `bases` is constant.
+
+*Added on 2026-06-02.*
 
 ## References

@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-31 (2026-02-17)}{
+\section{Changes in CHNOSZ version 2.2.0-33 (2026-06-02)}{
 
     \itemize{
 
@@ -65,6 +65,9 @@
       "meta-demos" show output on screen (\file{demo/demos.R},
       \file{demo/examples.R}) or save to PNG files (\file{demo/demos_png.R},
       \file{demo/examples_png.R})
+
+      \item Add FAQ question: How is the \emph{sum of activities} of basis
+      species defined for mosaic diagrams?
 
     }
 

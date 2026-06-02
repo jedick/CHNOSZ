@@ -1638,7 +1638,7 @@ e <- equilibrate(a, normalize = TRUE, loga.balance = 0)
 col <- c("darkred", "red", "darkgray", "blue", "darkblue")
 diagram(e, ylim = c(-4, -2.5), col = col, lwd = 2)
 legend("bottomleft", c("High-T reducing", NA, NA, NA, "Low-T oxidizing"),
-  lty = 1:5, col = col, title = "Environmental Conditions", inset = c(0.1, 0))
+  lty = 1:5, col = col, title = "Source environment", inset = c(0.1, 0))
 ```
 
 The `normalize = TRUE` option is important for proteins because their large size leads to extreme separation of activities in metastable equilibrium.
@@ -1701,7 +1701,7 @@ pI(aa)
 GRAVY(aa)
 ```
 
-### Comprehensive example: Parameter optimization to fit experimental protein abundances
+### End-to-end example: Parameter optimization to fit experimental protein abundances
 
 Let's analyze the relative abundances of proteins from the ER-to-Golgi location in *S. cerevisiae* (yeast)
 and compare theoretical predictions with experimental measurements from the YeastGFP study [@GHB_03]:
