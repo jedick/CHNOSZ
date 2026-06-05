@@ -65,6 +65,7 @@
     \item \code{RH98_Table15.csv} Group stoichiometries for high molecular weight crystalline and liquid organic compounds taken from Table 15 of Richard and Helgeson, 1998. The first three columns have the \code{compound} name, \code{formula} and physical \code{state} (\samp{cr} or \samp{liq}). The remaining columns have the numbers of each group in the compound; the names of the groups (columns) correspond to species in \code{\link{thermo}$OBIGT}. The compound named \samp{5a(H),14a(H)-cholestane} in the paper has been changed to \samp{5a(H),14b(H)-cholestane} here to match the group stoichiometry given in the table. See \code{\link{RH2OBIGT}} for a function that uses this file.
     \item \code{SK95.csv} contains thermodynamic data for alanate, glycinate, and their complexes with metals, taken from Amend and Helgeson (1997) and Shock and Koretsky (1995) as corrected in slop98.dat. These data are used in \code{demo("copper")} and \code{demo("glycinate")}.
     \item \code{LA19_test.csv} contains thermodynamic data for dimethylamine and trimethylamine from LaRowe and Amend (2019) in energy units of both J and cal. This file is used in \code{test-util.data.R}) to check the messages produced by \code{\link{check.GHS}} and \code{\link{check.EOS}}.
+    \item \code{C-127.txt} and \code{Fe-001.txt} are the NIST-JANAF tables for ethyne(gas) and wustite(cr), downloaded from \url{https://janaf.nist.gov/tables/C-127.txt} and \url{https://janaf.nist.gov/tables/Fe-001.txt} (NIST, 1998).
   }
 
 }
@@ -97,6 +98,8 @@ LaRowe DE, Amend JP. 2019. The energetics of fermentation in natural settings. \
 Makarova KS, Wolf YI, Iranzo J, Shmakov SA, Alkhnbashi OS, Brouns SJJ, Charpentier E, Cheng D, Haft DH, Horvath P, Moineau S, Mojica FJM, Scott D, Shah SA, Siksnys V, Terns MP, Venclovas Č, White MF, Yakunin AF, Yan W, Zhang F, Garrett RA, Backofen R, van der Oost J, Barrangou R, Koonin EV. 2020. Evolutionary classification of CRISPR-Cas systems: a burst of class 2 and derived variants. \emph{Nat Rev Microbiol} \bold{18}: 67--83. \doi{10.1038/s41579-019-0299-x}
 
 Merino E. 1975. Diagenesis in tertiary sandstones from Kettleman North Dome, California. II. Interstitial solutions: distribution of aqueous species at 100°C and chemical relation to diagenetic mineralogy. \emph{Geochim Cosmochim Acta} \bold{39}: 1629--1645. \doi{10.1016/0016-7037(75)90085-X}
+
+NIST. 1998. NIST-JANAF Thermochemical Tables. \doi{10.18434/T42S31}
 
 Privalov PL, Makhatadze GI. 1990. Heat capacity of proteins. II. Partial molar heat capacity of the unfolded polypeptide chain of proteins: Protein unfolding effects. \emph{J Mol Biol} \bold{213}: 385--391. \doi{10.1016/S0022-2836(05)80198-6}
 

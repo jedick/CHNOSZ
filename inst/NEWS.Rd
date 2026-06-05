@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-34 (2026-06-04)}{
+\section{Changes in CHNOSZ version 2.2.0-35 (2026-06-05)}{
 
     \itemize{
 
@@ -68,6 +68,9 @@
 
       \item Add FAQ question: How is the \emph{sum of activities} of basis
       species defined for mosaic diagrams?
+
+      \item Add \code{JANAF.to.OBIGT()} to import data for gases from
+      \href{https://doi.org/10.18434/T42S31}{NIST-JANAF Thermochemical Tables}.
 
       \item Add ethyne(gas) (acetylene) from
       \href{https://doi.org/10.18434/T42S31}{NIST-JANAF Thermochemical Tables}.

@@ -343,4 +343,4 @@ OBIGT.7,"J. M. Dick",2019,"OBIGT database in CHNOSZ","Tl(Gly) and Tl(Gly)<sub>2<
 OBIGT.8,"J. M. Dick",2019,"OBIGT database in CHNOSZ","GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",https://chnosz.net
 OBIGT.9,"J. M. Dick",2021,"OBIGT database in CHNOSZ","diaminopimelic acid, putrescine and spermidine: parameters recalculated to account for a missing [-CH2NH2] group in the group additivity equations",https://chnosz.net
 OBIGT25,OBIGT,2025,"OBIGT database in CHNOSZ","corrected H by -7335 cal/mol to maintain GHS consistency for In<sup>+3</sup> and derived species",https://chnosz.net
-OBIGT26,OBIGT,2026,"OBIGT database in CHNOSZ","Fit Cp values using JANAF_to_OBIGT.R",https://chnosz.net
+OBIGT26,OBIGT,2026,"OBIGT database in CHNOSZ","Fit Cp values using JANAF.to.OBIGT.R",https://chnosz.net
