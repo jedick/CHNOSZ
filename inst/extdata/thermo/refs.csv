@@ -111,6 +111,7 @@ ST97,"D. Shvedov and P. R. Tremaine",1997,"J. Solution Chem. 26, 1113-1143","dim
 DRT98,"I. I. Diakonov et al.",1998,"Chem. Geol. 151, 327-347","REE hydroxides",https://doi.org/10.1016/S0009-2541(98)00088-6
 HOKR98,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00219-6
 HOKR98.1,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","amino acids",https://doi.org/10.1016/S0016-7037(97)00219-6
+JANAF98,NIST,1998,"NIST-JANAF Thermochemical Tables","imported thermodynamic data",https://doi.org/10.18434/T42S31
 PS98,"G. S. Pokrovski and J. Schott",1998,"Geochim. Cosmochim. Acta 62, 1631-1642","GeO<sub>2</sub> (hex) and (tetr) (augite)",https://doi.org/10.1016/S0016-7037(98)00081-7
 PS98.1,"G. S. Pokrovski and J. Schott",1998,"Geochim. Cosmochim. Acta 62, 1631-1642","Ge hydroxide and oxyhydroxide complexes",https://doi.org/10.1016/S0016-7037(98)00081-7
 RH98,"L. Richard and H. C. Helgeson",1998,"Geochim. Cosmochim. Acta 62, 3591-3636","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00345-1
@@ -333,7 +334,6 @@ RSS+24,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","alkylami
 RSS+24.1,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","corrected V for tripropylaminium",https://doi.org/10.1016/j.gca.2024.03.013
 TAT+25,"B. R. Tagirov, N. N. Akinfiev et al.",2025,"Geochim. Cosmochim. Acta 406, 285-304","Au-(hydro)sulfide species and SO<sub>4</sub><sup>-2</sup>-bearing species",https://doi.org/10.1016/j.gca.2024.08.022
 TAZ24,"B. R. Tagirov, N. N. Akinfiev and A. V. Zotov",2024,"Geol. Ore Deposits 66, 581-597","Au hydroxide and chloride complexes",https://doi.org/10.1134/S1075701524600403
-OBIGT25,OBIGT,2025,"OBIGT database in CHNOSZ","corrected H by -7335 cal/mol to maintain GHS consistency for In<sup>+3</sup> and derived species",https://chnosz.net
 OBIGT.1,"J. M. Dick",2017,"OBIGT database in CHNOSZ","GHS (T<sub>r</sub>) of the polymorph that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the polymorphs that are stable at higher temperatures.",https://chnosz.net
 OBIGT.3,"J. M. Dick",2017,"OBIGT database in CHNOSZ","AuCl<sub>4</sub><sup>-</sup> renamed to AuCl<sub>4</sub><sup>-3</sup>",https://chnosz.net
 OBIGT.4,"J. M. Dick",2017,"OBIGT database in CHNOSZ","charge of NpO<sub>2</sub>(Oxal), La(Succ)<sup>+</sup>, NH<sub>4</sub>(Succ)<sup>-</sup>, and NpO<sub>2</sub>(Succ) as listed by @PSK99",https://chnosz.net
@@ -342,3 +342,5 @@ OBIGT.6,"J. M. Dick",2019,"OBIGT database in CHNOSZ","recalculated values of Cp 
 OBIGT.7,"J. M. Dick",2019,"OBIGT database in CHNOSZ","Tl(Gly) and Tl(Gly)<sub>2</sub><sup>-</sup>: change Ti to Tl",https://chnosz.net
 OBIGT.8,"J. M. Dick",2019,"OBIGT database in CHNOSZ","GHS recalculated by adding difference from SiO<sub>2</sub> [@SSH97] to updated values for SiO<sub>2</sub> [@AS04]",https://chnosz.net
 OBIGT.9,"J. M. Dick",2021,"OBIGT database in CHNOSZ","diaminopimelic acid, putrescine and spermidine: parameters recalculated to account for a missing [-CH2NH2] group in the group additivity equations",https://chnosz.net
+OBIGT25,OBIGT,2025,"OBIGT database in CHNOSZ","corrected H by -7335 cal/mol to maintain GHS consistency for In<sup>+3</sup> and derived species",https://chnosz.net
+OBIGT26,OBIGT,2026,"OBIGT database in CHNOSZ","Fit Cp values using JANAF_to_OBIGT.R",https://chnosz.net
