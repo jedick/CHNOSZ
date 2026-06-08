@@ -85,7 +85,7 @@ Dick JM. 2014. Average oxidation state of carbon in proteins. \emph{J R Soc Inte
 
 Gattiker A, Michoud K, Rivoire C, Auchincloss AH, Coudert E, Lima T, Kersey P, Pagni M, Sigrist CJA, Lachaize C, Veuthey A-L, Gasteiger E, Bairoch A. 2003. Automatic annotation of microbial proteomes in Swiss-Prot. \emph{Comput Biol Chem} \bold{27}: 49--58. \doi{10.1016/S1476-9271(02)00094-4}
 
-Helgeson HC, Delany JM, Nesbitt HW, Bird DK. 1978. Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am J Sci} \bold{278-A}: 1--229. \url{https://www.worldcat.org/oclc/13594862}
+Helgeson HC, Delany JM, Nesbitt HW, Bird DK. 1978. Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am J Sci} \bold{278-A}: 1--229. \url{https://worldcat.org/title/13594862}
 
 Hnědkovský L, Wood RH, Majer V. 1996. Volumes of aqueous solutions of \CH4, \CO2, \H2S, and \NH3 at temperatures from 298.15 K to 705 K and pressures to 35 MPa. \emph{J Chem Thermodyn} \bold{28}: 125--142. \doi{10.1006/jcht.1996.0011}
 
@@ -105,7 +105,7 @@ Privalov PL, Makhatadze GI. 1990. Heat capacity of proteins. II. Partial molar h
 
 Richard L, Helgeson HC. 1998. Calculation of the thermodynamic properties at elevated temperatures and pressures of saturated and aromatic high molecular weight solid and liquid hydrocarbons in kerogen, bitumen, petroleum, and other organic matter of biogeochemical interest. \emph{Geochim Cosmochim Acta} \bold{62}: 3591--3636. \doi{10.1016/S0016-7037(97)00345-1}
 
-Robie RA, Hemingway BS. 1995. \emph{Thermodynamic Properties of Minerals and Related Substances at 298.15 K and 1 Bar (\eqn{10^5} Pascals) Pressure and at Higher Temperatures}. U S Geol Surv Bull 2131, 461 p. \url{https://www.worldcat.org/oclc/32590140}
+Robie RA, Hemingway BS. 1995. \emph{Thermodynamic Properties of Minerals and Related Substances at 298.15 K and 1 Bar (\eqn{10^5} Pascals) Pressure and at Higher Temperatures}. U S Geol Surv Bull 2131, 461 p. \url{https://worldcat.org/title/32590140}
 
 Shock E, Canovas P. 2010. The potential for abiotic organic synthesis and biosynthesis at seafloor hydrothermal systems. \emph{Geofluids} \bold{10}: 161--192. \doi{10.1111/j.1468-8123.2010.00277.x}
 

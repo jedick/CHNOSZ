@@ -668,7 +668,7 @@ allkeys <- lapply(iall, function(x) thermo.refs(x)$key)
 allkeys
 ```
 
-The next code chunk prepends `@` to the reference keys and uses the chunk option [`results = 'asis'`](https://bookdown.org/yihui/rmarkdown-cookbook/results-asis.html) to insert the citations into the R Markdown document in chronological order.
+The next code chunk prepends `@` to the reference keys and uses the chunk option [`results = 'asis'`](https://pkg.yihui.org/rmarkdown-cookbook/results-asis.html) to insert the citations into the R Markdown document in chronological order.
 
 ```{r stack2.cite, results = "asis"}
 allyears <- lapply(iall, function(x) thermo.refs(x)$year)

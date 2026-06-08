@@ -52,7 +52,7 @@ legend("bottomright", lty = c(0, 0, 1, 2, 3, 0), pch = c(1, 4, NA, NA, NA, NA), 
        legend = c("Hemley et al., 1980", "SUPCRTBL", "CHNOSZ", 'add.OBIGT("SiO2")', 'add.OBIGT("AD")', ""))
 legend("bottomright", lty = 4, pch = NA, lwd = 1, col = "blue", legend = 'add.OBIGT("SUPCRT92")', bty = "n", cex = 0.9)
 legend("topleft", c("Boehmite - Kaolinite", "After Zhu and Lu, 2009 Fig. A1"), bty = "n")
-# Helgeson et al., 1978 (HDNB78): http://www.worldcat.org/oclc/13594862
+# Helgeson et al., 1978 (HDNB78): https://worldcat.org/title/13594862
 # Shock et al., 1989 (SHS89): doi:10.1016/0016-7037(89)90341-4
 # Berman, 1988 (Ber88): doi:10.1093/petrology/29.2.445
 # Holland and Powell, 2011 (HP11): 10.1111/j.1525-1314.2010.00923.x

@@ -13,8 +13,8 @@ library(CHNOSZ)
 # with subsequently different axis ranges
 
 ## H2O-CaO-MgO-SiO2 at 300 degree C and 1000 bar
-## Helgeson et al., 1969, p. 136 (http://www.worldcat.org/oclc/902423149)
-## Bowers et al., 1984, p. 246 (http://www.worldcat.org/oclc/224591948)
+## Helgeson et al., 1969, p. 136 (https://worldcat.org/title/902423149)
+## Bowers et al., 1984, p. 246 (https://worldcat.org/title/224591948)
 par(cex = 1.4)
 basis(c("SiO2", "Ca+2", "Mg+2", "carbon dioxide", "H2O", "O2", "H+"))
 species(c("quartz", "talc", "chrysotile", "forsterite", "tremolite",

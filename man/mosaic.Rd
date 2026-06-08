@@ -99,7 +99,7 @@ diagram(m1$A.bases, add = TRUE, col = 8, col.names = 8, lty = 3)
 }
 
 \references{
-Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://www.worldcat.org/oclc/517586}
+Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://worldcat.org/title/517586}
 }
 
 \concept{Extended workflow}

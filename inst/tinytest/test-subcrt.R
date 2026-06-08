@@ -269,4 +269,4 @@ expect_true(is.na(s.H2O$G[1]), info = info)
 
 # Helgeson, H. C., Delany, J. M., Nesbitt, H. W. and Bird, D. K. (1978) 
 #   Summary and critique of the thermodynamic properties of rock-forming minerals. 
-#   Am. J. Sci. 278-A, 1--229. http://www.worldcat.org/oclc/13594862
+#   Am. J. Sci. 278-A, 1--229. https://worldcat.org/title/13594862

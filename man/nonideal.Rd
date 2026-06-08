@@ -225,7 +225,7 @@ nonideal("Bdot")  # or reset()
 \references{
 Alberty RA. 2001. Effect of temperature on standard transformed Gibbs energies of formation of reactants at specified pH and ionic strength and apparent equilibrium constants of biochemical reactions. \emph{J Phys Chem B} \bold{105}: 7865--7870. \doi{10.1021/jp011308v}
 
-Alberty RA. 2003. \emph{Thermodynamics of Biochemical Reactions}. Hoboken, NJ: John Wiley & Sons. 397 p. \url{https://www.worldcat.org/oclc/51242181}
+Alberty RA. 2003. \emph{Thermodynamics of Biochemical Reactions}. Hoboken, NJ: John Wiley & Sons. 397 p. \url{https://worldcat.org/title/51242181}
 
 Clarke ECW, Glew DN. 1980. Evaluation of Debye-Hückel limiting slopes for water between 0 and 150°C. \emph{J Chem Soc Faraday Trans} \bold{76}: 1911--1916. \doi{10.1039/f19807601911}
 

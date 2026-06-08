@@ -37,11 +37,11 @@ expect_equal(round(as.numeric(deltaG_kJ), 2), -32.15, info = info)
 
 # Tests added on 20260107
 
-info <- "phospho_plot() doesn't error"
+info <- "phospho.plot() doesn't error"
 # Save plot to a temporary PNG file
 pngfile <- tempfile(fileext = ".png")
 png(pngfile)
-expect_silent(phospho_plot("adenosine_to_AMP", "PP", loga_Mg = -5, res = 50), info = info)
+expect_silent(phospho.plot("adenosine_to_AMP", "PP", loga_Mg = -5, res = 50), info = info)
 # Close the graphics device and remove the temporary PNG file
 dev.off()
 file.remove(pngfile)

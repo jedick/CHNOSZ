@@ -157,7 +157,7 @@ print(w)
 \references{
 Archer DG, Wang PM. 1990. The dielectric constant of water and Debye-Hückel limiting law slopes. \emph{J Phys Chem Ref Data} \bold{19}: 371--411. \doi{10.1063/1.555853}
 
-Haar L, Gallagher JS, Kell GS. 1984. \emph{NBS/NRC Steam Tables}. Washington, DC: Hemisphere. 320 p. \url{https://www.worldcat.org/oclc/301304139}
+Haar L, Gallagher JS, Kell GS. 1984. \emph{NBS/NRC Steam Tables}. Washington, DC: Hemisphere. 320 p. \url{https://worldcat.org/title/301304139}
 
 Helgeson HC, Kirkham DH. 1974. Theoretical prediction of the thermodynamic behavior of aqueous electrolytes at high pressures and temperatures. I. Summary of the thermodynamic/electrostatic properties of the solvent. \emph{Am J Sci} \bold{274}: 1089--1098. \doi{10.2475/ajs.274.10.1089}
 

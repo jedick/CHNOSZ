@@ -289,9 +289,9 @@ reset()
 }
 
 \references{
-Cox JD, Wagman DD, Medvedev VA, eds. 1989. \emph{CODATA Key Values for Thermodynamics}. New York: Hemisphere Publishing Corporation. 271 p. \url{https://www.worldcat.org/oclc/18559968}
+Cox JD, Wagman DD, Medvedev VA, eds. 1989. \emph{CODATA Key Values for Thermodynamics}. New York: Hemisphere Publishing Corporation. 271 p. \url{https://worldcat.org/title/18559968}
 
-Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://www.worldcat.org/oclc/517586}
+Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://worldcat.org/title/517586}
 
 Thoenen T, Hummel W, Berner U, Curti E. 2014. \emph{The PSI/Nagra Chemical Thermodynamic Database 12/07}. Villigen, Switzerland: Paul Scherrer Institut. \url{https://www.psi.ch/en/les/database}
 

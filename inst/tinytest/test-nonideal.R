@@ -16,7 +16,7 @@ maxdiff <- function(x, y) max(abs(y - x))
 info <- "A and B parameters are calculated correctly"
 ## Psat
 # Values from Helgeson, 1967 "Solution chemistry and metamorphism"
-# (chapter in http://www.worldcat.org/oclc/152725534)
+# (chapter in https://worldcat.org/title/152725534)
 T <- c(25, 50, 100, 200, 300, 350)
 A <- c(0.5095, 0.5354, 0.6019, 0.8127, 1.2979, 1.9936)
 B <- c(0.3284, 0.3329, 0.3425, 0.3659, 0.4010, 0.4300)

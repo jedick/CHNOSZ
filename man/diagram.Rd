@@ -321,9 +321,9 @@ Dick JM. 2019. CHNOSZ: Thermodynamic calculations and diagrams for geochemistry.
 
 Dick JM, Shock EL. 2011. Calculation of the relative chemical stabilities of proteins as a function of temperature and redox chemistry in a hot spring. \emph{PLOS One} \bold{6}: e22782. \doi{10.1371/journal.pone.0022782}
 
-Helgeson HC. 1970. A chemical and thermodynamic model of ore deposition in hydrothermal systems. \emph{Mineral Soc Am Spec Pap} \bold{3}: 155--186. \url{https://www.worldcat.org/oclc/583263}
+Helgeson HC. 1970. A chemical and thermodynamic model of ore deposition in hydrothermal systems. \emph{Mineral Soc Am Spec Pap} \bold{3}: 155--186. \url{https://worldcat.org/title/583263}
 
-Helgeson HC, Delany JM, Nesbitt HW, Bird DK. 1978. Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am J Sci} \bold{278-A}: 1--229. \url{https://www.worldcat.org/oclc/13594862}
+Helgeson HC, Delany JM, Nesbitt HW, Bird DK. 1978. Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am J Sci} \bold{278-A}: 1--229. \url{https://worldcat.org/title/13594862}
 
 LaRowe DE, Helgeson HC. 2007. Quantifying the energetics of metabolic reactions in diverse biogeochemical systems: electron flow and ATP synthesis. \emph{Geobiology} \bold{5}: 153--168. \doi{10.1111/j.1472-4669.2007.00099.x}
 

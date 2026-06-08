@@ -1,6 +1,6 @@
 # Calculate affinity of phosphorylation reactions taking account of speciation
 # 20251206 first version (extracted from sugars paper script) jmd
-# 20251208 add phospho_plot()
+# 20251208 add phospho.plot()
 # 20251224 add Mg species
 
 phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 0, loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, loga_Mg = -999, ...) {
@@ -220,7 +220,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
 } # end of phosphorylate()
 
 # Define a function to make the plots for a given reaction
-phospho_plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
+phospho.plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
 
   # Reaction-independent settings (activities of species)
   # The product (phosphorylated species)
@@ -410,5 +410,5 @@ phospho_plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
   # Return the calculated value
   G.kJ
 
-} # end of phospho_plot()
+} # end of phospho.plot()
 

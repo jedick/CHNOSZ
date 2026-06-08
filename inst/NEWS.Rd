@@ -211,7 +211,7 @@
       \href{https://doi.org/10.1007/978-3-662-02293-1}{Barin et al. (1977)}.
 
       \item Add CoSO\s{4} and beta-Nb\s{2}O\s{5} from
-      \href{https://www.worldcat.org/oclc/8139446}{Naumov et al. (1974)}. A PDF
+      \href{https://worldcat.org/title/8139446}{Naumov et al. (1974)}. A PDF
       of this publication is available from the
       \href{https://ntrl.ntis.gov/NTRL/}{National Technical Reports Library}.
       
@@ -449,7 +449,7 @@
       \href{https://doi.org/10.3749/2300028}{von der Heyden et al. (2024)}.
 
       \item Modify cattierite (CoS\s{2}) and linnaeite (Co\s{3}S\s{4}) to use
-      parameters from \href{https://www.worldcat.org/oclc/16131757}{Pankratz et
+      parameters from \href{https://worldcat.org/title/16131757}{Pankratz et
         al. (1987)} as listed by
       \href{https://doi.org/10.5382/econgeo.4895}{Williams-Jones and Vasyukova
         (2022)}.
@@ -543,11 +543,11 @@
       \item \samp{OBIGT/inorganic_cr.csv}: Modify linnaeite (Co\s{3}S\s{4}) to
       use 25 \degC parameters from \href{https://doi.org/10.3133/b2131}{Robie
         and Hemingway (1995)} and heat capacity coefficients from
-      \href{https://www.worldcat.org/oclc/16131757}{Pankratz et al. (1987)}.
+      \href{https://worldcat.org/title/16131757}{Pankratz et al. (1987)}.
 
       \item \samp{OBIGT/inorganic_cr.csv}: Modify Co-pentlandite
       (Co\s{9}S\s{8}) to use parameters from
-      \href{https://www.worldcat.org/oclc/16131757}{Pankratz et al. (1987)} as
+      \href{https://worldcat.org/title/16131757}{Pankratz et al. (1987)} as
       listed by \href{https://doi.org/10.5382/econgeo.4895}{Williams-Jones and
         Vasyukova (2022)}.
 
@@ -840,7 +840,7 @@
     \itemize{
 
       \item Add \samp{demo/Pourbaix.R} (Eh-pH diagrams with isosolubility
-      lines, after \href{https://www.worldcat.org/oclc/563921897}{Pourbaix,
+      lines, after \href{https://worldcat.org/title/563921897}{Pourbaix,
       1974}). This demo depends on the following two changes.
 
       \item Revise \code{solubility()} to enable calculating overall (i.e.
@@ -1043,7 +1043,7 @@
 
       \item \samp{inorganic_cr.csv}: Add linnaeite (Co\s{3}S\s{4}) and
       Co-pentlandite (Co\s{9}S\s{8}) from
-      \href{https://www.worldcat.org/oclc/801856147}{Vaughan and Craig, 1978}
+      \href{https://worldcat.org/title/801856147}{Vaughan and Craig, 1978}
       and cattierite (CoS\s{2}) and cobalt from
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway,
         1995}.

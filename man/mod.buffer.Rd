@@ -130,7 +130,7 @@ affinity(return.buffer = TRUE)
 }
 
 \references{
-Garrels RM. 1960. \emph{Mineral Equilibria}. New York: Harper & Brothers. 254 p. \url{https://www.worldcat.org/oclc/552690}
+Garrels RM. 1960. \emph{Mineral Equilibria}. New York: Harper & Brothers. 254 p. \url{https://worldcat.org/title/552690}
 }
 
 \concept{Extended workflow}

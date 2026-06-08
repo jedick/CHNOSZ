@@ -62,7 +62,7 @@ export(
 # added 20220620
   "stack_mosaic",
 # added 20251207
-  "phosphorylate", "phospho_plot", "hyphen.in.pdf",
+  "phosphorylate", "phospho.plot", "hyphen.in.pdf",
 # added 20260605
   "JANAF.to.OBIGT"
 )

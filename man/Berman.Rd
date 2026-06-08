@@ -118,7 +118,7 @@ reset()
 }
 
 \references{
-Anderson GM. 2005. \emph{Thermodynamics of Natural Systems}. 2nd ed. Cambridge, UK: Cambridge University Press. 648 p. \url{https://www.worldcat.org/oclc/474880901}
+Anderson GM. 2005. \emph{Thermodynamics of Natural Systems}. 2nd ed. Cambridge, UK: Cambridge University Press. 648 p. \url{https://worldcat.org/title/474880901}
 
 Berman RG. 1988. Internally-consistent thermodynamic data for minerals in the system Na{\s2}O-K{\s2}O-CaO-MgO-FeO-Fe{\s2}O{\s3}-Al{\s2}O{\s3}-SiO{\s2}-TiO{\s2}-H{\s2}O-CO{\s2}. \emph{J Petrol} \bold{29}: 445--522. \doi{10.1093/petrology/29.2.445}
 
@@ -126,7 +126,7 @@ Berman RG, Aranovich LYa. 1996. Optimized standard state and solution properties
 
 Berman RG. 2007. winTWQ (version 2.3): A software package for performing internally-consistent thermobarometric calculations. \emph{Open File} \bold{5462}, Geological Survey of Canada. 41 p. \doi{10.4095/223425}
 
-Helgeson HC, Delany JM, Nesbitt HW, Bird DK. 1978. Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am J Sci} \bold{278-A}: 1--229. \url{https://www.worldcat.org/oclc/13594862}
+Helgeson HC, Delany JM, Nesbitt HW, Bird DK. 1978. Summary and critique of the thermodynamic properties of rock-forming minerals. \emph{Am J Sci} \bold{278-A}: 1--229. \url{https://worldcat.org/title/13594862}
 }
 
 \concept{Thermodynamic calculations}

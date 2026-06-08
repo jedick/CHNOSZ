@@ -1,6 +1,6 @@
 \name{phosphorylate}
 \alias{phosphorylate}
-\alias{phospho_plot}
+\alias{phospho.plot}
 \title{Calculate affinity of phosphorylation reactions with pH-dependent speciation}
 \description{
   Calculate the affinity and Gibbs energy of phosphorylation reactions accounting for pH-dependent speciation of reactants, products, and phosphate sources using the mosaic approach.
@@ -9,7 +9,7 @@
 \usage{
 phosphorylate(reactant, P_source, loga_reactant = 0, loga_product = 0, 
   loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, loga_Mg = -999, ...)
-phospho_plot(reactant, P_source, loga_Mg = -999, res = 50)
+phospho.plot(reactant, P_source, loga_Mg = -999, res = 50)
 }
 \arguments{
   \item{reactant}{
@@ -57,7 +57,7 @@ phospho_plot(reactant, P_source, loga_Mg = -999, res = 50)
   
   The function returns affinity values that can be converted to standard transformed Gibbs energy using \code{\link{convert}}.
 
-  \code{phospho_plot} creates a set of \T-pH and \P-pH plots showing Gibbs energy of phosphorylation reactions (contour labels are kJ/mol).
+  \code{phospho.plot} creates a set of \T-pH and \P-pH plots showing Gibbs energy of phosphorylation reactions (contour labels are kJ/mol).
   It uses \code{loga_P_source = loga_P_remainder = -3}, \code{loga_product = -6}, and \code{loga_reactant} equal to -6, -4, and -2.
   However, if \code{reactant} is \samp{adenosine_for_RNA}, then \code{loga_P_source} is made equal to \code{loga_reactant} in each plot.
   The \samp{adenosine_for_RNA} reactant uses only protonated species (i.e., no AMP\S{-2} or PO\s{4}\S{-3})
@@ -124,7 +124,7 @@ print(paste("DeltaG at pH 7 with non-unit activities:",
 }
 
 \references{
-Alberty RA. 2003. \emph{Thermodynamics of Biochemical Reactions}. Hoboken, NJ: John Wiley & Sons. 397 p. \url{https://www.worldcat.org/oclc/51242181}
+Alberty RA. 2003. \emph{Thermodynamics of Biochemical Reactions}. Hoboken, NJ: John Wiley & Sons. 397 p. \url{https://worldcat.org/title/51242181}
 
 Degani C, Halmann M. 1966. Solvolysis of phosphoric acid esters. Hydrolysis of glucose 6-phosphate. Kinetic and tracer studies. \emph{J Am Chem Soc} \bold{88}: 4075--4082. \doi{10.1021/ja00969a033}
 

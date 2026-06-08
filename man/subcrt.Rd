@@ -229,7 +229,7 @@ thermo("opt$varP" = FALSE)
 }
 
 \references{
-Anderson GM, Crerar DA. 1993. \emph{Thermodynamics in Geochemistry: The Equilibrium Model}. New York: Oxford University Press. \url{https://www.worldcat.org/oclc/803272549}
+Anderson GM, Crerar DA. 1993. \emph{Thermodynamics in Geochemistry: The Equilibrium Model}. New York: Oxford University Press. \url{https://worldcat.org/title/803272549}
 
 Johnson JW, Oelkers EH, Helgeson HC. 1992. SUPCRT92: A software package for calculating the standard molal thermodynamic properties of minerals, gases, aqueous species, and reactions from 1 to 5000 bar and 0 to 1000°C. \emph{Comput Geosci} \bold{18}: 899--947. \doi{10.1016/0098-3004(92)90029-Q}
 
