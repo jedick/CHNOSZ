@@ -1,33 +1,34 @@
 key,author,year,citation,note,URL
-Kel60,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gases Cp",https://www.worldcat.org/oclc/693388901
-Kel60.2,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","iron Cp",https://www.worldcat.org/oclc/693388901
-Kel60.3,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gypsum Cp",https://www.worldcat.org/oclc/693388901
-Pan70,"L. B. Pankratz",1970,"U. S. Bureau of Mines Report of Investigations 7430",chlorargyrite,https://www.worldcat.org/oclc/14154245
-PK70,"L. B. Pankratz and E. G. King",1970,"U. S. Bureau of Mines Report of Investigations 7435","bornite and chalcopyrite",https://www.worldcat.org/oclc/14154292
-NRK74,"Naumov, G. B., Ryzhenko, B. N., & Khodakovsky, I. L.",1974,"Handbook of Thermodynamic Data (U.S. Geol. Surv.)","beta-Nb<sub>2</sub>O<sub>5</sub> and CoSO<sub>4</sub>",https://www.worldcat.org/oclc/8139446
-NRK74.1,"Naumov, G. B., Ryzhenko, B. N., & Khodakovsky, I. L.",1974,"Handbook of Thermodynamic Data (U.S. Geol. Surv.)","GeS<sub>2</sub> [Cp coefficients from @PMW87]",https://www.worldcat.org/oclc/8139446
+Kel60,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gases Cp",https://worldcat.org/title/693388901
+Kel60.2,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","iron Cp",https://worldcat.org/title/693388901
+Kel60.3,"K. K. Kelley",1960,"U. S. Bureau of Mines Bull. 584","gypsum Cp",https://worldcat.org/title/693388901
+PW67,"L. B. Pankratz and W. W. Weller",1967,"U. S. Bureau of Mines Report of Investigations 7001","spodumene and eucryptite Cp",https://worldcat.org/title/14154292
+Pan70,"L. B. Pankratz",1970,"U. S. Bureau of Mines Report of Investigations 7430",chlorargyrite,https://worldcat.org/title/14154245
+PK70,"L. B. Pankratz and E. G. King",1970,"U. S. Bureau of Mines Report of Investigations 7435","bornite and chalcopyrite",https://worldcat.org/title/14154292
+NRK74,"Naumov, G. B., Ryzhenko, B. N., & Khodakovsky, I. L.",1974,"Handbook of Thermodynamic Data (U.S. Geol. Surv.)","beta-Nb<sub>2</sub>O<sub>5</sub> and CoSO<sub>4</sub>",https://worldcat.org/title/8139446
+NRK74.1,"Naumov, G. B., Ryzhenko, B. N., & Khodakovsky, I. L.",1974,"Handbook of Thermodynamic Data (U.S. Geol. Surv.)","GeS<sub>2</sub> [Cp coefficients from @PMW87]",https://worldcat.org/title/8139446
 RH72,"R. A. Robie and B. S. Hemingway",1972,"Am. Mineral. 57, 1768-1781","nesquehonite Cp",https://pubs.geoscienceworld.org/msa/ammin/article-pdf/57/11-12/1768/4256711/am-1972-1768.pdf
-BKK77,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement",spherocobaltite,https://www.worldcat.org/oclc/695258
-BKK77.1,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","willemite Cp",https://www.worldcat.org/oclc/695258
-BKK77.2,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","Ga<sub>2</sub>S<sub>3</sub> and In<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>",https://www.worldcat.org/oclc/695258
-HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229",minerals,https://www.worldcat.org/oclc/13594862
-HDNB78.2,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","celestite V and Cp parameters",https://www.worldcat.org/oclc/13594862
+BKK77,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement",spherocobaltite,https://worldcat.org/title/695258
+BKK77.1,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","willemite Cp",https://worldcat.org/title/695258
+BKK77.2,"I. Barin, O. Knacke and O. Kubaschewski",1977,"Thermochemical Properties of Inorganic Substances: Supplement","Ga<sub>2</sub>S<sub>3</sub> and In<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>",https://worldcat.org/title/695258
+HDNB78,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229",minerals,https://worldcat.org/title/13594862
+HDNB78.2,"H. C. Helgeson, J. M. Delany et al.",1978,"Am. J. Sci. 278A, 1-229","celestite V and Cp parameters",https://worldcat.org/title/13594862
 RHF78,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",chlorargyrite,https://doi.org/10.3133/b1452
 RHF78.2,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452",iron,https://doi.org/10.3133/b1452
 RHF78.3,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","gibbsite GHS",https://doi.org/10.3133/b1452
 RHF78.4,"R. A. Robie, B. S. Hemingway and J. R. Fisher",1978,"U. S. Geological Survey Bull. 1452","rutile and titanite",https://doi.org/10.3133/b1452
 Den81,"K. Denbigh",1981,"The Principles of Chemical Equilibrium","hydrogen ion convention",https://doi.org/10.1017/CBO9781139167604
 Hem82,"B. S. Hemingway",1982,"U. S. Geological Survey Open-File Report 82-619","Cp values of rutherfordine used to obtain parameters of Maier-Kelley equation",https://doi.org/10.3133/ofr82619
-Pan82,"L. B. Pankratz",1987,"Thermodynamic Properties of Elements and Oxides (U.S. Bureau of Mines Bull. 672)","gallium, Ga<sub>2</sub>O<sub>3</sub>, indium, In<sub>2</sub>O<sub>3</sub>",https://www.worldcat.org/oclc/8476714
+Pan82,"L. B. Pankratz",1987,"Thermodynamic Properties of Elements and Oxides (U.S. Bureau of Mines Bull. 672)","gallium, Ga<sub>2</sub>O<sub>3</sub>, indium, In<sub>2</sub>O<sub>3</sub>",https://worldcat.org/title/8476714
 PB82,"L. N. Plummer and E. Busenberg",1982,"Geochim. Cosmochim. Acta 46, 1011-1040","aragonite and calcite",https://doi.org/10.1016/0016-7037(82)90056-4
 WEP+82,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","gases GHS",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
 WEP+82.1,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","Mn(OH)<sub>2</sub> (amorphous) and MgSO<sub>4</sub>",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
 BH83,"T. S. Bowers and H. C. Helgeson",1983,"Geochim. Cosmochim. Acta 47, 1247-1275",rutile,https://doi.org/10.1016/0016-7037(83)90066-2
-HGK84,"L. Haar and J. S. Gallagher and G. S. Kell",1984,"NBS/NRC Steam Tables",thermodynamic properties of H<sub>2</sub>O outside of the critical region,https://www.worldcat.org/oclc/858456124
+HGK84,"L. Haar and J. S. Gallagher and G. S. Kell",1984,"NBS/NRC Steam Tables",thermodynamic properties of H<sub>2</sub>O outside of the critical region,https://worldcat.org/title/858456124
 Hel85,"H. C. Helgeson",1985,"Am. J. Sci. 285, 845-855","ferrosilite and siderite",https://doi.org/10.2475/ajs.285.9.845
 JH85,"K. J. Jackson and H. C. Helgeson",1985,"Econ. Geol. 80, 1365-1378","Sn minerals",https://doi.org/10.2113/gsecongeo.80.5.1365
-PMW87,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","cattierite, linnaeite, and Co-pentlandite",https://www.worldcat.org/oclc/16131757
-PMW87.1,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","GaS, InS, and In<sub>2</sub>S<sub>3</sub>",https://www.worldcat.org/oclc/16131757
+PMW87,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","cattierite, linnaeite, and Co-pentlandite",https://worldcat.org/title/16131757
+PMW87.1,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","GaS, InS, and In<sub>2</sub>S<sub>3</sub>",https://worldcat.org/title/16131757
 RA87,"E. J. Reardon and D. K. Armstrong",1987,"Geochim. Cosmochim. Acta 51, 63-72","celestite GHS",https://doi.org/10.1016/0016-7037(87)90007-X
 RS87,"J. R. Ruaya and T. M. Seward",1987,"Geochim. Cosmochim. Acta 51, 121-130",HCl,https://doi.org/10.1016/0016-7037(87)90013-5
 Ber88,"R. G. Berman",1988,"J. Petrol. 29, 445-522",minerals,https://doi.org/10.1093/petrology/29.2.445
@@ -79,6 +80,7 @@ RH95.6,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 213
 RH95.7,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","phase transition temperature",https://doi.org/10.3133/b2131
 RH95.8,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","brucite V",https://doi.org/10.3133/b2131
 RH95.9,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","germanium, cadmium, and greenockite (CdS)",https://doi.org/10.3133/b2131
+RH95.10,"R. A. Robie and B. S. Hemingway",1995,"U. S. Geological Survey Bull. 2131","petalite Cp",https://doi.org/10.3133/b2131
 SK95,"E. L. Shock and C. M. Koretsky",1995,"Geochim. Cosmochim. Acta 59, 1497-1532","metal-organic acid complexes",https://doi.org/10.1016/0016-7037(95)00058-8
 Sho95,"E. L. Shock",1995,"Am. J. Sci. 295, 496-580","carboxylic acids",https://doi.org/10.2475/ajs.295.5.496
 DPS+96,"I. Diakonov, G. Pokrovski et al.",1996,"Geochim. Cosmochim. Acta 60, 197-211",NaAl(OH)<sub>4</sub>,https://doi.org/10.1016/0016-7037(95)00403-3
@@ -182,6 +184,7 @@ MNM+06,"J. Majzlan, A. Navrotsky et al.",2006,"Eur. J. Mineral. 18, 175-186","co
 PK06,"K. Popa and R. J. M. Konings",2006,"Thermochim. Acta 445, 49-52","REE phosphates (monazites) [different G than @MWBC16]",https://doi.org/10.1016/j.tca.2006.03.023
 SGX+06,"A. V. Sharygin et al.",2006,"Geochim. Cosmochim. Acta 70, 5169-5182",KSO<sub>4</sub><sup>-</sup>,https://doi.org/10.1016/j.gca.2006.07.034
 Dic07,"J. M. Dick",2007,"Ph.D. Dissertation, Univ. of California","glutathione, cystine, and cystine sidechain",
+BVCN07,"I. Bobos et al.",2007,"Clay Clay Min. 55, 295-310","eucryptite, spodumene, cookeite, and petalite",https://doi.org/10.1346/CCMN.2007.0550306
 MA07,"L. Marini and M. Accornero",2007,"Environ. Geol. 52, 1343-1363","metal arsenate and arsenite complexes; linked to properties of arsenate and arsenite from @SSWS97",https://doi.org/10.1007/s00254-006-0578-5
 SLOP07.1,"E. L. Shock et al.",2007,"slop07.dat computer data file","corrected charge of Pu(Oxal)<sup>+2</sup>",https://doi.org/10.5281/zenodo.2630820
 SLOP07.2,"E. L. Shock et al.",2007,"slop07.dat computer data file","high temperature HKF parameters from @AP01",https://doi.org/10.5281/zenodo.2630820

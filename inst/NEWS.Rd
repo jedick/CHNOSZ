@@ -15,18 +15,25 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-35 (2026-06-05)}{
+\section{Changes in CHNOSZ version 2.2.0-36 (2026-06-08)}{
+
+  \subsection{MAIN USER-VISIBLE CHANGES}{
 
     \itemize{
 
-      \item \code{label.plot()} and \code{label.figure()} now handle
-      logarithmic scales for x and y axes.
+      \item Add \code{phosphorylate()} to calculate affinity of phosphorylation
+      reactions with pH-dependent speciation, including Mg-complexed species.
 
-      \item Fix bug preventing \code{mosaic()} from being used to form \H2O.
-      
-      \item For IAPWS95 water model, add 0.1 bar (0.01 MPa) to values of Psat >
-      1 bar computed from \code{WP02.auxiliary()} to prevent Born functions,
-      which are calculated as finite difference derivatives, from exploding.
+      \item Add \code{JANAF.to.OBIGT()} to import data for gases from
+      \href{https://doi.org/10.18434/T42S31}{NIST-JANAF Thermochemical Tables}.
+
+    }
+
+  }
+
+  \subsection{OBIGT DATABASE}{
+
+    \itemize{
 
       \item Add stibnite (Sb\s{2}S\s{3}) from
       \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
@@ -34,11 +41,34 @@
       \item Add skutterudite (CoAs\s{2.92}) and heazlewoodite (Ni\s{3}S\s{2})
       from \href{https://doi.org/10.2138/am-2022-8337}{Majzlan et al. (2022)}.
 
-      \item Add \code{phosphorylate()} to calculate affinity of phosphorylation
-      reactions with pH-dependent speciation, including Mg-complexed species.
+      \item Add gaseous ethyne (acetylene) from
+      \href{https://doi.org/10.18434/T42S31}{NIST-JANAF Thermochemical Tables}.
 
-      \item Add \code{hyphen.in.pdf()} for replacing minus signs with
-      hyphens in text added to PDF plots.
+      \item Add eucryptite, spodumene, cookeite, and petalite from
+      \href{https://doi.org/10.1346/CCMN.2007.0550306}{Bobos et al. (2007)}.
+
+    }
+
+  }
+
+
+  \subsection{DOCUMENTATION}{
+
+    \itemize{
+
+      \item Add FAQ question: How is the \emph{sum of activities} of basis
+      species defined for mosaic diagrams?
+
+      \item Add aqueous SO\s{2} and the trisulfur radical ion (S\s{3}\S{-}) to
+      basis species for mosaic calculations in examples, demos, and vignettes.
+      However, some lines with S\s{3}\S{-} are commented because of slowdowns
+      (especially in anintro.Rmd and multi-metal.Rmd). Thanks to Evgeniy
+      Bastrakov for suggesting this change.
+
+      \item Remove exported functions \code{demos()} and \code{examples()} and
+      make new demos from them. These "meta-demos" show output on screen
+      (\file{demo/demos.R}, \file{demo/examples.R}) or save to PNG files
+      (\file{demo/demos_png.R}, \file{demo/examples_png.R})
 
       \item Use \href{https://online.ucpress.edu/elementa}{Elementa} reference
       style (like \href{https://www.csemanual.org}{CSE} name-year style but all
@@ -46,11 +76,33 @@
 
       \item Add colors to \code{demo/NaCl.R}.
 
-      \item Add aqueous SO\s{2} and the trisulfur radical ion (S\s{3}\S{-}) to
-      basis species for mosaic calculations in examples, demos, and vignettes.
-      However, some lines with S\s{3}\S{-} are commented because of large
-      slowdowns (especially in anintro.Rmd and multi-metal.Rmd). Thanks to
-      Evgeniy Bastrakov for suggesting this change.
+    }
+
+  }
+
+  \subsection{BUG FIXES}{
+
+    \itemize{
+
+      \item Fix bug preventing \code{mosaic()} from being used to form \H2O.
+
+      \item For IAPWS95 water model, add 0.1 bar (0.01 MPa) to values of Psat >
+      1 bar computed from \code{WP02.auxiliary()} to prevent Born functions,
+      which are calculated as finite difference derivatives, from exploding.
+
+    }
+
+  }
+
+  \subsection{OTHER CHANGES}{
+
+    \itemize{
+
+      \item \code{label.plot()} and \code{label.figure()} now handle
+      logarithmic scales for x and y axes.
+
+      \item Add \code{hyphen.in.pdf()} for replacing minus signs with
+      hyphens in text added to PDF plots.
 
       \item Remove \code{lex()}, which only wrapped its argument in
       \code{as.expression(c())}.
@@ -61,21 +113,9 @@
 
       \item Add CI workflow for Codecov.
 
-      \item Move \code{demos()} and \code{examples()} functions to demos. These
-      "meta-demos" show output on screen (\file{demo/demos.R},
-      \file{demo/examples.R}) or save to PNG files (\file{demo/demos_png.R},
-      \file{demo/examples_png.R})
-
-      \item Add FAQ question: How is the \emph{sum of activities} of basis
-      species defined for mosaic diagrams?
-
-      \item Add \code{JANAF.to.OBIGT()} to import data for gases from
-      \href{https://doi.org/10.18434/T42S31}{NIST-JANAF Thermochemical Tables}.
-
-      \item Add ethyne(gas) (acetylene) from
-      \href{https://doi.org/10.18434/T42S31}{NIST-JANAF Thermochemical Tables}.
-
     }
+
+  }
 
 }
 

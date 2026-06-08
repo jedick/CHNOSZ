@@ -58,5 +58,5 @@ subcrt(inew)
 \references{
 Anderson GM. 2005. \emph{Thermodynamics of Natural Systems}. 2nd ed. Cambridge, UK: Cambridge University Press. 648 p. \url{https://www.worldcat.org/oclc/474880901}
 
-NIST. 1998. NIST-JANAF Thermochemical Tables. \doi{10.18434/T42S31}
+NIST. 1998. \emph{NIST-JANAF Thermochemical Tables}. \doi{10.18434/T42S31}
 }
