@@ -15,7 +15,7 @@
 \newcommand{\Cp}{\ifelse{latex}{\eqn{C_P}}{\ifelse{html}{\out{<I>C<sub>P</sub></I>}}{Cp}}}
 \newcommand{\DG0}{\ifelse{latex}{\eqn{{\Delta}G^{\circ}}}{\ifelse{html}{\out{&Delta;<I>G</I>&deg;}}{ΔG°}}}
 
-\section{Changes in CHNOSZ version 2.2.0-36 (2026-06-08)}{
+\section{Changes in CHNOSZ version 2.2.0-37 (2026-06-09)}{
 
   \subsection{MAIN USER-VISIBLE CHANGES}{
 
@@ -35,17 +35,21 @@
 
     \itemize{
 
-      \item Add stibnite (Sb\s{2}S\s{3}) from
-      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
+      \item Add REE minerals from
+      \href{https://doi.org/10.1016/j.chemgeo.2026.123471}{Pan et al. (2026)}.
 
       \item Add skutterudite (CoAs\s{2.92}) and heazlewoodite (Ni\s{3}S\s{2})
       from \href{https://doi.org/10.2138/am-2022-8337}{Majzlan et al. (2022)}.
 
-      \item Add gaseous ethyne (acetylene) from
-      \href{https://doi.org/10.18434/T42S31}{NIST-JANAF Thermochemical Tables}.
-
       \item Add eucryptite, spodumene, cookeite, and petalite from
       \href{https://doi.org/10.1346/CCMN.2007.0550306}{Bobos et al. (2007)}.
+
+      \item Add gaseous ethyne (acetylene) from
+      \href{https://doi.org/10.18434/T42S31}{NIST-JANAF Thermochemical Tables
+        (1998)}.
+
+      \item Add stibnite (Sb\s{2}S\s{3}) from
+      \href{https://doi.org/10.3133/b2131}{Robie and Hemingway (1995)}.
 
     }
 

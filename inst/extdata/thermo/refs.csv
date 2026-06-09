@@ -25,6 +25,7 @@ WEP+82,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Sup
 WEP+82.1,"D. D. Wagman, W. H. Evans et al.",1982,"J. Phys. Chem. Ref. Data 11, Suppl. 2, 1-392","Mn(OH)<sub>2</sub> (amorphous) and MgSO<sub>4</sub>",https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf
 BH83,"T. S. Bowers and H. C. Helgeson",1983,"Geochim. Cosmochim. Acta 47, 1247-1275",rutile,https://doi.org/10.1016/0016-7037(83)90066-2
 HGK84,"L. Haar and J. S. Gallagher and G. S. Kell",1984,"NBS/NRC Steam Tables",thermodynamic properties of H<sub>2</sub>O outside of the critical region,https://worldcat.org/title/858456124
+Pan84,"L. B. Pankratz",1984,"Thermodynamic Properties of Halides (U.S. Bureau of Mines Bull. 674)","YCl<sub>3</sub> and YF<sub>3</sub>",https://worldcat.org/title/10323723
 Hel85,"H. C. Helgeson",1985,"Am. J. Sci. 285, 845-855","ferrosilite and siderite",https://doi.org/10.2475/ajs.285.9.845
 JH85,"K. J. Jackson and H. C. Helgeson",1985,"Econ. Geol. 80, 1365-1378","Sn minerals",https://doi.org/10.2113/gsecongeo.80.5.1365
 PMW87,"L. B. Pankratz, A. D. Mah and S. W. Watson",1987,"Thermodynamic Properties of Sulfides (U.S. Bureau of Mines Bull. 689)","cattierite, linnaeite, and Co-pentlandite",https://worldcat.org/title/16131757
@@ -151,7 +152,6 @@ VPT01,"O. Vidal, T. Parra and F. Trotet",2001,"Am. J. Sci. 301, 557-592","daphni
 GKL02,"R. N. Goldberg et al.",2002,"J. Phys. Chem. Ref. Data 31, 231-370","glycine, diglycine, and triglycine (+1 and -1 ions) GHS",https://doi.org/10.1063/1.1416902
 AD03.1,"N. N. Akinfiev and L. W. Diamond",2003,"Geochim. Cosmochim. Acta 67, 613-629","dissolved gas species; parameters estimated from the experimental Henry's constant",https://doi.org/10.1016/S0016-7037(02)01141-9
 AD03.2,"N. N. Akinfiev and L. W. Diamond",2003,"Geochim. Cosmochim. Acta 67, 613-629","dissolved gas species; parameters estimated from standard state properties at 25 &deg; C",https://doi.org/10.1016/S0016-7037(02)01141-9
-KK03,"R. J. M. Konings and A. Kovács",2003,"Thermodynamic properties of the lanthanide(III) halides, in Handbook on the Physics and Chemistry of Rare Earths","REE chlorides and fluorides",https://doi.org/10.1016/S0168-1273(02)33003-4
 MGN03,"J. Majzlan, K.-D. Grevel and A. Navrotsky",2003,"Am. Mineral. 88, 855-859","goethite, lepidocrocite, and maghemite GHS",https://doi.org/10.2138/am-2003-5-614
 NA03,"D. K. Nordstrom and D. G. Archer",2003,"Arsenic thermodynamic data and environmental geochemistry. In Arsenic in Groundwater, eds. Welch and Stollenwerk, Kluwer","As oxide and sulfide minerals",
 NA03.1,"D. K. Nordstrom and D. G. Archer",2003,"Arsenic thermodynamic data and environmental geochemistry. In Arsenic in Groundwater, eds. Welch and Stollenwerk, Kluwer","aqueous As oxides and sulfides",
@@ -222,6 +222,7 @@ FDM+14,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","CO<sub>2</
 FDM+14.1,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","aragonite; source of data: `berman.dat`",https://doi.org/10.1016/j.gca.2014.01.030
 Kit14,"N. Kitadai",2014,"J. Mol. Evol. 78, 171-187","glycine, diglycine, and triglycine (zwitterions and ions); diketopiperazine, [Gly] and [UPBB] groups",https://doi.org/10.1007/s00239-014-9616-1
 KBK+14,"R. J. M. Konings et al.",2014,"J. Phys. Chem. Ref. Data 43, Article 013101","REE oxides",https://doi.org/10.1063/1.4825256
+KBK+14.1,"R. J. M. Konings et al.",2014,"J. Phys. Chem. Ref. Data 43, Article 013101","EuO",https://doi.org/10.1063/1.4825256
 PAB+14,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","corrected H of AuHS",https://doi.org/10.1144/SP402.4
 SBS14,"A. Stefánsson, P. Benézéth and J. Schott",2014,"Geochim. Cosmochim. Acta 138, 21-31",Mg(HCO<sub>3</sub>)<sup>+</sup>,https://doi.org/10.1016/j.gca.2014.04.008
 SHA14,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","SiO<sub>2</sub> and Si<sub>2</sub>O<sub>4</sub>",https://doi.org/10.1016/j.gca.2013.12.019
@@ -236,6 +237,7 @@ NLM+15,"A. Navrotsky et al.",2015,"J. Chem. Thermodyn.","REE phosphates (xenotim
 PD15,"G. S. Pokrovski and J. Dubessy",2015,"Earth Planet. Sci. Lett. 411, 298-309","trisulfur radical ion",https://doi.org/10.1016/j.epsl.2014.11.035
 LA16,"D. E. LaRowe and J. P. Amend",2016,"ISME J. 10, 1285-1295","fatty acids, saccharides, and other species",https://doi.org/10.1038/ismej.2015.227
 MWBC16,"A. A. Migdisov et al.",2016,"Chem. Geol. 439, 13-42","data compilation for REE minerals with modifications for OBIGT",https://doi.org/10.1016/j.chemgeo.2016.06.005
+MWBC16.1,"A. A. Migdisov et al.",2016,"Chem. Geol. 439, 13-42","REE chlorides and fluorides [traced to @KK03]",https://doi.org/10.1016/j.chemgeo.2016.06.005
 SLOP16.1,"E. L. Shock et al.",2016,"slop16.dat computer data file","&quot;Enthalpy changed to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements.&quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP16.2,"E. L. Shock et al.",2016,"slop16.dat computer data file","Zn(Ac)<sub>3</sub><sup>-</sup>: &quot;Enthalpy changed to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements. See footnote h in table 2 of @SSH97.&quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP16.3,"E. L. Shock et al.",2016,"slop16.dat computer data file","formaldehyde: &quot;Entropy corrected to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements. See footnote i in table 2 of @SS93.&quot;",https://doi.org/10.5281/zenodo.2630820
@@ -347,3 +349,5 @@ OBIGT.8,"J. M. Dick",2019,"OBIGT database in CHNOSZ","GHS recalculated by adding
 OBIGT.9,"J. M. Dick",2021,"OBIGT database in CHNOSZ","diaminopimelic acid, putrescine and spermidine: parameters recalculated to account for a missing [-CH2NH2] group in the group additivity equations",https://chnosz.net
 OBIGT25,OBIGT,2025,"OBIGT database in CHNOSZ","corrected H by -7335 cal/mol to maintain GHS consistency for In<sup>+3</sup> and derived species",https://chnosz.net
 OBIGT26,OBIGT,2026,"OBIGT database in CHNOSZ","Fit Cp values using JANAF.to.OBIGT.R",https://chnosz.net
+FG26,"Y. Figueroa Penarrieta and A. P. Gysi",2026,"Chem. Geol. 701, 123192","NdCl<sub>3</sub>&#42;6H<sub>2</sub>O",https://doi.org/10.1016/j.chemgeo.2025.123192
+PGM+26,"R. Pan, A. P. Gysi et al.",2026,"Chem. Geol. 715, 123471","data compilation and fits for REE minerals",https://doi.org/10.1016/j.chemgeo.2026.123471
