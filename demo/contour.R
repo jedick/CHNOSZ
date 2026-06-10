@@ -39,7 +39,7 @@ m <- mosaic(bases, pH = c(pH, res), O2 = c(O2, res), T = T, P = P, IS = NaCl$IS,
 # Show predominance fields for S-species
 diagram(m$A.bases, col = 8, col.names = 8, lty = 3, italic = TRUE)
 # Show predominance fields for Au-species
-# NOTE: balance = 1 is used to correctly handle *aqueous* multinuclear species ()
+# NOTE: balance = 1 is used to correctly handle *aqueous* multinuclear species (i.e. Au2S2-2)
 d <- diagram(m$A.species, col = 4, col.names = 4, lty = 2, bold = TRUE, add = TRUE, balance = 1)
 # Add dot-dash line for water stability limit
 water.lines(d, lty = 4)
