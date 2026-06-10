@@ -370,8 +370,9 @@ Pd [@TBZ+13],
 Zn [@AT14],
 Pt [@TBB15],
 Nb [@AKK+20],
-Ga and In [@HB24], and
-U [@MBA+25].
+Ga and In [@HB24],
+U [@MBA+25],
+KHSO<sub>4</sub> and KSO<sub>4</sub><sup>-</sup> [@TAT+25].
 
 Use `add.OBIGT("SLOP98")` to load the data.
 
@@ -424,7 +425,7 @@ Internally consistent dataset for aqueous species in the system Ca-Mg-Na-K-Al-Si
 
 <h3>IGEM</h3>
 
-Updates for Au and Cu complexes and SO<sub>4</sub><sup>-2</sup>-bearing species from researchers at the Institute of Geology of Ore Deposits, Petrography, Mineralogy, and Geochemistry, Russian Academy of Sciences (IGEM RAS) [@AZ23;@TTA+23;@TAT+25;@TAZ24].
+Updates for Cu complexes from researchers at the Institute of Geology of Ore Deposits, Petrography, Mineralogy, and Geochemistry, Russian Academy of Sciences (IGEM RAS) [@AZ23;@TTA+23].
 
 <h3>Sandia</h3>
 

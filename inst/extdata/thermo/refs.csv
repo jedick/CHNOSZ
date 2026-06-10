@@ -108,6 +108,7 @@ SSH97.3,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmoc
 SSH97.4,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","Zn acetate complexes",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.5,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","NaHSiO<sub>3</sub>, CaHSiO<sub>3</sub><sup>+</sup>, and MgHSiO<sub>3</sub><sup>+</sup>",https://doi.org/10.1016/S0016-7037(97)00009-4
 SSH97.6,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","In fluoride complex",https://doi.org/10.1016/S0016-7037(97)00009-4
+SSH97.7,"D. A. Sverjensky, E. L. Shock and H. C. Helgeson",1997,"Geochim. Cosmochim. Acta 61, 1359-1412","KHSO<sub>4</sub> and KSO<sub>4</sub><sup>-</sup>",https://doi.org/10.1016/S0016-7037(97)00009-4
 TSD97,"Y. Tardy, R. Schaul, J. Duplay",1997,"C. R. Acad. Sci. Paris 324, 969-976","humic acid, microflora, and plants",https://doi.org/10.1016/S1251-8050(97)83981-X
 TZA97,"B. R. Tagirov, A. V. Zotov and N. N. Akinfiev",2007,"Geochim. Cosmochim. Acta 61, 4267-4280","aqueous HCl",https://doi.org/10.1016/S0016-7037(97)00274-3
 ST97,"D. Shvedov and P. R. Tremaine",1997,"J. Solution Chem. 26, 1113-1143","dimethylammonium chloride HKF parameters",https://doi.org/10.1023/A:1022977006327
@@ -139,7 +140,7 @@ WS00,"S. A. Wood and I. M. Samson",2000,"Econ. Geol. 95, 143-182","scheelite and
 AP01,"J. P. Amend and A. V. Plyasunov",2001,"Geochim. Cosmochim. Acta 65, 3901-3917",carbohydrates,https://doi.org/10.1016/S0016-7037(01)00707-4
 AS01,"J. P. Amend and E. L. Shock",2001,"FEMS Microbiol. Rev. 25, 175-243","NO and N<sub>2</sub>O",https://doi.org/10.1111/j.1574-6976.2001.tb00576.x
 AS01.1,"J. P. Amend and E. L. Shock",2001,"FEMS Microbiol. Rev. 25, 175-243","selenium and molybdenite",https://doi.org/10.1111/j.1574-6976.2001.tb00576.x
-AZ01,"N. N. Akinfiev and A. V. Zotov",2001,"Geochem. Int. 39, 990-1006","M<sup>+</sup>, MCl<sub>2</sub><sup>-</sup>, M(OH)<sub>2</sub><sup>-</sup>, MCl, and MOH (M = Au<sup>+</sup>, Ag<sup>+</sup>, or Cu<sup>+</sup>)",http://pleiades.online/cgi-perl/search.pl?type=abstract&name=geochem&number=10&year=1&page=990
+AZ01,"N. N. Akinfiev and A. V. Zotov",2001,"Geochem. Int. 39, 990-1006","Au<sup>+</sup>, Au(OH)<sub>2</sub><sup>-</sup>, M<sup>+</sup>, MCl<sub>2</sub><sup>-</sup>, M(OH)<sub>2</sub><sup>-</sup>, MCl, and MOH (M = Ag<sup>+</sup> or Cu<sup>+</sup>)",http://pleiades.online/cgi-perl/search.pl?type=abstract&name=geochem&number=10&year=1&page=990
 MVT01,"L. Mercury, P. Vieillard. and Y. Tardy",2001,"Appl. Geochem. 16, 161-181","polymorphs of ice",https://doi.org/10.1016/S0883-2927(00)00025-1
 PS01,"A. V. Plyasunov and E. L. Shock",2001,"Geochim. Cosmochim. Acta 65, 3879-3900","aqueous nonelectrolytes (organic species)",https://doi.org/10.1016/S0016-7037(01)00678-0
 PS01.1,"A. V. Plyasunov and E. L. Shock",2001,"Geochim. Cosmochim. Acta 65, 3879-3900","aqueous nonelectrolytes (Ar, Xe, and CO<sub>2</sub>)",https://doi.org/10.1016/S0016-7037(01)00678-0
@@ -201,7 +202,7 @@ JSW09,"K. T. Jacob et al.",2009,"J. Chem. Thermodynamics 41, 748-753",beta-Ta<su
 BZA10,"E. F. Bazarkina, A. V. Zotov and N. N. Akinfiev",2010,"Geol. Ore Deposits 52, 167-178","Cd chloride complexes",https://doi.org/10.1134/S1075701510020054
 AML10,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","metal chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
 AML10.1,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","Np and Am chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
-AZ10,"N. N. Akinfiev and A. V. Zotov",2010,"Geochem. Int. 48, 714-720","MHS and M(HS)<sub>2</sub><sup>-</sup> (M = Au<sup>+</sup>, Ag<sup>+</sup>, or Cu<sup>+</sup>)",https://doi.org/10.1134/S0016702910070074
+AZ10,"N. N. Akinfiev and A. V. Zotov",2010,"Geochem. Int. 48, 714-720","AgHS, Ag(HS)<sub>2</sub><sup>-</sup>, CuHS, and Cu(HS)<sub>2</sub><sup>-</sup>",https://doi.org/10.1134/S0016702910070074
 DS10,"J. Delgado Martin and A. Soler i Gil",2010,"Eur. J. Mineral. 22, 363-380","hedenbergite, andradite, ferro-actinolite, grunerite, and ilvaite",https://doi.org/10.1127/0935-1221/2010/0022-2021
 MA10,"L. Marini and M. Accornero",2010,"Environ. Earth Sci. 59, 1601-1606","corrected values",https://doi.org/10.1007/s12665-009-0369-x
 Sch10,"M. Schulte",2010,"Aquat. Geochem. 16, 621-637","organic sulfides",https://doi.org/10.1007/s10498-010-9102-3
@@ -337,8 +338,8 @@ LBP25,"C. Laksar et al.",2025,"Geochim. Cosmochim. Acta 406, 134-147","Pd(HS)<su
 MBA+25,"A. Migdisov, E. Bastrakov et al.",2025,"Geochim. Cosmochim. Acta 406, 326-339","uranyl carbonate, chloride, sulfate, and hydroxide complexes",https://doi.org/10.1016/j.gca.2024.04.023
 RSS+24,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","alkylamines, benzylamines, and aminiums",https://doi.org/10.1016/j.gca.2024.03.013
 RSS+24.1,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","corrected V for tripropylaminium",https://doi.org/10.1016/j.gca.2024.03.013
-TAT+25,"B. R. Tagirov, N. N. Akinfiev et al.",2025,"Geochim. Cosmochim. Acta 406, 285-304","Au-(hydro)sulfide species and SO<sub>4</sub><sup>-2</sup>-bearing species",https://doi.org/10.1016/j.gca.2024.08.022
 TAZ24,"B. R. Tagirov, N. N. Akinfiev and A. V. Zotov",2024,"Geol. Ore Deposits 66, 581-597","Au hydroxide and chloride complexes",https://doi.org/10.1134/S1075701524600403
+TAT+25,"B. R. Tagirov, N. N. Akinfiev et al.",2025,"Geochim. Cosmochim. Acta 406, 285-304","Au-(hydro)sulfide species and SO<sub>4</sub><sup>-2</sup>-bearing species",https://doi.org/10.1016/j.gca.2024.08.022
 OBIGT.1,"J. M. Dick",2017,"OBIGT database in CHNOSZ","GHS (T<sub>r</sub>) of the polymorph that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the polymorphs that are stable at higher temperatures.",https://chnosz.net
 OBIGT.3,"J. M. Dick",2017,"OBIGT database in CHNOSZ","AuCl<sub>4</sub><sup>-</sup> renamed to AuCl<sub>4</sub><sup>-3</sup>",https://chnosz.net
 OBIGT.4,"J. M. Dick",2017,"OBIGT database in CHNOSZ","charge of NpO<sub>2</sub>(Oxal), La(Succ)<sup>+</sup>, NH<sub>4</sub>(Succ)<sup>-</sup>, and NpO<sub>2</sub>(Succ) as listed by @PSK99",https://chnosz.net
