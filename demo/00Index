@@ -16,7 +16,7 @@ sum_S           Summed molality of S species and solubility contours for iron an
 copper          Another example of mosaic(): complexation of copper with glycine species
 arsenic         Another example of mosaic(): Eh-pH diagram for the system As-O-H-S
 solubility      Solubility of calcite and CO2(gas) as a function of pH
-gold            Solubility of gold
+gold1           Solubility of gold 1
 contour         Gold solubility contours on a log fO2 - pH diagram
 sphalerite      Solubility of sphalerite
 minsol          Solubilities of multiple minerals
@@ -40,4 +40,4 @@ uranyl          Total (carbonate|sulfate)-pH diagrams for uranyl species
 MgATP           Speciation of ATP with H+ and Mg+2
 rubisco_Zc      Zc of Rubisco vs optimal growth temperature
 phosphorylate   Phosphorylation model for Gibbs energy of nucleotide polymerization into RNA
-
+gold2           Solubility of gold 2

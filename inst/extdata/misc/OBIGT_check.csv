@@ -18,7 +18,6 @@
 "OBIGT","MnSO4","aq","cal",,,1203
 "OBIGT","BeCl+","aq","cal",,,-33235
 "OBIGT","BeCl2","aq","cal",,,-33228
-"OBIGT","AuCl4-3","aq","cal",,,117800
 "OBIGT","BeF+","aq","cal",,,-33233
 "OBIGT","BeF2","aq","cal",,,-33220
 "OBIGT","BeF3-1","aq","cal",,,-33211
@@ -416,6 +415,7 @@
 "SLOP98","PtCl4-2","aq","cal",-13.86,,
 "SLOP98","Pt(SO4)3-4","aq","cal",,-1.79,-2915
 "SLOP98","UO4-2","aq","cal",,-1.11,
+"SLOP98","AuCl4-3","aq","cal",,,117800
 "SLOP98","ZnCl3-","aq","cal",,,2264
 "SLOP98","Zn(Ac)+","aq","cal",,,-4547
 "SLOP98","Zn(Ac)3-","aq","cal",,,-13968

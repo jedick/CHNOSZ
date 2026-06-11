@@ -18,32 +18,28 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-40 (2026-06-11)}{
+\section{Changes in CHNOSZ version 2.2.0-41 (2026-06-11)}{
 
-  \subsection{BUG FIXES}{
+  \subsection{DEMOS}{
 
     \itemize{
 
+      \item Add \code{demo/gold2.R} for Au solubility and speciation as a
+      function of pH, after \doiref{10.1016/j.gca.2024.08.022}{Tagirov et al.,
+        2025}. The speciation plot uses \code{equilibrate(balance = 1)} (i.e.,
+      per formula unit) to reduce the predominance range of the binuclear
+      species Au\s{2}S\s{2}\S{-2}, matching the reference diagram.
+
       \item In \code{demo/contour.R}, add \code{balance = 1} to the
-      \code{diagram()} call for predominance fields. This allows the binuclear
-      species Au\s{2}S\s{2}\S{-2} to be correctly represented by a narrow field
-      at high pH rather than taking up an unreasonably large area. The extent
-      of the Au\s{2}S\s{2}\S{-2} field aligns well with the diagram from the
-      IGEM group (\doiref{10.1134/S1075701525600690}{Rubtsova et
-        al., 2026}).
+      \code{diagram()} call for predominance fields. The small extent of the
+      Au\s{2}S\s{2}\S{-2} predominance field aligns well with the diagram from
+      the IGEM group (\doiref{10.1134/S1075701525600690}{Rubtsova et al.,
+        2026}).
       
-      \item Note that \code{balance = 1} should only be used for aqueous
-      species, \emph{not} for mineral stability diagrams. \emph{A fix to the
-        default value of \code{balance} that applies to both minerals and
-        aqueous species is being planned.}
-
-      \item Fix bug preventing \code{mosaic()} from being used to form \H2O.
-      Thanks to Doug LaRowe for the use case with phosphorylation reactions.
-
-      \item For the IAPWS95 water model, add 0.1 bar (0.01 MPa) to values of
-      \Psat > 1 bar computed from \code{WP02.auxiliary()} to prevent Born
-      functions, which are calculated as finite difference derivatives, from
-      exploding.  Thanks to Grayson Boyer for the bug report.
+      \item The default \code{balance = NULL} (i.e., per element) remains
+      useful for reproducing other diagrams with polynuclear species (e.g.
+      S\s{3}\S{-}). \emph{Note that \code{balance = 1} is not recommended for
+        mineral stability diagrams.}
 
     }
 
@@ -122,6 +118,22 @@
 
   }
 
+  \subsection{BUG FIXES}{
+
+    \itemize{
+
+      \item Fix bug preventing \code{mosaic()} from being used to form \H2O.
+      Thanks to Doug LaRowe for the use case with phosphorylation reactions.
+
+      \item For the IAPWS95 water model, add 0.1 bar (0.01 MPa) to values of
+      \Psat > 1 bar computed from \code{WP02.auxiliary()} to prevent Born
+      functions, which are calculated as finite difference derivatives, from
+      exploding.  Thanks to Grayson Boyer for the bug report.
+
+    }
+
+  }
+
   \subsection{NEW FUNCTIONS}{
 
     \itemize{
@@ -154,7 +166,7 @@
       \code{cpswap}.
 
       \item Add continuous integration (CI) with GitHub actions: R CMD check
-      workflow and Codecov test coverage (with badge in \file{README.md}).
+      workflow and Codecov test coverage, with badges in \file{README.md}.
 
     }
 

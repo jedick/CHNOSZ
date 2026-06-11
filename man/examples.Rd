@@ -32,7 +32,7 @@ The package demos are described below.
     \item{copper}{Another example of \code{\link{mosaic}}: complexation of Cu with glycine (Aksu and Doyle, 2001)}
     \item{arsenic}{Another example of \code{\link{mosaic}}: Eh-pH diagram for the system As-O-H-S (Lu and Zhu, 2011)}
     \item{solubility}{Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996)}
-    \item{gold}{Solubility of gold (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009)}
+    \item{gold1}{Solubility of gold 1 (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009)}
     \item{contour}{Gold solubility contours on a log fO2 - pH diagram (Ding et al., 2023)}
     \item{sphalerite}{Solubility of sphalerite (Akinfiev and Tagirov, 2014)}
     \item{minsol}{Solubilities of multiple minerals}
@@ -56,6 +56,7 @@ The package demos are described below.
     \item{MgATP}{Speciation of ATP with H+ and Mg+2 (Alberty, 2003)}
     \item{rubisco_Zc}{Zc of Rubisco vs optimal growth temperature}
     \item{phosphorylate}{Phosphorylation model for Gibbs energy of nucleotide polymerization into RNA (LaRowe and Dick, 2025)}
+    \item{gold2}{Solubility of gold 2 (Tagirov et al., 2025)}
   }
 
 
@@ -144,6 +145,8 @@ Sverjensky DA, Hemley JJ, D'Angelo WM. 1991. Thermodynamic assessment of hydroth
 Sverjensky DA, Harrison B, Azzolini D. 2014a. Water in the deep Earth: The dielectric constant and the solubilities of quartz and corundum to 60 kb and 1,200°C. \emph{Geochim Cosmochim Acta} \bold{129}: 125--145. \doi{10.1016/j.gca.2013.12.019}
 
 Sverjensky DA, Stagno V, Huang F. 2014b. Important role for organic carbon in subduction-zone fluids in the deep carbon cycle. \emph{Nat Geosci} \bold{7}: 909--913. \doi{10.1038/ngeo2291}
+
+Tagirov BR, Akinfiev NN, Tarnopolskaia ME, Nikolaeva IY, Zlivko IY, Volchenkova VA, Koroleva LA, Zotov, AV. 2025. Gold in sulfide fluids revisited. \emph{Geochim Cosmochim Acta} \bold{406}: 285--304. \doi{10.1016/j.gca.2024.08.022}
 
 Tai SL, Boer VM, Daran-Lapujade P, Walsh MC, de Winde JH, Daran J-M, Pronk JT. 2005. Two-dimensional transcriptome analysis in chemostat cultures: Combinatorial effects of oxygen availability and macronutrient limitation in \emph{Saccharomyces cerevisiae}. \emph{J Biol Chem} \bold{280}: 437--447. \doi{10.1074/jbc.M410573200}
 
