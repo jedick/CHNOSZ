@@ -37,9 +37,10 @@ OH88,"E. H. Oelkers and H. C. Helgeson",1988,"J. Phys. Chem. 92, 1631-1639",KCl,
 SH88,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","ionic species",https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.1,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","values of GHS",https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.2,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",H<sub>2</sub>AsO<sub>3</sub><sup>-</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
-SH88.3,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",Ag<sup>+</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
+SH88.3,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036",Ag<sup>+</sup> and Nd<sup>+3</sup>,https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.4,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","K<sup>+</sup>, Na<sup>+</sup>, Ca<sup>+2</sup>, Mg<sup>+2</sup>, Cl<sup>-</sup>, and OH<sup>-</sup>",https://doi.org/10.1016/0016-7037(88)90181-0
 SH88.5,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","values of GHS; corrected H for In<sup>+3</sup> [@OBIGT25]",https://doi.org/10.1016/0016-7037(88)90181-0
+SH88.6,"E. L. Shock and H. C. Helgeson",1988,"Geochim. Cosmochim. Acta 52, 2009-2036","Nd<sup>+3</sup> S, Cp, V, and HKF parameters",https://doi.org/10.1016/0016-7037(88)90181-0
 SHS89,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183","inorganic neutral species",https://doi.org/10.1016/0016-7037(89)90341-4
 SHS89.1,"E. L. Shock, H. C. Helgeson and D. A. Sverjensky",1989,"Geochim. Cosmochim. Acta 53, 2157-2183",SiO<sub>2</sub>,https://doi.org/10.1016/0016-7037(89)90341-4
 Ber90,"R. G. Berman",1990,"Am. Mineral. 75, 328-344",annite,http://ammin.geoscienceworld.org/content/75/3-4/328
@@ -198,10 +199,11 @@ GM09,"K.-D. Grevel and J. Majzlan",2009,"Geochim. Cosmochim. Acta 73, 6805-6815"
 HRMNS09,"H. C. Helgeson, L. Richard et al.",2009,"Geochim. Cosmochim. Acta 73, 594-695","kerogens (C128, C292, C406, C415, C515) and pyrobitumen (C<sub>54</sub>H<sub>42</sub>)",https://doi.org/10.1016/j.gca.2008.03.004
 LRB09,"K. H. Lemke, R. J. Rosenbauer and D. K. Bird",2009,"Astrobiology 9, 141-146","diglycine and diketopiperazine",https://doi.org/10.1089/ast.2008.0166
 MWW09,"A. A. Migdisov, A. E. Williams-Jones and T. Wagner",2009,"Geochim. Cosmochim. Acta 73, 7087-7109","REE F<sup>-</sup> and Cl<sup>-</sup> complexes",https://doi.org/10.1016/j.gca.2009.08.023
+MWW09.1,"A. A. Migdisov, A. E. Williams-Jones and T. Wagner",2009,"Geochim. Cosmochim. Acta 73, 7087-7109","Nd fluoride and chlorides S, Cp, V, and HKF parameters",https://doi.org/10.1016/j.gca.2009.08.023
 JSW09,"K. T. Jacob et al.",2009,"J. Chem. Thermodynamics 41, 748-753",beta-Ta<sub>2</sub>O<sub>5</sub>,https://doi.org/10.1016/j.jct.2008.12.006
 BZA10,"E. F. Bazarkina, A. V. Zotov and N. N. Akinfiev",2010,"Geol. Ore Deposits 52, 167-178","Cd chloride complexes",https://doi.org/10.1134/S1075701510020054
 AML10,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","metal chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
-AML10.1,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","Np and Am chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
+AML10.1,"M. Accornero, L. Marini and M. Lelli",2010,"Appl. Geochem. 25, 242-260","Nd, Np, and Am chromate complexes",https://doi.org/10.1016/j.apgeochem.2009.11.010
 AZ10,"N. N. Akinfiev and A. V. Zotov",2010,"Geochem. Int. 48, 714-720","AgHS, Ag(HS)<sub>2</sub><sup>-</sup>, CuHS, and Cu(HS)<sub>2</sub><sup>-</sup>",https://doi.org/10.1134/S0016702910070074
 DS10,"J. Delgado Martin and A. Soler i Gil",2010,"Eur. J. Mineral. 22, 363-380","hedenbergite, andradite, ferro-actinolite, grunerite, and ilvaite",https://doi.org/10.1127/0935-1221/2010/0022-2021
 MA10,"L. Marini and M. Accornero",2010,"Environ. Earth Sci. 59, 1601-1606","corrected values",https://doi.org/10.1007/s12665-009-0369-x
@@ -339,6 +341,7 @@ MBA+25,"A. Migdisov, E. Bastrakov et al.",2025,"Geochim. Cosmochim. Acta 406, 32
 RSS+24,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","alkylamines, benzylamines, and aminiums",https://doi.org/10.1016/j.gca.2024.03.013
 RSS+24.1,"K. Robinson et al.",2024,"Geochim. Cosmochim. Acta 372, 62-80","corrected V for tripropylaminium",https://doi.org/10.1016/j.gca.2024.03.013
 TAZ24,"B. R. Tagirov, N. N. Akinfiev and A. V. Zotov",2024,"Geol. Ore Deposits 66, 581-597","Au hydroxide and chloride complexes",https://doi.org/10.1134/S1075701524600403
+FG25,"Y. Figueroa Penarrieta and A. P. Gysi",2025,"Geochim. Cosmochim. Acta 406, 227-242","Nd<sup>+3</sup> and Nd fluoride and chlorides G and H",https://doi.org/10.1016/j.chemgeo.2025.123192
 TAT+25,"B. R. Tagirov, N. N. Akinfiev et al.",2025,"Geochim. Cosmochim. Acta 406, 285-304","Au-(hydro)sulfide species and SO<sub>4</sub><sup>-2</sup>-bearing species",https://doi.org/10.1016/j.gca.2024.08.022
 OBIGT.1,"J. M. Dick",2017,"OBIGT database in CHNOSZ","GHS (T<sub>r</sub>) of the polymorph that is stable at 298.15 K was combined with H<sub>tr</sub> and the Cp coefficients to calculate the metastable GHS (T<sub>r</sub>) of the polymorphs that are stable at higher temperatures.",https://chnosz.net
 OBIGT.3,"J. M. Dick",2017,"OBIGT database in CHNOSZ","AuCl<sub>4</sub><sup>-</sup> renamed to AuCl<sub>4</sub><sup>-3</sup>",https://chnosz.net

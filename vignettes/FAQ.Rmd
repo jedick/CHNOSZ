@@ -598,7 +598,7 @@ title(quote("Parameters for"~S[3]^"-"~"from Pokrovski and Dubessy (2015)"), xpd 
 ######## Plot 2: Modify Gibbs energy
 
 oldG <- info(info("S3-"))$G
-newG <- oldG - 12548
+newG <- oldG - 12586
 mod.OBIGT("S3-", G = newG)
 a <- affinity(pH = c(2, 10, res), O2 = c(-34, -22, res), T = T, P = P)
 e <- equilibrate(a, loga.balance = logm_S)
@@ -658,7 +658,7 @@ Let's calculate `r logK` for the reaction 2 `r H2S`(aq) + `r SO4__` + `r Hplus` 
 species <- c("H2S", "SO4-2", "H+", "S3-", "oxygen", "H2O")
 coeffs <- c(-2, -1, -1, 1, 0.75, 2.5)
 (calclogK <- subcrt(species, coeffs, T = seq(300, 450, 50), P = 5000)$out$logK)
-fcalclogK <- formatC(calclogK, format = "f", digits = 1)
+fcalclogK <- formatC(calclogK, format = "f", digits = 2)
 reflogK <- -9.6
 dlogK <- calclogK[2] - reflogK
 # Put in a test so that we don't get surprised by
@@ -667,7 +667,7 @@ stopifnot(round(dlogK, 4) == -4.4132)
 ```
 
 By using the thermodynamic parameters for `r S3minus` in OBIGT that are taken from @PD15, `r logK` is calculated to be `r paste(paste(fcalclogK[1:3], collapse = ", "), fcalclogK[4], sep = ", and ")` at 300, 350, 400, and 450 °C and 5000 bar.
-In contrast, ref. 22 of @PD11 lists `r reflogK` for `r logK` at 350 °C; this is `r round(-dlogK, 1)` log units higher than the calculated value of `r fcalclogK[2]`. 
+In contrast, ref. 22 of @PD11 lists `r reflogK` for `r logK` at 350 °C; this is `r round(-dlogK, 2)` log units higher than the calculated value of `r fcalclogK[2]`. 
 This corresponds to a difference of Gibbs energy of -2.303 * 1.9872 * (350 + 273.15) * `r round(-dlogK, 1)` = `r formatC(-2.303 * 1.9872 * (350 + 273.15) * -dlogK, format = "f", digits = 0)` cal/mol.
 
 In the code below, we use the difference of Gibbs energy to temporarily update the OBIGT entry for `r S3minus`.

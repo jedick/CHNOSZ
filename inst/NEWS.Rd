@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-38 (2026-06-10)}{
+\section{Changes in CHNOSZ version 2.2.0-40 (2026-06-11)}{
 
   \subsection{BUG FIXES}{
 
@@ -55,6 +55,9 @@
 
       \item Add REE minerals from
       \doiref{10.1016/j.chemgeo.2026.123471}{Pan et al. (2026)}.
+
+      \item Add Nd species from \doiref{10.1016/j.gca.2024.07.014}{Figueroa
+        Penarrieta and Gysi (2025)}.
 
       \item Move Au chloride, hyroxide, and (hydro)sulfide complexes (including
       the binuclear species Au\s{2}S\s{2}\S{-2}) from \file{testing/IGEM.csv}
