@@ -46,7 +46,7 @@ s <- solubility(iaq, bases = S_species, pH = pH, T = T, P = P, IS = m_NaCl)
 # Plot partial solubility then total solubility
 d_Au <- diagram(s, type="loga.equil", ylim = c(-10, -3), dy = 0.4)
 diagram(s, type="loga.balance", col = 4, lwd = 2, add = TRUE)
-title("Use solubility() to reproduce Fig. 7 of Tagirov et al. (2025)", font.main = 1)
+title("Use solubility() to reproduce/extend Fig. 7 of Tagirov et al. (2025)", font.main = 1)
 # Add T,P legend
 legend("topleft", legend = lTP(T, P), bty = "n")
 # Add composition legend

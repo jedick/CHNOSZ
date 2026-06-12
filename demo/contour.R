@@ -20,7 +20,7 @@ P <- 300
 m_NaCl <- 1
 sum_S <- 0.01
 # Define ranges of pH and logfO2
-pH <- c(1, 10)
+pH <- c(1, 11)
 O2 <- c(-40, -30)
 # Make smooth (TRUE) or sharp (FALSE) transitions between basis species 
 blend <- TRUE
@@ -40,7 +40,7 @@ m <- mosaic(bases, pH = c(pH, res), O2 = c(O2, res), T = T, P = P, IS = NaCl$IS,
 diagram(m$A.bases, col = 8, col.names = 8, lty = 3, italic = TRUE)
 # Show predominance fields for Au-species
 # NOTE: balance = 1 is used to correctly handle *aqueous* multinuclear species (i.e. Au2S2-2)
-d <- diagram(m$A.species, col = 4, col.names = 4, lty = 2, bold = TRUE, add = TRUE, balance = 1)
+d <- diagram(m$A.species, col = 4, col.names = 4, lwd = 2, bold = TRUE, add = TRUE, balance = 1)
 # Add dot-dash line for water stability limit
 water.lines(d, lty = 4)
 
@@ -49,7 +49,7 @@ species("Au")
 s <- solubility(iaq, bases = bases, pH = c(pH, res), O2 = c(O2, res), T = T, P = P, IS = NaCl$IS, blend = blend)
 # Convert to ppb
 s <- convert(s, "ppb")
-diagram(s, levels = c(1, 10, 100, 1000), col = 1, add = TRUE)
+diagram(s, levels = c(0.01, 0.1, 1, 10, 100, 1000), col = 1, add = TRUE)
 # Add legend and title
 dP <- describe.property(c("T", "P"), c(T, P))
 lexpr <- c(dP, lNaCl(m_NaCl), lS(sum_S))

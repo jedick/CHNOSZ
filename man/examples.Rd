@@ -52,7 +52,7 @@ The package demos are described below.
     \item{rank.affinity}{Affinity ranking for proteins in yeast nutrient limitation (data from Tai et al., 2005)}
     \item{yttrium}{\code{\link{logK.to.OBIGT}} fits at 800 and 1000 bar and Y speciation in \code{\link{NaCl}} solution at varying pH (Guan et al., 2020)}
     \item{uranyl}{Total (carbonate|sulfate)-pH diagrams for uranyl species (Migdisov et al., 2025)}
-    \item{sum_S}{Summed molality of S species and solubility contours for iron and gold (Skirrow and Walshe, 2002)}
+    \item{sulfur}{Solubility contours for iron and gold as a function of total S (Skirrow, 2026)}
     \item{MgATP}{Speciation of ATP with H+ and Mg+2 (Alberty, 2003)}
     \item{rubisco_Zc}{Zc of Rubisco vs optimal growth temperature}
     \item{phosphorylate}{Phosphorylation model for Gibbs energy of nucleotide polymerization into RNA (LaRowe and Dick, 2025)}
@@ -134,7 +134,7 @@ Shock EL, Koretsky CM. 1995. Metal-organic complexes in geochemical processes: E
 
 Shock EL, Oelkers EH, Johnson JW, Sverjensky DA, Helgeson HC. 1992. Calculation of the thermodynamic properties of aqueous species at high pressures and temperatures: Effective electrostatic radii, dissociation constants and standard partial molal properties to 1000 °C and 5 kbar. \emph{J Chem Soc Faraday Trans} \bold{88}: 803--826. \doi{10.1039/FT9928800803}
 
-Skirrow RG, Walshe JL. 2002. Reduced and oxidized Au-Cu-Bi iron oxide deposits of the Tennant Creek Inlier, Australia: An integrated geologic and chemical model. \emph{Econ Geol} \bold{97}: 1167--1202. \doi{10.2113/gsecongeo.97.6.1167}
+Skirrow RG. 2026. Iron Oxide Copper–Gold (IOCG) deposits – A review (part 2): fluid, metal and sulfur sources and ore genesis. \emph{Ore Geol Rev} \bold{189}: 107120. \doi{10.1016/j.oregeorev.2026.107120}
 
 Stefánsson A, Seward TM. 2004. Gold(I) complexing in aqueous sulphide solutions to 500°C at 500 bar. \emph{Geochim Cosmochim Acta} \bold{68}: 4121--4143. \doi{10.1016/j.gca.2004.04.006}
 

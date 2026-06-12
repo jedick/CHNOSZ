@@ -16,8 +16,8 @@ res <- 300
 T <- 100
 P <- "Psat"
 Stot <- 1e-3
-pH <- c(0, 14, res)
-O2 <- c(-62, -40, res)
+pH <- c(0, 14)
+O2 <- c(-62, -40)
 # Mass fraction NaCl in saturated solution at 100 degC, from CRC handbook
 wNaCl <- 0.2805  
 
@@ -39,10 +39,10 @@ species(iaq, logm_metal, add = TRUE)
 
 # Calculate affinities and make diagram
 bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
-m <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = NaCl$IS)
+m <- mosaic(bases, pH = c(pH, res), O2 = c(O2, res), T = T, P = P, IS = NaCl$IS)
 d <- diagram(m$A.species, bold = TRUE)
 diagram(m$A.bases, add = TRUE, col = 8, col.names = 8, lty = 3, italic = TRUE)
-title(bquote(log * italic(m)[.(metal)*"(aq) species"] == .(logm_metal)))
+title(bquote(log ~ italic(m)*.(metal)*"(aq)" == .(logm_metal)))
 label.figure("A")
 
 # Add legend
@@ -63,23 +63,22 @@ par(xpd = FALSE)
 
 # Make diagram for minerals only 20201007
 species(icr)
-mcr <- mosaic(bases, pH = pH, O2 = O2, T = T, P = P, IS = NaCl$IS)
+mcr <- mosaic(bases, pH = c(pH, res), O2 = c(O2, res), T = T, P = P, IS = NaCl$IS)
 diagram(mcr$A.species, col = 2)
+title("Relative stabilities of minerals only", font.main = 1)
 label.figure("B")
 
-# Calculate *minimum* solubility among all the minerals 20201008
-# (i.e. saturation condition for the solution)
-# Use solubility() 20210303
-s <- solubility(iaq, bases = bases, pH = pH, O2 = O2, T = T, P = P, IS = NaCl$IS, in.terms.of = metal)
-# Specify contour levels
+# Calculate saturation condition i.e. *minimum* solubility among all the minerals 20201008
+# Minimum solubility is now part of solubility() 20210303
+# Decrease resolution for faster running 20260612
+s <- solubility(iaq, bases = bases, pH = c(pH, 100), O2 = c(O2, 100), T = T, P = P, IS = NaCl$IS, in.terms.of = metal)
+# Start plot with solubility contours
 levels <- seq(-12, 9, 3)
 diagram(s, levels = levels, contour.method = "flattest")
-
-# Show the mineral stability boundaries
+# Add the mineral stability boundaries
 diagram(mcr$A.species, names = NA, add = TRUE, lty = 2, col = 2)
-title(paste("Solubilities of", length(icr), "minerals"), font.main = 1, line = 1.5)
+title("Solubilities of all minerals", font.main = 1, line = 1.5)
 title(bquote(log[10]~"moles of"~.(metal)~"in solution"), line = 0.7)
 label.figure("C")
-title(bquote(log * italic(m)*.(metal)*"(aq)" == .(logm_metal)))
 
 par(opar)

@@ -1,4 +1,5 @@
-# CHNOSZ/demo/sum_S.R
+# CHNOSZ/demo/sulfur.R
+# Adapted from Skirrow (2026)
 # 20240604 Fe-S-O-C     log a (sum S) - pH      modified from mosaic.R
 # 20241130 Fe-S-O + Au  logfO2 - log a (sum S)  added NaCl and solubility contours
 
@@ -72,7 +73,7 @@ for(metal in c("Fe", "Au")) {
   P_Cl <- c(bquote(pH == .(pH)), bquote(NaCl == .(m_NaCl)~mol~kg^-1))
   legend <- c(T_P, P_Cl)
   legend("topright", legend, bty = "n")
-  main <- paste("Fe minerals with summed aq species: S (x-axis) and ppb", metal, "(contours)")
+  main <- paste(metal, "solubility (ppb), after Skirrow (2026)")
   title(main, font.main = 1)
 
 }

@@ -18,19 +18,19 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-41 (2026-06-11)}{
+\section{Changes in CHNOSZ version 2.2.0-41 (2026-06-12)}{
 
   \subsection{DEMOS}{
 
     \itemize{
 
-      \item Add \code{demo/gold2.R} for Au solubility and speciation as a
-      function of pH, after \doiref{10.1016/j.gca.2024.08.022}{Tagirov et al.,
-        2025}. The speciation plot uses \code{equilibrate(balance = 1)} (i.e.,
-      per formula unit) to reduce the predominance range of the binuclear
-      species Au\s{2}S\s{2}\S{-2}, matching the reference diagram.
+      \item Add \file{demo/gold2.R} for Au solubility and speciation as a
+      function of pH, after \doiref{10.1016/j.gca.2024.08.022}{Tagirov et al.
+        (2025)}. The speciation plot uses \code{equilibrate(balance = 1)}
+      (i.e., per formula unit) to reduce the predominance range of the
+      binuclear species Au\s{2}S\s{2}\S{-2}, matching the reference diagram.
 
-      \item In \code{demo/contour.R}, add \code{balance = 1} to the
+      \item In \file{demo/contour.R}, add \code{balance = 1} to the
       \code{diagram()} call for predominance fields. The small extent of the
       Au\s{2}S\s{2}\S{-2} predominance field aligns well with the diagram from
       the IGEM group (\doiref{10.1134/S1075701525600690}{Rubtsova et al.,
@@ -40,6 +40,8 @@
       useful for reproducing other diagrams with polynuclear species (e.g.
       S\s{3}\S{-}). \emph{Note that \code{balance = 1} is not recommended for
         mineral stability diagrams.}
+
+      \item Rename \file{demo/sum_S.R} to \file{demo/sulfur.R}.
 
     }
 
@@ -55,19 +57,11 @@
       \item Add Nd species from \doiref{10.1016/j.gca.2024.07.014}{Figueroa
         Penarrieta and Gysi (2025)}.
 
-      \item Move Au chloride, hyroxide, and (hydro)sulfide complexes (including
-      the binuclear species Au\s{2}S\s{2}\S{-2}) from \file{testing/IGEM.csv}
-      to the default database
-      (\doiref{10.1134/S1075701524600403}{Tagirov et al., 2024}
-      and \doiref{10.1016/j.gca.2024.08.022}{2025}).
+      \item Move Au chloride, hyroxide, and (hydro)sulfide complexes from
+      \file{testing/IGEM.csv} to the default database
+      (\doiref{10.1134/S1075701524600403}{Tagirov et al., 2024} and
+      \doiref{10.1016/j.gca.2024.08.022}{2025}).
 
-      \item Aqueous Au\S{+} and Au(OH)\s{2}\S{-} do not form under geologic
-      conditions, are not listed in the latest IGEM updates, nor are they
-      recommended for use in hydrothermal models by
-      \doiref{10.1007/978-3-032-07705-9_4}{Pokrovski et al.
-        (2026)}. Nevertheless, they are kept here as possibly useful species
-      for modeling lixiviant reactions.
-     
       \item Add skutterudite (CoAs\s{2.92}) and heazlewoodite (Ni\s{3}S\s{2})
       from \doiref{10.2138/am-2022-8337}{Majzlan et al. (2022)}.
       Thanks to Yufei Wang for the request.
@@ -80,8 +74,8 @@
       \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables
         (1998)}. Thanks to George Brimhall for the request.
 
-      \item Add stibnite (Sb\s{2}S\s{3}) from
-      \doiref{10.3133/b2131}{Robie and Hemingway (1995)}.
+      \item Add stibnite (Sb\s{2}S\s{3}) from \doiref{10.3133/b2131}{Robie and
+        Hemingway (1995)}. Thanks to Miao Yu for the request.
 
     }
 
@@ -97,10 +91,9 @@
 
       \item Add aqueous SO\s{2} and the trisulfur radical ion (S\s{3}\S{-}) to
       basis species for mosaic calculations in examples, demos, and vignettes.
-      Thanks to Evgeniy Bastrakov for suggesting this change. (Note that some
-      instances of S\s{3}\S{-} are commented because of slowdowns associated
-      with non-unity balance constraints, particularly in anintro.Rmd and
-      multi-metal.Rmd). 
+      Thanks to Evgeniy Bastrakov for suggesting this change. Some instances of
+      S\s{3}\S{-} are commented because of slowdowns associated with non-unity
+      balance constraints, particularly in anintro.Rmd and multi-metal.Rmd. 
 
       \item Remove exported functions \code{demos()} and \code{examples()} and
       make new demos from them. These "meta-demos" show plots from all the
@@ -112,7 +105,7 @@
       style (like \doiref{https://www.csemanual.org}{CSE} name-year style but all
       authors are listed) in Rd files.
 
-      \item Add colors to \code{demo/NaCl.R}.
+      \item Add colors to \file{demo/NaCl.R}.
 
     }
 
