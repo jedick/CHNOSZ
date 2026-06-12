@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-41 (2026-06-12)}{
+\section{Changes in CHNOSZ version 2.2.0-43 (2026-06-12)}{
 
   \subsection{DEMOS}{
 
@@ -53,6 +53,9 @@
 
       \item Add REE minerals from
       \doiref{10.1016/j.chemgeo.2026.123471}{Pan et al. (2026)}.
+
+      \item Add AuHS(H\s{2}S)\s{3} from
+      \doiref{10.1134/S1075701525600690}{Rubtsova et al. (2026)}.
 
       \item Add Nd species from \doiref{10.1016/j.gca.2024.07.014}{Figueroa
         Penarrieta and Gysi (2025)}.

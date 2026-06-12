@@ -33,7 +33,7 @@ The package demos are described below.
     \item{arsenic}{Another example of \code{\link{mosaic}}: Eh-pH diagram for the system As-O-H-S (Lu and Zhu, 2011)}
     \item{solubility}{Solubility of calcite (cf. Manning et al., 2013) and \CO2 (cf. Stumm and Morgan, 1996)}
     \item{gold1}{Solubility of gold 1 (Akinfiev and Zotov; 2001; Stef{\aacute}nsson and Seward, 2004; Williams-Jones et al., 2009)}
-    \item{contour}{Gold solubility contours on a log fO2 - pH diagram (Ding et al., 2023)}
+    \item{contour}{Gold solubility contours on a log fO2-pH diagram (Ding et al., 2023; Rubtsova et al., 2026)}
     \item{sphalerite}{Solubility of sphalerite (Akinfiev and Tagirov, 2014)}
     \item{minsol}{Solubilities of multiple minerals}
     \item{Shh}{Affinities of transcription factors relative to Sonic hedgehog (Dick, 2015)}
@@ -127,6 +127,8 @@ Manning CE, Shock EL, Sverjensky DA. 2013. The chemistry of carbon in aqueous fl
 Migdisov A, Bastrakov E, Alcorn C, Reece M, Boukhalfa H, Caporuscio FA, Jove-Colon C. 2025. A spectroscopic study of the stability of uranyl-carbonate complexes at 25--150°C and re-visiting the data available for uranyl-chloride, uranyl-sulfate, and uranyl-hydroxide species. \emph{Geochim Cosmochim Acta} \bold{406}: 326--339. \doi{10.1016/j.gca.2024.04.023}
 
 Pourbaix M. 1974. \emph{Atlas of Electrochemical Equilibria in Aqueous Solutions}. Houston, TX: NACE; Brussels: CEBELCOR. \url{https://worldcat.org/title/563921897}
+
+Rubtsova EA, Tagirov BR, Chareev DA, Akinfiev NN, Tarnopolskaia ME, Zlivko IYu, Reukov VL, Koroleva LA, Mezhueva AA, Nickolsky MS. 2026. Experimental determination of the behavior of gold(I) in sulfide fluids at acidic pH. \emph{Geol Ore Deposits} \bold{68}: 280-293. \doi{10.1134/S1075701525600690}
 
 Schulte MD, Shock EL. 1995. Thermodynamics of Strecker synthesis in hydrothermal systems. \emph{Orig Life Evol Biosph} \bold{25}: 161--173. \doi{10.1007/BF01581580}
 
