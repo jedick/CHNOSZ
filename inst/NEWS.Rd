@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-43 (2026-06-12)}{
+\section{Changes in CHNOSZ version 2.2.0-44 (2026-06-13)}{
 
   \subsection{DEMOS}{
 
@@ -28,13 +28,12 @@
       function of pH, after \doiref{10.1016/j.gca.2024.08.022}{Tagirov et al.
         (2025)}. The speciation plot uses \code{equilibrate(balance = 1)}
       (i.e., per formula unit) to reduce the predominance range of the
-      binuclear species Au\s{2}S\s{2}\S{-2}, matching the reference diagram.
+      binuclear species Au\s{2}S\s{2}\S{-2}, matching the solubility plot.
 
       \item In \file{demo/contour.R}, add \code{balance = 1} to the
       \code{diagram()} call for predominance fields. The small extent of the
-      Au\s{2}S\s{2}\S{-2} predominance field aligns well with the diagram from
-      the IGEM group (\doiref{10.1134/S1075701525600690}{Rubtsova et al.,
-        2026}).
+      Au\s{2}S\s{2}\S{-2} predominance field aligns well with the diagram in
+      \doiref{10.1134/S1075701525600690}{Rubtsova et al. (2026)}.
       
       \item The default \code{balance = NULL} (i.e., per element) remains
       useful for reproducing other diagrams with polynuclear species (e.g.
@@ -73,9 +72,14 @@
       \doiref{10.1346/CCMN.2007.0550306}{Bobos et al. (2007)}.
       Thanks to Yongchao Liu for the request.
 
-      \item Add gaseous ethyne (acetylene) from
-      \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables
-        (1998)}. Thanks to George Brimhall for the request.
+      \item Add S(liq) (liquid sulfur, named \code{S_liq} in OBIGT) from
+      \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables (1998)}. Its
+      states are listed as cr and cr2 to handle the liquid-liquid transition.
+      Thanks to Evgeniy Bastrakov for the request.
+
+      \item Add C\s{2}H\s{2}(gas) (ethyne, acetylene) from
+      \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables (1998)}. Thanks
+      to George Brimhall for the request.
 
       \item Add stibnite (Sb\s{2}S\s{3}) from \doiref{10.3133/b2131}{Robie and
         Hemingway (1995)}. Thanks to Miao Yu for the request.
@@ -138,7 +142,9 @@
       reactions with pH-dependent speciation, including Mg-complexed species.
 
       \item Add \code{JANAF.to.OBIGT()} to import data for gases from
-      \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables}.
+      \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables}. This function
+      was used to create the database entry for acetylene (C\s{2}H\s{2}(gas))
+      but not for S(liq); \file{tinytest/test-S_liq.R} was used for that.
 
       \item Add \code{hyphen.in.pdf()} for replacing minus signs with
       hyphens in text added to PDF plots.

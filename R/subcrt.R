@@ -3,6 +3,7 @@
 # 20060817 jmd
 
 ## If this file is interactively sourced, the following are also needed to provide unexported functions:
+#source("util.misc.R")
 #source("util.args.R")
 #source("util.character.R")
 #source("info.R")

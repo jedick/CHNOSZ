@@ -117,6 +117,8 @@ DRT98,"I. I. Diakonov et al.",1998,"Chem. Geol. 151, 327-347","REE hydroxides",h
 HOKR98,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00219-6
 HOKR98.1,"H. C. Helgeson, C. E. Owens et al.",1998,"Geochim. Cosmochim. Acta 62, 985-1081","amino acids",https://doi.org/10.1016/S0016-7037(97)00219-6
 JANAF98,NIST,1998,"NIST-JANAF Thermochemical Tables","imported thermodynamic data",https://doi.org/10.18434/T42S31
+JANAF98.1,NIST,1998,"NIST-JANAF Thermochemical Tables","ethyne (acetylene)",https://doi.org/10.18434/T42S31
+JANAF98.2,NIST,1998,"NIST-JANAF Thermochemical Tables","S(liq)",https://doi.org/10.18434/T42S31
 PS98,"G. S. Pokrovski and J. Schott",1998,"Geochim. Cosmochim. Acta 62, 1631-1642","GeO<sub>2</sub> (hex) and (tetr) (augite)",https://doi.org/10.1016/S0016-7037(98)00081-7
 PS98.1,"G. S. Pokrovski and J. Schott",1998,"Geochim. Cosmochim. Acta 62, 1631-1642","Ge hydroxide and oxyhydroxide complexes",https://doi.org/10.1016/S0016-7037(98)00081-7
 RH98,"L. Richard and H. C. Helgeson",1998,"Geochim. Cosmochim. Acta 62, 3591-3636","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00345-1
@@ -226,7 +228,6 @@ FDM+14.1,"S. Facq et al.",2014,"Geochim. Cosmochim. Acta 132, 375-390","aragonit
 Kit14,"N. Kitadai",2014,"J. Mol. Evol. 78, 171-187","glycine, diglycine, and triglycine (zwitterions and ions); diketopiperazine, [Gly] and [UPBB] groups",https://doi.org/10.1007/s00239-014-9616-1
 KBK+14,"R. J. M. Konings et al.",2014,"J. Phys. Chem. Ref. Data 43, Article 013101","REE oxides",https://doi.org/10.1063/1.4825256
 KBK+14.1,"R. J. M. Konings et al.",2014,"J. Phys. Chem. Ref. Data 43, Article 013101","EuO",https://doi.org/10.1063/1.4825256
-PAB+14,"G. S. Pokrovski, N. N. Akinfiev et al., 2014",2014,"Geol. Soc. Spec. Publ. 402, 9-70","corrected H of AuHS",https://doi.org/10.1144/SP402.4
 SBS14,"A. Stefánsson, P. Benézéth and J. Schott",2014,"Geochim. Cosmochim. Acta 138, 21-31",Mg(HCO<sub>3</sub>)<sup>+</sup>,https://doi.org/10.1016/j.gca.2014.04.008
 SHA14,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","SiO<sub>2</sub> and Si<sub>2</sub>O<sub>4</sub>",https://doi.org/10.1016/j.gca.2013.12.019
 SHA14.1,"D. A. Sverjensky et al.",2014,"Geochim. Cosmochim. Acta 129, 125-145","revisions for AlO<sub>2</sub><sup>-</sup> and HAlO<sub>2</sub>",https://doi.org/10.1016/j.gca.2013.12.019
@@ -353,6 +354,7 @@ OBIGT.8,"J. M. Dick",2019,"OBIGT database in CHNOSZ","GHS recalculated by adding
 OBIGT.9,"J. M. Dick",2021,"OBIGT database in CHNOSZ","diaminopimelic acid, putrescine and spermidine: parameters recalculated to account for a missing [-CH2NH2] group in the group additivity equations",https://chnosz.net
 OBIGT25,OBIGT,2025,"OBIGT database in CHNOSZ","corrected H by -7335 cal/mol to maintain GHS consistency for In<sup>+3</sup> and derived species",https://chnosz.net
 OBIGT26,OBIGT,2026,"OBIGT database in CHNOSZ","Fit Cp values using JANAF.to.OBIGT.R",https://chnosz.net
+OBIGT26.1,OBIGT,2026,"OBIGT database in CHNOSZ","Stated listed as cr and cr2 to handle liquid-liquid transition; fit Cp values and transition properties using tinytest/test-S_liq.R",https://chnosz.net
 FG26,"Y. Figueroa Penarrieta and A. P. Gysi",2026,"Chem. Geol. 701, 123192","NdCl<sub>3</sub>&#42;6H<sub>2</sub>O",https://doi.org/10.1016/j.chemgeo.2025.123192
 PGM+26,"R. Pan, A. P. Gysi et al.",2026,"Chem. Geol. 715, 123471","data compilation and fits for REE minerals",https://doi.org/10.1016/j.chemgeo.2026.123471
 RTC+26,"E. A. Rubtsova, B. R. Tagirov et al.",2026,"Geol. Ore Deposits 68, 280-293","AuHS(H<sub>2</sub>S)<sub>3</sub>",https://doi.org/10.1134/S1075701525600690

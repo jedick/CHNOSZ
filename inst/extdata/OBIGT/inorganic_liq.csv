@@ -1,0 +1,3 @@
+name,abbrv,formula,state,ref1,ref2,date,model,E_units,G,H,S,Cp,V,a1.a,a2.b,a3.c,a4.d,c1.e,c2.f,omega.lambda,z.T
+S_liq,NA,S,cr,JANAF98.2,OBIGT26.1,2026-06-13,CGL,J,432,1854,36.825,22.531,17.81,-17602,11.328,-232350000,291140,0,0,0,432.02
+S_liq,NA,S,cr2,JANAF98.2,OBIGT26.1,2026-06-13,CGL_Ttr,J,-584.04,-6732.46,11.433,NA,17.81,1118.5,-0.35265,55324000,-25174,0,0,0,882.117

@@ -16,6 +16,8 @@ all_files <- c(OBIGT_files, testing_files)
 all_data <- lapply(all_files, read.csv)
 all_data <- do.call(rbind, all_data)
 used_refs <- na.omit(c(all_data$ref1, all_data$ref2))
+# Add JANAF98 to used_refs (reserved for species added by JANAF.to.OBIGT()) 20260613
+used_refs <- c(used_refs, "JANAF98")
 
 # Print messages for unavailable and unused refs
 unavailable_refs <- used_refs[!used_refs %in% available_refs]

@@ -8,10 +8,14 @@ file <- system.file("extdata/misc/Fe-001.txt", package = "CHNOSZ")
 expect_error(inew <- JANAF.to.OBIGT(file), "unrecognized state: cr", info = info)
 
 info <- "Works as expected for ethyne(gas)"
-# We need to set the current date in OBIGT so no changes are detected below
-mod.OBIGT("ethyne", state = "gas", date = format(Sys.time(), "%Y-%m-%d"))
+# We need to set the current date and the generic ref1 in OBIGT so no changes are detected below
+mod.OBIGT("ethyne", state = "gas", date = format(Sys.time(), "%Y-%m-%d"), ref1 = "JANAF98")
 file <- system.file("extdata/misc/C-127.txt", package = "CHNOSZ")
 expect_message(inew <- JANAF.to.OBIGT(file, abbrv = "acetylene"), "no change for ethyne\\(gas\\)", info = info)
 
 info <- "Error message for too high MAE"
-expect_error(inew <- JANAF.to.OBIGT(file, abbrv = "acetylene", MAE_max = 0.1), "MAE <= MAE_max is not TRUE")
+expect_error(inew <- JANAF.to.OBIGT(file, abbrv = "acetylene", MAE_max = 0.1), "MAE <= MAE_max is not TRUE", info = info)
+
+# We should also get a too-high MAE error for S_liq 20260613
+file <- system.file("extdata/misc/S-004.txt", package = "CHNOSZ")
+expect_error(inew <- JANAF.to.OBIGT(file), "MAE <= MAE_max is not TRUE", info = info)

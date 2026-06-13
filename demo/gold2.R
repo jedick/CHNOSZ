@@ -52,7 +52,7 @@ legend("topleft", legend = lTP(T, P), bty = "n")
 # Add composition legend
 l_NaCl <- bquote(italic(m)*NaCl == .(m_NaCl))
 l_S <- bquote(italic(m)*S[tot] == .(S_tot))
-l_O2 <- bquote(log*italic(f)*O[2] == .(O2_buffer) + .(dlogfO2))
+l_O2 <- bquote(log~italic(f)*O[2] == .(O2_buffer) + .(dlogfO2))
 legend("topright", legend = c(l_NaCl, l_S, l_O2), bty = "n")
 
 # Extract the pH range where Au2S2-2 predominates

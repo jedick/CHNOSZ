@@ -12,15 +12,22 @@ JANAF.to.OBIGT <- function(file, abbrv = NULL, T_max = 1500, MAE_max = 1, plot_C
 
   # Preprocess file: replace strings to get equal numbers of columns for read.table()
   lines <- readLines(file)
+  # For S1(l) and C2H2(g)
   lines <- gsub("Cp LAMBDA MAXIMUM", "NA\tNA\tNA", lines)
   lines <- gsub("TRANSITION", "NA\tNA\tNA", lines)
+  # For S1(l)
+  lines <- gsub("\t\t\t\t\t\t\t\t\t\t\t\t\t\t", "\tNA\tNA\tNA\tNA\tNA\tNA\tNA", lines)
+  lines <- gsub("BETA <--> LIQUID", "NA\tNA\tNA", lines)
+  lines <- gsub("FUGACITY = 1 bar", "NA\tNA\tNA", lines)
   tmpfile <- tempfile(fileext=".txt")
   writeLines(lines, tmpfile)
 
-  # Process abbrv argument
-  abbrv = ifelse(is.null(abbrv), NA_character_, abbrv)
   # Read the table, skipping the first three lines
   dat <- read.table(tmpfile, skip = 3)
+
+  # Process abbrv argument
+  abbrv = ifelse(is.null(abbrv), NA_character_, abbrv)
+
   # Add column names
   colnames(dat) <- c("T", "Cp", "S", "DG", "DH", "H", "G", "logK")
   # Read the first line to get name, formula, and state
@@ -35,7 +42,7 @@ JANAF.to.OBIGT <- function(file, abbrv = NULL, T_max = 1500, MAE_max = 1, plot_C
   state_orig <- regmatches(formula_state, m)[[1]][2]
   # Convert g to gas
   # TODO: work with other states (aq, cr)
-  state <- switch(state_orig, g = "gas", NA)
+  state <- switch(state_orig, g = "gas", l = "liq", NA)
   if(is.na(state)) stop(paste("unrecognized state:", state_orig))
   # Format today's date for ISO 8601, e.g. 2026-06-04
   date <- format(Sys.time(), "%Y-%m-%d")
@@ -45,6 +52,10 @@ JANAF.to.OBIGT <- function(file, abbrv = NULL, T_max = 1500, MAE_max = 1, plot_C
   # Find rows to use for Cp values (100 to 1500 K)
   iCp <- dat$T >= 100 & dat$T <= T_max
   Cp <- dat$Cp[iCp]
+  # Remove NA Cp values
+  iNA <- is.na(Cp)
+  Cp <- Cp[!iNA]
+  iCp[iNA] <- FALSE
   # Use linear model to fit Cp equation
   # Cp = a + b*T + c*T^-2 + d*T^-0.5 + e*T^2
   T <- dat$T[iCp]
@@ -55,12 +66,22 @@ JANAF.to.OBIGT <- function(file, abbrv = NULL, T_max = 1500, MAE_max = 1, plot_C
   Cp_predicted <- predict(Cp_lm)
 
   if(plot_Cp) {
-    # Plot actual and predicted values
+    # Plot actual values
     plot(T, Cp, xlab = quote(italic(T)~"(K)"), ylab = axis.label("Cp"))
-    lines(T, Cp_predicted)
+    # Predict Cp at closely-spaced T values
+    T_pred <- min(T):max(T)
+    newdata <- data.frame(
+      T = T_pred,
+      T_2 = T_pred ^ -2,
+      T_0.5 = T_pred ^ -0.5,
+      T2 = T_pred ^ 2
+    )
+    Cp_pred <- predict(Cp_lm, newdata)
+    lines(T_pred, Cp_pred)
     legend("topleft", c("actual", "predicted"), pch = c(1, NA), lty = c(0, 1))
     title(formula_state, font.main = 1)
   }
+
   # Calculate MAE
   MAE <- mean(abs(Cp_predicted - Cp))
   print(paste0("MAE for Cp of ", name, " ", formula_state, ": ", round(MAE, 2)))

@@ -26,6 +26,9 @@ Ttr <- function(ispecies, ispecies2 = NULL, P = 1, dPdT = NULL) {
   TtrPr <- get("thermo", CHNOSZ)$OBIGT$z.T[ispecies]
   # The constant slope, dP/dT
   if(is.null(dPdT)) dPdT <- dPdTtr(ispecies, ispecies2)
+  # Needed for S_liq: if the slope is NaN (0 in denominator)
+  # then return the transition temperature unchanged 20260613
+  if(is.nan(dPdT)) return(TtrPr)
   Pr <- 1
   TtrPr + (P - Pr) / dPdT
 }
