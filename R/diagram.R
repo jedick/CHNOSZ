@@ -11,6 +11,7 @@
 #source("util.plot.R")
 #source("util.character.R")
 #source("util.misc.R")
+#source("util.protein.R")
 
 diagram <- function(
   # Species affinities or activities
@@ -266,7 +267,7 @@ diagram <- function(
       }
       else names <- as.character(eout$species$name)
       # Remove non-unique organism or protein names
-      if(all(grepl("_", names))) {
+      if(all(is.protein(names))) {
         is.pname <- TRUE
         # Everything before the underscore (the protein)
         pname <- gsub("_.*$", "", names)
@@ -290,7 +291,7 @@ diagram <- function(
   }
 
   ## Apply formatting to chemical formulas 20170204
-  if(all(grepl("_", names))) is.pname <- TRUE
+  if(all(is.protein(names))) is.pname <- TRUE
   if(format.names & !is.pname) {
     # Check if names are a deparsed expression (used in mix()) 20200718
     parsed <- FALSE

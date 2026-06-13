@@ -8,6 +8,7 @@
 
 ## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("util.data.R")
+#source("util.protein.R")
 
 info <- function(species = NULL, state = NULL, check.it = TRUE) {
 
@@ -56,7 +57,7 @@ info <- function(species = NULL, state = NULL, check.it = TRUE) {
       # First look for exact match
       ispecies <- info.character(species[i], state[i])
       # If no exact match and it's not a protein, show approximate matches (side effect of info.approx)
-      if(identical(ispecies, NA) & !grepl("_", species[i])) ispecies.notused <- info.approx(species[i], state[i])
+      if(identical(ispecies, NA) & !is.protein(species[i])) ispecies.notused <- info.approx(species[i], state[i])
       # Do not accept multiple matches
       if(length(ispecies) > 1) ispecies <- NA
       return(ispecies)

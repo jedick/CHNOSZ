@@ -3,6 +3,7 @@
 
 ## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("util.units.R")
+#source("util.protein.R")
 
 slice.affinity <- function(affinity, d = 1, i = 1) {
   # Take a slice of affinity along one dimension
@@ -206,7 +207,7 @@ energy <- function(what, vars, vals, lims, T = 298.15, P = "Psat", IS = 0, sout 
     # Deal with affinities of protein ionization here 20120527
     if("H+" %in% rownames(mybasis)) {
       # Which species are proteins
-      isprotein <- grepl("_", myspecies$name)
+      isprotein <- is.protein(myspecies$name)
       if(any(isprotein)) {
         if(get("thermo", CHNOSZ)$opt$ionize.aa) {
             message("affinity: ionizing proteins ...")
