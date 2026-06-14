@@ -11,7 +11,6 @@
 #source("util.plot.R")
 #source("util.character.R")
 #source("util.misc.R")
-#source("util.protein.R")
 
 diagram <- function(
   # Species affinities or activities
@@ -49,7 +48,9 @@ diagram <- function(
   if(!(efun %in% c("affinity", "rank.affinity", "equilibrate") | grepl("solubilit", efun)))
     stop("'eout' is not the output from one of these functions: affinity, rank.affinity, equilibrate, or solubility")
   # For solubility(), default type is loga.balance 20210303
-  if(grepl("solubilit", efun) & missing(type)) type <- "loga.balance"
+  if(grepl("solubility", efun) & missing(type)) type <- "loga.balance"
+  # Use loga.equil to plot stabilities of multiple substrates 20260614
+  if(grepl("solubilities", efun) & missing(type)) type <- "loga.equil"
   # Check balance argument for rank.affinity() 20220416
   if(efun == "rank.affinity") {
     if(!identical(balance, 1)) {

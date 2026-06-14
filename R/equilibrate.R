@@ -5,7 +5,6 @@
 ## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("util.misc.R")
 #source("util.character.R")
-#source("util.protein.R")
 
 equilibrate <- function(aout, balance = NULL, loga.balance = NULL, 
   ispecies = !grepl("cr", aout$species$state), normalize = FALSE, as.residue = FALSE,

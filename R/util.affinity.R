@@ -3,7 +3,7 @@
 
 ## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("util.units.R")
-#source("util.protein.R")
+#source("util.misc.R")
 
 slice.affinity <- function(affinity, d = 1, i = 1) {
   # Take a slice of affinity along one dimension

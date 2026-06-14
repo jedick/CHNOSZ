@@ -135,3 +135,28 @@ which.balance <- function(species) {
   }
   return(ib[!is.na(ib)])
 }
+
+is.protein <- function(name) {
+  # Utility function to return TRUE for valid protein names  20260613
+  # Added so S_liq isn't mistaken as a protein using previous grepl("_", name) heuristic
+  name %in% paste(thermo()$protein$protein, thermo()$protein$organism, sep = "_")
+}
+
+parallel_index <- function(input_list, indexing_object) {
+  # Parallel index to extract values from a list of objects  20260614
+  # input_list: list of objects with dim D
+  # indexing_object: single dim-D object with values in 1:length(input_list)
+  # result: single dim-D object with values extracted from input_list
+
+  # Stack inputs as columns of a matrix (works for any shape)
+  m <- do.call(cbind, lapply(input_list, as.vector))
+  # Build row indices (one per element) and column indices from indexing_object
+  row_idx <- seq_along(indexing_object)
+  col_idx <- as.vector(indexing_object)
+  # Extract one value per row using a 2-column index matrix
+  result <- m[cbind(row_idx, col_idx)]
+  # Restore original dimensions
+  dim(result) <- dim(indexing_object)
+  result
+}
+

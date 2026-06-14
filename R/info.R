@@ -8,7 +8,7 @@
 
 ## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("util.data.R")
-#source("util.protein.R")
+#source("util.misc.R")
 
 info <- function(species = NULL, state = NULL, check.it = TRUE) {
 

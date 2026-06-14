@@ -3,7 +3,7 @@
 \alias{solubility}
 \title{Equilibrium chemical activities of species}
 \description{
-Calculate chemical activities of aqueous species in equilibrium with a mineral or gas.
+Calculate chemical activities of aqueous species in equilibrium with one or more substrates (e.g. minerals or gases).
 }
 
 \usage{
@@ -14,38 +14,51 @@ Calculate chemical activities of aqueous species in equilibrium with a mineral o
   \item{iaq}{character (names) or numeric (species indices) of aqueous species}
   \item{...}{arguments for \code{\link{affinity}} or \code{\link{mosaic}} (i.e. plotting variables)}
   \item{in.terms.of}{character, express the total solubility in terms of moles of this species}
-  \item{dissociate}{logical, does the mineral undergo a dissociation reaction?}
+  \item{dissociate}{logical, calculate activities of products of the dissociation reaction?}
   \item{find.IS}{logical, find the equilibrium ionic strength by iteration?}
 }
 
 \details{
-\code{solubility} calculates the activities of aqueous species in equilibrium with one or more minerals or gases.
-The minerals or gases should be loaded as the formed \code{\link{species}}, and the aqueous species (including ions and/or neutral complexes) that can be produced by dissolution should be listed in the \code{iaq} argument.
-The definitions of plotting variables should be provided in \code{...}, which are passed as arguments to \code{\link{affinity}}, or to \code{\link{mosaic}} if the first one is named \code{bases}.
+\code{solubility} calculates the activities of aqueous species in equilibrium with one or more substrates, usually minerals or gases.
+The substrates should be loaded as the formed \code{\link{species}},
+and the product solutes (including ions and/or neutral complexes) should be listed in the \code{iaq} argument.
+The substrate(s) to dissolve are most often a mineral such as CaCO\s3 or gas such as CO\s2.
+It is possible and sometimes useful to use an aqueous species as a substrate; the solutes are always aqueous species.
+The definitions of plotting variables should be provided in \code{...}, which are passed as arguments to \code{\link{affinity}},
+or to \code{\link{mosaic}} if the first one is named \code{bases}.
 
-It must be possible to obtain a valid set of basis species by substituting each of the minerals or gases in the first position of the current \code{\link{basis}} defintion, and all of the aqueous species must include that basis species in their formation reactions.
-(This essentially means that all minerals, gases and aqueous species must share a common element, which is what the reactions are balanced on.)
+The function requires that a valid set of basis species can be obtained by substituting each of the substrates in the first position
+of the current \code{\link{basis}} defintion, and all of the aqueous species must include that basis species in their formation reactions.
+This essentially means that all substrates and aqueous species must share a common element, which is what the reactions are balanced on.
 
-For a single mineral or gas, the output of \code{solubility} can be used by \code{\link{diagram}} with \code{type = "loga.balance"} (the default when \code{type} is \samp{auto}) to plot the sum of activities of aqueous species.
-This value corresponds to the solubility of the mineral or gas; \code{in.terms.of} can be used to express this value in terms of another species or element.
+For a single substrate, the output of \code{solubility} can be used by \code{\link{diagram}} with \code{type = "loga.balance"} (or the default of \samp{auto})
+to plot the solubility of the substrate (i.e. the sum of activities of aqueous species).
+\code{in.terms.of} can be used to express this value in terms of another species or element.
 For example, for dissolution of gaseous S\s{2}, \code{in.terms.of = "S"} gives the total amount of S in solution, which is twice the amount of S\s{2} dissolved.
 Likewise, the solubility of corundum (Al\s{2}O\s{3}) can be expressed in terms of the moles of Al\S{+3} in solution (see the vignette \viglink{anintro}).
 
+Use \code{diagram(..., type = "loga.equil")} to plot the activity of each solute (aqueous species).
+}
 
-For multiple minerals, the function calculates the solubilities for each of the minerals separately; these are stored in the \code{loga.equil} element of the output.
-The overall \emph{minimum} solubility among all the minerals at each point is stored in \code{loga.balance}.
-This corresponds to the total activity of dissolved species in equilibrium with the most stable mineral.
+\section{Multiple Substrates}{
+If multiple substrates are defined by \code{species}, the function calculates the solubilities for each of the substrates separately,
+then combines the results into a two-part output list named \code{substrate} and \code{aqueous}.
 
-Note that \code{\link{diagram}} by default plots \code{loga.balance}.
-Use \code{type = "loga.equil"} in the function call to plot the solubilities for the individual minerals or gases, or the activities of aqueous species when there is one mineral or gas being dissolved.
+The \code{aqueous} list item follows the output description given above, but has the results for the most stable substrate at each grid point.
+This \emph{minimum} solubility is used to identify the most stable substrate, and this is used to extract the overall solubility (\code{loga.balance})
+and activities of aqueous species (\code{loga.equil}) at each grid point.
+
+The \code{substrate} list item has the same value for \code{loga.balance} (overall solubility),
+but the solubilities of individual substrates are stored in \code{loga.equil}, and the \code{species} list is assigned the names of the substrates.
+This allows plotting stable substrates in addition to aqueous species' activities from the result of a single \code{solubility} call.
 }
 
 \section{Backward Compatibility}{
-For compatibility with previous versions of the function, the \code{iaq} argument can be the output of \code{\link{affinity}} or \code{\link{mosaic}} for aqueous species.
+For compatibility with previous versions, the \code{iaq} argument can be the output of \code{\link{affinity}} or \code{\link{mosaic}} for aqueous species.
 The examples for ionic strength and dissociation reactions were designed for this calling style.
 
-In this case the (single) mineral or gas being dissolved is taken from the current \code{\link{basis}} species.
-Usually, the basis species should be set up so that the first basis species represents the substance being dissolved (a mineral such as CaCO\s3 or gas such as CO\s2).
+In this case the (single) substrate being dissolved is taken from the current \code{\link{basis}} species.
+Usually, the basis species should be set up so that the first basis species represents the substrate being dissolved.
 This is treated as the conserved basis species, so it must be present in all of the formation reactions of the aqueous species.
 
 The \code{\link{species}} should be defined to represent one set of aqueous species (including ions and/or neutral complexes) formed in solution, all involving the conserved basis species.
@@ -54,8 +67,10 @@ Other variables (pH, ionic strength, activities of other basis species) should b
 }
 
 \section{Dissociation Reactions}{
-The function perfoms some additional steps to calculate the solubility of something that dissociates (not just dissolves).
-For example, the dissolution of calcite (CaCO\s3), involves the release of both calcium ions and different forms of carbonate in solution, depending on the pH.
+The function perfoms additional steps to calculate the activities of dissociation products.
+This may be needed when a non-negligible amount of counterion is released as a mineral dissolves.
+
+For example, the dissolution of calcite (CaCO\s3) involves the release of both calcium ions and different forms of carbonate in solution, depending on the pH.
 The equilibrium calculation must take account of the \emph{total} activity of the shared ion (Ca\S{+2}), which is unknown at the start of the calculation.
 The solution is found by recalculating the affinities, essentially working backward from the assumption that the dissociation didn't occur.
 The resulting activities correspond to equilibrium considering the system-wide activity of Ca\S{+2}.
@@ -84,7 +99,7 @@ Except for relatively simple systems, even after careful refinement, the results
 \code{demo("solubility")} shows solubilities of CO\s{2} and calcite calculated as a function of pH and T; note that for calcite, the \code{dissociate} argument is set to TRUE.
 \code{demo("gold")} shows solubility calculations for Au in aqueous solutions with hydroxide, chloride, and hydrosulfide complexes.
 
-Solubility calculations for multiple minerals are used for generating isosolubility (aka. equisolubility) lines in \code{demo("Pourbaix")} and \code{demo("minsol")}.
+Solubility calculations for multiple substrates are used for generating isosolubility (aka. equisolubility) lines in \code{demo("Pourbaix")} and \code{demo("minsol")}.
 The latter demo combines the calculation of solubilities with a \code{\link{mosaic}} calculation to account for the speciation of aqueous sulfur.
 
 Whereas \code{solubility} yields a stable equilibrium condition (the affinities of formation reactions of aqueous species are zero), \code{\link{equilibrate}} generates metastable equilibrium (the affinities of formation reactions are equal to each other, but not necessarily zero).
@@ -137,10 +152,10 @@ text(-58, 6.5, paste("Solubility of gaseous SO2 (green line) is",
 par(xpd = FALSE)
 
 # Show overall (minimum) solubility of multiple gases
-diagram(s2, col = 4, lwd = 3)
+diagram(s2$aqueous, col = 4, lwd = 3)
 # Show solubilities of individual gases
 names <- info(species()$ispecies)$formula
-diagram(s2, type = "loga.equil", names = names, add = TRUE)
+diagram(s2$substrate, names = names, add = TRUE)
 title("Minimum solubility (blue line) corresponds to the most stable gas")
 layout(matrix(1))
 

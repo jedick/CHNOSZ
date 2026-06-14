@@ -12,7 +12,7 @@ par(mfrow = c(2, 2))
 
 # System variables
 metal <- "Zn"
-res <- 300
+res <- 100
 T <- 100
 P <- "Psat"
 Stot <- 1e-3
@@ -39,7 +39,7 @@ species(iaq, logm_metal, add = TRUE)
 
 # Calculate affinities and make diagram
 bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
-m <- mosaic(bases, pH = c(pH, res), O2 = c(O2, res), T = T, P = P, IS = NaCl$IS)
+m <- mosaic(bases, pH = c(pH, res * 3), O2 = c(O2, res * 3), T = T, P = P, IS = NaCl$IS)
 d <- diagram(m$A.species, bold = TRUE)
 diagram(m$A.bases, add = TRUE, col = 8, col.names = 8, lty = 3, italic = TRUE)
 title(bquote(log ~ italic(m)*.(metal)*"(aq)" == .(logm_metal)))
@@ -57,7 +57,7 @@ legend("topleft", legend = l, bty = "n", cex = 1.5)
 par(xpd = NA)
 legend("bottomleft", c("Predominance diagram: molality of aqueous", "species defines one solubility contour.",
   "Take away aqueous species to see", "all possible minerals.",
-  "Calculate solubility for each mineral separately", "then find the minimum to plot solubilities", "of stable minerals across the diagram."),
+  "Calculate solubility for each mineral separately", "then use the minimum to plot solubilities", "of stable minerals across the diagram."),
        pch = c("A", "", "B", "", "C", "", ""), inset = c(-0.1, 0), cex = 0.95)
 par(xpd = FALSE)
 
@@ -70,13 +70,12 @@ label.figure("B")
 
 # Calculate saturation condition i.e. *minimum* solubility among all the minerals 20201008
 # Minimum solubility is now part of solubility() 20210303
-# Decrease resolution for faster running 20260612
-s <- solubility(iaq, bases = bases, pH = c(pH, 100), O2 = c(O2, 100), T = T, P = P, IS = NaCl$IS, in.terms.of = metal)
+s <- solubility(iaq, bases = bases, pH = c(pH, res), O2 = c(O2, res), T = T, P = P, IS = NaCl$IS, in.terms.of = metal)
 # Start plot with solubility contours
 levels <- seq(-12, 9, 3)
-diagram(s, levels = levels, contour.method = "flattest")
+diagram(s$aqueous, levels = levels, contour.method = "flattest")
 # Add the mineral stability boundaries
-diagram(mcr$A.species, names = NA, add = TRUE, lty = 2, col = 2)
+diagram(s$substrate, names = NA, add = TRUE, lty = 2, col = 2)
 title("Solubilities of all minerals", font.main = 1, line = 1.5)
 title(bquote(log[10]~"moles of"~.(metal)~"in solution"), line = 0.7)
 label.figure("C")

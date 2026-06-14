@@ -70,9 +70,3 @@ group.formulas <- function() {
   rownames(out)[1] <- "H2O"
   return(out)
 }
-
-is.protein <- function(name) {
-  # Utility function to return TRUE for valid protein names  20260613
-  # Added so S_liq isn't mistaken as a protein using previous grepl("_", name) heuristic
-  name %in% paste(thermo()$protein$protein, thermo()$protein$organism, sep = "_")
-}

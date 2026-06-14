@@ -452,7 +452,7 @@ diagram(m$A.species, bold = species()$state == "cr")
 species(icr)
 s <- solubility(iaq, bases = bases, pH = pH, O2 = O2, T = T, P = P, IS = IS, in.terms.of = metal)
 levels <- seq(-9, -3, 3)
-diagram(s, levels = levels, contour.method = "flattest", add = TRUE, col = "green4", lwd = 2)
+diagram(s$aqueous, levels = levels, contour.method = "flattest", add = TRUE, col = "green4", lwd = 2)
 # Add a legend
 leg_list <- c(
   lTP(T, P),
@@ -465,29 +465,18 @@ title("Total solubility is higher than quasisolubility", font.main = 1)
 ## Second plot: activities of aqueous species in solubility calculation
 basis("O2", -46)
 s <- solubility(iaq, bases = bases, pH = pH, T = T, P = P, IS = IS, in.terms.of = metal)
-diagram(s, col = "green4", lwd = 2, ylim = c(-10, -6))
+# Plot solubility followed by speciation
+diagram(s$aqueous, col = "green4", lwd = 2, ylim = c(-10, -6))
+diagram(s$aqueous, type = "loga.equil", add = TRUE)
+
 # Locate the stability boundary between pyrite and magnetite along the the pH axis 
-ipH <- which.min(abs(s$loga.equil[[3]] - s$loga.equil[[2]]))
+s_sub <- s$substrate
+ipH <- which.min(abs(s_sub$loga.equil[[3]] - s_sub$loga.equil[[2]]))
 # Show py-mag stability boundary
-pH_py_mag <- s$vals$pH[ipH]
+pH_py_mag <- s_sub$vals$pH[ipH]
 abline(v = pH_py_mag, col = 8)
 text(pH_py_mag, -6, "pyrite", adj = c(1.2, 1.5), font = 2)
 text(pH_py_mag, -6, "magnetite", adj = c(-0.1, 1.5), font = 2)
-
-# Consider each mineral separately to get activities of aqueous speices
-species("pyrite")
-s_py <- solubility(iaq, bases = bases, pH = pH, T = T, P = P, IS = IS, in.terms.of = metal)
-species("magnetite")
-s_mag <- solubility(iaq, bases = bases, pH = pH, T = T, P = P, IS = IS, in.terms.of = metal)
-# Merge activities for stable regions of each mineral
-loga.equil_both <- lapply(1:length(s_py$loga.equil), function(ispecies) {
-  c(s_py$loga.equil[[ispecies]][1:(ipH-1)], s_mag$loga.equil[[ispecies]][ipH:res])
-})
-# Put merged activities into new object for plotting
-s_both <- s_py
-s_both$loga.equil <- loga.equil_both
-diagram(s_both, type = "loga.equil", add = TRUE)
-
 leg_expr <- expr.species("O2", "gas", value = -46, log = TRUE)
 legend("bottomleft", legend = leg_expr, bg = "white")
 title("Species contributing to total solubility", font.main = 1)
@@ -844,7 +833,7 @@ title(main, font.main = 1)
 species(icr)
 s <- solubility(iaq, bases = bases, pH = pH, O2 = O2, T = T, P = P, IS = IS, in.terms.of = metal)
 levels <- seq(-12, 9, 3)
-diagram(s, levels = levels, contour.method = "flattest", col = "green4")
+diagram(s$aqueous, levels = levels, contour.method = "flattest", col = "green4")
 title("Total solubility contours", font.main = 1)
 ```
 
@@ -884,7 +873,7 @@ Another use of `convert()` is to convert the output of `solubility()` from log a
 The following code continues from the example above:
 
 ```{r convert_ppm, fig.cap = "Solubility in units of ppm"}
-sppm <- convert(s, "ppm")
+sppm <- convert(s$aqueous, "ppm")
 levels <- c(1e-6, 1e-3, 1e0, 1e3)
 diagram(sppm, levels = levels, col = "green4")
 ```

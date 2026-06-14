@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-44 (2026-06-13)}{
+\section{Changes in CHNOSZ version 2.2.0-46 (2026-06-14)}{
 
   \subsection{DEMOS}{
 
@@ -156,6 +156,15 @@
   \subsection{OTHER CHANGES}{
 
     \itemize{
+
+      \item For dissolution of more than one substrate, \code{solubility()} now
+      returns a multi-part list with elements named \code{aqueous} with the
+      activities of all aqueous species and \code{substrate} with the
+      solubilities of all substrates in \code{loga.equil}. Both elements
+      contain the overall solubility among all substrates in
+      \code{loga.balance}, as before. This way one can plot either the aqueous
+      activities, mineral (substrate) predominance areas, or both, from a
+      single \code{solubility()} call.
 
       \item \code{label.plot()} and \code{label.figure()} now handle
       logarithmic scales for x and y axes.

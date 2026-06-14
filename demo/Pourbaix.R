@@ -89,7 +89,7 @@ species(icr)
 s <- solubility(iaq, pH = c(pH, res), Eh = c(Eh, res), T = T, P = P, IS = IS, in.terms.of = element)
 
 # Plot diagram (LAYER 2: equisolubility lines)
-diagram(s, levels = levels, contour.method = "flattest", add = TRUE, lwd = 1.5)
+diagram(s$aqueous, levels = levels, contour.method = "flattest", add = TRUE, lwd = 1.5)
 
 # Calculate affinities for aqueous species
 # FIXME: should be able to remove cr species from previous affinity object

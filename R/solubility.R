@@ -2,7 +2,7 @@
 # 20181031 first version jmd
 # 20181106 work on the output from affinity(); no "equilibrate()" needed!
 # 20190117 add find.IS and test for dissociation reaction
-# 20210319 use vector of aqueous species as main argument (with back-compatibility for affinity output) and handle multiple minerals
+# 20210319 use vector of aqueous species as main argument (with back-compatibility for affinity output) and handle multiple substrates
 
 ## If this file is interactively sourced, the following are also needed to provide unexported functions:
 #source("equilibrate.R")
@@ -13,9 +13,9 @@
 #source("mosaic.R")
 #source("basis.R")
 
-# Function to calculate solubilities of multiple minerals 20210303
-# species() should be used first to load the minerals (all bearing the same metal)
-# 'iaq' lists aqueous species that can be produced by dissolution of the minerals
+# Function to calculate solubilities of multiple substrates 20210303
+# species() should be used first to load the substrates (all bearing the same metal)
+# 'iaq' lists aqueous species that can be produced by dissolution of the substrates
 # '...' contains arguments for affinity() or mosaic() (i.e. plotting variables)
 solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS = FALSE) {
 
@@ -36,28 +36,29 @@ solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS
   # Use current basis species as a template for the solubility calculations
   ispecies <- basis()$ispecies
   logact <- basis()$logact
-  # The current formed species are the minerals to be dissolved
-  mineral <- species()
-  if(is.null(mineral)) stop("please load minerals or gases with species()")
+  # The current formed species are the substrates to be dissolved
+  substrates <- species()
+  if(is.null(substrates)) stop("please load substrates (e.g. minerals or gases) with species()")
 
   if(!find.IS) {
-    # Get subcrt() output for all aqueous species and minerals 20210322
-    # Add aqueous species here - the minerals are already present
+    # Get subcrt() output for all aqueous species and substrates 20210322
+    # Add aqueous species here - the substrates are already present
     lapply(iaq, species, add = TRUE)
     # Also add basis species for mosaic()!
     if(is.mosaic) lapply(unlist(ddd$bases), species, add = TRUE)
     sout <- suppressMessages(do.call(affinity, c(affargs, return.sout = TRUE)))
   }
 
-  # Make a list to store the calculated solubilities for each mineral
-  slist <- list()
-  # Loop over minerals
-  for(i in seq_along(mineral$ispecies)) {
+  # Make lists to store the calculated solubilities (loga.balance) and speciation (loga.equil) for each substrate
+  balance_list <- list()
+  equil_list <- list()
+  # Loop over substrates
+  for(i in seq_along(substrates$ispecies)) {
     # Print message
-    message(paste("solubility: calculating for", mineral$name[i]))
-    # Define basis species with the mineral first (so it will be dissolved)
-    ispecies[1] <- mineral$ispecies[i]
-    logact[1] <- mineral$logact[i]
+    message(paste("solubility: calculating for", substrates$name[i]))
+    # Define basis species with the substrate first (so it will be dissolved)
+    ispecies[1] <- substrates$ispecies[i]
+    logact[1] <- substrates$logact[i]
     # Use numeric values first and put in buffer names second (needed for demo/gold.R)
     loga.numeric <- suppressWarnings(as.numeric(logact))
     basis(ispecies, loga.numeric)
@@ -70,32 +71,39 @@ solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS
     } else {
       if(is.mosaic) aout <- suppressMessages(mosaic(..., sout = sout)) else aout <- suppressMessages(affinity(..., sout = sout))
     }
-    # Calculate solubility of this mineral
+    # Calculate solubility of this substrate
     scalc <- solubility_calc(aout, in.terms.of = in.terms.of, dissociate = dissociate, find.IS = find.IS)
-    # Store the solubilities in the list
-    slist[[i]] <- scalc$loga.balance
+    # Store the results
+    balance_list[[i]] <- scalc$loga.balance
+    equil_list[[i]] <- scalc$loga.equil
   }
   
   # Restore the original thermodynamic system settings
   assign("thermo", thermo, CHNOSZ)
 
-  if(length(mineral$ispecies) == 1) {
-    # For one mineral, return the results of the solubility calculation
+  if(length(substrates$ispecies) == 1) {
+    # For one substrate, return the results of the solubility calculation
     scalc
   } else {
-    # For multiple minerals, the overall solubility is the *minimum* among all the minerals
-    smin <- do.call(pmin, slist)
-    # Put this into the last-computed 'solubility' object
-    scalc$loga.balance <- smin
-    scalc$loga.equil <- slist
-    scalc$species <- mineral
-    # Change the function name stored in the object so diagram() plots loga.balance automatically
-    scalc$fun <- "solubilities"
-    # Return the object
-    scalc
+    # Create two outputs (substrate and aqueous) using the last-computed 'solubility' object as a template
+    substrate <- aqueous <- scalc
+    # For multiple substrates, the overall solubility is the *minimum* among all the substrates
+    imin <- which.pmax(balance_list, maximum = FALSE)
+    substrate$loga.balance <- parallel_index(balance_list, imin)
+    substrate$loga.equil <- balance_list
+    substrate$species <- substrates
+    # Assign the function name so diagram() uses minimum solubility to identify the stable substrate
+    substrate$fun <- "solubilities"
+    # Now get the activities of aqueous species
+    aqueous$loga.balance <- parallel_index(balance_list, imin)
+    for(i in 1:length(aqueous$loga.equil)) {
+      this_equil_list <- sapply(equil_list, "[", i)
+      aqueous$loga.equil[[i]] <- parallel_index(this_equil_list, imin)
+    }
+    # Return the objects
+    return(list(substrate = substrate, aqueous = aqueous))
   }
 }
-
 
 # The "nuts and bolts" of solubility calculations
 # Moved from solubility() to solubility_calc() 20210318
