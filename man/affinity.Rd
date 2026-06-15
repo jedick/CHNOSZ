@@ -7,7 +7,7 @@ Calculate the chemical affinities of formation reactions of species.
 }
 
 \usage{
-  affinity(..., property = NULL, sout = NULL, exceed.Ttr = FALSE,
+  affinity(..., property = NULL, sout = NULL, warn.Ttr = TRUE,
     exceed.rhomin = FALSE, return.buffer = FALSE, return.sout = FALSE,
     balance = "PBB", iprotein = NULL, loga.protein = 0, transect = NULL)
 }
@@ -16,7 +16,7 @@ Calculate the chemical affinities of formation reactions of species.
   \item{...}{numeric, zero or more named arguments, used to identify the variables of interest in the calculations. For argument recall, pass the output from a previous calculation of \code{affinity} as an unnamed first argument.}
   \item{property}{character, the property to be calculated. Default is \samp{A}, for chemical affinity of formation reactions of species of interest}
   \item{sout}{list, output from \code{\link{subcrt}}}
-  \item{exceed.Ttr}{logical, allow \code{\link{subcrt}} to compute properties for phases beyond their transition temperature?}
+  \item{warn.Ttr}{logical, warn for temperatures above phase transition temperature?}
   \item{exceed.rhomin}{logical, allow \code{\link{subcrt}} to compute properties of species in the HKF model below 0.35 g cm\S{-3}?}
   \item{return.buffer}{logical. If \code{TRUE}, and a \code{\link{buffer}} has been associated with one or more basis species in the system, return the values of the activities of the basis species calculated using the buffer. Default is \code{FALSE}.}
   \item{return.sout}{logical, return only the values calculated with \code{\link{subcrt}}?}
@@ -47,7 +47,7 @@ For any arguments that refer to basis species, the numerical values are the loga
 If \samp{T}, \samp{P}, and/or \samp{IS} are not among the \code{var}s, their constant values can be supplied in \code{T}, \code{P}, or \code{IS} (in mol kg\eqn{^{-1}}{^-1}).
 The units of \samp{T} and \samp{P} are those set by \code{\link{T.units}} and \code{\link{P.units}} (on program start-up these are \degC and bar, respectively). 
 \code{sout}, if provided, replaces the call to \code{\link{subcrt}}, which can greatly speed up the calculations if this intermediate result is stored by other functions.
-\code{exceed.Ttr} is passed to \code{\link{subcrt}} so that the properties of mineral phases beyond their transition temperatures can optionally be calculated.
+\code{warn.Ttr} is passed to \code{\link{subcrt}} to control warnings about temperatures above the transition temperature for minerals, gases, or liquids.
 
 If one or more buffers are assigned to the definition of \code{\link{basis}} species, the logarithms of activities of these basis species are taken from the buffer (see \code{\link{buffer}}).
 

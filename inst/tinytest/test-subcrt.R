@@ -43,12 +43,9 @@ expect_true(all(sb$`Na+`$G < sb$water$G), info = info)
 water(oldwat)
 
 info <- "Phase transition temperatures give expected results"
-expect_message(subcrt("gold", T = c(1300, 1350), P = 1, convert = FALSE), "subcrt: setting G to NA for gold\\(cr\\)", info = info)
+expect_warning(subcrt("gold", T = c(1300, 1350), P = 1, convert = FALSE), "above transition temperature of 1336.15 K", info = info)
 # The reaction coefficients in the output should be unchanged 20171214
 expect_equal(subcrt(c("bunsenite", "nickel", "oxygen"), c(-1, 1, 0.5))$reaction$coeff, c(-1, 1, 0.5), info = info) 
-# Properties are NA only above (not at) the phase transition temperature 20191111
-sout <- subcrt("covellite", T = seq(780, 781, 0.5), P = 1, convert = FALSE)$out[[1]]
-expect_equal(is.na(sout$G), c(FALSE, FALSE, TRUE), info = info)
 
 # Use calories for comparisons with SUPCRT92
 E.units("cal")
@@ -198,10 +195,10 @@ expect_identical(sres_poly, sres_poly1, info = info)
 info <- "Automatic identification of polymorphs can be turned off"
 sres_nopoly <- subcrt("pyrrhotite", use.polymorphs = FALSE)
 expect_null(sres_nopoly$out[[1]]$polymorph, info = info)
-info <- "Warning is issued above beyond the transition temperature"
-expect_warning(sres_nopoly <- subcrt("pyrrhotite", use.polymorphs = FALSE), "above T limit of 411 K", info = info)
-info <- "Gibbs energy is silently extrapolated with exceed.Ttr = TRUE"
-expect_silent(sres_nopoly_extrap <- subcrt("pyrrhotite", use.polymorphs = FALSE, exceed.Ttr = TRUE), info = info)
+info <- "Message is issued above beyond the transition temperature"
+expect_message(sres_nopoly <- subcrt("pyrrhotite", use.polymorphs = FALSE), "above T limit of 411 K", info = info)
+info <- "Gibbs energy is silently extrapolated with warn.Ttr = FALSE"
+expect_silent(sres_nopoly_extrap <- subcrt("pyrrhotite", use.polymorphs = FALSE, warn.Ttr = FALSE), info = info)
 expect_false(anyNA(sres_nopoly_extrap$out[[1]]$G), info = info)
 
 # Added on 20230621
@@ -209,26 +206,25 @@ info <- "Arguments 2 and 3 can't both be character"
 expect_error(subcrt(c("hydrogen", "H2"), c("gas", "aq"), "G"), info = info)
 
 # Added on 20230818
-info <- "exceed.Ttr works for basis species in automatically balanced reactions"
+info <- "extrapolation above Ttr works for basis species in automatically balanced reactions"
 basis(c("gypsum", "SO4-2", "H2O", "H+", "O2"))
-# Defaults for subcrt() go above the temperature limit for gypsum, so use exceed.Ttr to calculate logK
-automatic_reaction <- subcrt("Ca+2", 1, exceed.Ttr = TRUE)$out
+# Defaults for subcrt() go above the temperature limit for gypsum
+expect_warning(automatic_reaction <- subcrt("Ca+2", 1)$out, "above transition temperature", info = info)
 expect_false(any(is.na(automatic_reaction$logK)), info = info)
 # Check that logK is identical for the reaction entered manually
-manual_reaction <- subcrt(c("gypsum", "Ca+2", "SO4-2", "H2O"), c(-1, 1, 1, 2), exceed.Ttr = TRUE)$out
+manual_reaction <- subcrt(c("gypsum", "Ca+2", "SO4-2", "H2O"), c(-1, 1, 1, 2))$out
 expect_equal(automatic_reaction$logK, manual_reaction$logK, info = info)
 
 # Added on 20231115
 info <- "Cp equation limits give expected results"
-expect_warning(sout <- subcrt("acanthite", T = 1000:1001, P = 1, convert = FALSE)$out[[1]], "above T limit of 1000 K", info = info)
+expect_message(sout <- subcrt("acanthite", T = 1000:1001, P = 1, convert = FALSE)$out[[1]], "above T limit of 1000 K", info = info)
 expect_false(any(is.na(sout$G)), info = info)
-info <- "exceed.Ttr doesn't interfere with polymorphic transitions"
-# Stable polymorphs of pyrrhotite at default T,P conditions of subcrt()
-polymorph <- c(1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3)
-s1 <- subcrt("pyrrhotite")$out[[1]]
+info <- "extrapolation above Ttr doesn't interfere with polymorphic transitions"
+# Stable polymorphs of pyrrhotite at listed T (deg C)
+T <- seq(100, 1500, 100)
+polymorph <- c(1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3)
+expect_warning(s1 <- subcrt("pyrrhotite", T = seq(100, 1500, 100), P = 1)$out[[1]], "above transition temperature", info = info)
 expect_equal(s1$polymorph, polymorph, info = info)
-s2 <- subcrt("pyrrhotite", exceed.Ttr = TRUE)$out[[1]]
-expect_equal(s2$polymorph, polymorph, info = info)
 
 # Added on 20231204
 info <- "Auto-balanced reactions apply ionic strength correction"

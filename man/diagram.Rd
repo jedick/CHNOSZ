@@ -301,9 +301,7 @@ mtitle(c("Aqueous aluminum species",
 #     T/P limits of the water() calculations;
 basis(c("corundum", "quartz", "oxygen"))
 species(c("kyanite", "sillimanite", "andalusite"))
-# Database has transition temperatures of kyanite and andalusite
-# at 1 bar only, so we permit calculation at higher temperatures
-a <- affinity(T = c(200, 900, 99), P = c(0, 9000, 101), exceed.Ttr = TRUE)
+a <- affinity(T = c(200, 900, 99), P = c(0, 9000, 101))
 d <- diagram(a, fill = NULL)
 slab <- syslab(c("Al2O3", "SiO2", "H2O"))
 mtitle(c(as.expression(slab), "after Helgeson et al., 1978"))

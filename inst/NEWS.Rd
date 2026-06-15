@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-47 (2026-06-15)}{
+\section{Changes in CHNOSZ version 2.2.0-48 (2026-06-15)}{
 
   \subsection{DEMOS}{
 
@@ -110,7 +110,8 @@
       basis species for mosaic calculations in examples, demos, and vignettes.
       Thanks to Evgeniy Bastrakov for suggesting this change. Some instances of
       S\s{3}\S{-} are commented because of slowdowns associated with non-unity
-      balance constraints, particularly in anintro.Rmd and multi-metal.Rmd. 
+      balance constraints, particularly in \viglink{anintro} and
+      \viglink{multi-metal}.
 
       \item Remove exported functions \code{demos()} and \code{examples()} and
       make new demos from them. These "meta-demos" show plots from all the
@@ -163,18 +164,34 @@
 
   }
 
-  \subsection{OTHER CHANGES}{
+  \subsection{API CHANGES}{
 
     \itemize{
 
+      \item Standard Gibbs energies and other thermodynamic properties are now
+      always extrapolated beyond the phase transition temperature for minerals,
+      gases and liquids. The \strong{exceed.Ttr} argument in \code{subcrt()}
+      and \code{affinity()} has been replaced by \strong{warn.Ttr} with a
+      default of TRUE. For species with \code{model = "CGL_Ttr"}, this produces
+      a warning when T is above the transition temperature for the species. Set
+      \strong{warn.Ttr} to FALSE to silence the warning.
+
       \item For dissolution of more than one substrate, \code{solubility()} now
-      returns a multi-part list with elements named \code{aqueous} with the
-      activities of all aqueous species and \code{substrate} with the
-      solubilities of all substrates in \code{loga.equil}. Both elements
-      contain the overall solubility among all substrates in
-      \code{loga.balance}, as before. This way one can plot either the aqueous
-      activities, mineral (substrate) predominance areas, or both, from a
-      single \code{solubility()} call.
+      returns a list with elements named \code{aqueous} with the activities of
+      aqueous species and \code{substrate} with the solubilities of substrates
+      in \code{loga.equil}. Both elements contain the overall solubility among
+      all substrates in \code{loga.balance}, as before. This allows plotting
+      either the aqueous activities, relative stabilities of substrates (e.g.
+      minerals), or both, from a single \code{solubility()} call. This is used
+      in some demos and \viglink{anintro} (look for \code{s$substrate}).
+
+    }
+
+  }
+
+  \subsection{OTHER CHANGES}{
+
+    \itemize{
 
       \item \code{label.plot()} and \code{label.figure()} now handle
       logarithmic scales for x and y axes.
@@ -337,15 +354,15 @@
 
       \item Add \file{demo/MgATP.R}: speciation of ATP with H\S{+} and
       Mg\S{+2}, based on
-      \doiref{https://search.worldcat.org/title/51242181}{Alberty (2003)} (moved
-      from \file{anintro.Rmd}).
+      \doiref{https://search.worldcat.org/title/51242181}{Alberty (2003)}
+      (moved from \viglink{anintro}).
 
       \item Update \file{demo/contour.R} to use conditions taken from
-      \doiref{10.1016/j.oregeorev.2022.105231}{Ding et al.
-        (2023)} and optional data for Au species from IGEM RAS, including
-      polynuclear Au\s{2}S\s{2}\S{-2}.
+      \doiref{10.1016/j.oregeorev.2022.105231}{Ding et al. (2023)} and optional
+      data for Au species from IGEM RAS, including polynuclear
+      Au\s{2}S\s{2}\S{-2}.
 
-      \item Add \file{demo/rubisco_Zc.R}, moved from \file{anintro.Rmd}.
+      \item Add \file{demo/rubisco_Zc.R}, moved from \viglink{anintro}.
 
       \item Add \file{demo/sum_S.R}: log \emph{f}O\s{2}--log \emph{m} ΣS
       diagram for Fe-S-O-C minerals with solubility contours for Fe and Au.
@@ -661,7 +678,7 @@
       \item Add \code{loga_aq} argument to \code{mosiac()} (also present in new
       function \code{stack_mosaic()}) to control the activity of mosaiced
       aqueous basis species. This obviates a workaround that was previously
-      used in the Mosaic Stacking 2 section of \strong{multi-metal.Rmd}.
+      used in the Mosaic Stacking 2 section of \viglink{multi-metal}.
 
       \item Add \code{add.alpha()} to add alpha value to a color specified in
       any notation accepted by \code{col2rgb()}.
@@ -737,7 +754,7 @@
       \code{mix()}, needed for \R < 4.0.0. Thanks to Xiaojia Jiang for the bug
       report.
 
-      \item In \strong{multi-metal.Rmd}, work around absence of
+      \item In \viglink{multi-metal}, work around absence of
       \code{hcl.colors()} in \R < 3.6.0.
 
       \item \code{diagram()}: Improve handling of length > 1 \code{col},
@@ -747,7 +764,7 @@
       species for which different-colored or -styled lines are desired should
       be placed at the top of the species list. This change makes possible one
       less call to \code{diagram()} in Mosaic Stacking 1 and 2 in
-      \strong{multi-metal.Rmd}, and now the entire chalcopyrite field in Mosaic
+      \viglink{multi-metal}, and now the entire chalcopyrite field in Mosaic
       Stacking 2 is bounded by a thick orange line, instead of just the border
       with bornite.
 
@@ -885,8 +902,8 @@
       \item Names of functions, variables, and data files now use capitalized
       \samp{Berman}, not \samp{berman}.
 
-      \item In \file{vignettes/multi-metal.Rmd} (\dQuote{Diagrams with multiple
-        metals}), add a link to the associated paper
+      \item In \viglink{multi-metal} (\dQuote{Diagrams with multiple metals}),
+      add a link to the associated paper
       (\doiref{10.1016/j.acags.2021.100059}{Dick, 2021}).
 
     }
@@ -983,11 +1000,11 @@
       used for a diagram in a new preprint
       (\doiref{10.1101/2021.01.29.428804}{Dick, 2021}).
 
-      \item Revise multi-metal.Rmd: Improve mineral abbreviations and placement
-      of labels; use updated DFT energies from Materials Project; add Mosaic
-      Stacking 2 (minerals and aqueous species); add \emph{K}\S{eff}
-      calculation (\doiref{10.1016/j.gca.2021.01.038}{Robinson et
-      al., 2021}); add Δ\emph{G}\s{pbx} color scale.
+      \item Revise \viglink{multi-metal}: Improve mineral abbreviations and
+      placement of labels; use updated DFT energies from Materials Project; add
+      Mosaic Stacking 2 (minerals and aqueous species); add \emph{K}\S{eff}
+      calculation (\doiref{10.1016/j.gca.2021.01.038}{Robinson et al., 2021});
+      add Δ\emph{G}\s{pbx} color scale.
 
       \item Rename \samp{demo/berman.R} to \samp{demo/potassium.R}.
 
@@ -1073,9 +1090,9 @@
       (or "stacked"), for instance to sequentially add metals (Fe, then Cu) to
       a diagram.
 
-      \item Add vignette \strong{multi-metal.Rmd} for examples that use these
-      new features to make diagrams for systems with multiple metals
-      (specifically Fe-V and Fe-Cu).
+      \item Add vignette \viglink{multi-metal} for examples that use these new
+      features to make diagrams for systems with multiple metals (specifically
+      Fe-V and Fe-Cu).
 
     }
   }
@@ -1157,30 +1174,30 @@
   \subsection{DEMOS AND VIGNETTES}{
     \itemize{
 
-      \item Add \samp{demo/comproportionation.R}: Gibbs energy of sulfur
-      comproportionation, after
-      \doiref{10.1111/1462-2920.14982}{Amend et al., 2020}.
+      \item Add \file{demo/comproportionation.R}: Gibbs energy of sulfur
+      comproportionation, after \doiref{10.1111/1462-2920.14982}{Amend et al.,
+        2020}.
 
-      \item Add \samp{demo/zinc.R}: Solubilities of multiple minerals (zincite
+      \item Add \file{demo/zinc.R}: Solubilities of multiple minerals (zincite
       and sphalerite).
 
-      \item Revise and simplify \samp{anintro.Rmd} and \samp{equilibrium.Rmd}
-      (converted from \samp{equilibrium.Rnw}).
+      \item Revise and simplify \viglink{anintro} and \file{equilibrium.Rmd}
+      (converted from \file{equilibrium.Rnw}).
 
-      \item Revise \samp{OBIGT.Rmd} to reduce the size of the HTML file and
-      make deep linking to individual sections work.
+      \item Revise \viglink{OBIGT} to reduce the size of the HTML file and make
+      deep linking to individual sections work.
 
       \item Add \samp{viglink} Rd macro so HTML versions of Rd files can link
       to vignettes.
 
-      \item Remove vignette \samp{hotspring.Rnw} and demos \samp{bison.R} and
-      \samp{bugstab.R}. The material is now in the \samp{bison.Rmd} vignette
-      and \samp{bugstab.R} demo in the \pkg{JMDplots} package
+      \item Remove vignette \file{hotspring.Rnw} and demos \file{bison.R} and
+      \file{bugstab.R}. The material is now in the \file{bison.Rmd} vignette
+      and \file{bugstab.R} demo in the \pkg{JMDplots} package
       (\url{https://github.com/jedick/JMDplots}).
 
-      \item New demo \samp{berman.R}, extracted from \samp{berman.Rd}.
+      \item New demo \file{berman.R}, extracted from \file{berman.Rd}.
 
-      \item Revise demo \samp{mosaic.R} to use \code{mash()} to show S and C
+      \item Revise demo \file{mosaic.R} to use \code{mash()} to show S and C
       species together, make better use of transparency, and \code{dy} argument
       to adjust positions of labels.
 
@@ -1216,7 +1233,7 @@
       \item The list returned by \code{diagram()} now includes a
       \strong{predominant.values} component, which has the affinities of the
       predominant species at each grid point. This can be used as shown in the
-      \code{multi-metal.Rmd} vignette to compute the Pourbaix energy
+      \viglink{multi-metal} vignette to compute the Pourbaix energy
       (Δ\emph{G}\s{pbx}) for a metastable material.
 
     }

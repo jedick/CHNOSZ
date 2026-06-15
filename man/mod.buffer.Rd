@@ -80,9 +80,9 @@ affinity(T = c(200, 400, 11), P = 2000)$values
 # Setup H2S and O2 to be buffered by PPM
 basis(c("H2S", "O2"), c("PPM", "PPM"))
 # Inspect values of H2S activity and O2 fugacity
-affinity(T = c(200, 400, 11), P = 2000, return.buffer = TRUE, exceed.Ttr = TRUE)
+affinity(T = c(200, 400, 11), P = 2000, return.buffer = TRUE)
 # Calculate affinities of formation reactions of species in the buffer
-a <- affinity(T = c(200, 400, 11), P = 2000, exceed.Ttr = TRUE)$values
+a <- affinity(T = c(200, 400, 11), P = 2000)$values
 # The affinities for species in the buffer are all equal to zero
 all.equal(as.numeric(a[[1]]), rep(0, 11))  # TRUE
 all.equal(as.numeric(a[[2]]), rep(0, 11))  # TRUE

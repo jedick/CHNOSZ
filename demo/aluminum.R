@@ -24,19 +24,19 @@ basis(delete = TRUE)
 ## First calculation: CHNOSZ default
 # kaolinite from Berman, 1988
 # boehmite from Hemingway et al., 1991
-r1 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
+r1 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000) 
 ## Second calculation: get SiO2(aq) from Apps and Spycher, 2004
 add.OBIGT("SiO2")
-r2 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
+r2 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000) 
 reset()
 ## Third calculation: get Si(OH)4 from Akinfiev and Plyasunov, 2014
 add.OBIGT("AD")
-r3 <- subcrt(c("boehmite", "Si(OH)4", "H2O", "kaolinite"), c(-1, -1, 1.5, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
+r3 <- subcrt(c("boehmite", "Si(OH)4", "H2O", "kaolinite"), c(-1, -1, 1.5, 0.5), T = T, P = 1000) 
 reset()
 ## Fourth calculation: minerals as in SUPCRT92
 add.OBIGT("SUPCRT92") # gets kaolinite and boehmite from HDNB78
-# We need exceed.Ttr = TRUE because the T limit for boehmite is 500 K (Helgeson et al., 1978)
-r4 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000, exceed.Ttr = TRUE) 
+# We need warn.Ttr = TRUE because the T limit for boehmite is 500 K (Helgeson et al., 1978)
+r4 <- subcrt(c("boehmite", "H2O", "SiO2", "kaolinite"), c(-1, -0.5, -1, 0.5), T = T, P = 1000) 
 reset()
 ## log activity of SiO2 is -ve logK
 lines(T, -r1$out$logK, lwd = 1.5)

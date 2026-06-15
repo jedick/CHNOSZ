@@ -21,7 +21,7 @@ slice.affinity <- function(affinity, d = 1, i = 1) {
 
 ### Unexported functions ###
 
-energy <- function(what, vars, vals, lims, T = 298.15, P = "Psat", IS = 0, sout = NULL, exceed.Ttr = FALSE, exceed.rhomin = FALSE, transect = FALSE) {
+energy <- function(what, vars, vals, lims, T = 298.15, P = "Psat", IS = 0, sout = NULL, warn.Ttr = TRUE, exceed.rhomin = FALSE, transect = FALSE) {
   # 20090329 Dxtracted from affinity() and made to
   # deal with >2 dimensions (variables)
 
@@ -152,7 +152,7 @@ energy <- function(what, vars, vals, lims, T = 298.15, P = "Psat", IS = 0, sout 
       if("P" %in% vars) P <- vals[[which(vars == "P")]]
       if("IS" %in% vars) IS <- vals[[which(vars == "IS")]]
       s.args <- list(species = species, property = property, T = T, P = P, IS = IS, grid = grid,
-        convert = FALSE, exceed.Ttr = exceed.Ttr, exceed.rhomin = exceed.rhomin)
+        convert = FALSE, warn.Ttr = warn.Ttr, exceed.rhomin = exceed.rhomin)
       sout <- do.call("subcrt", s.args)
       # 20191210 workaround a limitation in subcrt(): only IS (if present) can be the 'grid' variable
       if(workaround.IS) {

@@ -16,7 +16,7 @@
 #source("cgl.R")
 
 subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "H", "S", "V", "Cp"),
-  T = seq(273.15, 623.15, 25), P = "Psat", grid = NULL, convert = TRUE, exceed.Ttr = FALSE,
+  T = seq(273.15, 623.15, 25), P = "Psat", grid = NULL, convert = TRUE, warn.Ttr = TRUE,
   exceed.rhomin = FALSE, logact = NULL, autobalance = TRUE, use.polymorphs = TRUE, IS = 0) {
 
   # Revise the call if the states are the second argument 
@@ -26,7 +26,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       # This is missing coeff and T in order that missing values are correctly detected further below 20230621
       newargs <- list(species = species, state = newstate,
         property = property, P = P, grid = grid, convert = convert,
-        exceed.Ttr = exceed.Ttr, exceed.rhomin = exceed.rhomin, logact = logact,
+        warn.Ttr = warn.Ttr, exceed.rhomin = exceed.rhomin, logact = logact,
         autobalance = autobalance, use.polymorphs = use.polymorphs, IS = IS)
       if(!missing(state)) {
         if(is.numeric(state[1])) newcoeff <- state else stop("If they are both given, one of arguments 2 and 3 should be numeric reaction coefficients")
@@ -74,7 +74,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
   if(identical(P, "Psat") & any(T > 647.067)) {
     nover <- sum(T > 647.067)
     if(nover==1) vtext <- "value" else vtext <- "values"
-    warnings <- c(warnings, paste0("P = 'Psat' undefined for T > Tcritical (", nover, " T ", vtext, ")"))
+    warnings <- c(warnings, warning("P = 'Psat' undefined for T > Tcritical (", nover, " T ", vtext, ")"))
   }
 
   # Are we gridding?
@@ -253,8 +253,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
           if(!is.null(logact)) {
             ila <- match(colnames(bc), rownames(thermo$basis))
             nla <- !(can.be.numeric(thermo$basis$logact[ila]))
-            if(any(nla)) warning("subcrt: logact values of basis species",
-              c2s(rownames(thermo$basis)[ila]), "are NA.")
+            if(any(nla)) warnings <- c(warnings, warning("subcrt: logact values of basis species",
+              c2s(rownames(thermo$basis)[ila]), "are NA."))
             logact <- c(logact, thermo$basis$logact[ila])
           }
           # Warn user and do it!
@@ -268,9 +268,9 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
           newstate <- c(state, b.state)
           return(subcrt(species = newspecies, coeff = newcoeff, state = newstate,
             property = property, T = outvert(T, "K"), P = P, grid = grid, convert = convert, logact = logact,
-            exceed.Ttr = exceed.Ttr, exceed.rhomin = exceed.rhomin, IS = IS))
-        } else warnings <- c(warnings, paste("reaction among", paste(species, collapse = ","), "was unbalanced, missing", as.chemical.formula(miss)))
-      } else warnings <- c(warnings, paste("reaction among", paste(species, collapse = ","), "was unbalanced, missing", as.chemical.formula(miss)))
+            warn.Ttr = warn.Ttr, exceed.rhomin = exceed.rhomin, IS = IS))
+        } else warnings <- c(warnings, warning("reaction among ", paste(species, collapse = ","), " was unbalanced, missing ", as.chemical.formula(miss)))
+      } else warnings <- c(warnings, warning("reaction among ", paste(species, collapse = ","), " was unbalanced, missing ", as.chemical.formula(miss)))
     }
   }
 
@@ -314,7 +314,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       if(any(ilowrho)) {
         for(i in 1:length(p.aq)) p.aq[[i]][ilowrho, ] <- NA
         if(sum(ilowrho) == 1) ptext <- "pair" else ptext <- "pairs"
-        warnings <- c(warnings, paste0("below minimum density for applicability of revised HKF equations (", sum(ilowrho), " T,P ", ptext, ")"))
+        warnings <- c(warnings, warning("below minimum density for applicability of revised HKF equations (", sum(ilowrho), " T,P ", ptext, ")"))
       }
     }
     # Calculate properties using Akinfiev-Diamond model 20190219
@@ -344,7 +344,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     # phases are beyond their temperature range
     if("G" %in% eosprop) {
       # 20080304 This code is weird and hard to read - needs a lot of cleanup!
-      # 20120219 Cleaned up somewhat; using exceed.Ttr and NA instead of do.phases and 999999
+      # 20120219 Cleaned up somewhat; using warn.Ttr and NA instead of do.phases and 999999
       # The numbers of the cgl species (becomes 0 for any that aren't cgl)
       ncgl <- iscgl
       ncgl[iscgl] <- 1:nrow(param)
@@ -362,13 +362,12 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
             Ttr <- Ttr(iphases[i-1], iphases[i], P = P, dPdT = dPdTtr(iphases[i-1], iphases[i]))
             if(all(is.na(Ttr))) next
             if(any(T <= Ttr)) {
-              status.Ttr <- "(extrapolating G)"
-              if(!exceed.Ttr) {
-                # put NA into the value of G
-                p.cgl[[ncgl[i]]]$G[T <= Ttr] <- NA
-                status.Ttr <- "(using NA for G)"
-              } 
-              #message(paste("subcrt: some points below transition temperature for", myname, mystate, status.Ttr))
+              # Put NA into the value of G
+              # NOTE: this is the key to getting the right polymorphs (mask the low-T ones at high T) 20260615
+              p.cgl[[ncgl[i]]]$G[T <= Ttr] <- NA
+              status.Ttr <- "(using NA for G)"
+              # This message comes up for any polymorphic transition - comment it but leave it for debugging 20260615
+              #message(paste("subcrt: some points below transition temperature for", myname, mystate))
             }
           }
         }
@@ -388,23 +387,15 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
         }
 
         if(!is.polymorphic.transition) {
-          # Check if we're above the T limit for a Cp equation or a phase change (e.g. melting or vaporization)
+          # Check if we're above the transition temperature or a T limit for a Cp equation
           if(all(is.na(Ttr))) next
           if(all(Ttr == 0)) next
-          is.phase_change <- any(thermo$OBIGT$model[iphases[i]] == "CGL_Ttr")
           if(any(T > Ttr)) {
-            if(is.phase_change) {
-              if(exceed.Ttr) {
-                message(paste0("subcrt: showing G for ", myname, "(", mystate, ") above its stability limit of ", Ttr, " K (use exceed.Ttr = FALSE to prevent this)"))
-              } else {
-                message(paste0("subcrt: setting G to NA for ", myname, "(", mystate, ") above its stability limit of ", Ttr, " K (use exceed.Ttr = TRUE to output G)"))
-                p.cgl[[ncgl[i]]]$G[T > Ttr] <- NA
-              }
-            } else {
-              if(! exceed.Ttr) {
-                # Warn if we're above a Cp limit (but don't change the output)
-                warning(paste0("above T limit of ", Ttr, " K for the Cp equation for ", myname, "(", mystate, ")"))
-              }
+            # Message if we're above a T limit for Cp equation
+            message(paste0("subcrt: above T limit of ", Ttr, " K for the Cp equation for ", myname, "(", mystate, ")"))
+            if(warn.Ttr & any(thermo$OBIGT$model[iphases[i]] == "CGL_Ttr")) {
+              # Add a warning for transition temperature if warn.Ttr is TRUE
+              warnings <- c(warnings, warning("above transition temperature of ", Ttr, " K for the Cp equation for ", myname, "(", mystate, ")"))
             }
           }
         }
@@ -461,9 +452,9 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
       # Assemble the Gibbs energies for each species
       for(j in 1:length(are.polymorphs)) {
         G.this <- outprops[[are.polymorphs[j]]]$G
-#        if(sum(is.na(G.this)) > 0 & exceed.Ttr) warning(paste("subcrt: NAs found for G of ",
+#        if(sum(is.na(G.this)) > 0) warnings <- c(warnings, warning(paste("subcrt: NAs found for G of ",
 #          reaction$name[are.polymorphs[j]], " ", reaction$state[are.polymorphs[j]], " at T-P point(s) ", 
-#          c2s(which(is.na(G.this)), sep = " "), sep = ""), call. = FALSE)
+#          c2s(which(is.na(G.this)), sep = " "), sep = ""), call. = FALSE))
         if(j == 1) G <- as.data.frame(G.this)
         else G <- cbind(G, as.data.frame(G.this))
       }
@@ -478,8 +469,8 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
           #ps <- 1
           # - above temperature limit for the highest-T phase (subcrt.Rd skarn example) --> use highest-T phase 20171110
           ps <- ncol(G)
-          if(exceed.Ttr) warning("subcrt: stable polymorph for ", reaction$name[are.polymorphs[ps]], " at T-P point ", j, 
-          " undetermined (using ", reaction$state[are.polymorphs[ps]], ")", call. = FALSE)
+          warnings <- c(warnings, warning("subcrt: stable polymorph for ", reaction$name[are.polymorphs[ps]], " at T-P point ", j, 
+            " undetermined (using ", reaction$state[are.polymorphs[ps]], ")", call. = FALSE))
         } 
         stable.polymorph <- c(stable.polymorph, ps)
         out.new.entry[j, ] <- outprops[[ are.polymorphs[ps] ]][j, ]
@@ -619,9 +610,6 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
     }
   }
   # Add warnings to output 20180922
-  if(length(warnings) > 0) {
-    OUT <- c(OUT, list(warnings = warnings))
-    for(warn in warnings) warning(warn)
-  }
+  if(length(warnings) > 0) OUT <- c(OUT, list(warnings = warnings))
   return(OUT)
 }

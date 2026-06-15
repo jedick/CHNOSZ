@@ -110,7 +110,7 @@ info <- "P-T diagram has expected geometry"
 # Modified from kayanite-sillimanite-andalusite example in ?diagram 20200811
 basis(c("corundum", "quartz", "oxygen"))
 species(c("kyanite", "sillimanite", "andalusite"))
-a <- affinity(T = c(200, 900, 50), P = c(0, 9000, 51), exceed.Ttr = TRUE)
+a <- affinity(T = c(200, 900, 50), P = c(0, 9000, 51))
 expect_silent(d <- diagram(a), info = info)
 expect_equal(species()$name[d$predominant[1, 1]], "andalusite", info = info)
 expect_equal(species()$name[d$predominant[1, 51]], "kyanite", info = info)

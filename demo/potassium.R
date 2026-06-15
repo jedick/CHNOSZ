@@ -17,14 +17,12 @@ species(c("K-feldspar", "muscovite", "kaolinite",
 ## Start with the data from Helgeson et al., 1978
 add.OBIGT("SUPCRT92")
 # Calculate affinities in aK+ - temperature space
-# exceed.Tr: enable calculations above stated temperature limit of pyrophyllite
 res <- 400
-a <- suppressWarnings(affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, exceed.Ttr = TRUE))
+a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000)
 # Make base plot with colors and no lines
 diagram(a, xlab = ratlab("K+", molality = TRUE), lty = 0, fill = "terrain")
 # Add the lines, extending into the low-density region (exceed.rhomin = TRUE)
-a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, 
-              exceed.Ttr = TRUE, exceed.rhomin = TRUE)
+a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, exceed.rhomin = TRUE)
 diagram(a, add = TRUE, names = FALSE, col = 2, lwd = 1.5, lty = 2)
 # The list of references:
 ref1 <- thermo.refs(species()$ispecies)$key
@@ -37,8 +35,6 @@ OBIGT()
 # and not coesite or some other phase of SiO2
 iSiO2 <- rownames(basis()) == "SiO2"
 stopifnot(info(basis()$ispecies[iSiO2])$name == "quartz")
-# Berman's dataset doesn't have the upper temperature limits,
-# so we don't need exceed.Ttr here
 a <- affinity(`K+` = c(0, 5, res), T = c(200, 650, res), P = 1000, exceed.rhomin = TRUE)
 diagram(a, add = TRUE, names = FALSE, col = 4, lwd = 1.5)
 # The list of references:

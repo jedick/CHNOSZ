@@ -16,7 +16,7 @@ thermo.plot.new(xlim = xlim, ylim = c(-4, 4), xlab = axis.label("T"), ylab = axi
 # Method 1: in basis(), assign name of buffer to basis species
 bufferline <- function(buffer, ixlab) {
   basis("H2", buffer)
-  a <- affinity(T = xlim, P = 300, return.buffer = TRUE, exceed.Ttr = TRUE)
+  a <- affinity(T = xlim, P = 300, return.buffer = TRUE, warn.Ttr = TRUE)
   lines(a$vals[[1]], a$H2, col = 3, lwd = 2)
   text(a$vals[[1]][ixlab], a$H2[ixlab] + 0.2, buffer, font = 2)
 }

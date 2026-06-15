@@ -84,7 +84,7 @@ JANAF.to.OBIGT <- function(file, abbrv = NULL, T_max = 1500, MAE_max = 1, plot_C
 
   # Calculate MAE
   MAE <- mean(abs(Cp_predicted - Cp))
-  print(paste0("MAE for Cp of ", name, " ", formula_state, ": ", round(MAE, 2)))
+  message(paste0("JANAF.to.OBIGT: MAE for Cp of ", name, " ", formula_state, ": ", round(MAE, 2)))
   # Error if MAE > max MAE
   stopifnot(MAE <= MAE_max)
 

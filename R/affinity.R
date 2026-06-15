@@ -15,15 +15,15 @@
 #source("hkf.R")
 #source("cgl.R")
 
-affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exceed.rhomin = FALSE,
+affinity <- function(..., property = NULL, sout = NULL, warn.Ttr = TRUE, exceed.rhomin = FALSE,
   return.buffer = FALSE, return.sout = FALSE, balance = "PBB", iprotein = NULL, loga.protein = 0, transect = NULL) {
   # ...: variables over which to calculate
   # property: what type of energy
   #   (G.basis, G.species, logact.basis, logK, logQ, A)
   # return.buffer: return buffered activities
   # balance: balance protein buffers on PBB
-  # exceed.Ttr: extrapolate Gibbs energies
-  #   of minerals beyond their T-limits?
+  # warn.Ttr: warn if Gibbs energies are extrapolated
+  #   above transition temperature for minerals?
   # sout: provide a previously calculated output from subcrt
   # iprotein: build these proteins from residues (speed optimization)
 
@@ -52,7 +52,7 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
 
   # The argument list
   args <- energy.args(args.orig, transect = transect)
-  args <- c(args, list(sout = sout, exceed.Ttr = exceed.Ttr, exceed.rhomin = exceed.rhomin))
+  args <- c(args, list(sout = sout, warn.Ttr = warn.Ttr, exceed.rhomin = exceed.rhomin))
 
   # The user-defined species (including basis species, formed species, and proteins)
   thermo <- get("thermo", CHNOSZ)
@@ -252,7 +252,7 @@ affinity <- function(..., property = NULL, sout = NULL, exceed.Ttr = FALSE, exce
   # Content of return value depends on buffer request
   if(return.buffer) return(c(tb, list(vars = vars, vals = vals)))
   # For argument recall, include all arguments (except sout) in output 20190117
-  allargs <- c(args.orig, list(property = property, exceed.Ttr = exceed.Ttr, exceed.rhomin = exceed.rhomin,
+  allargs <- c(args.orig, list(property = property, warn.Ttr = warn.Ttr, exceed.rhomin = exceed.rhomin,
     return.buffer = return.buffer, balance = balance, iprotein = iprotein, loga.protein = loga.protein))
   # Add IS value only if it given as an argument 20171101
   # (even if its value is 0, the presence of IS will trigger diagram() to use "m" instead of "a" in axis labels)
