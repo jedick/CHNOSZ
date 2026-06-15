@@ -31,7 +31,7 @@
       binuclear species Au\s{2}S\s{2}\S{-2}, matching the solubility plot.
 
       \item In \file{demo/contour.R}, add \code{balance = 1} to the
-      \code{diagram()} call for predominance fields. The small extent of the
+      \code{diagram()} call for predominance fields. The small size of the
       Au\s{2}S\s{2}\S{-2} predominance field aligns well with the diagram in
       \doiref{10.1134/S1075701525600690}{Rubtsova et al. (2026)}.
       
@@ -85,6 +85,11 @@
       \item Add C\s{2}H\s{2}(gas) (ethyne, acetylene) from
       \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables (1998)}. Thanks
       to George Brimhall for the request.
+
+      \item Move optional data for several studies from \file{SLOP98.csv} to
+      \file{SLOP98b.csv}. Rather than splitting these data across default and
+      optional data files, this optional file has the complete datasets for
+      these studies to improve maintainability and findability.
 
       \item Add stibnite (Sb\s{2}S\s{3}) from \doiref{10.3133/b2131}{Robie and
         Hemingway (1995)}. Thanks to Miao Yu for the request.

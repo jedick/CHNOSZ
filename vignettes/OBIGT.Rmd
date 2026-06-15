@@ -70,6 +70,7 @@ function OpenAllDivs() {
   OpenDiv("liquid-inorganic");
   OpenDiv("optional-SUPCRT92");
   OpenDiv("optional-SLOP98");
+  OpenDiv("optional-SLOP98b");
   OpenDiv("optional-AD");
   OpenDiv("optional-DEW");
   OpenDiv("optional-Testing");
@@ -90,6 +91,7 @@ function CloseAllDivs() {
   CloseDiv("liquid-inorganic");
   CloseDiv("optional-SUPCRT92");
   CloseDiv("optional-SLOP98");
+  CloseDiv("optional-SLOP98b");
   CloseDiv("optional-AD");
   CloseDiv("optional-DEW");
   CloseDiv("optional-Testing");
@@ -232,13 +234,13 @@ Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthal
 
 ### Gases <button id="B-gas-inorganic" onclick='ToggleDiv("gas-inorganic")'>Inorganic</button> <button id="B-gas-organic" onclick='ToggleDiv("gas-organic")'>Organic</button> &nbsp;&nbsp;&nbsp;Liquids <button id="B-liquid-inorganic" onclick='ToggleDiv("liquid-inorganic")'>Inorganic</button> <button id="B-liquid-organic" onclick='ToggleDiv("liquid-organic")'>Organic</button>
 
-### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AD" onclick='ToggleDiv("optional-AD")'>AD</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-Testing" onclick='ToggleDiv("optional-Testing")'>Testing</button>
+### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-SLOP98b" onclick='ToggleDiv("optional-SLOP98b")'>SLOP98b</button> <button id="B-optional-AD" onclick='ToggleDiv("optional-AD")'>AD</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-Testing" onclick='ToggleDiv("optional-Testing")'>Testing</button>
 
 <!-- Normal or "all open" footer message --> 
 
 <div id="footer" style="display: block">
 *Press a button above to show the citations in that data file.*
-*Or, <a href = "#showall" onclick='OpenAllDivs()'>click here</a> to show all citations.*
+*<strong><a href = "#showall" onclick='OpenAllDivs()'>Click here</a> to show all citations.</strong>*
 </div>
 
 <div id="all-open" style="display: none">
@@ -366,7 +368,8 @@ optused <- c(optused, filerefs(csvfile))
 
 <div id="D-optional-SLOP98" style="display: none">
 ## <a id="optional-SLOP98" class="anchor"></a> `r setfile("SLOP98.csv")`
-These species, whose parameters were listed in or are otherwise linked to slop98.dat (or later versions) and were present in earlier versions of CHNOSZ, have been replaced by or are incompatible with species currently in the default database.
+These species, whose parameters were listed in slop98.dat (or later versions) and were present in earlier versions of CHNOSZ,
+have been replaced by or are incompatible with species currently in the default database.
 The elements with updated data for at least some aqueous species include:
 HCl [@TZA97],
 Al [@TS01],
@@ -386,7 +389,20 @@ Nd<sup>+3</sup> [@FG25].
 
 Use `add.OBIGT("SLOP98")` to load the data.
 
-**NOTE:** Other species listed in slop98.dat and later versions are still present in the default database.
+```{r optreflist, results="asis", echo=FALSE}
+```
+</div>
+
+<div id="D-optional-SLOP98b" style="display: none">
+## <a id="optional-SLOP98b" class="anchor"></a> `r setfile("SLOP98b.csv")`
+These are data from several studies that were part of or depend on slop98.dat.
+Included here are estimated thermodynamic parameters for REE complexes and metal-organic complexes.
+
+For some elements, the data here are superseded by newer studies (see description in the **SLOP98** tab).
+For better maintainability and findability, the data from each study are stored in this
+optional data file rather than being separated into default and optional data files.
+
+Use `add.OBIGT("SLOP98b")` to load the data.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```
