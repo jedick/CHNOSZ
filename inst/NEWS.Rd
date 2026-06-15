@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-46 (2026-06-14)}{
+\section{Changes in CHNOSZ version 2.2.0-47 (2026-06-15)}{
 
   \subsection{DEMOS}{
 
@@ -36,9 +36,9 @@
       \doiref{10.1134/S1075701525600690}{Rubtsova et al. (2026)}.
       
       \item The default \code{balance = NULL} (i.e., per element) remains
-      useful for reproducing other diagrams with polynuclear species (e.g.
-      S\s{3}\S{-}). \emph{Note that \code{balance = 1} is not recommended for
-        mineral stability diagrams.}
+      useful for reproducing other diagrams with polynuclear aqueous species
+      (e.g. S\s{3}\S{-}) or minerals. \emph{Note that \code{balance = 1} is not
+        recommended for mineral stability diagrams.}
 
       \item Rename \file{demo/sum_S.R} to \file{demo/sulfur.R}.
 
@@ -67,6 +67,11 @@
       \item Add skutterudite (CoAs\s{2.92}) and heazlewoodite (Ni\s{3}S\s{2})
       from \doiref{10.2138/am-2022-8337}{Majzlan et al. (2022)}.
       Thanks to Yufei Wang for the request.
+
+      \item Add bastnäsite-(Ce)
+      (Ce\s{0.50}La\s{0.25}Nd\s{0.20}Pr\s{0.05}CO\s{3}F) and parisite-(Ce)
+      (CaCe\s{0.95}La\s{0.60}Nd\s{0.35}Pr\s{0.10}(CO\s{3})\s{3}F\s{2}) from
+      \doiref{10.1016/j.chemgeo.2014.11.001}{Gysi and Williams-Jones (2015)}.
 
       \item Add eucryptite, spodumene, cookeite, and petalite from
       \doiref{10.1346/CCMN.2007.0550306}{Bobos et al. (2007)}.
