@@ -327,55 +327,62 @@ energy.args <- function(args, transect = FALSE) {
     args <- args[names(args) != "what"]
   }
   # Assemble the variables
-  if(length(args) > 0) {
-    for(i in 1:length(args)) {
-      nametxt <- names(args)[i]
-      if(transect) lims.orig <- c(min(args[[i]]), max(args[[i]]))
-      else lims.orig <- args[[i]][1:2]
-      if(names(args)[i] == "pH") {
-        names(args)[i] <- "H+"
-        if(transect) args[[i]] <- -args[[i]]
-        else args[[i]][1:2] <- -args[[i]][1:2]
-      } 
-      if(names(args)[i] == "pe") {
-        names(args)[i] <- "e-"
-        if(transect) args[[i]] <- -args[[i]]
-        else args[[i]][1:2] <- -args[[i]][1:2]
-      }
-      if(length(args[[i]]) < 3 & !transect) args[[i]] <- c(args[[i]], res)
-      vars[length(vars)+1] <- names(args)[i]
-      if(transect) {
-        vals[[length(vars)]] <- args[[i]]
-        lims[[length(vars)]] <- c(lims.orig, length(vals[[i]]))
-      } else {
-        vals[[length(vars)]] <- seq(args[[i]][1], args[[i]][2], length.out = args[[i]][3])
-        lims[[length(vars)]] <- args[[i]]
-      }
-      names(lims)[length(vars)] <- names(args)[i]
-      # Say something about the identities, ranges, and units of the variables
-      unittxt <- ""
-      # Number of values
-      if(transect) n <- length(args[[i]]) else n <- args[[i]][3]
-      # Physical state
-      ibasis <- match(nametxt, rownames(thermo$basis))
-      if(isTRUE(as.logical(ibasis))) {
-        if(thermo$basis$state[ibasis] == "gas") nametxt <- paste("log10(f_", nametxt, ")", sep = "") 
-        else nametxt <- paste("log10(a_", nametxt, ")", sep = "") 
-      } else {
-        # Stop if the argument doesn't correspond to a basis species, T, P, or IS
-        if(!nametxt %in% c("T", "P", "IS")) {
-          if(! (nametxt == "pH" & 'H+' %in% rownames(thermo$basis) | nametxt %in% c("pe", "Eh") & 'e-' %in% rownames(thermo$basis))) {
-            stop(nametxt, " is not one of T, P, or IS, and does not match any basis species")
-          }
+  for(i in seq_along(args)) {
+
+    orig_name <- names(args)[i]
+    # Transforms for pH and pe
+    if(names(args)[i] == "pH") {
+      names(args)[i] <- "H+"
+      if(transect) args[[i]] <- -args[[i]]
+      else args[[i]][1:2] <- -args[[i]][1:2]
+    } 
+    if(names(args)[i] == "pe") {
+      names(args)[i] <- "e-"
+      if(transect) args[[i]] <- -args[[i]]
+      else args[[i]][1:2] <- -args[[i]][1:2]
+    }
+
+    # Stop if the argument doesn't correspond to a basis species, T, P, or IS
+    arg_name <- names(args)[i]
+    ibasis <- match(arg_name, rownames(thermo$basis))
+    if(!isTRUE(as.logical(ibasis))) {
+      if(!arg_name %in% c("T", "P", "IS")) {
+        if(! (arg_name == "Eh" & "e-" %in% rownames(thermo$basis))) {
+          stop(orig_name, " is not one of T, P, or IS, and does not match any basis species")
         }
       }
-      # Temperature and pressure and Eh
-      if(nametxt == "T") unittxt <- " K"
-      if(nametxt == "P") unittxt <- " bar"
-      if(nametxt == "Eh") unittxt <- " V"
-      message("affinity: variable ", length(vars), " is ", nametxt, 
-        " at ", n, " values from ", lims.orig[1], " to ", lims.orig[2], unittxt)
     }
+
+    # Apply resolution and variable name
+    if(length(args[[i]]) < 3 & !transect) args[[i]] <- c(args[[i]], res)
+    vars[length(vars)+1] <- names(args)[i]
+    # Handle transects
+    if(transect) lims.orig <- c(min(args[[i]]), max(args[[i]]))
+    else lims.orig <- args[[i]][1:2]
+    if(transect) {
+      vals[[length(vars)]] <- args[[i]]
+      lims[[length(vars)]] <- c(lims.orig, length(vals[[i]]))
+    } else {
+      vals[[length(vars)]] <- seq(args[[i]][1], args[[i]][2], length.out = args[[i]][3])
+      lims[[length(vars)]] <- args[[i]]
+    }
+    names(lims)[length(vars)] <- names(args)[i]
+
+    # Create message about the identities, ranges, and units of the variables
+    unittxt <- ""
+    # Number of values
+    if(transect) n <- length(args[[i]]) else n <- args[[i]][3]
+    # Physical state for basis species
+    if(isTRUE(as.logical(ibasis))) {
+      if(thermo$basis$state[ibasis] == "gas") arg_name <- paste("log10(f_", arg_name, ")", sep = "") 
+      else arg_name <- paste("log10(a_", arg_name, ")", sep = "") 
+    }
+    # Temperature and pressure and Eh
+    if(arg_name == "T") unittxt <- " K"
+    if(arg_name == "P") unittxt <- " bar"
+    if(orig_name == "Eh") unittxt <- " V"
+    message("affinity: variable ", length(vars), " is ", orig_name, 
+      " at ", n, " values from ", lims.orig[1], " to ", lims.orig[2], unittxt)
   }
   args <- list(what = what, vars = vars, vals = vals, lims = lims, T = T, P = P, IS = IS, transect = transect)
 

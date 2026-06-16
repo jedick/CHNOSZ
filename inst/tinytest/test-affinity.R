@@ -219,3 +219,8 @@ basis("pe", pe)
 basis("pH", 2)
 a5 <- affinity(T = 150)
 expect_equal(sapply(a$values, "[", 5), unlist(a5$values), info = info)
+
+# Test added 20260616
+info <- "Defunct exceed.Ttr argument gives interpretable error message"
+expect_error(affinity(exceed.Ttr = TRUE), "exceed.Ttr is not one of T, P, or IS, and does not match any basis species", info = info)
+

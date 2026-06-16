@@ -162,7 +162,7 @@ basis("O2", -49.5)
 species(`n-alkane`)
 species(`2-isoalkane`, add = TRUE)
 # Approximate conditions of Computer Experiment 27 (Helgeson et al., 2009, GCA)
-a <- affinity(T = 150, P = 830)
+a <- affinity(T = 150, P = 830, warn.Ttr = FALSE)
 # Using full chemical formulas
 efull <- equilibrate(a)
 dloga_isoalkane_full <- diff(unlist(efull$loga.equil[c(8, 11)]))

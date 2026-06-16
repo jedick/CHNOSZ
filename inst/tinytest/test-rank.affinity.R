@@ -18,7 +18,6 @@ expect_equal(sum_average_ranks, 1 + nrow(species()), info = info)
 # Test added 20250527
 info <- "Empty groups get removed from output"
 groups$oxidized <- numeric()
-arank <- rank.affinity(aout, groups)
 expect_message(arank <- rank.affinity(aout, groups), "removing empty groups: oxidized", info = info)
 expect_equal(arank$species$name, "reduced", info = info)
 expect_length(arank$values, 1, info = info)

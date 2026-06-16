@@ -212,7 +212,7 @@ basis(c("gypsum", "SO4-2", "H2O", "H+", "O2"))
 expect_warning(automatic_reaction <- subcrt("Ca+2", 1)$out, "above transition temperature", info = info)
 expect_false(any(is.na(automatic_reaction$logK)), info = info)
 # Check that logK is identical for the reaction entered manually
-manual_reaction <- subcrt(c("gypsum", "Ca+2", "SO4-2", "H2O"), c(-1, 1, 1, 2))$out
+expect_warning(manual_reaction <- subcrt(c("gypsum", "Ca+2", "SO4-2", "H2O"), c(-1, 1, 1, 2))$out, info = info)
 expect_equal(automatic_reaction$logK, manual_reaction$logK, info = info)
 
 # Added on 20231115

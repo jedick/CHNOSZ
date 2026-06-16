@@ -395,7 +395,7 @@ subcrt <- function(species, coeff = 1, state = NULL, property = c("logK", "G", "
             message(paste0("subcrt: above T limit of ", Ttr, " K for the Cp equation for ", myname, "(", mystate, ")"))
             if(warn.Ttr & any(thermo$OBIGT$model[iphases[i]] == "CGL_Ttr")) {
               # Add a warning for transition temperature if warn.Ttr is TRUE
-              warnings <- c(warnings, warning("above transition temperature of ", Ttr, " K for the Cp equation for ", myname, "(", mystate, ")"))
+              warnings <- c(warnings, warning("above transition temperature of ", Ttr, " K for ", myname, "(", mystate, ")"))
             }
           }
         }

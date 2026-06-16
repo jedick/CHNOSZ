@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-48 (2026-06-15)}{
+\section{Changes in CHNOSZ version 2.2.0-50 (2026-06-15)}{
 
   \subsection{DEMOS}{
 
@@ -87,9 +87,10 @@
       to George Brimhall for the request.
 
       \item Move optional data for several studies from \file{SLOP98.csv} to
-      \file{SLOP98b.csv}. Rather than splitting these data across default and
-      optional data files, this optional file has the complete datasets for
-      these studies to improve maintainability and findability.
+      \file{SLOP98b.csv}. Included here are estimated thermodynamic parameters
+      for REE complexes and metal-organic complexes. Rather than splitting
+      these data across default and optional data files, this optional file has
+      the complete datasets for these studies to improve maintainability.
 
       \item Add stibnite (Sb\s{2}S\s{3}) from \doiref{10.3133/b2131}{Robie and
         Hemingway (1995)}. Thanks to Miao Yu for the request.

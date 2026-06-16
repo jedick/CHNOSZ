@@ -399,7 +399,7 @@ These are data from several studies that were part of or depend on slop98.dat.
 Included here are estimated thermodynamic parameters for REE complexes and metal-organic complexes.
 
 For some elements, the data here are superseded by newer studies (see description in the **SLOP98** tab).
-For better maintainability and findability, the data from each study are stored in this
+For better maintainability, the data from each study are stored in this
 optional data file rather than being separated into default and optional data files.
 
 Use `add.OBIGT("SLOP98b")` to load the data.
