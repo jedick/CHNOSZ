@@ -278,7 +278,7 @@ For more sophisticated diagrams involving speciation of basis species, use the `
 basis(c("Cu", "H2S", "Cl-", "H2O", "H+", "e-"))
 basis("H2S", -6)
 basis("Cl-", -1)
-species(c("CuCl", "CuCl2-", "CuCl3-2", "CuCl+", "CuCl2", "CuCl3-", "CuCl4-2"))
+species(c("CuCl", "CuCl2-", "CuCl+", "CuCl2", "CuCl3-", "CuCl4-2"))
 species(c("chalcocite", "tenorite", "cuprite", "copper"), add = TRUE)
 bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2")
 m <- mosaic(bases, pH = c(0, 12), Eh = c(-1, 1), T = 200)

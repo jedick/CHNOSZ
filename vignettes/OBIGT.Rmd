@@ -449,10 +449,6 @@ See `demo(aluminum)` and the vignette [<span style="color:blue">*Regressing ther
 
 Internally consistent dataset for aqueous species in the system Ca-Mg-Na-K-Al-Si-O-H-C-Cl obtained with the [GEMSFIT](https://doi.org/10.1016/j.apgeochem.2014.10.013) package [@MWKH16;@MWKL17].
 
-<h3>IGEM</h3>
-
-Updates for Cu complexes from researchers at the Institute of Geology of Ore Deposits, Petrography, Mineralogy, and Geochemistry, Russian Academy of Sciences (IGEM RAS) [@AZ23;@TTA+23].
-
 <h3>Sandia</h3>
 
 Model for the Mg(OH)<sub>2</sub>-MgCl<sub>2</sub>-H<sub>2</sub>O system at 25 to 150 &deg;C from researchers at Sandia National Laboratories [@KBJ24].

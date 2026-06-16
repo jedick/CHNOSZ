@@ -57,6 +57,7 @@ The package demos are described below.
     \item{rubisco_Zc}{Zc of Rubisco vs optimal growth temperature}
     \item{phosphorylate}{Phosphorylation model for Gibbs energy of nucleotide polymerization into RNA (LaRowe and Dick, 2025)}
     \item{gold2}{Solubility of gold 2 (Tagirov et al., 2025)}
+    \item{neodymium}{Solubility of multiple Nd minerals (Migdisov et al., 2016)}
   }
 
 
@@ -123,6 +124,8 @@ Lowe AR, Cox JS, Tremaine PR. 2017. Thermodynamics of aqueous adenine: Standard 
 Lu P, Zhu C. 2011. Arsenic Eh--pH diagrams at 25°C and 1 bar. \emph{Environ Earth Sci} \bold{62}: 1673--1683. \doi{10.1007/s12665-010-0652-x}
   
 Manning CE, Shock EL, Sverjensky DA. 2013. The chemistry of carbon in aqueous fluids at crustal and upper-mantle conditions: Experimental and theoretical constraints. \emph{Rev Mineral Geochem} \bold{75}: 109--148. \doi{10.2138/rmg.2013.75.5}
+
+Migdisov A, Williams-Jones AE, Brugger J, Caporuscio FA. 2016. Hydrothermal transport, deposition, and fractionation of the REE: Experimental data and thermodynamic calculations. \emph{Chem Geol} \bold{439}: 13--42. \doi{10.1016/j.chemgeo.2016.06.005}
 
 Migdisov A, Bastrakov E, Alcorn C, Reece M, Boukhalfa H, Caporuscio FA, Jove-Colon C. 2025. A spectroscopic study of the stability of uranyl-carbonate complexes at 25--150°C and re-visiting the data available for uranyl-chloride, uranyl-sulfate, and uranyl-hydroxide species. \emph{Geochim Cosmochim Acta} \bold{406}: 326--339. \doi{10.1016/j.gca.2024.04.023}
 

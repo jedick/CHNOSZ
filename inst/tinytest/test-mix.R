@@ -21,7 +21,7 @@ basis(c("copper", "iron", "H2S", "H2O", "e-", "H+"))
 iFe.cr <- info(c("iron", "ferrous-oxide", "magnetite", "hematite"))
 iFe.aq <- info(c("Fe+2", "FeOH+"))
 iCu.cr <- info(c("copper", "cuprite", "tenorite"))
-iCu.aq <- info(c("Cu+", "CuOH"))
+iCu.aq <- info(c("Cu+", "CuO-"))
 
 # METHOD 1 (mix)
 

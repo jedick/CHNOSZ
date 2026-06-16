@@ -848,6 +848,8 @@ mfun <- function() {
 mfun()
 title("Cu (ppm)")
 
+# Load SLOP98 data to use legacy parameters for CuCl2- and CuCl3-2
+add.OBIGT("SLOP98")
 # Calculate logK for CuCl2- dissociation at 125 °C
 logK <- subcrt(c("CuCl2-", "Cu+", "Cl-"), c(-1, 1, 2), T = T)$out$logK
 # Sverjensky (1987) used Helgeson (1969) value, which is ca. -5.2
@@ -909,16 +911,19 @@ The thick magenta lines indicate the 35 ppm contour for Cu and SO~4~^-2^.
 The first plot shows a lower Cu solubility in this region compared to Figure 2 of @Sve87.
 The difference is likely due to lower stabilities of Cu(I) chloride complexes in the default OBIGT database, compared to those available at the time [@Hel69].
 For the second plot, the standard Gibbs energies of CuCl~2~^-^ and CuCl~3~^-2^ are adjusted so that the `logK` for their dissociation reactions at 125 °C matches values interpolated from Table 5 of @Hel69.
-Here are the `logK` values after the adjustment, followed a `reset()` call to compare the values with the default database, which is also used for later examples in this vignette.
+Here are the `logK` values after the adjustment, compared with the values calculated from the SLOP98 database [@SSH97].
+This is followed by a `reset()` call to use load the default database for the rest of this vignette.
 (`T` was set to 125 above.)
 ```{r logK, message = FALSE}
 # logK values interpolated from Table 5 of Helgeson (1969)
 subcrt(c("CuCl2-", "Cu+", "Cl-"), c(-1, 1, 2), T = T)$out$logK
 subcrt(c("CuCl3-2", "Cu+", "Cl-"), c(-1, 1, 3), T = T)$out$logK
-# Default OBIGT database
-reset()
+# SLOP98 values
+add.OBIGT("SLOP98")
 subcrt(c("CuCl2-", "Cu+", "Cl-"), c(-1, 1, 2), T = T)$out$logK
 subcrt(c("CuCl3-2", "Cu+", "Cl-"), c(-1, 1, 3), T = T)$out$logK
+# Reset database to default
+reset()
 ```
 
 The higher stability of these complexes from @Hel69 causes the 35 ppm contour to move closer to the position shown by @Sve87.
