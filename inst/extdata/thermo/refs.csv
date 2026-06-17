@@ -121,9 +121,9 @@ JANAF98.2,NIST,1998,"NIST-JANAF Thermochemical Tables","S(liq)",https://doi.org/
 PS98,"G. S. Pokrovski and J. Schott",1998,"Geochim. Cosmochim. Acta 62, 1631-1642","GeO<sub>2</sub> (hex) and (tetr) (augite)",https://doi.org/10.1016/S0016-7037(98)00081-7
 PS98.1,"G. S. Pokrovski and J. Schott",1998,"Geochim. Cosmochim. Acta 62, 1631-1642","Ge hydroxide and oxyhydroxide complexes",https://doi.org/10.1016/S0016-7037(98)00081-7
 RH98,"L. Richard and H. C. Helgeson",1998,"Geochim. Cosmochim. Acta 62, 3591-3636","organic molecules and groups",https://doi.org/10.1016/S0016-7037(97)00345-1
-SLOP98.1,"E. L. Shock et al.",1998,"slop98.dat computer data file","zincite and litharge; &quot;These data were used in @SSWS97, but were not tabulated in the paper.&quot;",https://doi.org/10.5281/zenodo.2630820
+SLOP98.1,"E. L. Shock et al.",1998,"slop98.dat computer data file","zincite and litharge; &quot;These data were used by @SSWS97, but were not tabulated in the paper.&quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP98.2,"E. L. Shock et al.",1998,"slop98.dat computer data file","daphnite; &quot;G<sub>f</sub> and H<sub>f</sub> from @SS93a TMM&quot;",https://doi.org/10.5281/zenodo.2630820
-SLOP98.8,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;These data were used in @SK95, but were not tabulated in the paper.&quot;",https://doi.org/10.5281/zenodo.2630820
+SLOP98.8,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;These data were used by @SK95, but were not tabulated in the paper.&quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP98.10,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;Corrected values based on data from @HSS95 &quot;",https://doi.org/10.5281/zenodo.2630820
 SLOP98.11,"E. L. Shock et al.",1998,"slop98.dat computer data file","&quot;Data and parameters as used by @MS97. &quot;",https://doi.org/10.5281/zenodo.2630820
 SS98a,"D. C. Sassani and E. L. Shock",1998,"Geochim. Cosmochim. Acta 62, 2643-2671","platinum-group ions and complexes",https://doi.org/10.1016/S0016-7037(98)00049-0

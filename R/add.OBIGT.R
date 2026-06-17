@@ -113,10 +113,12 @@ add.OBIGT <- function(file, species = NULL, force = TRUE) {
   # Add/replace entries in thermo$OBIGT from values saved in a file
   # Only replace if force == TRUE
   thermo <- get("thermo", CHNOSZ)
-  to1 <- thermo$OBIGT
-  id1 <- paste(to1$name,to1$state)
+  olddat <- thermo$OBIGT
+  oldid <- paste(olddat$name, olddat$state)
 
-  # `file` should be the path to a CSV file, or the name (without path or .csv) of a file in the package's OBIGT or OBIGT/testing
+  # `file` should be the path to a CSV file, or the base name (before hyphen,
+  # without path or .csv) of a file in the package's OBIGT or OBIGT/testing
+  # Example: file = "SLOP98" reads both SLOP98-a.csv and SLOP98-b.csv 20260617
   if(!file.exists(file)) {
 
     # List all files in OBIGT and OBIGT/testing
@@ -125,55 +127,70 @@ add.OBIGT <- function(file, species = NULL, force = TRUE) {
     all_files <- c(OBIGT_files, testing_files)
     # Match argument to file names without path or .csv suffix
     all_names <- gsub(".csv", "", basename(all_files))
-    ifile <- match(file, all_names)
-    if(is.na(ifile)) stop(paste(file, "is not a file and doesn't match any files in the OBIGT database"))
-    file <- all_files[ifile]
+    # Split file names at hyphen 20260617
+    all_names <- sapply(strsplit(all_names, "-"), "[", 1)
+    # Get all matches
+    matches <- which(all_names %in% file)
+    if(length(matches) == 0) {
+      stop(paste(file, "is not a file and doesn't match any files in the OBIGT database"))
+    } else if(length(matches) == 1) {
+      file <- all_files[matches]
+    } else {
+      # Read all matching files, combine them,
+      # and put into a single temporary file for further processing 20260617
+      file_contents <- lapply(all_files[matches], read.csv)
+      combined_contents <- do.call(rbind, file_contents)
+      file <- tempfile(fileext = ".csv")
+      write.csv(combined_contents, file, row.names = FALSE)
+    }
 
   }
 
   # Read data from the file
-  to2 <- read.csv(file, as.is = TRUE)
-  Etxt <- paste(unique(to2$E_units), collapse = " and ")
+  newdat <- read.csv(file, as.is = TRUE)
+  Etxt <- paste(unique(newdat$E_units), collapse = " and ")
   # Load only selected species if requested
   if(!is.null(species)) {
-    idat <- match(species, to2$name)
+    idat <- match(species, newdat$name)
     ina <- is.na(idat)
-    if(!any(ina)) to2 <- to2[idat, ]
+    if(!any(ina)) newdat <- newdat[idat, ]
     else stop(paste("file", file, "doesn't have", paste(species[ina], collapse = ", ")))
   }
-  id2 <- paste(to2$name,to2$state)
+  newid <- paste(newdat$name, newdat$state)
   # Check if the data table is compatible with thermo$OBIGT
-  if(!identical(colnames(to1), colnames(to2))) stop(paste(file, "does not have same column names as thermo$OBIGT data frame."))
+  if(!identical(colnames(olddat), colnames(newdat)))
+    stop(paste(file, "does not have same column names as thermo$OBIGT data frame."))
   # Match the new species to existing ones
-  does.exist <- id2 %in% id1
-  ispecies.exist <- na.omit(match(id2, id1))
+  does.exist <- newid %in% oldid
+  ispecies.exist <- na.omit(match(newid, oldid))
   nexist <- sum(does.exist)
   # Keep track of the species we've added
   inew <- numeric()
   if(force) {
     # Replace existing entries
     if(nexist > 0) {
-      to1[ispecies.exist, ] <- to2[does.exist, ]
-      to2 <- to2[!does.exist, ]
+      olddat[ispecies.exist, ] <- newdat[does.exist, ]
+      newdat <- newdat[!does.exist, ]
       inew <- c(inew, ispecies.exist)
     }
   } else {
     # Ignore any new entries that already exist
-    to2 <- to2[!does.exist, ]
+    newdat <- newdat[!does.exist, ]
     nexist <- 0
   }
   # Add new entries
-  if(nrow(to2) > 0) {
-    to1 <- rbind(to1, to2)
-    inew <- c(inew, (length(id1)+1):nrow(to1))
+  alldat <- olddat
+  if(nrow(newdat) > 0) {
+    alldat <- rbind(olddat, newdat)
+    inew <- c(inew, (length(oldid)+1):nrow(alldat))
   }
   # Commit the change
-  thermo$OBIGT <- to1
+  thermo$OBIGT <- alldat
   rownames(thermo$OBIGT) <- 1:nrow(thermo$OBIGT)
   assign("thermo", thermo, CHNOSZ)
   # Give the user a message
   message("add.OBIGT: read ", length(does.exist), " rows; made ", 
-    nexist, " replacements, ", nrow(to2), " additions [energy units: ", Etxt, "]")
+    nexist, " replacements, ", nrow(newdat), " additions [energy units: ", Etxt, "]")
   #message("add.OBIGT: use OBIGT() or reset() to restore default database")
   return(invisible(inew))
 }

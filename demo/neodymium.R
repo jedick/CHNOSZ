@@ -7,7 +7,7 @@ library(CHNOSZ)
 # Setup database
 reset()
 # Use Haas et al. (1995) data for REE complexes
-add.OBIGT("SLOP98b")
+add.OBIGT("SLOP98")
 
 # Fit logK for NdSO4+ and Nd(SO4)2-
 # Data from Migdisov and Williams-Jones (2008)

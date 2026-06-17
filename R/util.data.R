@@ -267,7 +267,7 @@ check.OBIGT <- function() {
     # Looking at thermo$OBIGT
     if(what == "OBIGT") tdata <- get("thermo", CHNOSZ)$OBIGT
     else {
-      if(what %in% c("DEW", "SLOP98", "SLOP98b", "SUPCRT92" ,"AD")) file <- paste0("extdata/OBIGT/", what, ".csv")
+      if(what %in% c("DEW", "SLOP98-a", "SLOP98-b", "SUPCRT92" ,"AD")) file <- paste0("extdata/OBIGT/", what, ".csv")
       else file <- paste0("extdata/OBIGT/testing/", what, ".csv")
       tdata <- read.csv(system.file(file, package = "CHNOSZ"), as.is = TRUE)
     }
@@ -303,7 +303,7 @@ check.OBIGT <- function() {
   # Check default database (OBIGT)
   out <- checkfun("OBIGT")
   # Check optional data
-  for(what in c("DEW", "SLOP98", "SLOP98b", "SUPCRT92" ,"AD")) out <- rbind(out, checkfun(what))
+  for(what in c("DEW", "SLOP98-a", "SLOP98-b", "SUPCRT92" ,"AD")) out <- rbind(out, checkfun(what))
   # Check testing data 
   testing_files <- dir(system.file("extdata/OBIGT/testing", package = "CHNOSZ"), full.names = TRUE)
   sources <- gsub(".csv", "", basename(testing_files))
@@ -379,10 +379,10 @@ dumpdata <- function(file = NULL) {
   # Optional data
   dat <- read.csv(system.file("extdata/OBIGT/DEW.csv", package = "CHNOSZ"), as.is = TRUE)
   DEW <- cbind(source = "DEW", dat)
-  dat <- read.csv(system.file("extdata/OBIGT/SLOP98.csv", package = "CHNOSZ"), as.is = TRUE)
-  SLOP98 <- cbind(source = "SLOP98", dat)
-  dat <- read.csv(system.file("extdata/OBIGT/SLOP98b.csv", package = "CHNOSZ"), as.is = TRUE)
-  SLOP98b <- cbind(source = "SLOP98b", dat)
+  dat <- read.csv(system.file("extdata/OBIGT/SLOP98-a.csv", package = "CHNOSZ"), as.is = TRUE)
+  SLOP98a <- cbind(source = "SLOP98-a", dat)
+  dat <- read.csv(system.file("extdata/OBIGT/SLOP98-b.csv", package = "CHNOSZ"), as.is = TRUE)
+  SLOP98b <- cbind(source = "SLOP98-b", dat)
   dat <- read.csv(system.file("extdata/OBIGT/SUPCRT92.csv", package = "CHNOSZ"), as.is = TRUE)
   SUPCRT92 <- cbind(source = "SUPCRT92", dat)
   dat <- read.csv(system.file("extdata/OBIGT/AD.csv", package = "CHNOSZ"), as.is = TRUE)
@@ -396,7 +396,7 @@ dumpdata <- function(file = NULL) {
   })
   testing <- do.call(rbind, testing_list)
   # Put it all together
-  out <- rbind(OBIGT, SUPCRT92, SLOP98, SLOP98b, AD, DEW, testing)
+  out <- rbind(OBIGT, SUPCRT92, SLOP98a, SLOP98b, AD, DEW, testing)
   # Quote columns 2 (name) and 3 (abbrv) because they have commas for some entries
   if(!is.null(file)) write.csv(out, file, row.names = FALSE, quote = c(2, 3))
   else(return(out))

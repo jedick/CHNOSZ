@@ -70,7 +70,6 @@ function OpenAllDivs() {
   OpenDiv("liquid-inorganic");
   OpenDiv("optional-SUPCRT92");
   OpenDiv("optional-SLOP98");
-  OpenDiv("optional-SLOP98b");
   OpenDiv("optional-AD");
   OpenDiv("optional-DEW");
   OpenDiv("optional-Testing");
@@ -91,7 +90,6 @@ function CloseAllDivs() {
   CloseDiv("liquid-inorganic");
   CloseDiv("optional-SUPCRT92");
   CloseDiv("optional-SLOP98");
-  CloseDiv("optional-SLOP98b");
   CloseDiv("optional-AD");
   CloseDiv("optional-DEW");
   CloseDiv("optional-Testing");
@@ -111,19 +109,21 @@ reset()
 setfile <- function(csvfile, dat=NULL) {
   # Assign csvfile outside this function
   assign("csvfile", csvfile, parent.frame())
-  if(csvfile == "testing") {
-    # Deal with testing optional data files as a group
-    testing_files <- dir(system.file("extdata/OBIGT/testing", package = "CHNOSZ"), full.names = TRUE)
-    testing_list <- lapply(testing_files, function(file) {
+  if(csvfile %in% c("SLOP98", "testing")) {
+    # Deal with SLOP98 or testing optional data files as a group
+    if(csvfile == "SLOP98") group_files <- dir(system.file("extdata/OBIGT", package = "CHNOSZ"), "SLOP98", full.names = TRUE)
+    if(csvfile == "testing") group_files <- dir(system.file("extdata/OBIGT/testing", package = "CHNOSZ"), full.names = TRUE)
+    group_files <- dir(system.file("extdata/OBIGT", package = "CHNOSZ"), "SLOP98", full.names = TRUE)
+    group_list <- lapply(group_files, function(file) {
       dat <- read.csv(file, as.is = TRUE)
       source <- gsub(".csv", "", basename(file))
       cbind(source = source, dat)
     })
-    dat <- do.call(rbind, testing_list)
+    dat <- do.call(rbind, group_list)
     state <- "Optional "
-    class <- "Testing"
+    class <- ifelse(csvfile == "SLOP98", "SLOP98", "Testing")
   } else {
-    # Deal with individual optional data files
+    # Deal with individual data files
     file <- system.file(paste0("extdata/OBIGT/", csvfile), package="CHNOSZ")
     dat <- read.csv(file, as.is=TRUE)
     ## Exclude entries for high-T polymorphs
@@ -149,15 +149,16 @@ filerefs <- function(csvfile, dat=NULL, message=FALSE) {
   whichref <- "ref2"
   # Without dat, look for ref1 in csvfile
   if(is.null(dat)) {
-    if(csvfile == "testing") {
-      # Deal with testing optional data files as a group
-      testing_files <- dir(system.file("extdata/OBIGT/testing", package = "CHNOSZ"), full.names = TRUE)
-      testing_list <- lapply(testing_files, function(file) {
+    if(csvfile %in% c("SLOP98", "testing")) {
+      # Deal with SLOP98 or testing optional data files as a group
+      if(csvfile == "SLOP98") group_files <- dir(system.file("extdata/OBIGT", package = "CHNOSZ"), "SLOP98", full.names = TRUE)
+      if(csvfile == "testing") group_files <- dir(system.file("extdata/OBIGT/testing", package = "CHNOSZ"), full.names = TRUE)
+      group_list <- lapply(group_files, function(file) {
         dat <- read.csv(file, as.is = TRUE)
         source <- gsub(".csv", "", basename(file))
         cbind(source = source, dat)
       })
-      dat <- do.call(rbind, testing_list)
+      dat <- do.call(rbind, group_list)
     } else {
       file <- system.file(paste0("extdata/OBIGT/", csvfile), package="CHNOSZ")
       dat <- read.csv(file, as.is=TRUE)
@@ -234,7 +235,7 @@ Abbreviations: T (temperature), P (pressure), GHS (standard Gibbs energy, enthal
 
 ### Gases <button id="B-gas-inorganic" onclick='ToggleDiv("gas-inorganic")'>Inorganic</button> <button id="B-gas-organic" onclick='ToggleDiv("gas-organic")'>Organic</button> &nbsp;&nbsp;&nbsp;Liquids <button id="B-liquid-inorganic" onclick='ToggleDiv("liquid-inorganic")'>Inorganic</button> <button id="B-liquid-organic" onclick='ToggleDiv("liquid-organic")'>Organic</button>
 
-### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-SLOP98b" onclick='ToggleDiv("optional-SLOP98b")'>SLOP98b</button> <button id="B-optional-AD" onclick='ToggleDiv("optional-AD")'>AD</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-Testing" onclick='ToggleDiv("optional-Testing")'>Testing</button>
+### Optional Data <button id="B-optional-SUPCRT92" onclick='ToggleDiv("optional-SUPCRT92")'>SUPCRT92</button> <button id="B-optional-SLOP98" onclick='ToggleDiv("optional-SLOP98")'>SLOP98</button> <button id="B-optional-AD" onclick='ToggleDiv("optional-AD")'>AD</button> <button id="B-optional-DEW" onclick='ToggleDiv("optional-DEW")'>DEW</button> <button id="B-optional-Testing" onclick='ToggleDiv("optional-Testing")'>Testing</button>
 
 <!-- Normal or "all open" footer message --> 
 
@@ -367,9 +368,9 @@ optused <- c(optused, filerefs(csvfile))
 </div>
 
 <div id="D-optional-SLOP98" style="display: none">
-## <a id="optional-SLOP98" class="anchor"></a> `r setfile("SLOP98.csv")`
-These species, whose parameters were listed in slop98.dat (or later versions) and were present in earlier versions of CHNOSZ,
-have been replaced by or are incompatible with species currently in the default database.
+## <a id="optional-SLOP98" class="anchor"></a> `r setfile("SLOP98")`
+These species, whose parameters are listed in slop98.dat (or later versions) and were present in earlier versions of CHNOSZ,
+have been replaced by or are incompatible with species in the default database.
 The elements with updated data for at least some aqueous species include:
 HCl [@TZA97],
 Al [@TS01],
@@ -387,22 +388,12 @@ U [@MBA+25],
 KHSO<sub>4</sub> and KSO<sub>4</sub><sup>-</sup> [@TAT+25],
 Nd<sup>+3</sup> [@FG25].
 
+NOTE: The entire datasets from several studies that are part of or depend on slop98.dat (not restricted to the elements listed above) are kept here.
+These datasets include estimated thermodynamic parameters for REE complexes and metal-organic complexes.
+The studies are: @SK93, @SK95, @HSS95, @PSK99, @MA07, @AML10, and @AKAE19.
+Keeping the datasets in one place rather than splitting them between default and optional files makes the database eaiser to maintain.
+
 Use `add.OBIGT("SLOP98")` to load the data.
-
-```{r optreflist, results="asis", echo=FALSE}
-```
-</div>
-
-<div id="D-optional-SLOP98b" style="display: none">
-## <a id="optional-SLOP98b" class="anchor"></a> `r setfile("SLOP98b.csv")`
-These are data from several studies that were part of or depend on slop98.dat.
-Included here are estimated thermodynamic parameters for REE complexes and metal-organic complexes.
-
-For some elements, the data here are superseded by newer studies (see description in the **SLOP98** tab).
-For better maintainability, the data from each study are stored in this
-optional data file rather than being separated into default and optional data files.
-
-Use `add.OBIGT("SLOP98b")` to load the data.
 
 ```{r optreflist, results="asis", echo=FALSE}
 ```

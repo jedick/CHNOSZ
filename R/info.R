@@ -287,10 +287,11 @@ info.approx <- function(species, state = NULL) {
   }
   # If we got here there were no approximate matches
   # 20190127 look for the species in optional data files 
-  for(opt in c("SLOP98", "SLOP98b", "SUPCRT92", "AD")) {
+  for(opt in c("SLOP98-a", "SLOP98-b", "SUPCRT92", "AD")) {
     optdat <- read.csv(system.file(paste0("extdata/OBIGT/", opt, ".csv"), package = "CHNOSZ"), as.is = TRUE)
     if(species %in% optdat$name) {
-      message('info.approx: ', species, ' is in an optional database; use add.OBIGT("', opt, '", "', species, '") to load it')
+      message('info.approx: ', species, ' is in an optional database; use add.OBIGT("',
+              strsplit(opt, "-")[[1]][1], '", "', species, '") to load it')
       return(NA)
     }
   }
