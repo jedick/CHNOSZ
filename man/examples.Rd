@@ -58,6 +58,7 @@ The package demos are described below.
     \item{phosphorylate}{Phosphorylation model for Gibbs energy of nucleotide polymerization into RNA (LaRowe and Dick, 2025)}
     \item{gold2}{Solubility of gold 2 (Tagirov et al., 2025)}
     \item{neodymium}{Solubility of multiple Nd minerals (Migdisov et al., 2016)}
+    \item{chalcocite}{Solubility of chalcocite and gold (Trofimov et al., 2023)}
   }
 
 
@@ -154,6 +155,8 @@ Sverjensky DA, Stagno V, Huang F. 2014b. Important role for organic carbon in su
 Tagirov BR, Akinfiev NN, Tarnopolskaia ME, Nikolaeva IY, Zlivko IY, Volchenkova VA, Koroleva LA, Zotov, AV. 2025. Gold in sulfide fluids revisited. \emph{Geochim Cosmochim Acta} \bold{406}: 285--304. \doi{10.1016/j.gca.2024.08.022}
 
 Tai SL, Boer VM, Daran-Lapujade P, Walsh MC, de Winde JH, Daran J-M, Pronk JT. 2005. Two-dimensional transcriptome analysis in chemostat cultures: Combinatorial effects of oxygen availability and macronutrient limitation in \emph{Saccharomyces cerevisiae}. \emph{J Biol Chem} \bold{280}: 437--447. \doi{10.1074/jbc.M410573200}
+
+Trofimov ND, Tagirov BR, Akinfiev NN, Reukov VL, Nickolsky MS, Nikolaeva IY, Tarnopolskaya ME, Afanasyev AA. 2023. Chalcocite Cu\s{2}S solubility in aqueous sulfide and chloride fluids. Thermodynamic properties of copper(I) aqueous species and copper transport in hydrothermal systems. \emph{Chem Geology} \bold{625}: 121413. \doi{10.1016/j.chemgeo.2023.121413}
 
 Tutolo BM, Kong X-Z, Seyfried WE Jr, Saar MO. 2014. Internal consistency in aqueous geochemical data revisited: Applications to the aluminum system. \emph{Geochim Cosmochim Acta} \bold{133}: 216--234. \doi{10.1016/j.gca.2014.02.036}
 

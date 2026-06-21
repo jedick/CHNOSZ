@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-53 (2026-06-17)}{
+\section{Changes in CHNOSZ version 2.2.0-54 (2026-06-21)}{
 
   \subsection{DEMOS}{
 
@@ -44,8 +44,12 @@
       as a function of pH, after
       \doiref{10.1016/j.chemgeo.2016.06.005}{Migdisov et al., 2016}. This
       diagram currently uses data for NdO\s{2}H (i.e. Nd(OH)\s{3}(aq)) from
-      \doiref{10.1016/0016-7037(95)00314-P}{Hass et al., 1995}, which
+      \doiref{10.1016/0016-7037(95)00314-P}{Haas et al., 1995}, which
       overestimates solubility at alkaline conditions.
+
+      \item Add \file{demo/chalcocite.R} for solubility of chalcocite and gold
+      in a rock-buffered system, after
+      \doiref{10.1016/j.chemgeo.2023.121413}{Trofimov et al., 2023}.
 
       \item Rename \file{demo/sum_S.R} to \file{demo/sulfur.R}.
 
@@ -73,7 +77,7 @@
 
       \item Move Cu\S{+} and Cu chloride, hyroxide, and hydrosulfide complexes
       from \file{testing/IGEM.csv} to the default database
-      (\doiref{10.1134/S1075701523010026}{Akinfiev and Zotov, 2023} and
+      (\doiref{10.1134/S1075701523010026}{Akinfiev and Zotov, 2023};
       \doiref{10.1016/j.chemgeo.2023.121413}{Trofimov et al., 2023}).
 
       \item Add skutterudite (CoAs\s{2.92}) and heazlewoodite (Ni\s{3}S\s{2})

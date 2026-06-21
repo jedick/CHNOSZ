@@ -102,7 +102,7 @@ abline(v = d$vals$pH[which(diff(d$predominant) != 0)], lty = 2, col = 8)
 # Add legend and title
 TP_text <- lTP(T, P)
 composition_text <- bquote(.(wt_pct_NaCl)~"wt% NaCl,"~.(wt_pct_Na2SO4)~"wt%"~
-                           .(expr.species("Na2SO4"))~.(ppm_HF)~"ppm HF, "~.(ppm_Nd)~" ppm Nd")
+                           .(expr.species("Na2SO4"))*","~.(ppm_HF)~"ppm HF,"~.(ppm_Nd)~"ppm Nd")
 legend_text <- bquote(list(.(TP_text), .(composition_text)))
 legend("top", legend = legend_text, bty = "n")
 title("Solubility of Nd minerals, after Migdisov et al. (2016)", font.main = 1)

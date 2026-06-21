@@ -3,7 +3,7 @@
 # 20190207
 
 library(CHNOSZ)
-add.OBIGT("SLOP98b")
+add.OBIGT("SLOP98")
 
 # Divalent metals
 di <- c("Cu+2", "Ni+2", "Co+2", "Mn+2", "Zn+2", "Cd+2")
