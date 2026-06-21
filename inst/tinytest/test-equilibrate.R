@@ -186,7 +186,7 @@ expect_true(maxdiff(dloga_isoalkane_mix, dloga_isoalkane_norm) > maxdiff(dloga_i
 
 info <- "solids are not equilibrated, but their stability fields are calculated"
 # Added 20191111; based on an example sent by Feng Lai on 20191020
-Cu_aq <- c("CuCl", "CuCl2-", "CuHS", "Cu(HS)2-", "CuO-")
+Cu_aq <- c("CuCl", "CuCl2-", "CuCl3-2", "CuHS", "Cu(HS)2-", "CuO-")
 Cu_cr <- c("copper", "chalcocite")
 basis(c("Cu+", "HS-", "Cl-", "H2O", "H+", "oxygen"))
 basis("O2", -35)
@@ -202,7 +202,7 @@ expect_equal(apredom, epredom, info = info)
 species(Cu_cr)
 acr <- affinity(a)
 ecr <- equilibrate(acr)
-expect_identical(e$values[6:7], ecr$values, info = info)
+expect_identical(e$values[7:8], ecr$values, info = info)
 
 # Reference
 

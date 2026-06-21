@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-54 (2026-06-21)}{
+\section{Changes in CHNOSZ version 2.2.0-55 (2026-06-21)}{
 
   \subsection{DEMOS}{
 
@@ -92,6 +92,9 @@
       \item Add eucryptite, spodumene, cookeite, and petalite from
       \doiref{10.1346/CCMN.2007.0550306}{Bobos et al. (2007)}.
       Thanks to Yongchao Liu for the request.
+
+      \item Add CuCl\s{3}\S{-2} from \doiref{10.1016/j.gca.2007.08.003}{Brugger
+        et al. (2007)}.
 
       \item Add S(liq) (liquid sulfur, named \code{S_liq} in OBIGT) from
       \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables (1998)}. Its
