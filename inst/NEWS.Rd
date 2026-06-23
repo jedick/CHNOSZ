@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-55 (2026-06-21)}{
+\section{Changes in CHNOSZ version 2.2.0-56 (2026-06-23)}{
 
   \subsection{DEMOS}{
 
@@ -147,13 +147,22 @@
 
     \itemize{
 
-      \item Fix bug preventing \code{mosaic()} from being used to form \H2O.
-      Thanks to Doug LaRowe for the use case with phosphorylation reactions.
-
       \item For the IAPWS95 water model, add 0.1 bar (0.01 MPa) to values of
       \Psat > 1 bar computed from \code{WP02.auxiliary()} to prevent Born
       functions, which are calculated as finite difference derivatives, from
       exploding.  Thanks to Grayson Boyer for the bug report.
+
+      \item Fix bug preventing \code{mosaic()} from being used to form \H2O.
+      Thanks to Doug LaRowe for the use case with phosphorylation reactions.
+
+      \item \code{mosaic()} now computes the solubility contour for a single
+      non-aqueous candidate basis species. This extra logic is needed to handle
+      S_liq; the previous method gave a sharply pointed predominance field
+      where it should be curved, resulting in misaligned contours on the
+      S_liq-to-aqueous boundary for the Rubtsova et al. diagram in
+      \code{demo/contour.R}. The function errors if it detects more than one
+      non-aqueous candidate basis species (this is doable in principle, but
+      needs more work).
 
     }
 

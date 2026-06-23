@@ -91,9 +91,9 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
     message("mosaic: calculating affinities of basis species group ", i, ": ", paste(bases[[i]], collapse = " "))
     mysp <- species(bases[[i]])
     # Include only aq species in total activity 20191111
-    iaq <- mysp$state == "aq"
+    is_aq <- mysp$state == "aq"
     # Use as.numeric in case a buffer is active 20201014
-    if(any(iaq)) species(which(iaq), as.numeric(basis0$logact[ibasis0[i]]))
+    if(any(is_aq)) species(which(is_aq), as.numeric(basis0$logact[ibasis0[i]]))
     if(affinityargs_has_sout) A.bases[[i]] <- suppressMessages(do.call(affinity, affinityargs))
     else A.bases[[i]] <- suppressMessages(do.call(affinity, c(affinityargs, list(sout = sout))))
   }
@@ -142,11 +142,11 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
     # Use loga_aq for log(activity) of mosaiced aqueous basis species 20220722
     if(!is.null(loga_aq)) {
       if(length(loga_aq) != length(ibasis0)) stop("'loga_aq' should have same length as 'bases'")
-      iaq <- grep("aq", states)
+      is_aq <- grep("aq", states)
       # Loop over sets of mosaiced basis species
       for(j in 1:length(ibasis0)) {
         if(is.na(loga_aq[j])) next
-        iaqbasis0 <- intersect(iaq, ibasis0[j])
+        iaqbasis0 <- intersect(is_aq, ibasis0[j])
         thislogact[iaqbasis0] <- loga_aq[j]
       }
     }
@@ -173,17 +173,53 @@ mosaic <- function(bases, blend = TRUE, stable = list(), loga_aq = NULL, ...) {
   E.bases <- list()
   for(i in 1:length(A.bases)) {
     if(blend[i] & is.null(stable[i][[1]])) {
+      # Get number of non-aqueous candidate basis species 20260623
+      is_not_aq <- A.bases[[i]]$species$state != "aq"
       # This isn't needed (and doesn't work) if all the affinities are NA 20180925
       if(any(!sapply(A.bases[[1]]$values, is.na))) {
-        # When equilibrating the changing basis species, use a total activity equal to the activity from the basis definition 20190504
-        # Use equilibrate(loga.balance = ) instead of setting activities in species definition 20191111
-        e <- equilibrate(A.bases[[i]], loga.balance = as.numeric(basis0$logact[ibasis0[i]]))
-        # Exponentiate to get activities then divide by total activity
-        a.equil <- lapply(e$loga.equil, function(x) 10^x)
-        a.tot <- Reduce("+", a.equil)
-        group.fraction[[i]] <- lapply(a.equil, function(x) x / a.tot)
-        # Include the equilibrium activities in the output of this function 20190504
-        E.bases[[i]] <- e
+        if(sum(is_not_aq) == 0) {
+          # When equilibrating the changing basis species, use a total activity equal to the activity from the basis definition 20190504
+          # Use equilibrate(loga.balance = ) instead of setting activities in species definition 20191111
+          e <- equilibrate(A.bases[[i]], loga.balance = as.numeric(basis0$logact[ibasis0[i]]))
+          # Exponentiate to get activities then divide by total activity
+          a.equil <- lapply(e$loga.equil, function(x) 10^x)
+          a.tot <- Reduce("+", a.equil)
+          group.fraction[[i]] <- lapply(a.equil, function(x) x / a.tot)
+          # Include the equilibrium activities in the output of this function 20190504
+          E.bases[[i]] <- e
+        } else if(sum(is_not_aq) == 1) {
+          # Handling solubility curve for non-aqueous species (e.g. S_liq) 20260623
+          # Store existing basis and species
+          basis_save <- thermo()$basis
+          species_save <- thermo()$species
+          # Reorder basis species so the one we're swapping out is first
+          oldbasis <- basis()
+          iaq <- A.bases[[i]]$species$ispecies[!is_not_aq]
+          newbasis <- rbind(subset(oldbasis, ispecies==iaq[1]), subset(oldbasis, ispecies!=iaq[1]))
+          thermo("basis" = newbasis)
+          # Use solubility() to get solubility of mineral and activities of aqueous species
+          species(A.bases[[i]]$species$ispecies[is_not_aq])
+          # NOTE: affinityargs may contain 'sout', which is why this argument needs to be defined for solubility()
+          s <- do.call(solubility, c(list(iaq=iaq), affinityargs))
+          # Find where the mineral is stable relative to total activity of candidate basis species
+          max_solubility <- as.numeric(basis0$logact[ibasis0[i]])
+          cr_is_stable <- s$loga.balance < max_solubility
+          # Use this as a mask to update the affinity values for the non-aqueous species
+          # NOTE: don't use 999 - it produces Inf for a.equil and NaN for group.fraction
+          cr_values <- ifelse(cr_is_stable, 99, -999)
+          A.bases[[i]]$values[is_not_aq][[1]] <- cr_values
+          # Also update the activities then calculate the group fractions
+          loga_equil <- append(s$loga.equil, list(cr_values), after = which(is_not_aq) - 1)
+          # Exponentiate to get activities then divide by total activity
+          a.equil <- lapply(loga_equil, function(x) 10^x)
+          a.tot <- Reduce("+", a.equil)
+          group.fraction[[i]] <- lapply(a.equil, function(x) x / a.tot)
+          # Restore basis and species
+          thermo("basis" = basis_save)
+          thermo("species" = species_save)
+        } else {
+          stop(paste("found more than one non-aqueous candidate basis species:", paste(A.bases[[i]]$species$name[is_not_aq], collapse = ", ")))
+        }
       } else {
         group.fraction[[i]] <- A.bases[[i]]$values
       }

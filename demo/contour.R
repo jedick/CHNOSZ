@@ -20,7 +20,7 @@ for(author in c("Ding", "Rubtsova")) {
   # Set up system
   basis(c("Au", "Cl-", "H2S", "H2O", "oxygen", "H+"))
   iaq <- retrieve("Au", c("H", "O", "S", "Cl"), state = "aq")
-  srt <- rep(0, length(names))
+  srt <- rep(0, length(iaq))
   # Define S-bearing basis species to swap through for mosaic
   bases <- c("H2S", "HS-", "S3-", "SO2", "HSO4-", "SO4-2", "S_liq")
 
@@ -55,8 +55,8 @@ for(author in c("Ding", "Rubtsova")) {
     levels <- c(0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000, 2500, 10000)
     title <- "Au solubility (ppm), after Rubtsova et al. (2026)"
     # Rotate field labels
-    srt[names %in% c("AuCl2-", "AuHS(H2S)3")] <- 90
-    srt[names %in% "Au2S2-2"] <- -60
+    srt[names(iaq) %in% c("AuCl2-", "AuHS(H2S)3")] <- 90
+    srt[names(iaq) %in% "Au2S2-2"] <- -60
   }
 
   # Set composition
@@ -89,7 +89,6 @@ for(author in c("Ding", "Rubtsova")) {
 
   # LAYER 4: Predominance fields for Au-bearing species
   # NOTE: balance = 1 is used for plotting predominance fields of polynuclear species (i.e. Au2S2-2)
-  names <- species()$name
   d <- diagram(m$A.species, col = 4, lwd = 2, col.names = 4, bold = TRUE, srt = srt, add = TRUE, balance = 1)
 
   # LAYER 5: Re-add contour lines (they were added in layer 1 but covered by layer 2)

@@ -17,7 +17,7 @@
 # species() should be used first to load the substrates (all bearing the same metal)
 # 'iaq' lists aqueous species that can be produced by dissolution of the substrates
 # '...' contains arguments for affinity() or mosaic() (i.e. plotting variables)
-solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS = FALSE) {
+solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS = FALSE, sout = NULL) {
 
   # If iaq is the output of affinity(), use old calling style 20210318
   if(is.list(iaq)) return(solubility_calc(aout = iaq, in.terms.of = in.terms.of, dissociate = dissociate, find.IS = find.IS))
@@ -46,7 +46,7 @@ solubility <- function(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS
     lapply(iaq, species, add = TRUE)
     # Also add basis species for mosaic()!
     if(is.mosaic) lapply(unlist(ddd$bases), species, add = TRUE)
-    sout <- suppressMessages(do.call(affinity, c(affargs, return.sout = TRUE)))
+    if(is.null(sout)) sout <- suppressMessages(do.call(affinity, c(affargs, return.sout = TRUE)))
   }
 
   # Make lists to store the calculated solubilities (loga.balance) and speciation (loga.equil) for each substrate

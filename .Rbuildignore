@@ -4,3 +4,4 @@ LICENSE
 ^\.github$
 inst/extdata/src
 tests/.*.pdf
+sync_rforge.sh

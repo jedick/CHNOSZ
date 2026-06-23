@@ -7,7 +7,8 @@ Calculate chemical activities of aqueous species in equilibrium with one or more
 }
 
 \usage{
-  solubility(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS = FALSE)
+  solubility(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS = FALSE,
+    sout = NULL)
 }
 
 \arguments{
@@ -16,6 +17,7 @@ Calculate chemical activities of aqueous species in equilibrium with one or more
   \item{in.terms.of}{character, express the total solubility in terms of moles of this species}
   \item{dissociate}{logical, calculate activities of products of the dissociation reaction?}
   \item{find.IS}{logical, find the equilibrium ionic strength by iteration?}
+  \item{sout}{list, output from \code{\link{subcrt}}}
 }
 
 \details{
@@ -28,7 +30,7 @@ The definitions of plotting variables should be provided in \code{...}, which ar
 or to \code{\link{mosaic}} if the first one is named \code{bases}.
 
 The function requires that a valid set of basis species can be obtained by substituting each of the substrates in the first position
-of the current \code{\link{basis}} defintion, and all of the aqueous species must include that basis species in their formation reactions.
+of the current \code{\link{basis}} definition, and all of the aqueous species must include that basis species in their formation reactions.
 This essentially means that all substrates and aqueous species must share a common element, which is what the reactions are balanced on.
 
 For a single substrate, the output of \code{solubility} can be used by \code{\link{diagram}} with \code{type = "loga.balance"} (or the default of \samp{auto})
@@ -36,6 +38,8 @@ to plot the solubility of the substrate (i.e. the sum of activities of aqueous s
 \code{in.terms.of} can be used to express this value in terms of another species or element.
 For example, for dissolution of gaseous S\s{2}, \code{in.terms.of = "S"} gives the total amount of S in solution, which is twice the amount of S\s{2} dissolved.
 Likewise, the solubility of corundum (Al\s{2}O\s{3}) can be expressed in terms of the moles of Al\S{+3} in solution (see the vignette \viglink{anintro}).
+
+\code{sout} has intermediate results from \code{\link{subcrt}}, used internally by \code{\link{mosaic}}.
 
 Use \code{diagram(..., type = "loga.equil")} to plot the activity of each solute (aqueous species).
 }
