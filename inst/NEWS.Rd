@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-56 (2026-06-23)}{
+\section{Changes in CHNOSZ version 2.2.0-57 (2026-06-28)}{
 
   \subsection{DEMOS}{
 
@@ -61,6 +61,9 @@
 
     \itemize{
 
+      \item Add organic phosphates and related species from LaRowe et al.
+      (2026).
+
       \item Add REE minerals from
       \doiref{10.1016/j.chemgeo.2026.123471}{Pan et al. (2026)}.
 
@@ -70,12 +73,12 @@
       \item Add Nd species from \doiref{10.1016/j.gca.2024.07.014}{Figueroa
         Penarrieta and Gysi (2025)}.
 
-      \item Move Au chloride, hyroxide, and (hydro)sulfide complexes from
+      \item Move Au chloride, hydroxide, and (hydro)sulfide complexes from
       \file{testing/IGEM.csv} to the default database
       (\doiref{10.1134/S1075701524600403}{Tagirov et al., 2024} and
       \doiref{10.1016/j.gca.2024.08.022}{2025}).
 
-      \item Move Cu\S{+} and Cu chloride, hyroxide, and hydrosulfide complexes
+      \item Move Cu\S{+} and Cu chloride, hydroxide, and hydrosulfide complexes
       from \file{testing/IGEM.csv} to the default database
       (\doiref{10.1134/S1075701523010026}{Akinfiev and Zotov, 2023};
       \doiref{10.1016/j.chemgeo.2023.121413}{Trofimov et al., 2023}).

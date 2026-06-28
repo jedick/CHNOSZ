@@ -139,6 +139,7 @@ SAJ00,"R. E. Stoffregen, C. N. Alpers and J. L. Jambor",2000,"Rev. Mineral. Geoc
 TDDZ00,"B. R. Tagirov et al.",2000,"Chem. Geol. 162, 193-219",FeCl<sup>+2</sup>,https://doi.org/10.2138/rmg.2000.40.9
 WS00,"S. A. Wood and I. M. Samson",2000,"Econ. Geol. 95, 143-182","scheelite and ferberite; GHS and V of scheelite and V of ferberite are from @RHF78.",https://doi.org/10.2113/gsecongeo.95.1.143
 AP01,"J. P. Amend and A. V. Plyasunov",2001,"Geochim. Cosmochim. Acta 65, 3901-3917",carbohydrates,https://doi.org/10.1016/S0016-7037(01)00707-4
+AP01.1,"J. P. Amend and A. V. Plyasunov",2001,"Geochim. Cosmochim. Acta 65, 3901-3917","saccharides HKF parameters",https://doi.org/10.1016/S0016-7037(01)00707-4
 AS01,"J. P. Amend and E. L. Shock",2001,"FEMS Microbiol. Rev. 25, 175-243","NO and N<sub>2</sub>O",https://doi.org/10.1111/j.1574-6976.2001.tb00576.x
 AS01.1,"J. P. Amend and E. L. Shock",2001,"FEMS Microbiol. Rev. 25, 175-243","selenium and molybdenite",https://doi.org/10.1111/j.1574-6976.2001.tb00576.x
 AZ01,"N. N. Akinfiev and A. V. Zotov",2001,"Geochem. Int. 39, 990-1006","Au<sup>+</sup>, Ag<sup>+</sup>, and Au and Ag hydroxide and chloride complexes",http://pleiades.online/cgi-perl/search.pl?type=abstract&name=geochem&number=10&year=1&page=990
@@ -172,8 +173,10 @@ BL06,"A. V. Bandura and S. N. Lvov",2006,"J. Phys. Chem. Ref. Data 35, 15-30",OH
 HPT06,"B. Hawrylak, R. Palepu and P. R. Tremaine",2006,"J. Chem. Thermodynamics 38, 988-1007","methyldiethanolamine and methyldiethanolammonium chloride HKF parameters",https://doi.org/10.1016/j.jct.2005.10.013
 LH06a,"D. E. LaRowe and H. C. Helgeson",2006,"Geochim. Cosmochim. Acta 70, 4680-4724","nucleic acid bases, nucleosides, and nucleotides",https://doi.org/10.1016/j.gca.2006.04.010
 LH06a.1,"D. E. LaRowe and H. C. Helgeson",2006,"Geochim. Cosmochim. Acta 70, 4680-4724","citric acid and citrate",https://doi.org/10.1016/j.gca.2006.04.010
+LH06a.2,"D. E. LaRowe and H. C. Helgeson",2006,"Geochim. Cosmochim. Acta 70, 4680-4724","ribose-5-phosphate<sup>-2</sup> HKF parameters",https://doi.org/10.1016/j.gca.2006.04.010
 LH06b,"D. E. LaRowe and H. C. Helgeson",2006,"Thermochim. Acta 448, 82-106","Mg-complexed adenosine nucleotides (ATP), NAD, and NADP",https://doi.org/10.1016/j.tca.2006.06.008
 LH06b.1,"D. E. LaRowe and H. C. Helgeson",2006,"Thermochim. Acta 448, 82-106","pyridine and piperidine",https://doi.org/10.1016/j.tca.2006.06.008
+LH06b.2,"D. E. LaRowe and H. C. Helgeson",2006,"Thermochim. Acta 448, 82-106","ribose-5-phosphate<sup>-1</sup> and ribose-5-phosphate HKF parameters",https://doi.org/10.1016/j.tca.2006.06.008
 DLH06,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","amino acid, protein, and organic groups",https://doi.org/10.5194/bg-3-311-2006
 DLH06.1,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","amino acids HKF parameters",https://doi.org/10.5194/bg-3-311-2006
 DLH06.2,"J. M. Dick, D. E. LaRowe and H. C. Helgeson",2006,"Biogeosciences 3, 311-336","Gly-X-Gly tripeptides Cp, V, and HKF c<sub>1</sub>, c<sub>2</sub>, &omega; parameters",https://doi.org/10.5194/bg-3-311-2006
@@ -239,6 +242,7 @@ NLM+15,"A. Navrotsky et al.",2015,"J. Chem. Thermodyn.","REE phosphates (xenotim
 PD15,"G. S. Pokrovski and J. Dubessy",2015,"Earth Planet. Sci. Lett. 411, 298-309","trisulfur radical ion",https://doi.org/10.1016/j.epsl.2014.11.035
 GHFW16,"A. P. Gysi et al.",2016,"Thermochim. Acta 627-629, 61-67","REE phosphates (xenotimes) [different S for DyPO<sub>4</sub> than @MWBC16]",https://doi.org/10.1016/j.tca.2016.01.016
 LA16,"D. E. LaRowe and J. P. Amend",2016,"ISME J. 10, 1285-1295","fatty acids, saccharides, and other species",https://doi.org/10.1038/ismej.2015.227
+LA16.1,"D. E. LaRowe and J. P. Amend",2016,"ISME J. 10, 1285-1295","glycerol HKF parameters",https://doi.org/10.1038/ismej.2015.227
 MWBC16,"A. A. Migdisov et al.",2016,"Chem. Geol. 439, 13-42","data compilation for REE minerals with modifications for OBIGT",https://doi.org/10.1016/j.chemgeo.2016.06.005
 MWBC16.1,"A. A. Migdisov et al.",2016,"Chem. Geol. 439, 13-42","REE chlorides and fluorides [traced to @KK03]",https://doi.org/10.1016/j.chemgeo.2016.06.005
 SLOP16.1,"E. L. Shock et al.",2016,"slop16.dat computer data file","&quot;Enthalpy changed to be compatible with the equation &Delta;H=&Delta;G+T&Delta;S for the formation reaction from elements.&quot;",https://doi.org/10.5281/zenodo.2630820
@@ -355,5 +359,7 @@ OBIGT25,OBIGT,2025,"OBIGT database in CHNOSZ","corrected H by -7335 cal/mol to m
 OBIGT26,OBIGT,2026,"OBIGT database in CHNOSZ","Fit Cp values using JANAF.to.OBIGT.R",https://chnosz.net
 OBIGT26.1,OBIGT,2026,"OBIGT database in CHNOSZ","Stated listed as cr and cr2 to handle liquid-liquid transition; fit Cp values and transition properties using tinytest/test-S_liq.R",https://chnosz.net
 FG26,"Y. Figueroa Penarrieta and A. P. Gysi",2026,"Chem. Geol. 701, 123192","NdCl<sub>3</sub>&#42;6H<sub>2</sub>O",https://doi.org/10.1016/j.chemgeo.2025.123192
+LDS+26,"D. E. LaRowe et al.",2026,"submitted manuscript","organic phosphates and related species",NA
+LDS+26.1,"D. E. LaRowe et al.",2026,"submitted manuscript","saccharides",NA
 PGM+26,"R. Pan, A. P. Gysi et al.",2026,"Chem. Geol. 715, 123471","data compilation and fits for REE minerals",https://doi.org/10.1016/j.chemgeo.2026.123471
 RTC+26,"E. A. Rubtsova, B. R. Tagirov et al.",2026,"Geol. Ore Deposits 68, 280-293","AuHS(H<sub>2</sub>S)<sub>3</sub>",https://doi.org/10.1134/S1075701525600690

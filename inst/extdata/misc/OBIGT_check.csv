@@ -141,8 +141,6 @@
 "OBIGT","dHUMP-","aq","cal",-3.13,,
 "OBIGT","MgADP-","aq","cal",-1.01,,
 "OBIGT","HNicMP(ox)","aq","cal",,9.4,
-"OBIGT","ribose-5-phosphate","aq","cal",,7.48,
-"OBIGT","ribose-5-phosphate-2","aq","cal",1.53,,
 "OBIGT","H4NADP(red)","aq","cal",1.73,,
 "OBIGT","H3NADP(red)-","aq","cal",2.41,,
 "OBIGT","H2NADP(red)-2","aq","cal",1.28,,
@@ -150,7 +148,6 @@
 "OBIGT","NADP(red)-4","aq","cal",1.09,,
 "OBIGT","H3NADP(ox)","aq","cal",1.05,,
 "OBIGT","cysteinate","aq","cal",-1,,
-"OBIGT","glucose","aq","cal",1.11,,
 "OBIGT","methyldiethanolamine","aq","cal",1.61,,
 "OBIGT","diglycine+","aq","cal",-177.69,,
 "OBIGT","diglycine-","aq","cal",-49.22,,565
@@ -198,6 +195,12 @@
 "OBIGT","benzylaminium","aq","J",,2.98,
 "OBIGT","dibenzylaminium","aq","J",,3.04,
 "OBIGT","tribenzylaminium","aq","J",,2.26,
+"OBIGT","bisphosphoglycerate-3","aq","cal",,,604
+"OBIGT","bisphosphoglycerate-1","aq","cal",,,-2121
+"OBIGT","bisphosphoglycerate","aq","cal",,,-3797
+"OBIGT","glucose","aq","cal",1.11,,
+"OBIGT","ribose-5-phosphate-2","aq","cal",1.53,,
+"OBIGT","ribose-5-phosphate","aq","cal",,7.48,
 "OBIGT","hydromagnesite","cr","cal",,,-2569
 "OBIGT","jarosite","cr","cal",,,20697
 "OBIGT","natrojarosite","cr","cal",,,17554
