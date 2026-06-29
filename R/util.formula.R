@@ -60,24 +60,39 @@ as.chemical.formula <- function(makeup, drop.zero = TRUE) {
 
 mass <- function(formula) {
   # Calculate the mass of elements in chemical formulas
-  thermo <- get("thermo", CHNOSZ)
+  if("CHNOSZ" %in% .packages()) {
+    # Use thermo$element if CHNOSZ is loaded,
+    # otherwise read the CSV file from the installed package  20260629
+    element <- get("thermo", CHNOSZ)$element
+    # This text is used if there is an error
+    element_file <- "thermo()$element"
+  } else {
+    element_file <- system.file("extdata/thermo/element.csv", package = "CHNOSZ")
+    element <- read.csv(element_file)
+  }
   formula <- i2A(get.formula(formula))
-  ielem <- match(colnames(formula), thermo$element$element)
+  ielem <- match(colnames(formula), element$element)
   if(any(is.na(ielem))) stop(paste("element(s)",
-    colnames(formula)[is.na(ielem)], "not available in thermo()$element"))
-  mass <- as.numeric(formula %*% thermo$element$mass[ielem])
+    colnames(formula)[is.na(ielem)], "not available in", element_file))
+  mass <- as.numeric(formula %*% element$mass[ielem])
   return(mass)
 }
 
 entropy <- function(formula) {
   # Calculate the standard molal entropy at Tref of elements in chemical formulas
-  thermo <- get("thermo", CHNOSZ)
+  if("CHNOSZ" %in% .packages()) {
+    element <- get("thermo", CHNOSZ)$element
+    element_file <- "thermo()$element"
+  } else {
+    element_file <- system.file("extdata/thermo/element.csv", package = "CHNOSZ")
+    element <- read.csv(element_file)
+  }
   formula <- i2A(get.formula(formula))
-  ielem <- match(colnames(formula), thermo$element$element)
+  ielem <- match(colnames(formula), element$element)
   if(any(is.na(ielem))) warning(paste("element(s)",
-    paste(colnames(formula)[is.na(ielem)], collapse = " "), "not available in thermo()$element"))
+    paste(colnames(formula)[is.na(ielem)], collapse = " "), "not available in", element_file))
   # Entropy per atom
-  Sn <- thermo$element$s[ielem] / thermo$element$n[ielem]
+  Sn <- element$s[ielem] / element$n[ielem]
   # If there are any NA values of entropy, put NA in the matrix, then set the value to zero
   # this allows mixed finite and NA values to be calculated 20190802
   ina <- is.na(Sn)
@@ -167,6 +182,9 @@ get.formula <- function(formula) {
   if(is.numeric(formula) & !is.null(names(formula))) return(formula)
   # Return the argument as matrix if it's a data frame
   if(is.data.frame(formula)) return(as.matrix(formula))
+  # Return the argument if CHNOSZ isn't loaded 20260629
+  if(!"CHNOSZ" %in% .packages()) return(formula)
+
   # Return the values in the argument, or chemical formula(s) for values that are species indices
   # For numeric values, get the formulas from those rownumbers of thermo()$OBIGT
   i <- suppressWarnings(as.integer(formula))

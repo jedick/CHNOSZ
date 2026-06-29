@@ -58,11 +58,17 @@ info <- "as.chemical.formula() moves charge to the end"
 mkp <- makeup("Z-1HCO3")
 expect_equal(as.chemical.formula(mkp), "HCO3-1", info = info)  # i.e. not -1HCO3
 
-# TODO: Commented this test because detaching the package isn't always possible 20220131
-#info <- "makeup() can process formulas if the package is not attached"
-## test added 20200727
-#CHNOSZattached <- "CHNOSZ" %in% (.packages())
-#if(CHNOSZattached) detach("package:CHNOSZ", unload = TRUE)
-#mH2O <- CHNOSZ::makeup("H2O")
-#expect_identical(mH2O, c(H = 2, O = 1), info = info)
-#if(CHNOSZattached) library(CHNOSZ)
+# Test added on 20200727
+# NOTE: detaching the package isn't possible if dependent packages are loaded 20220131
+CHNOSZ_attached <- "CHNOSZ" %in% (.packages())
+if(CHNOSZ_attached) {
+  res <- try(detach("package:CHNOSZ", unload = TRUE), silent = TRUE)
+  if(!inherits(res, "try-error")) {
+    info <- "makeup() can process formulas if the package is not attached"
+    mH2O <- NULL
+    expect_silent(mH2O <- CHNOSZ::makeup("H2O"), info = info)
+    if(!is.null(mH2O)) expect_identical(CHNOSZ::makeup("H2O"), c(H = 2, O = 1), info = info)
+    # Reload CHNOSZ so things work normally after this test
+    if(CHNOSZ_attached) library(CHNOSZ)
+  }
+}

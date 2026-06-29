@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-57 (2026-06-28)}{
+\section{Changes in CHNOSZ version 2.2.0-58 (2026-06-29)}{
 
   \subsection{DEMOS}{
 
@@ -149,6 +149,10 @@
   \subsection{BUG FIXES}{
 
     \itemize{
+
+      \item \code{mass()} and \code{entropy()} can now be used with chemical
+      formulas even if the package isn't attached. Thanks to Pim Meijer for the
+      request concerning \code{mass()}.
 
       \item For the IAPWS95 water model, add 0.1 bar (0.01 MPa) to values of
       \Psat > 1 bar computed from \code{WP02.auxiliary()} to prevent Born

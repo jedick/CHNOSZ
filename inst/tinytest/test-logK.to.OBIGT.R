@@ -51,7 +51,7 @@ expect_error(logK.to.OBIGT(logK, species, coeffs, T, P, npar = 1, optimize.omega
 info <- "No error for optimize.omega = TRUE"
 expect_silent(inew <- logK.to.OBIGT(logK, species, coeffs, T, P, npar = 5, optimize.omega = TRUE), info = info)
 
-# NOTE: optimize.omega technically works for this small dataste, but is massively overfitting:
+# NOTE: optimize.omega technically works for this small dataset, but is massively overfitting:
 ## Plot experimental logK
 #plot(T, logK, "n", c(100, 320), c(5.8, 6.8), xlab = axis.label("T"), ylab = quote(log~beta))
 #points(T, logK, pch = 19, cex = 2)

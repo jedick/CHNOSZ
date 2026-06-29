@@ -34,3 +34,21 @@ expect_equal(calcS, c(63.83843212237, 55.74952198853, 15.61663479924), info = in
 calcGHS <- GHS("H2O", G = 0, H = 0, E_units = "cal")
 expect_equal(as.numeric(calcGHS[1, 3]), calcS[2], info = info)
   
+# Test added on 20260629
+# NOTE: detaching the package isn't possible if dependent packages are loaded
+CHNOSZ_attached <- "CHNOSZ" %in% (.packages())
+if(CHNOSZ_attached) {
+  res <- try(detach("package:CHNOSZ", unload = TRUE), silent = TRUE)
+  if(!inherits(res, "try-error")) {
+    info <- "mass() can process formulas if the package is not attached"
+    mH2O <- NULL
+    expect_silent(mH2O <- CHNOSZ::mass("H2O"), info = info)
+    if(!is.null(mH2O)) expect_equal(mH2O, 18.01528, info = info)
+    info <- "entropy() can process formulas if the package is not attached"
+    sH2O <- NULL
+    expect_silent(sH2O <- CHNOSZ::entropy("H2O"), info = info)
+    if(!is.null(sH2O)) expect_equal(sH2O, 233.256, info = info)
+    # Reload CHNOSZ so things work normally after this test
+    if(CHNOSZ_attached) library(CHNOSZ)
+  }
+}
