@@ -35,12 +35,12 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
   if(reactant == "acetic acid") {
     # Basic reaction: acetic acid + P = acetylphosphate + H2O
     # Load initial species for mosaic reaction (uncharged species)
-    basis(c("acetic acid", "H3PO4", "acetylphosphate0", "O2", "H+", "Mg+2"))
+    basis(c("acetic acid", "H3PO4", "acetylphosphate", "O2", "H+", "Mg+2"))
     # The basis species we will speciate using mosaic()
     bases <- list(
       c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3"),
       c("acetic acid", "acetate"),
-      c("acetylphosphate0", "acetylphosphate-1", "acetylphosphate-2", "acetylphosphate-3")
+      c("acetylphosphate", "acetylphosphate-1", "acetylphosphate-2", "acetylphosphate-3")
     )
   } else if(reactant == "glycerol") {
     # Basic reaction: glycerol + P = 1-glycerolphosphate + H2O
@@ -144,7 +144,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
   basis(formula_reactant, loga_reactant)
 
   # Generate overall reaction
-  # Don't use e.g. species("acetylphosphate0"), because that reaction is just acetylphosphate0 = acetylphosphate0
+  # Don't use e.g. species("acetylphosphate"), because that reaction is just acetylphosphate = acetylphosphate
   # Instead, form H2O from the basis species to generate the overall reaction
   species("H2O")
 
@@ -175,11 +175,11 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
       )
     } else if(P_source == "acetylphosphate") {
       # Form H2O from acetylphosphate and acetic acid
-      basis(c("acetylphosphate0", "acetic acid", "H3PO4", "O2", "H+", "Mg+2"))
+      basis(c("acetylphosphate", "acetic acid", "H3PO4", "O2", "H+", "Mg+2"))
       basis("C2H5O5P", loga_P_source)
       basis("C2H4O2", loga_P_remainder)
       bases <- list(
-        c("acetylphosphate0", "acetylphosphate-1", "acetylphosphate-2", "acetylphosphate-3"),
+        c("acetylphosphate", "acetylphosphate-1", "acetylphosphate-2", "acetylphosphate-3"),
         c("acetic acid", "acetate"),
         c("H3PO4", "H2PO4-", "HPO4-2", "PO4-3")
       )
@@ -369,7 +369,6 @@ phospho.plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
   # Use ionized forms for names
   name[name == "H3PO4"] <- "Pi"
   name[name == "H4P2O7"] <- "PP"
-  name[name == "acetylphosphate0"] <- "acetylphosphate"
   name[name == "acetic acid"] <- "acetate"
   name[name == "H2AMP"] <- "AMP"
   name[name == "H3ADP"] <- "ADP"
