@@ -2,6 +2,7 @@
 # 20251206 first version (extracted from sugars paper script) jmd
 # 20251208 add phospho.plot()
 # 20251224 add Mg species
+# 20260702 add const_T and const_P to phospho.plot()
 
 phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 0, loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, loga_Mg = -999, ...) {
 
@@ -220,7 +221,7 @@ phosphorylate <- function(reactant, P_source, loga_reactant = 0, loga_product = 
 } # end of phosphorylate()
 
 # Define a function to make the plots for a given reaction
-phospho.plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
+phospho.plot <- function(reactant, P_source, const_T = 25, const_P = "Psat", loga_Mg = -999, res = 50) {
 
   # Reaction-independent settings (activities of species)
   # The product (phosphorylated species)
@@ -272,23 +273,27 @@ phospho.plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
       # Perform calculations and define diagram settings for temperature or pressure
       if(yvar == "T") {
         # Calculate affinity of forming product from predominant basis species as a function of pH and temperature
-        result <- phosphorylate(reactant, P_source, loga_reactant, loga_product, loga_P_source, loga_P_remainder, pH = c(pH, res), T = c(T, res), loga_Mg = loga_Mg)
+        # Use P_source=P_source to avoid argument collision with 'P' (pressure)
+        result <- phosphorylate(reactant, P_source=P_source, loga_reactant, loga_product, loga_P_source, loga_P_remainder,
+                                loga_Mg = loga_Mg, pH = c(pH, res), T = c(T, res), P = const_P)
         # Method for labeling contour lines
         method <- "flattest"
         # Legend placement, space, and expression
         legend.x <- "topright"
         legend.space <- "   "
-        legend.expr <- as.expression(quote(italic(P)[SAT]))
+        if(!identical(const_P, "Psat")) legend.space <- "          "
+        legend.expr <- as.expression(lP(const_P))
         # Label offset (0 for a-c)
         dlab <- 0
       }
       if(yvar == "P") {
-        # Use P_source=P_source to avoid argument collision with 'P' (pressure)
-        result <- phosphorylate(reactant, P_source=P_source, loga_reactant, loga_product, loga_P_source, loga_P_remainder, pH = c(pH, res), P = c(P, res), loga_Mg = loga_Mg)
+        result <- phosphorylate(reactant, P_source=P_source, loga_reactant, loga_product, loga_P_source, loga_P_remainder,
+                                loga_Mg = loga_Mg, pH = c(pH, res), P = c(P, res), T = const_T)
         method <- "edge"
         legend.x <- "bottomright"
         legend.space <- "      "
-        legend.expr <- as.expression(quote(25~degree~C))
+        if(!identical(const_T, 25)) legend.space <- "       "
+        legend.expr <- as.expression(lT(const_T))
         # Label offset (3 for d-f)
         dlab <- 3
       }
@@ -307,7 +312,7 @@ phospho.plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
          # Label tick mark for 1 bar
          axis(2, at = 1)
          # Use constant T for yvar == "P"
-         TK <- convert(25, "K")
+         TK <- convert(const_T, "K")
       }
 
       # The affinity of the overall reaction as a function of pH (rows) and T (columns)
@@ -368,7 +373,7 @@ phospho.plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
   }
   # Use ionized forms for names
   name[name == "H3PO4"] <- "Pi"
-  name[name == "H4P2O7"] <- "PP"
+  name[name == "H4P2O7"] <- "PPi"
   name[name == "acetic acid"] <- "acetate"
   name[name == "H2AMP"] <- "AMP"
   name[name == "H3ADP"] <- "ADP"
@@ -381,7 +386,7 @@ phospho.plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
   # Use names except for inorganic species
   use.name <- c(TRUE, TRUE, TRUE, TRUE)
   use.name[formula == "H2O"] <- FALSE
-  # Uncomment these to use formulas instead of Pi and PP
+  # Uncomment these to use formulas instead of Pi and PPi
   #use.name[formula == "H3PO4"] <- FALSE
   #use.name[formula == "H2P4O7"] <- FALSE
   iname <- which(use.name)
@@ -389,6 +394,17 @@ phospho.plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
   for(i in iname) reaction$name[i] <- hyphen.in.pdf(reaction$name[i])
   # Get expression for reaction 
   reaction_expr <- describe.reaction(reaction, iname = iname)
+  # Subscript i in Pi and PPi  20260702
+  for(i in seq_along(reaction_expr)) { 
+    if(!is.symbol(reaction_expr[[i]])) for(j in seq_along(reaction_expr[[i]])) {
+      if(identical(reaction_expr[[i]][[j]], "Pi")) { reaction_expr[[i]][[j]] <- quote(P[i]); next }
+      if(identical(reaction_expr[[i]][[j]], "PPi")) { reaction_expr[[i]][[j]] <- quote(PP[i]); next }
+      if(!is.symbol(reaction_expr[[i]][[j]])) for(k in seq_along(reaction_expr[[i]][[j]])) {
+        if(identical(reaction_expr[[i]][[j]][[k]], "Pi")) reaction_expr[[i]][[j]][[k]] <- quote(P[i])
+        if(identical(reaction_expr[[i]][[j]][[k]], "PPi")) reaction_expr[[i]][[j]][[k]] <- quote(PP[i])
+      }
+    }
+  }
   # Add loga_Mg if given
   if(!missing(loga_Mg)) reaction_expr <- bquote(.(reaction_expr) ~ "(" * log ~ italic(a) * Mg^"+2" == .(loga_Mg) * ")")
   # Add reaction to plot
@@ -402,10 +418,10 @@ phospho.plot <- function(reactant, P_source, loga_Mg = -999, res = 50) {
   # The affinity of the overall reaction
   A <- result$a12
   # Convert to Delta G
-  TK <- convert(25, "K")
+  TK <- convert(const_T, "K")
   G.J <- convert(A, "G", T = TK)
   G.kJ <- G.J / 1000
-  print(paste("DeltaG0' at 25 degC and pH = 7 (kJ/mol):", round(G.kJ, 3)))
+  print(paste("DeltaG0' at", const_T, "degC and pH = 7 (kJ/mol):", round(G.kJ, 3)))
   # Return the calculated value
   G.kJ
 

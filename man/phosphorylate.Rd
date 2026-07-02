@@ -9,7 +9,7 @@
 \usage{
 phosphorylate(reactant, P_source, loga_reactant = 0, loga_product = 0, 
   loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, loga_Mg = -999, ...)
-phospho.plot(reactant, P_source, loga_Mg = -999, res = 50)
+phospho.plot(reactant, P_source, const_T = 25, const_P = "Psat", loga_Mg = -999, res = 50)
 }
 \arguments{
   \item{reactant}{
@@ -24,7 +24,9 @@ phospho.plot(reactant, P_source, loga_Mg = -999, res = 50)
   \item{loga_product}{numeric, logarithm of activity of the product.}
   \item{loga_P_source}{numeric, logarithm of activity of the phosphate source.}
   \item{loga_P_remainder}{numeric, logarithm of activity of the phosphate remainder (e.g., Pi when PP is the source).}
-  \item{const_pH}{numeric, pH value for the calculation.}
+  \item{const_pH}{numeric, single pH value for the calculation.}
+  \item{const_T}{numeric, single temperature value for \P-pH plots.}
+  \item{const_P}{numeric, single pressure value for \T-pH plots.}
   \item{loga_Mg}{numeric, logarithm of activity of Mg\S{+2}. With the default of -999, effectively no Mg-complexed species are formed.}
   \item{\dots}{
     additional arguments passed to \code{\link{mosaic}},

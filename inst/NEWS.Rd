@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-58 (2026-06-29)}{
+\section{Changes in CHNOSZ version 2.2.0-61 (2026-07-02)}{
 
   \subsection{DEMOS}{
 
@@ -160,7 +160,7 @@
       exploding.  Thanks to Grayson Boyer for the bug report.
 
       \item Fix bug preventing \code{mosaic()} from being used to form \H2O.
-      Thanks to Doug LaRowe for the use case with phosphorylation reactions.
+      This is needed for \code{phosphorylate()}.
 
       \item \code{mosaic()} now computes the solubility contour for a single
       non-aqueous candidate basis species. This extra logic is needed to handle
@@ -179,8 +179,10 @@
 
     \itemize{
 
-      \item Add \code{phosphorylate()} to calculate affinity of phosphorylation
-      reactions with pH-dependent speciation, including Mg-complexed species.
+      \item Add \code{phosphorylate()} and \code{phospho.plot()} to calculate
+      and visualize affinity of phosphorylation reactions with pH-dependent
+      speciation, including Mg-complexed species. Thanks to Doug LaRowe for the
+      use case.
 
       \item Add \code{JANAF.to.OBIGT()} to import data for gases from
       \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables}. This function
