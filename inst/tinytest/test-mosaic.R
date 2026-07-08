@@ -166,3 +166,11 @@ bases <- list(
 species("H2O")
 m <- mosaic(bases)
 expect_identical(m$A.species$species$name, "water", info = info)
+
+# Test added on 20260708
+info <- "mosaic() errors for more than one non-aqueous candidate basis species"
+basis(c("Au", "H2S", "H2O", "oxygen", "H+"))
+iaq <- info("Au(HS)2-")
+bases <- c("H2S", "S_liq", "S")
+species(iaq)
+expect_error(mosaic(bases), "found more than one non-aqueous candidate basis species: S_liq, sulfur", info = info)

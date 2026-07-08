@@ -414,7 +414,7 @@ phospho.plot <- function(reactant, P_source, const_T = 25, const_P = "Psat", log
   par(opar)
 
   # After we're done with the plot, calculate standard transformed Gibbs energy (ΔG°') at pH 7
-  result <- phosphorylate(reactant, P_source, const_pH = 7, loga_Mg = loga_Mg)
+  result <- phosphorylate(reactant, P_source = P_source, const_pH = 7, loga_Mg = loga_Mg, T = const_T, P = const_P)
   # The affinity of the overall reaction
   A <- result$a12
   # Convert to Delta G
