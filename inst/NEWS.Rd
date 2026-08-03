@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-61 (2026-07-02)}{
+\section{Changes in CHNOSZ version 2.2.0-63 (2026-08-03)}{
 
   \subsection{DEMOS}{
 
@@ -86,6 +86,10 @@
       \item Add skutterudite (CoAs\s{2.92}) and heazlewoodite (Ni\s{3}S\s{2})
       from \doiref{10.2138/am-2022-8337}{Majzlan et al. (2022)}.
       Thanks to Yufei Wang for the request.
+
+      \item Correct formula of oleate (C\s{18}H\s{33}O\s{2}\S{-}) from
+      \doiref{10.1038/ismej.2015.227}{LaRowe and Amend (2016)}. Thanks to
+      Grayson Boyer for the report.
 
       \item Add bastnäsite-(Ce)
       (Ce\s{0.50}La\s{0.25}Nd\s{0.20}Pr\s{0.05}CO\s{3}F) and parisite-(Ce)
