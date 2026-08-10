@@ -222,6 +222,31 @@ affinity <- function(..., property = NULL, sout = NULL, warn.Ttr = TRUE, exceed.
     P <- numeric()
     vals[[iP]] <- outvert(vals[[iP]], "bar")
   }
+  
+  # Build a grid of temperature values, in the user's units, with the same
+  # dimensions as affinity()$values[[i]], to facilitate converting the
+  # dimensionless affinity to Gibbs energy 20260810
+  T_grid <- NULL
+  if(length(affinity_values) > 0) {
+    mydim <- dim(affinity_values[[1]])
+    if(is.null(mydim)) mydim <- length(affinity_values[[1]])
+    nd <- length(mydim)
+    if(!is.na(iT)) {
+      # T is one of the variables: broadcast its (already user-unit) values
+      # along dimension iT to fill out the other dimensions
+      if(nd == 1) T_grid <- vals[[iT]]
+      else {
+        iv <- 1:nd
+        iv[1] <- iT
+        iv[iT] <- 1
+        T_grid <- aperm(array(vals[[iT]], mydim[iv]), iv)
+      }
+    } else {
+      # T is constant: fill the array with a single value, in the user's units
+      T_grid <- array(outvert(T, "K"), mydim)
+    }
+  }
+
   # Get Eh
   iEh <- match("Eh", names(args.orig))
   if(!is.na(iEh)) {
@@ -259,9 +284,9 @@ affinity <- function(..., property = NULL, sout = NULL, warn.Ttr = TRUE, exceed.
   # (even if its value is 0, the presence of IS will trigger diagram() to use "m" instead of "a" in axis labels)
   iIS <- match("IS", names(args.orig))
   if(!is.na(iIS)) out <- list(fun = "affinity", args = allargs, sout = energy_sout, property = property,
-                            basis = thermo$basis, species = myspecies, T = T, P = P, IS = args$IS, vars = vars, vals = vals, values = affinity_values)
+                            basis = thermo$basis, species = myspecies, T = T, P = P, IS = args$IS, vars = vars, vals = vals, T_grid = T_grid, values = affinity_values)
   else out <- list(fun = "affinity", args = allargs, sout = energy_sout, property = property,
-                 basis = thermo$basis, species = myspecies, T = T, P = P, vars = vars, vals = vals, values = affinity_values)
+                 basis = thermo$basis, species = myspecies, T = T, P = P, vars = vars, vals = vals, T_grid = T_grid, values = affinity_values)
   if(buffer) out <- c(out, list(buffer = tb))
   return(out)
 }

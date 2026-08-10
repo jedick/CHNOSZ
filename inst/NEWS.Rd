@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-63 (2026-08-03)}{
+\section{Changes in CHNOSZ version 2.2.0-65 (2026-08-10)}{
 
   \subsection{DEMOS}{
 
@@ -220,6 +220,13 @@
       either the aqueous activities, relative stabilities of substrates (e.g.
       minerals), or both, from a single \code{solubility()} call. This is used
       in some demos and \viglink{anintro} (look for \code{s$substrate}).
+
+      \item \code{affinity()} now outputs a \code{T_grid} value, which consists
+      of the temperatures used for the calculation (in the user's units) in the
+      same dimensions as the affinity values. This allows easily converting
+      affinity to Gibbs energy for any set of conditions with e.g. \code{TK <-
+        convert(affinity()$T_grid, "K"); DGr <- convert(affinity()$values[[1]],
+        "G", T = TK)}.
 
     }
 

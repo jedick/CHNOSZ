@@ -224,3 +224,29 @@ expect_equal(sapply(a$values, "[", 5), unlist(a5$values), info = info)
 info <- "Defunct exceed.Ttr argument gives interpretable error message"
 expect_error(affinity(exceed.Ttr = TRUE), "exceed.Ttr is not one of T, P, or IS, and does not match any basis species", info = info)
 
+
+# Tests added 20260810
+
+basis("CHNOS+")
+species("HCO3-")
+T <- c(25, 100, 4)
+pH <- c(5, 9, 5)
+IS <- c(0, 0.25, 6)
+
+info <- "T_grid has correct values of T in the first dimension"
+
+a <- affinity(T = T, pH = pH, IS = IS)
+expect_equal(unique(as.vector(a$T_grid[1, , ])), 25, info = info)
+expect_equal(unique(as.vector(a$T_grid[4, , ])), 100, info = info)
+
+info <- "T_grid has correct values of T in the last dimension"
+
+# FIXME: This causes an error:
+# Error in .Primitive("-")(dots[[1L]][[1L]], dots[[2L]][[1L]]) : 
+#   non-conformable arrays
+#a <- affinity(pH = pH, IS = IS, T = T)
+
+a <- affinity(IS = IS, pH = pH, T = T)
+expect_equal(unique(as.vector(a$T_grid[, , 1])), 25, info = info)
+expect_equal(unique(as.vector(a$T_grid[, , 4])), 100, info = info)
+

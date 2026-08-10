@@ -63,8 +63,20 @@ The function then calls itself using the settings from the previous calculation,
 }
 
 \value{
-A list, elements of which are \code{fun} the name of the function (\samp{affinity}), \code{args} all of the arguments except for \samp{sout} (these are used for argument recall), \code{sout} output from \code{\link{subcrt}}, \code{property} name of the calculated property (\samp{A} for chemical affinity), \code{basis} and \code{species} definition of basis species and species of interest in effect at runtime, \code{T} and \code{P} temperature and pressure, in the system units of Kelvin and bar, set to \code{numeric()} (length=0) if either one is a variable, \code{vars} the names of the variables, \code{vals} the values of the variables (a list, one element for each variable), \code{values} the result of the calculation (a list, one element for each species, with names taken from the species index in \code{\link{thermo}$OBIGT}).
-The elements of the lists in \code{vals} and \code{values} are arrays of \eqn{n}{n} dimensions, where \eqn{n}{n} is the number of variables.
+A list, elements of which are:
+  \itemize{
+    \item \code{fun} the name of the function (\samp{affinity}),
+    \item \code{args} all of the arguments except for \samp{sout} (these are used for argument recall),
+    \item \code{sout} output from \code{\link{subcrt}},
+    \item \code{property} name of the calculated property (\samp{A} for chemical affinity),
+    \item \code{basis} and \code{species} definition of basis species and species of interest in effect at runtime,
+    \item \code{T} and \code{P} temperature and pressure, in the system units of Kelvin and bar, set to \code{numeric()} (length=0) if either one is a variable,
+    \item \code{vars} the names of the variables,
+    \item \code{vals} the values of the variables (a list, one element for each variable),
+    \item \code{T_grid} the temperatures used for the calculation (in the user's units) in the same dimensions as the affinity values,
+    \item \code{values} the calculated affinity (a list, one element for each species, with names taken from the species index in \code{\link{thermo}$OBIGT}).
+  }
+The elements of the lists in \code{T_grid} and \code{values} are arrays of \eqn{n}{n} dimensions, where \eqn{n}{n} is the number of variables.
 The values of chemical affinity of formation reactions of the species are returned in dimensionless units (for use with decimal logarithms, i.e., \emph{A}/\eqn{2.303RT}).
 
 Names other than \samp{T} or \samp{P} in \code{vars} generally refer to basis species, and the corresponding \code{vals} are the logarithms of activity or fugacity.
