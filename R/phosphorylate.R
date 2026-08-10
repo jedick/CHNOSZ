@@ -243,18 +243,24 @@ phospho.plot <- function(reactant, P_source, const_T = 25, const_P = "Psat", log
 
   # Define which contour levels to show
   levels <- c(-1e6, seq(-100, 100, 10), 1e6)
+  levels_extended <- c(-1e6, seq(-150, 150, 10), 1e6)
   # Use thick line for 0
-  lwd <- ifelse(levels == 0, 2, 1)
+  lwd <- ifelse(levels_extended == 0, 2, 1)
+
   # Use shades of blue for exergonic, white for endergonic
-  # Take away the 2 lightest and 1 darkest shades for better readability
-  blues <- hcl.colors(14, "Blues")[2:12]
-  col <- c(blues, rep("#FFFFFF", 11))
+  blues <- hcl.colors(200, "Blues")
+  col <- c(blues, rep("#FFFFFF", 200))
+  col_levels <- seq(-100, 100, length.out = length(col) + 1)
+  # Extend the color scale for values of ΔGr < -100 kJ/mol
+  col_extended <- c(col[1], col)
+  col_levels_extended <- c(-200, col_levels)
 
   # Use the top row (panel 7) for the reaction label
   top <- t(matrix(rep(7, 3)))
   bottom <- matrix(1:6, nrow = 2, byrow = TRUE)
-  mat <- rbind(top, bottom)
-  layout(mat, heights = c(1, 8, 8))
+  right <- matrix(c(0, 8, 8))
+  mat <- cbind(rbind(top, bottom), right)
+  layout(mat, heights = c(1, 8, 8), widths = c(3, 3, 3, 1))
 
   # Loop over temperature and pressure for rows of figure
   for(yvar in c("T", "P")) {
@@ -276,24 +282,15 @@ phospho.plot <- function(reactant, P_source, const_T = 25, const_P = "Psat", log
         # Use P_source=P_source to avoid argument collision with 'P' (pressure)
         result <- phosphorylate(reactant, P_source=P_source, loga_reactant, loga_product, loga_P_source, loga_P_remainder,
                                 loga_Mg = loga_Mg, pH = c(pH, res), T = c(T, res), P = const_P)
-        # Method for labeling contour lines
-        method <- "flattest"
-        # Legend placement, space, and expression
-        legend.x <- "topright"
-        legend.space <- "   "
-        if(!identical(const_P, "Psat")) legend.space <- "          "
-        legend.expr <- as.expression(lP(const_P))
+        # Text for constant T or P in title
+        TP.text <- lP(const_P)
         # Label offset (0 for a-c)
         dlab <- 0
       }
       if(yvar == "P") {
         result <- phosphorylate(reactant, P_source=P_source, loga_reactant, loga_product, loga_P_source, loga_P_remainder,
                                 loga_Mg = loga_Mg, pH = c(pH, res), P = c(P, res), T = const_T)
-        method <- "edge"
-        legend.x <- "bottomright"
-        legend.space <- "      "
-        if(!identical(const_T, 25)) legend.space <- "       "
-        legend.expr <- as.expression(lT(const_T))
+        TP.text <- lT(const_T)
         # Label offset (3 for d-f)
         dlab <- 3
       }
@@ -325,15 +322,12 @@ phospho.plot <- function(reactant, P_source, const_T = 25, const_P = "Psat", log
       G.J <- t(convert(t(A), "G", T = TK))
       G.kJ <- G.J / 1000
       # Add color image
-      image(a$vals$pH, a$vals[[yvar]], G.kJ, col = col, breaks = levels, add = TRUE)
+      image(a$vals$pH, a$vals[[yvar]], G.kJ, col = col_extended, breaks = col_levels_extended, add = TRUE)
       # Add contour lines
-      contour(a$vals$pH, a$vals[[yvar]], G.kJ, levels = levels, labcex = 0.9, add = TRUE, method = method, lwd = lwd)
+      contour(a$vals$pH, a$vals[[yvar]], G.kJ, levels = levels_extended, labcex = 0.9, add = TRUE, method = "edge", lwd = lwd)
 
       # Replot tick marks
       thermo.axis()
-      # Add legend
-      legend(legend.x, legend.space, bg = "white")
-      legend(legend.x, legend.expr, bty = "n")
       # Replot border
       box()
       # Add title
@@ -341,7 +335,7 @@ phospho.plot <- function(reactant, P_source, const_T = 25, const_P = "Psat", log
       short_reactant <- strsplit(reactant, "_")[[1]][1]
       # Change pyruvic acid to pyruvate
       short_reactant[short_reactant == "pyruvic acid"] <- "pyruvate"
-      main <- bquote(log~italic(a)[.(short_reactant)]==.(loga_reactant))
+      main <- bquote(log~italic(a)[.(short_reactant)]==.(loga_reactant)*","~.(TP.text))
       title(main, cex.main = 1.3)
       # Add panel label - outside x range
       label.figure(letters[iloga + dlab], cex = 1.6, xfrac = 0.03)
@@ -411,6 +405,28 @@ phospho.plot <- function(reactant, P_source, const_T = 25, const_P = "Psat", log
   opar <- par(mar = c(0, 0, 0, 0))
   plot.new()
   text(0.5, 0.5, reaction_expr, cex = 1.4)
+  par(opar)
+
+  # The following is adapted from filled.contour() in R's graphics library
+  # 20260810 jmd
+  ## Plot the 'plot key' (scale):
+  mar <- par("mar")
+  mar[4L] <- mar[2L]
+  mar[2L] <- 1
+  opar <- par(mar = mar)
+  plot.new()
+  plot.window(xlim = c(0,1), ylim = range(col_levels), xaxs = "i", yaxs = "i")
+  # Plot the color scale (color only - no lines)
+  rect(0, col_levels[-length(col_levels)], 1, col_levels[-1L], col = col, border = NA)
+  # Plot the contour levels (lines)
+  rect(0, levels[-length(levels)], 1, levels[-1L], col = NA, border = 8)
+  axis(4)
+  box()
+  # Create label for Delta G (kJ / mol)
+  DGlab <- quote(Delta * italic(G[r]))
+  title(DGlab, line = 2.5, xpd = NA)
+  kJlab <- quote("(" * kJ ~ mol^-1 * ")")
+  title(kJlab, xpd = NA)
   par(opar)
 
   # After we're done with the plot, calculate standard transformed Gibbs energy (ΔG°') at pH 7
