@@ -255,12 +255,33 @@ phospho.plot <- function(reactant, P_source, const_T = 25, const_P = "Psat", log
   col_extended <- c(col[1], col)
   col_levels_extended <- c(-200, col_levels)
 
-  # Use the top row (panel 7) for the reaction label
-  top <- t(matrix(rep(7, 3)))
-  bottom <- matrix(1:6, nrow = 2, byrow = TRUE)
-  right <- matrix(c(0, 8, 8))
+  # Put color key on right side (panel 1)
+  right <- matrix(c(0, 1, 1))
+  # Make plots in panels 2-7
+  bottom <- matrix(2:7, nrow = 2, byrow = TRUE)
+  # Use the top row (panel 8) for the reaction label
+  top <- t(matrix(rep(8, 3)))
   mat <- cbind(rbind(top, bottom), right)
   layout(mat, heights = c(1, 8, 8), widths = c(3, 3, 3, 1))
+
+  # The following is adapted from filled.contour() in R's graphics library
+  # 20260810 jmd
+  ## Plot the 'plot key' (scale):
+  opar <- par(mar = c(3, 1, 2.5, 3.5))
+  plot.new()
+  plot.window(xlim = c(0,1), ylim = range(col_levels), xaxs = "i", yaxs = "i")
+  # Plot the color scale (color only - no lines)
+  rect(0, col_levels[-length(col_levels)], 1, col_levels[-1L], col = col, border = NA)
+  # Plot the contour levels (lines)
+  rect(0, levels[-length(levels)], 1, levels[-1L], col = NA, border = 8)
+  axis(4)
+  box()
+  # Create label for Delta G (kJ / mol)
+  DGlab <- quote(Delta * italic(G[r]))
+  title(DGlab, line = 2.5, xpd = NA)
+  kJlab <- quote("(" * kJ ~ mol^-1 * ")")
+  title(kJlab, xpd = NA)
+  par(opar)
 
   # Loop over temperature and pressure for rows of figure
   for(yvar in c("T", "P")) {
@@ -303,23 +324,14 @@ phospho.plot <- function(reactant, P_source, const_T = 25, const_P = "Psat", log
       # Start with blank diagram
       diagram(a, names = NA)
 
-      # Get temperature values in Kelvin
-      TK <- convert(a$vals$T, "K")
-      if(yvar == "P") {
-         # Label tick mark for 1 bar
-         axis(2, at = 1)
-         # Use constant T for yvar == "P"
-         TK <- convert(const_T, "K")
-      }
+      # Label tick mark for 1 bar
+      if(yvar == "P") axis(2, at = 1)
 
       # The affinity of the overall reaction as a function of pH (rows) and T (columns)
       A <- result$a12
       # Convert dimensionless affinity (A/2.303RT) to delta G (kJ / mol)
-      # For temperature values to be applied correctly, we need to transpose
-      # to get T into the rows of A (i.e., the first indexed dimension),
-      # then transpose again to get back to the plot dimensions
-      # For yvar == "P" this has no effect because TK is a scalar
-      G.J <- t(convert(t(A), "G", T = TK))
+      TK <- convert(result$m1$A.species$T_grid, "K")
+      G.J <- convert(A, "G", T = TK)
       G.kJ <- G.J / 1000
       # Add color image
       image(a$vals$pH, a$vals[[yvar]], G.kJ, col = col_extended, breaks = col_levels_extended, add = TRUE)
@@ -391,42 +403,21 @@ phospho.plot <- function(reactant, P_source, const_T = 25, const_P = "Psat", log
   # Subscript i in Pi and PPi  20260702
   for(i in seq_along(reaction_expr)) { 
     if(!is.symbol(reaction_expr[[i]])) for(j in seq_along(reaction_expr[[i]])) {
-      if(identical(reaction_expr[[i]][[j]], "Pi")) { reaction_expr[[i]][[j]] <- quote(P[i]); next }
-      if(identical(reaction_expr[[i]][[j]], "PPi")) { reaction_expr[[i]][[j]] <- quote(PP[i]); next }
+      if(identical(reaction_expr[[i]][[j]], "Pi")) { reaction_expr[[i]][[j]] <- quote(P[italic(i)]); next }
+      if(identical(reaction_expr[[i]][[j]], "PPi")) { reaction_expr[[i]][[j]] <- quote(PP[italic(i)]); next }
       if(!is.symbol(reaction_expr[[i]][[j]])) for(k in seq_along(reaction_expr[[i]][[j]])) {
-        if(identical(reaction_expr[[i]][[j]][[k]], "Pi")) reaction_expr[[i]][[j]][[k]] <- quote(P[i])
-        if(identical(reaction_expr[[i]][[j]][[k]], "PPi")) reaction_expr[[i]][[j]][[k]] <- quote(PP[i])
+        if(identical(reaction_expr[[i]][[j]][[k]], "Pi")) reaction_expr[[i]][[j]][[k]] <- quote(P[italic(i)])
+        if(identical(reaction_expr[[i]][[j]][[k]], "PPi")) reaction_expr[[i]][[j]][[k]] <- quote(PP[italic(i)])
       }
     }
   }
   # Add loga_Mg if given
   if(!missing(loga_Mg)) reaction_expr <- bquote(.(reaction_expr) ~ "(" * log ~ italic(a) * Mg^"+2" == .(loga_Mg) * ")")
-  # Add reaction to plot
+
+  # Add reaction to figure title
   opar <- par(mar = c(0, 0, 0, 0))
   plot.new()
   text(0.5, 0.5, reaction_expr, cex = 1.4)
-  par(opar)
-
-  # The following is adapted from filled.contour() in R's graphics library
-  # 20260810 jmd
-  ## Plot the 'plot key' (scale):
-  mar <- par("mar")
-  mar[4L] <- mar[2L]
-  mar[2L] <- 1
-  opar <- par(mar = mar)
-  plot.new()
-  plot.window(xlim = c(0,1), ylim = range(col_levels), xaxs = "i", yaxs = "i")
-  # Plot the color scale (color only - no lines)
-  rect(0, col_levels[-length(col_levels)], 1, col_levels[-1L], col = col, border = NA)
-  # Plot the contour levels (lines)
-  rect(0, levels[-length(levels)], 1, levels[-1L], col = NA, border = 8)
-  axis(4)
-  box()
-  # Create label for Delta G (kJ / mol)
-  DGlab <- quote(Delta * italic(G[r]))
-  title(DGlab, line = 2.5, xpd = NA)
-  kJlab <- quote("(" * kJ ~ mol^-1 * ")")
-  title(kJlab, xpd = NA)
   par(opar)
 
   # After we're done with the plot, calculate standard transformed Gibbs energy (ΔG°') at pH 7
