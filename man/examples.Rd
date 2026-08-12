@@ -55,10 +55,11 @@ The package demos are described below.
     \item{sulfur}{Solubility contours for iron and gold as a function of total S (Skirrow, 2026)}
     \item{MgATP}{Speciation of ATP with H+ and Mg+2 (Alberty, 2003)}
     \item{rubisco_Zc}{Zc of Rubisco vs optimal growth temperature}
-    \item{phosphorylate}{Phosphorylation model for Gibbs energy of nucleotide polymerization into RNA (LaRowe and Dick, 2025)}
+    \item{phosphorylate}{Phosphorylation model for nucleotide polymerization (LaRowe and Dick, 2025)}
     \item{gold2}{Solubility of gold 2 (Tagirov et al., 2025)}
     \item{neodymium}{Solubility of multiple Nd minerals (Migdisov et al., 2016)}
     \item{chalcocite}{Solubility of chalcocite and gold (Trofimov et al., 2023)}
+    \item{ATP_hydrolysis}{Biochemical standard state Gibbs energy of ATP hydrolysis (Alberty, 2003)}
   }
 
 

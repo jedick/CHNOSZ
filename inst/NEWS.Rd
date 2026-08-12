@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-65 (2026-08-10)}{
+\section{Changes in CHNOSZ version 2.2.0-67 (2026-08-12)}{
 
   \subsection{DEMOS}{
 
@@ -42,14 +42,18 @@
 
       \item Add \file{demo/neodymium.R} for solubility of multiple Nd minerals
       as a function of pH, after
-      \doiref{10.1016/j.chemgeo.2016.06.005}{Migdisov et al., 2016}. This
+      \doiref{10.1016/j.chemgeo.2016.06.005}{Migdisov et al. (2016)}. This
       diagram currently uses data for NdO\s{2}H (i.e. Nd(OH)\s{3}(aq)) from
-      \doiref{10.1016/0016-7037(95)00314-P}{Haas et al., 1995}, which
+      \doiref{10.1016/0016-7037(95)00314-P}{Haas et al. (1995)}, which
       overestimates solubility at alkaline conditions.
 
       \item Add \file{demo/chalcocite.R} for solubility of chalcocite and gold
       in a rock-buffered system, after
-      \doiref{10.1016/j.chemgeo.2023.121413}{Trofimov et al., 2023}.
+      \doiref{10.1016/j.chemgeo.2023.121413}{Trofimov et al. (2023)}.
+
+      \item Add \file{demo/ATP_hydrolysis.R} for Gibbs energy of ATP hydrolysis
+      as a function of pH in the biochemical standard state, after
+      \href{https://worldcat.org/title/51242181}{Alberty (2003)}.
 
       \item Rename \file{demo/sum_S.R} to \file{demo/sulfur.R}.
 

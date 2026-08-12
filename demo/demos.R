@@ -8,7 +8,8 @@ demos <- c("references", "dehydration", "affinity", "NaCl", "density",
   "mosaic", "copper", "arsenic", "solubility", "gold1", "contour", "sphalerite", "minsol",
   "Shh", "saturation", "adenine", "DEW", "lambda", "potassium", "TCA", "aluminum",
   "AD", "comproportionation", "Pourbaix", "E_coli", "yttrium", "rank.affinity", "uranyl",
-  "sulfur", "MgATP", "rubisco_Zc", "phosphorylate", "gold2", "neodymium")
+  "sulfur", "MgATP", "rubisco_Zc", "phosphorylate", "gold2", "neodymium", "chalcocite",
+  "ATP_hydrolysis")
 
 for(i in 1:length(demos)) {
   # A message so the user knows where we are
