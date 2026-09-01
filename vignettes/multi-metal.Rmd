@@ -163,7 +163,6 @@ As shown above, mashing two diagrams is essentially a simple combination of the 
 Although it is easy to make such a diagram, there is no interaction between the systems.
 If there is a possibility of forming bimetallic species, then additional considerations are needed to account for the stoichiometry of the mixture.
 The stoichiometry can be given as a fixed composition of both metals; then, all combinations of (mono- and/or bimetallic) species that satisfy this compositional constraint are used as the candidate "species" in the system.
-This is the same type of calculation as that described for [binary Pourbaix diagrams in the Materials Project](https://matgenb.materialsvirtuallab.org/2017/12/15/Plotting-a-Pourbaix-Diagram.html#Plotting-k-nary-systems).
 
 This example makes a Pourbaix diagram for the Fe-V-O-H system that is similar to Figure 1 of @SZS_17.
 Before getting started, it may be helpful to clarify some terminology.

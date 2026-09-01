@@ -9,13 +9,15 @@
 \usage{
 phosphorylate(reactant, P_source, loga_reactant = 0, loga_product = 0, 
   loga_P_source = 0, loga_P_remainder = 0, const_pH = 7, loga_Mg = -999, ...)
-phospho.plot(reactant, P_source, const_T = 25, const_P = "Psat", loga_Mg = -999, res = 50)
+phospho.plot(reactant, P_source, const_T = 25, const_P = "Psat",
+  loga_Mg = -999, res = 50)
 }
 \arguments{
   \item{reactant}{
     character, the compound to be phosphorylated.
-    Options include \code{"acetic acid"}, \code{"glycerol"}, \code{"adenosine_to_AMP"}, \code{"adenosine_to_cAMP"},
-    \code{"adenosine_for_RNA"}, \code{"ribose"}, \code{"uridine"}, \code{"AMP"}, \code{"ADP"}, \code{"glucose"}, or \code{"pyruvic acid"}.}
+    Options include \code{"acetic acid"}, \code{"glycerol"}, \code{"adenosine_to_AMP"},
+    \code{"adenosine_to_cAMP"}, \code{"adenosine_for_RNA"}, \code{"ribose"}, \code{"uridine"},
+    \code{"AMP"}, \code{"ADP"}, \code{"glucose"}, or \code{"pyruvic acid"}.}
   \item{P_source}{
     character, the source of phosphate.
     Use \code{"P"} for basic reactions with inorganic phosphate,
@@ -126,7 +128,7 @@ print(paste("DeltaG at pH 7 with non-unit activities:",
 }
 
 \references{
-Alberty RA. 2003. \emph{Thermodynamics of Biochemical Reactions}. Hoboken, NJ: John Wiley & Sons. 397 p. \url{https://worldcat.org/title/51242181}
+Alberty RA. 2003. \emph{Thermodynamics of Biochemical Reactions}. Hoboken, NJ: John Wiley & Sons. 397 p. \url{https://search.worldcat.org/title/51242181}
 
 Degani C, Halmann M. 1966. Solvolysis of phosphoric acid esters. Hydrolysis of glucose 6-phosphate. Kinetic and tracer studies. \emph{J Am Chem Soc} \bold{88}: 4075--4082. \doi{10.1021/ja00969a033}
 

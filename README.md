@@ -4,8 +4,11 @@
 [![Codecov test coverage](https://codecov.io/gh/jedick/CHNOSZ/graph/badge.svg)](https://app.codecov.io/gh/jedick/CHNOSZ)
 <!-- badges: end -->
 
-This is a mirror of the [primary repository on R-Forge](https://r-forge.r-project.org/projects/chnosz/).
+CHNOSZ is an R package for thermodynamic calculations and diagrams.
+
+The primary development site is now on [GitHub](https://github.com/jedick/CHNOSZ).
+The original [R-Forge](https://r-forge.r-project.org/projects/chnosz/) repository is updated less frequently.
 
 Please see the [CHNOSZ website](https://chnosz.net) for more information.
 
-**NEW**: For questions about CHNOSZ, please use the [Discussions forum](https://github.com/jedick/CHNOSZ/discussions) on GitHub.
+For questions about CHNOSZ, please use the [Discussions forum](https://github.com/jedick/CHNOSZ/discussions) on GitHub.

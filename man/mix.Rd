@@ -75,7 +75,7 @@ basis(c("Fe+2", "Cu+", "hydrogen sulfide", "oxygen", "H2O", "H+"))
 xlab <- ratlab("Fe+2", "Cu+")
 # Calculate diagram for only Fe-bearing minerals
 species(c("pyrite", "pyrrhotite", "magnetite", "hematite"))
-aFe <- affinity("Fe+2" = c(0, 12), O2 = c(-40, -16), T = 400, P = 2000)
+aFe <- affinity("Fe+2" = c(0, 12, 100), O2 = c(-40, -16, 100), T = 400, P = 2000)
 dFe <- diagram(aFe, xlab = xlab, main = "Fe-S-O-H")
 # Calculate diagram for only Cu-bearing minerals
 species(c("covellite", "chalcocite", "tenorite", "cuprite"))

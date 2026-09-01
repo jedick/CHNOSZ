@@ -14,7 +14,8 @@ Check self consistency of individual entries in database.
 }
 
 \usage{
-  thermo.refs(key = NULL, keep.duplicates = FALSE, browser = getOption("browser"))
+  thermo.refs(key = NULL, keep.duplicates = FALSE,
+    browser = getOption("browser"))
   check.EOS(eos, model, prop, return.difference = TRUE)
   check.GHS(ghs, return.difference = TRUE)
   check.OBIGT()

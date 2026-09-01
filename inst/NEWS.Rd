@@ -18,7 +18,7 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
-\section{Changes in CHNOSZ version 2.2.0-67 (2026-08-12)}{
+\section{Changes in CHNOSZ version 2.3.0 (2026-08-31)}{
 
   \subsection{DEMOS}{
 
@@ -32,13 +32,14 @@
 
       \item In \file{demo/contour.R}, add \code{balance = 1} to the
       \code{diagram()} call for predominance fields. The small size of the
-      Au\s{2}S\s{2}\S{-2} predominance field aligns well with the diagram in
+      Au\s{2}S\s{2}\S{-2} predominance field matches the diagram in
       \doiref{10.1134/S1075701525600690}{Rubtsova et al. (2026)}.
       
-      \item The default \code{balance = NULL} (i.e., per element) remains
-      useful for reproducing other diagrams with polynuclear aqueous species
-      (e.g. S\s{3}\S{-}) or minerals. \emph{Note that \code{balance = 1} is not
-        recommended for mineral stability diagrams.}
+      \item NOTE: \emph{Balancing per formula unit with \code{balance = 1} is
+        not recommended for mineral stability diagrams.} The default
+      \code{balance = NULL} (i.e., per element) remains useful for reproducing
+      most mineral stability diagrams and some diagrams with polynuclear
+      aqueous species (e.g. S\s{3}\S{-}). 
 
       \item Add \file{demo/neodymium.R} for solubility of multiple Nd minerals
       as a function of pH, after
@@ -53,7 +54,7 @@
 
       \item Add \file{demo/ATP_hydrolysis.R} for Gibbs energy of ATP hydrolysis
       as a function of pH in the biochemical standard state, after
-      \href{https://worldcat.org/title/51242181}{Alberty (2003)}.
+      \href{https://search.worldcat.org/title/51242181}{Alberty (2003)}.
 
       \item Rename \file{demo/sum_S.R} to \file{demo/sulfur.R}.
 
@@ -66,7 +67,7 @@
     \itemize{
 
       \item Add organic phosphates and related species from LaRowe et al.
-      (2026).
+      (2026) (submitted manuscript).
 
       \item Add REE minerals from
       \doiref{10.1016/j.chemgeo.2026.123471}{Pan et al. (2026)}.
@@ -77,15 +78,15 @@
       \item Add Nd species from \doiref{10.1016/j.gca.2024.07.014}{Figueroa
         Penarrieta and Gysi (2025)}.
 
-      \item Move Au chloride, hydroxide, and (hydro)sulfide complexes from
-      \file{testing/IGEM.csv} to the default database
-      (\doiref{10.1134/S1075701524600403}{Tagirov et al., 2024} and
-      \doiref{10.1016/j.gca.2024.08.022}{2025}).
+      \item Move Au chloride, hydroxide, and (hydro)sulfide complexes
+      (\doiref{10.1134/S1075701524600403}{Tagirov et al., 2024};
+      \doiref{10.1016/j.gca.2024.08.022}{2025}) from \file{testing/IGEM.csv} to
+      the default database.
 
       \item Move Cu\S{+} and Cu chloride, hydroxide, and hydrosulfide complexes
-      from \file{testing/IGEM.csv} to the default database
       (\doiref{10.1134/S1075701523010026}{Akinfiev and Zotov, 2023};
-      \doiref{10.1016/j.chemgeo.2023.121413}{Trofimov et al., 2023}).
+      \doiref{10.1016/j.chemgeo.2023.121413}{Trofimov et al., 2023}) from
+      \file{testing/IGEM.csv} to the default database.
 
       \item Add skutterudite (CoAs\s{2.92}) and heazlewoodite (Ni\s{3}S\s{2})
       from \doiref{10.2138/am-2022-8337}{Majzlan et al. (2022)}.
@@ -107,10 +108,15 @@
       \item Add CuCl\s{3}\S{-2} from \doiref{10.1016/j.gca.2007.08.003}{Brugger
         et al. (2007)}.
 
-      \item Add S(liq) (liquid sulfur, named \code{S_liq} in OBIGT) from
-      \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables (1998)}. Its
-      states are listed as cr and cr2 to handle the liquid-liquid transition.
-      Thanks to Evgeniy Bastrakov for the request.
+      \item Add S(liq) (liquid sulfur) from \doiref{10.18434/T42S31}{NIST-JANAF
+        Thermochemical Tables (1998)}. To handle the liquid-liquid transition
+      at 432.02 K, the two liquid forms are listed with states of cr and cr2;
+      this invokes the polymorph-selection logic in \code{subcrt()}, originally
+      intended for mineral polymorphs. Unlike other species in OBIGT, the
+      species name (\code{S_liq}) has the state made explicit to help identify
+      it as the liquid. A predominance field for S(liq) appears in the high-S
+      system shown in \file{demo/contour.R} Thanks to Evgeniy Bastrakov for the
+      request.
 
       \item Add C\s{2}H\s{2}(gas) (ethyne, acetylene) from
       \doiref{10.18434/T42S31}{NIST-JANAF Thermochemical Tables (1998)}. Thanks
@@ -144,8 +150,8 @@
       or save them to PNG files (\file{demo/demos_png.R},
       \file{demo/examples_png.R})
 
-      \item Use \doiref{https://online.ucpress.edu/elementa}{Elementa} reference
-      style (like \doiref{https://www.csemanual.org}{CSE} name-year style but all
+      \item Use \href{https://online.ucpress.edu/elementa}{Elementa} reference
+      style (like \href{https://www.csemanual.org}{CSE} name-year style but all
       authors are listed) in Rd files.
 
       \item Add colors to \file{demo/NaCl.R}.
@@ -172,9 +178,9 @@
 
       \item \code{mosaic()} now computes the solubility contour for a single
       non-aqueous candidate basis species. This extra logic is needed to handle
-      S_liq; the previous method gave a sharply pointed predominance field
+      S(liq); the previous method gave a sharply pointed predominance field
       where it should be curved, resulting in misaligned contours on the
-      S_liq-to-aqueous boundary for the Rubtsova et al. diagram in
+      S(liq)-to-aqueous boundary for the high-S system in
       \code{demo/contour.R}. The function errors if it detects more than one
       non-aqueous candidate basis species (this is doable in principle, but
       needs more work).
@@ -250,8 +256,13 @@
       \code{Psublm}, \code{TsHGK}, \code{TdPsdT}, \code{tcorr}, and
       \code{cpswap}.
 
-      \item Add continuous integration (CI) with GitHub actions: R CMD check
-      workflow and Codecov test coverage, with badges in \file{README.md}.
+      \item For historical purposes, the original version of the \H2O model
+      from SUPCRT92 is stored unchanged at
+      \file{inst/extdata/src/H2O92D.f.orig}. This file can be diffed with the
+      version at \file{src/H2O92D.f} to identify the changes made for CHNOSZ.
+
+      \item Add GitHub actions for R CMD check workflow and Codecov test
+      coverage, with badges in \file{README.md}.
 
     }
 
@@ -338,7 +349,7 @@
       \doiref{10.1016/j.jct.2008.12.006}{Jacob et al. (2009)}.
 
       \item Add Co(OH)\s{2} from
-      \doiref{https://pid.geoscience.gov.au/dataset/ga/25473}{Shvarov and
+      \href{https://pid.geoscience.gov.au/dataset/ga/25473}{Shvarov and
         Bastrakov, 1999}.
 
       \item Add chromite (FeCr\s{2}O\s{4}) and cassiterite (SnO\s{2}) from
@@ -351,9 +362,9 @@
       \doiref{10.1007/978-3-662-02293-1}{Barin et al. (1977)}.
 
       \item Add CoSO\s{4} and beta-Nb\s{2}O\s{5} from
-      \doiref{https://worldcat.org/title/8139446}{Naumov et al. (1974)}. A PDF
-      of this publication is available from the
-      \doiref{https://ntrl.ntis.gov/NTRL/}{National Technical Reports Library}.
+      \href{https://search.worldcat.org/title/8139446}{Naumov et al. (1974)}. A
+      PDF of this publication is available from the
+      \href{https://ntrl.ntis.gov/NTRL/}{National Technical Reports Library}.
       
       \item Move americium complexes from optional to default data. Entropy of
       the element Am has been listed in \file{element.csv} since CHNOSZ 1.4.0.
@@ -362,7 +373,7 @@
         (1981)} for the hydrogen ion convention.
 
       \item Due to an apparent typo in
-      \doiref{https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf}{Wagman et al. (1982)},
+      \href{https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf}{Wagman et al. (1982)},
       Δ\emph{H}°\s{f} for In\S{+3} and derived species was corrected by -7335
       cal/mol to maintain GHS consistency. This is in addition to the
       correction for S° previously noted by
@@ -401,8 +412,8 @@
 
       \item Add \file{demo/MgATP.R}: speciation of ATP with H\S{+} and
       Mg\S{+2}, based on
-      \doiref{https://search.worldcat.org/title/51242181}{Alberty (2003)}
-      (moved from \viglink{anintro}).
+      \href{https://search.worldcat.org/title/51242181}{Alberty (2003)} (moved
+      from \viglink{anintro}).
 
       \item Update \file{demo/contour.R} to use conditions taken from
       \doiref{10.1016/j.oregeorev.2022.105231}{Ding et al. (2023)} and optional
@@ -505,7 +516,6 @@
       classes and subtypes listed by
       \doiref{10.1038/s41579-019-0299-x}{Makarova et al. (2020)}.
 
-
       \item Remove \code{ispecies} from output of \code{check.OBIGT()} to avoid
       trivial diffs.
 
@@ -522,11 +532,11 @@
       \item Remove \code{seq2aa()}.
 
       \item Move \code{read.fasta()}, \code{count.aa()}, and \code{aasum()} to
-      \doiref{https://cran.r-project.org/package=canprot}{canprot} with different
+      \href{https://cran.r-project.org/package=canprot}{canprot} with different
       names (\code{read_fasta()}, \code{count_aa()}, and \code{sum_aa()}).
 
       \item Move \file{equilibrium.Rmd} and \code{protein.equil()} to
-      \doiref{https://github.com/jedick/JMDplots}{JMDplots}.
+      \href{https://github.com/jedick/JMDplots}{JMDplots}.
 
     }
   }
@@ -589,9 +599,9 @@
       \doiref{10.3749/2300028}{von der Heyden et al. (2024)}.
 
       \item Modify cattierite (CoS\s{2}) and linnaeite (Co\s{3}S\s{4}) to use
-      parameters from \doiref{https://worldcat.org/title/16131757}{Pankratz et
-        al. (1987)} as listed by
-      \doiref{10.5382/econgeo.4895}{Williams-Jones and Vasyukova
+      parameters from
+      \href{https://search.worldcat.org/title/16131757}{Pankratz et al. (1987)}
+      as listed by \doiref{10.5382/econgeo.4895}{Williams-Jones and Vasyukova
         (2022)}.
       
       \item Add 36 charged amino acids from
@@ -681,15 +691,16 @@
       \doiref{10.3133/b2131}{Robie and Hemingway (1995)}.
 
       \item \samp{OBIGT/inorganic_cr.csv}: Modify linnaeite (Co\s{3}S\s{4}) to
-      use 25 \degC parameters from \doiref{10.3133/b2131}{Robie
-        and Hemingway (1995)} and heat capacity coefficients from
-      \doiref{https://worldcat.org/title/16131757}{Pankratz et al. (1987)}.
+      use 25 \degC parameters from \doiref{10.3133/b2131}{Robie and Hemingway
+        (1995)} and heat capacity coefficients from
+      \href{https://search.worldcat.org/title/16131757}{Pankratz et al.
+        (1987)}.
 
       \item \samp{OBIGT/inorganic_cr.csv}: Modify Co-pentlandite
       (Co\s{9}S\s{8}) to use parameters from
-      \doiref{https://worldcat.org/title/16131757}{Pankratz et al. (1987)} as
-      listed by \doiref{10.5382/econgeo.4895}{Williams-Jones and
-        Vasyukova (2022)}.
+      \href{https://search.worldcat.org/title/16131757}{Pankratz et al. (1987)}
+      as listed by \doiref{10.5382/econgeo.4895}{Williams-Jones and Vasyukova
+        (2022)}.
 
       \item \samp{OBIGT/organic_aq.csv}: Correct formulas of Na(Mal)-, K(Mal)-,
       and Dy(Mal)+. Thanks to Grayson Boyer.
@@ -928,7 +939,7 @@
 
       \item Remove \file{OldAA.csv} (superseded thermodynamic parameters for
       amino acids). This file is now available in the
-      \doiref{https://github.com/jedick/JMDplots}{JMDplots} package.
+      \href{https://github.com/jedick/JMDplots}{JMDplots} package.
 
     }
   }
@@ -980,8 +991,8 @@
     \itemize{
 
       \item Add \samp{demo/Pourbaix.R} (Eh-pH diagrams with isosolubility
-      lines, after \doiref{https://worldcat.org/title/563921897}{Pourbaix,
-      1974}). This demo depends on the following two changes.
+      lines, after \href{https://search.worldcat.org/title/563921897}{Pourbaix,
+        1974}). This demo depends on the following two changes.
 
       \item Revise \code{solubility()} to enable calculating overall (i.e.
       minimum) solubility for multiple minerals. Calculations for multiple
@@ -1023,7 +1034,7 @@
 
       \item \samp{thermo/protein.csv}: Rename \samp{CDC2_HUMAN} to
       \samp{CDK1_HUMAN} (UniProt:
-      \doiref{https://www.uniprot.org/uniprot/P06493}{P06493}).
+      \href{https://www.uniprot.org/uniprot/P06493}{P06493}).
 
     }
   }
@@ -1173,7 +1184,7 @@
         1995}.
 
       \item \samp{inorganic_cr.csv}: Add amorphous Mn(OH)\s{2} from
-      \doiref{https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf}{Wagman et al., 1982}
+      \href{https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf}{Wagman et al., 1982}
       (GHS) and \doiref{10.1016/S0925-8388(98)00739-7}{Senoh et
         al., 1998} (estimated Cp values).
 
@@ -1183,10 +1194,9 @@
 
       \item \samp{inorganic_cr.csv}: Add linnaeite (Co\s{3}S\s{4}) and
       Co-pentlandite (Co\s{9}S\s{8}) from
-      \doiref{https://worldcat.org/title/801856147}{Vaughan and Craig, 1978}
-      and cattierite (CoS\s{2}) and cobalt from
-      \doiref{10.3133/b2131}{Robie and Hemingway,
-        1995}.
+      \href{https://search.worldcat.org/title/801856147}{Vaughan and Craig,
+        1978} and cattierite (CoS\s{2}) and cobalt from
+      \doiref{10.3133/b2131}{Robie and Hemingway, 1995}.
 
       \item Add GHS and Cp at 25 \degC for almandine, dickite, fluorphlogopite,
       glaucophane, grunerite, halloysite, larnite, pyrope (\samp{SUPCRT92.csv})
@@ -1212,7 +1222,7 @@
       package (\url{https://github.com/jedick/logKcalc}).
 
       \item \samp{thermo/element.csv}: Add entropies for Am, Pu, Cm, Np from
-      Thoenen et al., 2014 (\doiref{https://www.psi.ch/en/les/database}{The
+      Thoenen et al., 2014 (\href{https://www.psi.ch/en/les/database}{The
         PSI/Nagra Chemical Thermodynamic Database 12/07}).
 
     }

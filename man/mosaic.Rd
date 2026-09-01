@@ -93,13 +93,14 @@ m2 <- mosaic(bases, pH = pH, Eh = Eh, T = T)
 diagram(m2$A.species, add = TRUE, names = FALSE, fill = NA)
 title(main=paste("Iron oxides and sulfides in water, log(total S) = -6",
   "After Garrels and Christ, 1965", sep="\n"))
-legend("bottomleft", c("log(act_Fe) = -4", "log(act_Fe) = -6"), lwd = c(2, 1), bty = "n")
+legend("bottomleft", c("log(act_Fe) = -4", "log(act_Fe) = -6"),
+  lwd = c(2, 1), bty = "n")
 # Overlay the predominance fields for the basis species
 diagram(m1$A.bases, add = TRUE, col = 8, col.names = 8, lty = 3)
 }
 
 \references{
-Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://worldcat.org/title/517586}
+Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://search.worldcat.org/title/517586}
 }
 
 \concept{Extended workflow}

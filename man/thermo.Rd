@@ -62,7 +62,7 @@ These files are used to build the \code{thermo} object, which is described below
       \code{Setchenow} \tab character \tab Option for neutral species in \code{\link{nonideal}} [\code{bgamma0}] \cr
       \code{Berman} \tab character \tab User data file for mineral parameters in the Berman equations [\code{NA}] \cr
       \code{maxcores} \tab numeric \tab Maximum number of cores for parallel calculations with \code{\link{palply}} [\code{2}] \cr
-      \code{ionize.aa} \tab numeric \tab Calculate properties of ionized proteins when \Hplus is in basis species (see \code{\link{affinity}}) [\code{TRUE}]
+      \code{ionize.aa} \tab numeric \tab Calculate properties of ionized proteins when \Hplus is in basis species [\code{TRUE}]
 }
 
     \item \code{thermo()$element}
@@ -289,9 +289,9 @@ reset()
 }
 
 \references{
-Cox JD, Wagman DD, Medvedev VA, eds. 1989. \emph{CODATA Key Values for Thermodynamics}. New York: Hemisphere Publishing Corporation. 271 p. \url{https://worldcat.org/title/18559968}
+Cox JD, Wagman DD, Medvedev VA, eds. 1989. \emph{CODATA Key Values for Thermodynamics}. New York: Hemisphere Publishing Corporation. 271 p. \url{https://search.worldcat.org/title/18559968}
 
-Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://worldcat.org/title/517586}
+Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://search.worldcat.org/title/517586}
 
 Thoenen T, Hummel W, Berner U, Curti E. 2014. \emph{The PSI/Nagra Chemical Thermodynamic Database 12/07}. Villigen, Switzerland: Paul Scherrer Institut. \url{https://www.psi.ch/en/les/database}
 

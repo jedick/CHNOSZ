@@ -89,7 +89,7 @@ Akinfiev NN, Zotov AV. 2001. Thermodynamic description of chloride, hydrosulfide
 
 Aksu S, Doyle FM. 2001. Electrochemistry of copper in aqueous glycine solutions. \emph{J Electrochem Soc} \bold{148}: B51--B57. \doi{10.1149/1.1344532}
 
-Alberty RA. 2003. \emph{Thermodynamics of Biochemical Reactions}. Hoboken, NJ: John Wiley & Sons. 397 p. \url{https://worldcat.org/title/51242181}
+Alberty RA. 2003. \emph{Thermodynamics of Biochemical Reactions}. Hoboken, NJ: John Wiley & Sons. 397 p. \url{https://search.worldcat.org/title/51242181}
 
 Amend JP, Shock EL. 1998. Energetics of amino acid synthesis in hydrothermal ecosystems. \emph{Science} \bold{281}: 1659--1662. \doi{10.1126/science.281.5383.1659}
 
@@ -101,7 +101,7 @@ Azadi MR, Karrech A, Attar M, Elchalakani M. 2019. Data analysis and estimation 
 
 Berman RG. 1988. Internally-consistent thermodynamic data for minerals in the system Na{\s2}O-K{\s2}O-CaO-MgO-FeO-Fe{\s2}O{\s3}-Al{\s2}O{\s3}-SiO{\s2}-TiO{\s2}-H{\s2}O-CO{\s2}. \emph{J Petrol} \bold{29}: 445--522. \doi{10.1093/petrology/29.2.445}
 
-Bowers TS, Jackson KJ, Helgeson HC. 1984. \emph{Equilibrium Activity Diagrams for Coexisting Minerals and Aqueous Solutions at Pressures and Temperatures to 5 kb and 600°C}. Berlin: Springer-Verlag. 397 p. \url{https://worldcat.org/title/11133620}
+Bowers TS, Jackson KJ, Helgeson HC. 1984. \emph{Equilibrium Activity Diagrams for Coexisting Minerals and Aqueous Solutions at Pressures and Temperatures to 5 kb and 600°C}. Berlin: Springer-Verlag. 397 p. \url{https://search.worldcat.org/title/11133620}
 
 Canovas PA III, Shock EL. 2016. Geobiochemistry of metabolism: Standard state thermodynamic properties of the citric acid cycle. \emph{Geochim Cosmochim Acta} \bold{195}: 293--322. \doi{10.1016/j.gca.2016.08.028}
 
@@ -111,7 +111,7 @@ Dick JM. 2015. Chemical integration of proteins in signaling and development. \e
 
 Ding Z, Sun X, Hu S, Chen H, Li D, Fu Y, Xu L, Wu Z, Huang F. 2023. Role of carbonaceous material in gold precipitation for orogenic gold deposits: A case study of the Bangbu gold deposit in southern Tibet, China. \emph{Ore Geol Rev} \bold{152}: 105231. \doi{10.1016/j.oregeorev.2022.105231}
 
-Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://worldcat.org/title/517586}
+Garrels RM, Christ CL. 1965. \emph{Solutions, Minerals, and Equilibria}. New York: Harper & Row. 450 p. \url{https://search.worldcat.org/title/517586}
 
 Guan Q, Mei Y, Etschmann B, Testemale D, Louvel M, Brugger J. 2020. Yttrium complexation and hydration in chloride-rich hydrothermal fluids: A combined \emph{ab initio} molecular dynamics and \emph{in situ} X-ray absorption spectroscopy study. \emph{Geochim Cosmochim Acta} \bold{281}: 168--189. \doi{10.1016/j.gca.2020.04.015}
 
@@ -131,7 +131,7 @@ Migdisov A, Williams-Jones AE, Brugger J, Caporuscio FA. 2016. Hydrothermal tran
 
 Migdisov A, Bastrakov E, Alcorn C, Reece M, Boukhalfa H, Caporuscio FA, Jove-Colon C. 2025. A spectroscopic study of the stability of uranyl-carbonate complexes at 25--150°C and re-visiting the data available for uranyl-chloride, uranyl-sulfate, and uranyl-hydroxide species. \emph{Geochim Cosmochim Acta} \bold{406}: 326--339. \doi{10.1016/j.gca.2024.04.023}
 
-Pourbaix M. 1974. \emph{Atlas of Electrochemical Equilibria in Aqueous Solutions}. Houston, TX: NACE; Brussels: CEBELCOR. \url{https://worldcat.org/title/563921897}
+Pourbaix M. 1974. \emph{Atlas of Electrochemical Equilibria in Aqueous Solutions}. Houston, TX: NACE; Brussels: CEBELCOR. \url{https://search.worldcat.org/title/563921897}
 
 Rubtsova EA, Tagirov BR, Chareev DA, Akinfiev NN, Tarnopolskaia ME, Zlivko IYu, Reukov VL, Koroleva LA, Mezhueva AA, Nickolsky MS. 2026. Experimental determination of the behavior of gold(I) in sulfide fluids at acidic pH. \emph{Geol Ore Deposits} \bold{68}: 280-293. \doi{10.1134/S1075701525600690}
 
@@ -145,7 +145,7 @@ Skirrow RG. 2026. Iron Oxide Copper–Gold (IOCG) deposits – A review (part 2)
 
 Stefánsson A, Seward TM. 2004. Gold(I) complexing in aqueous sulphide solutions to 500°C at 500 bar. \emph{Geochim Cosmochim Acta} \bold{68}: 4121--4143. \doi{10.1016/j.gca.2004.04.006}
 
-Stumm W, Morgan JJ. 1996. \emph{Aquatic Chemistry: Chemical Equilibria and Rates in Natural Waters}. 3rd ed. New York: John Wiley & Sons. 1040 p. \url{https://worldcat.org/title/31754493}
+Stumm W, Morgan JJ. 1996. \emph{Aquatic Chemistry: Chemical Equilibria and Rates in Natural Waters}. 3rd ed. New York: John Wiley & Sons. 1040 p. \url{https://search.worldcat.org/title/31754493}
 
 Sverjensky DA, Hemley JJ, D'Angelo WM. 1991. Thermodynamic assessment of hydrothermal alkali feldspar-mica-aluminosilicate equilibria. \emph{Geochim Cosmochim Acta} \bold{55}: 989--1004. \doi{10.1016/0016-7037(91)90157-Z}
 

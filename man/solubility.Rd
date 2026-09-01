@@ -7,8 +7,8 @@ Calculate chemical activities of aqueous species in equilibrium with one or more
 }
 
 \usage{
-  solubility(iaq, ..., in.terms.of = NULL, dissociate = FALSE, find.IS = FALSE,
-    sout = NULL)
+  solubility(iaq, ..., in.terms.of = NULL, dissociate = FALSE,
+    find.IS = FALSE, sout = NULL)
 }
 
 \arguments{

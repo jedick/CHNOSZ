@@ -8,7 +8,8 @@ Only gases are currently supported.
 }
 
 \usage{
-  JANAF.to.OBIGT(file, abbrv = NULL, T_max = 1500, MAE_max = 1, plot_Cp = FALSE)
+  JANAF.to.OBIGT(file, abbrv = NULL, T_max = 1500, MAE_max = 1,
+    plot_Cp = FALSE)
 }
 
 \arguments{
@@ -56,7 +57,7 @@ subcrt(inew)
 }
 
 \references{
-Anderson GM. 2005. \emph{Thermodynamics of Natural Systems}. 2nd ed. Cambridge, UK: Cambridge University Press. 648 p. \url{https://worldcat.org/title/474880901}
+Anderson GM. 2005. \emph{Thermodynamics of Natural Systems}. 2nd ed. Cambridge, UK: Cambridge University Press. 648 p. \url{https://search.worldcat.org/title/474880901}
 
 NIST. 1998. \emph{NIST-JANAF Thermochemical Tables}. \doi{10.18434/T42S31}
 }

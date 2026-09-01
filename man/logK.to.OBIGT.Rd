@@ -88,7 +88,8 @@ for(o.o in c(TRUE, FALSE)) {
   sres <- subcrt(species, coeffs, T = Tfit)
   lines(sres$out$T, sres$out$logK, col = 4)
   title(describe.reaction(sres$reaction))
-  legend <- c("Migdisov et al. (2011)",paste0("logK.to.OBIGT(optimize.omega = ",o.o,")"))
+  legend <- c("Migdisov et al. (2011)",
+    paste0("logK.to.OBIGT(optimize.omega = ", o.o, ")"))
   legend("top", legend, pch = c(19, NA), lty = c(0, 1), col = c(1, 4),
     pt.cex = 2, bg = "#FFFFFFB0")
 }
