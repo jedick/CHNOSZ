@@ -18,20 +18,37 @@ csl: elementa.csl
 ---
 
 ```{css, echo=FALSE}
+/* Lower font size than tufte default */
 html { 
   font-size: 14px;
 }
-/* zero margin around pre blocks (looks more like R console output) */
+/* Zero margin around pre blocks (looks more like R console output) */
 pre {
   margin: 0;
   padding: 0;
 }
+/* Highlight `NOTE` (.highlight selector added in postprocess.sh) */
 .highlight {
   background-color: #F27121cc;
   border-radius: 6px;
   padding: 0px 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: inline-block;
+}
+/* Reference list in the same style as body paragraphs (for pandoc >= 2.11) */
+/* - Cancel hanging indent */
+#refs.hanging-indent {
+  margin-left: 0;
+  text-indent: 0;
+}
+/* - Copy tufte <p> rules onto the reference entries */
+#refs .csl-entry {
+  width: 55%;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
+  padding-right: 0;
 }
 ```
 

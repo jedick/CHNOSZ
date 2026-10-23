@@ -17,7 +17,7 @@
 # This still mangles some output, so let's be specific for the one block we need:
 sed -i ':a;N;$!ba;s/<\/pre>\n<pre\ style="color:magenta">//g' anintro.html
 
-# Highlight NOTE in all caps
+# Highlight `NOTE`
 sed -i 's/NOTE/<span class="highlight">NOTE<\/span>/g' anintro.html
 
 # Functions without side effects (green)
