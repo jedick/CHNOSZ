@@ -18,6 +18,39 @@
 \newcommand{\Psat}{\ifelse{latex}{\eqn{P_{\mathrm{SAT}}}}{\ifelse{html}{\out{<i>P</i><sub>SAT</sub>}}{Psat}}}
 \newcommand{\doiref}{\href{https://doi.org/#1}{#2}}
 
+\section{Changes in CHNOSZ version 2.3.0-3 (2026-10-31)}{
+
+  \subsection{OBIGT DATABASE}{
+
+    \itemize{
+
+      \item Correct apparent transcription errors to maintain GHS
+      consistency: Δ\emph{H}°\s{f} of YCl\s{3}(cr) (sign; -1013880 J/mol),
+      triphenylene(cr) (36280 cal/mol, consistent with 151.8 kJ/mol in the
+      NIST Chemistry WebBook) and nonacontane(liq) (-563923 cal/mol, linear
+      with the C\s{60} to C\s{80} n-alkane liquids). These species are
+      removed from \file{extdata/misc/OBIGT_check.csv}.
+
+      \item In \file{DEW.csv}, use the values from the default database for
+      Δ\emph{H}°\s{f} of HCN (25600 cal/mol) and Δ\emph{H}°\s{f} and S° of
+      Hg\s{2}\S{+2} (39880 cal/mol and 15.71 cal/K/mol), restoring GHS
+      consistency.
+
+      \item Fix charge (\code{z.T}) of RuSO\s{4}\S{+} (1), MnO\s{2}\S{-2}
+      (-2) and cysteinate (-1) to match their formulas and the values in
+      \file{slop98.dat} or \file{slop16.dat}, and of Pb(Ac)\s{2},
+      Mn(Ac)\s{2}, Cu(Ac)\s{2}, Cd(Ac)\s{2} and Hg(Ac)\s{2} (0) in
+      \file{SLOP98-b.csv}.
+
+      \item In \file{DEW.csv}, rename the second entry named CaOH\S{+} to
+      CaO, matching its formula.
+
+    }
+
+  }
+
+}
+
 \section{Changes in CHNOSZ version 2.3.0 (2026-08-31)}{
 
   \subsection{DEMOS}{

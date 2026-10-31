@@ -224,7 +224,6 @@
 "OBIGT","Eu(OH)3","cr","J",,,-866
 "OBIGT","CeCl3","cr","J",,,678
 "OBIGT","DyCl3","cr","J",,,-915
-"OBIGT","YCl3","cr","J",,,2027761
 "OBIGT","TbCl3*6H2O","cr","J",,,-1123
 "OBIGT","DyCl3*6H2O","cr","J",,,-879
 "OBIGT","LaF3","cr","J",-7.49,,
@@ -265,11 +264,9 @@
 "OBIGT","hexacosane","cr","cal",-1.29,,
 "OBIGT","heptacosane","cr","cal",-1.23,,
 "OBIGT","carbazole","cr","cal",-43.39,,
-"OBIGT","triphenylene","cr","cal",,,541
 "OBIGT","deoxyadenosine","cr","cal",,,-2977
 "OBIGT","ethylene","gas","cal",-4.59,,
 "OBIGT","3,5-dimethylphenol","gas","cal",,,628
-"OBIGT","nonacontane","liq","cal",,,635
 "OBIGT","2-methyloctane","liq","cal",10,,
 "OBIGT","5,6-dithiadecane","liq","cal",2,,
 "DEW","AlO2(SiO2)-","aq","cal",,,-897
@@ -284,8 +281,6 @@
 "DEW","FeCl2+","aq","cal",,,-8614
 "DEW","FeCl3","aq","cal",,,-14671
 "DEW","FeCl4-","aq","cal",,,-21499
-"DEW","HCN","aq","cal",,,907
-"DEW","Hg2+2","aq","cal",,,9334
 "DEW","HPO4-2","aq","cal",,-1.02,
 "DEW","KOH","aq","cal",,,-71448
 "DEW","MgHCO3+","aq","cal",,,686
